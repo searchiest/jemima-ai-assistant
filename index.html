@@ -479,24 +479,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </script>
 
 <script>
-
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('nav ul');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
-    
-    // Close menu when clicking on links
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('show');
-      });
-    });
-
-
 /* --- endpoint and session --- */
 const webhook = 'https://jemima-ai.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat';
 const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
@@ -573,6 +555,37 @@ window.addEventListener('load', () => {
   if (chatInput) chatInput.focus({preventScroll:true});
 });
 </script>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('nav ul');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+    
+    // Close menu when clicking on links
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('show');
+      });
+    });
+    
+    // Apply button animation
+    const applyButtons = document.querySelectorAll('.apply-btn');
+    applyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        button.textContent = "Application Sent!";
+        button.style.backgroundColor = "#10B981";
+        setTimeout(() => {
+          button.textContent = "Apply Now";
+          button.style.backgroundColor = "";
+        }, 2000);
+      });
+    });
+  </script>
 
 </body>
 </html>
