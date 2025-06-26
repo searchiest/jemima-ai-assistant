@@ -1,1 +1,568 @@
-<h1>terms.html</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms of Service | jemima.ai</title>
+
+  <!-- Icons & fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+  /* Reset and variables */
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --primary:#1a1a2e;--accent:#4f46e5;--light:#ffffff;--dark:#000000;
+    --gray:#4a4a4a;--light-gray:#f5f7fa;--transition:all 0.3s ease;
+  }
+
+  /* Base layout */
+  body{
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+    color:var(--dark);
+    line-height:1.6;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+  /* Header */
+  header{padding:25px 0;position:fixed;top:0;width:100%;z-index:1000;
+    background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+  .header-container{display:flex;justify-content:space-between;align-items:center;}
+  .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
+  .logo span{color:var(--accent);}
+  nav ul{display:flex;list-style:none;}
+  nav ul li{margin-left:30px;}
+  nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
+  nav ul li a:hover{color:var(--accent);}
+  nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+  nav ul li a:hover::after{width:100%;}
+  .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+
+  /* Main wrap */
+  .tos-main{padding-top:140px;padding-bottom:80px;}
+  .inner{max-width:1100px;margin:0 auto;}
+
+  /* Hero */
+  .tos-hero{text-align:center;padding:0px 0 0px;}
+  .tos-hero h1{font-size:3.2rem;font-weight:800;margin-bottom:15px;line-height:1.3;color:var(--dark);}
+  .tos-hero h1 span{color:var(--accent);}
+  .update-date{font-size:1.1rem;color:var(--gray);margin-bottom:25px;font-weight:500;}
+  .divider{height:4px;width:80px;background:linear-gradient(135deg,var(--accent),#818cf8);margin:20px auto;border-radius:2px;}
+
+  /* Content Container */
+  .tos-container{
+    background:#fff;
+    padding:60px 50px;
+    border-radius:25px;
+    margin:40px 0 60px;
+    box-shadow:0 25px 50px rgba(0,0,0,0.05);
+    position:relative;
+    overflow:hidden;
+  }
+  
+  .tos-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent), #818cf8);
+  }
+  
+  .intro-text {
+    font-size: 1.15rem;
+    color: var(--gray);
+    margin-bottom: 40px;
+    line-height: 1.8;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .terms-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .term-section {
+    padding-bottom: 35px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  
+  .term-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .term-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .term-title .number {
+    background: var(--accent);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  
+  .term-content {
+    font-size: 1.1rem;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+  
+  .term-content strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .term-content ul {
+    margin: 20px 0;
+    padding-left: 30px;
+  }
+  
+  .term-content li {
+    margin-bottom: 12px;
+    position: relative;
+  }
+  
+  .term-content li::before {
+    content: "•";
+    color: var(--accent);
+    font-size: 1.5rem;
+    position: absolute;
+    left: -20px;
+    top: -5px;
+  }
+  
+  .acceptance-section {
+    background: rgba(124,58,237,0.05);
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 40px;
+    text-align: center;
+    border: 1px solid rgba(124,58,237,0.15);
+  }
+  
+  .acceptance-section h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+  
+  .acceptance-section p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* Footer */
+  footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
+  .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
+  .footer-col h3{font-size:1.3rem;margin-bottom:20px;font-weight:600;}
+  .footer-links{list-style:none;}
+  .footer-links li{margin-bottom:12px;}
+  .footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);}
+  .footer-links a:hover{color:#fff;}
+  .social-links{display:flex;gap:15px;margin-top:20px;}
+  .social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
+  .social-links a:hover{background:var(--accent);transform:translateY(-3px);}
+  .copyright{max-width:1200px;margin:0 auto;text-align:center;padding-top:30px;border-top:1px solid rgba(255,255,255,0.1);color:#a0aec0;font-size:0.9rem;}
+
+  /* Responsive */
+  @media (max-width:768px){
+    .mobile-menu-btn{display:block;margin-left:auto;}
+    nav ul{display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,0.1);}
+    nav ul.show{display:flex;}
+    nav ul li{text-align:center;margin:10px 0;}
+
+    .tos-hero h1{font-size:2.5rem;}
+    
+    .tos-container {
+      padding: 40px 25px;
+    }
+    
+    .term-title {
+      font-size: 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .term-title .number {
+      width: 35px;
+      height: 35px;
+      font-size: 1.1rem;
+    }
+    
+    .term-content {
+      font-size: 1rem;
+    }
+    
+    .acceptance-section {
+      padding: 25px 20px;
+    }
+  }
+  </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container header-container">
+    <a href="/" class="logo">jemima<span>.ai</span></a>
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <nav>
+      <ul>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="tos-main">
+  <div class="container inner">
+
+    <!-- Hero -->
+    <section class="tos-hero">
+      <h1>Terms of <span>Service</span></h1>
+      <div class="update-date">Last updated: June 26, 2025</div>
+      <div class="divider"></div>
+    </section>
+
+    <!-- Content Container -->
+    <div class="tos-container">
+      <p class="intro-text">
+        These Terms of Service form a contract between Jemima.ai, 71-75 Shelton Street, London WC2H 9JQ (Agency) and every person or organisation that buys our AI automation services (Client). When you place an order, pay an invoice, or use any of our services you agree to these terms.
+      </p>
+      
+      <div class="terms-grid">
+        <!-- Term 1 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">1</span>
+            <span>Definitions</span>
+          </h2>
+          <div class="term-content">
+            <p><strong>AI Service</strong> – any software, automation, or model that the Agency builds, hosts, or manages for the Client.</p>
+            <p><strong>Subscription</strong> – the ongoing support plan that the Client buys each month.</p>
+          </div>
+        </div>
+        
+        <!-- Term 2 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">2</span>
+            <span>Services</span>
+          </h2>
+          <div class="term-content">
+            <p>The Agency designs, builds, and hosts AI automations that help the Client run business tasks such as sales, support, or marketing. Exact scope, price, and timetable for any project appear in quotes, proposals, or order forms issued by the Agency and accepted by the Client. The Agency may use third party tools and cloud providers.</p>
+          </div>
+        </div>
+        
+        <!-- Term 3 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">3</span>
+            <span>Ownership of Code and Data</span>
+          </h2>
+          <div class="term-content">
+            <p>The Client will own the source code, models, prompts, and other work results that the Agency creates once the Client has paid all fees in full.</p>
+            <p>The Agency may reuse general know how, templates, and skills in work for other clients.</p>
+            <p>Data that the Client supplies will remain the property of the Client.</p>
+          </div>
+        </div>
+        
+        <!-- Term 4 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">4</span>
+            <span>Hosting and Exit</span>
+          </h2>
+          <div class="term-content">
+            <p>The Agency will host each Client automation in a separate cloud account or container.</p>
+            <ul>
+              <li>The Client may ask for a full export of code, models, and data at any time.</li>
+              <li>The Agency will supply the export within ten working days of the request.</li>
+              <li>After export the Client may move the automation to another host.</li>
+              <li>The Agency may charge a reasonable fee for extra work linked to an exit.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Term 5 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">5</span>
+            <span>Subscription and Support</span>
+          </h2>
+          <div class="term-content">
+            <p>The Subscription covers bug fixes, security updates, and minor tweaks agreed in writing.</p>
+            <ul>
+              <li>The Agency will give support only while the Client holds an active Subscription.</li>
+              <li>If the Subscription ends the Agency will keep the automation online for thirty days. During that time the Client may export code and data. After thirty days the Agency may delete the automation.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Term 6 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">6</span>
+            <span>Fees and Payment</span>
+          </h2>
+          <div class="term-content">
+            <ul>
+              <li>Fees are in pounds sterling and exclude VAT.</li>
+              <li>Invoices are due fourteen days from the date on the invoice.</li>
+              <li>Late payment will carry interest at four per cent above the Bank of England base rate.</li>
+              <li>The Agency may suspend service if any sum is overdue by more than fourteen days.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Term 7 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">7</span>
+            <span>Acceptable Use</span>
+          </h2>
+          <div class="term-content">
+            <p>The Client must not use any AI Service to break the law, to harm people, or to send spam. The Client must not try to reverse engineer or copy parts that belong to the Agency.</p>
+          </div>
+        </div>
+        
+        <!-- Term 8 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">8</span>
+            <span>Confidentiality</span>
+          </h2>
+          <div class="term-content">
+            <p>Each side must keep secret any information marked secret or that a reasonable person would think private. This duty lasts five years after the end of the agreement.</p>
+          </div>
+        </div>
+        
+        <!-- Term 9 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">9</span>
+            <span>Data Protection</span>
+          </h2>
+          <div class="term-content">
+            <p>The parties will follow UK data protection law. Unless the parties agree otherwise in writing the Client acts as data controller and the Agency acts as data processor.</p>
+            <p>The Agency will:</p>
+            <ul>
+              <li>keep data safe with access controls, encryption at rest and in transit, and backups;</li>
+              <li>help the Client deal with any request from a data subject;</li>
+              <li>tell the Client within forty eight hours if the Agency becomes aware of a data breach that affects Client data.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Term 10 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">10</span>
+            <span>Warranty and Disclaimer</span>
+          </h2>
+          <div class="term-content">
+            <p>The Agency warrants that it will carry out work with reasonable care and skill. All other warranties, terms, and conditions are excluded as far as the law allows.</p>
+          </div>
+        </div>
+        
+        <!-- Term 11 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">11</span>
+            <span>Limitation of Liability</span>
+          </h2>
+          <div class="term-content">
+            <p>The total liability of the Agency for all claims in any twelve month period will not exceed the total fees paid by the Client to the Agency in that period.</p>
+            <p>The Agency will not be liable for loss of profit, revenue, business, data, or any indirect loss.</p>
+          </div>
+        </div>
+        
+        <!-- Term 12 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">12</span>
+            <span>Indemnity</span>
+          </h2>
+          <div class="term-content">
+            <p>The Client will indemnify the Agency against any claim, loss, or cost that arises from data, instructions, or materials supplied by the Client.</p>
+          </div>
+        </div>
+        
+        <!-- Term 13 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">13</span>
+            <span>Term and Termination</span>
+          </h2>
+          <div class="term-content">
+            <p>This agreement starts when the Client first orders a service and continues until ended by either side on thirty days written notice.</p>
+            <p>Either side may end the agreement at once in writing if the other side:</p>
+            <ul>
+              <li>is in material breach and fails to fix the breach within fourteen days of notice; or</li>
+              <li>becomes insolvent.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Term 14 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">14</span>
+            <span>Suspension</span>
+          </h2>
+          <div class="term-content">
+            <p>The Agency may suspend service if it is reasonable to protect the system, to comply with law, or if the Client is late in payment.</p>
+          </div>
+        </div>
+        
+        <!-- Term 15 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">15</span>
+            <span>Changes</span>
+          </h2>
+          <div class="term-content">
+            <p>The Agency may change these terms by giving thirty days notice. If the Client does not agree to a change the Client may end the agreement by giving notice before the change takes effect.</p>
+          </div>
+        </div>
+        
+        <!-- Term 16 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">16</span>
+            <span>Dispute Resolution</span>
+          </h2>
+          <div class="term-content">
+            <p>The parties will follow the steps below before court action:</p>
+            <ul>
+              <li>Meet and try to settle the dispute within fourteen days.</li>
+              <li>Refer the dispute to mediation at the Centre for Effective Dispute Resolution in London.</li>
+              <li>If mediation fails the dispute will be settled by final and binding arbitration under the Arbitration Act 1996 and the LCIA Rules. The seat of arbitration will be London. The language will be English.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Term 17 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">17</span>
+            <span>Governing Law and Jurisdiction</span>
+          </h2>
+          <div class="term-content">
+            <p>This agreement is governed by the law of England and Wales. Subject to the Dispute Resolution clause the courts of England and Wales have exclusive jurisdiction.</p>
+          </div>
+        </div>
+        
+        <!-- Term 18 -->
+        <div class="term-section">
+          <h2 class="term-title">
+            <span class="number">18</span>
+            <span>General</span>
+          </h2>
+          <div class="term-content">
+            <ul>
+              <li>Neither party may transfer this agreement without written consent, except that the Agency may assign the agreement as part of a sale of its business.</li>
+              <li>If any part of this agreement is found invalid the rest will still apply.</li>
+              <li>This agreement together with accepted order forms makes the whole contract between the parties and replaces all earlier discussions.</li>
+              <li>Any waiver must be in writing and signed by both parties.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Acceptance Section -->
+      <div class="acceptance-section">
+        <h3>Acceptance</h3>
+        <p>By using a service of the Agency or by paying any invoice that refers to these terms the Client confirms acceptance of this agreement.</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="#" class="logo" style="color:#fff;">jemima<span style="color:#818cf8;">.ai</span></a>
+        <p style="margin-top:20px;color:#a0aec0;line-height:1.7;">Leading business solutions for forward-thinking teams.</p>
+        <div class="social-links">
+          <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
+          <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Solutions</h3>
+        <ul class="footer-links">
+          <li><a href="ai-lead-generation.html">Lead Generation</a></li>
+          <li><a href="ai-sales-automation.html">Sales</a></li>
+          <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
+          <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
+          <li><a href="ai-automation.html">AI Automation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <ul class="footer-links">
+          <li><a href="ai-business-guides.html">AI Business Guides</a></li>
+          <li><a href="ai-workflows.html">Workflows</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+const mobileMenuBtn=document.querySelector('.mobile-menu-btn');
+const navMenu=document.querySelector('nav ul');
+mobileMenuBtn.addEventListener('click',() => navMenu.classList.toggle('show'));
+document.querySelectorAll('nav ul li a').forEach(link => link.addEventListener('click',() => navMenu.classList.remove('show')));
+</script>
+</body>
+</html>
