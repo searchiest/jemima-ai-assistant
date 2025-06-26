@@ -2,641 +2,359 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Careers | jemima.ai</title>
+
+  <!-- Icons & fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    :root{
-        --primary:#1a1a2e;
-        --accent:#4f46e5;
-        --light:#ffffff;
-        --dark:#000000;
-        --gray:#4a4a4a;
-        --light-gray:#f5f7fa;
-        --transition:all 0.3s ease;
-    }
+  /* Reset and variables */
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --primary:#1a1a2e;--accent:#4f46e5;--light:#ffffff;--dark:#000000;
+    --gray:#4a4a4a;--light-gray:#f5f7fa;--transition:all 0.3s ease;
+  }
 
-    body{
-        font-family:"Poppins",sans-serif;
-        background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
-        color:var(--dark);
-        line-height:1.6;
-        overflow-x:hidden;
-        min-height:100vh;
-    }
-    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+  /* Base layout */
+  body{
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+    color:var(--dark);
+    line-height:1.6;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
 
-    /* Header */
-    header{
-        padding:25px 0;
-        position:fixed;top:0;width:100%;z-index:1000;
-        background:rgba(255,255,255,0.95);
-        backdrop-filter:blur(10px);
-        box-shadow:0 2px 10px rgba(0,0,0,0.05);
-    }
-    .header-container{display:flex;justify-content:space-between;align-items:center;}
-    .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
-    .logo span{color:var(--accent);}
-    nav ul{display:flex;list-style:none;}
-    nav ul li{margin-left:30px;}
-    nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
-    nav ul li a:hover{color:var(--accent);}
-    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
-    nav ul li a:hover::after{width:100%;}
-    .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+  /* Header */
+  header{padding:25px 0;position:fixed;top:0;width:100%;z-index:1000;
+    background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+  .header-container{display:flex;justify-content:space-between;align-items:center;}
+  .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
+  .logo span{color:var(--accent);}
+  nav ul{display:flex;list-style:none;}
+  nav ul li{margin-left:30px;}
+  nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
+  nav ul li a:hover{color:var(--accent);}
+  nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+  nav ul li a:hover::after{width:100%;}
+  .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
 
-    /* Main Content */
-    .careers-main {
-        padding-top: 120px;
-        padding-bottom: 80px;
-    }
+  /* Main wrap */
+  .careers-main{padding-top:120px;padding-bottom:80px;}
+  .inner{max-width:1100px;margin:0 auto;}          /* width now matches About page */
 
-    /* Careers Hero */
-    .careers-hero {
-        text-align: center;
-        padding: 60px 0 40px;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-    .careers-hero h1 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 25px;
-        color: var(--dark);
-        line-height: 1.3;
-    }
-    .careers-hero h1 span {
-        position: relative;
-        color: var(--accent);
-    }
-    .careers-hero p {
-        font-size: 1.5rem;
-        color: var(--gray);
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.7;
-        font-weight: 400;
-    }
-    .divider {
-        height: 4px;
-        width: 80px;
-        background: linear-gradient(135deg, var(--accent), #818cf8);
-        margin: 30px auto;
-        border-radius: 2px;
-    }
+  /* Hero */
+  .careers-hero{text-align:center;padding:60px 0 40px;}
+  .careers-hero h1{font-size:3.5rem;font-weight:800;margin-bottom:25px;line-height:1.3;color:var(--dark);}
+  .careers-hero h1 span{color:var(--accent);}
+  .careers-hero p{font-size:1.5rem;color:var(--gray);max-width:700px;margin:0 auto;line-height:1.7;font-weight:400;}
+  .divider{height:4px;width:80px;background:linear-gradient(135deg,var(--accent),#818cf8);margin:30px auto;border-radius:2px;}
 
-    /* Why Join Section */
-    .why-join {
-        background: #fff;
-        padding: 60px 40px;
-        border-radius: 25px;
-        margin: 10px 0;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.05);
-    }
-    .why-join h2 {
-        font-size: 2.5rem;
-        margin-bottom: 40px;
-        color: var(--dark);
-        font-weight: 700;
-        text-align: center;
-        line-height: 1.3;
-    }
-    .benefits-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px;
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-    .benefit {
-        text-align: center;
-        padding: 30px;
-        transition: var(--transition);
-    }
-    .benefit:hover {
-        transform: translateY(-10px);
-    }
-    .benefit-icon {
-        width: 80px;
-        height: 80px;
-        background: rgba(124, 58, 237, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 25px;
-        color: var(--accent);
-        font-size: 32px;
-    }
-    .benefit h3 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        color: var(--dark);
-        line-height: 1.3;
-    }
-    .benefit p {
-        color: var(--gray);
-        line-height: 1.8;
-        font-size: 1.1rem;
-    }
+  /* Why-join */
+  .why-join{background:#fff;padding:60px 40px;border-radius:25px;margin:10px 0 60px;box-shadow:0 25px 50px rgba(0,0,0,0.05);}
+  .why-join h2{text-align:center;font-size:2.5rem;margin-bottom:40px;font-weight:700;}
+  .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;}
+  .benefit{text-align:center;padding:30px;transition:var(--transition);}
+  .benefit:hover{transform:translateY(-10px);}
+  .benefit-icon{width:80px;height:80px;background:rgba(124,58,237,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 25px;font-size:32px;color:var(--accent);}
+  .benefit h3{font-size:1.8rem;margin-bottom:15px;}
+  .benefit p{color:var(--gray);font-size:1.1rem;line-height:1.8;max-width:320px;margin:0 auto;}
 
-    /* Jobs Section */
-    .jobs-section {
-        margin: 80px 0;
-    }
-    .jobs-section h2 {
-        font-size: 2.5rem;
-        text-align: center;
-        margin-bottom: 50px;
-        color: var(--dark);
-    }
-    .jobs-section h2 span {
-        color: var(--accent);
-    }
-    .job-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: 40px;
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-    .job-card {
-        background: #fff;
-        border-radius: 25px;
-        padding: 40px;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition);
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-    .job-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-    }
-    .job-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 6px;
-        background: linear-gradient(90deg, var(--accent), #818cf8);
-        border-radius: 25px 25px 0 0;
-    }
-    .job-title {
-        font-size: 2rem;
-        margin-bottom: 10px;
-        color: var(--dark);
-    }
-    .job-meta {
-        display: flex;
-        gap: 25px;
-        margin-bottom: 25px;
-        color: var(--gray);
-    }
-    .job-meta span {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .job-card h3 {
-        font-size: 1.4rem;
-        margin: 30px 0 15px;
-        color: var(--dark);
-        position: relative;
-        padding-bottom: 10px;
-    }
-    .job-card h3::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 3px;
-        background: var(--accent);
-        border-radius: 2px;
-    }
-    .job-card ul {
-        padding-left: 20px;
-        margin-bottom: 25px;
-    }
-    .job-card li {
-        margin-bottom: 12px;
-        color: var(--gray);
-        line-height: 1.7;
-    }
-    .apply-btn {
-        display: inline-block;
-        background: var(--accent);
-        color: white;
-        padding: 14px 35px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        border-radius: 12px;
-        text-decoration: none;
-        transition: var(--transition);
-        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
-        margin-top: 15px;
-        border: none;
-        cursor: pointer;
-        font-family: "Poppins", sans-serif;
-    }
-    .apply-btn:hover {
-        background: #4338ca;
-        transform: translateY(-3px);
-        box-shadow: 0 15px 30px rgba(79, 70, 229, 0.3);
-    }
+  /* Jobs */
+  .jobs-section{margin:80px 0;}
+  .jobs-section h2{text-align:center;font-size:2.5rem;margin-bottom:50px;}
+  .jobs-section h2 span{color:var(--accent);}
 
-    /* Culture Section */
-    .culture-section {
-        background: linear-gradient(135deg, var(--accent), #818cf8);
-        padding: 80px 40px;
-        border-radius: 25px;
-        margin: 80px 0;
-        color: white;
-        text-align: center;
-    }
-    .culture-section h2 {
-        font-size: 2.8rem;
-        margin-bottom: 30px;
-    }
-    .culture-section p {
-        font-size: 1.3rem;
-        max-width: 800px;
-        margin: 0 auto 40px;
-        line-height: 1.8;
-        opacity: 0.9;
-    }
+  .job-list{display:flex;flex-direction:column;gap:30px;}
+  .job-card{background:#fff;border-radius:25px;padding:35px;box-shadow:0 20px 40px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.05);transition:var(--transition);position:relative;}
+  .job-card:hover{transform:translateY(-5px);box-shadow:0 25px 50px rgba(0,0,0,0.12);}
+  .job-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
+  .job-title{font-size:1.9rem;margin-bottom:20px;font-weight:600;color:var(--dark);}
+  .job-meta{display:flex;gap:25px;margin-bottom:20px;color:var(--gray);flex-wrap:wrap;}
+  .job-meta span{display:flex;align-items:center;gap:8px;white-space:nowrap;}
+  .job-card p{color:var(--gray);line-height:1.7;margin-bottom:20px;}
+  .job-tags{display:flex;flex-wrap:wrap;gap:10px;}
+  .job-tag{background:rgba(124,58,237,0.1);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:0.9rem;font-weight:500;}
+
+.job-card{
+  overflow:hidden;          /* << clip the gradient bar */
+}
+
+  /* Culture - FIXED SECTION */
+  .culture-section{background:linear-gradient(135deg,var(--accent),#818cf8);padding:80px 40px;border-radius:25px;margin:80px 0;color:#fff;text-align:center;}
+  .culture-section h2{font-size:2.8rem;margin-bottom:30px;}
+  .culture-section p{font-size:1.3rem;max-width:800px;margin:0 auto 40px;line-height:1.8;opacity:0.9;}
+  .culture-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr)); /* Ensures 3 columns on desktop */
+    gap:30px;
+    max-width:1100px; /* Matches container width */
+    margin:0 auto;
+  }
+  .culture-item{
+    background:rgba(255,255,255,0.1); 
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:25px 20px; /* Slightly reduced padding for better fit */
+    border:1px solid rgba(255,255,255,0.2);
+    transition:var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .culture-item:hover{transform:translateY(-5px);}
+  .culture-item h3{
+    font-size:1.5rem;
+    margin-bottom:15px;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .culture-item p{font-size:1.1rem; margin: 0;}
+
+  /* Footer */
+  footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
+  .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
+  .footer-col h3{font-size:1.3rem;margin-bottom:20px;font-weight:600;}
+  .footer-links{list-style:none;}
+  .footer-links li{margin-bottom:12px;}
+  .footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);}
+  .footer-links a:hover{color:#fff;}
+  .social-links{display:flex;gap:15px;margin-top:20px;}
+  .social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
+  .social-links a:hover{background:var(--accent);transform:translateY(-3px);}
+  .copyright{max-width:1200px;margin:0 auto;text-align:center;padding-top:30px;border-top:1px solid rgba(255,255,255,0.1);color:#a0aec0;font-size:0.9rem;}
+
+  /* Responsive */
+  @media (max-width:768px){
+    .mobile-menu-btn{display:block;margin-left:auto;}
+    nav ul{display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,0.1);}
+    nav ul.show{display:flex;}
+    nav ul li{text-align:center;margin:10px 0;}
+
+    .careers-hero h1{font-size:2.5rem;}
+    .careers-hero p{font-size:1.3rem;}
+
+    .job-card{padding:25px;}
+    .job-meta{flex-direction:column;gap:10px;}
+    .job-title{font-size:1.7rem;}
+
+    .culture-section h2{font-size:2.2rem;}
+    .culture-item h3{min-height:auto;}
+
+    .benefit p{max-width:100%;}
+    
+    /* Culture grid adjustments for mobile */
     .culture-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        max-width: 1000px;
-        margin: 0 auto;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+  }
+
+  /* Tablet size adjustment for culture section */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .culture-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)); /* Maintain 3 columns */
+      gap: 20px; /* Reduce gap for tablet */
     }
     .culture-item {
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 30px;
-        border: 1px solid rgba(255,255,255,0.2);
+      padding: 20px 15px; /* Adjust padding for tablet */
     }
     .culture-item h3 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+      font-size: 1.4rem; /* Slightly smaller heading */
+      min-height: 50px; /* Reduce min-height */
     }
-    .culture-item p {
-        font-size: 1.1rem;
-        margin-bottom: 0;
-    }
-
-    /* Footer */
-    footer{
-        background:var(--dark);
-        padding:70px 0 30px;
-        color:#fff;
-    }
-    .footer-grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-        gap:40px;
-        margin-bottom:50px;
-    }
-    .footer-col h3{
-        font-size:1.3rem;
-        margin-bottom:20px;
-        color:#fff;
-        font-weight:600;
-    }
-    .footer-links{
-        list-style:none;
-    }
-    .footer-links li{
-        margin-bottom:12px;
-    }
-    .footer-links a{
-        color:#a0aec0;
-        text-decoration:none;
-        transition:var(--transition);
-        font-weight:400;
-    }
-    .footer-links a:hover{
-        color:#fff;
-    }
-    .social-links{
-        display:flex;
-        gap:15px;
-        margin-top:20px;
-    }
-    .social-links a{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        width:40px;
-        height:40px;
-        border-radius:50%;
-        background:rgba(255,255,255,0.1);
-        color:#fff;
-        transition:var(--transition);
-    }
-    .social-links a:hover{
-        background:var(--accent);
-        transform:translateY(-3px);
-    }
-    .copyright{
-        text-align:center;
-        padding-top:30px;
-        margin-top:30px;
-        border-top:1px solid rgba(255,255,255,0.1);
-        color:#a0aec0;
-        font-size:0.9rem;
-        max-width:1200px;
-        margin:0 auto;
-    }
-
-    /* Animations */
-    @keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2);opacity:0.7;}}
-
-    /* Responsive */
-    @media (max-width:768px){
-        .mobile-menu-btn{
-            display:block;
-            margin-left:auto;
-        }
-
-        nav ul{
-            display:none;
-            flex-direction:column;
-            position:absolute;
-            top:80px;
-            left:0;
-            width:100%;
-            background:#fff;
-            padding:20px 0;
-            box-shadow:0 10px 15px rgba(0,0,0,0.1);
-        }
-        nav ul.show{display:flex;}
-        nav ul li{
-            text-align:center;
-            margin:10px 0;
-        }
-
-        .careers-hero h1{font-size:2.5rem;}
-        .careers-hero p { font-size: 1.3rem; }
-        
-        .job-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .job-card {
-            padding: 30px;
-        }
-        
-        .job-meta {
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .culture-section h2 {
-            font-size: 2.2rem;
-        }
-    }
+  }
   </style>
 </head>
+
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container header-container">
-      <a href="#" class="logo">jemima<span>.ai</span></a>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
+
+<!-- Header -->
+<header>
+  <div class="container header-container">
+    <a href="/" class="logo">jemima<span>.ai</span></a>
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <nav>
+      <ul>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="careers-main">
+  <div class="container inner">
+
+    <!-- Hero -->
+    <section class="careers-hero">
+      <h1>Shape the Future of <span>AI</span> With Us</h1>
+      <p>Join our mission to build AI solutions that augment human potential and drive meaningful innovation</p>
+      <div class="divider"></div>
+    </section>
+
+    <!-- Why join -->
+    <section class="why-join">
+      <h2>Why Join Jemima.ai?</h2>
+      <div class="benefits-grid">
+        <div class="benefit">
+          <div class="benefit-icon"><i class="fas fa-lightbulb"></i></div>
+          <h3>Cutting-Edge Projects</h3>
+          <p>Work on innovative AI solutions that push boundaries and solve real-world challenges</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon"><i class="fas fa-users"></i></div>
+          <h3>Collaborative Culture</h3>
+          <p>Join a diverse team that values teamwork, knowledge sharing, and mutual growth</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Growth Path</h3>
+          <p>Advance your career with mentoring, learning resources, and challenging projects</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jobs -->
+    <section class="jobs-section">
+      <h2>Current <span>Openings</span></h2>
+
+      <div class="job-list">
+        <!-- Senior AI Developer -->
+        <div class="job-card">
+          <div class="job-title">Senior AI Developer</div>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+            <span><i class="fas fa-briefcase"></i> Full-time</span>
+            <span><i class="fas fa-dollar-sign"></i> 140 000 – 180 000 USD</span>
+          </div>
+          <p>Lead advanced AI systems and guide junior team members to create transformative solutions.</p>
+          <div class="job-tags"><span class="job-tag">Python</span><span class="job-tag">TensorFlow</span><span class="job-tag">NLP</span><span class="job-tag">MLOps</span></div>
+        </div>
+
+        <!-- Junior AI Developer -->
+        <div class="job-card">
+          <div class="job-title">Junior AI Developer</div>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+            <span><i class="fas fa-briefcase"></i> Full-time</span>
+            <span><i class="fas fa-dollar-sign"></i> 90 000 – 120 000 USD</span>
+          </div>
+          <p>Start your AI journey with support from experts while working on meaningful projects.</p>
+          <div class="job-tags"><span class="job-tag">Python</span><span class="job-tag">Machine Learning</span><span class="job-tag">Data</span><span class="job-tag">PyTorch</span></div>
+        </div>
+
+        <!-- Junior N8N Automation Engineer -->
+        <div class="job-card">
+          <div class="job-title">Junior N8N Automation Engineer</div>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+            <span><i class="fas fa-briefcase"></i> Full-time</span>
+            <span><i class="fas fa-dollar-sign"></i> 75 000 – 95 000 USD</span>
+          </div>
+          <p>Build and improve N8N workflows that power our products and internal tools.</p>
+          <div class="job-tags"><span class="job-tag">N8N</span><span class="job-tag">Automation</span><span class="job-tag">APIs</span><span class="job-tag">JavaScript</span></div>
+        </div>
+
+        <!-- Junior Workflow Developer -->
+        <div class="job-card">
+          <div class="job-title">Junior Workflow Developer</div>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+            <span><i class="fas fa-briefcase"></i> Full-time</span>
+            <span><i class="fas fa-dollar-sign"></i> 70 000 – 90 000 USD</span>
+          </div>
+          <p>Create and maintain business workflows that connect our AI services.</p>
+          <div class="job-tags"><span class="job-tag">N8N</span><span class="job-tag">APIs</span><span class="job-tag">Data Flow</span><span class="job-tag">Automation</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Culture - FIXED SECTION -->
+    <section class="culture-section">
+      <h2>Our Culture</h2>
+      <p>Great tech starts with great people. We encourage fresh ideas, teamwork, and equal voices.</p>
+      <div class="culture-grid">
+        <div class="culture-item">
+          <h3>Impact-Driven</h3>
+          <p>Projects that solve real problems</p>
+        </div>
+        <div class="culture-item">
+          <h3>Work-Life Balance</h3>
+          <p>Flexible schedules and fair leave</p>
+        </div>
+        <div class="culture-item">
+          <h3>Inclusive</h3>
+          <p>Diverse backgrounds and open minds</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="#" class="logo" style="color:#fff;">jemima<span style="color:#818cf8;">.ai</span></a>
+        <p style="margin-top:20px;color:#a0aec0;line-height:1.7;">Leading business solutions for forward-thinking teams.</p>
+        <div class="social-links">
+          <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
+          <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Solutions</h3>
+        <ul class="footer-links">
+          <li><a href="ai-lead-generation.html">Lead Generation</a></li>
+          <li><a href="ai-sales-automation.html">Sales</a></li>
+          <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
+          <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
+          <li><a href="ai-automation.html">AI Automation</a></li>
         </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="careers-main">
-    <div class="container">
-      <!-- Careers Hero -->
-      <section class="careers-hero">
-        <h1>Shape the Future of <span>AI</span> With Us</h1>
-        <p>Join our mission to build AI solutions that augment human potential and drive meaningful innovation</p>
-        <div class="divider"></div>
-      </section>
-      
-      <!-- Why Join Section -->
-      <section class="why-join">
-        <h2>Why Join Jemima.ai?</h2>
-        <div class="benefits-grid">
-          <div class="benefit">
-            <div class="benefit-icon">
-              <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3>Cutting-Edge Projects</h3>
-            <p>Work on innovative AI solutions that push boundaries and solve real-world challenges using the latest technologies.</p>
-          </div>
-          
-          <div class="benefit">
-            <div class="benefit-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3>Collaborative Culture</h3>
-            <p>Join a diverse team of experts who value collaboration, knowledge sharing, and mutual growth.</p>
-          </div>
-          
-          <div class="benefit">
-            <div class="benefit-icon">
-              <i class="fas fa-chart-line"></i>
-            </div>
-            <h3>Growth Opportunities</h3>
-            <p>Accelerate your career with mentorship programs, learning resources, and challenging projects.</p>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Jobs Section -->
-      <section class="jobs-section">
-        <h2>Current <span>Openings</span></h2>
-        <div class="job-grid">
-          <!-- Senior AI Developer -->
-          <div class="job-card">
-            <h2 class="job-title">Senior AI Developer</h2>
-            <div class="job-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-dollar-sign"></i> $140k - $180k</span>
-            </div>
-            <p>Lead the development of advanced AI systems and mentor junior team members in creating transformative solutions.</p>
-            
-            <h3>Responsibilities</h3>
-            <ul>
-              <li>Design and implement scalable AI architectures</li>
-              <li>Develop and optimize machine learning models</li>
-              <li>Lead technical decision-making for AI projects</li>
-              <li>Mentor junior developers and conduct code reviews</li>
-              <li>Collaborate with cross-functional teams to deliver AI solutions</li>
-            </ul>
-            
-            <h3>Requirements</h3>
-            <ul>
-              <li>5+ years experience in AI/ML development</li>
-              <li>Expertise in Python and frameworks like TensorFlow/PyTorch</li>
-              <li>Proven experience with NLP, computer vision, or reinforcement learning</li>
-              <li>Strong understanding of cloud platforms (AWS, GCP, or Azure)</li>
-              <li>Experience with MLOps and deployment pipelines</li>
-              <li>Excellent problem-solving and leadership skills</li>
-            </ul>
-            
-            <button class="apply-btn">Apply Now</button>
-          </div>
-          
-          <!-- Junior AI Developer -->
-          <div class="job-card">
-            <h2 class="job-title">Junior AI Developer</h2>
-            <div class="job-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-              <span><i class="fas fa-briefcase"></i> Full-time</span>
-              <span><i class="fas fa-dollar-sign"></i> $90k - $120k</span>
-            </div>
-            <p>Kickstart your AI career by working alongside industry experts on meaningful projects that make a difference.</p>
-            
-            <h3>Responsibilities</h3>
-            <ul>
-              <li>Assist in developing and testing AI models</li>
-              <li>Implement data preprocessing pipelines</li>
-              <li>Contribute to documentation and code quality</li>
-              <li>Participate in team meetings and knowledge sharing</li>
-              <li>Support deployment and monitoring of AI solutions</li>
-            </ul>
-            
-            <h3>Requirements</h3>
-            <ul>
-              <li>Bachelor's degree in Computer Science or related field</li>
-              <li>1+ years experience with Python programming</li>
-              <li>Understanding of machine learning fundamentals</li>
-              <li>Familiarity with ML frameworks (TensorFlow, PyTorch, or scikit-learn)</li>
-              <li>Strong desire to learn and grow in AI development</li>
-              <li>Excellent communication and teamwork abilities</li>
-            </ul>
-            
-            <button class="apply-btn">Apply Now</button>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Culture Section -->
-      <section class="culture-section">
-        <h2>Our Culture</h2>
-        <p>At Jemima.ai, we believe that great technology starts with great people. We foster an environment where innovation thrives and every voice matters.</p>
-        
-        <div class="culture-grid">
-          <div class="culture-item">
-            <h3>Impact-Driven</h3>
-            <p>Work on projects that solve real problems</p>
-          </div>
-          
-          <div class="culture-item">
-            <h3>Work-Life Balance</h3>
-            <p>Flexible schedules and unlimited PTO</p>
-          </div>
-                   
-          <div class="culture-item">
-            <h3>Inclusive Environment</h3>
-            <p>Diversity and inclusion at our core</p>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-  
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="#" class="logo" style="color: white;">jemima<span style="color: #818cf8;">.ai</span></a>
-          <p style="color: #a0aec0; margin-top: 20px; line-height: 1.7;">Leading business solutions for forward-thinking businesses.</p>
-          <div class="social-links">
-            <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
-            <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h3>Solutions</h3>
-          <ul class="footer-links">
-            <li><a href="ai-lead-generation.html">Lead Generation</a></li>
-            <li><a href="ai-sales-automation.html">Sales</a></li>
-            <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
-            <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
-            <li><a href="ai-automation.html">AI Automation</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Company</h3>
-          <ul class="footer-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="careers.html">Careers</a></li>
-            <li><a href="faq.html">FAQs</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-            <li><a href="privacy.html">Privacy</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Resources</h3>
-          <ul class="footer-links">
-            <li><a href="ai-business-guides.html">AI Business Guides</a></li>
-            <li><a href="ai-workflows.html">Workflows</a></li>
-          </ul>
-        </div>
       </div>
-      <div class="copyright">
-        <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <ul class="footer-links">
+          <li><a href="ai-business-guides.html">AI Business Guides</a></li>
+          <li><a href="ai-workflows.html">Workflows</a></li>
+        </ul>
       </div>
     </div>
-  </footer>
+    <div class="copyright">
+      <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('nav ul');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
-    
-    // Close menu when clicking on links
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('show');
-      });
-    });
-    
-    // Apply button animation
-    const applyButtons = document.querySelectorAll('.apply-btn');
-    applyButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        button.textContent = "Application Sent!";
-        button.style.backgroundColor = "#10B981";
-        setTimeout(() => {
-          button.textContent = "Apply Now";
-          button.style.backgroundColor = "";
-        }, 2000);
-      });
-    });
-  </script>
+<!-- Scripts -->
+<script>
+const mobileMenuBtn=document.querySelector('.mobile-menu-btn');
+const navMenu=document.querySelector('nav ul');
+mobileMenuBtn.addEventListener('click',() => navMenu.classList.toggle('show'));
+document.querySelectorAll('nav ul li a').forEach(link => link.addEventListener('click',() => navMenu.classList.remove('show')));
+</script>
 </body>
 </html>
