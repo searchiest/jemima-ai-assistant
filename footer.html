@@ -48,21 +48,3 @@
       </div>
     </div>
   </footer>
-
-  <script>
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('nav ul');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
-    
-    // Close menu when clicking on links
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('show');
-      });
-    });
-   </script>
