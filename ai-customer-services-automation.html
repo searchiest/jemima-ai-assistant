@@ -1,1 +1,297 @@
-<h1>ai-customer-services-automation.html</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta & SEO -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Customer Service Automation | jemima.ai</title>
+  <meta name="description" content="24/7 support bots that resolve routine questions and keep clients delighted while you focus on real work.">
+  <link rel="canonical" href="https://jemima.ai/ai-customer-services-automation.html">
+  <meta property="og:title" content="AI Customer Service Automation | jemima.ai">
+  <meta property="og:description" content="Done-for-you workflows that slash response times and boost satisfaction.">
+  <meta property="og:image" content="og-image.jpg">
+  <meta name="author" content="jemima.ai">
+
+  <!-- Icons & Fonts -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Inline style (matches existing site) -->
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--accent:#4f46e5;--dark:#000;--gray:#4a4a4a;--transition:.3s ease;}
+    body{
+      font-family:"Poppins",sans-serif;
+      background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+      color:var(--dark);line-height:1.6;min-height:100vh;
+    }
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+    /* Header */
+    header{padding:25px 0;position:fixed;top:0;width:100%;z-index:1000;
+      background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,.05);}
+    .header-container{display:flex;justify-content:space-between;align-items:center;}
+    .logo{font-size:1.8rem;font-weight:700;text-decoration:none;color:var(--dark);}
+    .logo span{color:var(--accent);}
+    nav ul{display:flex;list-style:none;}
+    nav ul li{margin-left:30px;}
+    nav ul li a{font-weight:500;text-decoration:none;color:var(--dark);position:relative;}
+    nav ul li a:hover{color:var(--accent);}
+    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;
+      background:var(--accent);transition:var(--transition);}
+    nav ul li a:hover::after{width:100%;}
+    .mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;}
+
+    /* Hero */
+    .hero{padding:140px 0 30px;text-align:center;}
+    .hero h1{font-size:3.5rem;font-weight:800;letter-spacing:-1px;}
+    .hero h1 span{position:relative;}
+    .hero h1 span::after{content:"";position:absolute;bottom:6px;left:0;width:100%;height:8px;
+      background:rgba(159,122,234,.3);z-index:-1;}
+    .hero p{max-width:700px;margin:20px auto;font-size:1.25rem;color:var(--gray);}
+
+    /* Wrapper */
+    .service-wrapper{
+      background:#fff;border-radius:30px;padding:50px;margin:50px auto;max-width:1000px;position:relative;
+      box-shadow:0 25px 50px rgba(0,0,0,.08);
+    }
+    .service-wrapper::before{
+      content:"";position:absolute;top:0;left:0;width:100%;height:6px;
+      background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:30px 30px 0 0;
+    }
+
+    /* Sections */
+    .section{margin-bottom:60px;}
+    .section h2{font-size:2rem;margin-bottom:20px;position:relative;padding-bottom:12px;}
+    .section h2::after{content:"";position:absolute;bottom:0;left:0;width:60px;height:4px;background:var(--accent);}
+    .section p{font-size:1.05rem;color:var(--gray);margin-bottom:18px;}
+
+    /* Grid cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:25px;}
+    .card{
+      background:#f7f7ff;border:1px solid rgba(0,0,0,.04);border-radius:20px;padding:25px;min-height:230px;
+      box-shadow:0 10px 25px rgba(0,0,0,.05);transition:var(--transition);
+    }
+    .card:hover{transform:translateY(-6px);}
+    .card h3{font-size:1.2rem;margin-bottom:10px;color:var(--accent);}
+    .card p{font-size:.95rem;color:var(--gray);}
+
+    /* Steps */
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;}
+    .step{background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:20px;padding:30px;text-align:center;
+      box-shadow:0 10px 25px rgba(0,0,0,.05);}
+    .step-number{
+      width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;display:flex;
+      align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;margin:0 auto 15px;}
+    .step h4{font-size:1.2rem;margin-bottom:10px;}
+
+    /* CTA */
+    .cta{background:linear-gradient(135deg,var(--accent),#818cf8);color:#fff;text-align:center;
+      padding:50px 25px;border-radius:25px;margin-top:40px;}
+    .cta h2{font-size:2rem;margin-bottom:15px;}
+    .cta a{display:inline-block;background:#fff;color:var(--accent);padding:14px 36px;border-radius:12px;
+      font-weight:600;text-decoration:none;transition:var(--transition);}
+    .cta a:hover{transform:translateY(-4px);}
+
+    /* Footer (matches about.html) */
+    footer{background:#000;padding:70px 0 30px;color:#fff;margin-top:60px;}
+    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px;}
+    .footer-col h3{margin-bottom:15px;font-size:1.2rem;}
+    .footer-links{list-style:none;}
+    .footer-links li{margin-bottom:10px;}
+    .footer-links a{color:#a0aec0;text-decoration:none;}
+    .footer-links a:hover{color:#fff;}
+    .social-links{display:flex;gap:15px;margin-top:15px;color:#fff;}
+    .social-links a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);
+      display:flex;align-items:center;justify-content:center;}
+
+    /* Responsive */
+    @media(max-width:768px){
+      .mobile-menu-btn{display:block;margin-left:auto;}
+      nav ul{display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;
+        background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,.1);}
+      nav ul.show{display:flex;}
+      nav ul li{text-align:center;margin:10px 0;}
+      .hero h1{font-size:2.8rem;}
+      .service-wrapper{padding:30px 20px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="/" class="logo">jemima<span>.ai</span></a>
+      <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>AI <span>Customer&nbsp;Service</span> Automation</h1>
+      <p>Resolve routine questions 24/7, keep clients happy, and reclaim your evenings.</p>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <div class="container">
+    <div class="service-wrapper">
+
+      <!-- Overview -->
+      <div class="section">
+        <h2>Why automate support?</h2>
+        <p>Small businesses live or die by referrals and repeat orders, yet owners rarely have time to answer every “just checking…” email. We deploy &amp; maintain AI agents that clear the queue, handle common issues, and escalate only when a human touch really matters.</p>
+      </div>
+
+      <!-- Functionality -->
+      <div class="section">
+        <h2>What our support bots can do</h2>
+        <div class="grid">
+          <div class="card">
+            <h3><i class="fas fa-inbox"></i> Inbox Triage</h3>
+            <p>Reads incoming emails, labels urgency, drafts replies, and files tasks to the right person.</p>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-comments"></i> Live-Chat Concierge</h3>
+            <p>Pops up on your site, answers FAQs, and books calls when human help is needed.</p>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-ticket-alt"></i> Ticket Deflection</h3>
+            <p>Pulls help-centre articles and past answers to solve issues before they reach the queue.</p>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-language"></i> Multilingual Replies</h3>
+            <p>Understands and responds in 100+ languages – no outsourcing required.</p>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-sync"></i> CRM &amp; Order Sync</h3>
+            <p>Looks up orders, appointments, or policy numbers and includes them in the answer automatically.</p>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-chart-line"></i> Sentiment Alerts</h3>
+            <p>Flags unhappy customers early so you can save the relationship.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits by business type -->
+      <div class="section">
+        <h2>Owner-level wins</h2>
+        <p>See how hands-off support boosts loyalty across different service niches:</p>
+        <div class="grid">
+          <div class="card"><h3>Solo Law Practice</h3><p>Client-portal chatbot shares document status updates, cutting “just checking” calls.</p></div>
+          <div class="card"><h3>Independent Insurance Agency</h3><p>Policy-lookup bot emails renewal options and answers coverage questions instantly.</p></div>
+          <div class="card"><h3>Boutique Accounting Firm</h3><p>Quarter-end reminder flow chases missing receipts so you bill on time.</p></div>
+          <div class="card"><h3>Dentist / Health Clinic</h3><p>SMS bot confirms appointments, sends prep instructions, and frees reception.</p></div>
+          <div class="card"><h3>Residential Realtor</h3><p>Move-in concierge answers utility transfer queries, driving rave reviews.</p></div>
+          <div class="card"><h3>Home Remodeller</h3><p>Project-status bot shares photo updates, reducing site-visit interruptions.</p></div>
+          <div class="card"><h3>Wellness Coach</h3><p>Habit-tracking assistant nudges clients daily and escalates only when stuck.</p></div>
+          <div class="card"><h3>Specialty Retailer</h3><p>Order-lookup bot handles “where’s my parcel?” so staff can sell.</p></div>
+          <div class="card"><h3>Property Manager</h3><p>Maintenance bot triages tenant issues, schedules contractors, and logs updates in the portal.</p></div>
+          <div class="card"><h3>Travel Planner</h3><p>Itinerary bot answers flight change requests while you sleep.</p></div>
+        </div>
+      </div>
+
+      <!-- Process -->
+      <div class="section">
+        <h2>How it works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Discover</h4>
+            <p>We list your FAQ themes, channels, and escalation rules in a short call.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>Deploy</h4>
+            <p>Pre-built modules plug into email, chat, SMS, or help-desk software.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Delight</h4>
+            <p>Our team monitors accuracy and tunes replies so customers stay loyal.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta">
+        <h2>Ready to halve your support workload?</h2>
+        <a href="contact.html">Book a discovery call</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo" style="color:#fff;">jemima<span style="color:#818cf8;">.ai</span></a>
+          <p style="color:#a0aec0;margin-top:20px;line-height:1.7;">Leading business solutions for forward-thinking teams.</p>
+          <div class="social-links">
+            <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-slack"></i></a>
+            <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Solutions</h3>
+          <ul class="footer-links">
+            <li><a href="ai-lead-generation.html">Lead Generation</a></li>
+            <li><a href="ai-sales-automation.html">Sales</a></li>
+            <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
+            <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
+            <li><a href="ai-automation.html">AI Automation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Resources</h3>
+          <ul class="footer-links">
+            <li><a href="ai-business-guides.html">AI Business Guides</a></li>
+            <li><a href="ai-workflows.html">Workflows</a></li>
+          </ul>
+        </div>
+      </div>
+      <p style="text-align:center;color:#a0aec0;font-size:.9rem;">© 2025 jemima.ai. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Mobile menu -->
+  <script>
+    const btn=document.querySelector('.mobile-menu-btn');
+    const nav=document.querySelector('nav ul');
+    btn.addEventListener('click',()=>nav.classList.toggle('show'));
+    document.querySelectorAll('nav ul li a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('show')));
+  </script>
+</body>
+</html>
