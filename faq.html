@@ -44,21 +44,30 @@
   <!-- Styles -->
   <style>
     /* Shared site styles */
-    *{margin:0;padding:0;box-sizing:border-box;overflow: hidden;}
+    *{margin:0;padding:0;box-sizing:border-box;}               /* ← CHANGED (overflow removed) */
+
     :root{
         --accent:#4f46e5;
         --dark:#000;
         --gray:#4a4a4a;
         --transition:all 0.3s ease;
     }
+
     body{
         font-family:"Poppins",sans-serif;
         background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
         color:var(--dark);
         line-height:1.6;
         min-height:100vh;
+        overflow-x:hidden;                                      /* ← CHANGED (keeps horizontal hidden, allows vertical) */
     }
-    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+    .container{
+        width:100%;
+        max-width:1200px;
+        margin:0 auto;
+        padding:0 20px;                                         /* ← CHANGED (overflow removed) */
+    }
 
     /* Header */
     header{
@@ -176,7 +185,7 @@
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- FAQ (all sections and details unchanged) -->
   <div class="container">
     <div class="faq-wrapper">
 
@@ -189,7 +198,7 @@
         <details><summary>Which business functions do you cover?</summary><p>Lead generation, sales follow-ups, customer support, admin data entry, and simple marketing tasks.</p></details>
         <details><summary>How is success measured?</summary><p>Success means the automation runs without technical faults and meets the agreed uptime, accuracy, and speed targets. We do not promise a set number of meetings or sales.</p></details>
         <details><summary>Do you need my developers to help?</summary><p>No. The service is built for teams without in-house developers. We handle access set-up, integration, and maintenance for you.</p></details>
-        <details><summary>Do you replace my sales or support staff?</summary><p>No. Automations remove repeat tasks so staff can focus on higher value work.</p></details>
+        <details><summary>Do you replace my sales or support staff?</summary><p>No. Automations remove repeat tasks so staff can focus on higher-value work.</p></details>
         <details><summary>Can I see examples before I sign?</summary><p>Yes. We show working demos during the scoping call.</p></details>
         <details><summary>Is the service one size fits all?</summary><p>You choose from a library of proven workflows and we adjust them to your tools.</p></details>
         <details><summary>What industries do you serve most?</summary><p>Agencies, consultancies, IT service firms, and online education providers.</p></details>
@@ -287,7 +296,7 @@
         <details><summary>How do I report a bug or issue?</summary><p>Email jemima@jemima.ai with a short description and, if possible, a screenshot.</p></details>
         <details><summary>Will you tell me when a workflow is updated?</summary><p>Yes. If a change affects how you use the workflow we send a brief email explaining what changed and why.</p></details>
         <details><summary>Do I need special training to use the service?</summary><p>No. The automations run in the background. A short hand-over call and a two-page checklist cover everything you need.</p></details>
-        <details><summary>Can I request a quick screen-share if I am stuck?</summary><p>Yes. We can book a fifteen minute video call to walk through the issue at no extra cost.</p></details>
+        <details><summary>Can I request a quick screen-share if I am stuck?</summary><p>Yes. We can book a fifteen-minute video call to walk through the issue at no extra cost.</p></details>
         <details><summary>What counts as an urgent issue?</summary><p>Any error that stops leads, emails, or bookings from flowing is treated as urgent and handled first.</p></details>
         <details><summary>What details should I include when I ask for support?</summary><p>State the workflow name, what you expected, what happened, and the time it occurred. Attach a screenshot or error message if you have one. This helps us fix the issue faster.</p></details>
       </div>
@@ -366,3 +375,4 @@
   </script>
 </body>
 </html>
+
