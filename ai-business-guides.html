@@ -1,1 +1,319 @@
-<h1>ai-business-guides.html</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic setup -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Business Guides | jemima.ai</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Browse our AI-Business-Guide library and discover where automation delivers the biggest wins for your service business.">
+  <link rel="canonical" href="https://jemima.ai/ai-business-guides.html">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="jemima.ai">
+
+  <!-- Open-Graph / Twitter (minimal) -->
+  <meta property="og:title"       content="AI Business Guides | jemima.ai">
+  <meta property="og:description" content="See the moments where AI creates value—then let Jemima AI build and run the automation for you.">
+  <meta property="og:image"       content="og-image.jpg">
+  <meta name="twitter:card"       content="summary_large_image">
+
+  <!-- Icons & fonts -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <style>
+    /* --- Core site styles (same palette used across the site) --- */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+        --accent:#4f46e5;
+        --accent-light:#818cf8;
+        --dark:#000000;
+        --gray:#4a4a4a;
+        --transition:all .3s ease;
+    }
+    body{
+        font-family:"Poppins",sans-serif;
+        background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+        color:var(--dark);
+        line-height:1.6;
+        min-height:100vh;
+    }
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+    /* Header */
+    header{
+      padding:25px 0;
+      position:fixed;top:0;width:100%;z-index:1000;
+      background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+    .header-container{display:flex;justify-content:space-between;align-items:center;}
+    .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;}
+    .logo span{color:var(--accent);}
+    nav ul{display:flex;list-style:none;}
+    nav ul li{margin-left:30px;}
+    nav ul li a{font-weight:500;color:var(--dark);text-decoration:none;position:relative;transition:var(--transition);}
+    nav ul li a:hover{color:var(--accent);}
+    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+    nav ul li a:hover::after{width:100%;}
+    .mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;}
+
+    /* Hero (matches /solutions.html look-and-feel) */
+    .hero{padding:140px 0 0;text-align:center;}
+    .hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
+    .hero h1{font-size:3.5rem;font-weight:800;letter-spacing:-1px;margin-bottom:30px;}
+    .hero h1 span{position:relative;}
+    .hero h1 span::after{
+      content:"";position:absolute;left:0;bottom:6px;width:100%;height:8px;
+      background:rgba(159,122,234,0.3);z-index:-1;
+    }
+    .hero .description{font-size:1.25rem;color:var(--gray);}
+    @media(max-width:768px){.hero h1{font-size:2.7rem;}}
+
+    /* Guide list wrapper */
+    .guide-wrapper{
+      background:#fff;border-radius:30px;padding:50px;margin:50px auto;
+      box-shadow:0 25px 50px rgba(0,0,0,.08);max-width:1000px;position:relative;
+    }
+    .guide-wrapper::before{
+      content:"";position:absolute;top:0;left:0;width:100%;height:6px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:30px 30px 0 0;
+    }
+
+    /* Table */
+    table{width:100%;border-collapse:collapse;font-size:.95rem;}
+    thead th{background:var(--accent);color:#fff;padding:14px 12px;text-align:left;font-weight:600;}
+    tbody tr:nth-child(even){background:#f9f9ff;}
+    tbody td{padding:12px 12px;vertical-align:top;}
+    tbody tr:hover{background:#f1f1ff;}
+    tbody td:first-child{font-weight:600;}
+    @media(max-width:768px){
+      table,thead,tbody,tr,th,td{display:block;}
+      thead{display:none;}
+      tbody tr{margin-bottom:18px;border:1px solid rgba(0,0,0,.05);border-radius:12px;overflow:hidden;}
+      tbody td{padding:10px 14px;}
+      tbody td::before{
+        content:attr(data-label);
+        display:block;
+        font-weight:600;
+        margin-bottom:4px;
+        color:var(--accent);
+      }
+    }
+
+    /* Section intro */
+    .mini-headline{font-size:1.1rem;text-align:center;margin-top:20px;color:var(--gray);}
+    .section-divider{
+      width:80px;height:4px;background:var(--accent);margin:30px auto;border-radius:2px;
+    }
+
+    /* Footer (simple copy of other pages) */
+    footer{background:#000;padding:60px 0 30px;color:#fff;margin-top:60px;}
+    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px;}
+    .footer-col h3{margin-bottom:15px;font-size:1.2rem;}
+    .footer-links{list-style:none;}
+    .footer-links li{margin-bottom:10px;}
+    .footer-links a{color:#a0aec0;text-decoration:none;}
+    .footer-links a:hover{color:#fff;}
+    .social-links{display:flex;gap:15px;margin-top:15px;}
+    .social-links a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.1);
+       display:flex;align-items:center;justify-content:center;}
+
+    @media(max-width:768px){
+      .mobile-menu-btn{display:block;margin-left:auto;}
+      nav ul{display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;
+        background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,.1);}
+      nav ul.show{display:flex;}
+      nav ul li{text-align:center;margin:10px 0;}
+      .guide-wrapper{padding:30px 20px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container header-container">
+    <a href="/" class="logo">jemima<span>.ai</span></a>
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <nav>
+      <ul>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="ai-business-guides.html" class="active">AI Guides</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-content">
+    <h1>AI&nbsp;<span>Business Guides</span></h1>
+    <p class="description">See where automation pays off – then let Jemima&nbsp;AI build &amp; run it for you</p>
+  </div>
+</section>
+
+<!-- Guide list -->
+<div class="container">
+  <div class="guide-wrapper">
+    <p class="mini-headline">Every guide highlights **where** AI saves hours and grows revenue – without turning you into a developer.</p>
+    <div class="section-divider"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Service-based Business</th>
+          <th>Where Time Leaks Today</th>
+          <th>Automation Gain You’ll Read About</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="#">1</td>
+          <td data-label="Business">Independent Dental / Medical Practice</td>
+          <td data-label="Time Leak">Re-booking hygiene recalls, chasing forms, missed voicemails</td>
+          <td data-label="Gain">AI receptionist that books, reminds &amp; pre-fills insurance so staff focus on care</td>
+        </tr>
+        <tr>
+          <td>2</td><td>Chiropractic &amp; Physio Clinics</td><td>No-show gaps, generic exercise emails</td><td>Smart SMS sequences that keep patients on-track and rehabs on-time</td>
+        </tr>
+        <tr>
+          <td>3</td><td>Small Law Firm / Solo Attorney</td><td>Screening cold enquiries, deadline tracking</td><td>Intake chatbots &amp; AI calendar watchdogs that protect billable hours</td>
+        </tr>
+        <tr>
+          <td>4</td><td>Boutique Accountancy &amp; Bookkeeping</td><td>Chasing receipts, manual data entry</td><td>OCR + reminder flows that close the books without back-and-forth</td>
+        </tr>
+        <tr>
+          <td>5</td><td>Recruitment &amp; Staffing Boutique</td><td>CV triage, interview scheduling chaos</td><td>Ranking bots &amp; self-serve calendars that place talent faster</td>
+        </tr>
+        <tr>
+          <td>6</td><td>Real-Estate Brokers &amp; Property Managers</td><td>Missed lead calls, maintenance tickets</td><td>24/7 listing bots &amp; tenant SMS portals that cut vacancy time</td>
+        </tr>
+        <tr>
+          <td>7</td><td>Cleaning &amp; Maintenance Companies</td><td>Estimate visits, late invoices</td><td>Photo-quote bots &amp; auto-billing that win jobs while you work</td>
+        </tr>
+        <tr>
+          <td>8</td><td>Landscaping / Lawn-Care</td><td>Seasonal upsells, routing headaches</td><td>AI weather triggers &amp; smart route planners that add revenue per truck</td>
+        </tr>
+        <tr>
+          <td>9</td><td>Plumbers / Electricians</td><td>After-hours emergencies, stock outs</td><td>Call-triage IVR &amp; parts-reorder alerts that rescue margin</td>
+        </tr>
+        <tr>
+          <td>10</td><td>Fitness Studios &amp; Gyms</td><td>Empty classes, member churn</td><td>AI wait-lists &amp; churn-risk nudges that keep mats full</td>
+        </tr>
+        <tr>
+          <td>11</td><td>Beauty Salons &amp; Spas</td><td>No-shows, low retail upsell</td><td>Reminder cadences &amp; post-treatment product suggestions</td>
+        </tr>
+        <tr>
+          <td>12</td><td>Pet-Care Services</td><td>Missed vaccine dates, manual scheduling</td><td>AI care alerts &amp; WhatsApp bookings that delight pet parents</td>
+        </tr>
+        <tr>
+          <td>13</td><td>Private Tutors &amp; Coaches</td><td>Tracking progress, rescheduling</td><td>Adaptive lesson prompts &amp; auto make-up booking flows</td>
+        </tr>
+        <tr>
+          <td>14</td><td>Language Schools / Afterschool Programs</td><td>Paper enrolment, fee reminders</td><td>Digital enrolment &amp; multilingual pay-link nudges that fill seats</td>
+        </tr>
+        <tr>
+          <td>15</td><td>Wedding &amp; Event Planners</td><td>Vendor chasing, guest FAQs</td><td>Timeline trackers &amp; AI guest hotlines that end midnight calls</td>
+        </tr>
+        <tr>
+          <td>16</td><td>Catering &amp; Meal-Prep</td><td>Diet questions, delivery status calls</td><td>Allergen chat assistants &amp; live ETA texts that boost re-orders</td>
+        </tr>
+        <tr>
+          <td>17</td><td>Travel &amp; Tour Operators</td><td>Itinerary edits, review follow-ups</td><td>Concierge bots &amp; post-trip feedback flows that drive referrals</td>
+        </tr>
+        <tr>
+          <td>18</td><td>Non-Profit Charities</td><td>Donor lapse, volunteer mismatch</td><td>AI pledge nudges &amp; skill-based rostering that grow impact</td>
+        </tr>
+        <tr>
+          <td>19</td><td>Small E-Commerce Brands</td><td>Repetitive support tickets, slow reviews</td><td>GPT chat widgets &amp; auto-review harvesters that lift conversion</td>
+        </tr>
+        <tr>
+          <td>20</td><td>Home-Care / Elder-Care Agencies</td><td>Shift gaps, family update calls</td><td>Rota AI &amp; secure family messaging that raise satisfaction</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-divider" style="margin-top:50px;"></div>
+
+    <h3 style="text-align:center;margin-bottom:10px;">What you’ll find in every guide</h3>
+    <ul style="max-width:650px;margin:0 auto 30px auto;color:var(--gray);line-height:1.8;">
+      <li><strong>Value Snapshot</strong> – quick maths on hours saved &amp; revenue added</li>
+      <li><strong>Automation Hotspots</strong> – 3-5 tasks ripe for AI takeover</li>
+      <li><strong>Risk Watch-outs</strong> – compliance or data pitfalls to avoid</li>
+      <li><strong>Success Stories</strong> – 60-second reads from similar clients</li>
+      <li><strong>Next-Step Checklist</strong> – items we need to start building for you</li>
+    </ul>
+
+    <p style="text-align:center;font-weight:600;">Ready to see your guide?<br>
+      <a href="contact.html" style="color:var(--accent);text-decoration:none;">Book a 15-minute discovery call</a> — we’ll walk you through the opportunities and handle the build, hosting, and maintenance for you.</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="/" class="logo" style="color:#fff;">jemima<span style="color:#818cf8;">.ai</span></a>
+        <p style="color:#a0aec0;margin-top:20px;line-height:1.7;">Leading business solutions for forward-thinking teams.</p>
+        <div class="social-links">
+          <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-slack"></i></a>
+          <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Solutions</h3>
+        <ul class="footer-links">
+          <li><a href="ai-lead-generation.html">Lead Generation</a></li>
+          <li><a href="ai-sales-automation.html">Sales</a></li>
+          <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
+          <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
+          <li><a href="ai-automation.html">AI Automation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <ul class="footer-links">
+          <li><a href="ai-business-guides.html">AI Business Guides</a></li>
+          <li><a href="ai-workflows.html">Workflows</a></li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align:center;color:#a0aec0;font-size:0.9rem;">© 2025 jemima.ai. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Mobile menu -->
+<script>
+  const btn=document.querySelector('.mobile-menu-btn');
+  const nav=document.querySelector('nav ul');
+  btn.addEventListener('click',()=>nav.classList.toggle('show'));
+  document.querySelectorAll('nav ul li a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('show')));
+</script>
+</body>
+</html>
