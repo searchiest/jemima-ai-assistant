@@ -1,1 +1,268 @@
-<h1>ai-workflows.html</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic setup -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workflow Library | jemima.ai</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Browse ready-made AI workflows for busy service businesses. Let Jemima AI plug them in and run them for you.">
+  <link rel="canonical" href="https://jemima.ai/ai-workflows.html">
+  <meta name="author" content="jemima.ai">
+
+  <!-- Open Graph / Twitter summary removed for brevity -->
+
+  <!-- Icons & fonts -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <style>
+    /* ---------- Base ---------- */
+    *{margin:0;padding:0;box-sizing:border-box;}      /* ← no overflow hidden */
+    :root{
+      --accent:#4f46e5;
+      --accent-light:#818cf8;
+      --dark:#000;
+      --gray:#4a4a4a;
+      --transition:all .3s ease;
+    }
+    body{
+      font-family:"Poppins",sans-serif;
+      background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+      color:var(--dark);
+      line-height:1.6;
+      min-height:100vh;
+    }
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+    /* ---------- Header ---------- */
+    header{
+      padding:25px 0;
+      position:fixed;
+      top:0;left:0;right:0;
+      background:rgba(255,255,255,.95);
+      backdrop-filter:blur(10px);
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      z-index:1000;
+    }
+    .header-container{display:flex;justify-content:space-between;align-items:center;}
+    .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;}
+    .logo span{color:var(--accent);}
+    nav ul{display:flex;list-style:none;}
+    nav ul li{margin-left:30px;}
+    nav ul li a{font-weight:500;color:var(--dark);text-decoration:none;position:relative;transition:var(--transition);}
+    nav ul li a:hover{color:var(--accent);}
+    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+    nav ul li a:hover::after{width:100%;}
+    .mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;}
+
+    /* ---------- Hero ---------- */
+    .hero{padding:140px 0 40px;text-align:center;}
+    .hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
+    .hero h1{
+      font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;
+    }
+    .hero h1 span{position:relative;}
+    .hero h1 span::after{
+      content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,.3);z-index:-1;
+    }
+    .hero .description{font-size:1.25rem;color:var(--gray);}
+
+    /* ---------- Cards grid ---------- */
+    .cards-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+      margin-top:40px;
+    }
+    .card{
+      background:#fff;
+      border-radius:22px;
+      padding:30px;
+      border:1px solid rgba(0,0,0,.05);
+      box-shadow:0 10px 30px rgba(0,0,0,.05);
+      transition:var(--transition);
+      position:relative;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.08);}
+    .card::before{
+      content:"";position:absolute;top:0;left:0;width:100%;height:6px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-light));
+      border-radius:22px 22px 0 0;
+    }
+    .card h3{font-size:1.3rem;margin-bottom:12px;font-weight:600;}
+    .card p{color:var(--gray);font-size:.95rem;line-height:1.7;}
+
+    /* ---------- Footer (short) ---------- */
+    footer{background:#000;color:#fff;padding:60px 0 30px;margin-top:80px;}
+    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px;}
+    .footer-col h3{margin-bottom:15px;font-size:1.2rem;}
+    .footer-links{list-style:none;}
+    .footer-links li{margin-bottom:10px;}
+    .footer-links a{color:#a0aec0;text-decoration:none;}
+    .footer-links a:hover{color:#fff;}
+    .social-links{display:flex;gap:15px;margin-top:15px;}
+    .social-links a{
+      width:38px;height:38px;border-radius:50%;
+      background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media(max-width:768px){
+      .mobile-menu-btn{display:block;margin-left:auto;}
+      nav ul{
+        display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;
+        background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,.1);
+      }
+      nav ul.show{display:flex;}
+      nav ul li{text-align:center;margin:10px 0;}
+      .hero h1{font-size:2.7rem;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="/" class="logo">jemima<span>.ai</span></a>
+      <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="ai-workflows.html" class="active">Workflows</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>AI <span>Workflow&nbsp;Library</span></h1>
+      <p class="description">Pick a proven automation. We’ll connect it to your tools and keep it running.</p>
+    </div>
+  </section>
+
+  <!-- Workflows -->
+  <div class="container">
+    <div class="cards-grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <h3>Instant Web-Lead Concierge</h3>
+        <p>Replies to every enquiry in <b>&lt;60&nbsp;sec</b>, enriches the record and drops a booking link in their inbox – boosting first-contact rates 2-3×.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <h3>Missed-Call Text-Back</h3>
+        <p>Turns unanswered calls into SMS conversations automatically, rescuing weekend voicemails for trades &amp; field-service firms.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <h3>Appointment Auto-Scheduler</h3>
+        <p>Sends a live calendar link, writes the booking into Google / Outlook, fires reminders and logs everything in the CRM.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <h3>Quote Nurture Drip</h3>
+        <p>Checks in at 48 h, 4 d and 7 d with gentle nudges and social proof – lifting closed-deal rate by up to 15 %.</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <h3>After-Visit Review Collector</h3>
+        <p>Asks happy clients for a quick rating, funnels 5-star feedback straight to Google &amp; Facebook, doubling review volume.</p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <h3>Service-Due Reminder Bot</h3>
+        <p>Calculates next-due dates (dentist cleanings, boiler service…) then nudges clients with a one-click booking link.</p>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="card">
+        <h3>Dormant-Lead Re-Engager</h3>
+        <p>Re-awakens contacts silent for 90 days with value content or offers, routing replies straight to sales.</p>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="card">
+        <h3>Invoice &amp; Payment Nudge</h3>
+        <p>Sends polite reminders before &amp; after due dates with click-to-pay links, cutting aged debt without awkward calls.</p>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="card">
+        <h3>Project Kick-Off Pack Generator</h3>
+        <p>Auto-creates a branded folder, contract and onboarding checklist the moment a deal closes – zero admin time.</p>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="card">
+        <h3>Client FAQ Answer Bot</h3>
+        <p>24/7 chat agent trained on your site &amp; docs, answering repetitive questions and handing off when needed.</p>
+      </div>
+
+      <!-- Card 11 -->
+      <div class="card">
+        <h3>Referral Request Sequencer</h3>
+        <p>Politely asks happy customers for referrals two weeks post-project and tracks introductions automatically.</p>
+      </div>
+
+      <!-- Card 12 -->
+      <div class="card">
+        <h3>Micro-Upsell Recommender</h3>
+        <p>Spots renewal or milestone moments and sends timely “next-logical-product” offers – boosting average order value.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#" class="logo" style="color:#fff;">jemima<span style="color:#818cf8;">.ai</span></a>
+          <p style="color:#a0aec0;margin-top:20px;line-height:1.7;">Leading business solutions for forward-thinking teams.</p>
+          <div class="social-links">
+            <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-slack"></i></a>
+            <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <!-- other footer cols trimmed for brevity -->
+      </div>
+      <p style="text-align:center;color:#a0aec0;font-size:.9rem;">© 2025 jemima.ai. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Mobile nav script -->
+  <script>
+    const btn=document.querySelector('.mobile-menu-btn');
+    const menu=document.querySelector('nav ul');
+    btn.addEventListener('click',()=>menu.classList.toggle('show'));
+    document.querySelectorAll('nav ul li a').forEach(a=>{
+      a.addEventListener('click',()=>menu.classList.remove('show'));
+    });
+  </script>
+</body>
+</html>
