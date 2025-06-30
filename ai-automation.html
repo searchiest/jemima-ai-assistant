@@ -48,14 +48,31 @@
     nav ul li a:hover::after{width:100%;}
     .mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;}
 
-    /* hero */
+    /* hero - FIXED FOR MOBILE */
     .hero{padding:140px 0 30px;text-align:center;}
-    .hero h1{font-size:3.5rem;font-weight:800;letter-spacing:-1px;}
-    .hero h1 span{position:relative;}
-    .hero h1 span::after{content:"";position:absolute;bottom:6px;left:0;width:100%;height:8px;background:rgba(159,122,234,.3);z-index:-1;}
+    .hero h1{
+      font-size:3.5rem;
+      font-weight:800;
+      letter-spacing:-1px;
+      line-height:1.2; /* Improved line spacing */
+      overflow-wrap: break-word; /* Ensure long words break */
+    }
+    .hero h1 span{
+      position:relative;
+      display: inline-block; /* Better control of underline */
+    }
+    .hero h1 span::after{
+      content:"";
+      position:absolute;
+      bottom:6px;
+      left:0;
+      width:100%;
+      height:8px;
+      background:rgba(159,122,234,.3);
+      z-index:-1;
+    }
     .hero p{max-width:700px;margin:20px auto;font-size:1.25rem;color:var(--gray);}
-    @media(max-width:768px){.hero h1{font-size:2.8rem;}}
-
+    
     /* wrapper */
     .wrapper{
       background:#fff;border-radius:30px;padding:50px;margin:auto;max-width:1000px;position:relative;overflow:hidden;
@@ -70,11 +87,14 @@
     .section h2::after{content:"";position:absolute;bottom:0;left:0;width:60px;height:4px;background:var(--accent);}
     .section p{font-size:1.05rem;color:var(--gray);margin-bottom:18px;}
 
-    /* grid / cards */
+    /* grid / cards - ORIGINAL */
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:25px;}
     .card{
       background:#f7f7ff;border:1px solid rgba(0,0,0,.04);border-radius:20px;padding:25px;min-height:230px;
       box-shadow:0 10px 25px rgba(0,0,0,.05);transition:var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .card:hover{transform:translateY(-6px);}
     .card h3{font-size:1.2rem;margin-bottom:10px;color:var(--accent);}
@@ -116,6 +136,66 @@
       nav ul.show{display:flex;}
       nav ul li{text-align:center;margin:10px 0;}
       .wrapper{padding:30px 20px;}
+      
+      /* FIXED H1 FOR TABLETS */
+      .hero{padding:120px 0 20px;}
+      .hero h1{font-size:2.8rem;}
+      .hero h1 span::after{bottom:4px;height:6px;} /* Adjust underline position */
+    }
+    
+    /* MOBILE SPECIFIC FIXES */
+    @media (max-width: 480px) {
+      .hero {
+        padding: 100px 0 15px; /* Reduced top padding */
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem; /* Smaller font size for phones */
+        letter-spacing: -0.5px; /* Tighter spacing */
+      }
+      
+      .hero h1 span {
+        display: inline; /* Better line wrapping */
+      }
+      
+      .hero h1 span::after {
+        height: 5px; /* Thinner underline */
+        bottom: 2px; /* Better vertical alignment */
+      }
+      
+      .hero p {
+        font-size: 1.1rem; /* Slightly smaller paragraph */
+        padding: 0 10px; /* Add side padding */
+      }
+      
+      /* CARD TEXT SIZE INCREASE FOR MOBILE */
+      .card {
+        padding: 20px; /* Slightly more padding */
+        min-height: 260px; /* More space for larger text */
+      }
+      
+      .card h3 {
+        font-size: 1.4rem !important; /* Larger heading */
+        margin-bottom: 15px; /* More spacing */
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .card p {
+        font-size: 1.15rem !important; /* Larger paragraph */
+        line-height: 1.7; /* Better readability */
+      }
+      
+      /* Adjust grid for better mobile spacing */
+      .grid {
+        gap: 25px;
+      }
+      
+      /* Increase icon size for mobile */
+      .card i {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
@@ -136,9 +216,10 @@
     </div>
   </header>
 
-  <!-- hero -->
+  <!-- hero - FIXED H1 -->
   <section class="hero">
     <div class="container hero-content">
+      <!-- Fixed: Removed &nbsp; and added proper spacing -->
       <h1>AI <span>Workflow Automation</span></h1>
       <p>Goodbye double-entry. Hello work that moves the needle.</p>
     </div>
