@@ -50,7 +50,7 @@ nav ul li a:hover::after{width:100%;}
 
 /* hero */
 .hero{padding:140px 0 30px;text-align:center;}
-.hero h1{font-size:3.5rem;font-weight:800;letter-spacing:-1px;}
+.hero h1{font-size:3.5rem;font-weight:800;letter-spacing:-1px;line-height:1.1;}
 .hero h1 span{position:relative;}
 .hero h1 span::after{content:"";position:absolute;bottom:6px;left:0;width:100%;height:8px;background:rgba(159,122,234,.3);z-index:-1;}
 .hero p{max-width:700px;margin:20px auto;font-size:1.25rem;color:var(--gray);}
@@ -110,6 +110,7 @@ footer{background:#000;padding:70px 0 30px;color:#fff;margin-top:60px;}
 /* ========== RESPONSIVE CHANGES ========== */
 /* Tablet adjustments */
 @media(max-width:768px){
+  .hero{padding:140px 0 20px;}
   .hero h1{font-size:2.8rem;}
   
   .mobile-menu-btn{display:block;margin-left:auto;}
@@ -121,15 +122,17 @@ footer{background:#000;padding:70px 0 30px;color:#fff;margin-top:60px;}
 }
 
 /* Mobile-specific adjustments */
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   /* More vertical space above H1 */
   .hero {
     padding: 150px 0 20px; /* Increased top padding */
   }
   
+  /* Updated H1 styling to match reference page */
   .hero h1 {
-    font-size: 2.2rem; /* Smaller font size for phones */
-    letter-spacing: -0.5px; /* Tighter spacing */
+    font-size: 2.4rem; /* Matches reference page */
+    letter-spacing: -0.5px; 
+    line-height: 1.1; /* Tighter line spacing */
   }
   
   .hero h1 span {
@@ -184,8 +187,7 @@ footer{background:#000;padding:70px 0 30px;color:#fff;margin-top:60px;}
     font-size: 1.05rem; /* Increased from 0.95rem */
   }
 }
-</style>
-</head>
+</style></head>
 <body>
   <!-- header -->
   <header>
