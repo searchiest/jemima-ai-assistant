@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Availability Test</title>
+</head>
+<body>
+  <h1>Test Available Slots</h1>
+  <p>
+    <label for="day">Choose a day:</label>
+    <input type="date" id="day" />
+  </p>
+  <p>
+    <label for="slot">Free times:</label>
+    <select id="slot"></select>
+  </p>
+
+  <script>
+    // ← only change this to your real URL
+    const AVAIL_URL = 'https://jemima-ai.app.n8n.cloud/webhook-test/availability';
+
+    const dayInput   = document.getElementById('day');
+    const slotSelect = document.getElementById('slot');
+
+    dayInput.addEventListener('change', fetchTimes);
+
+    async function fetchTimes() {
+      const day = dayInput.value;
+      if (!day) {
+        slotSelect.innerHTML = '<option>Pick a day first</option>';
+        return;
+      }
+
+      console.clear();
+      console.log('Requesting availability for:', day);
+
+      slotSelect.disabled = true;
+      slotSelect.innerHTML = '<option>Loading…</option>';
+
+      try {
+        const res  = await fetch(AVAIL_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ day })
+        });
+        const data = await res.json();
+        console.log('raw reply:', data);
+
+        // pull out the busy array no matter where it is
+        const busyArr =
+             data.busy
+          || data.body?.busy
+          || data.data?.busy
+          || [];
+        console.log('busyArr:', busyArr);
+
+        // trim to YYYY-MM-DDTHH:MM
+        const busyLocal = busyArr.map(t => t.slice(0,16));
+        console.log('busyLocal:', busyLocal);
+
+        // build free half-hours
+        const free = [];
+        for (let h=9; h<18; h++){
+          for (let m of [0,30]){
+            const slotKey = `${day}T${String(h).padStart(2,'0')}:${m?'30':'00'}`;
+            if (!busyLocal.includes(slotKey)) free.push(slotKey);
+          }
+        }
+        console.log('free slots:', free);
+
+        // render
+        if (!free.length) {
+          slotSelect.innerHTML = '<option>No slots</option>';
+        } else {
+          slotSelect.innerHTML = '<option>Select a time</option>';
+          free.forEach(s => {
+            const t = s.slice(11,16);
+            slotSelect.insertAdjacentHTML('beforeend',
+              `<option value="${s}">${t}</option>`
+            );
+          });
+        }
+      } catch (e) {
+        console.error('fetch error:', e);
+        slotSelect.innerHTML = '<option>Error</option>';
+      } finally {
+        slotSelect.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
