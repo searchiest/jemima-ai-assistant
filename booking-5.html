@@ -33,75 +33,51 @@
       overflow-x:hidden;
     }
     .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
-    header{
-      padding:25px 0;position:fixed;top:0;width:100%;z-index:1000;
+    header{padding:25px 0;position:fixed;top:0;width:100%;z-index:1000;
       background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);
-      box-shadow:0 2px 10px rgba(0,0,0,0.05);
-    }
+      box-shadow:0 2px 10px rgba(0,0,0,0.05);}
     .header-container{display:flex;justify-content:space-between;align-items:center;}
     .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
     .logo span{color:var(--accent);}
     nav ul{display:flex;list-style:none;}
     nav ul li{margin-left:30px;}
-    nav ul li a{
-      color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;
-      position:relative;transition:var(--transition);
-    }
+    nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;
+      position:relative;transition:var(--transition);}
     nav ul li a:hover{color:var(--accent);}
-    nav ul li a::after{
-      content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;
-      background:var(--accent);transition:var(--transition);
-    }
+    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;
+      background:var(--accent);transition:var(--transition);}
     nav ul li a:hover::after{width:100%;}
-    .mobile-menu-btn{
-      display:none;background:none;border:none;color:var(--dark);
-      font-size:1.5rem;cursor:pointer;
-    }
+    .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);
+      font-size:1.5rem;cursor:pointer;}
     .booking-main{padding-top:100px;padding-bottom:80px;}
     .booking-hero{text-align:center;padding:40px 20px;max-width:900px;margin:0 auto;}
-    .booking-hero h1{
-      font-size:3rem;font-weight:800;margin-bottom:15px;
-      letter-spacing:-1px;line-height:1.2;color:var(--dark);
-    }
+    .booking-hero h1{font-size:3rem;font-weight:800;margin-bottom:15px;
+      letter-spacing:-1px;line-height:1.2;color:var(--dark);}
     .booking-hero span{color:var(--accent);}
-    .booking-hero p{
-      font-size:1.3rem;color:var(--gray);max-width:600px;margin:0 auto;
-      line-height:1.6;font-weight:400;
-    }
-    .booking-section{
-      background:#fff;border:1px solid rgba(0,0,0,0.05);border-radius:25px;
-      box-shadow:0 25px 50px rgba(0,0,0,0.08);margin:40px auto;
-      padding:50px;max-width:600px;
-    }
-    .booking-section h2{
-      font-size:1.9rem;margin-bottom:25px;color:var(--dark);font-weight:700;
-    }
+    .booking-hero p{font-size:1.3rem;color:var(--gray);max-width:600px;margin:0 auto;
+      line-height:1.6;font-weight:400;}
+    .booking-section{background:#fff;border:1px solid rgba(0,0,0,0.05);
+      border-radius:25px;box-shadow:0 25px 50px rgba(0,0,0,0.08);
+      margin:40px auto;padding:50px;max-width:600px;}
+    .booking-section h2{font-size:1.9rem;margin-bottom:25px;color:var(--dark);font-weight:700;}
     .booking-form{display:grid;gap:20px;}
     .booking-form label{font-weight:600;color:var(--dark);}
     .booking-form input,
-    .booking-form select{
-      width:100%;padding:14px 18px;font-size:1rem;border:1px solid #ddd;
-      border-radius:10px;background:var(--light-gray);
-    }
-    .booking-form button{
-      background:var(--accent);color:#fff;padding:16px 45px;
+    .booking-form select{width:100%;padding:14px 18px;font-size:1rem;border:1px solid #ddd;
+      border-radius:10px;background:var(--light-gray);}
+    .booking-form button{background:var(--accent);color:#fff;padding:16px 45px;
       font-size:1.1rem;font-weight:600;border:none;border-radius:12px;
-      cursor:pointer;transition:var(--transition);
-    }
+      cursor:pointer;transition:var(--transition);}
     .booking-form button:hover{background:var(--primary);}
     #formMsg{margin-top:20px;font-weight:600;}
-    footer{
-      background:var(--dark);padding:40px 0;color:#fff;margin-top:80px;
-    }
+    footer{background:var(--dark);padding:40px 0;color:#fff;margin-top:80px;}
     footer p{text-align:center;font-size:0.9rem;color:#a0aec0;}
     @media(max-width:768px){
       .booking-hero h1{font-size:2.4rem;}
       .mobile-menu-btn{display:block;margin-left:auto;}
-      nav ul{
-        display:none;flex-direction:column;position:absolute;top:80px;left:0;
+      nav ul{display:none;flex-direction:column;position:absolute;top:80px;left:0;
         width:100%;background:#fff;padding:20px 0;
-        box-shadow:0 10px 15px rgba(0,0,0,0.1);
-      }
+        box-shadow:0 10px 15px rgba(0,0,0,0.1);}
       nav ul.show{display:flex;}
       nav ul li{text-align:center;margin:10px 0;}
     }
@@ -228,7 +204,7 @@
     const BOOK_URL  = 'https://jemima-ai.app.n8n.cloud/webhook/book';
     const TIME_ZONE = 'Europe/London';
 
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', () => {
       const dayInput   = document.getElementById('day');
       const slotSelect = document.getElementById('slot');
       const form       = document.getElementById('bookingForm');
@@ -248,22 +224,17 @@
         }
 
         slotSelect.disabled = true;
-        slotSelect.innerHTML = '<option>Loading...</option>';
+        slotSelect.innerHTML = '<option>Loading…</option>';
 
         try {
-          const res  = await fetch(AVAIL_URL, {
+          const res = await fetch(AVAIL_URL, {
             method:'POST',
             headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ day: day })
+            body:JSON.stringify({ day })
           });
           const data = await res.json();
 
-          const busyArr =
-               data.busy
-            || data.body?.busy
-            || data.data?.busy
-            || [];
-
+          const busyArr = data.busy || data.body?.busy || data.data?.busy || [];
           const busyLocal = busyArr.map(ts => ts.slice(0,16));
           const freeSlots = [];
 
@@ -280,10 +251,7 @@
             slotSelect.innerHTML = '<option value="">Select a time</option>';
             freeSlots.forEach(s => {
               const t = s.slice(11,16);
-              slotSelect.insertAdjacentHTML(
-                'beforeend',
-                `<option value="${s}">${t}</option>`
-              );
+              slotSelect.insertAdjacentHTML('beforeend', `<option value="${s}">${t}</option>`);
             });
           }
         } catch {
@@ -295,7 +263,7 @@
 
       async function submitBooking(e) {
         e.preventDefault();
-        formMsg.textContent = 'Sending...';
+        formMsg.textContent = 'Sending…';
 
         const payload = {
           firstName: document.getElementById('firstName').value,
@@ -333,5 +301,6 @@
   </script>
 </body>
 </html>
+
 
 
