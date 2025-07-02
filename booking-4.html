@@ -167,14 +167,17 @@
   </footer>
 
   <script>
-    const AVAIL_URL = 'https://jemima-ai.app.n8n.cloud/webhook/availability';
-    const BOOK_URL  = 'https://jemima-ai.app.n8n.cloud/webhook/book';
+    // ─── CONFIG ─────────────────────────────────────────────
+    const AVAIL_URL  = 'https://jemima-ai.app.n8n.cloud/webhook/availability';
+    const BOOK_URL   = 'https://jemima-ai.app.n8n.cloud/webhook/book';
+    const TIME_ZONE  = 'Europe/London';  // ← change here for a new zone
+    // ────────────────────────────────────────────────────────
 
     document.addEventListener('DOMContentLoaded', () => {
-      const dayInput   = document.getElementById('day');
-      const slotSelect= document.getElementById('slot');
-      const form      = document.getElementById('bookingForm');
-      const formMsg   = document.getElementById('formMsg');
+      const dayInput    = document.getElementById('day');
+      const slotSelect  = document.getElementById('slot');
+      const form        = document.getElementById('bookingForm');
+      const formMsg     = document.getElementById('formMsg');
 
       dayInput.addEventListener('change', fetchTimes);
       form.addEventListener('submit', submitBooking);
@@ -206,8 +209,8 @@
           const busyLocal = busyArr.map(ts => ts.slice(0,16));
           const freeSlots = [];
 
-          for (let h=9; h<18; h++){
-            for (let m of [0,30]){
+          for (let h = 9; h < 18; h++) {
+            for (let m of [0,30]) {
               const key = `${day}T${String(h).padStart(2,'0')}:${m?'30':'00'}`;
               if (!busyLocal.includes(key)) freeSlots.push(key);
             }
@@ -237,9 +240,10 @@
         formMsg.textContent = 'Sending…';
 
         const payload = {
-          name:  document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          slot:  slotSelect.value
+          name:     document.getElementById('name').value,
+          email:    document.getElementById('email').value,
+          slot:     slotSelect.value,
+          timeZone: TIME_ZONE
         };
 
         try {
