@@ -208,7 +208,6 @@
             </select>
           </div>
 
-          <!-- hidden field for page URL -->
           <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
 
           <button type="submit">Book now</button>
@@ -225,20 +224,17 @@
   </footer>
 
   <script>
-    // ─── CONFIG ─────────────────────────────────────────────
-    const AVAIL_URL  = 'https://jemima-ai.app.n8n.cloud/webhook/availability';
-    const BOOK_URL   = 'https://jemima-ai.app.n8n.cloud/webhook/book';
-    const TIME_ZONE  = 'Europe/London';
-    // ────────────────────────────────────────────────────────
+    const AVAIL_URL = 'https://jemima-ai.app.n8n.cloud/webhook/availability';
+    const BOOK_URL  = 'https://jemima-ai.app.n8n.cloud/webhook/book';
+    const TIME_ZONE = 'Europe/London';
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const dayInput    = document.getElementById('day');
-      const slotSelect  = document.getElementById('slot');
-      const form        = document.getElementById('bookingForm');
-      const formMsg     = document.getElementById('formMsg');
-      const pageUrlIn   = document.getElementById('pageUrl');
+    document.addEventListener('DOMContentLoaded', function(){
+      const dayInput   = document.getElementById('day');
+      const slotSelect = document.getElementById('slot');
+      const form       = document.getElementById('bookingForm');
+      const formMsg    = document.getElementById('formMsg');
+      const pageUrlIn  = document.getElementById('pageUrl');
 
-      // capture page URL
       pageUrlIn.value = window.location.href;
 
       dayInput.addEventListener('change', fetchTimes);
@@ -252,13 +248,13 @@
         }
 
         slotSelect.disabled = true;
-        slotSelect.innerHTML = '<option>Loading…</option>';
+        slotSelect.innerHTML = '<option>Loading...</option>';
 
         try {
           const res  = await fetch(AVAIL_URL, {
             method:'POST',
             headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ day })
+            body:JSON.stringify({ day: day })
           });
           const data = await res.json();
 
@@ -299,7 +295,7 @@
 
       async function submitBooking(e) {
         e.preventDefault();
-        formMsg.textContent = 'Sending…';
+        formMsg.textContent = 'Sending...';
 
         const payload = {
           firstName: document.getElementById('firstName').value,
@@ -337,4 +333,5 @@
   </script>
 </body>
 </html>
+
 
