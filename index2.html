@@ -568,30 +568,26 @@ function parse(raw, headers) {
   return raw;
 }
 
-<script>
 /* --- the send routine, called by the form --- */
-async function sendMessage () {
+async function sendMessage() {
   const msg = input.value.trim();
   if (!msg) return;
 
   add(msg, 'user');
-  input.value  = '';
+  input.value = '';
   input.style.height = '60px';
 
   try {
-    const res = await fetch(webhook, {
+    const res  = await fetch(webhook, {
       method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body   : JSON.stringify({
         sessionId,
         route     : 'general',
         action    : 'sendMessage',
-        chatInput : msg,
-        /* hidden extra field */
-        pageUrl   : pageUrl
+        chatInput : msg
       })
     });
-
     const raw = await res.text();
     add(parse(raw, res.headers), 'ai');
   } catch (err) {
@@ -599,7 +595,6 @@ async function sendMessage () {
     add('Could not reach the server.', 'ai');
   }
 }
-</script>
 
 /* --- make the textarea grow with content --- */
 input.addEventListener('input', () => {
