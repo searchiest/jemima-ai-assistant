@@ -214,6 +214,44 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     /* or pre-line if you only want to collapse extra spaces but keep new lines */
   }
 
+/* ---------- Quick-link section ---------- */
+.quick-links-wrapper{
+    margin:20px 0;
+}
+.quick-links-title{
+    font-size:1rem;
+    font-weight:600;
+    color:var(--dark);
+    margin-bottom:8px;
+}
+.quick-links-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+.qlink{
+    padding:8px 16px;
+    border-radius:12px;
+    background:#7c3aed;          /* purple */
+    color:#ffffff;
+    font-size:0.95rem;
+    text-decoration:none;
+    transition:var(--transition);
+    white-space:nowrap;
+}
+.qlink:hover{
+    background:#5b21b6;          /* darker purple on hover */
+    transform:translateY(-2px);
+}
+
+/* keep buttons centred on very small screens */
+@media(max-width:480px){
+    .quick-links-list{
+        justify-content:center;
+    }
+}
+
+
 /* ---------- Footer ---------- */
 footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
@@ -364,12 +402,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </form>
                     </div>
 
-<!-- Quick links -->
-<div id="chat-quick-links" style="display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;">
-  <a href="#" data-msg="Book a call"       class="qlink">Book a call</a>
-  <a href="#" data-msg="What services do you offer?" class="qlink">Our services</a>
-  <a href="#" data-msg="Show me your prices"          class="qlink">Pricing</a>
-  <a href="#" data-msg="How can AI help my company?"  class="qlink">AI help</a>
+<!-- Chat Suggestions -->
+<div class="quick-links-wrapper">
+  <h4 class="quick-links-title">Chat Suggestions</h4>
+
+  <div id="chat-quick-links" class="quick-links-list">
+    <a href="#" class="qlink" data-msg="Book a call">Book a call</a>
+    <a href="#" class="qlink" data-msg="What services do you offer?">Our services</a>
+    <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
+    <a href="#" class="qlink" data-msg="How can AI help my company?">AI help</a>
+  </div>
 </div>
 
                 </div>
