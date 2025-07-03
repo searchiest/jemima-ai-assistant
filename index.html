@@ -214,6 +214,49 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     /* or pre-line if you only want to collapse extra spaces but keep new lines */
   }
 
+/* ---------- Quick-link section ---------- */
+.quick-links-wrapper{
+    margin:20px 0;
+}
+
+.quick-links-title{
+    font-size:1rem;
+    font-weight:600;
+    color:var(--dark);
+    margin:0 0 8px 0;    /* title now flush left */
+    text-align:left;      /* left-aligned */
+}
+
+.quick-links-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.qlink{
+    padding:6px 12px;     /* smaller button */
+    border-radius:10px;
+    background:#4f46e5;;
+    color:#ffffff;
+    font-size:0.85rem;    /* smaller text */
+    text-decoration:none;
+    transition:var(--transition);
+    white-space:nowrap;
+}
+
+.qlink:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+}
+
+/* keep buttons centred on very small screens */
+@media (max-width:480px){
+    .quick-links-list{
+        justify-content:center;
+    }
+}
+
+
 /* ---------- Footer ---------- */
 footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
@@ -363,7 +406,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
                         </form>
                     </div>
+
+<!-- Chat Suggestions -->
+<div class="quick-links-wrapper">
+  <h4 class="quick-links-title">Chat Suggestions</h4>
+
+  <div id="chat-quick-links" class="quick-links-list">
+    <a href="#" class="qlink" data-msg="Book a call">Book a call</a>
+    <a href="#" class="qlink" data-msg="What services do you offer?">Our services</a>
+    <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
+    <a href="#" class="qlink" data-msg="How can AI help my company?">AI help</a>
+  </div>
+</div>
+
                 </div>
+
+
+
+
+
+
+
 
                 <!-- Description Text -->
                 <div class="description-text">
@@ -604,7 +667,18 @@ if (menuBtn && navMenu) {
     a.addEventListener('click', () => navMenu.classList.remove('show'))
   );
 }
-</script>
 
+
+/* quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    if(e.target.classList.contains('qlink')){
+      e.preventDefault();
+      input.value = e.target.dataset.msg;
+      sendMessage();               // reuse the same send routine
+    }
+  });
+
+</script>
 </body>
 </html>
