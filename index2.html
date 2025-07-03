@@ -218,34 +218,39 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 .quick-links-wrapper{
     margin:20px 0;
 }
+
 .quick-links-title{
     font-size:1rem;
     font-weight:600;
     color:var(--dark);
-    margin-bottom:8px;
+    margin:0 0 8px 0;    /* title now flush left */
+    text-align:left;      /* left-aligned */
 }
+
 .quick-links-list{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
 }
+
 .qlink{
-    padding:8px 16px;
-    border-radius:12px;
-    background:#7c3aed;          /* purple */
+    padding:6px 12px;     /* smaller button */
+    border-radius:10px;
+    background:#7c3aed;
     color:#ffffff;
-    font-size:0.95rem;
+    font-size:0.85rem;    /* smaller text */
     text-decoration:none;
     transition:var(--transition);
     white-space:nowrap;
 }
+
 .qlink:hover{
-    background:#5b21b6;          /* darker purple on hover */
+    background:#5b21b6;
     transform:translateY(-2px);
 }
 
 /* keep buttons centred on very small screens */
-@media(max-width:480px){
+@media (max-width:480px){
     .quick-links-list{
         justify-content:center;
     }
