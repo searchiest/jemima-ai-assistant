@@ -200,103 +200,71 @@
   </footer>
 
   <script>
-    const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
-    const TIME_ZONE = 'Europe/London';
+  // Updated single endpoint
+  const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+  const TIME_ZONE = 'Europe/London';
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const dayInput   = document.getElementById('day');
-      const slotSelect = document.getElementById('slot');
-      const form       = document.getElementById('bookingForm');
-      const formMsg    = document.getElementById('formMsg');
-      const pageUrlIn  = document.getElementById('pageUrl');
+  document.addEventListener('DOMContentLoaded', () => {
+    // ... existing DOM references ...
 
-      pageUrlIn.value = window.location.href;
-
-      dayInput.addEventListener('change', fetchTimes);
-      form.addEventListener('submit', submitBooking);
-
-      async function fetchTimes() {
-        const day = dayInput.value;
-        if (!day) {
-          slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-          return;
-        }
-
-        slotSelect.disabled = true;
-        slotSelect.innerHTML = '<option>Loading…</option>';
-
-        try {
-          const res = await fetch(AVAIL_URL, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ day })
-          });
-          const data = await res.json();
-
-          const busyArr = data.busy || data.body?.busy || data.data?.busy || [];
-          const busyLocal = busyArr.map(ts => ts.slice(0,16));
-          const freeSlots = [];
-
-          for (let h = 9; h < 18; h++) {
-            for (let m of [0,30]) {
-              const key = `${day}T${String(h).padStart(2,'0')}:${m?'30':'00'}`;
-              if (!busyLocal.includes(key)) freeSlots.push(key);
-            }
-          }
-
-          if (freeSlots.length === 0) {
-            slotSelect.innerHTML = '<option value="">No slots available</option>';
-          } else {
-            slotSelect.innerHTML = '<option value="">Select a time</option>';
-            freeSlots.forEach(s => {
-              const t = s.slice(11,16);
-              slotSelect.insertAdjacentHTML('beforeend', `<option value="${s}">${t}</option>`);
-            });
-          }
-        } catch {
-          slotSelect.innerHTML = '<option value="">Error loading slots</option>';
-        } finally {
-          slotSelect.disabled = false;
-        }
+    async function fetchTimes() {
+      const day = dayInput.value;
+      if (!day) {
+        slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+        return;
       }
 
-      async function submitBooking(e) {
-        e.preventDefault();
-        formMsg.textContent = 'Sending…';
+      slotSelect.disabled = true;
+      slotSelect.innerHTML = '<option>Loading…</option>';
 
-        const payload = {
-          firstName: document.getElementById('firstName').value,
-          lastName:  document.getElementById('lastName').value,
-          company:   document.getElementById('company').value,
-          phone:     document.getElementById('phone').value,
-          email:     document.getElementById('email').value,
-          slot:      slotSelect.value,
-          pageUrl:   pageUrlIn.value,
-          timeZone:  TIME_ZONE
-        };
+      try {
+        const res = await fetch(BOOKING_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            action: 'check_availability',
+            day: dayInput.value
+          })
+        });
+        const data = await res.json();
 
-        try {
-          const res = await fetch(BOOK_URL, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            form.reset();
-            slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-            formMsg.textContent = 'Your meeting is confirmed. Check your inbox.';
-          } else if (res.status === 409) {
-            formMsg.textContent = 'That time has just been taken. Please choose another.';
-            fetchTimes();
-          } else {
-            formMsg.textContent = 'An error occurred. Please try again later.';
-          }
-        } catch {
-          formMsg.textContent = 'Could not reach the server. Try again later.';
-        }
+        // ... rest of the existing fetchTimes logic ...
+      } catch {
+        // ... error handling ...
       }
-    });
-  </script>
+    }
+
+    async function submitBooking(e) {
+      e.preventDefault();
+      formMsg.textContent = 'Sending…';
+
+      const payload = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        company: document.getElementById('company').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        slot: slotSelect.value,
+        pageUrl: pageUrlIn.value,
+        timeZone: TIME_ZONE
+      };
+
+      try {
+        const res = await fetch(BOOKING_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'create_booking',
+            ...payload
+          })
+        });
+
+        // ... rest of existing submitBooking logic ...
+      } catch {
+        // ... error handling ...
+      }
+    }
+  });
+</script>
 </body>
 </html>
