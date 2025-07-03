@@ -365,6 +365,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
 
+
+<!-- Quick links -->
+<div id="chat-quick-links" style="display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;">
+  <a href="#" data-msg="Book a call"       class="qlink">Book a call</a>
+  <a href="#" data-msg="What services do you offer?" class="qlink">Our services</a>
+  <a href="#" data-msg="Show me your prices"          class="qlink">Pricing</a>
+  <a href="#" data-msg="How can AI help my company?"  class="qlink">AI help</a>
+</div>
+
+
+
+
+
                 <!-- Description Text -->
                 <div class="description-text">
                     Transform your service business with our cutting-edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
@@ -605,6 +618,17 @@ if (menuBtn && navMenu) {
   );
 }
 </script>
+
+/* quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    if(e.target.classList.contains('qlink')){
+      e.preventDefault();
+      input.value = e.target.dataset.msg;
+      sendMessage();               // reuse the same send routine
+    }
+  });
+
 
 </body>
 </html>
