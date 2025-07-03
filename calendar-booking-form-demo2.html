@@ -240,24 +240,25 @@
 
         const data = await res.json();
 
-        // Unpack if it comes back as [ { busy, slots } ] or { busy, slots }
-        let payload;
-        if (Array.isArray(data) && data.length) {
-          payload = data[0];
-        } else {
-          payload = data;
-        }
+        // Log raw response so you can check its structure
+        console.log('Availability response:', data);
 
-        // payload might nest under json when using n8n items format
-        const busyArr   = payload.busy   || payload.json?.busy   || [];
-        const freeSlots = payload.slots  || payload.json?.slots  || [];
+        // Unpack array or object, then look under data or body if needed
+        let payload = data;
+        if (Array.isArray(payload) && payload.length) {
+          payload = payload[0];
+        }
+        payload = payload.data ?? payload.body ?? payload;
+
+        const busyArr   = payload.busy  || [];
+        const freeSlots = payload.slots || [];
 
         if (!Array.isArray(freeSlots) || freeSlots.length === 0) {
           slotSelect.innerHTML = '<option value="">No slots available</option>';
         } else {
           slotSelect.innerHTML = '<option value="">Select a time</option>';
           freeSlots.forEach(s => {
-            // only show times matching the selected day
+            // only include slots for the chosen day
             if (!s.startsWith(day)) return;
             const t = s.slice(11,16);
             slotSelect.insertAdjacentHTML(
@@ -265,12 +266,12 @@
               `<option value="${s}">${t}</option>`
             );
           });
-          // if none on that day, show message
+          // if none left for that day show message
           if (slotSelect.options.length === 1) {
             slotSelect.innerHTML = '<option value="">No slots available</option>';
           }
         }
-      } catch {
+      } catch (e) {
         slotSelect.innerHTML = '<option value="">Error loading slots</option>';
       } finally {
         slotSelect.disabled = false;
@@ -312,12 +313,13 @@
         } else {
           formMsg.textContent = 'An error occurred. Please try again later.';
         }
-      } catch {
+      } catch (e) {
         formMsg.textContent = 'Could not reach the server. Try again later.';
       }
     }
   });
 </script>
+
 
 
 </body>
