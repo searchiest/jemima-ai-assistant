@@ -229,7 +229,7 @@
       slotSelect.innerHTML = '<option>Loading…</option>';
 
       try {
-        const res = await fetch(BOOKING_URL, {
+        const res  = await fetch(BOOKING_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -237,24 +237,40 @@
             day: day
           })
         });
-        const data      = await res.json();
-        // Pull busy and free slots from workflow output
-        const busyArr   = data.busy      ?? data[0]?.busy   ?? [];
-        const freeSlots = data.slots     ?? data[0]?.slots  ?? [];
 
-        if (freeSlots.length === 0) {
+        const data = await res.json();
+
+        // Unpack if it comes back as [ { busy, slots } ] or { busy, slots }
+        let payload;
+        if (Array.isArray(data) && data.length) {
+          payload = data[0];
+        } else {
+          payload = data;
+        }
+
+        // payload might nest under json when using n8n items format
+        const busyArr   = payload.busy   || payload.json?.busy   || [];
+        const freeSlots = payload.slots  || payload.json?.slots  || [];
+
+        if (!Array.isArray(freeSlots) || freeSlots.length === 0) {
           slotSelect.innerHTML = '<option value="">No slots available</option>';
         } else {
           slotSelect.innerHTML = '<option value="">Select a time</option>';
           freeSlots.forEach(s => {
-            const t = s.slice(11, 16);
+            // only show times matching the selected day
+            if (!s.startsWith(day)) return;
+            const t = s.slice(11,16);
             slotSelect.insertAdjacentHTML(
               'beforeend',
               `<option value="${s}">${t}</option>`
             );
           });
+          // if none on that day, show message
+          if (slotSelect.options.length === 1) {
+            slotSelect.innerHTML = '<option value="">No slots available</option>';
+          }
         }
-      } catch (err) {
+      } catch {
         slotSelect.innerHTML = '<option value="">Error loading slots</option>';
       } finally {
         slotSelect.disabled = false;
