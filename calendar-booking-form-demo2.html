@@ -229,7 +229,7 @@
       slotSelect.innerHTML = '<option>Loading…</option>';
 
       try {
-        const res  = await fetch(BOOKING_URL, {
+        const res = await fetch(BOOKING_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -237,29 +237,10 @@
             day: day
           })
         });
-        const data    = await res.json();
-        const busyArr = data.busy || data.body?.busy || data.data?.busy || [];
-
-        // Convert each busy timestamp into local YYYY-MM-DDTHH:MM
-        const busyLocal = busyArr.map(ts => {
-          const date = new Date(ts);
-          const y    = date.getFullYear();
-          const m    = String(date.getMonth() + 1).padStart(2, '0');
-          const d    = String(date.getDate())     .padStart(2, '0');
-          const hh   = String(date.getHours())    .padStart(2, '0');
-          const mm   = String(date.getMinutes())  .padStart(2, '0');
-          return `${y}-${m}-${d}T${hh}:${mm}`;
-        });
-
-        const freeSlots = [];
-        for (let h = 9; h < 18; h++) {
-          for (let m of [0, 30]) {
-            const hh  = String(h).padStart(2, '0');
-            const mm  = m ? '30' : '00';
-            const key = `${day}T${hh}:${mm}`;
-            if (!busyLocal.includes(key)) freeSlots.push(key);
-          }
-        }
+        const data      = await res.json();
+        // Pull busy and free slots from workflow output
+        const busyArr   = data.busy      ?? data[0]?.busy   ?? [];
+        const freeSlots = data.slots     ?? data[0]?.slots  ?? [];
 
         if (freeSlots.length === 0) {
           slotSelect.innerHTML = '<option value="">No slots available</option>';
@@ -273,7 +254,7 @@
             );
           });
         }
-      } catch {
+      } catch (err) {
         slotSelect.innerHTML = '<option value="">Error loading slots</option>';
       } finally {
         slotSelect.disabled = false;
@@ -321,6 +302,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
