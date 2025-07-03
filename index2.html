@@ -243,6 +243,16 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     font-weight: 600;
 }
 
+.typing-indicator {
+  display       : flex;
+  align-items   : center;
+  padding       : 8px;
+  font-size     : 14px;
+}
+.hidden {
+  display       : none;
+}
+
 /* ---------- Animations ---------- */
 @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
@@ -355,15 +365,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <p>I am a <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, and <span class="highlight">Digital Marketing</span> Manager. How can I help?</p>
                     </div>
                     <!-- Chat area -->
-                    <div id="chat-body" class="chat-body"></div>
-                    <!-- Chat Input Form -->
-                    <div class="chat-input-form">
-                        <form onsubmit="sendMessage(); return false;">
-                            <textarea id="chat-input" required></textarea>
-                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
-                </div>
+<div id="chat-body" class="chat-body">
+  <!-- Typing Indicator -->
+<div id="typingIndicator" class="typing-indicator hidden">
+  <img src="typing-icon.svg" alt="Typing…" />
+</div>
+  <!-- Messages will be injected here -->
+</div>
+
+<!-- Chat Input Form -->
+<div class="chat-input-form">
+  <form onsubmit="sendMessage(); return false;">
+    <textarea id="chat-input" required></textarea>
+    <button id="chat-send" type="submit">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </form>
+</div>
 
                 <!-- Description Text -->
                 <div class="description-text">
@@ -525,20 +543,32 @@ const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9b
 const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
 
 /* ── 3.  DOM handles ───────────────────────────────────────── */
-const box   = document.getElementById('chat-body');
-const input = document.getElementById('chat-input');
+const box             = document.getElementById('chat-body');
+const input           = document.getElementById('chat-input');
+const typingIndicator = document.getElementById('typingIndicator');
 
-/* ── 4.  helper: add a chat bubble ─────────────────────────── */
+/* ── 4.  helper: show / hide typing icon ───────────────────── */
+function showTyping() {
+  typingIndicator.classList.remove('hidden');
+  box.scrollTop = box.scrollHeight;
+}
+function hideTyping() {
+  typingIndicator.classList.add('hidden');
+}
+
+/* ── 5.  helper: add a chat bubble ─────────────────────────── */
 function add (text, role = 'ai') {
-  const div       = document.createElement('div');
-  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
-  div.innerHTML   = `<p>${text}</p>`;
+  const div     = document.createElement('div');
+  div.className = role === 'user'
+    ? 'chat-bubble user-bubble'
+    : 'chat-bubble ai-bubble';
+  div.innerHTML = `<p>${text}</p>`;
   box.appendChild(div);
-  box.scrollTop   = box.scrollHeight;
+  box.scrollTop = box.scrollHeight;
   box.classList.add('show');
 }
 
-/* ── 5.  helper: unwrap JSON (object OR first element of array) */
+/* ── 6.  helper: unwrap JSON (object OR first element of array) */
 function parse (raw, hdr) {
   if ((hdr.get('content-type') || '').includes('application/json')) {
     try {
@@ -555,14 +585,16 @@ function parse (raw, hdr) {
   return raw;
 }
 
-/* ── 6.  send routine, called on form submit ───────────────── */
+/* ── 7.  send routine, called on form submit ───────────────── */
 async function sendMessage () {
   const msg = input.value.trim();
   if (!msg) return;
 
-  add(msg, 'user');               // echo user text
-  input.value = '';               // clear
-  input.style.height = '60px';    // reset height
+  add(msg, 'user');            // echo user text
+  input.value = '';            // clear input
+  input.style.height = '60px'; // reset height
+
+  showTyping();                // show typing icon
 
   try {
     const res = await fetch(webhook, {
@@ -573,31 +605,33 @@ async function sendMessage () {
         route     : 'general',
         action    : 'sendMessage',
         chatInput : msg,
-        pageUrl                      // hidden field
+        pageUrl
       })
     });
     const raw = await res.text();
+    hideTyping();             // hide typing icon
     add(parse(raw, res.headers), 'ai');
   } catch (err) {
+    hideTyping();             // hide on error
     console.error(err);
     add('Could not reach the server.', 'ai');
   }
 }
 
-/* ── 7.  auto-grow textarea ───────────────────────────────── */
+/* ── 8.  auto-grow textarea ───────────────────────────────── */
 input.addEventListener('input', () => {
   input.style.height = 'auto';
   input.style.height = input.scrollHeight + 'px';
 });
 
-/* ── 8.  give focus on load ───────────────────────────────── */
+/* ── 9.  give focus on load ───────────────────────────────── */
 window.addEventListener('load', () => {
   input.focus({ preventScroll: true });
 });
 
-/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
-const menuBtn  = document.querySelector('.mobile-menu-btn');
-const navMenu  = document.querySelector('nav ul');
+/* ── 10.  mobile-menu toggle (optional) ────────────────────── */
+const menuBtn = document.querySelector('.mobile-menu-btn');
+const navMenu = document.querySelector('nav ul');
 if (menuBtn && navMenu) {
   menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
   navMenu.querySelectorAll('a').forEach(a =>
@@ -605,6 +639,7 @@ if (menuBtn && navMenu) {
   );
 }
 </script>
+
 
 </body>
 </html>
