@@ -507,85 +507,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
 <script>
-  /* grab the current page address */
-  window.n8nOriginPage = window.location.href;
-</script>
+/* ── 1.  hidden page address sent to n8n ───────────────────── */
+const pageUrl   = window.location.href;
 
-
-    <script>
-        // Simple animation on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.service-card, .solution-card').forEach(card => {
-            observer.observe(card);
-        });
-    </script>
-
-<script>
-/* --- endpoint and session --- */
-const webhook = 'https://jemima-ai.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat';
+/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat';
 const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
 
-/* --- DOM handles --- */
+/* ── 3.  DOM handles ───────────────────────────────────────── */
 const box   = document.getElementById('chat-body');
 const input = document.getElementById('chat-input');
 
-/* --- helper to append a bubble --- */
-function add(text, role = 'ai') {
-  const div = document.createElement('div');
-  div.className = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
-  div.innerHTML = `<p>${text}</p>`;
+/* ── 4.  helper: add a chat bubble ─────────────────────────── */
+function add (text, role = 'ai') {
+  const div       = document.createElement('div');
+  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+  div.innerHTML   = `<p>${text}</p>`;
   box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
-  if(!box.classList.contains('show')) box.classList.add('show');
+  box.scrollTop   = box.scrollHeight;
+  box.classList.add('show');
 }
 
-/* --- helper to unwrap JSON replies --- */
-function parse(raw, headers) {
-  if ((headers.get('content-type') || '').includes('application/json')) {
+/* ── 5.  helper: unwrap JSON (object OR first element of array) */
+function parse (raw, hdr) {
+  if ((hdr.get('content-type') || '').includes('application/json')) {
     try {
-      const d = JSON.parse(raw);
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
       return (
-        d.reply   || d.output  || d.text   || d.message ||
+        d.reply   || d.output  || d.text || d.message ||
         d.answer  || d.content ||
-        (d.choices && d.choices[0] && d.choices[0].message.content) ||
+        (d.choices && d.choices[0]?.message.content) ||
         raw
       );
-    } catch { /* leave fall-back below */ }
+    } catch { /* fall through to raw */ }
   }
   return raw;
 }
 
-/* --- the send routine, called by the form --- */
-async function sendMessage() {
+/* ── 6.  send routine, called on form submit ───────────────── */
+async function sendMessage () {
   const msg = input.value.trim();
   if (!msg) return;
 
-  add(msg, 'user');
-  input.value = '';
-  input.style.height = '60px';
+  add(msg, 'user');               // echo user text
+  input.value = '';               // clear
+  input.style.height = '60px';    // reset height
 
   try {
-    const res  = await fetch(webhook, {
+    const res = await fetch(webhook, {
       method : 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
         sessionId,
         route     : 'general',
         action    : 'sendMessage',
-        chatInput : msg
+        chatInput : msg,
+        pageUrl                      // hidden field
       })
     });
     const raw = await res.text();
@@ -596,51 +574,27 @@ async function sendMessage() {
   }
 }
 
-/* --- make the textarea grow with content --- */
+/* ── 7.  auto-grow textarea ───────────────────────────────── */
 input.addEventListener('input', () => {
   input.style.height = 'auto';
   input.style.height = input.scrollHeight + 'px';
 });
-</script>
 
-<script>
-/* give the chat box focus as soon as the page has loaded */
+/* ── 8.  give focus on load ───────────────────────────────── */
 window.addEventListener('load', () => {
-  const chatInput = document.getElementById('chat-input');
-  if (chatInput) chatInput.focus({preventScroll:true});
+  input.focus({ preventScroll: true });
 });
-</script>
 
-  <script>
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('nav ul');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
-    
-    // Close menu when clicking on links
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('show');
-      });
-    });
-    
-    // Apply button animation
-    const applyButtons = document.querySelectorAll('.apply-btn');
-    applyButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        button.textContent = "Application Sent!";
-        button.style.backgroundColor = "#10B981";
-        setTimeout(() => {
-          button.textContent = "Apply Now";
-          button.style.backgroundColor = "";
-        }, 2000);
-      });
-    });
-  </script>
+/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
+const menuBtn  = document.querySelector('.mobile-menu-btn');
+const navMenu  = document.querySelector('nav ul');
+if (menuBtn && navMenu) {
+  menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
+  navMenu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navMenu.classList.remove('show'))
+  );
+}
+</script>
 
 </body>
 </html>
