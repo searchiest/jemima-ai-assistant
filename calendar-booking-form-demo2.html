@@ -199,17 +199,17 @@
     </div>
   </footer>
 
-  <script>
+<script>
   // Updated single endpoint
   const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
-  const TIME_ZONE = 'Europe/London';
+  const TIME_ZONE   = 'Europe/London';
 
   document.addEventListener('DOMContentLoaded', () => {
-    const dayInput = document.getElementById('day');
+    const dayInput   = document.getElementById('day');
     const slotSelect = document.getElementById('slot');
-    const form = document.getElementById('bookingForm');
-    const formMsg = document.getElementById('formMsg');
-    const pageUrlIn = document.getElementById('pageUrl');
+    const form       = document.getElementById('bookingForm');
+    const formMsg    = document.getElementById('formMsg');
+    const pageUrlIn  = document.getElementById('pageUrl');
 
     // Set page URL
     pageUrlIn.value = window.location.href;
@@ -229,24 +229,34 @@
       slotSelect.innerHTML = '<option>Loading…</option>';
 
       try {
-        const res = await fetch(BOOKING_URL, {
+        const res  = await fetch(BOOKING_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             action: 'check_availability',
             day: day
           })
         });
-        
-        const data = await res.json();
+        const data    = await res.json();
         const busyArr = data.busy || data.body?.busy || data.data?.busy || [];
-        const busyLocal = busyArr.map(ts => ts.slice(0,16));
-        const freeSlots = [];
 
-        // Generate time slots (9AM-6PM with 30-minute intervals)
+        // Convert each busy timestamp into local YYYY-MM-DDTHH:MM
+        const busyLocal = busyArr.map(ts => {
+          const date = new Date(ts);
+          const y    = date.getFullYear();
+          const m    = String(date.getMonth() + 1).padStart(2, '0');
+          const d    = String(date.getDate())     .padStart(2, '0');
+          const hh   = String(date.getHours())    .padStart(2, '0');
+          const mm   = String(date.getMinutes())  .padStart(2, '0');
+          return `${y}-${m}-${d}T${hh}:${mm}`;
+        });
+
+        const freeSlots = [];
         for (let h = 9; h < 18; h++) {
-          for (let m of [0,30]) {
-            const key = `${day}T${String(h).padStart(2,'0')}:${m?'30':'00'}`;
+          for (let m of [0, 30]) {
+            const hh  = String(h).padStart(2, '0');
+            const mm  = m ? '30' : '00';
+            const key = `${day}T${hh}:${mm}`;
             if (!busyLocal.includes(key)) freeSlots.push(key);
           }
         }
@@ -256,8 +266,11 @@
         } else {
           slotSelect.innerHTML = '<option value="">Select a time</option>';
           freeSlots.forEach(s => {
-            const t = s.slice(11,16);
-            slotSelect.insertAdjacentHTML('beforeend', `<option value="${s}">${t}</option>`);
+            const t = s.slice(11, 16);
+            slotSelect.insertAdjacentHTML(
+              'beforeend',
+              `<option value="${s}">${t}</option>`
+            );
           });
         }
       } catch {
@@ -273,13 +286,13 @@
 
       const payload = {
         firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        company: document.getElementById('company').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        slot: slotSelect.value,
-        pageUrl: pageUrlIn.value,
-        timeZone: TIME_ZONE
+        lastName:  document.getElementById('lastName').value,
+        company:   document.getElementById('company').value,
+        phone:     document.getElementById('phone').value,
+        email:     document.getElementById('email').value,
+        slot:      slotSelect.value,
+        pageUrl:   pageUrlIn.value,
+        timeZone:  TIME_ZONE
       };
 
       try {
@@ -295,7 +308,7 @@
         if (res.ok) {
           form.reset();
           slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-          formMsg.textContent = 'Your meeting is confirmed. Check your inbox.';
+          formMsg.textContent   = 'Your meeting is confirmed. Check your inbox.';
         } else if (res.status === 409) {
           formMsg.textContent = 'That time has just been taken. Please choose another.';
           fetchTimes();
@@ -308,5 +321,6 @@
     }
   });
 </script>
+
 </body>
 </html>
