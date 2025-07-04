@@ -653,11 +653,16 @@ input.addEventListener('input', () => {
   input.style.height = input.scrollHeight + 'px';
 });
 
-/* ── 8.  give focus on load ───────────────────────────────── */
+/* ── 8.  give focus on load (desktop only) ─────────────────── */
 window.addEventListener('load', () => {
-  input.focus({ preventScroll: true });
+  const isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (!isMobile) {
+    input.focus({ preventScroll: true });
+  }
 });
-
 /* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
 const menuBtn  = document.querySelector('.mobile-menu-btn');
 const navMenu  = document.querySelector('nav ul');
