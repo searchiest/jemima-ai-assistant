@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- Reset and variables ---------- */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+    --primary:#1a1a2e;
+    --accent:#4f46e5;
+    --light:#ffffff;
+    --dark:#000000;
+    --gray:#4a4a4a;
+    --light-gray:#f5f7fa;
+    --transition:all 0.3s ease;
+    --chat-bg:#f9f9ff;
+    --user-bubble:#4f46e5;
+    --ai-bubble:#f0f4ff;
+    --chat-border:#e0e0e0;
+    --chat-input-bg:#ffffff;
+}
+
+/* ---------- Page ---------- */
+body{
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+    color:var(--dark);
+    line-height:1.6;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+/* ---------- Header ---------- */
+header{
+    padding:25px 0;
+    position:fixed;top:0;width:100%;z-index:1000;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.header-container{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
+.logo span{color:var(--accent);}
+nav ul{display:flex;list-style:none;}
+nav ul li{margin-left:30px;}
+nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
+nav ul li a:hover{color:var(--accent);}
+nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+nav ul li a:hover::after{width:100%;}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+
+/* ---------- Hero ---------- */
+.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
+.hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
+.hero h1{font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
+.hero h1 span{position:relative;}
+.hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
+
+/* ---------- Chat box ---------- */
+.ai-chat-box{
+    background:#fff;border-radius:25px;padding:30px;
+    box-shadow:0 25px 50px rgba(0,0,0,0.08);
+    margin:50px auto 0;max-width:650px;position:relative;overflow:hidden;
+    border:1px solid rgba(0,0,0,0.05);animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;transform:translateY(20px);
+}
+.ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
+.chat-header{display:flex;align-items:center;margin-bottom:15px;}
+.ai-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#818cf8,var(--accent));display:flex;align-items:center;justify-content:center;margin-right:15px;overflow:hidden;border:3px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+.ai-avatar img{width:100%;height:100%;object-fit:cover;}
+.ai-info h3{font-size:1.3rem;color:var(--dark);margin-bottom:3px;font-weight:600;text-align:left;}
+.ai-info p{color:var(--gray);font-size:0.9rem;background:#f0f4ff;padding:3px 10px;border-radius:15px;display:inline-block;font-weight:500;text-align:left;}
+
+/* ---------- Chat body ---------- */
+.chat-body{
+    background:var(--chat-bg);border-radius:20px;padding:20px;
+    max-height:350px;overflow-y:auto;margin-bottom:20px;
+    display:flex;flex-direction:column;gap:15px;
+    align-items:flex-start;
+}
+
+/* hide the pane until the first message arrives */
+.chat-body{
+    background:#ffffff;
+    display:none;
+}
+
+.chat-bubble{
+    max-width:85%;padding:15px 20px;border-radius:20px;
+    animation:fadeIn 0.3s ease;box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    display:inline-block;
+}
+
+.chat-bubble{
+    width:100%;
+    max-width:100%;
+    display:block;
+}
+
+.ai-bubble{background:var(--ai-bubble);border-radius:20px 20px 20px 5px;color:var(--dark);}
+.user-bubble{background:var(--user-bubble);border-radius:20px 20px 5px 20px;color:#fff;align-self:flex-end;}
+.chat-bubble p{font-size:1.1rem;line-height:1.5;text-align:left;}
+
+/* ---------- Chat input ---------- */
+.chat-input-form{
+    margin-top:20px;position:relative;border:1px solid var(--chat-border);
+    border-radius:16px;background:var(--chat-input-bg);
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);overflow:hidden;transition:var(--transition);
+}
+.chat-input-form:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,0.2);}
+textarea#chat-input{
+    width:100%;border:none;resize:none;padding:16px 60px 16px 20px;
+    font-family:"Poppins",sans-serif;font-size:1rem;min-height:60px;max-height:150px;
+    outline:none;background:transparent;color:var(--dark);line-height:1.5;
+}
+textarea#chat-input::placeholder{color:#a0aec0;}
+#chat-send{
+    position:absolute;right:12px;bottom:12px;width:40px;height:40px;border:none;
+    border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);
+}
+#chat-send:hover{background:#4338ca;transform:scale(1.05);}
+#chat-send i{font-size:1.1rem;}
+
+/* ---------- Form Section ---------- */
+.form-section {
+    background: var(--accent);
+    padding: 60px 0;
+    border-radius: 30px;
+    margin: 50px auto;
+    color: white;
+    width: 100%;
+    max-width: calc(630px + 30px); /* 300px card + 300px card + 30px gap */
+}
+
+.form-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.form-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-section p {
+    max-width: 700px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.booking-form {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    max-width: 630px; /* Match the width of two cards plus gap */
+}
+
+.booking-form label {
+    font-weight: 600;
+    color: white;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: var(--transition);
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255,255,255,0.2);
+}
+
+.booking-form input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.booking-form button {
+    background: white;
+    color: var(--accent);
+    padding: 16px 45px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 10px;
+}
+
+.booking-form button:hover {
+    background: var(--light-gray);
+    transform: translateY(-2px);
+}
+
+/* ---------- Services Section ---------- */
+.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px;}
+.section-header{text-align:center;margin-bottom:70px;}
+.section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
+.section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
+.service-card{
+    background:#fff;border-radius:20px;padding:40px 30px;text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;transition:var(--transition);
+    width: 100%;
+    max-width: 300px; /* Fixed width for cards */
+    margin: 0 auto; /* Center cards */
+}
+.service-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
+.service-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
+.service-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
+.service-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
+.service-card p{color:var(--gray);font-size:1.05rem;}
+
+.user-bubble, .ai-bubble {
+    white-space: pre-wrap;
+}
+
+/* ---------- Quick-link section ---------- */
+.quick-links-wrapper{
+    margin:20px 0;
+}
+
+.quick-links-title{
+    font-size:1rem;
+    font-weight:600;
+    color:var(--dark);
+    margin:0 0 8px 0;
+    text-align:left;
+}
+
+.quick-links-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.qlink{
+    padding:6px 12px;
+    border-radius:10px;
+    background:#4f46e5;
+    color:#ffffff;
+    font-size:0.85rem;
+    text-decoration:none;
+    transition:var(--transition);
+    white-space:nowrap;
+    text-align:left;
+}
+
+.qlink:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+}
+
+/* Description Text */
+.description-text {
+    max-width: 650px;
+    margin: 40px auto 0;
+    font-size: 1.25rem;
+    color: var(--gray);
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    font-weight: 400;
+}
+.highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---------- Responsive ---------- */
+@media (max-width:768px){
+    .mobile-menu-btn{
+        display:block;
+        margin-left:auto;
+    }
+
+    nav ul{
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#fff;
+        padding:20px 0;
+        box-shadow:0 10px 15px rgba(0,0,0,0.1);
+    }
+    nav ul.show{display:flex;}
+    nav ul li{
+        text-align:center;
+        margin:10px 0;
+    }
+
+    .hero{padding:140px 0 20px;}
+    .hero h1{font-size:3.7rem;}
+
+    .chat-body{max-height:300px;padding:15px;}
+    .chat-bubble{padding:12px 16px;}
+    .chat-bubble p{font-size:1rem;}
+}
+
+@media (max-width:992px) {
+    .form-section {
+        max-width: 630px; /* Same as mobile */
+    }
+    .service-card {
+        max-width: 100%; /* Allow cards to take full width on tablet */
+    }
+}
+
+@media (max-width:576px){
+    .hero h1{font-size:2.4rem;}
+    .ai-chat-box{padding:20px;}
+    .chat-bubble p{font-size:0.95rem;}
+    .form-section {
+        border-radius: 20px;
+        padding: 40px 0;
+    }
+}
+
+/* Services grid - force two columns on desktop */
+@media (min-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 300px);
+        justify-content: center;
+    }
+}
+
+/* Keep the hero heading on one line at desktop width */
+@media (min-width: 992px) {
+    .hero-content {
+        max-width: 1100px;
+    }
+    .hero h1 {
+        white-space: nowrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo">jemima<span>.ai</span></a>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI <span>Sales & Marketing</span> Solutions</h1>
+                
+                <!-- AI Chat Box -->
+                <div class="ai-chat-box">
+                    <div class="chat-header">
+                        <div class="ai-avatar">
+                            <img src="jemima.png" alt="Jemima AI">
+                        </div>
+                        <div class="ai-info">
+                            <h3>Jemima</h3>
+                            <p>Business Solutions Manager</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-bubble">
+                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> Automation.</p>
+                    </div>
+                    <!-- Chat area -->
+                    <div id="chat-body" class="chat-body"></div>
+                    <!-- Chat Input Form -->
+                    <div class="chat-input-form">
+                        <form onsubmit="sendMessage(); return false;">
+                            <textarea id="chat-input" required></textarea>
+                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+
+<!-- Chat Suggestions -->
+<div class="quick-links-wrapper">
+  <h4 class="quick-links-title">Chat Suggestions</h4>
+
+  <div id="chat-quick-links" class="quick-links-list">
+    <a href="#" class="qlink" data-msg="I'd like to book a 30 minute discovery call">Book a call</a>
+    <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
+    <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
+    <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
+  </div>
+</div>
+
+                </div>
+
+                <!-- Description Text -->
+                <div class="description-text">
+                    Transform your service business with our cutting-edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sales & Marketing Automation</h2>
+                <p>AI Solutions for Lead to Revenue Operations</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Lead Generation</h3>
+                    <p>AI powered systems that identify and qualify leads day and night, increasing your conversion rates.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Sales Automation</h3>
+                    <p>Intelligent sales pipelines that nurture prospects and close deals automatically.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Customer Service</h3>
+                    <p>Round the clock AI support agents that resolve issues instantly and improve satisfaction.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Digital Marketing</h3>
+                    <p>Automated campaigns, content creation, and analytics for digital marketing success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+  <!-- Form Section with Booking Form -->
+  <section class="form-section">
+    <div class="container">
+      <h2>Reserve your slot</h2>
+      <p>Fill out the form below to book your meeting with our team.</p>
+      
+      <form class="booking-form" id="bookingForm" autocomplete="on">
+        <div>
+          <label for="firstName">First name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            autocomplete="given-name"
+            placeholder="Jane"
+            required
+          />
+        </div>
+        <div>
+          <label for="lastName">Last name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            autocomplete="family-name"
+            placeholder="Doe"
+            required
+          />
+        </div>
+        <div>
+          <label for="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            autocomplete="organization"
+            placeholder="Your company"
+          />
+        </div>
+        <div>
+          <label for="phone">Telephone number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            autocomplete="tel"
+            placeholder="01234567890"
+          />
+        </div>
+        <div>
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+        <div>
+          <label for="day">Choose a day</label>
+          <input
+            type="date"
+            id="day"
+            name="day"
+            required
+          />
+        </div>
+        <div>
+          <label for="slot">Choose a time</label>
+          <select
+            id="slot"
+            name="slot"
+            required
+          >
+            <option value="">Pick a day first</option>
+          </select>
+        </div>
+
+        <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+
+        <button type="submit">Book now</button>
+      </form>
+      <p id="formMsg"></p>
+    </div>
+  </section>
+
+
+</body>
+</html>
