@@ -52,6 +52,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 /* ---------- Reset and variables ---------- */
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -184,6 +185,15 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 /* ---------- Service and solution sections ---------- */
   
 .services
+  { background: white;
+    padding: 60px 0;
+    border-radius: 30px;
+    margin: 50px auto;
+    color: white;
+    width: calc(100% - 60px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
+
+.solutions
   { background: white;
     padding: 60px 0;
     border-radius: 30px;
@@ -381,12 +391,13 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 .form-section h2 {
     font-size: 2.2rem;
     margin-bottom: 20px;
+    margin-top: 40px;
     font-weight: 600;
 }
 
 .form-section p {
     max-width: 700px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     font-size: 1.1rem;
     line-height: 1.7;
 }
@@ -440,6 +451,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     transition: var(--transition);
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 .booking-form button:hover {
@@ -511,6 +523,106 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   }
 }
 
+/* ---------- Service cards – extra horizontal space ---------- */
+
+/* Small tablets and up */
+@media (min-width: 576px) {
+  .solutions .container {
+    padding-left: 40px;   /* 40 px each side */
+    padding-right: 40px;
+  }
+}
+
+/* Desktops and large laptops */
+@media (min-width: 992px) {
+  .solutions .container {
+    padding-left: 40px;   /* 80 px each side */
+    padding-right: 40px;
+  }
+}
+
+/* ---------- Calendar icon – corrected spelling ---------- */
+
+/* Hide the native WebKit icon, keep its click area */
+.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;              /* invisible but clickable */
+  position: relative;
+}
+
+/* Draw a white calendar symbol in the same spot */
+.booking-form input[type="date"] {
+  position: relative;      /* anchor for the pseudo-element */
+}
+.booking-form input[type="date"]::after {
+  content: "";
+  position: absolute;
+  right: 14px;             /* move left or right if needed */
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  background:
+    url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h3V2Zm13 6H4v12h16V8Zm-5 3v5h5v-5h-5Z'/%3E%3C/svg%3E")
+    no-repeat center center / contain;
+  pointer-events: none;    /* clicks still reach the real picker */
+}
+
+
+/* ---------- Match section width on very small screens ---------- */
+@media (max-width: 575.98px) {
+  .services,
+  .solutions {
+    width: calc(100% - 40px);   /* 20 px gap each side, same as the rest */
+  }
+}
+
+/* ---------- Time dropdown: white field text, white arrow ---------- */
+
+/* closed field */
+/* ---------- Time field: match pale-purple background ---------- */
+#slot{
+  background-color: rgba(255,255,255,0.1);                 /* light purple */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E"); /* arrow */
+  appearance:none;                        /* hide built-in arrow                  */
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px 6px;
+}
+
+/* open list */
+#slot option{
+  color:var(--dark);                      /* black items in the drop-down list    */
+}
+
+/* ── Floating form message (full-width, semi-transparent) ─────────── */
+#formMsg{
+  position:fixed;
+  top:0;
+  left:0;           /* start at left edge  */
+  right:0;          /* stretch to right    */
+  width:100%;
+  /* remove any explicit width (or keep width:auto) */
+
+  z-index:9999;
+  padding:14px 20px;
+  text-align:center;
+  font-weight:600;
+  color:#ffffff;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+
+  /* slide-in animation */
+  transform:translateY(-100%);
+  opacity:0;
+  transition:opacity .3s ease, transform .3s ease;
+}
+
+#formMsg.show   {transform:translateY(0);opacity:1;}
+#formMsg.sending{background:rgba(255,152,0,.90);}   /* orange */
+#formMsg.success{background:rgba( 76,175,80,.90);}   /* green  */
+#formMsg.error  {background:rgba(229, 57,53,.90);}   /* red    */
+
+
 </style>
 
 </head>
@@ -576,7 +688,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h4 class="quick-links-title">Chat Suggestions</h4>
 
   <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="I'd like to book a 30 minute discovery call">Book a call</a>
+    <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
     <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
@@ -693,6 +805,99 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
     </section>
+
+
+  <!-- Form Section with Booking Form -->
+  <section class="form-section">
+    <div class="container">
+      <h2>Book A Discovery Call</h2>
+      <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
+      
+      <form class="booking-form" id="bookingForm" autocomplete="on">
+        <div>
+          <label for="firstName">First name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            autocomplete="given-name"
+            placeholder="Jane"
+            required
+          />
+        </div>
+        <div>
+          <label for="lastName">Last name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            autocomplete="family-name"
+            placeholder="Doe"
+            required
+          />
+        </div>
+        <div>
+          <label for="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            autocomplete="organization"
+            placeholder="Your company"
+          />
+        </div>
+        <div>
+          <label for="phone">Telephone number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            autocomplete="tel"
+            placeholder="01234567890"
+          />
+        </div>
+        <div>
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+        <div>
+          <label for="day">Choose a day</label>
+          <input
+            type="date"
+            id="day"
+            name="day"
+            required
+          />
+        </div>
+        <div>
+          <label for="slot">Choose a time</label>
+          <select
+            id="slot"
+            name="slot"
+            required
+          >
+            <option value="">Pick a day first</option>
+          </select>
+        </div>
+
+        <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+
+        <button type="submit">Book now</button>
+      </form>
+      <p id="formMsg"></p>
+    </div>
+  </section>
+
+
+
+
 
     <!-- Footer -->
   <!-- Footer -->
@@ -847,7 +1052,113 @@ document.getElementById('chat-quick-links')
       sendMessage();               // reuse the same send routine
     }
   });
-
 </script>
+<script>
+/* ── Booking & floating message ─────────────────────────── */
+const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+const TIME_ZONE   = 'Europe/London';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* handles ------------------------------------------------ */
+  const dayInput   = document.getElementById('day');
+  const slotSelect = document.getElementById('slot');
+  const form       = document.getElementById('bookingForm');
+  const formMsg    = document.getElementById('formMsg');
+  const pageUrlIn  = document.getElementById('pageUrl');
+
+  /* helper: show / hide banner ----------------------------- */
+  function flash(type, text, keepMs = 3000){
+    formMsg.className = '';            // clear all classes
+    formMsg.textContent = text;
+    if(type) formMsg.classList.add(type);
+    formMsg.classList.add('show');     // slide-in
+    clearTimeout(flash._timer);
+    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+  }
+
+  /* init --------------------------------------------------- */
+  pageUrlIn.value = window.location.href;
+  dayInput.addEventListener('change',  fetchTimes);
+  form    .addEventListener('submit',  submitBooking);
+
+  /* fetch available times ---------------------------------- */
+  async function fetchTimes(){
+    const day = dayInput.value;
+    if(!day){
+      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+      return;
+    }
+    slotSelect.disabled = true;
+    slotSelect.innerHTML = '<option>Loading…</option>';
+
+    try{
+      const res  = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'check_availability', day})
+                  });
+      const data = await res.json();
+      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+      const free   = payload.slots ?? [];
+
+      slotSelect.innerHTML = free.length
+        ? '<option value="">Select a time</option>'
+        : '<option value="">No slots available</option>';
+
+      free.forEach(s=>{
+        if(!s.startsWith(day)) return;
+        const t = s.slice(11,16);
+        slotSelect.insertAdjacentHTML('beforeend',
+          `<option value="${s}">${t}</option>`);
+      });
+    }catch{
+      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+    }finally{
+      slotSelect.disabled = false;
+    }
+  }
+
+  /* submit booking ---------------------------------------- */
+  async function submitBooking(e){
+    e.preventDefault();
+    flash('sending','Sending…',10_000);         // orange bar
+
+    const payload = {
+      firstName:form.firstName.value,
+      lastName :form.lastName.value,
+      company  :form.company.value,
+      phone    :form.phone.value,
+      email    :form.email.value,
+      slot     :slotSelect.value,
+      pageUrl  :pageUrlIn.value,
+      timeZone :TIME_ZONE
+    };
+
+    try{
+      const res = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'create_booking',...payload})
+                  });
+
+      if(res.ok){
+        form.reset();
+        slotSelect.innerHTML =
+          '<option value="">Pick a day first</option>';
+        flash('success','Your meeting is confirmed. Check your inbox.');
+      }else if(res.status===409){
+        flash('error','That time has just been taken. Please choose another.');
+        fetchTimes();
+      }else{
+        flash('error','An error occurred. Please try again later.');
+      }
+    }catch{
+      flash('error','Could not reach the server. Try again later.');
+    }
+  }
+});
+</script>
+
 </body>
 </html>
