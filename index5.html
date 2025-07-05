@@ -4,6 +4,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+
+/* ---------- Header ---------- */
+header{
+    padding:25px 0;
+    position:fixed;top:0;width:100%;z-index:1000;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.header-container{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
+.logo span{color:var(--accent);}
+nav ul{display:flex;list-style:none;}
+nav ul li{margin-left:30px;}
+nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
+nav ul li a:hover{color:var(--accent);}
+nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+nav ul li a:hover::after{width:100%;}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+
+/* ---------- Hero ---------- */
+.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
+.hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
+.hero h1{font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
+.hero h1 span{position:relative;}
+.hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
+
+
 /* ---------- Reset and variables ---------- */
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -32,95 +60,6 @@ body{
 }
 .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
 
-/* ---------- Header ---------- */
-header{
-    padding:25px 0;
-    position:fixed;top:0;width:100%;z-index:1000;
-    background:rgba(255,255,255,0.95);
-    backdrop-filter:blur(10px);
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
-}
-.header-container{display:flex;justify-content:space-between;align-items:center;}
-.logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
-.logo span{color:var(--accent);}
-nav ul{display:flex;list-style:none;}
-nav ul li{margin-left:30px;}
-nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
-nav ul li a:hover{color:var(--accent);}
-nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
-nav ul li a:hover::after{width:100%;}
-.mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
-
-/* ---------- Hero ---------- */
-.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
-.hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
-.hero h1{font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
-.hero h1 span{position:relative;}
-.hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
-
-/* ---------- Chat box ---------- */
-.ai-chat-box{
-    background:#fff;border-radius:25px;padding:30px;
-    box-shadow:0 25px 50px rgba(0,0,0,0.08);
-    margin:50px auto 0;max-width:650px;position:relative;overflow:hidden;
-    border:1px solid rgba(0,0,0,0.05);animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;transform:translateY(20px);
-}
-.ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
-.chat-header{display:flex;align-items:center;margin-bottom:15px;}
-.ai-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#818cf8,var(--accent));display:flex;align-items:center;justify-content:center;margin-right:15px;overflow:hidden;border:3px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-.ai-avatar img{width:100%;height:100%;object-fit:cover;}
-.ai-info h3{font-size:1.3rem;color:var(--dark);margin-bottom:3px;font-weight:600;text-align:left;}
-.ai-info p{color:var(--gray);font-size:0.9rem;background:#f0f4ff;padding:3px 10px;border-radius:15px;display:inline-block;font-weight:500;text-align:left;}
-
-/* ---------- Chat body ---------- */
-.chat-body{
-    background:var(--chat-bg);border-radius:20px;padding:20px;
-    max-height:350px;overflow-y:auto;margin-bottom:20px;
-    display:flex;flex-direction:column;gap:15px;
-    align-items:flex-start;
-}
-
-/* hide the pane until the first message arrives */
-.chat-body{
-    background:#ffffff;
-    display:none;
-}
-
-.chat-bubble{
-    max-width:85%;padding:15px 20px;border-radius:20px;
-    animation:fadeIn 0.3s ease;box-shadow:0 3px 8px rgba(0,0,0,0.05);
-    display:inline-block;
-}
-
-.chat-bubble{
-    width:100%;
-    max-width:100%;
-    display:block;
-}
-
-.ai-bubble{background:var(--ai-bubble);border-radius:20px 20px 20px 5px;color:var(--dark);}
-.user-bubble{background:var(--user-bubble);border-radius:20px 20px 5px 20px;color:#fff;align-self:flex-end;}
-.chat-bubble p{font-size:1.1rem;line-height:1.5;text-align:left;}
-
-/* ---------- Chat input ---------- */
-.chat-input-form{
-    margin-top:20px;position:relative;border:1px solid var(--chat-border);
-    border-radius:16px;background:var(--chat-input-bg);
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);overflow:hidden;transition:var(--transition);
-}
-.chat-input-form:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,0.2);}
-textarea#chat-input{
-    width:100%;border:none;resize:none;padding:16px 60px 16px 20px;
-    font-family:"Poppins",sans-serif;font-size:1rem;min-height:60px;max-height:150px;
-    outline:none;background:transparent;color:var(--dark);line-height:1.5;
-}
-textarea#chat-input::placeholder{color:#a0aec0;}
-#chat-send{
-    position:absolute;right:12px;bottom:12px;width:40px;height:40px;border:none;
-    border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);
-}
-#chat-send:hover{background:#4338ca;transform:scale(1.05);}
-#chat-send i{font-size:1.1rem;}
 
 /* ---------- Form Section ---------- */
 .form-section {
@@ -235,45 +174,6 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 .service-card p,
 .solution-card p{color:var(--gray);font-size:1.05rem;}
 
-.user-bubble, .ai-bubble {
-    white-space: pre-wrap;
-}
-
-/* ---------- Quick-link section ---------- */
-.quick-links-wrapper{
-    margin:20px 0;
-}
-
-.quick-links-title{
-    font-size:1rem;
-    font-weight:600;
-    color:var(--dark);
-    margin:0 0 8px 0;
-    text-align:left;
-}
-
-.quick-links-list{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.qlink{
-    padding:6px 12px;
-    border-radius:10px;
-    background:#4f46e5;
-    color:#ffffff;
-    font-size:0.85rem;
-    text-decoration:none;
-    transition:var(--transition);
-    white-space:nowrap;
-    text-align:left;
-}
-
-.qlink:hover{
-    background:#7c3aed;
-    transform:translateY(-2px);
-}
 
 /* Description Text */
 .description-text {
@@ -369,11 +269,6 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 </style>
 </head>
 <body>
-
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 
   <!-- Header -->
