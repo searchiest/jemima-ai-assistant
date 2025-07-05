@@ -1,9 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- [Previous head content remains exactly the same until the form section CSS] -->
-  <style>
-    /* [All previous CSS remains the same until the form section] */
+<!-- Basic setup -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Automation Solutions for Sales and Marketing | jemima.ai</title>
+
+<!-- SEO -->
+<meta name="description" content="Explore AI solutions for sales, marketing and support at jemima.ai. Drive efficiency with AI chat and workflow tools.">
+<link rel="canonical" href="https://jemima.ai/solutions.html">
+<meta name="robots" content="index, follow">
+<meta name="author" content="jemima.ai">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://jemima.ai/solutions.html">
+<meta property="og:title"       content="jemima.ai | AI Sales and Marketing Solutions">
+<meta property="og:description" content="Explore AI solutions for sales, marketing, support and digital marketing at jemima.ai. Drive efficiency with AI chat and workflow tools.">
+<meta property="og:image"       content="og-image.jpg">
+
+<!-- Twitter -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:url"         content="jemima.ai | AI Sales and Marketing Solutions">
+<meta name="twitter:title"       content="jemima.ai | AI Solutions">
+<meta name="twitter:description" content="Explore AI solutions for sales, marketing, support and digital marketing at jemima.ai. Drive efficiency with AI chat and workflow tools.">
+<meta name="twitter:image"       content="og-image.jpg">
+
+<!-- Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#4f46e5">
+
+<!-- Performance: pre-connect and fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons and extra CSS -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-REPLACE_WITH_LATEST_HASH"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
+<!-- End Google Tag Manager -->
+
+
+
+
+<style>
 
     /* ---------- Form Section (Styled like Pre-Footer) ---------- */
     .form-section {
@@ -52,8 +107,241 @@
         margin: 0 auto;
     }
 
-    /* [Rest of your existing CSS remains the same] */
-  </style>
+
+    /* CSS for blog-style solutions page */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+        --primary:#1a1a2e;
+        --accent:#4f46e5;
+        --light:#ffffff;
+        --dark:#000000;
+        --gray:#4a4a4a;
+        --light-gray:#f5f7fa;
+        --transition:all 0.3s ease;
+        --gradient: linear-gradient(90deg, #4f46e5 0%, #818cf8 50%, #a5b4fc 100%);
+    }
+    
+    body{
+        font-family:"Poppins",sans-serif;
+        background: var(--light);
+        color:var(--dark);
+        line-height:1.6;
+        overflow-x:hidden;
+        min-height:100vh;
+    }
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+    
+    /* Header */
+    header{
+        padding:25px 0;
+        position:fixed;top:0;width:100%;z-index:1000;
+        background:rgba(255,255,255,0.95);
+        backdrop-filter:blur(10px);
+        box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    }
+    .header-container{display:flex;justify-content:space-between;align-items:center;}
+    .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
+    .logo span{color:var(--accent);}
+    nav ul{display:flex;list-style:none;}
+    nav ul li{margin-left:30px;}
+    nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
+    nav ul li a:hover{color:var(--accent);}
+    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+    nav ul li a:hover::after{width:100%;}
+    .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+    
+    /* Blog-style hero */
+    .blog-hero {
+        padding: 180px 0 40px;
+        text-align: center;
+        background: white;
+        position: relative;
+    }
+    .blog-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #4f46e5 0%, #818cf8 50%, #a5b4fc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+    .blog-hero .meta {
+        color: var(--gray);
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    .blog-hero .meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    /* Blog content */
+    .blog-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px 80px;
+    }
+    
+    /* Solutions sections */
+    .solution-section {
+        margin-bottom: 60px;
+    }
+    .solution-section h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+        color: var(--dark);
+        position: relative;
+        padding-bottom: 15px;
+    }
+    .solution-section h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+    }
+    .solution-section p {
+        color: var(--gray);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 25px;
+    }
+    
+    /* Cards grid */
+    .solutions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin: 40px 0;
+    }
+    .solution-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.03);
+        transition: var(--transition);
+    }
+    .solution-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    .solution-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+    }
+    .solution-card h3 i {
+        margin-right: 12px;
+        color: var(--accent);
+        font-size: 1.3rem;
+    }
+    .solution-card p {
+        font-size: 1rem;
+        color: var(--gray);
+    }
+    
+    /* Process steps */
+    .process-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin: 40px 0;
+    }
+    .process-step {
+        text-align: center;
+        padding: 30px 20px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .step-number {
+        width: 50px;
+        height: 50px;
+        background: var(--accent);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 auto 20px;
+    }
+    
+    
+    
+    /* Spinner */
+    .spinner {
+        display: none;
+        width: 40px;
+        height: 40px;
+        margin: 20px auto;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--accent);
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Footer */
+    footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
+    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
+    .footer-col h3{font-size:1.3rem;margin-bottom:20px;color:#fff;font-weight:600;}
+    .footer-links{list-style:none;}
+    .footer-links li{margin-bottom:12px;}
+    .footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);font-weight:400;}
+    .footer-links a:hover{color:#fff;}
+    .social-links{display:flex;gap:15px;margin-top:20px;}
+    .social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
+    .social-links a:hover{background:var(--accent);transform:translateY(-3px);}
+    footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:30px;}
+    
+    /* Responsive */
+    @media (max-width:768px){
+        .mobile-menu-btn{display:block;margin-left:auto;}
+        nav ul{
+            display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;
+            background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,0.1);
+        }
+        nav ul.show{display:flex;}
+        nav ul li{margin:10px 0;text-align:center;}
+        .blog-hero{padding:140px 0 20px;}
+        .blog-hero h1{font-size:2.8rem;}
+        .contact-form {
+            padding: 40px;
+        }
+    }
+    @media (max-width:576px){
+        .blog-hero h1{font-size:2.2rem;}
+        .blog-hero .meta {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .solutions-grid{grid-template-columns:1fr;}
+        .process-steps{grid-template-columns:1fr;}
+        .contact-form {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
 </head>
 <body>
   <!-- [Previous HTML content remains the same until the form section] -->
@@ -71,6 +359,107 @@
         </div>
     </section>
 
+
+
+   <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">jemima<span>.ai</span></a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="solutions.html" class="active">Solutions</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog-style Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>AI Solutions for Modern Businesses</h1>
+            <div class="meta">
+                <span><i class="far fa-clock"></i> Updated June 24, 2025</span>
+                <span><i class="far fa-bookmark"></i> Business Solutions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="blog-content">
+        <div class="solution-section">
+            <h2>Why AI Solutions Matter</h2>
+            <p>In today's competitive landscape, businesses need every advantage they can get. Our AI solutions provide the tools to automate critical processes, enhance decision-making, and deliver exceptional customer experiences at scale.</p>
+            <p>With over 87% of leading companies now investing in AI technologies, the question isn't whether to adopt AI, but how to implement it effectively for your specific business needs.</p>
+        </div>
+
+        <div class="solution-section">
+            <h2>Our Core AI Solutions</h2>
+            <p>We offer a comprehensive suite of AI-powered solutions designed to address the most pressing challenges across sales, marketing, customer service, and operations.</p>
+            
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3><i class="fas fa-robot"></i> Lead Generation AI</h3>
+                    <p>Intelligent systems that identify and qualify leads 24/7, increasing conversion rates by up to 45% while reducing acquisition costs.</p>
+                </div>
+                <div class="solution-card">
+                    <h3><i class="fas fa-shopping-cart"></i> Sales Automation</h3>
+                    <p>End-to-end sales solutions that nurture prospects, close deals, and manage customer relationships with minimal human intervention.</p>
+                </div>
+                <div class="solution-card">
+                    <h3><i class="fas fa-headset"></i> Customer Service AI</h3>
+                    <p>24/7 virtual support agents that resolve common issues instantly, reducing response times by 80% and improving satisfaction scores.</p>
+                </div>
+                <div class="solution-card">
+                    <h3><i class="fas fa-bullhorn"></i> Marketing Automation</h3>
+                    <p>AI-powered campaigns that deliver personalized content at scale, increasing engagement and conversion rates across all channels.</p>
+                </div>
+                <div class="solution-card">
+                    <h3><i class="fas fa-users"></i> HR & Recruitment</h3>
+                    <p>Intelligent systems that streamline hiring, onboarding, and employee engagement, reducing time-to-hire by 60%.</p>
+                </div>
+                <div class="solution-card">
+                    <h3><i class="fas fa-chart-pie"></i> Business Intelligence</h3>
+                    <p>Advanced analytics that transform raw data into actionable insights, enabling data-driven decision making at every level.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="solution-section">
+            <h2>Our Implementation Process</h2>
+            <p>We follow a proven methodology to ensure successful AI adoption and maximum ROI for your business.</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Assessment</h3>
+                    <p>We analyze your business processes to identify automation opportunities.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Customization</h3>
+                    <p>We tailor our AI solutions to your specific business needs and goals.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Implementation</h3>
+                    <p>Our experts deploy and integrate the solution with your existing systems.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Optimization</h3>
+                    <p>Continuous monitoring and improvement to maximize your ROI.</p>
+                </div>
+            </div>
+        </div>
+
+
+
     <!-- Form Section - Now matches the width of the cards above -->
     <section class="form-section">
         <div class="container">
@@ -85,6 +474,175 @@
         </div>
     </section>
 
-    <!-- [Rest of the HTML remains the same] -->
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="color: white;">jemima<span style="color: #818cf8;">.ai</span></a>
+                    <p style="color: #a0aec0; margin-top: 20px; line-height: 1.7;">Leading business solutions for forward-thinking businesses.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="solutions.html">Process Automation</a></li>
+                        <li><a href="solutions.html">Intelligent Analytics</a></li>
+                        <li><a href="solutions.html">Conversational AI</a></li>
+                        <li><a href="solutions.html">System Integration</a></li>
+                        <li><a href="solutions.html">Security Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        <li><a href="#">Webinars</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // Close menu when clicking on links
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('show');
+            });
+        });
+
+       // Set autocomplete attribute for the visible input
+        const visibleInput = phoneInput.parentElement.querySelector('.iti__tel-input');
+        if (visibleInput) {
+            visibleInput.setAttribute('autocomplete', 'tel');
+        }
+        
+        // Form submission with AJAX to n8n
+        const contactForm = document.getElementById('contactForm');
+        const spinner = document.getElementById('spinner');
+        const formFeedback = document.getElementById('formFeedback');
+        const globalMessage = document.getElementById('globalMessage');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Validate phone number
+                if (phoneInput.value.trim()) {
+                    const isValidNumber = iti.isValidNumber();
+                    if (!isValidNumber) {
+                        formFeedback.textContent = "Please enter a valid phone number";
+                        formFeedback.className = 'form-feedback form-error';
+                        formFeedback.style.display = 'block';
+                        return;
+                    }
+                }
+                
+                // Show loading spinner
+                spinner.style.display = 'block';
+                formFeedback.style.display = 'none';
+                
+                // Disable submit button
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                
+                try {
+                    // Create form data
+                    const formData = new FormData(contactForm);
+                    
+                    // Add full international number
+                    const fullNumber = iti.getNumber();
+                    if (fullNumber) {
+                        formData.set('phone', fullNumber);
+                    }
+                    
+                    // Convert to URLSearchParams for n8n
+                    const urlEncodedData = new URLSearchParams();
+                    for (const [key, value] of formData.entries()) {
+                        urlEncodedData.append(key, value);
+                    }
+                    
+                    // Send to n8n
+                    const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/contact-form', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: urlEncodedData
+                    });
+                    
+                    if (response.ok) {
+                        // Show global success message
+                        globalMessage.textContent = 'Thank you for your message! Our team will contact you shortly.';
+                        globalMessage.className = 'global-success show';
+                        
+                        // Hide after 3 seconds
+                        setTimeout(() => {
+                            globalMessage.classList.remove('show');
+                        }, 3000);
+                        
+                        // Reset form
+                        contactForm.reset();
+                        iti.setNumber(""); // Clear phone input
+                    } else {
+                        // Handle server errors
+                        const errorData = await response.text();
+                        throw new Error('Form submission failed. Please try again later.');
+                    }
+                } catch (error) {
+                    // Show error message
+                    formFeedback.textContent = `There was a problem: ${error.message}`;
+                    formFeedback.className = 'form-feedback form-error';
+                    formFeedback.style.display = 'block';
+                    
+                    console.error('Form submission error:', error);
+                } finally {
+                    // Hide spinner and re-enable button
+                    spinner.style.display = 'none';
+                    submitButton.disabled = false;
+                }
+            });
+
+    </script>
 </body>
 </html>
