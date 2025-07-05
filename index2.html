@@ -151,98 +151,6 @@ nav ul li a:hover::after{width:100%;}
     display:block;
 }
 
-
-
-/* ---------- Form Section ---------- */
-    .form-section {
-        background: var(--accent);
-        padding: 60px 0;
-        border-radius: 30px;
-        margin: 50px auto; /* Center the section */
-        color: white;
-        width: calc(50% - 15px); /* Half width minus half gap */
-        max-width: 585px; /* Matches card width */
-    }
-
-    .form-section .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        width: 100%;
-        padding: 0 20px;
-    }
-
-    .form-section h2 {
-        font-size: 2.2rem;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-
-    .form-section p {
-        max-width: 700px;
-        margin-bottom: 30px;
-        font-size: 1.1rem;
-        line-height: 1.7;
-    }
-
-    .booking-form {
-        display: grid;
-        gap: 20px;
-        width: 100%;
-    }
-
-    .booking-form label {
-        font-weight: 600;
-        color: white;
-        display: block;
-        margin-bottom: 8px;
-        text-align: left;
-    }
-
-    .booking-form input,
-    .booking-form select {
-        width: 100%;
-        padding: 14px 18px;
-        font-size: 1rem;
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 10px;
-        background: rgba(255,255,255,0.1);
-        color: white;
-        transition: var(--transition);
-    }
-
-    .booking-form input:focus,
-    .booking-form select:focus {
-        outline: none;
-        border-color: white;
-        background: rgba(255,255,255,0.2);
-    }
-
-    .booking-form input::placeholder {
-        color: rgba(255,255,255,0.7);
-    }
-
-    .booking-form button {
-        background: white;
-        color: var(--accent);
-        padding: 16px 45px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: var(--transition);
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .booking-form button:hover {
-        background: var(--light-gray);
-        transform: translateY(-2px);
-    }
-
-
 .ai-bubble{background:var(--ai-bubble);border-radius:20px 20px 20px 5px;color:var(--dark);}
 .user-bubble{background:var(--user-bubble);border-radius:20px 20px 5px 20px;color:#fff;align-self:flex-end;}
 .chat-bubble p{font-size:1.1rem;line-height:1.5;text-align:left;}
@@ -274,7 +182,17 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 }
 
 /* ---------- Service and solution sections ---------- */
-.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px;}
+  
+.services
+  { background: white;
+    padding: 60px 0;
+    border-radius: 30px;
+    margin: 50px auto;
+    color: white;
+    width: calc(100% - 60px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
+
+/*.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px; max-width:600px;}*/
 .section-header{text-align:center;margin-bottom:70px;}
 .section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
 .section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
@@ -299,11 +217,9 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 
   .user-bubble {
     white-space: pre-wrap;
-    /* or pre-line if you only want to collapse extra spaces but keep new lines */
   }
   .ai-bubble {
     white-space: pre-wrap;
-    /* or pre-line if you only want to collapse extra spaces but keep new lines */
   }
 
 /* ---------- Quick-link section ---------- */
@@ -315,8 +231,8 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     font-size:1rem;
     font-weight:600;
     color:var(--dark);
-    margin:0 0 8px 0;    /* title now flush left */
-    text-align:left;      /* left-aligned */
+    margin:0 0 8px 0;
+    text-align:left;
 }
 
 .quick-links-list{
@@ -326,11 +242,11 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 }
 
 .qlink{
-    padding:6px 12px;     /* smaller button */
+    padding:6px 12px;
     border-radius:10px;
-    background:#4f46e5;;
+    background:#4f46e5;
     color:#ffffff;
-    font-size:0.85rem;    /* smaller text */
+    font-size:0.85rem;
     text-decoration:none;
     transition:var(--transition);
     white-space:nowrap;
@@ -364,7 +280,7 @@ footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
 footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:30px;}
 /* Description Text */
 .description-text {
-    max-width: 650px;
+    max-width: 800px;
     margin: 40px auto 0;
     font-size: 1.25rem;
     color: var(--gray);
@@ -433,15 +349,170 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 
 /* Keep the hero heading on one line at desktop width */
 @media (min-width: 992px) {
-    .hero-content {          /* give the text more room */
-        max-width: 1100px;   /* raise or lower to suit */
+    .hero-content {
+        max-width: 1100px;
     }
-    .hero h1 {               /* stop the browser from breaking the line */
+    .hero h1 {
         white-space: nowrap;
     }
 }
 
+/* ---------- Form Section ---------- */
+.form-section {
+    background: var(--accent);
+    padding: 30px 0;
+    border-radius: 30px;
+    margin: 60px auto;
+    color: white;
+    width: calc(100% - 100px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */
+}
+
+.form-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 200px;
+    max-width: calc(560px * 2 + 30px);
+}
+
+.form-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-section p {
+    max-width: 700px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.booking-form {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+}
+
+.booking-form label {
+    font-weight: 600;
+    color: white;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: var(--transition);
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255,255,255,0.2);
+}
+
+.booking-form input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.booking-form button {
+    background: white;
+    color: var(--accent);
+    padding: 16px 45px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 10px;
+}
+
+.booking-form button:hover {
+    background: var(--light-gray);
+    transform: translateY(-2px);
+}
+
+
+
+/* ---------- Form Section – responsive fix ---------- */
+
+/* Reduce side padding on tablets */
+@media (max-width: 992px) {
+  .form-section .container {
+    padding: 0 40px;
+  }
+}
+
+/* Further reduce side padding on phones */
+@media (max-width: 576px) {
+  .form-section .container {
+    padding: 0 20px;
+  }
+}
+
+/* One-column layout by default */
+.booking-form {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+/* Two-column layout from 600 px upward */
+@media (min-width: 600px) {
+  .booking-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Keep the purple box away from the viewport edge */
+.form-section {
+  width: calc(100% - 40px);   /* 20 px gap each side */
+  margin: 60px auto;
+}
+
+/* Force one field per row on desktop */
+@media (min-width: 992px) {
+  .booking-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------- Service cards – extra horizontal space ---------- */
+
+/* Small tablets and up */
+@media (min-width: 576px) {
+  .services .container {
+    padding-left: 40px;   /* 40 px each side */
+    padding-right: 40px;
+  }
+}
+
+/* Desktops and large laptops */
+@media (min-width: 992px) {
+  .services .container {
+    padding-left: 40px;   /* 80 px each side */
+    padding-right: 40px;
+  }
+}
+
 </style>
+
 </head>
 <body>
 
@@ -623,95 +694,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-  <!-- Form Section with Booking Form -->
-  <section class="form-section">
-    <div class="container">
-      <h2>Reserve your slot</h2>
-      <p>Fill out the form below to book your meeting with our team.</p>
-      
-      <form class="booking-form" id="bookingForm" autocomplete="on">
-        <div>
-          <label for="firstName">First name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            autocomplete="given-name"
-            placeholder="Jane"
-            required
-          />
-        </div>
-        <div>
-          <label for="lastName">Last name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            autocomplete="family-name"
-            placeholder="Doe"
-            required
-          />
-        </div>
-        <div>
-          <label for="company">Company</label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            autocomplete="organization"
-            placeholder="Your company"
-          />
-        </div>
-        <div>
-          <label for="phone">Telephone number</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            autocomplete="tel"
-            placeholder="01234567890"
-          />
-        </div>
-        <div>
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-            required
-          />
-        </div>
-        <div>
-          <label for="day">Choose a day</label>
-          <input
-            type="date"
-            id="day"
-            name="day"
-            required
-          />
-        </div>
-        <div>
-          <label for="slot">Choose a time</label>
-          <select
-            id="slot"
-            name="slot"
-            required
-          >
-            <option value="">Pick a day first</option>
-          </select>
-        </div>
-
-        <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
-
-        <button type="submit">Book now</button>
-      </form>
-      <p id="formMsg"></p>
-    </div>
-  </section>
-
-
     <!-- Footer -->
   <!-- Footer -->
   <footer>
@@ -865,134 +847,6 @@ document.getElementById('chat-quick-links')
       sendMessage();               // reuse the same send routine
     }
   });
-
-/* ── 11.  booking form ─────────────────────── */
-  // Updated single endpoint
-  const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
-  const TIME_ZONE   = 'Europe/London';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const dayInput   = document.getElementById('day');
-    const slotSelect = document.getElementById('slot');
-    const form       = document.getElementById('bookingForm');
-    const formMsg    = document.getElementById('formMsg');
-    const pageUrlIn  = document.getElementById('pageUrl');
-
-    // Set page URL
-    pageUrlIn.value = window.location.href;
-
-    // Event listeners
-    dayInput.addEventListener('change', fetchTimes);
-    form.addEventListener('submit', submitBooking);
-
-    async function fetchTimes() {
-      const day = dayInput.value;
-      if (!day) {
-        slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-        return;
-      }
-
-      slotSelect.disabled = true;
-      slotSelect.innerHTML = '<option>Loading…</option>';
-
-      try {
-        const res  = await fetch(BOOKING_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'check_availability',
-            day: day
-          })
-        });
-
-        const data = await res.json();
-
-        // Log raw response so you can check its structure
-        console.log('Availability response:', data);
-
-        // Unpack array or object, then look under data or body if needed
-        let payload = data;
-        if (Array.isArray(payload) && payload.length) {
-          payload = payload[0];
-        }
-        payload = payload.data ?? payload.body ?? payload;
-
-        const busyArr   = payload.busy  || [];
-        const freeSlots = payload.slots || [];
-
-        if (!Array.isArray(freeSlots) || freeSlots.length === 0) {
-          slotSelect.innerHTML = '<option value="">No slots available</option>';
-        } else {
-          slotSelect.innerHTML = '<option value="">Select a time</option>';
-          freeSlots.forEach(s => {
-            // only include slots for the chosen day
-            if (!s.startsWith(day)) return;
-            const t = s.slice(11,16);
-            slotSelect.insertAdjacentHTML(
-              'beforeend',
-              `<option value="${s}">${t}</option>`
-            );
-          });
-          // if none left for that day show message
-          if (slotSelect.options.length === 1) {
-            slotSelect.innerHTML = '<option value="">No slots available</option>';
-          }
-        }
-      } catch (e) {
-        slotSelect.innerHTML = '<option value="">Error loading slots</option>';
-      } finally {
-        slotSelect.disabled = false;
-      }
-    }
-
-    async function submitBooking(e) {
-      e.preventDefault();
-      formMsg.textContent = 'Sending…';
-
-      const payload = {
-        firstName: document.getElementById('firstName').value,
-        lastName:  document.getElementById('lastName').value,
-        company:   document.getElementById('company').value,
-        phone:     document.getElementById('phone').value,
-        email:     document.getElementById('email').value,
-        slot:      slotSelect.value,
-        pageUrl:   pageUrlIn.value,
-        timeZone:  TIME_ZONE
-      };
-
-      try {
-        const res = await fetch(BOOKING_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'create_booking',
-            ...payload
-          })
-        });
-
-        if (res.ok) {
-          form.reset();
-          slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-          formMsg.textContent   = 'Your meeting is confirmed. Check your inbox.';
-        } else if (res.status === 409) {
-          formMsg.textContent = 'That time has just been taken. Please choose another.';
-          fetchTimes();
-        } else {
-          formMsg.textContent = 'An error occurred. Please try again later.';
-        }
-      } catch (e) {
-        formMsg.textContent = 'Could not reach the server. Try again later.';
-      }
-    }
-  });
-
-
-
-
-
-
-
-
 
 </script>
 </body>
