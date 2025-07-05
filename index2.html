@@ -242,6 +242,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     text-decoration:none;
     transition:var(--transition);
     white-space:nowrap;
+    text-align:left;
 }
 
 .qlink:hover{
@@ -252,7 +253,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 /* keep buttons centred on very small screens */
 @media (max-width:480px){
     .quick-links-list{
-        justify-content:center;
+        justify-content:left;
     }
 }
 
@@ -395,7 +396,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     
                     <div class="chat-bubble">
-                        <p>I am a <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, and <span class="highlight">Digital Marketing</span> Manager. How can I help?</p>
+                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> Automation.</p>
                     </div>
                     <!-- Chat area -->
                     <div id="chat-body" class="chat-body"></div>
@@ -412,10 +413,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h4 class="quick-links-title">Chat Suggestions</h4>
 
   <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="Book a call">Book a call</a>
-    <a href="#" class="qlink" data-msg="What services do you offer?">Our services</a>
+    <a href="#" class="qlink" data-msg="I'd like to book a 30 minute discovery call">Book a call</a>
+    <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
-    <a href="#" class="qlink" data-msg="How can AI help my company?">AI help</a>
+    <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
   </div>
 </div>
 
@@ -653,11 +654,16 @@ input.addEventListener('input', () => {
   input.style.height = input.scrollHeight + 'px';
 });
 
-/* ── 8.  give focus on load ───────────────────────────────── */
+/* ── 8.  give focus on load (desktop only) ─────────────────── */
 window.addEventListener('load', () => {
-  input.focus({ preventScroll: true });
+  const isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (!isMobile) {
+    input.focus({ preventScroll: true });
+  }
 });
-
 /* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
 const menuBtn  = document.querySelector('.mobile-menu-btn');
 const navMenu  = document.querySelector('nav ul');
