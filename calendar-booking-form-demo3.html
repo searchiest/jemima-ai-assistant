@@ -1,126 +1,688 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- [Previous head content remains exactly the same] -->
-  <style>
-    /* [All previous CSS remains the same until the form section] */
+  <!-- Basic setup -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Sales & Marketing Solutions | jemima.ai</title>
 
-    /* ---------- Form Section (Styled like Pre-Footer) ---------- */
+  <!-- SEO -->
+  <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
+  <link rel="canonical" href="https://jemima.ai/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="jemima.ai">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jemima.ai/">
+  <meta property="og:title" content="jemima.ai | AI Automation Solutions">
+  <meta property="og:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools.">
+  <meta property="og:image" content="og-image.jpg">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://jemima.ai/">
+  <meta name="twitter:title" content="jemima.ai | AI Automation Solutions">
+  <meta name="twitter:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools.">
+  <meta name="twitter:image" content="og-image.jpg">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+
+  <!-- Performance: pre-connect and fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons and extra CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-REPLACE_WITH_LATEST_HASH" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- Reset and variables ---------- */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+    --primary:#1a1a2e;
+    --accent:#4f46e5;
+    --light:#ffffff;
+    --dark:#000000;
+    --gray:#4a4a4a;
+    --light-gray:#f5f7fa;
+    --transition:all 0.3s ease;
+    --chat-bg:#f9f9ff;
+    --user-bubble:#4f46e5;
+    --ai-bubble:#f0f4ff;
+    --chat-border:#e0e0e0;
+    --chat-input-bg:#ffffff;
+}
+
+/* ---------- Page ---------- */
+body{
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+    color:var(--dark);
+    line-height:1.6;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+/* ---------- Header ---------- */
+header{
+    padding:25px 0;
+    position:fixed;top:0;width:100%;z-index:1000;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.header-container{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
+.logo span{color:var(--accent);}
+nav ul{display:flex;list-style:none;}
+nav ul li{margin-left:30px;}
+nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
+nav ul li a:hover{color:var(--accent);}
+nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
+nav ul li a:hover::after{width:100%;}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+
+/* ---------- Hero ---------- */
+.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
+.hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
+.hero h1{font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
+.hero h1 span{position:relative;}
+.hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
+
+/* ---------- Chat box ---------- */
+.ai-chat-box{
+    background:#fff;border-radius:25px;padding:30px;
+    box-shadow:0 25px 50px rgba(0,0,0,0.08);
+    margin:50px auto 0;max-width:650px;position:relative;overflow:hidden;
+    border:1px solid rgba(0,0,0,0.05);animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;transform:translateY(20px);
+}
+.ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
+.chat-header{display:flex;align-items:center;margin-bottom:15px;}
+.ai-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#818cf8,var(--accent));display:flex;align-items:center;justify-content:center;margin-right:15px;overflow:hidden;border:3px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+.ai-avatar img{width:100%;height:100%;object-fit:cover;}
+.ai-info h3{font-size:1.3rem;color:var(--dark);margin-bottom:3px;font-weight:600;text-align:left;}
+.ai-info p{color:var(--gray);font-size:0.9rem;background:#f0f4ff;padding:3px 10px;border-radius:15px;display:inline-block;font-weight:500;text-align:left;}
+
+/* ---------- Chat body ---------- */
+.chat-body{
+    background:var(--chat-bg);border-radius:20px;padding:20px;
+    max-height:350px;overflow-y:auto;margin-bottom:20px;
+    display:flex;flex-direction:column;gap:15px;
+    align-items:flex-start;
+}
+
+/* hide the pane until the first message arrives */
+.chat-body{
+    background:#ffffff;
+    display:none;
+}
+
+.chat-body.show{
+    display:flex;
+}
+
+.chat-bubble{
+    max-width:85%;padding:15px 20px;border-radius:20px;
+    animation:fadeIn 0.3s ease;box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    display:inline-block;
+}
+
+.chat-bubble{
+    width:100%;
+    max-width:100%;
+    display:block;
+}
+
+.ai-bubble{background:var(--ai-bubble);border-radius:20px 20px 20px 5px;color:var(--dark);}
+.user-bubble{background:var(--user-bubble);border-radius:20px 20px 5px 20px;color:#fff;align-self:flex-end;}
+.chat-bubble p{font-size:1.1rem;line-height:1.5;text-align:left;}
+
+/* ---------- Chat input ---------- */
+.chat-input-form{
+    margin-top:20px;position:relative;border:1px solid var(--chat-border);
+    border-radius:16px;background:var(--chat-input-bg);
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);overflow:hidden;transition:var(--transition);
+}
+.chat-input-form:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,0.2);}
+textarea#chat-input{
+    width:100%;border:none;resize:none;padding:16px 60px 16px 20px;
+    font-family:"Poppins",sans-serif;font-size:1rem;min-height:60px;max-height:150px;
+    outline:none;background:transparent;color:var(--dark);line-height:1.5;
+}
+textarea#chat-input::placeholder{color:#a0aec0;}
+#chat-send{
+    position:absolute;right:12px;bottom:12px;width:40px;height:40px;border:none;
+    border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);
+}
+#chat-send:hover{background:#4338ca;transform:scale(1.05);}
+#chat-send i{font-size:1.1rem;}
+
+/* Solutions Section */
+.solutions {
+    padding: 100px 0;
+    background: linear-gradient(to bottom, #ffffff, #f8f9ff);
+}
+
+/* ---------- Service and solution sections ---------- */
+.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px;}
+.section-header{text-align:center;margin-bottom:70px;}
+.section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
+.section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
+.services-grid,
+.solutions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
+.service-card,
+.solution-card{
+    background:#fff;border-radius:20px;padding:40px 30px;text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;transition:var(--transition);
+}
+.service-card:hover,
+.solution-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
+.service-card::before,
+.solution-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
+.service-icon,
+.solution-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
+.service-card h3,
+.solution-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
+.service-card p,
+.solution-card p{color:var(--gray);font-size:1.05rem;}
+
+
+  .user-bubble {
+    white-space: pre-wrap;
+    /* or pre-line if you only want to collapse extra spaces but keep new lines */
+  }
+  .ai-bubble {
+    white-space: pre-wrap;
+    /* or pre-line if you only want to collapse extra spaces but keep new lines */
+  }
+
+/* ---------- Quick-link section ---------- */
+.quick-links-wrapper{
+    margin:20px 0;
+}
+
+.quick-links-title{
+    font-size:1rem;
+    font-weight:600;
+    color:var(--dark);
+    margin:0 0 8px 0;    /* title now flush left */
+    text-align:left;      /* left-aligned */
+}
+
+.quick-links-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.qlink{
+    padding:6px 12px;     /* smaller button */
+    border-radius:10px;
+    background:#4f46e5;;
+    color:#ffffff;
+    font-size:0.85rem;    /* smaller text */
+    text-decoration:none;
+    transition:var(--transition);
+    white-space:nowrap;
+    text-align:left;
+}
+
+.qlink:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+}
+
+/* keep buttons centred on very small screens */
+@media (max-width:480px){
+    .quick-links-list{
+        justify-content:left;
+    }
+}
+
+/* ---------- Form Section (Styled like Pre-Footer) ---------- */
+.form-section {
+    background: var(--accent);
+    padding: 60px 0;
+    border-radius: 30px;
+    margin: 50px 0;
+    color: white;
+}
+
+.form-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+}
+
+.form-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-section p {
+    max-width: 700px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
+}
+
+.form-submit {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.form-submit:hover {
+    background: #4338ca;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* ---------- Pre-Footer Section ---------- */
+.pre-footer {
+    background: var(--accent);
+    padding: 60px 0;
+    border-radius: 30px 30px 0 0;
+    margin-top: 50px;
+    color: white;
+}
+
+.pre-footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.pre-footer h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.pre-footer p {
+    max-width: 700px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.pre-footer .cta-button {
+    display: inline-block;
+    background: white;
+    color: var(--accent);
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pre-footer .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
     .form-section {
-        background: var(--accent);
-        padding: 60px 0;
-        border-radius: 30px;
-        margin: 50px 0;
-        color: white;
-    }
-
-    .form-section .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        max-width: 800px;
-    }
-
-    .form-section h2 {
-        font-size: 2.2rem;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-
-    .form-section p {
-        max-width: 700px;
-        margin-bottom: 30px;
-        font-size: 1.1rem;
-        line-height: 1.7;
-    }
-
-    .form-container {
-        width: 100%;
-        max-width: 500px;
-        background: white;
-        padding: 40px;
+        padding: 50px 20px;
         border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-
-    .form-group {
-        margin-bottom: 20px;
-        text-align: left;
+    
+    .form-section h2 {
+        font-size: 1.8rem;
     }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        color: var(--dark);
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        font-family: "Poppins", sans-serif;
+    
+    .form-section p {
         font-size: 1rem;
-        transition: var(--transition);
     }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-        outline: none;
-        border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
+    
+    .form-container {
+        padding: 30px;
     }
-
-    .form-submit {
-        display: inline-block;
-        background: var(--accent);
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 12px;
-        font-weight: 600;
+    
+    .pre-footer {
+        padding: 50px 20px;
+        border-radius: 20px 20px 0 0;
+    }
+    
+    .pre-footer h2 {
+        font-size: 1.8rem;
+    }
+    
+    .pre-footer p {
         font-size: 1rem;
-        cursor: pointer;
-        transition: var(--transition);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        width: 100%;
+    }
+}
+
+/* ---------- Footer ---------- */
+footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
+.footer-col h3{font-size:1.3rem;margin-bottom:20px;color:#fff;font-weight:600;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:12px;}
+.footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);font-weight:400;}
+.footer-links a:hover{color:#fff;}
+.social-links{display:flex;gap:15px;margin-top:20px;}
+.social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
+.social-links a:hover{background:var(--accent);transform:translateY(-3px);}
+footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:30px;}
+/* Description Text */
+.description-text {
+    max-width: 650px;
+    margin: 40px auto 0;
+    font-size: 1.25rem;
+    color: var(--gray);
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    font-weight: 400;
+}
+.highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2);opacity:0.7;}}
+
+/* ---------- Responsive ---------- */
+@media (max-width:768px){
+    .mobile-menu-btn{
+        display:block;
+        margin-left:auto;
     }
 
-    .form-submit:hover {
-        background: #4338ca;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    nav ul{
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#fff;
+        padding:20px 0;
+        box-shadow:0 10px 15px rgba(0,0,0,0.1);
+    }
+    nav ul.show{display:flex;}
+    nav ul li{
+        text-align:center;
+        margin:10px 0;
     }
 
-    @media (max-width: 768px) {
-        .form-section {
-            padding: 50px 20px;
-            border-radius: 20px;
-        }
-        
-        .form-section h2 {
-            font-size: 1.8rem;
-        }
-        
-        .form-section p {
-            font-size: 1rem;
-        }
-        
-        .form-container {
-            padding: 30px;
-        }
-    }
+    .hero{padding:140px 0 20px;}
+    .hero h1{font-size:3.7rem;}
 
-    /* [Rest of your existing CSS remains the same] */
-  </style>
+    .chat-body{max-height:300px;padding:15px;}
+    .chat-bubble{padding:12px 16px;}
+    .chat-bubble p{font-size:1rem;}
+}
+
+@media (max-width:576px){
+    .hero h1{font-size:2.4rem;}
+    .ai-chat-box{padding:20px;}
+    .chat-bubble p{font-size:0.95rem;}
+    .footer-grid{grid-template-columns:1fr;}
+}
+
+/* Services grid - force two columns on desktop */
+@media (min-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Keep the hero heading on one line at desktop width */
+@media (min-width: 992px) {
+    .hero-content {          /* give the text more room */
+        max-width: 1100px;   /* raise or lower to suit */
+    }
+    .hero h1 {               /* stop the browser from breaking the line */
+        white-space: nowrap;
+    }
+}
+</style>
 </head>
 <body>
-  <!-- [All previous HTML content remains the same until before the pre-footer] -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo">jemima<span>.ai</span></a>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI <span>Sales & Marketing</span> Solutions</h1>
+                
+                <!-- AI Chat Box -->
+                <div class="ai-chat-box">
+                    <div class="chat-header">
+                        <div class="ai-avatar">
+                            <img src="jemima.png" alt="Jemima AI">
+                        </div>
+                        <div class="ai-info">
+                            <h3>Jemima</h3>
+                            <p>Business Solutions Manager</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-bubble">
+                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> Automation.</p>
+                    </div>
+                    <!-- Chat area -->
+                    <div id="chat-body" class="chat-body"></div>
+                    <!-- Chat Input Form -->
+                    <div class="chat-input-form">
+                        <form onsubmit="sendMessage(); return false;">
+                            <textarea id="chat-input" required></textarea>
+                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+
+<!-- Chat Suggestions -->
+<div class="quick-links-wrapper">
+  <h4 class="quick-links-title">Chat Suggestions</h4>
+
+  <div id="chat-quick-links" class="quick-links-list">
+    <a href="#" class="qlink" data-msg="I'd like to book a 30 minute discovery call">Book a call</a>
+    <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
+    <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
+    <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
+  </div>
+</div>
+
+                </div>
+
+                <!-- Description Text -->
+                <div class="description-text">
+                    Transform your service business with our cutting-edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sales & Marketing Automation</h2>
+                <p>AI Solutions for Lead to Revenue Operations</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Lead Generation</h3>
+                    <p>AI powered systems that identify and qualify leads day and night, increasing your conversion rates.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Sales Automation</h3>
+                    <p>Intelligent sales pipelines that nurture prospects and close deals automatically.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Customer Service</h3>
+                    <p>Round the clock AI support agents that resolve issues instantly and improve satisfaction.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Digital Marketing</h3>
+                    <p>Automated campaigns, content creation, and analytics for digital marketing success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Solutions Section -->
+    <section class="solutions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Business Solutions</h2>
+                <p>End to end solutions shaped for your business needs</p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Process Automation</h3>
+                    <p>Automate repetitive tasks and workflows to increase efficiency and reduce costs.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Intelligent Analytics</h3>
+                    <p>Turn data into useful insights with AI-powered analytics solutions.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Conversational AI</h3>
+                    <p>Implement chatbots and virtual assistants for enhanced customer interactions.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>System Integration</h3>
+                    <p>Connect your existing systems with our automation solutions.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security Solutions</h3>
+                    <p>Protect your business with AI-powered threat detection and prevention systems.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Scalable Solutions</h3>
+                    <p>Grow your business with solutions that scale with your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Form Section -->
     <section class="form-section">
@@ -177,6 +739,159 @@
         </div>
     </section>
 
-    <!-- [Rest of your HTML remains the same] -->
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="color: white;">jemima<span style="color: #818cf8;">.ai</span></a>
+                    <p style="color: #a0aec0; margin-top: 20px; line-height: 1.7;">Leading business solutions for forward-thinking businesses.</p>
+                    <div class="social-links">
+                        <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
+                        <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-lead-generation.html">Lead Generation</a></li>
+                        <li><a href="ai-sales-automation.html">Sales</a></li>
+                        <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
+                        <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
+                        <li><a href="ai-automation.html">AI Automation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-business-guides.html">AI Business Guides</a></li>
+                        <li><a href="ai-workflows.html">Workflows</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+/* ── 1.  hidden page address sent to n8n ───────────────────── */
+const pageUrl   = window.location.href;
+
+/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
+const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+
+/* ── 3.  DOM handles ───────────────────────────────────────── */
+const box   = document.getElementById('chat-body');
+const input = document.getElementById('chat-input');
+
+/* ── 4.  helper: add a chat bubble ─────────────────────────── */
+function add (text, role = 'ai') {
+  const div       = document.createElement('div');
+  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+  div.innerHTML   = `<p>${text}</p>`;
+  box.appendChild(div);
+  box.scrollTop   = box.scrollHeight;
+  box.classList.add('show');
+}
+
+/* ── 5.  helper: unwrap JSON (object OR first element of array) */
+function parse (raw, hdr) {
+  if ((hdr.get('content-type') || '').includes('application/json')) {
+    try {
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
+      return (
+        d.reply   || d.output  || d.text || d.message ||
+        d.answer  || d.content ||
+        (d.choices && d.choices[0]?.message.content) ||
+        raw
+      );
+    } catch { /* fall through to raw */ }
+  }
+  return raw;
+}
+
+/* ── 6.  send routine, called on form submit ───────────────── */
+async function sendMessage () {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  add(msg, 'user');               // echo user text
+  input.value = '';               // clear
+  input.style.height = '60px';    // reset height
+
+  try {
+    const res = await fetch(webhook, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        sessionId,
+        route     : 'general',
+        action    : 'sendMessage',
+        chatInput : msg,
+        pageUrl                      // hidden field
+      })
+    });
+    const raw = await res.text();
+    add(parse(raw, res.headers), 'ai');
+  } catch (err) {
+    console.error(err);
+    add('Could not reach the server.', 'ai');
+  }
+}
+
+/* ── 7.  auto-grow textarea ───────────────────────────────── */
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = input.scrollHeight + 'px';
+});
+
+/* ── 8.  give focus on load (desktop only) ─────────────────── */
+window.addEventListener('load', () => {
+  const isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (!isMobile) {
+    input.focus({ preventScroll: true });
+  }
+});
+/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
+const menuBtn  = document.querySelector('.mobile-menu-btn');
+const navMenu  = document.querySelector('nav ul');
+if (menuBtn && navMenu) {
+  menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
+  navMenu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navMenu.classList.remove('show'))
+  );
+}
+
+
+/* quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    if(e.target.classList.contains('qlink')){
+      e.preventDefault();
+      input.value = e.target.dataset.msg;
+      sendMessage();               // reuse the same send routine
+    }
+  });
+
+</script>
 </body>
 </html>
