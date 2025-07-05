@@ -596,32 +596,52 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 /* ── Floating form message (full-width, semi-transparent) ─────────── */
-#formMsg{
-  position:fixed;
-  top:0;
-  left:0;           /* start at left edge  */
-  right:0;          /* stretch to right    */
-  width:100%;
-  /* remove any explicit width (or keep width:auto) */
-
-  z-index:9999;
-  padding:14px 20px;
-  text-align:center;
-  font-weight:600;
-  color:#ffffff;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
-
+#formMsg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 14px 20px;
+  text-align: center; 
+  font-weight: 600;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  
+  /* Remove any max-width constraints */
+  max-width: none !important;
+  
+  /* Ensure full width */
+  margin: 0;
+  box-sizing: border-box;
+  
+  /* Override any container padding */
+  transform: translateY(-100%) translateX(-50%);
+  left: 50%;
+  width: 100vw;
+  
   /* slide-in animation */
-  transform:translateY(-100%);
-  opacity:0;
-  transition:opacity .3s ease, transform .3s ease;
+  opacity: 0;
+  transition: opacity .3s ease, transform .3s ease;
 }
 
-#formMsg.show   {transform:translateY(0);opacity:1;}
-#formMsg.sending{background:rgba(255,152,0,.90);}   /* orange */
-#formMsg.success{background:rgba( 76,175,80,.90);}   /* green  */
-#formMsg.error  {background:rgba(229, 57,53,.90);}   /* red    */
+#formMsg.show {
+  transform: translateY(0) translateX(-50%);
+  opacity: 1;
+}
 
+#formMsg.sending {
+  background: rgba(255, 152, 0, .90); /* orange */
+}
+
+#formMsg.success {
+  background: rgba(76, 175, 80, .90); /* green */
+}
+
+#formMsg.error {
+  background: rgba(229, 57, 53, .90); /* red */
+}
 
 </style>
 
