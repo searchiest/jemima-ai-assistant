@@ -212,34 +212,28 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     transform: translateY(-2px);
 }
 
-/* ---------- Services Section ---------- */
+/* ---------- Service and solution sections ---------- */
 .services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px;}
 .section-header{text-align:center;margin-bottom:70px;}
 .section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
 .section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
-.services-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-    gap:30px;
-    max-width:1200px;
-    margin:0 auto;
+.services-grid,
+.solutions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
+.service-card,
+.solution-card{
+    background:#fff;border-radius:20px;padding:40px 30px;text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;transition:var(--transition);
 }
-.service-card{
-    background:#fff;
-    border-radius:20px;
-    padding:40px 30px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.05);
-    border:1px solid rgba(0,0,0,0.03);
-    position:relative;
-    overflow:hidden;
-    transition:var(--transition);
-}
-.service-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
-.service-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
-.service-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
-.service-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
-.service-card p{color:var(--gray);font-size:1.05rem;}
+.service-card:hover,
+.solution-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
+.service-card::before,
+.solution-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
+.service-icon,
+.solution-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
+.service-card h3,
+.solution-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
+.service-card p,
+.solution-card p{color:var(--gray);font-size:1.05rem;}
 
 .user-bubble, .ai-bubble {
     white-space: pre-wrap;
