@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* [Previous CSS remains the same until the services section] */
+
+/* ---------- Services Section ---------- */
+.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px;}
+.section-header{text-align:center;margin-bottom:70px;}
+.section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
+.section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
+.services-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:30px;
+    max-width:1200px;
+    margin:0 auto;
+}
+.service-card{
+    background:#fff;
+    border-radius:20px;
+    padding:40px 30px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    border:1px solid rgba(0,0,0,0.03);
+    position:relative;
+    overflow:hidden;
+    transition:var(--transition);
+}
+.service-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
+.service-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
+.service-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
+.service-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
+.service-card p{color:var(--gray);font-size:1.05rem;}
+
+/* ---------- Form Section ---------- */
+.form-section {
+    background: var(--accent);
+    padding: 60px 0;
+    border-radius: 30px;
+    margin: 50px auto;
+    color: white;
+    width: calc(100% - 40px); /* Account for container padding */
+    max-width: 630px; /* Matches two 300px cards + 30px gap */
+}
+
+.form-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+    max-width: 630px; /* Match the form section width */
+}
+
+/* [Rest of the CSS remains the same] */
+
+/* Services grid - force two columns on desktop */
+@media (min-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        justify-content: center;
+    }
+    
+    /* Calculate the exact width of two cards plus gap */
+    .form-section {
+        max-width: calc(300px * 2 + 30px); /* 300px card + 300px card + 30px gap */
+    }
+}
+
+/* [Rest of the responsive styles remain the same] */
+</style>
+</head>
+<body>
+
+<!-- [Previous HTML remains the same until the form section] -->
+
+  <!-- Form Section with Booking Form -->
+  <section class="form-section">
+    <div class="container">
+      <h2>Reserve your slot</h2>
+      <p>Fill out the form below to book your meeting with our team.</p>
+      
+      <form class="booking-form" id="bookingForm" autocomplete="on">
+        <!-- [Form fields remain the same] -->
+      </form>
+    </div>
+  </section>
+
+</body>
+</html>
