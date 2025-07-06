@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Test — Auto Token</title>
+  <title>Twilio Voice Test — Auto Token (Text)</title>
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px }
@@ -47,34 +47,36 @@
     const cons  = document.getElementById("console");
     let   device, activeCall;
 
-    function log(message) {
-      cons.innerHTML += 
-        "<div>" + new Date().toLocaleTimeString() + ": " + message + "</div>";
+    function log(msg) {
+      cons.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
       cons.scrollTop = cons.scrollHeight;
     }
 
-    function updateStatus(message) {
-      stat.textContent = "Status: " + message;
-      log(message);
+    function updateStatus(msg) {
+      stat.textContent = "Status: " + msg;
+      log(msg);
     }
 
+    // 1) Fetch the token as plain text
     function fetchTokenAndSetup() {
       updateStatus("Fetching token");
-      fetch(TOKEN_URL)
+      fetch(TOKEN_URL, { method: "GET" })
         .then(res => {
-          if (!res.ok) throw new Error("Token fetch failed: " + res.status);
-          return res.json();
+          if (!res.ok) {
+            throw new Error("Token fetch failed: " + res.status);
+          }
+          return res.text();                // <-- use text(), not json()
         })
-        .then(data => {
-          if (!data.token) throw new Error("No token in response");
-          log("Token received");
-          setupDevice(data.token);
+        .then(token => {
+          log("Token snippet: " + token.substring(0,20) + "…");
+          setupDevice(token.trim());
         })
         .catch(err => {
           updateStatus("Token error: " + err.message);
         });
     }
 
+    // 2) Initialise Twilio.Device with that token
     function setupDevice(token) {
       updateStatus("Initializing Twilio Device");
       device = new Twilio.Device(token, {
@@ -107,6 +109,7 @@
       device.register();
     }
 
+    // 3) Button to place (or hang up) the call
     btn.addEventListener("click", () => {
       if (activeCall) {
         activeCall.disconnect();
@@ -117,7 +120,7 @@
       activeCall = device.connect({ To: TO_NUMBER });
     });
 
-    // start on load
+    // Kick things off
     log("Page loaded");
     fetchTokenAndSetup();
   </script>
