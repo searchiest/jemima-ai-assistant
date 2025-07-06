@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Test — Manual Token</title>
+  <title>Twilio Voice Test — Manual Token Input</title>
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px }
@@ -10,8 +10,9 @@
       font-size: 1rem;
       padding: 8px;
       margin: 4px 0;
+      box-sizing: border-box;
     }
-    input { width: 100%; box-sizing: border-box }
+    input { width: 100% }
     button {
       background: #4CAF50;
       color: white;
@@ -39,10 +40,13 @@
 </head>
 <body>
   <h2>Twilio Voice Test</h2>
-  <label for="tokenInput">Paste Twilio JWT here:</label><br>
-  <input id="tokenInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+
+  <label for="tokenInput">Paste your Twilio JWT here:</label><br>
+  <input id="tokenInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ..." />
   <button id="loadToken">Load Token</button>
+
   <hr>
+
   <button id="callButton" disabled>Start Test Call</button>
   <div id="status">Status: Waiting for token</div>
   <div id="console"></div>
@@ -57,7 +61,8 @@
     let   device, activeCall, currentToken;
 
     function log(msg) {
-      consoleDiv.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
+      consoleDiv.innerHTML += "<div>" + new Date().toLocaleTimeString() 
+                             + ": " + msg + "</div>";
       consoleDiv.scrollTop = consoleDiv.scrollHeight;
     }
 
@@ -66,7 +71,6 @@
       log(msg);
     }
 
-    // Load the token you paste in
     loadBtn.addEventListener("click", () => {
       const t = tokenInput.value.trim();
       if (!t.startsWith("eyJ")) {
@@ -79,9 +83,7 @@
       setupDevice();
     });
 
-    // Set up Twilio.Device with the loaded token
     function setupDevice() {
-      // If we have an old device, destroy it first
       if (device) {
         device.destroy();
         device = null;
@@ -104,6 +106,7 @@
 
         device.on("error", err => {
           updateStatus("Error: " + err.message);
+          callBtn.disabled = true;
         });
 
         device.on("connect", () => {
@@ -121,11 +124,10 @@
         device.register();
       } catch (e) {
         updateStatus("Device init failed");
-        log("Init exception: " + e.message);
+        log("Init error: " + e.message);
       }
     }
 
-    // Place or end the call
     callBtn.addEventListener("click", () => {
       if (activeCall) {
         activeCall.disconnect();
@@ -136,7 +138,7 @@
       }
     });
 
-    // start
+    // initial log
     log("Page loaded");
   </script>
 </body>
