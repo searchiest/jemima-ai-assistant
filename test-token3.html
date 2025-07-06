@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Test — Auto Token</title>
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px }
+    button {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled { background: #888 }
+    #status {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    #console {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Twilio Voice Test</h2>
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Loading…</div>
+  <div id="console"></div>
+
+  <script>
+    const TOKEN_URL = "https://voice-tokens-2997.twil.io/token";
+    const TO_NUMBER = "+447479277657";
+
+    const btn   = document.getElementById("callButton");
+    const stat  = document.getElementById("status");
+    const cons  = document.getElementById("console");
+    let   device, activeCall;
+
+    function log(message) {
+      cons.innerHTML += 
+        "<div>" + new Date().toLocaleTimeString() + ": " + message + "</div>";
+      cons.scrollTop = cons.scrollHeight;
+    }
+
+    function updateStatus(message) {
+      stat.textContent = "Status: " + message;
+      log(message);
+    }
+
+    function fetchTokenAndSetup() {
+      updateStatus("Fetching token");
+      fetch(TOKEN_URL)
+        .then(res => {
+          if (!res.ok) throw new Error("Token fetch failed: " + res.status);
+          return res.json();
+        })
+        .then(data => {
+          if (!data.token) throw new Error("No token in response");
+          log("Token received");
+          setupDevice(data.token);
+        })
+        .catch(err => {
+          updateStatus("Token error: " + err.message);
+        });
+    }
+
+    function setupDevice(token) {
+      updateStatus("Initializing Twilio Device");
+      device = new Twilio.Device(token, {
+        codecPreferences: ["opus","pcmu"],
+        logLevel: "debug",
+        enableIceRestart: true
+      });
+
+      device.on("ready", () => {
+        updateStatus("Ready to call");
+        btn.disabled = false;
+      });
+
+      device.on("error", err => {
+        updateStatus("Error: " + err.message);
+      });
+
+      device.on("connect", () => {
+        updateStatus("Call connected");
+        btn.textContent = "End Call";
+        btn.disabled = false;
+      });
+
+      device.on("disconnect", () => {
+        updateStatus("Ready to call");
+        btn.textContent = "Start Test Call";
+        activeCall = null;
+      });
+
+      device.register();
+    }
+
+    btn.addEventListener("click", () => {
+      if (activeCall) {
+        activeCall.disconnect();
+        return;
+      }
+      updateStatus("Calling " + TO_NUMBER);
+      btn.disabled = true;
+      activeCall = device.connect({ To: TO_NUMBER });
+    });
+
+    // start on load
+    log("Page loaded");
+    fetchTokenAndSetup();
+  </script>
+</body>
+</html>
