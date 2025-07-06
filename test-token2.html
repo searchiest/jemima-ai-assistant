@@ -41,81 +41,81 @@
   <script>
     // your Twilio JWT
     const TEST_TOKEN = 
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzAzZDA3YWU0ZWI1ZGIyNmFmZjk2YmM0Yzg2NDJiN2E5LTE3NTE3OTU1NDEiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0LXVzZXIiLCJ2b2ljZSI6eyJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDRiMzY3MDVhMDM0NzgyNDM5MDk0OWIzMGFlNmZmYzIyIn19fSwiaWF0IjoxNzUxNzk1NTQxLCJleHAiOjE3NTE3OTkxNDEsImlzcyI6IlNLMDNkMDdhZTRlYjVkYjI2YWZmOTZiYzRjODY0MmI3YTkiLCJzdWIiOiJBQzk0ZGZhNzU0YzI1YTQxYzhhYjI4YWZiMmYzZTg0MGRlIn0.9HMmseBqgmzupgU7hl8UnuV2sSitOPbUDTS2Dp373t0';
-    // the number you want to call
-    const TO_NUMBER   = '+447479277657';
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzAzZDA3YWU0ZWI1ZGIyNmFmZjk2YmM0Yzg2NDJiN2E5LTE3NTE3OTU1NDEiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0LXVzZXIiLCJ2b2ljZSI6eyJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDRiMzY3MDVhMDM0NzgyNDM5MDk0OWIzMGFlNmZmYzIyIn19fSwiaWF0IjoxNzUxNzk1NTQxLCJleHAiOjE3NTE3OTkxNDEsImlzcyI6IlNLMDNkMDdhZTRlYjVkYjI2YWZmOTZiYzRjODY0MmI3YTkiLCJzdWIiOiJBQzk0ZGZhNzU0YzI1YTQxYzhhYjI4YWZiMmYzZTg0MGRlIn0.9HMmseBqgmzupgU7hl8UnuV2sSitOPbUDTS2Dp373t0";
+    // number to call
+    const TO_NUMBER = "+447479277657";
 
-    const btn    = document.getElementById('callButton');
-    const stat  = document.getElementById('status');
-    const cons  = document.getElementById('console');
+    const btn   = document.getElementById("callButton");
+    const stat  = document.getElementById("status");
+    const cons  = document.getElementById("console");
     let   device, activeCall;
 
-    function log(msg) {
+    function log(message) {
       cons.innerHTML += 
-        `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
+        "<div>" + new Date().toLocaleTimeString() + ": " + message + "</div>";
       cons.scrollTop = cons.scrollHeight;
     }
 
-    function updateStatus(msg) {
-      stat.textContent = 'Status: ' + msg;
-      log(msg);
+    function updateStatus(message) {
+      stat.textContent = "Status: " + message;
+      log(message);
     }
 
-    // ensure page is secure
-    if (!['http:','https:'].includes(location.protocol)) {
+    // require http or https
+    if (!["http:","https:"].includes(location.protocol)) {
       document.body.innerHTML = 
-        '<p>Please serve this page over http or https, for example:'+ 
-        '<br><code>python -m http.server 8000</code> then open:'+ 
-        '<br><code>http://localhost:8000/index.html</code></p>';
-      throw new Error('Invalid protocol');
+        "<p>Please serve this page over http or https. For example:" +
+        "<br><code>python -m http.server</code> then open " +
+        "<code>http://localhost:8000/index.html</code></p>";
+      throw new Error("Invalid protocol");
     }
 
-    // set up Twilio Device
+    // setup Twilio Device
     function setupDevice() {
       device = new Twilio.Device(TEST_TOKEN, {
-        codecPreferences: ['opus','pcmu'],
-        logLevel: 'debug',
+        codecPreferences: ["opus","pcmu"],
+        logLevel: "debug",
         enableIceRestart: true
       });
 
-      device.on('ready', () => {
-        updateStatus('Ready to call');
+      device.on("ready", () => {
+        updateStatus("Ready to call");
         btn.disabled = false;
       });
 
-      device.on('error', err => {
-        updateStatus('Error: ' + err.message);
+      device.on("error", err => {
+        updateStatus("Error: " + err.message);
         btn.disabled = true;
       });
 
-      device.on('connect', conn => {
-        updateStatus('Call connected');
-        btn.textContent = 'End Call';
+      device.on("connect", () => {
+        updateStatus("Call connected");
+        btn.textContent = "End Call";
+        btn.disabled = false;
       });
 
-      device.on('disconnect', () => {
-        updateStatus('Ready to call');
-        btn.textContent = 'Start Test Call';
-        btn.disabled = false;
+      device.on("disconnect", () => {
+        updateStatus("Ready to call");
+        btn.textContent = "Start Test Call";
         activeCall = null;
       });
 
       device.register();
     }
 
-    // handle button clicks
-    btn.addEventListener('click', () => {
+    // handle button click
+    btn.addEventListener("click", () => {
       if (activeCall) {
         activeCall.disconnect();
         return;
       }
-      updateStatus('Calling ' + TO_NUMBER);
+      updateStatus("Calling " + TO_NUMBER);
       btn.disabled = true;
       activeCall = device.connect({ To: TO_NUMBER });
     });
 
     // start
-    log('Page loaded');
+    log("Page loaded");
     setupDevice();
   </script>
 </body>
