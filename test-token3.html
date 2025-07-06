@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Test — Auto Token</title>
+  <title>Twilio Voice Test — Robust Token Fetch</title>
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px }
@@ -47,16 +47,30 @@
     const cons  = document.getElementById("console");
     let   device, activeCall;
 
-    function log(message) {
-      cons.innerHTML += "<div>" 
-        + new Date().toLocaleTimeString() 
-        + ": " + message + "</div>";
+    function log(msg) {
+      cons.innerHTML += "<div>" + new Date().toLocaleTimeString() 
+                       + ": " + msg + "</div>";
       cons.scrollTop = cons.scrollHeight;
     }
 
-    function updateStatus(message) {
-      stat.textContent = "Status: " + message;
-      log(message);
+    function updateStatus(msg) {
+      stat.textContent = "Status: " + msg;
+      log(msg);
+    }
+
+    function extractJwt(text) {
+      text = text.trim();
+      // if JSON, parse it
+      if (text.startsWith("{")) {
+        try {
+          const obj = JSON.parse(text);
+          if (obj.token) return obj.token;
+        } catch(e) {
+          // fall through
+        }
+      }
+      // otherwise assume the entire body is the JWT
+      return text;
     }
 
     function fetchTokenAndSetup() {
@@ -64,16 +78,17 @@
       fetch(TOKEN_URL)
         .then(res => {
           if (!res.ok) {
-            throw new Error("Token fetch failed " + res.status);
+            throw new Error("Fetch failed: " + res.status);
           }
-          return res.json();            // parse JSON
+          return res.text();
         })
-        .then(data => {
-          if (!data.token) {
-            throw new Error("No token in response");
+        .then(body => {
+          const jwt = extractJwt(body);
+          if (!jwt.startsWith("eyJ")) {
+            throw new Error("No JWT found in response");
           }
-          log("Token snippet: " + data.token.substring(0, 20) + "…");
-          setupDevice(data.token.trim());
+          log("Token snippet: " + jwt.substring(0,20) + "…");
+          setupDevice(jwt);
         })
         .catch(err => {
           updateStatus("Token error: " + err.message);
@@ -122,7 +137,7 @@
       activeCall = device.connect({ To: TO_NUMBER });
     });
 
-    // start on load
+    // start
     log("Page loaded");
     fetchTokenAndSetup();
   </script>
