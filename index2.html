@@ -7,9 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Sales & Marketing Solutions | jemima.ai</title>
 
-
-
-
   <!-- SEO -->
   <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
   <link rel="canonical" href="https://jemima.ai/">
@@ -43,7 +40,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Icons and extra CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-REPLACE_WITH_LATEST_HASH" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -679,6 +676,13 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   pointer-events: none; /* Allow clicks to pass through to the input */
 }
 
+@media (max-width: 768px) {
+  .hero h1 {
+    margin-top: -10px;      /* Reduced from original value */
+    margin-bottom: -20px;   /* Reduced from original 30px */
+  }
+}
+
 </style>
 
 </head>
@@ -727,7 +731,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     
                     <div class="chat-bubble">
-                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> Automation.</p>
+                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
                     </div>
                     <!-- Chat area -->
                     <div id="chat-body" class="chat-body"></div>
@@ -763,7 +767,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <!-- Description Text -->
                 <div class="description-text">
-                    Transform your service business with our cutting-edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
+                    Transform your service business with cutting edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
                 </div>
             </div>
         </div>
@@ -867,7 +871,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- Form Section with Booking Form -->
   <section class="form-section">
     <div class="container">
-      <h2>Book A Discovery Call</h2>
+      <h2>Book A Call</h2>
       <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
       
       <form class="booking-form" id="bookingForm" autocomplete="on">
@@ -1005,65 +1009,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
+<!-- 1) Official Twilio Voice JS v2 -->
+script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
 
-
-<!-- 1) Voice SDK v2 -->
-<script src="https://sdk.twilio.com/js/voice/v2.0/twilio.min.js"></script>
-
-<!-- 2) Voice-chat wiring and debug logs -->
+<!-- 2) Fully-instrumented voice-chat logic -->
 <script>
-  console.log('Voice script loading');
+  console.log('Voice script start');
 
-  const micBtn = document.getElementById('micBtn');
+  const micBtn    = document.getElementById('micBtn');
+  const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
+
   if (!micBtn) {
-    console.error('Could not find #micBtn');
+    console.error('❌ Could not find #micBtn');
   } else {
-    console.log('Found #micBtn, hooking click');
-    micBtn.addEventListener('click', () => {
-      console.log('Talk button clicked');
-      startCall();
-    });
+    console.log('✅ Found #micBtn, wiring click');
+    micBtn.addEventListener('click', startCall);
   }
 
   async function startCall() {
-    console.log('startCall beginning');
+    console.log('▶️ startCall()');
+
     try {
-      const res = await fetch('https://voice-tokens-2997.twil.io/token');
-      console.log('Token fetch status', res.status);
-      if (!res.ok) throw new Error('Token request failed ' + res.status);
+      // 1. Fetch token
+      const res = await fetch(TOKEN_URL);
+      console.log('🔄 token fetch status', res.status);
+      if (!res.ok) throw new Error('Token request failed: ' + res.status);
       const { token } = await res.json();
-      console.log('Got token', token.slice(0,10),'…');
-
+      console.log('🔑 Got token (first 20 chars):', token.slice(0,20));
+console.log(JSON.parse(atob(token.split('.')[1])));
+      // 2. Initialize Device
       const device = new Twilio.Device(token, {
-        codecPreferences: ['opus'],
-        debug: false
+        codecPreferences:['opus'],
+        logLevel: 'debug'   // extra verbosity
       });
-      console.log('Twilio.Device created');
+      console.log('📱 Twilio.Device created');
 
-      device.on('error', e => console.error('Twilio error', e));
-      device.on('ready', () => {
-        console.log('Voice SDK ready, connecting');
-        device.connect();
-        micBtn.disabled = true;
+      // 3. Device-level events
+      device.on('error',           e  => console.error('📟 device error', e));
+      device.on('ready',          () => console.log('🟢 device ready'));
+      device.on('offline',        () => console.warn('🟡 device offline'));
+      device.on('registrationSuccess', () => console.log('✅ registered'));
+      device.on('registrationError',   e  => console.error('❌ registration error', e));
+
+      // 4. Register the client (so v2 can open the signaling channel)
+      device.register();
+
+      // 5. Once ready, connect
+      device.on('ready', async () => {
+        console.log('▶️ calling device.connect()');
+        try {
+          const call = await device.connect();
+          console.log('🔊 call.connect() resolved');
+
+          // 6. Connection-level events
+          call.on('accept',      () => console.log('🎧 call accepted'));
+          call.on('disconnect',  () => { console.log('📴 call disconnected'); micBtn.disabled = false; });
+          call.on('error',       e  => console.error('❌ call error', e));
+          micBtn.disabled = true;
+        } catch(connErr) {
+          console.error('❌ connect() failed', connErr);
+          alert('Could not connect call: ' + connErr.message);
+        }
       });
-      device.on('disconnect', () => {
-        console.log('Call ended');
-        micBtn.disabled = false;
-      });
+
     } catch (err) {
-      console.error('startCall error', err);
+      console.error('❌ startCall error', err);
       alert('Could not start voice chat: ' + err.message);
     }
   }
 </script>
-</body>
-
-
-
-</body>
-
-
-
 
 
 <script>
