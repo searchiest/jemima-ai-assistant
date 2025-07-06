@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Test — Robust Token Fetch</title>
+  <title>Twilio Voice Test — Debug Token</title>
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px }
@@ -39,17 +39,18 @@
   <div id="console"></div>
 
   <script>
-    const TOKEN_URL = "https://voice-tokens-2997.twil.io/token";
-    const TO_NUMBER = "+447479277657";
+    const TOKEN_URL    = "https://voice-tokens-2997.twil.io/token";
+    const TO_NUMBER    = "+447479277657";
+    const USE_FALLBACK = false;
+    const TEST_TOKEN   = "PASTE_A_KNOWN_GOOD_JWT_HERE";
 
     const btn   = document.getElementById("callButton");
     const stat  = document.getElementById("status");
     const cons  = document.getElementById("console");
-    let   device, activeCall;
+    let   device, activeCall, lastJwt;
 
     function log(msg) {
-      cons.innerHTML += "<div>" + new Date().toLocaleTimeString()
-                       + ": " + msg + "</div>";
+      cons.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
       cons.scrollTop = cons.scrollHeight;
     }
 
@@ -64,14 +65,18 @@
         try {
           const obj = JSON.parse(text);
           if (obj.token) return obj.token;
-        } catch(e) { }
+        } catch(e){}
       }
       return text;
     }
 
-    function fetchTokenAndSetup() {
-      updateStatus("Fetching token");
-      fetch(TOKEN_URL)
+    function fetchToken() {
+      if (USE_FALLBACK) {
+        log("⚠️ Using fallback TEST_TOKEN");
+        return Promise.resolve(TEST_TOKEN);
+      }
+      updateStatus("Fetching token…");
+      return fetch(TOKEN_URL)
         .then(res => {
           if (!res.ok) throw new Error("Fetch failed: " + res.status);
           return res.text();
@@ -79,7 +84,15 @@
         .then(body => {
           const jwt = extractJwt(body);
           if (!jwt.startsWith("eyJ")) throw new Error("No JWT found");
-          // <<< Added line to log the actual token used
+          return jwt;
+        });
+    }
+
+    function init() {
+      log("Page loaded");
+      fetchToken()
+        .then(jwt => {
+          lastJwt = jwt;
           console.log("🔑 Using JWT:", jwt);
           log("Token snippet: " + jwt.substring(0,20) + "…");
           setupDevice(jwt);
@@ -104,6 +117,7 @@
 
       device.on("error", err => {
         updateStatus("Error: " + err.message);
+        log("Last JWT: " + lastJwt);
       });
 
       device.on("connect", () => {
@@ -131,9 +145,7 @@
       activeCall = device.connect({ To: TO_NUMBER });
     });
 
-    // start
-    log("Page loaded");
-    fetchTokenAndSetup();
+    init();
   </script>
 </body>
 </html>
