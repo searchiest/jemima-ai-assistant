@@ -1,155 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Twilio Voice Debugger</title>
+  <title>Twilio Voice Validator</title>
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
-    /* [Previous CSS remains unchanged] */
+    body { font-family: Arial, padding: 20px; }
+    #status { padding: 10px; margin: 10px 0; background: #f0f0f0; }
+    #console { 
+      background: #111; color: #0f0; padding: 15px; 
+      height: 200px; overflow-y: auto; font-family: monospace;
+    }
+    button { padding: 10px 15px; background: #4CAF50; color: white; border: none; }
   </style>
 </head>
 <body>
-  <h2>Twilio Voice Debugger</h2>
-  <button id="callButton" disabled>Start Test Call</button>
-  <div id="status">Status: Loading…</div>
+  <h2>Twilio Token Validator</h2>
+  <div id="status">Initializing...</div>
   <div id="console"></div>
+  <button id="validateBtn" disabled>Validate Token</button>
 
   <script>
     const TOKEN_URL = "https://voice-tokens-2997.twil.io/token";
-    const TO_NUMBER = "+447479277657";
+    const statusEl = document.getElementById('status');
+    const consoleEl = document.getElementById('console');
+    const btnEl = document.getElementById('validateBtn');
 
-    const btn = document.getElementById("callButton");
-    const stat = document.getElementById("status");
-    const cons = document.getElementById("console");
-    let device, activeCall;
-
-    function log(msg, isError = false) {
-      const entry = document.createElement('div');
-      entry.innerHTML = `${new Date().toLocaleTimeString()}: ${msg}`;
-      entry.style.color = isError ? '#ff4444' : '#ffffff';
-      cons.appendChild(entry);
-      cons.scrollTop = cons.scrollHeight;
-      console[isError ? 'error' : 'log'](msg);
+    function log(message, isError = false) {
+      const line = document.createElement('div');
+      line.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+      line.style.color = isError ? '#ff6666' : '#00ff00';
+      consoleEl.appendChild(line);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
     }
 
-    function updateStatus(msg, isError = false) {
-      stat.textContent = `Status: ${msg}`;
-      stat.style.color = isError ? '#ff4444' : '#000000';
-      log(msg, isError);
-    }
-
-    async function getToken() {
+    async function validateToken() {
+      btnEl.disabled = true;
+      statusEl.textContent = "Validating token...";
+      
       try {
-        updateStatus("Fetching token...");
-        const response = await fetch(`${TOKEN_URL}?_=${Date.now()}`); // Cache bust
+        // 1. Fetch token
+        log("Fetching token from endpoint...");
+        const response = await fetch(TOKEN_URL);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const { token } = await response.json();
         
-        const data = await response.json();
-        const payload = JSON.parse(atob(data.token.split('.')[1]));
-        
-        log(`Token Details:
+        // 2. Decode and verify token structure
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        log(`Token Contents:
           Identity: ${payload.grants.identity}
           App SID: ${payload.grants.voice?.outgoing?.application_sid}
           Issuer: ${payload.iss}
-          Expires: ${new Date(payload.exp * 1000)}
-          Current Time: ${new Date()}`);
-        
-        // Verify critical fields
-        if (!payload.grants.voice?.outgoing?.application_sid) {
-          throw new Error("Token missing voice grants");
-        }
-        if (payload.exp <= Math.floor(Date.now()/1000)) {
-          throw new Error("Token already expired");
-        }
-        
-        return data.token;
-      } catch (err) {
-        updateStatus(`Token error: ${err.message}`, true);
-        throw err;
-      }
-    }
+          Expires: ${new Date(payload.exp * 1000)}`);
 
-    async function setupDevice() {
-      try {
-        updateStatus("Requesting microphone access...");
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach(t => t.stop());
-        
-        const token = await getToken();
-        updateStatus("Initializing device...");
-        
-        device = new Twilio.Device(token, {
-          codecPreferences: ["opus", "pcmu"],
-          logLevel: "debug",
-          enableIceRestart: true,
-          connectionTimeout: 10000
+        // 3. Initialize device
+        log("Initializing Twilio Device...");
+        const device = new Twilio.Device(token, {
+          logLevel: 'debug',
+          connectionTimeout: 5000
         });
 
-        device.on("ready", () => {
-          updateStatus("Device ready");
-          btn.disabled = false;
+        device.on('ready', () => {
+          log("SUCCESS: Token is valid and device is ready");
+          statusEl.textContent = "Token is valid!";
+          statusEl.style.color = 'green';
+          device.destroy();
         });
 
-        device.on("error", error => {
-          log(`Device Error:
-            Code: ${error.code}
-            Message: ${error.message}
-            TwilioError: ${JSON.stringify(error.twilioError)}`, true);
-          updateStatus(`Error: ${error.message}`, true);
-        });
-
-        device.on("connect", call => {
-          updateStatus("Call connected");
-          btn.textContent = "End Call";
-        });
-
-        device.on("disconnect", () => {
-          updateStatus("Ready");
-          btn.textContent = "Start Test Call";
-          activeCall = null;
+        device.on('error', (error) => {
+          log(`ERROR: ${error.code} - ${error.message}`, true);
+          log(`Full error: ${JSON.stringify(error, null, 2)}`, true);
+          statusEl.textContent = `Invalid token (${error.code})`;
+          statusEl.style.color = 'red';
         });
 
         device.register();
 
-      } catch (err) {
-        updateStatus(`Initialization failed: ${err.message}`, true);
+      } catch (error) {
+        log(`FATAL ERROR: ${error.message}`, true);
+        statusEl.textContent = "Validation failed";
+        statusEl.style.color = 'red';
+      } finally {
+        btnEl.disabled = false;
       }
     }
-
-    btn.addEventListener("click", async () => {
-      if (activeCall) {
-        activeCall.disconnect();
-        return;
-      }
-      
-      btn.disabled = true;
-      updateStatus("Starting call...");
-      
-      try {
-        const token = await getToken();
-        device.updateToken(token);
-        
-        activeCall = device.connect({ 
-          To: TO_NUMBER,
-          // Add custom parameters if needed
-        });
-        
-      } catch (err) {
-        updateStatus(`Call failed: ${err.message}`, true);
-        btn.disabled = false;
-      }
-    });
 
     // Initialize
-    if (!["http:","https:"].includes(location.protocol)) {
-      document.body.innerHTML = 
-        "<p>Please serve over http/https. For example:<br>" +
-        "<code>python -m http.server</code><br>" +
-        "Then open <code>http://localhost:8000</code></p>";
-    } else {
-      log("Page initialized");
-      setupDevice();
-    }
+    btnEl.addEventListener('click', validateToken);
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        stream.getTracks().forEach(t => t.stop());
+        btnEl.disabled = false;
+        statusEl.textContent = "Ready to validate";
+      })
+      .catch(err => {
+        log(`Microphone error: ${err.message}`, true);
+        statusEl.textContent = "Need microphone access";
+      });
   </script>
 </body>
 </html>
