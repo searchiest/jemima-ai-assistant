@@ -5,7 +5,7 @@
   <title>Twilio Voice Test</title>
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
+    body { font-family: Arial, sans-serif; padding: 20px }
     button {
       padding: 10px 15px;
       background: #4CAF50;
@@ -14,6 +14,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    button:disabled { background: #888 }
     #status {
       margin: 15px 0;
       padding: 10px;
@@ -24,131 +25,98 @@
       background: #333;
       color: #fff;
       padding: 10px;
-      height: 200px;
-      overflow-y: auto;
       border-radius: 4px;
       font-family: monospace;
+      height: 200px;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
   <h2>Twilio Voice Test</h2>
-  <button id="callButton">Start Test Call</button>
-  <div id="status">Status: Ready to test</div>
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Loading…</div>
   <div id="console"></div>
 
   <script>
-    // Replace with your valid Twilio token
+    // your Twilio JWT
     const TEST_TOKEN = 
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzAzZDA3YWU0ZWI1ZGIyNmFmZjk2YmM0Yzg2NDJiN2E5LTE3NTE3OTU1NDEiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0LXVzZXIiLCJ2b2ljZSI6eyJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDRiMzY3MDVhMDM0NzgyNDM5MDk0OWIzMGFlNmZmYzIyIn19fSwiaWF0IjoxNzUxNzk1NTQxLCJleHAiOjE3NTE3OTkxNDEsImlzcyI6IlNLMDNkMDdhZTRlYjVkYjI2YWZmOTZiYzRjODY0MmI3YTkiLCJzdWIiOiJBQzk0ZGZhNzU0YzI1YTQxYzhhYjI4YWZiMmYzZTg0MGRlIn0.9HMmseBqgmzupgU7hl8UnuV2sSitOPbUDTS2Dp373t0"
-    const TO_NUMBER   = "+447479277657"
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0...';
+    // the number you want to call
+    const TO_NUMBER   = '+447479277657';
 
-    const callButton = document.getElementById("callButton")
-    const statusDiv  = document.getElementById("status")
-    const consoleDiv = document.getElementById("console")
-    let device, activeCall
+    const btn    = document.getElementById('callButton');
+    const stat  = document.getElementById('status');
+    const cons  = document.getElementById('console');
+    let   device, activeCall;
 
-    function log(message) {
-      consoleDiv.innerHTML += 
-        "<div>" + new Date().toLocaleTimeString() + ": " + message + "</div>"
-      consoleDiv.scrollTop = consoleDiv.scrollHeight
+    function log(msg) {
+      cons.innerHTML += 
+        `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
+      cons.scrollTop = cons.scrollHeight;
     }
 
-    function updateStatus(message) {
-      statusDiv.textContent = "Status: " + message
-      log(message)
+    function updateStatus(msg) {
+      stat.textContent = 'Status: ' + msg;
+      log(msg);
     }
 
-    function chooseSpeaker() {
-      navigator.mediaDevices.enumerateDevices()
-        .then(devices => {
-          const outputs = devices.filter(d => d.kind === "audiooutput")
-          if (outputs.length === 0) {
-            log("No audio output devices found")
-            return
-          }
-          const pick = outputs.find(d => d.deviceId) || outputs[0]
-          const id   = pick.deviceId || ""
-          const name = pick.label.trim() || id
-          if (id) {
-            device.audio.speakerDevices.set([ id ])
-            log("Audio output set to: " + name)
-          } else {
-            log("Device id empty, using default output")
-          }
-        })
-        .catch(err => log("Error listing devices: " + err.message))
+    // ensure page is secure
+    if (!['http:','https:'].includes(location.protocol)) {
+      document.body.innerHTML = 
+        '<p>Please serve this page over http or https, for example:'+ 
+        '<br><code>python -m http.server 8000</code> then open:'+ 
+        '<br><code>http://localhost:8000/index.html</code></p>';
+      throw new Error('Invalid protocol');
     }
 
-    callButton.addEventListener("click", () => {
+    // set up Twilio Device
+    function setupDevice() {
+      device = new Twilio.Device(TEST_TOKEN, {
+        codecPreferences: ['opus','pcmu'],
+        logLevel: 'debug',
+        enableIceRestart: true
+      });
+
+      device.on('ready', () => {
+        updateStatus('Ready to call');
+        btn.disabled = false;
+      });
+
+      device.on('error', err => {
+        updateStatus('Error: ' + err.message);
+        btn.disabled = true;
+      });
+
+      device.on('connect', conn => {
+        updateStatus('Call connected');
+        btn.textContent = 'End Call';
+      });
+
+      device.on('disconnect', () => {
+        updateStatus('Ready to call');
+        btn.textContent = 'Start Test Call';
+        btn.disabled = false;
+        activeCall = null;
+      });
+
+      device.register();
+    }
+
+    // handle button clicks
+    btn.addEventListener('click', () => {
       if (activeCall) {
-        activeCall.disconnect()
-        endCall()
-      } else {
-        startCall()
+        activeCall.disconnect();
+        return;
       }
-    })
+      updateStatus('Calling ' + TO_NUMBER);
+      btn.disabled = true;
+      activeCall = device.connect({ To: TO_NUMBER });
+    });
 
-    function startCall() {
-      updateStatus("Initializing")
-      callButton.disabled = true
-
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-          stream.getTracks().forEach(t => t.stop())
-
-          device = new Twilio.Device(TEST_TOKEN, {
-            codecPreferences: ["opus", "pcmu"],
-            logLevel: "debug",
-            enableIceRestart: true
-          })
-
-          device.on("error", err => {
-            updateStatus("Error: " + err.message)
-            callButton.disabled = false
-          })
-
-          device.on("ready", () => {
-            log("Device ready")
-            chooseSpeaker()
-            updateStatus("Calling " + TO_NUMBER)
-            activeCall = device.connect({ To: TO_NUMBER })
-
-            activeCall.on("accept", () => {
-              updateStatus("Call connected")
-              callButton.textContent = "End Call"
-              callButton.disabled = false
-            })
-
-            activeCall.on("disconnect", endCall)
-            activeCall.on("cancel",    () => { updateStatus("Call cancelled"); endCall() })
-            activeCall.on("reject",    () => { updateStatus("Call rejected"); endCall() })
-            activeCall.on("error", err => { updateStatus("Call error: " + err.message); endCall() })
-          })
-
-          if (device.audio && device.audio.on) {
-            device.audio.on("deviceChange", chooseSpeaker)
-          }
-
-          device.register()
-        })
-        .catch(err => {
-          updateStatus("Mic permission error: " + err.message)
-          callButton.disabled = false
-        })
-    }
-
-    function endCall() {
-      if (device) device.destroy()
-      activeCall = null
-      updateStatus("Ready to test")
-      callButton.textContent = "Start Test Call"
-      callButton.disabled = false
-    }
-
-    // initial log
-    log("Page loaded")
-    log("Token starts with: " + TEST_TOKEN.substring(0,20) + "...")
+    // start
+    log('Page loaded');
+    setupDevice();
   </script>
 </body>
 </html>
