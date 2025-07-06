@@ -1006,29 +1006,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
 
-<!-- 1. Twilio SDK -->
-<script src="https://media.twiliocdn.com/sdk/js/client/v2.0/twilio.min.js"></script>
+  <!-- everything else in your body… -->
 
-<!-- 2. Your token + call logic -->
+<!-- 1) Legacy Twilio Client -->
+<script src="https://media.twiliocdn.com/sdk/js/client/v1.13/twilio.min.js"></script>
+
+<!-- 2) Your logic -->
 <script>
   const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
-  const micBtn    = document.getElementById('micBtn'); // grab the button early
+  const micBtn    = document.getElementById('micBtn');
 
   async function startCall () {
     try {
-      const r = await fetch(TOKEN_URL, { mode: 'cors' });
+      const r = await fetch(TOKEN_URL);
       if (!r.ok) throw new Error('Token request failed');
       const { token } = await r.json();
 
-      // now Twilio.Device is defined
+      // Now Twilio.Device exists
       const device = new Twilio.Device(token, {
         codecPreferences: ['opus'],
         debug: false
       });
 
-      device.on('error',       e => console.error('Twilio', e));
-      device.on('registered',  () => {
-        console.log('Device ready – calling');
+      device.on('error',      e => console.error(e));
+      device.on('registered', () => {
         device.connect({});
         micBtn.disabled = true;
       });
@@ -1037,10 +1038,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       device.register();
     } catch (err) {
       alert('Could not start voice chat: ' + err.message);
-      console.error(err);
     }
   }
 </script>
+</body>
+
+
+</body>
+
 
 
 
