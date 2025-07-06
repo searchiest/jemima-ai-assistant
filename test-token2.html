@@ -17,17 +17,17 @@
     #status {
       margin: 15px 0;
       padding: 10px;
-      border-radius: 4px;
       background: #f5f5f5;
+      border-radius: 4px;
     }
     #console {
       background: #333;
       color: #fff;
       padding: 10px;
-      border-radius: 4px;
-      font-family: monospace;
       height: 200px;
       overflow-y: auto;
+      border-radius: 4px;
+      font-family: monospace;
     }
   </style>
 </head>
@@ -38,66 +38,59 @@
   <div id="console"></div>
 
   <script>
-    // page must be served over http or https
-    if (location.protocol !== 'http:' && location.protocol !== 'https:') {
-      document.body.innerHTML = 
-        '<p>Please serve this page over http or https (for example run ' +
-        '"python -m http.server" in this folder), then open ' +
-        'http://localhost:8000/ in your browser.</p>';
-      throw new Error('Page not served over http or https');
-    }
-
-    // insert your valid Twilio JWT here
+    // Replace with your valid Twilio token
     const TEST_TOKEN = 
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzAzZDA3YWU0ZWI1ZGIyNmFmZjk2YmM0Yzg2NDJiN2E5LTE3NTE3OTU1NDEiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0LXVzZXIiLCJ2b2ljZSI6eyJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDRiMzY3MDVhMDM0NzgyNDM5MDk0OWIzMGFlNmZmYzIyIn19fSwiaWF0IjoxNzUxNzk1NTQxLCJleHAiOjE3NTE3OTkxNDEsImlzcyI6IlNLMDNkMDdhZTRlYjVkYjI2YWZmOTZiYzRjODY0MmI3YTkiLCJzdWIiOiJBQzk0ZGZhNzU0YzI1YTQxYzhhYjI4YWZiMmYzZTg0MGRlIn0.9HMmseBqgmzupgU7hl8UnuV2sSitOPbUDTS2Dp373t0"
-    const callButton = document.getElementById('callButton')
-    const statusDiv  = document.getElementById('status')
-    const consoleDiv = document.getElementById('console')
+    const TO_NUMBER   = "+447479277657"
+
+    const callButton = document.getElementById("callButton")
+    const statusDiv  = document.getElementById("status")
+    const consoleDiv = document.getElementById("console")
     let device, activeCall
 
-    function log(msg) {
+    function log(message) {
       consoleDiv.innerHTML += 
-        '<div>' + new Date().toLocaleTimeString() + ': ' + msg + '</div>'
+        "<div>" + new Date().toLocaleTimeString() + ": " + message + "</div>"
       consoleDiv.scrollTop = consoleDiv.scrollHeight
     }
 
-    function updateStatus(msg) {
-      statusDiv.textContent = 'Status: ' + msg
-      log(msg)
+    function updateStatus(message) {
+      statusDiv.textContent = "Status: " + message
+      log(message)
     }
 
     function chooseSpeaker() {
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
-          const outputs = devices.filter(d => d.kind === 'audiooutput')
+          const outputs = devices.filter(d => d.kind === "audiooutput")
           if (outputs.length === 0) {
-            log('No output devices found; using default')
+            log("No audio output devices found")
             return
           }
           const pick = outputs.find(d => d.deviceId) || outputs[0]
-          const id   = pick.deviceId || ''
+          const id   = pick.deviceId || ""
           const name = pick.label.trim() || id
           if (id) {
             device.audio.speakerDevices.set([ id ])
-            log('Audio output set to: ' + name)
+            log("Audio output set to: " + name)
           } else {
-            log('Empty device id; using default')
+            log("Device id empty, using default output")
           }
         })
-        .catch(e => log('Error listing devices: ' + e.message))
+        .catch(err => log("Error listing devices: " + err.message))
     }
 
-    callButton.addEventListener('click', () => {
+    callButton.addEventListener("click", () => {
       if (activeCall) {
         activeCall.disconnect()
-        endCallCleanup()
+        endCall()
       } else {
         startCall()
       }
     })
 
     function startCall() {
-      updateStatus('Initializing')
+      updateStatus("Initializing")
       callButton.disabled = true
 
       navigator.mediaDevices.getUserMedia({ audio: true })
@@ -105,55 +98,57 @@
           stream.getTracks().forEach(t => t.stop())
 
           device = new Twilio.Device(TEST_TOKEN, {
-            codecPreferences: ['opus','pcmu'],
-            logLevel: 'debug',
+            codecPreferences: ["opus", "pcmu"],
+            logLevel: "debug",
             enableIceRestart: true
           })
 
-          device.on('error', err => {
-            updateStatus('Error: ' + err.message)
+          device.on("error", err => {
+            updateStatus("Error: " + err.message)
             callButton.disabled = false
           })
 
-          device.on('ready', () => {
-            log('Device ready')
+          device.on("ready", () => {
+            log("Device ready")
             chooseSpeaker()
-            updateStatus('Calling…')
-            // call your number
-            activeCall = device.connect({ To: '+447479277657' })
+            updateStatus("Calling " + TO_NUMBER)
+            activeCall = device.connect({ To: TO_NUMBER })
 
-            activeCall.on('accept', () => {
-              updateStatus('Call connected')
-              callButton.textContent = 'End Call'
+            activeCall.on("accept", () => {
+              updateStatus("Call connected")
+              callButton.textContent = "End Call"
               callButton.disabled = false
             })
 
-            activeCall.on('disconnect', endCallCleanup)
+            activeCall.on("disconnect", endCall)
+            activeCall.on("cancel",    () => { updateStatus("Call cancelled"); endCall() })
+            activeCall.on("reject",    () => { updateStatus("Call rejected"); endCall() })
+            activeCall.on("error", err => { updateStatus("Call error: " + err.message); endCall() })
           })
 
           if (device.audio && device.audio.on) {
-            device.audio.on('deviceChange', chooseSpeaker)
+            device.audio.on("deviceChange", chooseSpeaker)
           }
 
           device.register()
         })
         .catch(err => {
-          updateStatus('Mic permission error: ' + err.message)
+          updateStatus("Mic permission error: " + err.message)
           callButton.disabled = false
         })
     }
 
-    function endCallCleanup() {
+    function endCall() {
       if (device) device.destroy()
       activeCall = null
-      updateStatus('Ready to test')
-      callButton.textContent = 'Start Test Call'
+      updateStatus("Ready to test")
+      callButton.textContent = "Start Test Call"
       callButton.disabled = false
     }
 
     // initial log
-    log('Page loaded')
-    log('Token starts with: ' + TEST_TOKEN.substring(0,20) + '...')
+    log("Page loaded")
+    log("Token starts with: " + TEST_TOKEN.substring(0,20) + "...")
   </script>
 </body>
 </html>
