@@ -748,7 +748,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
     <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
-    <button id="micBtn" onclick="startCall()">Talk</button>
+    <button id="micBtn">Talk</button>
   </div>
 </div>
 
@@ -1006,41 +1006,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
 
-  <!-- everything else in your body… -->
+<!-- … all your page HTML … -->
 
-<!-- 1) Legacy Twilio Client -->
-<script src="https://media.twiliocdn.com/sdk/js/client/v1.13/twilio.min.js"></script>
+<!-- 1) Load the Voice SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk@2.13.1/dist/twilio.min.js"></script>
 
-<!-- 2) Your logic -->
+<!-- 2) Then your startCall logic -->
 <script>
   const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
   const micBtn    = document.getElementById('micBtn');
 
-  async function startCall () {
+  async function startCall() {
     try {
-      const r = await fetch(TOKEN_URL);
-      if (!r.ok) throw new Error('Token request failed');
-      const { token } = await r.json();
+      const res = await fetch(TOKEN_URL);
+      if (!res.ok) throw new Error('Token request failed');
+      const { token } = await res.json();
 
-      // Now Twilio.Device exists
+      // v2 Voice SDK will now be present
       const device = new Twilio.Device(token, {
         codecPreferences: ['opus'],
         debug: false
       });
 
       device.on('error',      e => console.error(e));
-      device.on('registered', () => {
-        device.connect({});
+      device.on('ready',      () => {
+        console.log('Voice SDK ready, connecting…');
+        device.connect();
         micBtn.disabled = true;
       });
       device.on('disconnect', () => micBtn.disabled = false);
 
-      device.register();
+      // v2 auto‐registers; no manual .register() call needed
     } catch (err) {
       alert('Could not start voice chat: ' + err.message);
+      console.error(err);
     }
   }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk@2.13.1/dist/twilio.min.js"></script>
+<script>
+  const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
+  const micBtn    = document.getElementById('micBtn');
+
+  async function startCall() { /* …your code… */ }
+
+  // Add this line to wire up the button
+  micBtn.addEventListener('click', startCall);
+</script>
+
+
+</body>
+
+</body>
+</html>
+
 </body>
 
 
