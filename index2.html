@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Sales & Marketing Solutions | jemima.ai</title>
 
+
   <!-- SEO -->
   <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
   <link rel="canonical" href="https://jemima.ai/">
@@ -745,6 +746,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
     <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
+    <button id="micBtn" onclick="startCall()">Talk</button>
   </div>
 </div>
 
@@ -1000,6 +1002,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
   </footer>
+
+<script src="https://sdk.twilio.com/js/client/v2/twilio.js"></script>
+<script>
+const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';   // ← your URL
+
+async function startCall () {
+  try {
+    /* 1  fetch JWT */
+    const r   = await fetch(TOKEN_URL, { mode: 'cors' });
+    if (!r.ok) throw new Error('Token request failed');
+    const { token } = await r.json();
+
+    /* 2  create device and register */
+    const device = new Twilio.Device(token, {
+      codecPreferences : ['opus'],   // smallest latency
+      debug            : false
+    });
+
+    device.on('error',       e => console.error('Twilio', e));
+    device.on('registered',  () => {
+      console.log('Device ready – calling');
+      device.connect({});                // hits your TwiML App
+      micBtn.disabled = true;
+    });
+    device.on('disconnect', () => micBtn.disabled = false);
+
+    device.register();                    // v2 SDK explicit register
+  } catch (err) {
+    alert('Could not start voice chat: ' + err.message);
+    console.error(err);
+  }
+}
+</script>
+
 
 <script>
 /* ── 1.  hidden page address sent to n8n ───────────────────── */
