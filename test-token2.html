@@ -38,108 +38,113 @@
   <div id="console"></div>
 
   <script>
-    const TEST_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzAzZDA3YWU0ZWI1ZGIyNmFmZjk2YmM0Yzg2NDJiN2E5LTE3NTE3OTQ1MjQiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0LXVzZXIiLCJ2b2ljZSI6eyJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDRiMzY3MDVhMDM0NzgyNDM5MDk0OWIzMGFlNmZmYzIyIn19fSwiaWF0IjoxNzUxNzk0NTI0LCJleHAiOjE3NTE3OTgxMjQsImlzcyI6IlNLMDNkMDdhZTRlYjVkYjI2YWZmOTZiYzRjODY0MmI3YTkiLCJzdWIiOiJBQzk0ZGZhNzU0YzI1YTQxYzhhYjI4YWZiMmYzZTg0MGRlIn0.07K4ctiJXZodWcUQhJ8YwVrO87krMfcTCIjEYLtnNbQ"
-    const callButton = document.getElementById('callButton')
-    const statusDiv   = document.getElementById('status')
-    const consoleDiv  = document.getElementById('console')
-    let device, activeCall
+    const TEST_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzAzZDA3YWU0ZWI1ZGIyNmFmZjk2YmM0Yzg2NDJiN2E5LTE3NTE3OTQ1MjQiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0LXVzZXIiLCJ2b2ljZSI6eyJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDRiMzY3MDVhMDM0NzgyNDM5MDk0OWIzMGFlNmZmYzIyIn19fSwiaWF0IjoxNzUxNzk0NTI0LCJleHAiOjE3NTE3OTgxMjQsImlzcyI6IlNLMDNkMDdhZTRlYjVkYjI2YWZmOTZiYzRjODY0MmI3YTkiLCJzdWIiOiJBQzk0ZGZhNzU0YzI1YTQxYzhhYjI4YWZiMmYzZTg0MGRlIn0.07K4ctiJXZodWcUQhJ8YwVrO87krMfcTCIjEYLtnNbQ";
+    const callButton = document.getElementById('callButton');
+    const statusDiv  = document.getElementById('status');
+    const consoleDiv = document.getElementById('console');
+    let device, activeCall;
 
     function log(msg) {
-      consoleDiv.innerHTML += '<div>'+ new Date().toLocaleTimeString() +': '+ msg +'</div>'
-      consoleDiv.scrollTop = consoleDiv.scrollHeight
+      consoleDiv.innerHTML += '<div>' + new Date().toLocaleTimeString() + ': ' + msg + '</div>';
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
     }
 
     function updateStatus(msg) {
-      statusDiv.textContent = 'Status: '+ msg
-      log(msg)
+      statusDiv.textContent = 'Status: ' + msg;
+      log(msg);
     }
 
     function chooseSpeaker() {
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
-          const outs = devices.filter(d => d.kind === 'audiooutput')
+          const outs = devices.filter(d => d.kind === 'audiooutput');
           if (outs.length === 0) {
-            log('No output devices found; using default')
-            return
+            log('No output devices found; using default');
+            return;
           }
-          const pick = outs.find(d => d.deviceId) || outs[0]
-          const id   = pick.deviceId || ''
-          const name = pick.label.trim() || id
+          const pick = outs.find(d => d.deviceId) || outs[0];
+          const id   = pick.deviceId || '';
+          const name = pick.label.trim() || id;
           if (id) {
-            device.audio.speakerDevices.set([ id ])
-            log('Audio output set to: '+ name)
+            device.audio.speakerDevices.set([ id ]);
+            log('Audio output set to: ' + name);
           } else {
-            log('Empty device id; using default')
+            log('Empty device id; using default');
           }
         })
-        .catch(e => log('Error listing devices: '+ e.message))
+        .catch(e => log('Error listing devices: ' + e.message));
     }
 
     callButton.addEventListener('click', () => {
       if (activeCall) {
-        endCall()
+        endCall();
       } else {
-        startCall()
+        startCall();
       }
-    })
+    });
 
     function startCall() {
-      updateStatus('Initializing')
-      callButton.disabled = true
+      updateStatus('Initializing');
+      callButton.disabled = true;
 
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
-          stream.getTracks().forEach(t => t.stop())
+          stream.getTracks().forEach(t => t.stop());
 
-          // create device without manual register
+          // create the Twilio Device
           device = new Twilio.Device(TEST_TOKEN, {
             codecPreferences: ['opus','pcmu'],
             logLevel: 'debug',
             enableIceRestart: true
-          })
+          });
 
           device.on('error', err => {
-            updateStatus('Error: '+ err.message)
-            callButton.disabled = false
-          })
+            updateStatus('Error: ' + err.message);
+            callButton.disabled = false;
+          });
 
           device.on('ready', () => {
-            log('Device ready')
-            chooseSpeaker()
-            updateStatus('Connecting call')
-            activeCall = device.connect()
-            activeCall.on('accept', () => {
-              updateStatus('Call connected')
-              callButton.textContent = 'End Call'
-              callButton.disabled = false
-            })
-            activeCall.on('disconnect', endCall)
-          })
+            log('Device ready');
+            chooseSpeaker();
+            updateStatus('Connecting call');
+            activeCall = device.connect();
 
-          // watch for any device change
+            activeCall.on('accept', () => {
+              updateStatus('Call connected');
+              callButton.textContent = 'End Call';
+              callButton.disabled = false;
+            });
+
+            activeCall.on('disconnect', endCall);
+          });
+
+          // handle any later device changes
           if (device.audio && device.audio.on) {
-            device.audio.on('deviceChange', chooseSpeaker)
+            device.audio.on('deviceChange', chooseSpeaker);
           }
+
+          // *** This line is needed so the SDK can reach ready state ***
+          device.register();
 
         })
         .catch(err => {
-          updateStatus('Mic permission error: '+ err.message)
-          callButton.disabled = false
-        })
+          updateStatus('Mic permission error: ' + err.message);
+          callButton.disabled = false;
+        });
     }
 
     function endCall() {
-      if (activeCall) activeCall.disconnect()
-      if (device)     device.destroy()
-      activeCall = null
-      updateStatus('Ready to test')
-      callButton.textContent = 'Start Test Call'
-      callButton.disabled = false
+      if (activeCall) activeCall.disconnect();
+      if (device)     device.destroy();
+      activeCall = null;
+      updateStatus('Ready to test');
+      callButton.textContent = 'Start Test Call';
+      callButton.disabled = false;
     }
 
     // initial log
-    log('Page loaded')
-    log('Using token starting with: '+ TEST_TOKEN.substring(0,20) +'...')
+    log('Page loaded');
+    log('Using token starting with: ' + TEST_TOKEN.substring(0,20) + '...');
   </script>
 </body>
 </html>
