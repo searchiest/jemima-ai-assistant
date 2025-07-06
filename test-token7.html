@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px }
+    button {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled { background: #888 }
+    #status {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    #console {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Twilio Voice Test</h2>
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Loading…</div>
+  <div id="console"></div>
+
+  <script>
+    const TOKEN_URL = "https://voice-tokens-2997.twil.io/token";
+    const TO_NUMBER = "+447479277657";
+
+    const btn = document.getElementById("callButton");
+    const stat = document.getElementById("status");
+    const cons = document.getElementById("console");
+    let device, activeCall;
+
+    function log(msg) {
+      cons.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
+      cons.scrollTop = cons.scrollHeight;
+      console.log(msg);
+    }
+
+    function updateStatus(msg) {
+      stat.textContent = "Status: " + msg;
+      log(msg);
+    }
+
+    async function getToken() {
+      try {
+        const response = await fetch(TOKEN_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        
+        // Debug: Log token details
+        const payload = JSON.parse(atob(data.token.split('.')[1]));
+        log(`Token details: 
+          Identity: ${payload.grants.identity}
+          App SID: ${payload.grants.voice.outgoing.application_sid}
+          Expires: ${new Date(payload.exp * 1000)}`);
+        
+        return data.token;
+      } catch (err) {
+        updateStatus("Token error: " + err.message);
+        throw err;
+      }
+    }
+
+    async function setupDevice() {
+      updateStatus("Requesting mic permission…");
+      try {
+        // Get microphone permission first
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop());
+        
+        // Then get token
+        const token = await getToken();
+        updateStatus("Initializing device…");
+
+        device = new Twilio.Device(token, {
+          codecPreferences: ["opus", "pcmu"],
+          logLevel: "debug",
+          enableIceRestart: true,
+          closeProtection: true
+        });
+
+        // Event handlers
+        device.on("ready", () => {
+          updateStatus("Ready to call");
+          btn.disabled = false;
+        });
+
+        device.on("error", error => {
+          updateStatus("Error: " + error.message);
+          log("Error details: " + JSON.stringify(error, null, 2));
+          btn.disabled = true;
+        });
+
+        device.on("connect", call => {
+          updateStatus("Call connected");
+          btn.textContent = "End Call";
+          btn.disabled = false;
+        });
+
+        device.on("disconnect", () => {
+          updateStatus("Ready to call");
+          btn.textContent = "Start Test Call";
+          activeCall = null;
+        });
+
+        device.register();
+        
+      } catch (err) {
+        updateStatus("Setup failed: " + err.message);
+        btn.disabled = true;
+      }
+    }
+
+    btn.addEventListener("click", async () => {
+      if (activeCall) {
+        activeCall.disconnect();
+        return;
+      }
+      
+      updateStatus("Starting call…");
+      btn.disabled = true;
+      
+      try {
+        // Refresh token for each call
+        const token = await getToken();
+        if (device) device.updateToken(token);
+        
+        activeCall = device.connect({ 
+          To: TO_NUMBER,
+          // Add any custom parameters here
+        });
+        
+      } catch (err) {
+        updateStatus("Call failed: " + err.message);
+        btn.disabled = false;
+      }
+    });
+
+    // Initialize
+    if (!["http:","https:"].includes(location.protocol)) {
+      document.body.innerHTML = 
+        "<p>Please serve over http/https. For example:<br>" +
+        "<code>python -m http.server</code><br>" +
+        "Then open <code>http://localhost:8000</code></p>";
+    } else {
+      log("Page loaded");
+      setupDevice();
+    }
+  </script>
+</body>
+</html>
