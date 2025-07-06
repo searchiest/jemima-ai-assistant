@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Debugger</title>
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+  <style>
+    /* [Previous CSS remains unchanged] */
+  </style>
+</head>
+<body>
+  <h2>Twilio Voice Debugger</h2>
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Loading…</div>
+  <div id="console"></div>
+
+  <script>
+    const TOKEN_URL = "https://voice-tokens-2997.twil.io/token";
+    const TO_NUMBER = "+447479277657";
+
+    const btn = document.getElementById("callButton");
+    const stat = document.getElementById("status");
+    const cons = document.getElementById("console");
+    let device, activeCall;
+
+    function log(msg, isError = false) {
+      const entry = document.createElement('div');
+      entry.innerHTML = `${new Date().toLocaleTimeString()}: ${msg}`;
+      entry.style.color = isError ? '#ff4444' : '#ffffff';
+      cons.appendChild(entry);
+      cons.scrollTop = cons.scrollHeight;
+      console[isError ? 'error' : 'log'](msg);
+    }
+
+    function updateStatus(msg, isError = false) {
+      stat.textContent = `Status: ${msg}`;
+      stat.style.color = isError ? '#ff4444' : '#000000';
+      log(msg, isError);
+    }
+
+    async function getToken() {
+      try {
+        updateStatus("Fetching token...");
+        const response = await fetch(`${TOKEN_URL}?_=${Date.now()}`); // Cache bust
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        const payload = JSON.parse(atob(data.token.split('.')[1]));
+        
+        log(`Token Details:
+          Identity: ${payload.grants.identity}
+          App SID: ${payload.grants.voice?.outgoing?.application_sid}
+          Issuer: ${payload.iss}
+          Expires: ${new Date(payload.exp * 1000)}
+          Current Time: ${new Date()}`);
+        
+        // Verify critical fields
+        if (!payload.grants.voice?.outgoing?.application_sid) {
+          throw new Error("Token missing voice grants");
+        }
+        if (payload.exp <= Math.floor(Date.now()/1000)) {
+          throw new Error("Token already expired");
+        }
+        
+        return data.token;
+      } catch (err) {
+        updateStatus(`Token error: ${err.message}`, true);
+        throw err;
+      }
+    }
+
+    async function setupDevice() {
+      try {
+        updateStatus("Requesting microphone access...");
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop());
+        
+        const token = await getToken();
+        updateStatus("Initializing device...");
+        
+        device = new Twilio.Device(token, {
+          codecPreferences: ["opus", "pcmu"],
+          logLevel: "debug",
+          enableIceRestart: true,
+          connectionTimeout: 10000
+        });
+
+        device.on("ready", () => {
+          updateStatus("Device ready");
+          btn.disabled = false;
+        });
+
+        device.on("error", error => {
+          log(`Device Error:
+            Code: ${error.code}
+            Message: ${error.message}
+            TwilioError: ${JSON.stringify(error.twilioError)}`, true);
+          updateStatus(`Error: ${error.message}`, true);
+        });
+
+        device.on("connect", call => {
+          updateStatus("Call connected");
+          btn.textContent = "End Call";
+        });
+
+        device.on("disconnect", () => {
+          updateStatus("Ready");
+          btn.textContent = "Start Test Call";
+          activeCall = null;
+        });
+
+        device.register();
+
+      } catch (err) {
+        updateStatus(`Initialization failed: ${err.message}`, true);
+      }
+    }
+
+    btn.addEventListener("click", async () => {
+      if (activeCall) {
+        activeCall.disconnect();
+        return;
+      }
+      
+      btn.disabled = true;
+      updateStatus("Starting call...");
+      
+      try {
+        const token = await getToken();
+        device.updateToken(token);
+        
+        activeCall = device.connect({ 
+          To: TO_NUMBER,
+          // Add custom parameters if needed
+        });
+        
+      } catch (err) {
+        updateStatus(`Call failed: ${err.message}`, true);
+        btn.disabled = false;
+      }
+    });
+
+    // Initialize
+    if (!["http:","https:"].includes(location.protocol)) {
+      document.body.innerHTML = 
+        "<p>Please serve over http/https. For example:<br>" +
+        "<code>python -m http.server</code><br>" +
+        "Then open <code>http://localhost:8000</code></p>";
+    } else {
+      log("Page initialized");
+      setupDevice();
+    }
+  </script>
+</body>
+</html>
