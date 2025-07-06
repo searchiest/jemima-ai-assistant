@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Test — Manual Token Input</title>
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px }
+    input, button {
+      font-size: 1rem;
+      padding: 8px;
+      margin: 4px 0;
+      box-sizing: border-box;
+    }
+    input { width: 100% }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled { background: #888 }
+    #status {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    #console {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Twilio Voice Test</h2>
+
+  <label for="tokenInput">Paste your Twilio JWT here:</label><br>
+  <input id="tokenInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ..." />
+  <button id="loadToken">Load Token</button>
+
+  <hr>
+
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Waiting for token</div>
+  <div id="console"></div>
+
+  <script>
+    const TO_NUMBER  = "+447479277657";
+    const loadBtn    = document.getElementById("loadToken");
+    const callBtn    = document.getElementById("callButton");
+    const tokenInput = document.getElementById("tokenInput");
+    const statusDiv  = document.getElementById("status");
+    const consoleDiv = document.getElementById("console");
+    let device, activeCall, currentToken;
+
+    function log(msg) {
+      consoleDiv.innerHTML += "<div>" + new Date().toLocaleTimeString() 
+                             + ": " + msg + "</div>";
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
+    }
+
+    function updateStatus(msg) {
+      statusDiv.textContent = "Status: " + msg;
+      log(msg);
+    }
+
+    // User clicks to load a new token
+    loadBtn.addEventListener("click", () => {
+      const t = tokenInput.value.trim();
+      if (!t.startsWith("eyJ")) {
+        updateStatus("Invalid token format");
+        return;
+      }
+      currentToken = t;
+      updateStatus("Token loaded");
+      log("🔑 Using JWT: " + t.substring(0,20) + "…");
+      setupDevice();
+    });
+
+    function setupDevice() {
+      if (!currentToken) {
+        updateStatus("No token loaded");
+        return;
+      }
+      // If an old device exists, destroy it first
+      if (device) {
+        device.destroy();
+        device = null;
+        activeCall = null;
+        callBtn.textContent = "Start Test Call";
+        callBtn.disabled = true;
+      }
+      updateStatus("Requesting mic permission…");
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          stream.getTracks().forEach(t=>t.stop());
+          updateStatus("Initializing Twilio Device…");
+          device = new Twilio.Device(currentToken, {
+            codecPreferences: ["opus","pcmu"],
+            logLevel: "debug",
+            enableIceRestart: true
+          });
+
+          device.on("registered", () => {
+            updateStatus("Device registered & ready");
+            callBtn.disabled = false;
+          });
+          device.on("ready", () => {
+            updateStatus("Device ready to call");
+            callBtn.disabled = false;
+          });
+          device.on("error", err => {
+            updateStatus("Error: " + err.message);
+            callBtn.disabled = true;
+          });
+          device.on("connect", () => {
+            updateStatus("Call connected");
+            callBtn.textContent = "End Call";
+            callBtn.disabled = false;
+          });
+          device.on("disconnect", () => {
+            updateStatus("Ready to call");
+            callBtn.textContent = "Start Test Call";
+            activeCall = null;
+          });
+
+          device.register();
+        })
+        .catch(err => {
+          updateStatus("Mic permission error: " + err.message);
+        });
+    }
+
+    // Handle the call button
+    callBtn.addEventListener("click", () => {
+      if (activeCall) {
+        activeCall.disconnect();
+      } else {
+        updateStatus("Calling " + TO_NUMBER + "…");
+        callBtn.disabled = true;
+        activeCall = device.connect({ To: TO_NUMBER });
+      }
+    });
+
+    // Initial log
+    log("Page loaded");
+  </script>
+</body>
+</html>
