@@ -722,17 +722,30 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 
-.card-body {
-  position: relative;
-  padding-bottom: 3rem;   /* make room for the pills */
+/* Solution card styling */
+.solution-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure card takes full height */
 }
 
-.category-pil {
-  position: absolute;
-  bottom: 1rem;           /* distance from card bottom */
-  left: 1rem;             /* align with your body padding */
-  right: 1rem;            /* stretch to the right padding */
-  margin: 0;              /* reset any auto margins */
+/* Card body should grow to fill space */
+.solution-card .card-body {
+  flex: 1; /* Makes body take available space */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Category pill container */
+.solution-card .category-pil {
+  margin-top: auto; /* Pushes pills to bottom */
+  padding-top: 15px; /* Adds spacing above pills */
+}
+
+/* Category pill list */
+.solution-card .category-pil ul {
+  margin: 0; /* Remove default margins */
+  justify-content: center; /* Center pills horizontally */
 }
 
 </style>
