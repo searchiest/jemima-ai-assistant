@@ -1,8 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic setup -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Sales & Marketing Solutions | jemima.ai</title>
+
+  <!-- SEO -->
+  <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
+  <link rel="canonical" href="https://jemima.ai/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="jemima.ai">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://jemima.ai/">
+  <meta property="og:title"       content="jemima.ai | AI Automation Solutions">
+  <meta property="og:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools.">
+  <meta property="og:image"       content="og-image.jpg">
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:url"         content="https://jemima.ai/">
+  <meta name="twitter:title"       content="jemima.ai | AI Automation Solutions">
+  <meta name="twitter:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools.">
+  <meta name="twitter:image"       content="og-image.jpg">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+
+  <!-- Performance: pre-connect and fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons and extra CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
+<!-- End Google Tag Manager -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 /* ---------- Reset and variables ---------- */
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -86,6 +136,10 @@ nav ul li a:hover::after{width:100%;}
     display:none;
 }
 
+.chat-body.show{
+    display:flex;
+}
+
 .chat-bubble{
     max-width:85%;padding:15px 20px;border-radius:20px;
     animation:fadeIn 0.3s ease;box-shadow:0 3px 8px rgba(0,0,0,0.05);
@@ -122,15 +176,206 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 #chat-send:hover{background:#4338ca;transform:scale(1.05);}
 #chat-send i{font-size:1.1rem;}
 
-/* ---------- Form Section ---------- */
-.form-section {
-    background: var(--accent);
+/* Solutions Section */
+.solutions {
+    padding: 100px 0;
+    background: linear-gradient(to bottom, #ffffff, #f8f9ff);
+}
+
+/* ---------- Service and solution sections ---------- */
+  
+.services
+  { background: white;
     padding: 60px 0;
     border-radius: 30px;
     margin: 50px auto;
     color: white;
-    width: calc(50% - 15px);
-    max-width: 585px;
+    width: calc(100% - 60px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
+
+.solutions
+  { background: white;
+    padding: 60px 0;
+    border-radius: 30px;
+    margin: 50px auto;
+    color: white;
+    width: calc(100% - 60px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
+
+/*.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px; max-width:600px;}*/
+.section-header{text-align:center;margin-bottom:70px;}
+.section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
+.section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
+.services-grid,
+.solutions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
+.service-card,
+.solution-card{
+    background:#fff;border-radius:20px;padding:40px 30px;text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;transition:var(--transition);
+}
+.service-card:hover,
+.solution-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
+.service-card::before,
+.solution-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
+.service-icon,
+.solution-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
+.service-card h3,
+.solution-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
+.service-card p,
+.solution-card p{color:var(--gray);font-size:1.05rem;}
+
+
+  .user-bubble {
+    white-space: pre-wrap;
+  }
+  .ai-bubble {
+    white-space: pre-wrap;
+  }
+
+/* ---------- Quick-link section ---------- */
+.quick-links-wrapper{
+    margin:20px 0;
+}
+
+.quick-links-title{
+    font-size:1rem;
+    font-weight:600;
+    color:var(--dark);
+    margin:0 0 8px 0;
+    text-align:left;
+}
+
+.quick-links-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.qlink{
+    padding:6px 12px;
+    border-radius:10px;
+    background:#4f46e5;
+    color:#ffffff;
+    font-size:0.85rem;
+    text-decoration:none;
+    transition:var(--transition);
+    white-space:nowrap;
+    text-align:left;
+}
+
+.qlink:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+}
+
+/* keep buttons centred on very small screens */
+@media (max-width:480px){
+    .quick-links-list{
+        justify-content:left;
+    }
+}
+
+
+/* ---------- Footer ---------- */
+footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
+.footer-col h3{font-size:1.3rem;margin-bottom:20px;color:#fff;font-weight:600;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:12px;}
+.footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);font-weight:400;}
+.footer-links a:hover{color:#fff;}
+.social-links{display:flex;gap:15px;margin-top:20px;}
+.social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
+.social-links a:hover{background:var(--accent);transform:translateY(-3px);}
+footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:30px;}
+/* Description Text */
+.description-text {
+    max-width: 800px;
+    margin: 40px auto 0;
+    font-size: 1.25rem;
+    color: var(--gray);
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    font-weight: 400;
+}
+.highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2);opacity:0.7;}}
+
+/* ---------- Responsive ---------- */
+@media (max-width:768px){
+    .mobile-menu-btn{
+        display:block;
+        margin-left:auto;
+    }
+
+    nav ul{
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#fff;
+        padding:20px 0;
+        box-shadow:0 10px 15px rgba(0,0,0,0.1);
+    }
+    nav ul.show{display:flex;}
+    nav ul li{
+        text-align:center;
+        margin:10px 0;
+    }
+
+    .hero{padding:140px 0 20px;}
+    .hero h1{font-size:3.7rem;}
+
+    .chat-body{max-height:300px;padding:15px;}
+    .chat-bubble{padding:12px 16px;}
+    .chat-bubble p{font-size:1rem;}
+}
+
+@media (max-width:576px){
+    .hero h1{font-size:2.4rem;}
+    .ai-chat-box{padding:20px;}
+    .chat-bubble p{font-size:0.95rem;}
+    .footer-grid{grid-template-columns:1fr;}
+}
+
+/* Services grid - force two columns on desktop */
+@media (min-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Keep the hero heading on one line at desktop width */
+@media (min-width: 992px) {
+    .hero-content {
+        max-width: 1100px;
+    }
+    .hero h1 {
+        white-space: nowrap;
+    }
+}
+
+/* ---------- Form Section ---------- */
+.form-section {
+    background: var(--accent);
+    padding: 30px 0;
+    border-radius: 30px;
+    margin: 60px auto;
+    color: white;
+    width: calc(100% - 100px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */
 }
 
 .form-section .container {
@@ -139,18 +384,20 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     align-items: center;
     text-align: center;
     width: 100%;
-    padding: 0 20px;
+    padding: 0 200px;
+    max-width: calc(560px * 2 + 30px);
 }
 
 .form-section h2 {
     font-size: 2.2rem;
     margin-bottom: 20px;
+    margin-top: 40px;
     font-weight: 600;
 }
 
 .form-section p {
     max-width: 700px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     font-size: 1.1rem;
     line-height: 1.7;
 }
@@ -204,6 +451,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     transition: var(--transition);
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 .booking-form button:hover {
@@ -211,138 +459,232 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     transform: translateY(-2px);
 }
 
-/* ---------- Services Section ---------- */
-.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px;}
-.section-header{text-align:center;margin-bottom:70px;}
-.section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
-.section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
-.service-card{
-    background:#fff;border-radius:20px;padding:40px 30px;text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;transition:var(--transition);
-}
-.service-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
-.service-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
-.service-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
-.service-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
-.service-card p{color:var(--gray);font-size:1.05rem;}
 
-.user-bubble, .ai-bubble {
-    white-space: pre-wrap;
+
+/* ---------- Form Section – responsive fix ---------- */
+
+/* Reduce side padding on tablets */
+@media (max-width: 992px) {
+  .form-section .container {
+    padding: 0 40px;
+  }
 }
 
-/* ---------- Quick-link section ---------- */
-.quick-links-wrapper{
-    margin:20px 0;
+/* Further reduce side padding on phones */
+@media (max-width: 576px) {
+  .form-section .container {
+    padding: 0 20px;
+  }
 }
 
-.quick-links-title{
-    font-size:1rem;
-    font-weight:600;
-    color:var(--dark);
-    margin:0 0 8px 0;
-    text-align:left;
+/* One-column layout by default */
+.booking-form {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
 }
 
-.quick-links-list{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
+/* Two-column layout from 600 px upward */
+@media (min-width: 600px) {
+  .booking-form {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.qlink{
-    padding:6px 12px;
-    border-radius:10px;
-    background:#4f46e5;
-    color:#ffffff;
-    font-size:0.85rem;
-    text-decoration:none;
-    transition:var(--transition);
-    white-space:nowrap;
-    text-align:left;
+/* Keep the purple box away from the viewport edge */
+.form-section {
+  width: calc(100% - 40px);   /* 20 px gap each side */
+  margin: 60px auto;
 }
 
-.qlink:hover{
-    background:#7c3aed;
-    transform:translateY(-2px);
-}
-
-/* Description Text */
-.description-text {
-    max-width: 650px;
-    margin: 40px auto 0;
-    font-size: 1.25rem;
-    color: var(--gray);
-    line-height: 1.7;
-    animation: fadeInUp 0.8s ease 0.5s forwards;
-    opacity: 0;
-    transform: translateY(20px);
-    font-weight: 400;
-}
-.highlight {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-/* ---------- Animations ---------- */
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-
-/* ---------- Responsive ---------- */
-@media (max-width:768px){
-    .mobile-menu-btn{
-        display:block;
-        margin-left:auto;
-    }
-
-    nav ul{
-        display:none;
-        flex-direction:column;
-        position:absolute;
-        top:80px;
-        left:0;
-        width:100%;
-        background:#fff;
-        padding:20px 0;
-        box-shadow:0 10px 15px rgba(0,0,0,0.1);
-    }
-    nav ul.show{display:flex;}
-    nav ul li{
-        text-align:center;
-        margin:10px 0;
-    }
-
-    .hero{padding:140px 0 20px;}
-    .hero h1{font-size:3.7rem;}
-
-    .chat-body{max-height:300px;padding:15px;}
-    .chat-bubble{padding:12px 16px;}
-    .chat-bubble p{font-size:1rem;}
-}
-
-@media (max-width:576px){
-    .hero h1{font-size:2.4rem;}
-    .ai-chat-box{padding:20px;}
-    .chat-bubble p{font-size:0.95rem;}
-}
-
-/* Services grid - force two columns on desktop */
+/* Force one field per row on desktop */
 @media (min-width: 992px) {
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .booking-form {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Keep the hero heading on one line at desktop width */
-@media (min-width: 992px) {
-    .hero-content {
-        max-width: 1100px;
-    }
-    .hero h1 {
-        white-space: nowrap;
-    }
+
+/* ---------- Service cards – extra horizontal space ---------- */
+
+/* Small tablets and up */
+@media (min-width: 576px) {
+  .services .container {
+    padding-left: 40px;   /* 40 px each side */
+    padding-right: 40px;
+  }
 }
+
+/* Desktops and large laptops */
+@media (min-width: 992px) {
+  .services .container {
+    padding-left: 40px;   /* 80 px each side */
+    padding-right: 40px;
+  }
+}
+
+/* ---------- Service cards – extra horizontal space ---------- */
+
+/* Small tablets and up */
+@media (min-width: 576px) {
+  .solutions .container {
+    padding-left: 40px;   /* 40 px each side */
+    padding-right: 40px;
+  }
+}
+
+/* Desktops and large laptops */
+@media (min-width: 992px) {
+  .solutions .container {
+    padding-left: 40px;   /* 80 px each side */
+    padding-right: 40px;
+  }
+}
+
+/* ---------- Calendar icon – corrected spelling ---------- */
+
+/* Hide the native WebKit icon, keep its click area */
+.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;              /* invisible but clickable */
+  position: relative;
+}
+
+/* Draw a white calendar symbol in the same spot */
+.booking-form input[type="date"] {
+  position: relative;      /* anchor for the pseudo-element */
+}
+.booking-form input[type="date"]::after {
+  content: "";
+  position: absolute;
+  right: 14px;             /* move left or right if needed */
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  background:
+    url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h3V2Zm13 6H4v12h16V8Zm-5 3v5h5v-5h-5Z'/%3E%3C/svg%3E")
+    no-repeat center center / contain;
+  pointer-events: none;    /* clicks still reach the real picker */
+}
+
+
+/* ---------- Match section width on very small screens ---------- */
+@media (max-width: 575.98px) {
+  .services,
+  .solutions {
+    width: calc(100% - 40px);   /* 20 px gap each side, same as the rest */
+  }
+}
+
+/* ---------- Time dropdown: white field text, white arrow ---------- */
+
+/* closed field */
+/* ---------- Time field: match pale-purple background ---------- */
+#slot{
+  background-color: rgba(255,255,255,0.1);                 /* light purple */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E"); /* arrow */
+  appearance:none;                        /* hide built-in arrow                  */
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px 6px;
+}
+
+/* open list */
+#slot option{
+  color:var(--dark);                      /* black items in the drop-down list    */
+}
+
+/* ── Floating form message (full-width, semi-transparent) ─────────── */
+#formMsg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 14px 20px;
+  text-align: center; 
+  font-weight: 600;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  
+  /* Remove any max-width constraints */
+  max-width: none !important;
+  
+  /* Ensure full width */
+  margin: 0;
+  box-sizing: border-box;
+  
+  /* Override any container padding */
+  transform: translateY(-100%) translateX(-50%);
+  left: 50%;
+  width: 100vw;
+  
+  /* slide-in animation */
+  opacity: 0;
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+#formMsg.show {
+  transform: translateY(0) translateX(-50%);
+  opacity: 1;
+}
+
+#formMsg.sending {
+  background: rgba(255, 152, 0, .90); /* orange */
+}
+
+#formMsg.success {
+  background: rgba(76, 175, 80, .90); /* green */
+}
+
+#formMsg.error {
+  background: rgba(229, 57, 53, .90); /* red */
+}
+
+/* Keep the custom styling but make the entire field clickable */
+.booking-form input[type="date"] {
+  position: relative;
+  cursor: pointer;
+  padding-right: 40px; /* Keep space for icon */
+}
+
+.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* Keep the native picker invisible */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.booking-form input[type="date"]::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  background:
+    url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h3V2Zm13 6H4v12h16V8Zm-5 3v5h5v-5h-5Z'/%3E%3C/svg%3E")
+    no-repeat center center / contain;
+  pointer-events: none; /* Allow clicks to pass through to the input */
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    margin-top: -10px;      /* Reduced from original value */
+    margin-bottom: -20px;   /* Reduced from original 30px */
+  }
+}
+
 </style>
+
 </head>
 <body>
 
@@ -389,7 +731,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     
                     <div class="chat-bubble">
-                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> Automation.</p>
+                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
                     </div>
                     <!-- Chat area -->
                     <div id="chat-body" class="chat-body"></div>
@@ -406,7 +748,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h4 class="quick-links-title">Chat Suggestions</h4>
 
   <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="I'd like to book a 30 minute discovery call">Book a call</a>
+    <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
     <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
@@ -415,9 +757,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 </div>
 
+
+
+
+
+
+
+
                 <!-- Description Text -->
                 <div class="description-text">
-                    Transform your service business with our cutting-edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
+                    Transform your service business with cutting edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
                 </div>
             </div>
         </div>
@@ -463,13 +812,66 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
     
-    
+    <!-- Solutions Section -->
+    <section class="solutions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Business Solutions</h2>
+                <p>End to end solutions shaped for your business needs</p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Process Automation</h3>
+                    <p>Automate repetitive tasks and workflows to increase efficiency and reduce costs.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Intelligent Analytics</h3>
+                    <p>Turn data into useful insights with AI-powered analytics solutions.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Conversational AI</h3>
+                    <p>Implement chatbots and virtual assistants for enhanced customer interactions.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>System Integration</h3>
+                    <p>Connect your existing systems with our automation solutions.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security Solutions</h3>
+                    <p>Protect your business with AI-powered threat detection and prevention systems.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Scalable Solutions</h3>
+                    <p>Grow your business with solutions that scale with your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
   <!-- Form Section with Booking Form -->
   <section class="form-section">
     <div class="container">
-      <h2>Reserve your slot</h2>
-      <p>Fill out the form below to book your meeting with our team.</p>
+      <h2>Book A Call</h2>
+      <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
       
       <form class="booking-form" id="bookingForm" autocomplete="on">
         <div>
@@ -553,6 +955,270 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+
+
+
+
+    <!-- Footer -->
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#" class="logo" style="color: white;">jemima<span style="color: #818cf8;">.ai</span></a>
+          <p style="color: #a0aec0; margin-top: 20px; line-height: 1.7;">Leading business solutions for forward-thinking businesses.</p>
+          <div class="social-links">
+            <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
+            <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Solutions</h3>
+          <ul class="footer-links">
+            <li><a href="ai-lead-generation.html">Lead Generation</a></li>
+            <li><a href="ai-sales-automation.html">Sales</a></li>
+            <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
+            <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
+            <li><a href="ai-automation.html">AI Automation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Resources</h3>
+          <ul class="footer-links">
+            <li><a href="ai-business-guides.html">AI Business Guides</a></li>
+            <li><a href="ai-workflows.html">Workflows</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+/* ── 1.  hidden page address sent to n8n ───────────────────── */
+const pageUrl   = window.location.href;
+
+/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
+const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+
+/* ── 3.  DOM handles ───────────────────────────────────────── */
+const box   = document.getElementById('chat-body');
+const input = document.getElementById('chat-input');
+
+/* ── 4.  helper: add a chat bubble ─────────────────────────── */
+function add (text, role = 'ai') {
+  const div       = document.createElement('div');
+  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+  div.innerHTML   = `<p>${text}</p>`;
+  box.appendChild(div);
+  box.scrollTop   = box.scrollHeight;
+  box.classList.add('show');
+}
+
+/* ── 5.  helper: unwrap JSON (object OR first element of array) */
+function parse (raw, hdr) {
+  if ((hdr.get('content-type') || '').includes('application/json')) {
+    try {
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
+      return (
+        d.reply   || d.output  || d.text || d.message ||
+        d.answer  || d.content ||
+        (d.choices && d.choices[0]?.message.content) ||
+        raw
+      );
+    } catch { /* fall through to raw */ }
+  }
+  return raw;
+}
+
+/* ── 6.  send routine, called on form submit ───────────────── */
+async function sendMessage () {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  add(msg, 'user');               // echo user text
+  input.value = '';               // clear
+  input.style.height = '60px';    // reset height
+
+  try {
+    const res = await fetch(webhook, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        sessionId,
+        route     : 'general',
+        action    : 'sendMessage',
+        chatInput : msg,
+        pageUrl                      // hidden field
+      })
+    });
+    const raw = await res.text();
+    add(parse(raw, res.headers), 'ai');
+  } catch (err) {
+    console.error(err);
+    add('Could not reach the server.', 'ai');
+  }
+}
+
+/* ── 7.  auto-grow textarea ───────────────────────────────── */
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = input.scrollHeight + 'px';
+});
+
+/* ── 8.  give focus on load (desktop only) ─────────────────── */
+window.addEventListener('load', () => {
+  const isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (!isMobile) {
+    input.focus({ preventScroll: true });
+  }
+});
+/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
+const menuBtn  = document.querySelector('.mobile-menu-btn');
+const navMenu  = document.querySelector('nav ul');
+if (menuBtn && navMenu) {
+  menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
+  navMenu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navMenu.classList.remove('show'))
+  );
+}
+
+
+/* quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    if(e.target.classList.contains('qlink')){
+      e.preventDefault();
+      input.value = e.target.dataset.msg;
+      sendMessage();               // reuse the same send routine
+    }
+  });
+</script>
+<script>
+/* ── Booking & floating message ─────────────────────────── */
+const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+const TIME_ZONE   = 'Europe/London';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* handles ------------------------------------------------ */
+  const dayInput   = document.getElementById('day');
+  const slotSelect = document.getElementById('slot');
+  const form       = document.getElementById('bookingForm');
+  const formMsg    = document.getElementById('formMsg');
+  const pageUrlIn  = document.getElementById('pageUrl');
+
+  /* helper: show / hide banner ----------------------------- */
+  function flash(type, text, keepMs = 3000){
+    formMsg.className = '';            // clear all classes
+    formMsg.textContent = text;
+    if(type) formMsg.classList.add(type);
+    formMsg.classList.add('show');     // slide-in
+    clearTimeout(flash._timer);
+    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+  }
+
+  /* init --------------------------------------------------- */
+  pageUrlIn.value = window.location.href;
+  dayInput.addEventListener('change',  fetchTimes);
+  form    .addEventListener('submit',  submitBooking);
+
+  /* fetch available times ---------------------------------- */
+  async function fetchTimes(){
+    const day = dayInput.value;
+    if(!day){
+      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+      return;
+    }
+    slotSelect.disabled = true;
+    slotSelect.innerHTML = '<option>Loading…</option>';
+
+    try{
+      const res  = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'check_availability', day})
+                  });
+      const data = await res.json();
+      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+      const free   = payload.slots ?? [];
+
+      slotSelect.innerHTML = free.length
+        ? '<option value="">Select a time</option>'
+        : '<option value="">No slots available</option>';
+
+      free.forEach(s=>{
+        if(!s.startsWith(day)) return;
+        const t = s.slice(11,16);
+        slotSelect.insertAdjacentHTML('beforeend',
+          `<option value="${s}">${t}</option>`);
+      });
+    }catch{
+      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+    }finally{
+      slotSelect.disabled = false;
+    }
+  }
+
+  /* submit booking ---------------------------------------- */
+  async function submitBooking(e){
+    e.preventDefault();
+    flash('sending','Sending…',10_000);         // orange bar
+
+    const payload = {
+      firstName:form.firstName.value,
+      lastName :form.lastName.value,
+      company  :form.company.value,
+      phone    :form.phone.value,
+      email    :form.email.value,
+      slot     :slotSelect.value,
+      pageUrl  :pageUrlIn.value,
+      timeZone :TIME_ZONE
+    };
+
+    try{
+      const res = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'create_booking',...payload})
+                  });
+
+      if(res.ok){
+        form.reset();
+        slotSelect.innerHTML =
+          '<option value="">Pick a day first</option>';
+        flash('success','Your meeting is confirmed. Check your inbox.');
+      }else if(res.status===409){
+        flash('error','That time has just been taken. Please choose another.');
+        fetchTimes();
+      }else{
+        flash('error','An error occurred. Please try again later.');
+      }
+    }catch{
+      flash('error','Could not reach the server. Try again later.');
+    }
+  }
+});
+</script>
 
 </body>
 </html>
