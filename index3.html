@@ -606,14 +606,35 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 /*  color: white; */
 }
 
-.card {
+.card-body {
   display: flex;
   flex-direction: column;
+  /* allow the body to grow and push its own footer down */
+  flex: 1;
 }
 
 .category-pil {
-  margin-top: auto;    /* push pills down to bottom of card */
-  padding-top: 1rem;   /* optional spacing above pills */
+  margin-top: auto;
+  padding-top: 1rem;  /* optional spacing */
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.col {
+  display: flex;        /* or add class="d-flex" */
+}
+.col .card {
+  flex: 1;               /* stretch each card to fill its column */
+  display: flex;
+  flex-direction: column;
+}
+.col .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 
@@ -841,7 +862,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3>Sales Automation</h3>
+                    <h3>Sales</h3>
                     <p>Intelligent sales pipelines that nurture prospects and close deals automatically.</p>
                 </div>
                 <div class="service-card">
