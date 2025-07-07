@@ -606,39 +606,6 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 /*  color: white; */
 }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  /* allow the body to grow and push its own footer down */
-  flex: 1;
-}
-
-.category-pil {
-  margin-top: auto;
-  padding-top: 1rem;  /* optional spacing */
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-}
-.col {
-  display: flex;        /* or add class="d-flex" */
-}
-.col .card {
-  flex: 1;               /* stretch each card to fill its column */
-  display: flex;
-  flex-direction: column;
-}
-.col .card-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-
-
 /* ---------- Match section width on very small screens ---------- */
 @media (max-width: 575.98px) {
   .services,
@@ -752,6 +719,20 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     margin-top: -10px;      /* Reduced from original value */
     margin-bottom: -20px;   /* Reduced from original 30px */
   }
+}
+
+
+.card-body {
+  position: relative;
+  padding-bottom: 3rem;   /* make room for the pills */
+}
+
+.category-pil {
+  position: absolute;
+  bottom: 1rem;           /* distance from card bottom */
+  left: 1rem;             /* align with your body padding */
+  right: 1rem;            /* stretch to the right padding */
+  margin: 0;              /* reset any auto margins */
 }
 
 </style>
