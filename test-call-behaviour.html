@@ -2,19 +2,21 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Test — Phone Icon</title>
+  <title>Twilio Voice Test — Click to Call</title>
+
   <!-- Font Awesome for the phone icon -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         crossorigin="anonymous" />
+
   <!-- Twilio Voice SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; text-align: center }
     #callButton {
-      font-size: 2rem;
-      width: 64px;
-      height: 64px;
+      font-size: 2.5rem;
+      width: 64px; height: 64px;
       border: none;
       background: none;
       color: #4CAF50;
@@ -40,37 +42,46 @@
 <body>
   <h2>Twilio Voice Test</h2>
 
-  <!-- Phone icon button -->
-  <button id="callButton" disabled>
+  <!-- Phone icon (always enabled) -->
+  <button id="callButton">
     <i class="fa-solid fa-phone"></i>
   </button>
   <div id="errorMsg">not available try later</div>
-  <div id="status">Status: Initialising…</div>
+  <div id="status">Status: Click the phone to call</div>
 
   <script>
     const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
     const TO_NUMBER = '+447479277657';
 
-    const btn      = document.getElementById('callButton');
-    const statusEl = document.getElementById('status');
-    const errorEl  = document.getElementById('errorMsg');
+    const btn     = document.getElementById('callButton');
+    const status  = document.getElementById('status');
+    const errorEl = document.getElementById('errorMsg');
     let   device, activeCall;
 
     function updateStatus(msg) {
-      statusEl.textContent = 'Status: ' + msg;
+      status.textContent = 'Status: ' + msg;
     }
 
     async function fetchToken() {
-      updateStatus('Fetching token…');
       const res = await fetch(TOKEN_URL);
       if (!res.ok) throw new Error(res.statusText);
       const data = await res.json();
       return data.token;
     }
 
-    async function initDevice() {
+    btn.addEventListener('click', async () => {
+      if (activeCall) {
+        // if already in call, hang up
+        activeCall.disconnect();
+        activeCall = null;
+        updateStatus('Call ended');
+        return;
+      }
+
       try {
+        updateStatus('Fetching token…');
         const token = await fetchToken();
+
         updateStatus('Initialising device…');
         device = new Twilio.Device(token, {
           codecPreferences: ['opus','pcmu'],
@@ -78,47 +89,36 @@
           enableIceRestart: true
         });
 
-        device.on('ready', () => {
-          updateStatus('Ready to call');
-          btn.disabled = false;
+        // handle ready → place call
+        device.once('ready', () => {
+          updateStatus('Calling…');
+          activeCall = device.connect({ To: TO_NUMBER });
+
+          activeCall.on('accept', () => updateStatus('Call connected'));
+          activeCall.on('disconnect', () => {
+            updateStatus('Call ended');
+            activeCall = null;
+          });
+          activeCall.on('error', err => {
+            updateStatus('Error');
+            errorEl.style.display = 'block';
+            console.error(err.message);
+          });
         });
 
+        // handle device errors
         device.on('error', err => {
           updateStatus('Error');
           errorEl.style.display = 'block';
           console.error(err.message);
         });
 
-        device.on('connect', () => {
-          updateStatus('Call connected');
-          errorEl.style.display = 'none';
-        });
-
-        device.on('disconnect', () => {
-          updateStatus('Ready to call');
-          btn.disabled = false;
-        });
-
-        device.register();
       } catch (err) {
-        updateStatus('Failed to initialise');
+        updateStatus('Error');
         errorEl.style.display = 'block';
         console.error(err);
       }
-    }
-
-    btn.addEventListener('click', () => {
-      if (activeCall) {
-        activeCall.disconnect();
-        return;
-      }
-      updateStatus('Calling…');
-      btn.disabled = true;
-      activeCall = device.connect({ To: TO_NUMBER });
     });
-
-    // start
-    initDevice();
   </script>
 </body>
 </html>
