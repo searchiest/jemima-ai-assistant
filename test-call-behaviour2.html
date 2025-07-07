@@ -25,7 +25,7 @@
       border: none;
       cursor: pointer;
       outline: none;
-      transition: color 0.3s ease;
+      transition: color 0.3s;
     }
     #callButton.idle       { color: rebeccapurple; }
     #callButton.connecting { color: limegreen;    }
@@ -79,8 +79,9 @@
     let   device, activeCall;
 
     function logEvent(msg) {
+      const d = new Date().toLocaleTimeString();
       const line = document.createElement('div');
-      line.textContent = `${new Date().toLocaleTimeString()}: ${msg}`;
+      line.textContent = `${d}: ${msg}`;
       debugEl.appendChild(line);
       debugEl.scrollTop = debugEl.scrollHeight;
     }
@@ -97,7 +98,7 @@
     async function fetchToken() {
       logEvent('Fetching token');
       const res = await fetch(TOKEN_URL);
-      if (!res.ok) throw new Error('Fetch ' + res.status);
+      if (!res.ok) throw new Error(res.statusText);
       const json = await res.json();
       if (!json.token) throw new Error('No token in response');
       logEvent('Token received');
@@ -106,7 +107,7 @@
 
     btn.addEventListener('click', async () => {
       logEvent('Phone clicked');
-      // if connected, hang up
+      // if already connected, hang up
       if (btn.classList.contains('connected') && activeCall) {
         logEvent('Hanging up');
         activeCall.disconnect();
@@ -114,6 +115,7 @@
       }
 
       setState('connecting');
+
       try {
         const token = await fetchToken();
         device = new Twilio.Device(token, {
@@ -122,27 +124,7 @@
           enableIceRestart: true
         });
 
-        device.on('ready',       () => { logEvent('Device ready');      });
-        device.on('registered',  () => { logEvent('Device registered'); });
-        device.on('error', err => {
-          logEvent('Device error: ' + err.message);
-          setState('idle');
-          errorEl.style.display = 'block';
-        });
-
-        // connection lifecycle
-        device.on('connect',     conn => { 
-          logEvent('Device event: connect'); 
-          setState('connected');
-        });
-        device.on('disconnect',  conn => {
-          logEvent('Device event: disconnect');
-          setState('idle');
-        });
-
-        device.register();  // actually open the websocket
-
-        // whichever comes first, make the call:
+        // hook lifecycle events *before* register()
         const placeCall = () => {
           logEvent('Placing call');
           activeCall = device.connect({ To: TO_NUMBER });
@@ -150,8 +132,19 @@
           activeCall.on('disconnect',() => logEvent('Call disconnected'));
           activeCall.on('error', err => logEvent('Call error: ' + err.message));
         };
-        device.once('ready',       placeCall);
-        device.once('registered',  placeCall);
+
+        device.once('ready',       () => { logEvent('Device ready');     placeCall() });
+        device.once('registered',  () => { logEvent('Device registered'); placeCall() });
+
+        device.on('connect',    () => { logEvent('Device event: connect');    setState('connected') });
+        device.on('disconnect', () => { logEvent('Device event: disconnect'); setState('idle')      });
+        device.on('error', err => {
+          logEvent('Device error: ' + err.message);
+          setState('idle');
+          errorEl.style.display = 'block';
+        });
+
+        device.register();
 
       } catch (err) {
         logEvent('Exception: ' + err.message);
