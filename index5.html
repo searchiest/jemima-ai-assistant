@@ -7,14 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Sales & Marketing Solutions | jemima.ai</title>
 
-  <!-- Font Awesome for the phone icon -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        crossorigin="anonymous" />
-
-  <!-- Twilio Voice SDK -->
-  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
-
   <!-- SEO -->
   <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
   <link rel="canonical" href="https://jemima.ai/">
@@ -59,7 +51,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #callButton {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
+    }
+    #callButton.idle       { color: #4f46e5; }
+    #callButton.connecting { color: limegreen;    }
+    #callButton.connected  { color: crimson;      }
+
+    #status {
+      margin-top: 10px;
+      font-size: 0.6rem;
+      min-height: 0.8em;
+    }
+    .error { color: #ffb3b3; }
+  </style>
+
 
 <style>
 /* ---------- Reset and variables ---------- */
@@ -729,45 +741,6 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   }
 }
 
-
-/* Solution card styling */
-.solution-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Ensure card takes full height */
-}
-
-/* Card body should grow to fill space */
-.solution-card .card-body {
-  flex: 1; /* Makes body take available space */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Category pill container */
-.solution-card .category-pil {
-  margin-top: auto; /* Pushes pills to bottom */
-  padding-top: 15px; /* Adds spacing above pills */
-}
-
-/* Category pill list */
-.solution-card .category-pil ul {
-  margin: 0; /* Remove default margins */
-  justify-content: center; /* Center pills horizontally */
-}
-
-.card {
-  position: relative !important;
-  padding-bottom: 5rem !important;
-}
-
-.category-pil {
-  position: absolute;
-  bottom: 1rem;           /* sits 1rem above the card’s bottom edge */
-  left: 1rem;
-  right: 1rem;
-}
-
 .solution-card {
   position: relative;
   padding-bottom: 6rem;    /* enough room for the pills row + gap */
@@ -779,40 +752,28 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   left: 1rem;              /* align with your card’s inner padding */
   right: 1rem;             /* stretch to the other side */
   margin: 0;               /* reset any default margins */
+  justify-content: center; /* Center pills horizontally */
+}
+
+/* Make phone/status font smaller and always fixed position */
+.chat-header .call-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  /* Remove any extra margin/padding that could cause movement */
+}
+
+#status {
+  font-size: 0.60rem !important;  /* smaller and consistent */
+  margin: 0;
+  padding: 0;
+  min-height: 0.6em;
+  transition: none !important;    /* disables any animation */
+  opacity: 1 !important;          /* disables fade-in */
 }
 
 </style>
-
-<!-- Twilio Voice SDK -->
-  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      text-align: center;
-      background: #f9f9f9;
-    }
-    #callButton {
-      font-size: 2rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      transition: color 0.3s;
-    }
-    #callButton.idle       { color: rebeccapurple; }
-    #callButton.connecting { color: limegreen;    }
-    #callButton.connected  { color: crimson;      }
-
-    #status {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      min-height: 0.5em;
-    }
-    .error { color: #ffb3b3; }
-  </style>
-
 
 </head>
 <body>
@@ -840,16 +801,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </nav>
     </div>
   </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>AI <span>Sales & Marketing</span> Solutions</h1>
-                
-                <!-- AI Chat Box -->
-                <div class="ai-chat-box">
-                    <div class="chat-header">
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>AI <span>Sales & Marketing</span> Solutions</h1>
+            
+            <!-- AI Chat Box -->
+            <div class="ai-chat-box">
+                <div class="chat-header" style="display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+                    <!-- Left: Avatar and Info -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
                         <div class="ai-avatar">
                             <img src="jemima.png" alt="Jemima AI">
                         </div>
@@ -858,30 +820,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <p>Business Solutions Manager</p>
                         </div>
                     </div>
-                    
-                    <div class="chat-bubble">
-                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
-                    </div>
-                    <!-- Chat area -->
-                    <div id="chat-body" class="chat-body"></div>
-                    <!-- Chat Input Form -->
-                    <div class="chat-input-form">
-                        <form onsubmit="sendMessage(); return false;">
-                            <textarea id="chat-input" required></textarea>
-                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
+                    <!-- Right: Call and Status -->
+<button id="callButton" class="idle" title="Click to start or end a voice chat" style="margin-bottom: 4px;">
+  <i class="fa-solid fa-phone"></i>
+</button>
+<div id="status" style="font-size: 1rem; margin: 0;"></div>
+                </div>
 
-  <button id="callButton" class="idle" title="Click to start or end call">
-    <i class="fa-solid fa-phone"></i>
-  </button>
-  <div id="status">Ready</div>
-
+                <div class="chat-bubble">
+                    <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
+                </div>
+                <!-- Chat area -->
+                <div id="chat-body" class="chat-body"></div>
+                <!-- Chat Input Form -->
+                <div class="chat-input-form">
+                    <form onsubmit="sendMessage(); return false;">
+                        <textarea id="chat-input" required></textarea>
+                        <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
 
 <!-- Chat Suggestions -->
 <div class="quick-links-wrapper">
   <h4 class="quick-links-title">Chat Suggestions</h4>
-
   <div id="chat-quick-links" class="quick-links-list">
     <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
@@ -890,7 +851,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
@@ -1192,77 +1156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
-
- <script>
-    let device;
-    let currentConnection;
-    const logDiv = document.getElementById('log');
-    const callBtn = document.getElementById('callButton');
-    const statusDiv = document.getElementById('status');
-
-    function log(msg, error) {
-      const time = new Date().toLocaleTimeString();
-      const div = document.createElement('div');
-      div.innerHTML = time + ': ' + msg;
-      if(error) div.classList.add('error');
-      logDiv.appendChild(div);
-      logDiv.scrollTop = logDiv.scrollHeight;
-    }
-
-    function setState(state, error) {
-      callBtn.className = state;
-      if (state === 'idle')           statusDiv.textContent = 'Start Voice Chat';
-      else if (state === 'connecting')statusDiv.textContent = 'Connecting…';
-      else if (state === 'connected') statusDiv.textContent = 'In Progress';
-      else if (state === 'completed') statusDiv.textContent = 'Completed';
-      else if (state === 'cancelled') statusDiv.textContent = 'Cancelled';
-      else                            statusDiv.textContent = state;
-      if (error) statusDiv.classList.add('error');
-      else       statusDiv.classList.remove('error');
-      log('UI → state ' + state, error);
-    }
-
-    async function setup() {
-      try {
-        const res = await fetch('https://voice-tokens-2997.twil.io/token');
-        const data = await res.json();
-        device = new Twilio.Device(data.token, { debug: true });
-
-        device.on('ready', () => setState('idle'));
-        device.on('error', err => setState('idle', true));
-        device.on('connect', conn => {
-          currentConnection = conn;
-          setState('connected');
-        });
-        device.on('disconnect', conn => {
-          setState('completed');
-          currentConnection = null;
-        });
-        device.on('cancel', conn => setState('cancelled'));
-      } catch (err) {
-        setState('idle', true);
-        log('Error: ' + err.message, true);
-      }
-    }
-
-    function makeCall() {
-      setState('connecting');
-      currentConnection = device.connect();
-    }
-
-    setup();
-
-    callBtn.onclick = () => {
-      if (currentConnection) {
-        currentConnection.disconnect();
-        setState('completed');
-      } else {
-        makeCall();
-      }
-    };
-  </script>
-
 <script>
 /* ── 1.  hidden page address sent to n8n ───────────────────── */
 const pageUrl   = window.location.href;
@@ -1475,5 +1368,80 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script type="module" src="https://jemima.ai/voice/assets/index-dBvI1JZo.js"></script>
+
+<script>
+let device;
+let currentCall = null;
+
+// Link to the chat box button and status (main UI)
+const callBtn = document.getElementById('callButton');
+const statusDiv = document.getElementById('status');
+
+function setState(state, isError) {
+  statusDiv.textContent = state.charAt(0).toUpperCase() + state.slice(1);
+  callBtn.className = state; // Set colour by state
+  if (isError) statusDiv.style.color = 'red';
+  else statusDiv.style.color = '';
+}
+
+async function setup() {
+  // 1. Fetch Twilio token
+  const token = await fetch('/twilio-token').then(res => res.text());
+
+  // 2. Use Twilio.Voice.Device for v2+
+  device = new Twilio.Voice.Device(token, {
+    logLevel: 1,
+    codecPreferences: ["opus", "pcmu"]
+  });
+
+  device.on('ready', function() {
+    setState('idle');
+  });
+  device.on('error', function(error) {
+    setState('idle', true);
+    console.error('Twilio Device Error:', error);
+  });
+}
+
+function bindCallEvents(call) {
+  call.on('disconnect', function() {
+    setState('completed');
+    currentCall = null;
+  });
+  call.on('cancel', function() {
+    setState('cancelled');
+    currentCall = null;
+  });
+  call.on('error', function(err) {
+    setState('idle', true);
+    currentCall = null;
+    console.error('Call error:', err);
+  });
+}
+
+function makeCall() {
+  setState('connecting');
+  device.connect({}).then(call => {
+    currentCall = call;
+    setState('connected');
+    bindCallEvents(call);
+  }).catch(err => {
+    setState('idle', true);
+    console.error('Call error:', err);
+  });
+}
+
+// Chat UI call button
+callBtn.onclick = () => {
+  if (currentCall) {
+    currentCall.disconnect();
+  } else {
+    makeCall();
+  }
+};
+
+document.addEventListener('DOMContentLoaded', setup);
+</script>
 </body>
 </html>
