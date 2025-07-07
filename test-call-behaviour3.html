@@ -4,66 +4,23 @@
   <meta charset="utf-8">
   <title>Twilio Voice Chat — Debug</title>
 
-  <!-- Font Awesome for the phone icon -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         crossorigin="anonymous" />
 
-  <!-- Twilio Voice SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+  <!-- Use v2.0.1 SDK via unpkg CDN -->
+  <script src="https://unpkg.com/@twilio/voice-sdk@2.0.1/dist/twilio.min.js"></script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      text-align: center;
-      background: #f9f9f9;
-    }
-    #callButton {
-      font-size: 3rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      transition: color 0.3s;
-    }
-    #callButton.idle       { color: rebeccapurple; }
-    #callButton.connecting { color: limegreen;    }
-    #callButton.connected  { color: crimson;      }
-
-    #status {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      min-height: 1.5em;
-    }
-    #errorMsg {
-      color: #c00;
-      font-size: 0.9rem;
-      margin-top: 8px;
-      display: none;
-    }
-    #debug {
-      margin-top: 30px;
-      text-align: left;
-      max-height: 200px;
-      overflow-y: auto;
-      background: #222;
-      color: #eee;
-      padding: 10px;
-      font-family: monospace;
-      font-size: 0.85rem;
-    }
-  </style>
+  <style>/* your existing styles */</style>
 </head>
 <body>
+  <!-- Your existing HTML elements (button, status, debug log) -->
   <h1>Twilio Voice Chat (Debug)</h1>
-
   <button id="callButton" class="idle" title="Click to start or end call">
     <i class="fa-solid fa-phone"></i>
   </button>
   <div id="errorMsg">not available, try later</div>
   <div id="status">Start Voice Chat</div>
-
   <h2>Event Log</h2>
   <div id="debug"></div>
 
@@ -78,36 +35,32 @@
     const debugEl = document.getElementById('debug');
     let   device, activeCall;
 
-    function logEvent(msg) {
-      const time = new Date().toLocaleTimeString();
-      debugEl.innerHTML += `<div>${time}: ${msg}</div>`;
+    function log(msg) {
+      debugEl.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
       debugEl.scrollTop = debugEl.scrollHeight;
     }
 
-    function setState(name) {
-      btn.className = name;
+    function setState(s) {
+      btn.className = s;
       errorEl.style.display = 'none';
-      if (name === 'idle')           status.textContent = 'Start Voice Chat';
-      else if (name === 'connecting')status.textContent = 'Connecting…';
-      else if (name === 'connected') status.textContent = 'Connected';
-      logEvent(`UI → state ${name}`);
+      status.textContent = s === 'idle' ? 'Start Voice Chat' :
+                          s === 'connecting' ? 'Connecting…' : 'Connected';
+      log(`UI → state ${s}`);
     }
 
     async function fetchToken() {
-      logEvent('Fetching token');
-      const res = await fetch(TOKEN_URL);
-      if (!res.ok) throw new Error(res.statusText);
-      const { token } = await res.json();
-      logEvent('Token received');
+      log('Fetching token');
+      const r = await fetch(TOKEN_URL);
+      if (!r.ok) throw new Error(r.statusText);
+      const { token } = await r.json();
+      log('Token received');
       return token;
     }
 
     btn.addEventListener('click', async () => {
-      logEvent('Phone clicked');
-
-      // Hang up if any call is in progress
+      log('Phone clicked');
       if (activeCall) {
-        logEvent('Hanging up active call');
+        log('Hanging up');
         activeCall.disconnect();
         return;
       }
@@ -116,44 +69,33 @@
 
       try {
         const token = await fetchToken();
-        device = new Twilio.Device(token, {
+        device = new Twilio.Voice.Device(token, {
           codecPreferences: ['opus','pcmu'],
-          logLevel: 'debug',
-          enableIceRestart: true
+          logLevel: 'debug'
         });
 
-        // Make the call after device is ready
         device.on('ready', () => {
-          logEvent('Device ready');
-          logEvent('Placing call');
+          log('Device ready');
+          log('Placing call');
           activeCall = device.connect({ To: TO_NUMBER });
 
-          // Call events
-          activeCall.on('accept',    () => { logEvent('Call accepted'); setState('connected'); });
-          activeCall.on('disconnect',() => { logEvent('Call disconnected'); setState('idle'); activeCall = null; });
-          activeCall.on('cancel',    () => { logEvent('Call cancelled'); setState('idle'); activeCall = null; });
-          activeCall.on('reject',    () => { logEvent('Call rejected'); setState('idle'); activeCall = null; });
-          activeCall.on('error',     e => { logEvent('Call error: ' + e.message); setState('idle'); activeCall = null; });
+          activeCall.on('accept', () => { log('Call accepted'); setState('connected'); });
+          activeCall.on('disconnect', () => { log('Call disconnected'); setState('idle'); activeCall = null; });
+          activeCall.on('cancel', () => { log('Call cancelled'); setState('idle'); activeCall = null; });
+          activeCall.on('reject', () => { log('Call rejected'); setState('idle'); activeCall = null; });
+          activeCall.on('error', e => { log('Call error ' + e.message); setState('idle'); activeCall = null; });
         });
 
-        // Device events
-        device.on('connect',    () => { logEvent('Device event: connect');    setState('connected'); });
-        device.on('disconnect', () => { logEvent('Device event: disconnect'); setState('idle');      activeCall = null; });
-        device.on('error', err => {
-          logEvent('Device error: ' + err.message);
+        device.on('error', e => {
+          log('Device error: ' + e.message);
           setState('idle');
           errorEl.style.display = 'block';
-          activeCall = null;
         });
 
-        // Register the device
-        device.register();
-
-      } catch (err) {
-        logEvent('Exception: ' + err.message);
+      } catch (e) {
+        log('Exception: ' + e.message);
         setState('idle');
         errorEl.style.display = 'block';
-        activeCall = null;
       }
     });
 
