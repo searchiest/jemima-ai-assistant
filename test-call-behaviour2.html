@@ -3,67 +3,31 @@
 <head>
   <meta charset="utf-8">
   <title>Twilio Voice Chat — Debug</title>
-
-  <!-- Font Awesome -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         crossorigin="anonymous" />
-
-  <!-- Twilio Voice SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
-
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      text-align: center;
-      background: #f9f9f9;
-    }
-    #callButton {
-      font-size: 3rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      transition: color 0.3s;
-    }
-    #callButton.idle       { color: rebeccapurple; }
-    #callButton.connecting { color: limegreen;    }
-    #callButton.connected  { color: crimson;      }
-
-    #status {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      min-height: 1.5em;
-    }
-    #errorMsg {
-      color: #c00;
-      font-size: 0.9rem;
-      margin-top: 8px;
-      display: none;
-    }
+    body { font-family: Arial; padding: 40px; text-align: center; background: #f9f9f9 }
+    #callButton { font-size: 3rem; background: none; border: none; cursor: pointer; }
+    #callButton.idle       { color: rebeccapurple }
+    #callButton.connecting { color: limegreen }
+    #callButton.connected  { color: crimson }
+    #status { margin-top: 20px; font-size: 1.2rem; min-height: 1.5em }
+    #errorMsg { color: #c00; margin-top: 8px; display: none }
     #debug {
-      margin-top: 30px;
-      text-align: left;
-      max-height: 200px;
-      overflow-y: auto;
-      background: #222;
-      color: #eee;
-      padding: 10px;
-      font-family: monospace;
-      font-size: 0.85rem;
+      margin-top: 30px; text-align: left;
+      max-height: 200px; overflow-y: auto;
+      background: #222; color: #eee;
+      padding: 10px; font-family: monospace; font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
   <h1>Twilio Voice Chat (Debug)</h1>
-
-  <button id="callButton" class="idle">
-    <i class="fa-solid fa-phone"></i>
-  </button>
+  <button id="callButton" class="idle"><i class="fa-solid fa-phone"></i></button>
   <div id="errorMsg">not available, try later</div>
   <div id="status">Start Voice Chat</div>
-
   <h2>Event Log</h2>
   <div id="debug"></div>
 
@@ -80,9 +44,7 @@
 
     function logEvent(msg) {
       const d = new Date().toLocaleTimeString();
-      const line = document.createElement('div');
-      line.textContent = `${d}: ${msg}`;
-      debugEl.appendChild(line);
+      debugEl.innerHTML += `<div>${d}: ${msg}</div>`;
       debugEl.scrollTop = debugEl.scrollHeight;
     }
 
@@ -99,15 +61,13 @@
       logEvent('Fetching token');
       const res = await fetch(TOKEN_URL);
       if (!res.ok) throw new Error(res.statusText);
-      const json = await res.json();
-      if (!json.token) throw new Error('No token in response');
+      const { token } = await res.json();
       logEvent('Token received');
-      return json.token;
+      return token;
     }
 
     btn.addEventListener('click', async () => {
       logEvent('Phone clicked');
-      // if already connected, hang up
       if (btn.classList.contains('connected') && activeCall) {
         logEvent('Hanging up');
         activeCall.disconnect();
@@ -124,39 +84,40 @@
           enableIceRestart: true
         });
 
-        // hook lifecycle events *before* register()
-        const placeCall = () => {
+        // Listen first
+        device.once('ready',      () => { logEvent('Device ready');      placeCall(); });
+        device.once('registered', () => { logEvent('Device registered'); placeCall(); });
+
+        device.on('error', err => {
+          logEvent('Device error: ' + err.message);
+          setState('idle'); errorEl.style.display = 'block';
+        });
+
+        device.on('connect',   () => { logEvent('Device event: connect');   setState('connected'); });
+        device.on('disconnect',() => { logEvent('Device event: disconnect'); setState('idle');      });
+
+        // Now open socket
+        device.register();
+
+        function placeCall() {
           logEvent('Placing call');
           activeCall = device.connect({ To: TO_NUMBER });
           activeCall.on('accept',    () => logEvent('Call accepted'));
           activeCall.on('disconnect',() => logEvent('Call disconnected'));
-          activeCall.on('error', err => logEvent('Call error: ' + err.message));
-        };
-
-        device.once('ready',       () => { logEvent('Device ready');     placeCall() });
-        device.once('registered',  () => { logEvent('Device registered'); placeCall() });
-
-        device.on('connect',    () => { logEvent('Device event: connect');    setState('connected') });
-        device.on('disconnect', () => { logEvent('Device event: disconnect'); setState('idle')      });
-        device.on('error', err => {
-          logEvent('Device error: ' + err.message);
-          setState('idle');
-          errorEl.style.display = 'block';
-        });
-
-        device.register();
+          activeCall.on('cancel',    () => { logEvent('Call cancelled');    setState('idle'); });
+          activeCall.on('reject',    () => { logEvent('Call rejected');     setState('idle'); });
+          activeCall.on('error',     e => { logEvent('Call error: ' + e.message); setState('idle'); });
+        }
 
       } catch (err) {
         logEvent('Exception: ' + err.message);
-        setState('idle');
-        errorEl.style.display = 'block';
+        setState('idle'); errorEl.style.display = 'block';
       }
     });
 
-    // initial
     setState('idle');
   });
   </script>
 </body>
 </html>
-2
+3
