@@ -1368,7 +1368,50 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
+<script>
+  // Safe: Wait for page to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Find your button and status area
+    const callBtn   = document.getElementById('callButton');
+    const statusDiv = document.getElementById('status');
+    let device      = window.device || null;  // If device is global, grab it
 
+    // Helper to update status
+    function setStatus(state, isError) {
+      statusDiv.textContent = state;
+      callBtn.className = state.toLowerCase();
+      if (isError) {
+        statusDiv.style.color = 'red';
+      } else {
+        statusDiv.style.color = '';
+      }
+      // Log to console for your testing
+      console.log('Call status:', state);
+    }
+
+    // You might need to wait for device to be available, or get it from another script
+    function bindToDevice() {
+      // If your Twilio device is available
+      if (window.device) {
+        device = window.device;
+        device.on('ready',        () => setStatus('Idle'));
+        device.on('connect',      () => setStatus('Connected'));
+        device.on('disconnect',   () => setStatus('Idle'));
+        device.on('cancel',       () => setStatus('Cancelled', true));
+        device.on('error',        (err) => setStatus('Error', true));
+      } else {
+        setTimeout(bindToDevice, 500); // Try again in 0.5 seconds
+      }
+    }
+
+    bindToDevice();
+
+    // Button click - just log for now
+    callBtn.addEventListener('click', function() {
+      console.log('Call button clicked. Status:', statusDiv.textContent);
+    });
+  });
+</script>
 
 </body>
-</html>4
+</html>5
