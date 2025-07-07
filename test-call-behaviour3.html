@@ -1,83 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Twilio Call Status Test</title>
+  <meta charset="utf-8">
+  <title>Twilio Voice Chat — Debug</title>
+
+  <!-- Font Awesome for the phone icon -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" />
+
+  <!-- Twilio Voice SDK -->
   <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
+
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .icon { font-size: 40px; cursor: pointer; }
-    #status { margin-top: 20px; font-weight: bold; }
-    #log { margin-top: 20px; font-family: monospace; font-size: 0.95em; background: #eee; padding: 10px; max-height: 180px; overflow-y: auto;}
-    .error { color: #c00; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+      background: #f9f9f9;
+    }
+    #callButton {
+      font-size: 3rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
+    }
+    #callButton.idle       { color: rebeccapurple; }
+    #callButton.connecting { color: limegreen;    }
+    #callButton.connected  { color: crimson;      }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      min-height: 1.5em;
+    }
+    #log {
+      margin-top: 30px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #222;
+      color: #eee;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .error { color: #ffb3b3; }
   </style>
 </head>
 <body>
+  <h1>Twilio Voice Chat (Debug)</h1>
 
-  <div>
-    <span id="call-icon" class="icon">📞</span>
-    <span id="status">Ready</span>
-  </div>
+  <button id="callButton" class="idle" title="Click to start or end call">
+    <i class="fa-solid fa-phone"></i>
+  </button>
+  <div id="status">Ready</div>
   <div id="log"></div>
 
   <script>
-  let device;
-  let currentConnection;
-  const logDiv = document.getElementById('log');
+    let device;
+    let currentConnection;
+    const logDiv = document.getElementById('log');
+    const callBtn = document.getElementById('callButton');
+    const statusDiv = document.getElementById('status');
 
-  function log(msg, error) {
-    const time = new Date().toLocaleTimeString();
-    const div = document.createElement('div');
-    div.innerHTML = time + ': ' + msg;
-    if(error) div.classList.add('error');
-    logDiv.appendChild(div);
-    logDiv.scrollTop = logDiv.scrollHeight;
-  }
-
-  function updateStatus(text, error) {
-    const statusSpan = document.getElementById('status');
-    statusSpan.textContent = text;
-    statusSpan.className = error ? 'error' : '';
-    log(text, error);
-  }
-
-  async function setup() {
-    try {
-      const res = await fetch('https://voice-tokens-2997.twil.io/token');
-      const data = await res.json();
-      device = new Twilio.Device(data.token, { debug: true });
-
-      device.on('ready', () => updateStatus('Ready to call'));
-      device.on('error', err => updateStatus('Error: ' + err.message, true));
-      device.on('connect', conn => {
-        currentConnection = conn;
-        updateStatus('In progress');
-      });
-      device.on('disconnect', conn => {
-        updateStatus('Completed');
-        currentConnection = null;
-      });
-      device.on('cancel', conn => updateStatus('Cancelled'));
-    } catch (err) {
-      updateStatus('Error: ' + err.message, true);
+    function log(msg, error) {
+      const time = new Date().toLocaleTimeString();
+      const div = document.createElement('div');
+      div.innerHTML = time + ': ' + msg;
+      if(error) div.classList.add('error');
+      logDiv.appendChild(div);
+      logDiv.scrollTop = logDiv.scrollHeight;
     }
-  }
 
-  function makeCall() {
-    updateStatus('Connecting');
-    currentConnection = device.connect();
-  }
-
-  setup();
-
-  document.getElementById('call-icon').onclick = () => {
-    if (currentConnection) {
-      currentConnection.disconnect();
-      updateStatus('Completed');
-    } else {
-      makeCall();
+    function setState(state, error) {
+      callBtn.className = state;
+      if (state === 'idle')           statusDiv.textContent = 'Start Voice Chat';
+      else if (state === 'connecting')statusDiv.textContent = 'Connecting…';
+      else if (state === 'connected') statusDiv.textContent = 'In Progress';
+      else if (state === 'completed') statusDiv.textContent = 'Completed';
+      else if (state === 'cancelled') statusDiv.textContent = 'Cancelled';
+      else                            statusDiv.textContent = state;
+      if (error) statusDiv.classList.add('error');
+      else       statusDiv.classList.remove('error');
+      log('UI → state ' + state, error);
     }
-  };
+
+    async function setup() {
+      try {
+        const res = await fetch('https://voice-tokens-2997.twil.io/token');
+        const data = await res.json();
+        device = new Twilio.Device(data.token, { debug: true });
+
+        device.on('ready', () => setState('idle'));
+        device.on('error', err => setState('idle', true));
+        device.on('connect', conn => {
+          currentConnection = conn;
+          setState('connected');
+        });
+        device.on('disconnect', conn => {
+          setState('completed');
+          currentConnection = null;
+        });
+        device.on('cancel', conn => setState('cancelled'));
+      } catch (err) {
+        setState('idle', true);
+        log('Error: ' + err.message, true);
+      }
+    }
+
+    function makeCall() {
+      setState('connecting');
+      currentConnection = device.connect();
+    }
+
+    setup();
+
+    callBtn.onclick = () => {
+      if (currentConnection) {
+        currentConnection.disconnect();
+        setState('completed');
+      } else {
+        makeCall();
+      }
+    };
   </script>
-
 </body>
 </html>
