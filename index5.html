@@ -1400,83 +1400,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Get the correct handles
   const callBtn   = document.getElementById('callBtn');
   const statusDiv = document.getElementById('status');
-  let device      = window.device || null;
 
-  // Status updater with Twilio mapping
+  // Helper: update the status and colour
   function setStatus(state, isError) {
     statusDiv.textContent = state;
 
-    // Remove all state classes
     callBtn.classList.remove(
       'status-idle', 'status-connecting', 'status-connected',
       'status-disconnected', 'status-cancelled', 'status-error'
     );
-
-    // Map Twilio status/events to visual class
-    let mappedState = 'idle'; // default
-
-    switch (String(state).toLowerCase()) {
-      case 'idle':
-      case 'ready':
-      case 'registered':
-        mappedState = 'idle';         // purple
-        break;
-      case 'connecting':
-      case 'calling':
-      case 'ringing':
-        mappedState = 'connecting';   // green
-        break;
-      case 'connected':
-      case 'open':
-        mappedState = 'connected';    // red
-        break;
-      case 'disconnected':
-      case 'closed':
-        mappedState = 'disconnected'; // purple (default)
-        break;
-      case 'cancelled':
-        mappedState = 'cancelled';    // purple (default)
-        break;
-      case 'error':
-        mappedState = 'error';        // purple (default, you may add new CSS)
-        break;
-      default:
-        mappedState = 'idle';
+    switch(state.toLowerCase()) {
+      case 'idle':         callBtn.classList.add('status-idle');        break;
+      case 'connecting':   callBtn.classList.add('status-connecting');  break;
+      case 'connected':    callBtn.classList.add('status-connected');   break;
+      case 'disconnected': callBtn.classList.add('status-disconnected');break;
+      case 'cancelled':    callBtn.classList.add('status-cancelled');   break;
+      case 'error':        callBtn.classList.add('status-error');       break;
+      default:             callBtn.classList.add('status-idle');
     }
-
-    callBtn.classList.add(`status-${mappedState}`);
     statusDiv.style.color = isError ? 'red' : '';
-    console.log('Call status:', state, `(mapped to: ${mappedState})`);
+    console.log('Call status:', state);
   }
 
-  // Twilio Device event mapping
-  function bindToDevice() {
-    if (window.device) {
-      device = window.device;
-      device.on('ready',        () => setStatus('registered'));
-      device.on('connect',      () => setStatus('connected'));
-      device.on('disconnect',   () => setStatus('disconnected'));
-      device.on('cancel',       () => setStatus('cancelled', true));
-      device.on('error',        () => setStatus('error', true));
-      device.on('ringing',      () => setStatus('calling'));
-    } else {
-      setTimeout(bindToDevice, 500);
-    }
-  }
-
-  bindToDevice();
-
-  // Button test (this just logs, your call logic goes here)
+  // Manual cycle test: Click to cycle through statuses
+  const statuses = ["idle", "connecting", "connected", "disconnected", "cancelled", "error"];
+  let idx = 0;
   callBtn.addEventListener('click', function() {
-    console.log('Call button clicked. Status:', statusDiv.textContent);
-    // You may call device.connect() or device.disconnect() here
+    idx = (idx + 1) % statuses.length;
+    setStatus(statuses[idx]);
   });
 
-  // Optional: make setStatus available for manual test in console
+  // Expose setStatus for console debugging
   window.setStatus = setStatus;
+
+  // For Twilio, you would call setStatus() from your Twilio event handlers.
+  // Example (pseudo-code):
+  // device.on('ready',        () => setStatus('Idle'));
+  // device.on('connect',      () => setStatus('Connected'));
+  // device.on('disconnect',   () => setStatus('Disconnected'));
+  // device.on('cancel',       () => setStatus('Cancelled', true));
+  // device.on('error',        () => setStatus('Error', true));
+  // device.on('ringing',      () => setStatus('Connecting'));
 });
 </script>
 
@@ -1484,4 +1450,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </body>
-</html>9
+</html>10
