@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Chat</title>
+  <title>Twilio Voice Chat — Debug</title>
 
-  <!-- Font Awesome for the phone icon -->
+  <!-- Font Awesome -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         crossorigin="anonymous" />
@@ -15,7 +15,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 60px;
+      padding: 40px;
       text-align: center;
       background: #f9f9f9;
     }
@@ -32,8 +32,8 @@
     #callButton.connected  { color: crimson;      }
 
     #status {
-      margin-top: 24px;
-      font-size: 1.25rem;
+      margin-top: 20px;
+      font-size: 1.2rem;
       min-height: 1.5em;
     }
     #errorMsg {
@@ -42,16 +42,30 @@
       margin-top: 8px;
       display: none;
     }
+    #debug {
+      margin-top: 30px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #222;
+      color: #eee;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
-  <h1>Twilio Voice Chat</h1>
+  <h1>Twilio Voice Chat (Debug)</h1>
 
-  <button id="callButton" class="idle" title="Click to voice chat">
+  <button id="callButton" class="idle">
     <i class="fa-solid fa-phone"></i>
   </button>
   <div id="errorMsg">not available, try later</div>
   <div id="status">Start Voice Chat</div>
+
+  <h2>Event Log</h2>
+  <div id="debug"></div>
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -61,7 +75,15 @@
     const btn     = document.getElementById('callButton');
     const status  = document.getElementById('status');
     const errorEl = document.getElementById('errorMsg');
+    const debugEl = document.getElementById('debug');
     let   device, activeCall;
+
+    function logEvent(msg) {
+      const line = document.createElement('div');
+      line.textContent = `${new Date().toLocaleTimeString()}: ${msg}`;
+      debugEl.appendChild(line);
+      debugEl.scrollTop = debugEl.scrollHeight;
+    }
 
     function setState(name) {
       btn.className = name;
@@ -69,19 +91,24 @@
       if (name === 'idle')        status.textContent = 'Start Voice Chat';
       else if (name === 'connecting') status.textContent = 'Connecting…';
       else if (name === 'connected')  status.textContent = 'Connected';
+      logEvent(`UI → state ${name}`);
     }
 
     async function fetchToken() {
+      logEvent('Fetching token');
       const res = await fetch(TOKEN_URL);
-      if (!res.ok) throw new Error(res.statusText);
+      if (!res.ok) throw new Error('Fetch ' + res.status);
       const json = await res.json();
       if (!json.token) throw new Error('No token in response');
+      logEvent('Token received');
       return json.token;
     }
 
     btn.addEventListener('click', async () => {
-      // If already connected, hang up
+      logEvent('Phone clicked');
+      // if connected, hang up
       if (btn.classList.contains('connected') && activeCall) {
+        logEvent('Hanging up');
         activeCall.disconnect();
         return;
       }
@@ -89,39 +116,45 @@
       setState('connecting');
       try {
         const token = await fetchToken();
-
         device = new Twilio.Device(token, {
           codecPreferences: ['opus','pcmu'],
           logLevel: 'debug',
           enableIceRestart: true
         });
 
-        // register to open the websocket
-        device.register();
-
-        // both events fire on different SDK versions
-        const placeCall = () => {
-          activeCall = device.connect({ To: TO_NUMBER });
-          activeCall.on('error', err => {
-            console.error(err);
-            setState('idle');
-            errorEl.style.display = 'block';
-          });
-        };
-        device.once('ready',      placeCall);
-        device.once('registered', placeCall);
-
-        // now hook call lifecycle
-        device.on('connect',    () => setState('connected'));
-        device.on('disconnect', () => setState('idle'));
+        device.on('ready',       () => { logEvent('Device ready');      });
+        device.on('registered',  () => { logEvent('Device registered'); });
         device.on('error', err => {
-          console.error(err);
+          logEvent('Device error: ' + err.message);
           setState('idle');
           errorEl.style.display = 'block';
         });
 
+        // connection lifecycle
+        device.on('connect',     conn => { 
+          logEvent('Device event: connect'); 
+          setState('connected');
+        });
+        device.on('disconnect',  conn => {
+          logEvent('Device event: disconnect');
+          setState('idle');
+        });
+
+        device.register();  // actually open the websocket
+
+        // whichever comes first, make the call:
+        const placeCall = () => {
+          logEvent('Placing call');
+          activeCall = device.connect({ To: TO_NUMBER });
+          activeCall.on('accept',    () => logEvent('Call accepted'));
+          activeCall.on('disconnect',() => logEvent('Call disconnected'));
+          activeCall.on('error', err => logEvent('Call error: ' + err.message));
+        };
+        device.once('ready',       placeCall);
+        device.once('registered',  placeCall);
+
       } catch (err) {
-        console.error(err);
+        logEvent('Exception: ' + err.message);
         setState('idle');
         errorEl.style.display = 'block';
       }
