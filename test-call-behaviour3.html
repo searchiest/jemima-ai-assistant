@@ -2,16 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Chat — Debug</title>
-
-  <!-- Font Awesome for the phone icon -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        crossorigin="anonymous" />
-
-  <!-- Twilio Voice SDK -->
+  <title>Twilio Voice Chat — Fixed Version</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,9 +21,8 @@
       transition: color 0.3s;
     }
     #callButton.idle       { color: rebeccapurple; }
-    #callButton.connecting { color: limegreen;    }
-    #callButton.connected  { color: crimson;      }
-
+    #callButton.connecting { color: limegreen; }
+    #callButton.connected  { color: crimson; }
     #status {
       margin-top: 20px;
       font-size: 1.2rem;
@@ -56,14 +48,12 @@
   </style>
 </head>
 <body>
-  <h1>Twilio Voice Chat (Debug)</h1>
-
+  <h1>Twilio Voice Chat (Fixed Version)</h1>
   <button id="callButton" class="idle" title="Click to start or end call">
     <i class="fa-solid fa-phone"></i>
   </button>
-  <div id="errorMsg">not available, try later</div>
-  <div id="status">Start Voice Chat</div>
-
+  <div id="errorMsg"></div>
+  <div id="status">Ready to call</div>
   <h2>Event Log</h2>
   <div id="debug"></div>
 
@@ -71,12 +61,14 @@
   document.addEventListener('DOMContentLoaded', () => {
     const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
     const TO_NUMBER = '+447479277657';
-
-    const btn     = document.getElementById('callButton');
-    const status  = document.getElementById('status');
+    const btn = document.getElementById('callButton');
+    const status = document.getElementById('status');
     const errorEl = document.getElementById('errorMsg');
     const debugEl = document.getElementById('debug');
-    let   device, activeCall;
+    
+    let device;
+    let activeCall = null;
+    let isCallInProgress = false;
 
     function logEvent(msg) {
       const time = new Date().toLocaleTimeString();
@@ -84,108 +76,153 @@
       debugEl.scrollTop = debugEl.scrollHeight;
     }
 
-    function setState(name) {
-      btn.className = name;
+    function setState(state) {
+      btn.className = state;
       errorEl.style.display = 'none';
-      if (name === 'idle')        status.textContent = 'Start Voice Chat';
-      else if (name === 'connecting') status.textContent = 'Connecting…';
-      else if (name === 'connected')  status.textContent = 'Connected';
-      logEvent(`UI → state ${name}`);
+      
+      switch(state) {
+        case 'idle':
+          status.textContent = 'Ready to call';
+          isCallInProgress = false;
+          break;
+        case 'connecting':
+          status.textContent = 'Connecting...';
+          isCallInProgress = true;
+          break;
+        case 'connected':
+          status.textContent = 'Connected - Click to hang up';
+          isCallInProgress = true;
+          break;
+      }
+      logEvent(`State changed to: ${state}`);
     }
 
     async function fetchToken() {
-      logEvent('Fetching token');
-      const res = await fetch(TOKEN_URL);
-      if (!res.ok) throw new Error(res.statusText);
-      const { token } = await res.json();
-      logEvent('Token received');
-      return token;
-    }
-
-    function setupCallHandlers(call) {
-      call.on('accept', () => {
-        logEvent('Call accepted');
-        setState('connected');
-      });
-      
-      call.on('disconnect', () => {
-        logEvent('Call disconnected');
-        setState('idle');
-        activeCall = null;
-      });
-      
-      call.on('cancel', () => {
-        logEvent('Call cancelled');
-        setState('idle');
-        activeCall = null;
-      });
-      
-      call.on('reject', () => {
-        logEvent('Call rejected');
-        setState('idle');
-        activeCall = null;
-      });
-      
-      call.on('error', (err) => {
-        logEvent('Call error: ' + err.message);
-        setState('idle');
-        errorEl.style.display = 'block';
-        activeCall = null;
-      });
+      try {
+        logEvent('Fetching token from server');
+        const response = await fetch(TOKEN_URL);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        logEvent('Token received successfully');
+        return data.token;
+      } catch (error) {
+        logEvent(`Token fetch failed: ${error.message}`);
+        throw error;
+      }
     }
 
     function setupDevice(token) {
+      logEvent('Initializing Twilio Device');
       device = new Twilio.Device(token, {
-        codecPreferences: ['opus','pcmu'],
-        logLevel: 'debug',
+        codecPreferences: ['opus', 'pcmu'],
+        logLevel: 1, // Debug level
         enableIceRestart: true
       });
 
-      device.on('error', (err) => {
-        logEvent('Device error: ' + err.message);
+      device.on('error', (error) => {
+        logEvent(`Device error: ${error.message}`);
         setState('idle');
-        errorEl.style.display = 'block';
+        showError(error.message);
       });
 
       device.on('registered', () => logEvent('Device registered'));
       device.on('unregistered', () => logEvent('Device unregistered'));
 
+      device.on('incoming', call => {
+        logEvent('Incoming call received');
+        // Handle incoming calls if needed
+      });
+
       return device;
     }
 
-    btn.addEventListener('click', async () => {
-      logEvent('Phone clicked');
+    function setupCallHandlers(call) {
+      logEvent('Setting up call handlers');
 
-      // If call is active, hang up
-      if (activeCall) {
-        logEvent('Hanging up active call');
-        activeCall.disconnect();
-        return;
-      }
+      call.on('accept', () => {
+        logEvent('Call accepted by remote party');
+        setState('connected');
+      });
+
+      call.on('disconnect', () => {
+        logEvent('Call disconnected');
+        setState('idle');
+        activeCall = null;
+      });
+
+      call.on('cancel', () => {
+        logEvent('Call canceled');
+        setState('idle');
+        activeCall = null;
+      });
+
+      call.on('reject', () => {
+        logEvent('Call rejected');
+        setState('idle');
+        activeCall = null;
+      });
+
+      call.on('error', (error) => {
+        logEvent(`Call error: ${error.message}`);
+        setState('idle');
+        showError(error.message);
+        activeCall = null;
+      });
+    }
+
+    function showError(message) {
+      errorEl.textContent = message;
+      errorEl.style.display = 'block';
+    }
+
+    async function startCall() {
+      if (isCallInProgress) return;
 
       setState('connecting');
-
+      
       try {
         const token = await fetchToken();
         device = setupDevice(token);
 
-        device.once('registered', () => {
-          logEvent('Placing call');
-          activeCall = device.connect({ To: TO_NUMBER });
+        device.register().then(() => {
+          logEvent('Device registered, initiating call');
+          activeCall = device.connect({
+            To: TO_NUMBER,
+            // Add any custom parameters here
+          });
+          
           setupCallHandlers(activeCall);
         });
 
-        device.register();
-
-      } catch (err) {
-        logEvent('Exception: ' + err.message);
+      } catch (error) {
+        logEvent(`Call setup failed: ${error.message}`);
         setState('idle');
-        errorEl.style.display = 'block';
+        showError(error.message);
+      }
+    }
+
+    function endCall() {
+      if (activeCall) {
+        logEvent('User initiated call termination');
+        activeCall.disconnect();
+      } else {
+        logEvent('No active call to disconnect');
+        setState('idle');
+      }
+    }
+
+    btn.addEventListener('click', () => {
+      if (isCallInProgress) {
+        endCall();
+      } else {
+        startCall();
       }
     });
 
+    // Initialize
     setState('idle');
+    logEvent('Application initialized');
   });
   </script>
 </body>
-</html>
+</html>1
