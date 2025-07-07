@@ -27,7 +27,6 @@
       outline: none;
       transition: color 0.3s ease;
     }
-    /* idle = purple, connecting = green, connected = red */
     #callButton.idle       { color: rebeccapurple; }
     #callButton.connecting { color: green;        }
     #callButton.connected  { color: crimson;      }
@@ -35,7 +34,7 @@
     #status {
       margin-top: 24px;
       font-size: 1.25rem;
-      min-height: 1.5em;    /* keep space for changing text */
+      min-height: 1.5em;
     }
     #errorMsg {
       color: #c00;
@@ -62,29 +61,30 @@
     const btn     = document.getElementById('callButton');
     const status  = document.getElementById('status');
     const errorEl = document.getElementById('errorMsg');
-    let   device, activeCall;
-    let   dotInterval;
+    let   device, activeCall, dotInterval;
+
+    function clearDots() {
+      clearInterval(dotInterval);
+    }
 
     function setState(state) {
-      // clear any connect-dots animation
-      clearInterval(dotInterval);
+      clearDots();
       btn.className = state;
       errorEl.style.display = 'none';
-      switch(state) {
-        case 'idle':
-          status.textContent = 'Start Voice Chat';
-          break;
-        case 'connecting':
-          // animate dots
-          let dots = 0;
-          dotInterval = setInterval(() => {
-            dots = (dots + 1) % 4;
-            status.textContent = 'Connecting' + '.'.repeat(dots);
-          }, 500);
-          break;
-        case 'connected':
-          status.textContent = 'Connected';
-          break;
+
+      if (state === 'idle') {
+        status.textContent = 'Start Voice Chat';
+      }
+      if (state === 'connecting') {
+        // animate the dots
+        let d = 0;
+        dotInterval = setInterval(() => {
+          d = (d + 1) % 4;
+          status.textContent = 'Connecting' + '.'.repeat(d);
+        }, 500);
+      }
+      if (state === 'connected') {
+        status.textContent = 'Connected';
       }
     }
 
@@ -97,45 +97,44 @@
     }
 
     btn.addEventListener('click', async () => {
-      // if already connected → hang up
+      // If we are already connected, hang up
       if (btn.classList.contains('connected') && activeCall) {
         activeCall.disconnect();
-        activeCall = null;
-        setState('idle');
         return;
       }
 
+      setState('connecting');
       try {
-        setState('connecting');
         const token = await fetchToken();
-
         device = new Twilio.Device(token, {
           codecPreferences: ['opus','pcmu'],
           logLevel: 'debug',
           enableIceRestart: true
         });
+
+        // device-level call events:
+        device.on('connect', () => setState('connected'));
+        device.on('disconnect', () => setState('idle'));
+        device.on('error', err => {
+          console.error(err);
+          setState('idle');
+          errorEl.style.display = 'block';
+        });
+
+        // open the websocket
         device.register();
 
-        // both events signal we can place the call
-        const placeCall = () => {
+        // once registered or ready, place call
+        const place = () => {
           activeCall = device.connect({ To: TO_NUMBER });
-          activeCall.on('accept',    () => setState('connected'));
-          activeCall.on('disconnect',() => setState('idle'));
           activeCall.on('error', err => {
             console.error(err);
             setState('idle');
             errorEl.style.display = 'block';
           });
         };
-
-        device.once('ready',     placeCall);
-        device.once('registered',placeCall);
-
-        device.on('error', err => {
-          console.error(err);
-          setState('idle');
-          errorEl.style.display = 'block';
-        });
+        device.once('registered', place);
+        device.once('ready',      place);
 
       } catch (err) {
         console.error(err);
