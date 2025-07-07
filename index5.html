@@ -1402,10 +1402,17 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', function() {
   const callBtn   = document.getElementById('callBtn');
   const statusDiv = document.getElementById('status');
+  let device      = null;
+  let call        = null;
 
-  // Helper: update the status and colour
+  // The SVG phone icon to reuse
+  const phoneSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 24 24">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L9.03 9.03a16 16 0 0 0 6.94 6.94l1.63-1.63a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57A2 2 0 0 1 22 16.92z"/>
+  </svg>`;
+
+  // Update status and button colour
   function setStatus(state, isError) {
-    statusDiv.textContent = state;
+    statusDiv.textContent = state.charAt(0).toUpperCase() + state.slice(1);
 
     callBtn.classList.remove(
       'status-idle', 'status-connecting', 'status-connected',
@@ -1413,6 +1420,7 @@ document.addEventListener('DOMContentLoaded', function() {
     );
     switch(state.toLowerCase()) {
       case 'idle':         callBtn.classList.add('status-idle');        break;
+      case 'ready':        callBtn.classList.add('status-idle');        break;
       case 'connecting':   callBtn.classList.add('status-connecting');  break;
       case 'connected':    callBtn.classList.add('status-connected');   break;
       case 'disconnected': callBtn.classList.add('status-disconnected');break;
@@ -1421,33 +1429,48 @@ document.addEventListener('DOMContentLoaded', function() {
       default:             callBtn.classList.add('status-idle');
     }
     statusDiv.style.color = isError ? 'red' : '';
+    callBtn.innerHTML = phoneSVG;
     console.log('Call status:', state);
   }
 
-  // Manual cycle test: Click to cycle through statuses
-  const statuses = ["idle", "connecting", "connected", "disconnected", "cancelled", "error"];
-  let idx = 0;
+  // Listen for Twilio events
+  function bindToDevice() {
+    if(window.device && window.Twilio && window.Twilio.Device) {
+      device = window.device;
+
+      device.on('ready',        () => setStatus('Ready'));
+      device.on('connect',      () => setStatus('Connected'));
+      device.on('disconnect',   () => setStatus('Idle'));
+      device.on('cancel',       () => setStatus('Cancelled', true));
+      device.on('error',        () => setStatus('Error', true));
+      device.on('ringing',      () => setStatus('Connecting'));
+    } else {
+      setTimeout(bindToDevice, 400); // Try again soon
+    }
+  }
+  bindToDevice();
+
+  // Button logic: call or hang up
   callBtn.addEventListener('click', function() {
-    idx = (idx + 1) % statuses.length;
-    setStatus(statuses[idx]);
+    const state = statusDiv.textContent.trim().toLowerCase();
+    if(!device) return;
+
+    if(state==='ready' || state==='idle' || state==='disconnected' || state==='cancelled') {
+      setStatus('Connecting');
+      call = device.connect();
+    } else if(state==='connected' || state==='connecting') {
+      if(call) { call.disconnect(); }
+      setStatus('Idle');
+    }
   });
 
-  // Expose setStatus for console debugging
-  window.setStatus = setStatus;
-
-  // For Twilio, you would call setStatus() from your Twilio event handlers.
-  // Example (pseudo-code):
-  // device.on('ready',        () => setStatus('Idle'));
-  // device.on('connect',      () => setStatus('Connected'));
-  // device.on('disconnect',   () => setStatus('Disconnected'));
-  // device.on('cancel',       () => setStatus('Cancelled', true));
-  // device.on('error',        () => setStatus('Error', true));
-  // device.on('ringing',      () => setStatus('Connecting'));
+  window.setStatus = setStatus; // for debug
 });
 </script>
 
 
 
 
+
 </body>
-</html>11
+</html>12
