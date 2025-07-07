@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://media.twiliocdn.com/sdk/js/voice/latest/twilio-voice.min.js"></script>
   <!-- Basic setup -->
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -1387,7 +1388,7 @@ function setState(state, isError) {
 
 async function setup() {
   // 1. Fetch Twilio token
-  const token = await fetch('/twilio-token').then(res => res.text());
+  const token = await fetch('https://voice-tokens-2997.twil.io/token').then(res => res.text());
 
   // 2. Use Twilio.Voice.Device for v2+
   device = new Twilio.Voice.Device(token, {
