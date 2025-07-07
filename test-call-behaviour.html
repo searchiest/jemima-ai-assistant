@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Twilio Voice Test — Click to Call</title>
+  <title>Twilio Click-to-Call</title>
 
   <!-- Font Awesome for the phone icon -->
   <link rel="stylesheet"
@@ -13,13 +13,16 @@
   <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
 
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; text-align: center }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
     #callButton {
-      font-size: 2.5rem;
-      width: 64px; height: 64px;
-      border: none;
-      background: none;
+      font-size: 3rem;
       color: #4CAF50;
+      background: none;
+      border: none;
       cursor: pointer;
       outline: none;
     }
@@ -34,22 +37,24 @@
       display: none;
     }
     #status {
-      margin-top: 12px;
-      font-size: 0.95rem;
+      margin-top: 16px;
+      font-size: 1rem;
     }
   </style>
 </head>
-<body>
-  <h2>Twilio Voice Test</h2>
 
-  <!-- Phone icon (always enabled) -->
-  <button id="callButton">
+<body>
+  <h1>Twilio Voice Test</h1>
+
+  <!-- Phone icon button -->
+  <button id="callButton" title="Click to call">
     <i class="fa-solid fa-phone"></i>
   </button>
-  <div id="errorMsg">not available try later</div>
+  <div id="errorMsg">not available, try later</div>
   <div id="status">Status: Click the phone to call</div>
 
   <script>
+  document.addEventListener('DOMContentLoaded', () => {
     const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
     const TO_NUMBER = '+447479277657';
 
@@ -66,59 +71,64 @@
       const res = await fetch(TOKEN_URL);
       if (!res.ok) throw new Error(res.statusText);
       const data = await res.json();
+      if (!data.token) throw new Error('No token in response');
       return data.token;
     }
 
     btn.addEventListener('click', async () => {
+      // If already on a call, hang up
       if (activeCall) {
-        // if already in call, hang up
         activeCall.disconnect();
         activeCall = null;
         updateStatus('Call ended');
         return;
       }
 
+      // Kick off the fetch → init → call sequence:
       try {
-        updateStatus('Fetching token…');
+        errorEl.style.display = 'none';
+        updateStatus('Fetching token...');
         const token = await fetchToken();
 
-        updateStatus('Initialising device…');
+        updateStatus('Initialising device...');
         device = new Twilio.Device(token, {
           codecPreferences: ['opus','pcmu'],
           logLevel: 'debug',
           enableIceRestart: true
         });
 
-        // handle ready → place call
+        // Only once device is ready do we actually connect
         device.once('ready', () => {
           updateStatus('Calling…');
           activeCall = device.connect({ To: TO_NUMBER });
 
-          activeCall.on('accept', () => updateStatus('Call connected'));
-          activeCall.on('disconnect', () => {
+          activeCall.on('accept',    () => updateStatus('Call connected'));
+          activeCall.on('disconnect',() => {
             updateStatus('Call ended');
             activeCall = null;
           });
           activeCall.on('error', err => {
+            console.error(err);
             updateStatus('Error');
             errorEl.style.display = 'block';
-            console.error(err.message);
           });
         });
 
-        // handle device errors
+        // If device setup fails, show error
         device.on('error', err => {
+          console.error(err);
           updateStatus('Error');
           errorEl.style.display = 'block';
-          console.error(err.message);
         });
 
       } catch (err) {
+        console.error(err);
         updateStatus('Error');
         errorEl.style.display = 'block';
-        console.error(err);
       }
     });
+  });
   </script>
 </body>
 </html>
+1
