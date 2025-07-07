@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Chat</title>
+
+  <!-- Font Awesome for the phone icon -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" />
+
+  <!-- Twilio Voice SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 60px;
+      text-align: center;
+      background: #f9f9f9;
+    }
+    #callButton {
+      font-size: 3rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s ease;
+    }
+    /* idle = purple, connecting = green, connected = red */
+    #callButton.idle       { color: rebeccapurple; }
+    #callButton.connecting { color: green;        }
+    #callButton.connected  { color: crimson;      }
+
+    #status {
+      margin-top: 24px;
+      font-size: 1.25rem;
+      min-height: 1.5em;    /* keep space for changing text */
+    }
+    #errorMsg {
+      color: #c00;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Twilio Voice Chat</h1>
+
+  <button id="callButton" class="idle" title="Click to voice chat">
+    <i class="fa-solid fa-phone"></i>
+  </button>
+  <div id="errorMsg">not available, try later</div>
+  <div id="status">Start Voice Chat</div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
+    const TO_NUMBER = '+447479277657';
+
+    const btn     = document.getElementById('callButton');
+    const status  = document.getElementById('status');
+    const errorEl = document.getElementById('errorMsg');
+    let   device, activeCall;
+    let   dotInterval;
+
+    function setState(state) {
+      // clear any connect-dots animation
+      clearInterval(dotInterval);
+      btn.className = state;
+      errorEl.style.display = 'none';
+      switch(state) {
+        case 'idle':
+          status.textContent = 'Start Voice Chat';
+          break;
+        case 'connecting':
+          // animate dots
+          let dots = 0;
+          dotInterval = setInterval(() => {
+            dots = (dots + 1) % 4;
+            status.textContent = 'Connecting' + '.'.repeat(dots);
+          }, 500);
+          break;
+        case 'connected':
+          status.textContent = 'Connected';
+          break;
+      }
+    }
+
+    async function fetchToken() {
+      const res = await fetch(TOKEN_URL);
+      if (!res.ok) throw new Error(res.statusText);
+      const json = await res.json();
+      if (!json.token) throw new Error('No token in response');
+      return json.token;
+    }
+
+    btn.addEventListener('click', async () => {
+      // if already connected → hang up
+      if (btn.classList.contains('connected') && activeCall) {
+        activeCall.disconnect();
+        activeCall = null;
+        setState('idle');
+        return;
+      }
+
+      try {
+        setState('connecting');
+        const token = await fetchToken();
+
+        device = new Twilio.Device(token, {
+          codecPreferences: ['opus','pcmu'],
+          logLevel: 'debug',
+          enableIceRestart: true
+        });
+        device.register();
+
+        // both events signal we can place the call
+        const placeCall = () => {
+          activeCall = device.connect({ To: TO_NUMBER });
+          activeCall.on('accept',    () => setState('connected'));
+          activeCall.on('disconnect',() => setState('idle'));
+          activeCall.on('error', err => {
+            console.error(err);
+            setState('idle');
+            errorEl.style.display = 'block';
+          });
+        };
+
+        device.once('ready',     placeCall);
+        device.once('registered',placeCall);
+
+        device.on('error', err => {
+          console.error(err);
+          setState('idle');
+          errorEl.style.display = 'block';
+        });
+
+      } catch (err) {
+        console.error(err);
+        setState('idle');
+        errorEl.style.display = 'block';
+      }
+    });
+
+    // start in idle
+    setState('idle');
+  });
+  </script>
+</body>
+</html>
