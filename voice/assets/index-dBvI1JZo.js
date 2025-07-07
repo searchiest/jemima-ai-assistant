@@ -95,5 +95,5 @@ pe.onclick = async () => {
         console.log("Status: calling");
     }
 };
-
+} // <--- This was missing!
 pn();
