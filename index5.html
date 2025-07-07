@@ -1407,19 +1407,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const callBtn   = document.getElementById('callButton');
+  const callBtn   = document.getElementById('callBtn');   // <--- this matches your HTML!
   const statusDiv = document.getElementById('status');
   let device      = window.device || null;
 
-  // Helper to update status and button colour
   function setStatus(state, isError) {
     statusDiv.textContent = state;
-
-    // Remove all state classes first
-    callBtn.classList.remove('status-idle', 'status-connecting', 'status-connected', 'status-disconnected', 'status-cancelled', 'status-error');
-
-    // Add correct class based on state
-    switch(state.toLowerCase()) {
+    callBtn.classList.remove(
+      'status-idle',
+      'status-connecting',
+      'status-connected',
+      'status-disconnected',
+      'status-cancelled',
+      'status-error'
+    );
+    switch (state.toLowerCase()) {
       case 'idle':
         callBtn.classList.add('status-idle');
         break;
@@ -1441,13 +1443,7 @@ document.addEventListener('DOMContentLoaded', function() {
       default:
         callBtn.classList.add('status-idle');
     }
-
-    if (isError) {
-      statusDiv.style.color = 'red';
-    } else {
-      statusDiv.style.color = '';
-    }
-    // Log for debugging
+    statusDiv.style.color = isError ? 'red' : '';
     console.log('Call status:', state);
   }
 
@@ -1458,19 +1454,20 @@ document.addEventListener('DOMContentLoaded', function() {
       device.on('connect',      () => setStatus('Connected'));
       device.on('disconnect',   () => setStatus('Disconnected'));
       device.on('cancel',       () => setStatus('Cancelled', true));
-      device.on('error',        (err) => setStatus('Error', true));
+      device.on('error',        () => setStatus('Error', true));
       device.on('ringing',      () => setStatus('Connecting'));
     } else {
       setTimeout(bindToDevice, 500);
     }
   }
-
   bindToDevice();
 
-  // Call button click event
+  // Call button click test (cycle through states for demo)
   callBtn.addEventListener('click', function() {
-    console.log('Call button clicked. Status:', statusDiv.textContent);
-    // You can call device.connect() or device.disconnect() here if you wish
+    const states = ['idle', 'connecting', 'connected', 'disconnected', 'cancelled', 'error'];
+    let current = states.indexOf(statusDiv.textContent.toLowerCase());
+    current = (current + 1) % states.length;
+    setStatus(states[current], states[current] === 'error' || states[current] === 'cancelled');
   });
 });
 </script>
@@ -1478,4 +1475,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </body>
-</html>5
+</html>6
