@@ -843,6 +843,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
     <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
 <button id="callButton" disabled>Start Test Call</button>
+<div id="status">Status: Loading…</div>
+<div id="console"></div>
   </div>
 </div>
 
@@ -1149,6 +1151,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+
+<script>
+  const TO_NUMBER = "+447479277657";
+  const btn   = document.getElementById("callButton");
+  const stat  = document.getElementById("status");
+  const cons  = document.getElementById("console");
+  let device, activeCall;
+
+  function log(msg) { /* … */ }
+  function updateStatus(msg) { /* … */ }
+  async function fetchToken() { /* … */ }
+  async function setupDevice() { /* … */ }
+
+  btn.addEventListener("click", /* … */);
+  log("Page loaded");
+  setupDevice();
+</script>
 
 <script>
     // Fetch token from your endpoint
