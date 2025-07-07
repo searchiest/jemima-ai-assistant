@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://media.twiliocdn.com/sdk/js/voice/latest/twilio-voice.min.js"></script>
   <!-- Basic setup -->
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,6 +41,7 @@
 
   <!-- Icons and extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+<script type="module" crossorigin src="/assets/index-dBvI1JZo.js"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -822,10 +822,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
                     <!-- Right: Call and Status -->
-<button id="callButton" class="idle" title="Click to start or end a voice chat" style="margin-bottom: 4px;">
-  <i class="fa-solid fa-phone"></i>
-</button>
-<div id="status" style="font-size: 1rem; margin: 0;"></div>
+  <button id="callBtn">Call</button>
+  <div id="status">Idle</div>
                 </div>
 
                 <div class="chat-bubble">
@@ -1371,85 +1369,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<!-- Always put external library scripts FIRST, but before your own scripts -->
-<script src="https://media.twiliocdn.com/sdk/js/voice/latest/twilio-voice.min.js"></script>
 
-<!-- Only ONE of your Twilio scripts! Never both if they both handle the call button etc.
-     If you use your own inline script, remove the type="module" one, and vice versa.
-     Here is the inline example. -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  let device;
-  let currentCall = null;
-
-  const callBtn = document.getElementById('callButton');
-  const statusDiv = document.getElementById('status');
-
-  function setState(state, isError) {
-    statusDiv.textContent = state.charAt(0).toUpperCase() + state.slice(1);
-    callBtn.className = state; // Set colour by state
-    if (isError) statusDiv.style.color = 'red';
-    else statusDiv.style.color = '';
-  }
-
-  async function setup() {
-    // 1. Fetch Twilio token
-    const token = await fetch('https://voice-tokens-2997.twil.io/token').then(res => res.text());
-
-    // 2. Use Twilio.Voice.Device for v2+
-    device = new Twilio.Voice.Device(token, {
-      logLevel: 1,
-      codecPreferences: ["opus", "pcmu"]
-    });
-
-    device.on('ready', function() {
-      setState('idle');
-    });
-    device.on('error', function(error) {
-      setState('idle', true);
-      console.error('Twilio Device Error:', error);
-    });
-  }
-
-  function bindCallEvents(call) {
-    call.on('disconnect', function() {
-      setState('completed');
-      currentCall = null;
-    });
-    call.on('cancel', function() {
-      setState('cancelled');
-      currentCall = null;
-    });
-    call.on('error', function(err) {
-      setState('idle', true);
-      currentCall = null;
-      console.error('Call error:', err);
-    });
-  }
-
-  function makeCall() {
-    setState('connecting');
-    device.connect({}).then(call => {
-      currentCall = call;
-      setState('connected');
-      bindCallEvents(call);
-    }).catch(err => {
-      setState('idle', true);
-      console.error('Call error:', err);
-    });
-  }
-
-  callBtn.onclick = () => {
-    if (currentCall) {
-      currentCall.disconnect();
-    } else {
-      makeCall();
-    }
-  };
-
-  setup();
-});
-</script>
 </body>
 </html>3
