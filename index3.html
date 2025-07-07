@@ -568,6 +568,45 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 
+/* Container for category pills */
+.category-pil ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Space between buttons */
+}
+
+/* Individual category buttons */
+.category-pil ul li {
+  background-color: #e6e6fa; /* Light purple */
+  color: #4b0082; /* Dark purple text for contrast */
+  padding: 6px 14px;
+  border-radius: 20px; /* Pill shape */
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border: 1px solid #d8bfd8; /* Light purple border */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Hover effect */
+.category-pil ul li:hover {
+  background-color: #d8bfd8; /* Slightly darker purple */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Active state */
+.category-pil ul li.active {
+  background-color: #9370db; /* Medium purple */
+  color: white;
+}
+
+
 /* ---------- Match section width on very small screens ---------- */
 @media (max-width: 575.98px) {
   .services,
