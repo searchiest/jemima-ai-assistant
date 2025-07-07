@@ -1400,21 +1400,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Correct handle: match the button id in your HTML!
   const callBtn   = document.getElementById('callBtn');
   const statusDiv = document.getElementById('status');
   let device      = window.device || null;
 
+  // Helper to update status and button colour
   function setStatus(state, isError) {
     statusDiv.textContent = state;
+
+    // Remove all state classes first
     callBtn.classList.remove(
-      'status-idle',
-      'status-connecting',
-      'status-connected',
-      'status-disconnected',
-      'status-cancelled',
-      'status-error'
+      'status-idle', 'status-connecting', 'status-connected',
+      'status-disconnected', 'status-cancelled', 'status-error'
     );
-    switch (state.toLowerCase()) {
+
+    // Add correct class based on state (case insensitive)
+    switch(state.toLowerCase()) {
       case 'idle':
         callBtn.classList.add('status-idle');
         break;
@@ -1436,8 +1438,8 @@ document.addEventListener('DOMContentLoaded', function() {
       default:
         callBtn.classList.add('status-idle');
     }
+
     statusDiv.style.color = isError ? 'red' : '';
-    // For debugging
     console.log('Call status:', state);
   }
 
@@ -1454,12 +1456,12 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(bindToDevice, 500);
     }
   }
+
   bindToDevice();
 
-  // No click behaviour defined
   callBtn.addEventListener('click', function() {
-    // You can define this later
-    console.log('Call button clicked. Current status:', statusDiv.textContent);
+    console.log('Call button clicked. Status:', statusDiv.textContent);
+    // device.connect() etc. goes here
   });
 });
 </script>
@@ -1468,4 +1470,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </body>
-</html>7
+</html>8
