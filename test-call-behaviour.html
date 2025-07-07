@@ -26,10 +26,6 @@
       cursor: pointer;
       outline: none;
     }
-    #callButton:disabled {
-      color: #888;
-      cursor: default;
-    }
     #errorMsg {
       color: #c00;
       font-size: 0.9rem;
@@ -75,7 +71,7 @@
     }
 
     btn.addEventListener('click', async () => {
-      // If already on a call, hang up
+      // hang up if already in a call
       if (activeCall) {
         activeCall.disconnect();
         activeCall = null;
@@ -95,10 +91,11 @@
           enableIceRestart: true
         });
 
-        // Must register for the ready event to fire
+        // register the device (opens the websocket)
         device.register();
 
-        device.once('ready', () => {
+        // as soon as *either* event fires, place the call
+        const placeCall = () => {
           updateStatus('Calling…');
           activeCall = device.connect({ To: TO_NUMBER });
 
@@ -112,8 +109,12 @@
             updateStatus('Error');
             errorEl.style.display = 'block';
           });
-        });
+        };
 
+        device.once('ready',    placeCall);
+        device.once('registered', placeCall);
+
+        // any device-level errors
         device.on('error', err => {
           console.error(err);
           updateStatus('Error');
@@ -130,5 +131,6 @@
   </script>
 </body>
 </html>
+3
 
 2
