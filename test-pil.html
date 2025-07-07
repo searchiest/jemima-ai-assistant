@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sales & Marketing Solutions | jemima.ai</title>
+  <style>
+    /* Reset and variables */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+        --primary:#1a1a2e;
+        --accent:#4f46e5;
+        --light:#ffffff;
+        --dark:#000000;
+        --gray:#4a4a4a;
+        --light-gray:#f5f7fa;
+        --transition:all 0.3s ease;
+        --chat-bg:#f9f9ff;
+        --user-bubble:#4f46e5;
+        --ai-bubble:#f0f4ff;
+        --chat-border:#e0e0e0;
+        --chat-input-bg:#ffffff;
+    }
+
+    body{
+        font-family:"Poppins",sans-serif;
+        background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
+        color:var(--dark);
+        line-height:1.6;
+        overflow-x:hidden;
+        min-height:100vh;
+    }
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+
+    /* Solutions Section */
+    .solutions {
+        background: white;
+        padding: 100px 0;
+        border-radius: 30px;
+        margin: 50px auto;
+        width: calc(100% - 60px);
+        max-width: calc(560px * 2 + 30px);
+    }
+
+    .section-header{text-align:center;margin-bottom:70px;}
+    .section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
+    .section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
+    
+    .solutions-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+        gap:30px;
+    }
+    
+    .solution-card{
+        background:#fff;
+        border-radius:20px;
+        padding:40px 30px;
+        text-align:center;
+        box-shadow:0 10px 30px rgba(0,0,0,0.05);
+        border:1px solid rgba(0,0,0,0.03);
+        position:relative;
+        overflow:hidden;
+        transition:var(--transition);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .solution-card:hover{
+        transform:translateY(-10px);
+        box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    }
+    
+    .solution-card::before{
+        content:"";
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:5px;
+        background:var(--accent);
+    }
+    
+    .solution-icon{
+        font-size:3.5rem;
+        color:var(--accent);
+        margin-bottom:20px;
+    }
+    
+    .solution-card h3{
+        font-size:1.5rem;
+        margin-bottom:15px;
+        color:var(--dark);
+        font-weight:600;
+    }
+    
+    .solution-card p{
+        color:var(--gray);
+        font-size:1.05rem;
+    }
+    
+    /* Card body to contain content */
+    .solution-card .card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1; /* Grow to fill space */
+    }
+    
+    /* Category pills */
+    .solution-card .category-pil {
+        margin-top: auto; /* Push to bottom */
+        padding-top: 15px; /* Space above pills */
+    }
+    
+    .category-pil ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Center pills */
+        gap: 8px;
+    }
+    
+    .category-pil ul li {
+        background-color: #e6e6fa;
+        color: #4b0082;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        white-space: nowrap;
+        border: 1px solid #d8bfd8;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    /* Responsive adjustments */
+    @media (min-width: 576px) {
+        .solutions .container {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .solutions .container {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+    }
+    
+    @media (max-width: 575.98px) {
+        .solutions {
+            width: calc(100% - 40px);
+        }
+    }
+  </style>
+</head>
+<body>
+  <!-- Solutions Section -->
+  <section class="solutions">
+    <div class="container">
+        <div class="section-header">
+            <h2>Always On Business Solutions</h2>
+            <p>Data gathering, AI analysis, automated actions and regular review to drive efficiency and boost growth</p>
+        </div>
+        <div class="solutions-grid">
+            <!-- Solution Card 1 -->
+            <div class="solution-card">
+                <div class="card-body">
+                    <div class="solution-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Intelligent Chat</h3>
+                    <p>Jemima answers questions and qualifies visitors, capturing leads 24/7 and cutting response time to zero.</p>
+                </div>
+                <div class="category-pil">
+                    <ul>
+                        <li>Lead Generation</li>
+                        <li>Sales</li>
+                        <li>Customer Service</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Solution Card 2 -->
+            <div class="solution-card">
+                <div class="card-body">
+                    <div class="solution-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>Jemima organises, summarises and replies to emails, spots buying signals and sets up nurture campaigns to drive more sales.</p>
+                </div>
+                <div class="category-pil">
+                    <ul>
+                        <li>Sales</li>
+                        <li>Customer Service</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Solution Card 3 -->
+            <div class="solution-card">
+                <div class="card-body">
+                    <div class="solution-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Call Centre</h3>
+                    <p>Jemima handles incoming and outgoing voice calls plus SMS and WhatsApp to keep response times quick and free up time.</p>
+                </div>
+                <div class="category-pil">
+                    <ul>
+                        <li>Lead Generation</li>
+                        <li>Sales</li>
+                        <li>Customer Service</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Solution Card 4 -->
+            <div class="solution-card">
+                <div class="card-body">
+                    <div class="solution-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Social Media</h3>
+                    <p>Jemima schedules posts and replies on social channels to keep your network growing 24/7 and free up hours of work.</p>
+                </div>
+                <div class="category-pil">
+                    <ul>
+                        <li>Digital Marketing</li>
+                        <li>Lead Generation</li>
+                        <li>Sales</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>
