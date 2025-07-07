@@ -28,7 +28,7 @@
       transition: color 0.3s ease;
     }
     #callButton.idle       { color: rebeccapurple; }
-    #callButton.connecting { color: green;        }
+    #callButton.connecting { color: limegreen;    }
     #callButton.connected  { color: crimson;      }
 
     #status {
@@ -61,31 +61,14 @@
     const btn     = document.getElementById('callButton');
     const status  = document.getElementById('status');
     const errorEl = document.getElementById('errorMsg');
-    let   device, activeCall, dotInterval;
+    let   device, activeCall;
 
-    function clearDots() {
-      clearInterval(dotInterval);
-    }
-
-    function setState(state) {
-      clearDots();
-      btn.className = state;
+    function setState(name) {
+      btn.className = name;
       errorEl.style.display = 'none';
-
-      if (state === 'idle') {
-        status.textContent = 'Start Voice Chat';
-      }
-      if (state === 'connecting') {
-        // animate the dots
-        let d = 0;
-        dotInterval = setInterval(() => {
-          d = (d + 1) % 4;
-          status.textContent = 'Connecting' + '.'.repeat(d);
-        }, 500);
-      }
-      if (state === 'connected') {
-        status.textContent = 'Connected';
-      }
+      if (name === 'idle')        status.textContent = 'Start Voice Chat';
+      else if (name === 'connecting') status.textContent = 'Connecting';
+      else if (name === 'connected')  status.textContent = 'Connected';
     }
 
     async function fetchToken() {
@@ -97,7 +80,7 @@
     }
 
     btn.addEventListener('click', async () => {
-      // If we are already connected, hang up
+      // if in a call, hang up
       if (btn.classList.contains('connected') && activeCall) {
         activeCall.disconnect();
         return;
@@ -112,7 +95,10 @@
           enableIceRestart: true
         });
 
-        // device-level call events:
+        device.on('ready', () => {
+          activeCall = device.connect({ To: TO_NUMBER });
+        });
+
         device.on('connect', () => setState('connected'));
         device.on('disconnect', () => setState('idle'));
         device.on('error', err => {
@@ -121,21 +107,7 @@
           errorEl.style.display = 'block';
         });
 
-        // open the websocket
         device.register();
-
-        // once registered or ready, place call
-        const place = () => {
-          activeCall = device.connect({ To: TO_NUMBER });
-          activeCall.on('error', err => {
-            console.error(err);
-            setState('idle');
-            errorEl.style.display = 'block';
-          });
-        };
-        device.once('registered', place);
-        device.once('ready',      place);
-
       } catch (err) {
         console.error(err);
         setState('idle');
@@ -143,10 +115,9 @@
       }
     });
 
-    // start in idle
     setState('idle');
   });
   </script>
 </body>
 </html>
-2
+3
