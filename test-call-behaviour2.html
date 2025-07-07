@@ -67,7 +67,7 @@
       btn.className = name;
       errorEl.style.display = 'none';
       if (name === 'idle')        status.textContent = 'Start Voice Chat';
-      else if (name === 'connecting') status.textContent = 'Connecting';
+      else if (name === 'connecting') status.textContent = 'Connecting…';
       else if (name === 'connected')  status.textContent = 'Connected';
     }
 
@@ -80,7 +80,7 @@
     }
 
     btn.addEventListener('click', async () => {
-      // if in a call, hang up
+      // If already connected, hang up
       if (btn.classList.contains('connected') && activeCall) {
         activeCall.disconnect();
         return;
@@ -89,17 +89,30 @@
       setState('connecting');
       try {
         const token = await fetchToken();
+
         device = new Twilio.Device(token, {
           codecPreferences: ['opus','pcmu'],
           logLevel: 'debug',
           enableIceRestart: true
         });
 
-        device.on('ready', () => {
-          activeCall = device.connect({ To: TO_NUMBER });
-        });
+        // register to open the websocket
+        device.register();
 
-        device.on('connect', () => setState('connected'));
+        // both events fire on different SDK versions
+        const placeCall = () => {
+          activeCall = device.connect({ To: TO_NUMBER });
+          activeCall.on('error', err => {
+            console.error(err);
+            setState('idle');
+            errorEl.style.display = 'block';
+          });
+        };
+        device.once('ready',      placeCall);
+        device.once('registered', placeCall);
+
+        // now hook call lifecycle
+        device.on('connect',    () => setState('connected'));
         device.on('disconnect', () => setState('idle'));
         device.on('error', err => {
           console.error(err);
@@ -107,7 +120,6 @@
           errorEl.style.display = 'block';
         });
 
-        device.register();
       } catch (err) {
         console.error(err);
         setState('idle');
@@ -115,9 +127,9 @@
       }
     });
 
+    // initial
     setState('idle');
   });
   </script>
 </body>
 </html>
-3
