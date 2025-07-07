@@ -1407,7 +1407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const callBtn   = document.getElementById('callBtn');   // <--- this matches your HTML!
+  const callBtn   = document.getElementById('callBtn');
   const statusDiv = document.getElementById('status');
   let device      = window.device || null;
 
@@ -1444,6 +1444,7 @@ document.addEventListener('DOMContentLoaded', function() {
         callBtn.classList.add('status-idle');
     }
     statusDiv.style.color = isError ? 'red' : '';
+    // For debugging
     console.log('Call status:', state);
   }
 
@@ -1462,17 +1463,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   bindToDevice();
 
-  // Call button click test (cycle through states for demo)
+  // No click behaviour defined
   callBtn.addEventListener('click', function() {
-    const states = ['idle', 'connecting', 'connected', 'disconnected', 'cancelled', 'error'];
-    let current = states.indexOf(statusDiv.textContent.toLowerCase());
-    current = (current + 1) % states.length;
-    setStatus(states[current], states[current] === 'error' || states[current] === 'cancelled');
+    // You can define this later
+    console.log('Call button clicked. Current status:', statusDiv.textContent);
   });
 });
 </script>
 
 
 
+
 </body>
-</html>6
+</html>7
