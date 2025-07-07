@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px }
+    button {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled { background: #888 }
+    #status {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    #console {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Twilio Voice Test</h2>
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Loading…</div>
+  <div id="console"></div>
+
+  <script>
+    // the number to call
+    const TO_NUMBER = "+447479277657";
+
+    const btn = document.getElementById("callButton");
+    const stat = document.getElementById("status");
+    const cons = document.getElementById("console");
+    let device, activeCall;
+
+    function log(msg) {
+      cons.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${msg}</div>`;
+      cons.scrollTop = cons.scrollHeight;
+    }
+
+    function updateStatus(msg) {
+      stat.textContent = "Status: " + msg;
+      log(msg);
+    }
+
+    // enforce http/https
+    if (!["http:","https:"].includes(location.protocol)) {
+      document.body.innerHTML = 
+        "<p>Please serve over http/https. For example:<br>" +
+        "<code>python -m http.server</code><br>" +
+        "Then open <code>http://localhost:8000/index.html</code></p>";
+      throw new Error("Invalid protocol");
+    }
+
+    // Fetch token from your endpoint
+    async function fetchToken() {
+      updateStatus("Fetching token...");
+      try {
+        const response = await fetch('https://voice-tokens-2997.twil.io/token');
+        const data = await response.json();
+        return data.token;
+      } catch (err) {
+        updateStatus("Failed to fetch token: " + err.message);
+        throw err;
+      }
+    }
+
+    // set up the Twilio.Device
+    async function setupDevice() {
+      updateStatus("Requesting mic permission…");
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        // stop immediately; we only needed permission
+        stream.getTracks().forEach(t => t.stop());
+        
+        updateStatus("Fetching token...");
+        const token = await fetchToken();
+        
+        updateStatus("Initializing Twilio Device…");
+        device = new Twilio.Device(token, {
+          codecPreferences: ["opus","pcmu"],
+          logLevel: "debug",
+          enableIceRestart: true
+        });
+
+        // some SDK versions fire 'registered' when ready:
+        device.on("registered", () => {
+          updateStatus("Device registered & ready");
+          btn.disabled = false;
+        });
+
+        // other versions fire 'ready':
+        device.on("ready", () => {
+          updateStatus("Device ready to call");
+          btn.disabled = false;
+        });
+
+        device.on("error", err => {
+          updateStatus("Error: " + err.message);
+          btn.disabled = true;
+        });
+
+        device.on("connect", () => {
+          updateStatus("Call connected");
+          btn.textContent = "End Call";
+          btn.disabled = false;
+        });
+
+        device.on("disconnect", () => {
+          updateStatus("Ready to call");
+          btn.textContent = "Start Test Call";
+          activeCall = null;
+        });
+
+        device.register();
+      } catch (err) {
+        updateStatus("Error: " + err.message);
+      }
+    }
+
+    // handle button clicks
+    btn.addEventListener("click", () => {
+      if (activeCall) {
+        activeCall.disconnect();
+        return;
+      }
+      updateStatus("Calling " + TO_NUMBER + " …");
+      btn.disabled = true;
+      activeCall = device.connect({ To: TO_NUMBER });
+    });
+
+    // kick off
+    log("Page loaded");
+    setupDevice();
+  </script>
+</body>
+</html>
