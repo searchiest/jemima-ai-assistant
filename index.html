@@ -568,6 +568,44 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 
+/* Container for category pills */
+.category-pil ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Space between buttons */
+}
+
+/* Individual category buttons */
+.category-pil ul li {
+  background-color: #e6e6fa; /* Light purple */
+  color: #4b0082; /* Dark purple text for contrast */
+  padding: 2px 4px;
+  border-radius: 5px; /* Pill shape */
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border: 0px solid #d8bfd8; /* Light purple border */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Hover effect */
+/* .category-pil ul li:hover {*/
+/*   background-color: #d8bfd8; *//* Slightly darker purple */
+/*   transform: translateY(-1px);*/
+/*   box-shadow: 0 3px 6px rgba(0,0,0,0.1);*/
+}
+
+/* Active state */
+/*.category-pil ul li.active { */
+/*  background-color: #9370db; /* Medium purple */
+/*  color: white; */
+}
+
 /* ---------- Match section width on very small screens ---------- */
 @media (max-width: 575.98px) {
   .services,
@@ -683,6 +721,20 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   }
 }
 
+.solution-card {
+  position: relative;
+  padding-bottom: 6rem;    /* enough room for the pills row + gap */
+}
+
+.solution-card .category-pil {
+  position: absolute;
+  bottom: 1rem;            /* distance from the bottom edge of the card */
+  left: 1rem;              /* align with your card’s inner padding */
+  right: 1rem;             /* stretch to the other side */
+  margin: 0;               /* reset any default margins */
+  justify-content: center; /* Center pills horizontally */
+}
+
 </style>
 
 </head>
@@ -791,7 +843,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3>Sales Automation</h3>
+                    <h3>Sales</h3>
                     <p>Intelligent sales pipelines that nurture prospects and close deals automatically.</p>
                 </div>
                 <div class="service-card">
@@ -816,51 +868,100 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="solutions">
         <div class="container">
             <div class="section-header">
-                <h2>Our Business Solutions</h2>
-                <p>End to end solutions shaped for your business needs</p>
+                <h2>Always On Business Solutions</h2>
+                <p>Data gathering, AI analysis, automated actions and regular review to drive efficiency and boost growth</p>
             </div>
             <div class="solutions-grid">
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>Process Automation</h3>
-                    <p>Automate repetitive tasks and workflows to increase efficiency and reduce costs.</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Intelligent Analytics</h3>
-                    <p>Turn data into useful insights with AI-powered analytics solutions.</p>
+                    <h3>Intelligent Chat</h3>
+                    <p>Jemima answers questions and qualifies visitors, capturing leads 24/7 and cutting response time to zero.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li> <li>Customer Service</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    <h3>Conversational AI</h3>
-                    <p>Implement chatbots and virtual assistants for enhanced customer interactions.</p>
+                    <h3>Email</h3>
+                    <p>Jemima organises, summarises and replies to emails, spots buying signals and sets up nurture campaigns to drive more sales.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Sales</li> <li>Customer Service</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-cogs"></i>
+                        <i class="fas fa-phone-alt"></i>
                     </div>
-                    <h3>System Integration</h3>
-                    <p>Connect your existing systems with our automation solutions.</p>
+                    <h3>Call Centre</h3>
+                    <p>Jemima handles incoming and outgoing voice calls plus SMS and WhatsApp to keep response times quick and free up time.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li> <li>Customer Service</li></ul>
+                </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Social Media</h3>
+                    <p>Jemima creates and schedules posts and replies on social channels to keep your network growing 24/7 and free up hours of work.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Digital Marketing</li> <li>Lead Generation</li> <li>Sales</li></ul>
+                </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-magnet"></i>
+                    </div>
+                    <h3>Lead Magnets</h3>
+                    <p>Jemima builds and shares helpful resources on email and social channels to attract contacts and showcase expertise on auto-pilot.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Digital Marketing</li> <li>Lead Generation</li> <li>Sales</li></ul>
+                </div>
+		    <p class="category-pil"></p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Lead Scoring</h3>
+                    <p>Jemima finds new leads, enriches their details, scores them and sends first-contact messages to speed up outreach and free up time.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Security Solutions</h3>
-                    <p>Protect your business with AI-powered threat detection and prevention systems.</p>
+                    <h3>Reputation Protection</h3>
+                    <p>Jemima scans search, social and review sites for negative mentions and crafts quick responses, continually protecting your brand.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Customer Service</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-rocket"></i>
+                        <i class="fas fa-search"></i>
                     </div>
-                    <h3>Scalable Solutions</h3>
-                    <p>Grow your business with solutions that scale with your needs.</p>
+                    <h3>SEO AIO Monitor</h3>
+                    <p>Jemima tracks AI and search ranking and Google updates as well as website changes, to react to shifts faster.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Digital Marketing</li></ul>
+                </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h3>Overcome Objections</h3>
+                    <p>Jemima analyses internal logs and competitor reviews, to identify and overcome objections, increasing lead to sales conversion.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Sales</li></ul>
+                </div>
                 </div>
             </div>
         </div>
