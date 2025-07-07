@@ -774,6 +774,35 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   opacity: 1 !important;          /* disables fade-in */
 }
 
+
+
+#callBtn.status-idle {
+  background: #4f46e5; /* purple */
+}
+#callBtn.status-connecting {
+  background: #22c55e; /* green */
+}
+#callBtn.status-connected {
+  background: #dc2626; /* red */
+}
+#callBtn.status-disconnected {
+  background: #4f46e5; /* purple */
+}
+#callBtn {
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+
+
+
 </style>
 
 </head>
@@ -822,22 +851,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
                     <!-- Right: Call and Status -->
-<button id="callBtn" style="
-  background: #4f46e5;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-">
+<button id="callBtn" class="status-idle">
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 24 24">
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L9.03 9.03a16 16 0 0 0 6.94 6.94l1.63-1.63a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57A2 2 0 0 1 22 16.92z"/>
   </svg>
 </button>
+
 
   <div id="status">Idle</div>
                 </div>
@@ -1384,50 +1403,79 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
+
+
 <script>
-  // Safe: Wait for page to be fully loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    // Find your button and status area
-    const callBtn   = document.getElementById('callButton');
-    const statusDiv = document.getElementById('status');
-    let device      = window.device || null;  // If device is global, grab it
+document.addEventListener('DOMContentLoaded', function() {
+  const callBtn   = document.getElementById('callButton');
+  const statusDiv = document.getElementById('status');
+  let device      = window.device || null;
 
-    // Helper to update status
-    function setStatus(state, isError) {
-      statusDiv.textContent = state;
-      callBtn.className = state.toLowerCase();
-      if (isError) {
-        statusDiv.style.color = 'red';
-      } else {
-        statusDiv.style.color = '';
-      }
-      // Log to console for your testing
-      console.log('Call status:', state);
+  // Helper to update status and button colour
+  function setStatus(state, isError) {
+    statusDiv.textContent = state;
+
+    // Remove all state classes first
+    callBtn.classList.remove('status-idle', 'status-connecting', 'status-connected', 'status-disconnected', 'status-cancelled', 'status-error');
+
+    // Add correct class based on state
+    switch(state.toLowerCase()) {
+      case 'idle':
+        callBtn.classList.add('status-idle');
+        break;
+      case 'connecting':
+        callBtn.classList.add('status-connecting');
+        break;
+      case 'connected':
+        callBtn.classList.add('status-connected');
+        break;
+      case 'disconnected':
+        callBtn.classList.add('status-disconnected');
+        break;
+      case 'cancelled':
+        callBtn.classList.add('status-cancelled');
+        break;
+      case 'error':
+        callBtn.classList.add('status-error');
+        break;
+      default:
+        callBtn.classList.add('status-idle');
     }
 
-    // You might need to wait for device to be available, or get it from another script
-    function bindToDevice() {
-      // If your Twilio device is available
-      if (window.device) {
-        device = window.device;
-        device.on('ready',        () => setStatus('Idle'));
-        device.on('connect',      () => setStatus('Connected'));
-        device.on('disconnect',   () => setStatus('Idle'));
-        device.on('cancel',       () => setStatus('Cancelled', true));
-        device.on('error',        (err) => setStatus('Error', true));
-      } else {
-        setTimeout(bindToDevice, 500); // Try again in 0.5 seconds
-      }
+    if (isError) {
+      statusDiv.style.color = 'red';
+    } else {
+      statusDiv.style.color = '';
     }
+    // Log for debugging
+    console.log('Call status:', state);
+  }
 
-    bindToDevice();
+  function bindToDevice() {
+    if (window.device) {
+      device = window.device;
+      device.on('ready',        () => setStatus('Idle'));
+      device.on('connect',      () => setStatus('Connected'));
+      device.on('disconnect',   () => setStatus('Disconnected'));
+      device.on('cancel',       () => setStatus('Cancelled', true));
+      device.on('error',        (err) => setStatus('Error', true));
+      device.on('ringing',      () => setStatus('Connecting'));
+    } else {
+      setTimeout(bindToDevice, 500);
+    }
+  }
 
-    // Button click - just log for now
-    callBtn.addEventListener('click', function() {
-      console.log('Call button clicked. Status:', statusDiv.textContent);
-    });
+  bindToDevice();
+
+  // Call button click event
+  callBtn.addEventListener('click', function() {
+    console.log('Call button clicked. Status:', statusDiv.textContent);
+    // You can call device.connect() or device.disconnect() here if you wish
   });
+});
 </script>
+
+
 
 </body>
 </html>5
