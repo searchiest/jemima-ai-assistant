@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twilio Voice Chat — Debug</title>
+
+  <!-- Font Awesome for the phone icon -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" />
+
+  <!-- Twilio Voice SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+      background: #f9f9f9;
+    }
+    #callButton {
+      font-size: 3rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
+    }
+    #callButton.idle       { color: rebeccapurple; }
+    #callButton.connecting { color: limegreen;    }
+    #callButton.connected  { color: crimson;      }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      min-height: 1.5em;
+    }
+    #errorMsg {
+      color: #c00;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+    }
+    #debug {
+      margin-top: 30px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #222;
+      color: #eee;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Twilio Voice Chat (Debug)</h1>
+
+  <button id="callButton" class="idle" title="Click to start or end call">
+    <i class="fa-solid fa-phone"></i>
+  </button>
+  <div id="errorMsg">not available, try later</div>
+  <div id="status">Start Voice Chat</div>
+
+  <h2>Event Log</h2>
+  <div id="debug"></div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
+    const TO_NUMBER = '+447479277657';
+
+    const btn     = document.getElementById('callButton');
+    const status  = document.getElementById('status');
+    const errorEl = document.getElementById('errorMsg');
+    const debugEl = document.getElementById('debug');
+    let   device, activeCall;
+
+    function logEvent(msg) {
+      const time = new Date().toLocaleTimeString();
+      debugEl.innerHTML += `<div>${time}: ${msg}</div>`;
+      debugEl.scrollTop = debugEl.scrollHeight;
+    }
+
+    function setState(name) {
+      btn.className = name;
+      errorEl.style.display = 'none';
+      if (name === 'idle')        status.textContent = 'Start Voice Chat';
+      else if (name === 'connecting') status.textContent = 'Connecting…';
+      else if (name === 'connected')  status.textContent = 'Connected';
+      logEvent(`UI → state ${name}`);
+    }
+
+    async function fetchToken() {
+      logEvent('Fetching token');
+      const res = await fetch(TOKEN_URL);
+      if (!res.ok) throw new Error(res.statusText);
+      const { token } = await res.json();
+      logEvent('Token received');
+      return token;
+    }
+
+    function setupCallHandlers(call) {
+      call.on('accept', () => {
+        logEvent('Call accepted');
+        setState('connected');
+      });
+      
+      call.on('disconnect', () => {
+        logEvent('Call disconnected');
+        setState('idle');
+        activeCall = null;
+      });
+      
+      call.on('cancel', () => {
+        logEvent('Call cancelled');
+        setState('idle');
+        activeCall = null;
+      });
+      
+      call.on('reject', () => {
+        logEvent('Call rejected');
+        setState('idle');
+        activeCall = null;
+      });
+      
+      call.on('error', (err) => {
+        logEvent('Call error: ' + err.message);
+        setState('idle');
+        errorEl.style.display = 'block';
+        activeCall = null;
+      });
+    }
+
+    function setupDevice(token) {
+      device = new Twilio.Device(token, {
+        codecPreferences: ['opus','pcmu'],
+        logLevel: 'debug',
+        enableIceRestart: true
+      });
+
+      device.on('error', (err) => {
+        logEvent('Device error: ' + err.message);
+        setState('idle');
+        errorEl.style.display = 'block';
+      });
+
+      device.on('registered', () => logEvent('Device registered'));
+      device.on('unregistered', () => logEvent('Device unregistered'));
+
+      return device;
+    }
+
+    btn.addEventListener('click', async () => {
+      logEvent('Phone clicked');
+
+      // If call is active, hang up
+      if (activeCall) {
+        logEvent('Hanging up active call');
+        activeCall.disconnect();
+        return;
+      }
+
+      setState('connecting');
+
+      try {
+        const token = await fetchToken();
+        device = setupDevice(token);
+
+        device.once('registered', () => {
+          logEvent('Placing call');
+          activeCall = device.connect({ To: TO_NUMBER });
+          setupCallHandlers(activeCall);
+        });
+
+        device.register();
+
+      } catch (err) {
+        logEvent('Exception: ' + err.message);
+        setState('idle');
+        errorEl.style.display = 'block';
+      }
+    });
+
+    setState('idle');
+  });
+  </script>
+</body>
+</html>
