@@ -931,8 +931,13 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   }
 }
 </style>
+<style>
+@media (max-width: 576px) {
+  .qlink-bookcall {
+    display: none !important;
+  }
+}
 </style>
-
 </head>
 <body>
 
@@ -1007,7 +1012,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="quick-links-wrapper">
   <h4 class="quick-links-title">Chat Suggestions</h4>
   <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
+    <a href="#" class="qlink qlink-bookcall" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
   </div>
