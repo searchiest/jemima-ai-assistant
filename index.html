@@ -52,6 +52,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
+
   <style>
     #callButton {
       font-size: 2rem;
@@ -211,7 +212,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     border-radius: 30px;
     margin: 50px auto;
     color: white;
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
 
 .solutions
@@ -220,7 +221,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     border-radius: 30px;
     margin: 50px auto;
     color: white;
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
 
 /*.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px; max-width:600px;}*/
@@ -312,7 +313,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 /* Description Text */
 .description-text {
     max-width: 800px;
-    margin: 40px 18px 0px 18px;;
+    margin: 40px auto 0;
     font-size: 1.25rem;
     color: var(--gray);
     line-height: 1.7;
@@ -320,8 +321,53 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     opacity: 0;
     transform: translateY(20px);
     font-weight: 400;
-    text-align: center;
+    text-align:center;
 }
+
+@media (max-width: 480px) {
+  /* Make the avatar always circular and smaller */
+  .ai-avatar {
+    width: 70px;
+    height: 70px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50% !important;
+    margin-right: 0px;
+  }
+  .ai-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+
+  /* Make job title smaller, single line, and avoid wrap */
+  .ai-info p {
+    font-size: 0.5rem !important;
+    padding: 3px 8px;
+    border-radius: 10px;
+    max-width: 130px;
+    white-space: nowrap;
+    margin-bottom: 0;
+  }
+
+  .ai-info h3 {
+    font-size: 1.04rem !important;
+    margin-bottom: 2px;
+  }
+
+  /* Tidy up chat header spacing */
+  .chat-header {
+    gap: 12px !important;
+    padding-bottom: 4px;
+  }
+}
+
+
+
+
+
+
 .highlight {
     color: var(--accent);
     font-weight: 600;
@@ -366,7 +412,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 @media (max-width:576px){
-    .hero h1{font-size:2.4rem;}
+    .hero h1{font-size:2.0rem;}
     .ai-chat-box{padding:20px;}
     .chat-bubble p{font-size:0.95rem;}
     .footer-grid{grid-template-columns:1fr;}
@@ -632,7 +678,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 @media (max-width: 575.98px) {
   .services,
   .solutions {
-    width: calc(100% - 20px);   /* 20 px gap each side, same as the rest */
+    width: calc(100% - 40px);   /* 20 px gap each side, same as the rest */
   }
 }
 
@@ -775,48 +821,6 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   opacity: 1 !important;          /* disables fade-in */
 }
 
-@media (max-width: 480px) {
-  /* Make the avatar always circular and smaller */
-  .ai-avatar {
-    width: 70px;
-    height: 70px;
-    min-width: 48px;
-    min-height: 48px;
-    border-radius: 50% !important;
-    margin-right: 0px;
-  }
-  .ai-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50% !important;
-  }
-
-  /* Make job title smaller, single line, and avoid wrap */
-  .ai-info p {
-    font-size: 0.5rem !important;
-    padding: 3px 8px;
-    border-radius: 10px;
-    max-width: 130px;
-    white-space: nowrap;
-  /*  overflow: hidden;
-  /* text-overflow: ellipsis;
-    margin-bottom: 0;
-  }
-
-  .ai-info h3 {
-    font-size: 1.04rem !important;
-    margin-bottom: 2px;
-  }
-
-  /* Tidy up chat header spacing */
-  .chat-header {
-    gap: 12px !important;
-    padding-bottom: 4px;
-  }
-}
-
-
 </style>
 
 <style>
@@ -831,7 +835,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
-  margin-left: 18px;
+  margin-left: 20px;
 }
 
 #callBtn.status-idle        { background: #4f46e5 !important; }
@@ -842,8 +846,19 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 #callBtn.status-error       { background: #dc2626 !important; }
 
 #status {
-  margin-left: 18px;
+  margin-left: 20px;
 }
+
+/* ---------- Responsive ---------- */
+@media (max-width:480px){
+
+#callBtn {  margin-left: 0px;
+}
+#status {
+  margin-left: 0px;
+}
+    }
+
 </style>
 
 </head>
