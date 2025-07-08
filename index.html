@@ -41,6 +41,7 @@
 
   <!-- Icons and extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+<script type="module" crossorigin src="/voice/assets/index-dBvI1JZo.js"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -50,8 +51,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
 <!-- End Google Tag Manager -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    #callButton {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
+    }
+    #callButton.idle       { color: #4f46e5; }
+    #callButton.connecting { color: limegreen;    }
+    #callButton.connected  { color: crimson;      }
+
+    #status {
+      margin-top: 10px;
+      font-size: 0.6rem;
+      min-height: 0.8em;
+    }
+    .error { color: #ffb3b3; }
+  </style>
+
 
 <style>
 /* ---------- Reset and variables ---------- */
@@ -735,6 +756,51 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
   justify-content: center; /* Center pills horizontally */
 }
 
+/* Make phone/status font smaller and always fixed position */
+.chat-header .call-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  /* Remove any extra margin/padding that could cause movement */
+}
+
+#status {
+  font-size: 0.60rem !important;  /* smaller and consistent */
+  margin: 0;
+  padding: 0;
+  min-height: 0.6em;
+  transition: none !important;    /* disables any animation */
+  opacity: 1 !important;          /* disables fade-in */
+}
+
+</style>
+
+<style>
+
+#callBtn {
+  border: none;
+  border-radius: 20%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin-left: 20px;
+}
+
+#callBtn.status-idle        { background: #4f46e5 !important; }
+#callBtn.status-connecting  { background: #22c55e !important; }
+#callBtn.status-connected   { background: #f5425a !important; }
+#callBtn.status-disconnected{ background: #4f46e5 !important; }
+#callBtn.status-cancelled   { background: #c026d3 !important; }
+#callBtn.status-error       { background: #dc2626 !important; }
+
+#status {
+  margin-left: 20px;
+}
 </style>
 
 </head>
@@ -763,16 +829,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </nav>
     </div>
   </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>AI <span>Sales & Marketing</span> Solutions</h1>
-                
-                <!-- AI Chat Box -->
-                <div class="ai-chat-box">
-                    <div class="chat-header">
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>AI <span>Sales & Marketing</span> Solutions</h1>
+            
+            <!-- AI Chat Box -->
+            <div class="ai-chat-box">
+                <div class="chat-header" style="display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+                    <!-- Left: Avatar and Info -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
                         <div class="ai-avatar">
                             <img src="jemima.png" alt="Jemima AI">
                         </div>
@@ -781,24 +848,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <p>Business Solutions Manager</p>
                         </div>
                     </div>
-                    
-                    <div class="chat-bubble">
-                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
-                    </div>
-                    <!-- Chat area -->
-                    <div id="chat-body" class="chat-body"></div>
-                    <!-- Chat Input Form -->
-                    <div class="chat-input-form">
-                        <form onsubmit="sendMessage(); return false;">
-                            <textarea id="chat-input" required></textarea>
-                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
+                    <!-- Right: Call and Status -->
+<!-- Right: Call and Status, now vertical -->
+<div class="call-block">
+  <button id="callBtn" class="status-idle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L9.03 9.03a16 16 0 0 0 6.94 6.94l1.63-1.63a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  </button>
+  <div id="status">Voice Chat</div>
+</div>
+                </div>
+
+                <div class="chat-bubble">
+                    <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
+                </div>
+                <!-- Chat area -->
+                <div id="chat-body" class="chat-body"></div>
+                <!-- Chat Input Form -->
+                <div class="chat-input-form">
+                    <form onsubmit="sendMessage(); return false;">
+                        <textarea id="chat-input" required></textarea>
+                        <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
 
 <!-- Chat Suggestions -->
 <div class="quick-links-wrapper">
   <h4 class="quick-links-title">Chat Suggestions</h4>
-
   <div id="chat-quick-links" class="quick-links-list">
     <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
@@ -807,7 +884,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
