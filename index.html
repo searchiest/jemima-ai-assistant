@@ -833,11 +833,11 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     right: 0;
     bottom: 0;
     display: flex;
-    gap: 10px;
+    gap: 6px; /* was 10px */
     justify-content: space-around;
     background: rgba(255,255,255,0.95);
     box-shadow: 0 -3px 12px rgba(0,0,0,0.09);
-    padding: 8px 8px 8px 8px;
+    padding: 5px 4px 5px 4px; /* was 8px 8px 8px 8px */
     z-index: 2000;
   }
   .mobile-btn {
@@ -845,16 +845,16 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 10px 0;
-    font-size: 1.1rem;
+    gap: 7px;
+    padding: 7px 0; /* was 10px 0 */
+    font-size: 0.95rem; /* was 1.1rem */
     font-weight: 600;
     color: white;
     background: #4f46e5;
     border: none;
-    border-radius: 20px;
+    border-radius: 16px; /* was 20px */
     text-decoration: none;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
     transition: background 0.18s;
   }
   .call-btn { background: #22c55e; }
@@ -863,9 +863,10 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     filter: brightness(0.93);
   }
   .mobile-btn i {
-    font-size: 1.3rem;
+    font-size: 1.1rem; /* was 1.3rem */
   }
 }
+
 
 /* Optional: add space at the bottom so content is not hidden by buttons */
 @media (max-width: 576px) {
