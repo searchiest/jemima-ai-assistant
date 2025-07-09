@@ -104,9 +104,14 @@ body{
 }
 .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
 
+.hero h1 {
+  margin-top: 20px;
+}
+
+
 /* ---------- Header ---------- */
 header{
-    padding:25px 0;
+    padding:14px 0;
     position:fixed;top:0;width:100%;z-index:1000;
     background:rgba(255,255,255,0.95);
     backdrop-filter:blur(10px);
@@ -124,9 +129,9 @@ nav ul li a:hover::after{width:100%;}
 .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
 
 /* ---------- Hero ---------- */
-.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
+.hero{padding:122px 0 0px;position:relative;overflow:hidden;text-align:center;}
 .hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
-.hero h1{font-size:3.2rem;font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-1px;color:var(--dark);}
+.hero h1{font-size:3.2rem;font-weight:800;line-height:1.1;margin-bottom:0px;letter-spacing:-1px;color:var(--dark);}
 .hero h1 span{position:relative;}
 .hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
 
@@ -134,7 +139,7 @@ nav ul li a:hover::after{width:100%;}
 .ai-chat-box{
     background:#fff;border-radius:25px;padding:30px;
     box-shadow:0 25px 50px rgba(0,0,0,0.08);
-    margin:50px auto 0;max-width:650px;position:relative;overflow:hidden;
+    margin:32px auto 0;max-width:650px;position:relative;overflow:hidden;
     border:1px solid rgba(0,0,0,0.05);animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;transform:translateY(20px);
 }
 .ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
@@ -322,7 +327,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 /* Description Text */
 .description-text {
     max-width: 800px;
-    margin: 40px auto 0;
+    margin: 30px auto 0;
     font-size: 1.25rem;
     color: var(--gray);
     line-height: 1.7;
@@ -429,9 +434,9 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
         margin:10px 0;
     }
 
-    .hero{padding:140px 0 20px;}
-    .hero h1{font-size:2.2rem;}
-
+    .hero{padding:120px 0 20px;}
+    .hero h1{font-size:2.2rem; padding-bottom:10px;}
+    .ai-chat-box{margin-top:40px;}
     .chat-body{max-height:300px;padding:15px;}
     .chat-bubble{padding:12px 16px;}
     .chat-bubble p{font-size:1rem;}
@@ -978,6 +983,72 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     transform: translateY(-2px);      /* Same as .qlink:hover */
 }
 
+header {
+  top: 40px;   /* exactly matches the bar height */
+}
+
+.top-contact-bar {
+  width: 100%;
+  background: #fff;
+  color: #4f46e5;
+  font-size: 0.9rem;
+  padding: 7px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2001;
+}
+.top-contact-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.top-contact-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.top-contact-right {
+  display: flex;
+  align-items: center;
+}
+.top-contact-left i {
+  margin-right: -16px;   /* Change 6px to whatever is right for your design */
+  margin-left: 0;
+  vertical-align: middle;
+}
+.top-contact-demo-btn {
+  background: #4f46e5;
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: background 0.18s, color 0.18s, transform 0.13s;
+  border: none;
+  font-size: 1rem;
+  margin-top:5px;
+}
+.top-contact-demo-btn:hover {
+  background: #7c3aed;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Hide bar on mobile */
+@media (max-width: 576px) {
+  .top-contact-bar { display: none; }
+header {
+  top: 0px;   /* exactly matches the bar height */
+
+}
+}
+
+
 </style>
 
 
@@ -989,6 +1060,18 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+<!-- Top Contact Bar: Desktop and Tablet only -->
+<div class="top-contact-bar">
+  <div class="top-contact-content">
+    <div class="top-contact-left">
+        <i class="fas fa-phone-alt"></i> +44 7479 277657
+        <i class="fas fa-envelope"></i> jemima@jemima.ai
+    </div>
+    <div class="top-contact-right">
+      <a href="#book-demo" class="top-contact-demo-btn">Book A Demo</a>
+    </div>
+  </div>
+</div>
 
   <!-- Header -->
   <header>
@@ -1039,7 +1122,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
 
                 <div class="chat-bubble-1">
-                    <p>I can generate leads, turn leads into sales, turn sales into upsells, for 24 hours of every day <a href="#book-demo" class="highlight" style="cursor: pointer; text-decoration:none;">Book A Demo</a></p>
+                    <p>I can generate leads, turn leads into sales, turn sales into upsells, for 24 hours of every day</p>
                 </div>
                 <!-- Chat area -->
                 <div id="chat-body" class="chat-body"></div>
@@ -1055,7 +1138,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="quick-links-wrapper">
   <h4 class="quick-links-title">Chat Suggestions</h4>
   <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="I'd like to book a 25 minute live demonstration">Book A Demo</a>
     <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
   </div>
@@ -1370,6 +1452,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
 <script>
+
+
 /* ── 1.  hidden page address sent to n8n ───────────────────── */
 const pageUrl   = window.location.href;
 
