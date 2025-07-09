@@ -42,6 +42,8 @@
   <!-- Icons and extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 
+  <!-- Twilio SDK -->
+  <script type="module" crossorigin src="/voice/assets/index-dBvI1JZo.js"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -1551,7 +1553,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="modal-description">
         Provide your email address and a mobile phone number to receive a call report.
       </div>
-      <button type="submit" class="modal-submit-btn">Start the Call</button>
+      <button type="submit" id="callBtn" class="modal-submit-btn">Start the Call</button>
     </form>
   </div>
 </div>
@@ -1810,7 +1812,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Form validation and submission
   var liveCallForm = document.getElementById('liveCallForm');
   if (liveCallForm) {
-    liveCallForm.onsubmit = function (e) {
+    liveCallForm.onsubmit = async function (e) {
       e.preventDefault();
       var email = document.getElementById('liveCallEmail');
       var sms = document.getElementById('liveCallSMS');
@@ -1834,14 +1836,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (!valid) return false;
 
-      // Start call process (AJAX etc)
+      // 1. Send the data to n8n (store to Google Sheet)
+      try {
+        await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email.value, sms: sms.value })
+        });
+      } catch (err) {
+        alert('Could not reach the server to save your details, but we will try the call anyway.');
+      }
+
+      // 2. Trigger the Twilio call (simulate button click)
+      var callBtn = document.getElementById('callBtn');
+      if (callBtn) {
+        callBtn.click();
+      } else {
+        alert('Could not start the call. Please refresh the page and try again.');
+      }
+
+      // 3. Hide the modal
       document.getElementById('liveCallModal').style.display = 'none';
-      alert('Call will start. You will receive a report at ' + email.value + ' and ' + sms.value);
       return false;
     };
   }
 });
 </script>
+
 
 </body>
 </html>
