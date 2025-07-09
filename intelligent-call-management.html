@@ -1523,6 +1523,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
+
+
+<div class="mobile-bottom-buttons">
+  <a href="tel:+447479277657" class="mobile-btn call-btn">
+    <i class="fas fa-phone"></i> Call
+  </a>
+  <a href="sms:+447479277657" class="mobile-btn sms-btn">
+    <i class="fas fa-sms"></i> SMS
+  </a>
+</div>
+
+<!-- Live Call Demo Pop-up -->
+<div id="liveCallModal" class="modal-bg" style="display:none;">
+  <div class="modal-dialog">
+    <button type="button" class="modal-close" aria-label="Close">&times;</button>
+    <h3 class="modal-title">Start Live Call Demo</h3>
+    <form id="liveCallForm" class="modal-form" autocomplete="off">
+      <div class="modal-form-group">
+        <label for="liveCallEmail">Email</label>
+        <input type="email" id="liveCallEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+      </div>
+      <div class="modal-form-group">
+        <label for="liveCallSMS">SMS</label>
+        <input type="tel" id="liveCallSMS" name="sms" placeholder="07xxx xxxxxx" required autocomplete="tel" pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" />
+      </div>
+      <div class="modal-description">
+        Provide your email address and a mobile phone number to receive a call report.
+      </div>
+      <button type="submit" class="modal-submit-btn">Start the Call</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
 <script>
 
 
@@ -1737,86 +1774,73 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<div class="mobile-bottom-buttons">
-  <a href="tel:+447479277657" class="mobile-btn call-btn">
-    <i class="fas fa-phone"></i> Call
-  </a>
-  <a href="sms:+447479277657" class="mobile-btn sms-btn">
-    <i class="fas fa-sms"></i> SMS
-  </a>
-</div>
-
-<!-- Live Call Demo Pop-up -->
-<div id="liveCallModal" class="modal-bg" style="display:none;">
-  <div class="modal-dialog">
-    <button type="button" class="modal-close" aria-label="Close">&times;</button>
-    <h3 class="modal-title">Start Live Call Demo</h3>
-    <form id="liveCallForm" class="modal-form" autocomplete="off">
-      <div class="modal-form-group">
-        <label for="liveCallEmail">Email</label>
-        <input type="email" id="liveCallEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
-      </div>
-      <div class="modal-form-group">
-        <label for="liveCallSMS">SMS</label>
-        <input type="tel" id="liveCallSMS" name="sms" placeholder="07xxx xxxxxx" required autocomplete="tel" pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" />
-      </div>
-      <div class="modal-description">
-        Provide your email address and a mobile phone number to receive a call report.
-      </div>
-      <button type="submit" class="modal-submit-btn">Start the Call</button>
-    </form>
-  </div>
-</div>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // Open modal on any "Live Call Demo" button click
-  document.querySelectorAll('.top-contact-demo-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
+  document.querySelectorAll('.top-contact-demo-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
       document.getElementById('liveCallModal').style.display = 'flex';
-      // reset previous errors
+      // Reset form and previous errors
       document.getElementById('liveCallForm').reset();
-      document.querySelectorAll('.modal-form-group input').forEach(inp => inp.classList.remove('invalid'));
+      document.querySelectorAll('.modal-form-group input').forEach(function (inp) {
+        inp.classList.remove('invalid');
+      });
     });
   });
 
-  // Close modal logic
-  document.querySelector('#liveCallModal .modal-close').onclick = function() {
-    document.getElementById('liveCallModal').style.display = 'none';
-  };
-  // Click outside dialog closes
-  document.getElementById('liveCallModal').onclick = function(e) {
-    if(e.target===this){ this.style.display = 'none'; }
-  };
+  // Close modal with close button
+  var closeBtn = document.querySelector('#liveCallModal .modal-close');
+  if (closeBtn) {
+    closeBtn.onclick = function () {
+      document.getElementById('liveCallModal').style.display = 'none';
+    };
+  }
+
+  // Close modal when clicking the modal background
+  var modalBg = document.getElementById('liveCallModal');
+  if (modalBg) {
+    modalBg.onclick = function (e) {
+      if (e.target === modalBg) {
+        modalBg.style.display = 'none';
+      }
+    };
+  }
 
   // Form validation and submission
-  document.getElementById('liveCallForm').onsubmit = function(e) {
-    e.preventDefault();
-    var email = document.getElementById('liveCallEmail');
-    var sms = document.getElementById('liveCallSMS');
-    var valid = true;
+  var liveCallForm = document.getElementById('liveCallForm');
+  if (liveCallForm) {
+    liveCallForm.onsubmit = function (e) {
+      e.preventDefault();
+      var email = document.getElementById('liveCallEmail');
+      var sms = document.getElementById('liveCallSMS');
+      var valid = true;
 
-    // Email validation
-    if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-      email.classList.add('invalid'); valid = false;
-    } else { email.classList.remove('invalid'); }
+      // Email validation
+      if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+        email.classList.add('invalid');
+        valid = false;
+      } else {
+        email.classList.remove('invalid');
+      }
 
-    // UK Mobile number validation (basic)
-    if (!sms.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
-      sms.classList.add('invalid'); valid = false;
-    } else { sms.classList.remove('invalid'); }
+      // UK Mobile number validation (basic)
+      if (!sms.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
+        sms.classList.add('invalid');
+        valid = false;
+      } else {
+        sms.classList.remove('invalid');
+      }
 
-    if (!valid) return false;
+      if (!valid) return false;
 
-    // START YOUR CALL HERE (AJAX etc)
-    document.getElementById('liveCallModal').style.display = 'none';
-    // Optionally, show a confirmation or start the call process...
-    alert('Call will start. You will receive a report at ' + email.value + ' and ' + sms.value);
-    // Replace alert above with your real call logic as needed.
-    return false;
-  };
-};
+      // Start call process (AJAX etc)
+      document.getElementById('liveCallModal').style.display = 'none';
+      alert('Call will start. You will receive a report at ' + email.value + ' and ' + sms.value);
+      return false;
+    };
+  }
+});
 </script>
 
 </body>
