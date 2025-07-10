@@ -2215,78 +2215,103 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <script>
-async function startCall() {
-  // Validate the form inputs
-  if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-    emailInput.classList.add('invalid');
-    return;
-  } else {
-    emailInput.classList.remove('invalid');
+document.addEventListener('DOMContentLoaded', () => {
+  const callForm = document.getElementById('callForm');
+  const emailInput = document.getElementById('email');
+  const smsInput = document.getElementById('sms');
+  const statusDiv = document.getElementById('status');
+
+  // Update the status text
+  function updateUI(status) {
+    const states = ['idle', 'error'];
+    states.forEach(s => statusDiv.classList.remove(`status-${s}`));
+    statusDiv.classList.add(`status-${status}`);
+
+    switch (status) {
+      case 'idle':
+        statusDiv.textContent = 'Idle';
+        break;
+      case 'error':
+        statusDiv.textContent = 'Error';
+        break;
+    }
   }
 
-  if (!smsInput.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
-    smsInput.classList.add('invalid');
-    return;
-  } else {
-    smsInput.classList.remove('invalid');
-  }
+  // Handle form submission
+  callForm.addEventListener('submit', async function (e) {
+    e.preventDefault();  // Prevent the form from submitting the normal way
 
-  // Prepare the data to send to n8n
-  const data = {
-    email: emailInput.value,
-    sms: smsInput.value,
-    url: window.location.href,    // Page URL
-    timestamp: new Date().toISOString() // Current timestamp
-  };
-
-  try {
-    // First, send the form data to n8n
-    const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo', { // Replace with your actual n8n webhook URL
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to send data to n8n');
+    // Validate the form inputs
+    if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+      emailInput.classList.add('invalid');
+      return;
+    } else {
+      emailInput.classList.remove('invalid');
     }
 
-    console.log('Data successfully sent to n8n');
+    if (!smsInput.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
+      smsInput.classList.add('invalid');
+      return;
+    } else {
+      smsInput.classList.remove('invalid');
+    }
 
-    // Only after the data is successfully sent to n8n, proceed with starting the call
-    updateUI('connecting');
-    currentCall = await device.connect({ To: TO_NUMBER });
+    // Prepare the data to send to n8n
+    const data = {
+      email: emailInput.value,
+      sms: smsInput.value,
+      url: window.location.href,    // Page URL
+      timestamp: new Date().toISOString() // Current timestamp
+    };
 
-    currentCall.on('accept', () => {
-      updateUI('connected');
-      callBtnModal.textContent = 'End Call';
-    });
+    try {
+      // Send the form data to n8n
+      updateUI('idle');
+      const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo', { // Replace with your actual n8n webhook URL
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
 
-    currentCall.on('disconnect', () => {
-      updateUI('disconnected');
-      currentCall = null;
-      callBtnModal.textContent = 'Start Call';
-    });
+      if (!response.ok) {
+        throw new Error('Failed to send data to n8n');
+      }
 
-    currentCall.on('cancel', () => {
-      updateUI('cancelled');
-      currentCall = null;
-      callBtnModal.textContent = 'Start Call';
-    });
-
-    currentCall.on('error', (err) => {
-      console.error('Call error:', err);
+      console.log('Data successfully sent to n8n');
+      updateUI('idle');
+      alert('Form data successfully submitted!');
+    } catch (error) {
+      console.error('Error sending form data to n8n:', error);
       updateUI('error');
-      currentCall = null;
-      callBtnModal.textContent = 'Start Call';
-    });
+      alert('There was an error sending your form data.');
+    }
+  });
+});
 
-  } catch (error) {
-    console.error('Error sending form data to n8n:', error);
-    alert('There was an error sending your form data.');
-  }
-}
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const closeModalBtn = document.querySelector('.modal-close');
+    console.log(closeModalBtn); // This should log the button or null
+    
+    const callModal = document.getElementById('callModal');
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', function () {
+        callModal.style.display = 'none'; // Hide the modal
+      });
+    }
+
+    window.addEventListener('click', function (event) {
+      if (event.target === callModal) {
+        callModal.style.display = 'none'; // Hide the modal if clicked outside
+      }
+    });
+  });
+</script>
+
+
 
 </body>
 </html>
