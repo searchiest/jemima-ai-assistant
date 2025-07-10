@@ -1468,6 +1468,29 @@ header .container {
   transform: translateY(-2px);
 }
 
+/* Live Call Answering Demo button - Desktop version */
+.openModalBtn {
+  background-color: #4f46e5;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  position: fixed;
+  top: 20px;  /* Positioned 20px from the top of the screen */
+  left: 50%;
+  transform: translateX(-50%); /* Center it horizontally */
+  z-index: 1100; /* Ensure it floats above the top contact bar */
+}
+
+/* Hover effect */
+.openModalBtn:hover {
+  background-color: #3b41b3;
+  transform: translateY(-2px);
+}
+
 /* Mobile view adjustments */
 @media (max-width: 768px) {
   .top-contact-bar {
@@ -1503,6 +1526,7 @@ header .container {
     position: relative;
   }
 }
+
 
 
 
