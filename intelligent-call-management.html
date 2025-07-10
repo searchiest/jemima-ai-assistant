@@ -1,214 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <!-- Basic setup -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Sales & Marketing Solutions | jemima.ai</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Call Demo</title>
 
-  <!-- SEO -->
-  <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
-  <link rel="canonical" href="https://jemima.ai/">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="jemima.ai">
+    <style>
+        /* Basic styles for the page */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-  <!-- Twilio SDK -->
-  <script type="module" crossorigin src="/voice/assets/index-DdEqXFKb.js"></script>
+        /* Button styles */
+        .top-contact-demo-btn {
+            padding: 10px 20px;
+            background-color: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
 
-  <style>
-    /* Modal Styles */
-    .modal-bg {
-      position: fixed; inset: 0; z-index: 3000;
-      background: rgba(30,34,70,.38);
-      display: flex; align-items: center; justify-content: center;
-      animation: fadeIn .23s;
-    }
-    .modal-dialog {
-      background: #fff;
-      border-radius: 24px;
-      box-shadow: 0 16px 40px rgba(44,44,84,0.10);
-      padding: 32px 24px 24px 24px;
-      max-width: 380px; width: 100%;
-      font-family: 'Poppins',sans-serif;
-      position: relative;
-      animation: fadeInUp .3s;
-    }
-    .modal-title {
-      margin-top: 0;
-      margin-bottom: 22px;
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      letter-spacing: -0.5px;
-      text-align: center;
-    }
-    .modal-close {
-      position: absolute; top: 18px; right: 18px;
-      font-size: 1.6rem; background: none; border: none;
-      color: #4f46e5; cursor: pointer; font-weight: bold; line-height: 1;
-      transition: color .18s;
-    }
-    .modal-close:hover { color: #e11d48; }
-    .modal-form-group {
-      margin-bottom: 18px;
-    }
-    .modal-form-group label {
-      font-weight: 600; color: #4f46e5;
-      margin-bottom: 7px; display: block; font-size: 1rem;
-    }
-    .modal-form-group input {
-      width: 100%; padding: 13px 14px; border-radius: 9px;
-      border: 1.5px solid #d4d4fd; background: #f5f7fa;
-      color: #2c294f; font-size: 1rem; font-family: inherit;
-      transition: border .19s;
-    }
-    .modal-form-group input:focus { border: 1.5px solid #4f46e5; outline: none; background: #f0f4ff; }
-    .modal-form-group input.invalid { border-color: #e11d48 !important; background: #fff1f2; }
-    .modal-description {
-      font-size: 1.03rem; color: #55587a;
-      background: #f0f4ff; border-radius: 9px;
-      margin-bottom: 20px; padding: 12px 12px; text-align: center;
-    }
-    .modal-submit-btn {
-      background: #4f46e5;
-      color: #fff; font-size: 1.1rem; font-weight: 600;
-      border: none; border-radius: 12px;
-      width: 100%; padding: 14px 0; cursor: pointer;
-      transition: background .18s;
-    }
-    .modal-submit-btn:hover { background: #7c3aed; }
-    @keyframes fadeInUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-  </style>
+        .top-contact-demo-btn:hover {
+            background-color: #7c3aed;
+        }
 
+        /* Modal styles */
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 34, 70, .38);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn .23s;
+            display: none;
+        }
+
+        .modal-dialog {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 16px 40px rgba(44, 44, 84, 0.10);
+            padding: 32px 24px 24px 24px;
+            max-width: 380px;
+            width: 100%;
+            animation: fadeInUp .3s;
+        }
+
+        .modal-title {
+            margin-top: 0;
+            margin-bottom: 22px;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: #4f46e5;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #e11d48;
+        }
+
+        .modal-form-group {
+            margin-bottom: 18px;
+        }
+
+        .modal-form-group label {
+            font-weight: 600;
+            color: #4f46e5;
+            margin-bottom: 7px;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .modal-form-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 9px;
+            border: 1.5px solid #d4d4fd;
+            background: #f5f7fa;
+            color: #2c294f;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border .19s;
+        }
+
+        .modal-form-group input:focus {
+            border: 1.5px solid #4f46e5;
+            outline: none;
+            background: #f0f4ff;
+        }
+
+        .modal-description {
+            font-size: 1.03rem;
+            color: #55587a;
+            background: #f0f4ff;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            padding: 12px 12px;
+            text-align: center;
+        }
+
+        .modal-submit-btn {
+            background: #4f46e5;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            padding: 14px 0;
+            cursor: pointer;
+            transition: background .18s;
+        }
+
+        .modal-submit-btn:hover {
+            background: #7c3aed;
+        }
+
+        /* Keyframe for modal animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- Top Contact Bar -->
-<div class="top-contact-bar">
-  <div class="top-contact-content">
-    <div class="top-contact-left">
-        <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
-        <i class="fas fa-envelope"></i> jemima@jemima.ai
+    <!-- Trigger Button -->
+    <a href="#" class="top-contact-demo-btn">Live Call Demo</a>
+
+    <!-- Live Call Demo Pop-up Modal -->
+    <div id="liveCallModal" class="modal-bg">
+        <div class="modal-dialog">
+            <button type="button" class="modal-close" aria-label="Close">&times;</button>
+            <h3 class="modal-title">Start Live Call Demo</h3>
+            <form id="liveCallForm" class="modal-form" autocomplete="off">
+                <div class="modal-form-group">
+                    <label for="liveCallEmail">Email</label>
+                    <input type="email" id="liveCallEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+                </div>
+                <div class="modal-form-group">
+                    <label for="liveCallSMS">SMS</label>
+                    <input type="tel" id="liveCallSMS" name="sms" placeholder="07xxx xxxxxx" required autocomplete="tel" />
+                </div>
+                <div class="modal-description">
+                    Provide your email address and a mobile phone number to receive a call report.
+                </div>
+                <button type="button" id="callBtn" class="modal-submit-btn">Start the Call</button>
+                <div id="status"></div>
+            </form>
+        </div>
     </div>
-    <div class="top-contact-right">
-      <a href="#" class="top-contact-demo-btn">Live Call Demo</a>
-    </div>
-  </div>
-</div>
 
-<!-- Modal Structure for Live Call Demo -->
-<div id="liveCallModal" class="modal-bg" style="display:none;">
-  <div class="modal-dialog">
-    <button type="button" class="modal-close" aria-label="Close">&times;</button>
-    <h3 class="modal-title">Start Live Call Demo</h3>
-    <form id="liveCallForm" class="modal-form" autocomplete="off">
-      <div class="modal-form-group">
-        <label for="liveCallEmail">Email</label>
-        <input type="email" id="liveCallEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
-      </div>
-      <div class="modal-form-group">
-        <label for="liveCallSMS">SMS</label>
-        <input type="tel" id="liveCallSMS" name="sms" placeholder="07xxx xxxxxx" required autocomplete="tel" pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" />
-      </div>
-      <div class="modal-description">
-        Provide your email address and a mobile phone number to receive a call report.
-      </div>
-      <button type="button" id="callBtn" class="modal-submit-btn">Start the Call</button>
-      <div id="status"></div>
-    </form>
-  </div>
-</div>
+    <!-- Twilio SDK -->
+    <script type="module" crossorigin src="/voice/assets/index-DdEqXFKb.js"></script>
 
-<!-- JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Ensure that the modal button is clickable after the DOM has loaded
-  const demoBtns = document.querySelectorAll('.top-contact-demo-btn');
-  demoBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.getElementById('liveCallModal').style.display = 'flex';  // Make modal visible
-      // Reset form and previous errors
-      document.getElementById('liveCallForm').reset();
-      document.querySelectorAll('.modal-form-group input').forEach(function (inp) {
-        inp.classList.remove('invalid');
-      });
-    });
-  });
-
-  // Close modal with close button
-  var closeBtn = document.querySelector('#liveCallModal .modal-close');
-  if (closeBtn) {
-    closeBtn.onclick = function () {
-      document.getElementById('liveCallModal').style.display = 'none';
-    };
-  }
-
-  // Close modal when clicking the modal background
-  var modalBg = document.getElementById('liveCallModal');
-  if (modalBg) {
-    modalBg.onclick = function (e) {
-      if (e.target === modalBg) {
-        modalBg.style.display = 'none';
-      }
-    };
-  }
-
-  // Form validation and submission
-  var liveCallForm = document.getElementById('liveCallForm');
-  if (liveCallForm) {
-    liveCallForm.onsubmit = async function (e) {
-      e.preventDefault();
-      var email = document.getElementById('liveCallEmail');
-      var sms = document.getElementById('liveCallSMS');
-      var valid = true;
-
-      // Email validation
-      if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-        email.classList.add('invalid');
-        valid = false;
-      } else {
-        email.classList.remove('invalid');
-      }
-
-      // UK Mobile number validation (basic)
-      if (!sms.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
-        sms.classList.add('invalid');
-        valid = false;
-      } else {
-        sms.classList.remove('invalid');
-      }
-
-      if (!valid) return false;
-
-      // 1. Send the data to n8n (store to Google Sheet)
-      try {
-        await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email.value, sms: sms.value })
+    <script>
+        // Open modal on button click
+        document.querySelector('.top-contact-demo-btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('liveCallModal').style.display = 'flex';
         });
-      } catch (err) {
-        alert('Could not reach the server to save your details, but we will try the call anyway.');
-      }
 
-      // 2. Trigger the Twilio call (simulate button click)
-      var callBtn = document.getElementById('callBtn');
-      if (callBtn) {
-        callBtn.click();
-      } else {
-        alert('Could not start the call. Please refresh the page and try again.');
-      }
+        // Close modal
+        document.querySelector('.modal-close').addEventListener('click', function () {
+            document.getElementById('liveCallModal').style.display = 'none';
+        });
 
-      // 3. Hide the modal
-      document.getElementById('liveCallModal').style.display = 'none';
-      return false;
-    };
-  }
-});
-</script>
+        // Close modal when clicking the background
+        document.getElementById('liveCallModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+        // Handle form submission and validate inputs
+        document.getElementById('liveCallForm').onsubmit = function (e) {
+            e.preventDefault();
+            var email = document.getElementById('liveCallEmail');
+            var sms = document.getElementById('liveCallSMS');
+            var valid = true;
+
+            // Validate Email
+            if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+                email.classList.add('invalid');
+                valid = false;
+            } else {
+                email.classList.remove('invalid');
+            }
+
+            // Validate Phone (UK Mobile number format)
+            if (!sms.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
+                sms.classList.add('invalid');
+                valid = false;
+            } else {
+                sms.classList.remove('invalid');
+            }
+
+            if (!valid) return;
+
+            // If valid, trigger the "Start the Call" button
+            document.getElementById('callBtn').click();
+
+            // Close the modal
+            document.getElementById('liveCallModal').style.display = 'none';
+        };
+    </script>
 
 </body>
+
 </html>
