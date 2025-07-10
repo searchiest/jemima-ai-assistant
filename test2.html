@@ -1,112 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Test Available Slots</title>
+  <meta charset="utf-8">
+  <title>Twilio Voice Test — Manual Token Input</title>
+  <script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
   <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    label { font-weight: bold; }
-    select, input { margin-left: .5rem; }
+    body { font-family: Arial, sans-serif; padding: 20px }
+    input, button {
+      font-size: 1rem;
+      padding: 8px;
+      margin: 4px 0;
+      box-sizing: border-box;
+    }
+    input { width: 100% }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled { background: #888 }
+    #status {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    #console {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 200px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body>
-  <h1>Test Available Slots</h1>
+  <h2>Twilio Voice Test</h2>
 
-  <p>
-    <label for="day">Choose a day:</label>
-    <input type="date" id="day"/>
-  </p>
+  <label for="tokenInput">Paste your Twilio JWT here:</label><br>
+  <input id="tokenInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ..." />
+  <button id="loadToken">Load Token</button>
 
-  <p>
-    <label for="slot">Free times:</label>
-    <select id="slot"></select>
-  </p>
+  <hr>
+
+  <button id="callButton" disabled>Start Test Call</button>
+  <div id="status">Status: Waiting for token</div>
+  <div id="console"></div>
 
   <script>
-    // ← point this at your real n8n webhook URL
-    const AVAIL_URL = 'https://jemima-ai.app.n8n.cloud/webhook/availability';
+    const TO_NUMBER  = "+441174632514";  // Replace with the number you want to call
+    const loadBtn    = document.getElementById("loadToken");
+    const callBtn    = document.getElementById("callButton");
+    const tokenInput = document.getElementById("tokenInput");
+    const statusDiv  = document.getElementById("status");
+    const consoleDiv = document.getElementById("console");
+    let device, activeCall, currentToken;
 
-    const dayInput   = document.getElementById('day');
-    const slotSelect = document.getElementById('slot');
+    function log(msg) {
+      consoleDiv.innerHTML += "<div>" + new Date().toLocaleTimeString() 
+                             + ": " + msg + "</div>";
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
+    }
 
-    dayInput.addEventListener('change', fetchTimes);
+    function updateStatus(msg) {
+      statusDiv.textContent = "Status: " + msg;
+      log(msg);
+    }
 
-    async function fetchTimes() {
-      const day = dayInput.value;
-      console.clear();
-      console.log('Requesting availability for:', day);
-
-      // reset UI
-      slotSelect.disabled = true;
-      slotSelect.innerHTML = '<option>Loading…</option>';
-
-      if (!day) {
-        slotSelect.innerHTML = '<option>Pick a day first</option>';
-        slotSelect.disabled = false;
+    loadBtn.addEventListener("click", () => {
+      const t = tokenInput.value.trim();
+      if (!t.startsWith("eyJ")) {
+        updateStatus("Invalid token format");
         return;
       }
+      currentToken = t;
+      updateStatus("Token loaded");
+      log("🔑 Using JWT: " + t.substring(0,20) + "…");
+      setupDevice();
+    });
 
-      try {
-        const res = await fetch(AVAIL_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ day })
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        console.log('📥 raw response:', data);
-
-        // figure out where "busy" lives
-        let busyArr = [];
-        if (Array.isArray(data)) {
-          busyArr = data[0]?.busy || [];
-        } else {
-          busyArr = data.busy 
-                 || data.body?.busy 
-                 || data.data?.busy 
-                 || [];
-        }
-        console.log('🔍 busyArr:', busyArr);
-
-        // normalize to YYYY-MM-DDTHH:MM
-        const busyLocal = busyArr.map(ts => ts.slice(0,16));
-        console.log('⏰ busyLocal:', busyLocal);
-
-        // build all half-hours from 09:00 up to 17:30
-        const free = [];
-        for (let h = 9; h < 18; h++) {
-          for (let m of [0,30]) {
-            const hh = String(h).padStart(2,'0');
-            const mm = m === 0 ? '00' : '30';
-            const key = `${day}T${hh}:${mm}`;
-            if (!busyLocal.includes(key)) {
-              free.push(key);
-            }
-          }
-        }
-        console.log('✅ free slots:', free);
-
-        // render into the dropdown
-        if (free.length === 0) {
-          slotSelect.innerHTML = '<option>No slots available</option>';
-        } else {
-          slotSelect.innerHTML = '<option value="">Select a time</option>';
-          free.forEach(k => {
-            const label = k.slice(11); // "HH:MM"
-            slotSelect.insertAdjacentHTML(
-              'beforeend',
-              `<option value="${k}">${label}</option>`
-            );
-          });
-        }
-      } catch (err) {
-        console.error('❌ fetch error:', err);
-        slotSelect.innerHTML = '<option>Error loading slots</option>';
-      } finally {
-        slotSelect.disabled = false;
+    function setupDevice() {
+      if (!currentToken) {
+        updateStatus("No token loaded");
+        return;
       }
+      if (device) {
+        device.destroy();
+        device = null;
+        activeCall = null;
+        callBtn.textContent = "Start Test Call";
+        callBtn.disabled = true;
+      }
+      updateStatus("Requesting mic permission…");
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          stream.getTracks().forEach(t=>t.stop());
+          updateStatus("Initializing Twilio Device…");
+          device = new Twilio.Device(currentToken, {
+            codecPreferences: ["opus","pcmu"],
+            logLevel: "debug",
+            enableIceRestart: true
+          });
+
+          device.on("registered", () => {
+            updateStatus("Device registered & ready");
+            callBtn.disabled = false;
+          });
+          device.on("ready", () => {
+            updateStatus("Device ready to call");
+            callBtn.disabled = false;
+          });
+          device.on("error", err => {
+            updateStatus("Error: " + err.message);
+            callBtn.disabled = true;
+          });
+          device.on("connect", () => {
+            updateStatus("Call connected");
+            callBtn.textContent = "End Call";
+            callBtn.disabled = false;
+          });
+          device.on("disconnect", () => {
+            updateStatus("Ready to call");
+            callBtn.textContent = "Start Test Call";
+            activeCall = null;
+          });
+
+          device.register();
+        })
+        .catch(err => {
+          updateStatus("Mic permission error: " + err.message);
+        });
     }
+
+    callBtn.addEventListener("click", () => {
+      if (activeCall) {
+        activeCall.disconnect();
+      } else {
+        updateStatus("Calling " + TO_NUMBER + "…");
+        callBtn.disabled = true;
+        activeCall = device.connect({ To: TO_NUMBER });
+      }
+    });
+
+    log("Page loaded");
   </script>
 </body>
 </html>
