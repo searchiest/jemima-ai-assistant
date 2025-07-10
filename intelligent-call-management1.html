@@ -2279,6 +2279,20 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+
+document.addEventListener('DOMContentLoaded', function () {
+  const openModalBtns = document.querySelectorAll('.openModalBtn');  // Select all buttons with the class 'openModalBtn'
+
+  openModalBtns.forEach(function(btn) {
+    btn.addEventListener('click', function () {
+      const callModal = document.getElementById('callModal');
+      if (callModal) {
+        callModal.style.display = 'flex';  // Show the modal when button is clicked
+      }
+    });
+  });
+});
+
 </script>
 
 <script>
