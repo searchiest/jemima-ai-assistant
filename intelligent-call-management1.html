@@ -1401,23 +1401,97 @@ header {
   transform: translateY(-2px);
 }
 
-/* Mobile styling - Move the button to take the place of the menu */
+/* Top Contact Bar - Make it visible and ensure it does not overlap content */
+.top-contact-bar {
+  width: 100%;
+  background: #fff;
+  color: #4f46e5;
+  font-size: 0.9rem;
+  padding: 7px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;  /* Ensure it stays on top */
+}
+
+.top-contact-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-contact-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.top-contact-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Header - Make sure the button inside the header is positioned correctly */
+header {
+  padding: 14px 0;
+  background-color: #fff;
+  position: relative;
+  z-index: 999;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Live Call Answering Demo button */
+.openModalBtn {
+  background-color: #4f46e5;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  margin-top: 10px;
+  z-index: 10;  /* Ensure it stays above other elements */
+}
+
+/* Hover effect */
+.openModalBtn:hover {
+  background-color: #3b41b3;
+  transform: translateY(-2px);
+}
+
+/* Mobile view adjustments */
 @media (max-width: 768px) {
-  .openModalBtn {
-    position: static;  /* Reset absolute positioning */
-    margin-top: 10px;   /* Optional, for spacing */
-    width: 100%;        /* Make it fit within the mobile view */
-    display: block;     /* Ensure it's a block level button */
-    margin-bottom: 20px; /* Optional space below button */
+  .top-contact-bar {
+    display: none;  /* Hide the top contact bar on mobile */
   }
-  
-  /* Make the menu button appear at the top and hide the other button */
+
+  /* Header adjustments for mobile */
+  header {
+    padding-top: 60px; /* To account for the height of the top bar */
+  }
+
+  .openModalBtn {
+    position: static;  /* Let the button follow the normal flow */
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
   .mobile-menu-btn {
-    display: block; /* Make sure the mobile menu button is visible */
+    display: block;
   }
 
   nav ul {
-    display: none; /* Hide menu on mobile, show on button click */
+    display: none;
   }
 
   nav ul.show {
@@ -1431,6 +1505,7 @@ header {
 }
 
 
+
 </style>
 
 
@@ -1438,18 +1513,20 @@ header {
 <body>
 
 
-<!-- Top Contact Bar: Desktop and Tablet only -->
+<!-- Top Contact Bar -->
 <div class="top-contact-bar">
   <div class="top-contact-content">
     <div class="top-contact-left">
-        <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
-        <i class="fas fa-envelope"></i> jemima@jemima.ai
+      <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
+      <i class="fas fa-envelope"></i> jemima@jemima.ai
     </div>
+    <div class="top-contact-right">
+      <button id="openModalBtn" class="openModalBtn">Live Call Answering Demo</button>
     </div>
   </div>
 </div>
 
-<!-- Your header HTML structure -->
+<!-- Header -->
 <header>
   <div class="container header-container">
     <a href="#" class="logo">jemima<span>.ai</span></a>
@@ -1464,9 +1541,8 @@ header {
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <button id="openModalBtn" class="openModalBtn">Live Call Answering Demo</button>
   </div>
-</header>>
+</header>
 
 <div id="callModal" class="modal-bg">
   <div class="modal-dialog">
