@@ -1895,12 +1895,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     });
 
-    // Close the modal when clicking outside the modal content
-    window.addEventListener('click', (event) => {
-      if (event.target === callModal) {
-        callModal.style.display = 'none';
-      }
-    });
+// Get the modal close button and modal background elements
+const closeModalBtn = document.querySelector('.modal-close');
+const callModal = document.getElementById('callModal');
+
+// Add event listener to the modal close button
+closeModalBtn.addEventListener('click', function () {
+  // Hide the modal
+  callModal.style.display = 'none';
+});
+
+// Add event listener to close the modal when clicking outside the modal
+window.addEventListener('click', function (event) {
+  if (event.target === callModal) {
+    callModal.style.display = 'none';
+  }
+});
 
     // Initialize the device when the page loads
     setup();
