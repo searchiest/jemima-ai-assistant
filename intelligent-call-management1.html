@@ -1189,8 +1189,9 @@ header {
 
 
 <style>
-.modal-close.button {}
-.modal-close {
+/* Override global button styles for the modal close button */
+.modal-bg .modal-close {
+  all: unset; /* Reset any inherited styles */
   position: absolute;
   top: 15px;
   right: 15px;
@@ -1201,8 +1202,14 @@ header {
   border: none;
   transition: color 0.3s ease;
 }
-.modal-close:hover {
-  color: #000000;
+
+.modal-bg .modal-close:hover {
+  color: #e11d48; /* Change color when hovered */
+}
+
+/* You can also define specific styles for the modal button if needed */
+.modal-bg .modal-close:focus {
+  outline: none; /* Prevent outline if needed */
 }
 
 .modal-dialog {
