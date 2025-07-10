@@ -2214,7 +2214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
-
+<script>
 async function startCall() {
   // Validate the form inputs
   if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
@@ -2280,12 +2280,13 @@ async function startCall() {
       currentCall = null;
       callBtnModal.textContent = 'Start Call';
     });
+
   } catch (error) {
     console.error('Error sending form data to n8n:', error);
     alert('There was an error sending your form data.');
   }
 }
-
+</script>
 
 </body>
 </html>
