@@ -2360,8 +2360,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
-
-
-
+<script>
+callForm.addEventListener('submit', async function (event) {
+  event.preventDefault();  // Prevents form from submitting the default way
+</script>
 </body>
 </html>
