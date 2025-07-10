@@ -1491,43 +1491,72 @@ header .container {
   transform: translateY(-2px);
 }
 
+/* Live Call Answering Demo Button */
+.openModalBtn {
+  background-color: #4f46e5;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  margin-top: 20px; /* Adjust this to position the button from the top */
+  margin-left: 20px; /* Adjust button margin */
+}
+
+/* Hover effect */
+.openModalBtn:hover {
+  background-color: #3b41b3;
+  transform: translateY(-2px);
+}
+
+/* Desktop-specific adjustments */
+@media (min-width: 992px) {
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Position the button within the header */
+  .openModalBtn {
+    margin-top: 0;
+    margin-left: auto; /* Push the button to the right */
+  }
+
+  /* Hide the menu items for desktop */
+  nav {
+    display: none;
+  }
+}
+
 /* Mobile view adjustments */
 @media (max-width: 768px) {
   .top-contact-bar {
-    display: none;  /* Hide the top contact bar on mobile */
-  }
-
-  /* Header adjustments for mobile */
-  header {
-    padding-top: 60px; /* To account for the height of the top bar */
-  }
-
-  .openModalBtn {
-    position: static;  /* Let the button follow the normal flow */
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-  }
-
-  .mobile-menu-btn {
-    display: block;
-  }
-
-  nav ul {
-    display: none;
-  }
-
-  nav ul.show {
-    display: flex;
-    flex-direction: column;
+    display: none; /* Hide the top contact bar on mobile */
   }
 
   .header-container {
     position: relative;
+    display: block;
+  }
+
+  .openModalBtn {
+    margin-top: 10px;
+    width: 100%; /* Full width button on mobile */
+  }
+
+  /* Hide the menu icon on mobile */
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  /* Hide the menu items on mobile */
+  nav {
+    display: none;
   }
 }
-
-
 
 
 </style>
@@ -1557,16 +1586,11 @@ header .container {
     <button class="mobile-menu-btn">
       <i class="fas fa-bars"></i>
     </button>
-    <nav>
-      <ul>
-        <li><a href="solutions.html">Solutions</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
+    <!-- Live Call Answering Demo Button -->
+    <button class="openModalBtn">Live Call Answering Demo</button>
   </div>
 </header>
+
 
 <div id="callModal" class="modal-bg">
   <div class="modal-dialog">
