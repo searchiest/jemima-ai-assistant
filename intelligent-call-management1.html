@@ -2215,130 +2215,77 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const closeModalBtn = document.querySelector('.modal-close');
-  const callModal = document.getElementById('callModal');
-  const emailInput = document.getElementById('email');
-  const smsInput = document.getElementById('sms');
-  const emailTooltip = document.getElementById('email-tooltip');
-  const smsTooltip = document.getElementById('sms-tooltip');
-  const callBtnModal = document.getElementById('callBtnModal');
-  
-  // Close the modal when the close button is clicked
-  closeModalBtn.addEventListener('click', function () {
-    callModal.style.display = 'none'; // Hide the modal
-  });
-
-  // Close the modal if clicking outside of it
-  window.addEventListener('click', function (event) {
-    if (event.target === callModal) {
-      callModal.style.display = 'none'; // Hide the modal if clicked outside
-    }
-  });
-
-  // Enable the button if both fields are valid
-  function validateForm() {
-    if (emailInput.validity.valid && smsInput.validity.valid) {
-      callBtnModal.disabled = false;
-    } else {
-      callBtnModal.disabled = true;
-    }
+async function startCall() {
+  // Validate the form inputs
+  if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+    emailInput.classList.add('invalid');
+    return;
+  } else {
+    emailInput.classList.remove('invalid');
   }
 
-  // Show tooltips if the fields are not completed
-  function showTooltips() {
-    if (!emailInput.validity.valid) {
-      emailTooltip.style.display = 'block';
-    } else {
-      emailTooltip.style.display = 'none';
-    }
-
-    if (!smsInput.validity.valid) {
-      smsTooltip.style.display = 'block';
-    } else {
-      smsTooltip.style.display = 'none';
-    }
+  if (!smsInput.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
+    smsInput.classList.add('invalid');
+    return;
+  } else {
+    smsInput.classList.remove('invalid');
   }
 
-  // Add event listeners for input validation
-  emailInput.addEventListener('input', function () {
-    validateForm();
-    showTooltips();
-  });
+  // Prepare the data to send to n8n
+  const data = {
+    email: emailInput.value,
+    sms: smsInput.value,
+    url: window.location.href,    // Page URL
+    timestamp: new Date().toISOString() // Current timestamp
+  };
 
-  smsInput.addEventListener('input', function () {
-    validateForm();
-    showTooltips();
-  });
+  // Send the form data to n8n first, then proceed with the call
+  try {
+    const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo', { // Replace with your actual n8n webhook URL
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
 
-  // Start the call when the button is clicked
-  callBtnModal.addEventListener('click', function () {
-    // Add your call initiation logic here
-    console.log('Starting the call...');
-  });
-});
-
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const callForm = document.getElementById('callForm');
-  const emailInput = document.getElementById('email');
-  const smsInput = document.getElementById('sms');
-
-  // Add an event listener for form submission
-  callForm.addEventListener('submit', async function (event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    // Validate the form fields
-    if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-      emailInput.classList.add('invalid');
-      return;
-    } else {
-      emailInput.classList.remove('invalid');
+    if (!response.ok) {
+      throw new Error('Failed to send data to n8n');
     }
 
-    if (!smsInput.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
-      smsInput.classList.add('invalid');
-      return;
-    } else {
-      smsInput.classList.remove('invalid');
-    }
+    console.log('Data successfully sent to n8n');
+    
+    // After data is sent successfully, start the call
+    updateUI('connecting');
+    currentCall = await device.connect({ To: TO_NUMBER });
 
-    // Prepare the data to send to n8n
-    const data = {
-      email: emailInput.value,
-      sms: smsInput.value,
-      url: window.location.href,    // Current page URL
-      timestamp: new Date().toISOString() // Current timestamp
-    };
+    currentCall.on('accept', () => {
+      updateUI('connected');
+      callBtnModal.textContent = 'End Call';
+    });
 
-    // Send the form data to n8n
-    try {
-      const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo', { // Your n8n webhook URL
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+    currentCall.on('disconnect', () => {
+      updateUI('disconnected');
+      currentCall = null;
+      callBtnModal.textContent = 'Start Call';
+    });
 
-      // Log the response to check if it's successful
-      const responseBody = await response.text();
-      console.log('Response Status:', response.status);
-      console.log('Response Body:', responseBody);
+    currentCall.on('cancel', () => {
+      updateUI('cancelled');
+      currentCall = null;
+      callBtnModal.textContent = 'Start Call';
+    });
 
-      if (!response.ok) {
-        throw new Error('Failed to send data to n8n');
-      }
+    currentCall.on('error', (err) => {
+      console.error('Call error:', err);
+      updateUI('error');
+      currentCall = null;
+      callBtnModal.textContent = 'Start Call';
+    });
+  } catch (error) {
+    console.error('Error sending form data to n8n:', error);
+    alert('There was an error sending your form data.');
+  }
+}
 
-      // Optional: Provide feedback to the user
-      alert('Form submitted successfully!');
-    } catch (error) {
-      console.error('Error sending form data to n8n:', error);
-      alert('There was an error sending your form data.');
-    }
-  });
-});
-</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -2360,9 +2307,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
-<script>
-callForm.addEventListener('submit', async function (event) {
-  event.preventDefault();  // Prevents form from submitting the default way
-</script>
+
 </body>
 </html>
