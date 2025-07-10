@@ -1767,197 +1767,173 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- Include the Twilio SDK script as a module -->
   <script type="module" crossorigin src="/voice/assets/index-DdEqXFKb.js"></script>
 
-  <script type="module">
-    import { Device } from '@twilio/voice-sdk';
+ <script type="module">
+  // Import Twilio SDK (make sure the CDN is available)
+  import { Device } from 'https://unpkg.com/@twilio/voice-sdk@2.0.0/dist/voice.min.js';
 
-    let device;
-    let currentCall = null;
-    const TO_NUMBER = '+441174632514'; // Replace with the correct phone number
+  let device;
+  let currentCall = null;
+  const TO_NUMBER = '+441174632514'; // Replace with the correct phone number
 
-    const openModalBtn = document.getElementById('openModalBtn');
-    const callBtnModal = document.getElementById('callBtnModal');
-    const callModal = document.getElementById('callModal');
-    const statusDiv = document.getElementById('status');
-    const callForm = document.getElementById('callForm');
-    const emailInput = document.getElementById('email');
-    const smsInput = document.getElementById('sms');
+  const openModalBtn = document.getElementById('openModalBtn');
+  const callBtnModal = document.getElementById('callBtnModal');
+  const callModal = document.getElementById('callModal');
+  const statusDiv = document.getElementById('status');
+  const emailInput = document.getElementById('email');
+  const smsInput = document.getElementById('sms');
 
-    // Update the status text and button colors
-    function updateUI(status) {
-      const states = ['idle', 'connecting', 'connected', 'disconnected', 'cancelled', 'error'];
-      states.forEach(s => callBtnModal.classList.remove(`status-${s}`));
-      callBtnModal.classList.add(`status-${status}`);
+  // Initialize AudioContext to avoid browser restriction
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-      switch (status) {
-        case 'idle':
-          statusDiv.textContent = 'Idle';
-          break;
-        case 'connecting':
-          statusDiv.textContent = 'Connecting...';
-          break;
-        case 'connected':
-          statusDiv.textContent = 'Call Connected';
-          break;
-        case 'disconnected':
-          statusDiv.textContent = 'Idle';
-          break;
-        case 'cancelled':
-          statusDiv.textContent = 'Cancelled';
-          break;
-        case 'error':
-          statusDiv.textContent = 'Error';
-          break;
-      }
+  // Ensure AudioContext is resumed on button click (user interaction)
+  callBtnModal.addEventListener('click', () => {
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+  });
+
+  // Update the UI status
+  function updateUI(status) {
+    const states = ['idle', 'connecting', 'connected', 'disconnected', 'cancelled', 'error'];
+    states.forEach(s => callBtnModal.classList.remove(`status-${s}`));
+    callBtnModal.classList.add(`status-${status}`);
+
+    switch (status) {
+      case 'idle':
+        statusDiv.textContent = 'Idle';
+        break;
+      case 'connecting':
+        statusDiv.textContent = 'Connecting...';
+        break;
+      case 'connected':
+        statusDiv.textContent = 'Call Connected';
+        break;
+      case 'disconnected':
+        statusDiv.textContent = 'Idle';
+        break;
+      case 'cancelled':
+        statusDiv.textContent = 'Cancelled';
+        break;
+      case 'error':
+        statusDiv.textContent = 'Error';
+        break;
+    }
+  }
+
+  // Fetch Twilio Token
+  async function fetchToken() {
+    try {
+      const response = await fetch('https://live-call-test-6733.twil.io/live-call-test'); // Replace with your actual endpoint
+      const data = await response.json();
+      return data.token;
+    } catch (error) {
+      console.error('Error fetching token:', error);
+    }
+  }
+
+  // Setup Twilio Device
+  async function setup() {
+    updateUI('idle');
+    callBtnModal.disabled = true;
+
+    const token = await fetchToken();
+    if (!token) {
+      console.error('Failed to fetch token');
+      return;
     }
 
-    // Fetch the Twilio token
-    async function fetchToken() {
-      try {
-        const response = await fetch('https://live-call-test-6733.twil.io/live-call-test'); // Replace with your actual endpoint
-        const data = await response.json();
-        return data.token;
-      } catch (error) {
-        console.error('Error fetching token:', error);
-      }
-    }
+    device = new Device(token, {
+      codecPreferences: ['opus', 'pcmu'],
+      logLevel: 1,
+      enableIceRestart: true,
+    });
 
-    // Setup the Twilio Device
-    async function setup() {
+    device.on('registered', () => {
       updateUI('idle');
+      callBtnModal.disabled = false;
+    });
+
+    device.on('error', (error) => {
+      console.error('Device error:', error);
+      updateUI('error');
       callBtnModal.disabled = true;
+    });
 
-      const token = await fetchToken();
-      if (!token) {
-        console.error('Failed to fetch token');
-        return;
-      }
+    device.on('disconnect', () => {
+      updateUI('disconnected');
+      currentCall = null;
+    });
 
-      device = new Device(token, {
-        codecPreferences: ['opus', 'pcmu'],
-        logLevel: 1,
-        enableIceRestart: true,
+    await device.register();
+  }
+
+  // Start Call
+  async function startCall() {
+    if (!device) {
+      return;
+    }
+
+    updateUI('connecting');
+    try {
+      currentCall = await device.connect({ To: TO_NUMBER });
+      currentCall.on('accept', () => {
+        updateUI('connected');
+        callBtnModal.textContent = 'End Call';
       });
 
-      device.on('registered', () => {
-        updateUI('idle');
-        callBtnModal.disabled = false;
-      });
-
-      device.on('error', (error) => {
-        console.error('Device error:', error);
-        updateUI('error');
-        callBtnModal.disabled = true;
-      });
-
-      device.on('disconnect', () => {
+      currentCall.on('disconnect', () => {
         updateUI('disconnected');
         currentCall = null;
+        callBtnModal.textContent = 'Start Call';
       });
 
-      await device.register();
+      currentCall.on('cancel', () => {
+        updateUI('cancelled');
+        currentCall = null;
+        callBtnModal.textContent = 'Start Call';
+      });
+
+      currentCall.on('error', (err) => {
+        console.error('Call error:', err);
+        updateUI('error');
+        currentCall = null;
+        callBtnModal.textContent = 'Start Call';
+      });
+    } catch (error) {
+      console.error('Call failed:', error);
     }
+  }
 
-    // Call the Twilio number
-    async function startCall() {
-      if (!device) {
-        return;
-      }
-
-      // Validate the form inputs
-      if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-        emailInput.classList.add('invalid');
-        return;
-      } else {
-        emailInput.classList.remove('invalid');
-      }
-
-      if (!smsInput.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
-        smsInput.classList.add('invalid');
-        return;
-      } else {
-        smsInput.classList.remove('invalid');
-      }
-
-      // Send the form data to n8n
-      try {
-        const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/live-call-demo-report', { // Replace with your actual n8n webhook URL
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: emailInput.value,
-            sms: smsInput.value
-          })
-        });
-        if (!response.ok) {
-          throw new Error('Failed to send data to n8n');
-        }
-      } catch (error) {
-        console.error('Error sending form data to n8n:', error);
-        return;
-      }
-
-      updateUI('connecting');
-      try {
-        currentCall = await device.connect({ To: TO_NUMBER });
-        currentCall.on('accept', () => {
-          updateUI('connected');
-          callBtnModal.textContent = 'End Call';
-        });
-
-        currentCall.on('disconnect', () => {
-          updateUI('disconnected');
-          currentCall = null;
-          callBtnModal.textContent = 'Start Call';
-        });
-
-        currentCall.on('cancel', () => {
-          updateUI('cancelled');
-          currentCall = null;
-          callBtnModal.textContent = 'Start Call';
-        });
-
-        currentCall.on('error', (err) => {
-          console.error('Call error:', err);
-          updateUI('error');
-          currentCall = null;
-          callBtnModal.textContent = 'Start Call';
-        });
-      } catch (error) {
-        console.error('Call failed:', error);
-      }
+  // End the Call
+  function endCall() {
+    if (currentCall) {
+      currentCall.disconnect();
     }
+  }
 
-    // End the current call
-    function endCall() {
-      if (currentCall) {
-        currentCall.disconnect();
-      }
+  // Event listeners
+  openModalBtn.addEventListener('click', () => {
+    callModal.style.display = 'flex';
+  });
+
+  callBtnModal.addEventListener('click', () => {
+    if (currentCall) {
+      endCall();
+    } else {
+      startCall();
     }
+  });
 
-    // Event listener to open the modal
-    openModalBtn.addEventListener('click', () => {
-      callModal.style.display = 'flex';
-    });
+  window.addEventListener('click', (event) => {
+    if (event.target === callModal) {
+      callModal.style.display = 'none';
+    }
+  });
 
-    // Event listener to start the call or end the call based on the current state
-    callBtnModal.addEventListener('click', () => {
-      if (currentCall) {
-        endCall();
-      } else {
-        startCall();
-      }
-    });
+  // Initialize the device on load
+  setup();
+</script>
 
-    // Close the modal when clicking outside the modal content
-    window.addEventListener('click', (event) => {
-      if (event.target === callModal) {
-        callModal.style.display = 'none';
-      }
-    });
-
-    // Initialize the device when the page loads
-    setup();
-  </script>
 
 
 </body>
