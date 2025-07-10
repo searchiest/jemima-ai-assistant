@@ -1885,30 +1885,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     });
 
-document.addEventListener('DOMContentLoaded', function () {
-  const closeModalBtn = document.querySelector('.modal-close');
-  console.log(closeModalBtn); // Log the button to check if it's selected correctly
-
-  const callModal = document.getElementById('callModal');
-
-  closeModalBtn.addEventListener('click', function () {
-    callModal.style.display = 'none'; // Hide the modal
-  });
-
-  window.addEventListener('click', function (event) {
-    if (event.target === callModal) {
-      callModal.style.display = 'none'; // Hide the modal if clicked outside
-    }
-  });
-});
-
-// Add event listener to close the modal when clicking outside the modal
-window.addEventListener('click', function (event) {
-  if (event.target === callModal) {
-    callModal.style.display = 'none';
-  }
-});
-
     // Initialize the device when the page loads
     setup();
   </script>
@@ -2128,6 +2104,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const closeModalBtn = document.querySelector('.modal-close');
+    console.log(closeModalBtn); // This should log the button or null
+    
+    const callModal = document.getElementById('callModal');
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', function () {
+        callModal.style.display = 'none'; // Hide the modal
+      });
+    }
+
+    window.addEventListener('click', function (event) {
+      if (event.target === callModal) {
+        callModal.style.display = 'none'; // Hide the modal if clicked outside
+      }
+    });
+  });
+</script>
+
 
 
 </body>
