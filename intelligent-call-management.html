@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+
+    <!-- Twilio SDK -->
+    <script type="module" crossorigin src="/voice/assets/index-DdEqXFKb.js"></script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -191,60 +195,9 @@
         </div>
     </div>
 
-    <!-- Twilio SDK -->
-    <script type="module" crossorigin src="/voice/assets/index-DdEqXFKb.js"></script>
 
-    <script>
-        // Open modal on button click
-        document.querySelector('.top-contact-demo-btn').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('liveCallModal').style.display = 'flex';
-        });
 
-        // Close modal
-        document.querySelector('.modal-close').addEventListener('click', function () {
-            document.getElementById('liveCallModal').style.display = 'none';
-        });
 
-        // Close modal when clicking the background
-        document.getElementById('liveCallModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                this.style.display = 'none';
-            }
-        });
-
-        // Handle form submission and validate inputs
-        document.getElementById('liveCallForm').onsubmit = function (e) {
-            e.preventDefault();
-            var email = document.getElementById('liveCallEmail');
-            var sms = document.getElementById('liveCallSMS');
-            var valid = true;
-
-            // Validate Email
-            if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
-                email.classList.add('invalid');
-                valid = false;
-            } else {
-                email.classList.remove('invalid');
-            }
-
-            // Validate Phone (UK Mobile number format)
-            if (!sms.value.match(/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/)) {
-                sms.classList.add('invalid');
-                valid = false;
-            } else {
-                sms.classList.remove('invalid');
-            }
-
-            if (!valid) return;
-
-            // If valid, trigger the "Start the Call" button
-            document.getElementById('callBtn').click();
-
-            // Close the modal
-            document.getElementById('liveCallModal').style.display = 'none';
-        };
-    </script>
 
 </body>
 
