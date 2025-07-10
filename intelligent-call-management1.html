@@ -1558,6 +1558,94 @@ header .container {
   }
 }
 
+/* General header styling */
+header {
+  padding: 14px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+/* Container inside the header */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo styling */
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+/* Live Call Answering Demo Button */
+.openModalBtn {
+  background-color: #4f46e5;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+}
+
+/* Hover effect for the button */
+.openModalBtn:hover {
+  background-color: #3b41b3;
+  transform: translateY(-2px);
+}
+
+/* Modal Background */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 34, 70, 0.38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Dialog Box */
+.modal-dialog {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(44, 44, 84, 0.1);
+  padding: 32px 24px;
+  max-width: 380px;
+  width: 100%;
+}
+
+/* Modal Close Button */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .openModalBtn {
+    font-size: 1rem;
+    padding: 10px 18px;
+  }
+}
+
 
 </style>
 
@@ -1574,7 +1662,6 @@ header .container {
       <i class="fas fa-envelope"></i> jemima@jemima.ai
     </div>
     <div class="top-contact-right">
-      <button id="openModalBtn" class="openModalBtn">Live Call Answering Demo</button>
     </div>
   </div>
 </div>
@@ -1583,13 +1670,32 @@ header .container {
 <header>
   <div class="container header-container">
     <a href="#" class="logo">jemima<span>.ai</span></a>
-    <button class="mobile-menu-btn">
-      <i class="fas fa-bars"></i>
-    </button>
-    <!-- Live Call Answering Demo Button -->
+    <!-- Live Call Answering Demo Button (positioned on the right) -->
     <button class="openModalBtn">Live Call Answering Demo</button>
   </div>
 </header>
+
+<!-- Modal for "Live Call Answering Demo" -->
+<div id="callModal" class="modal-bg">
+  <div class="modal-dialog">
+    <button class="modal-close">&times;</button>
+    <h2 class="modal-title">Try A Live Call Demo</h2>
+    <p>Enter your work email address and an SMS capable phone number to receive a call report when the call ends.</p>
+    <form id="callForm">
+      <div class="modal-form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+      </div>
+      <div class="modal-form-group">
+        <label for="sms">SMS Phone</label>
+        <input type="tel" id="sms" placeholder="Enter your phone number" required />
+      </div>
+      <button type="button" id="callBtnModal" disabled>Start Call</button>
+      <div id="status"></div>
+    </form>
+  </div>
+</div>
+
 
 
 <div id="callModal" class="modal-bg">
