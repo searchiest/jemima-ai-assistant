@@ -1335,6 +1335,50 @@ header {
   outline: none; /* Remove the default focus outline */
 }
 
+
+/* Ensure the Live Call Answering Demo button is hidden by default */
+.mobile-demo-btn {
+  display: none;  /* Hide it on larger screens */
+  background-color: #4f46e5; /* Button's primary color */
+  color: white;
+  font-size: 1rem;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.mobile-demo-btn:hover {
+  background-color: #3b41b3; /* Slightly darker shade on hover */
+  transform: translateY(-2px);
+}
+
+.mobile-demo-btn:active {
+  background-color: #2e38a7; /* Darker shade on active */
+  transform: translateY(0);
+}
+
+/* For mobile screens (max-width 576px), display the button */
+@media (max-width: 576px) {
+  .mobile-demo-btn {
+    display: inline-block;  /* Show the button only on mobile */
+    margin-left: 20px;  /* Add some space between the menu and the button */
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Ensure menu and button are aligned */
+    align-items: center;
+  }
+  
+  nav ul {
+    display: none;  /* Hide the normal navigation for small screens */
+  }
+}
+
+
+
 </style>
 
 
@@ -1354,23 +1398,24 @@ header {
   </div>
 </div>
 
-  <!-- Header -->
-  <header>
-    <div class="container header-container">
-      <a href="#" class="logo">jemima<span>.ai</span></a>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="container header-container">
+    <a href="#" class="logo">jemima<span>.ai</span></a>
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <!-- Live Call Answering Demo Button for Mobile -->
+    <button id="openModalBtn" class="mobile-demo-btn">Live Call Answering Demo</button>
+  </div>
+</header>
 
 <div id="callModal" class="modal-bg">
   <div class="modal-dialog">
