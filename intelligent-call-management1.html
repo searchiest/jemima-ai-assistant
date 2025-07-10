@@ -1205,6 +1205,28 @@ header {
 <body>
 
 
+
+  <h1>Twilio Voice Call Demo</h1>
+
+  <!-- Trigger Button to Open Modal -->
+  <button id="openModalBtn">Open Call Modal</button>
+
+  <!-- Status message -->
+  <div id="status">Idle</div>
+
+  <!-- Modal -->
+  <div id="callModal" class="modal-bg">
+    <div class="modal-dialog">
+      <h2>Make a Call</h2>
+      <form id="callForm">
+        <input type="email" id="email" placeholder="Enter Email" required />
+        <input type="tel" id="sms" placeholder="Enter SMS (Phone)" required pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" />
+        <button type="button" id="callBtnModal" disabled>Start Call</button>
+      </form>
+    </div>
+  </div>
+
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -1574,25 +1596,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 
-  <h1>Twilio Voice Call Demo</h1>
-
-  <!-- Trigger Button to Open Modal -->
-  <button id="openModalBtn">Open Call Modal</button>
-
-  <!-- Status message -->
-  <div id="status">Idle</div>
-
-  <!-- Modal -->
-  <div id="callModal" class="modal-bg">
-    <div class="modal-dialog">
-      <h2>Make a Call</h2>
-      <form id="callForm">
-        <input type="email" id="email" placeholder="Enter Email" required />
-        <input type="tel" id="sms" placeholder="Enter SMS (Phone)" required pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" />
-        <button type="button" id="callBtnModal" disabled>Start Call</button>
-      </form>
-    </div>
-  </div>
 
 
   <!-- Include the Twilio SDK script as a module -->
