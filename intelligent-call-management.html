@@ -124,8 +124,9 @@
 <!-- JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Open modal on any "Live Call Demo" button click
-  document.querySelectorAll('.top-contact-demo-btn').forEach(function (btn) {
+  // Ensure that the modal button is clickable after the DOM has loaded
+  const demoBtns = document.querySelectorAll('.top-contact-demo-btn');
+  demoBtns.forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       document.getElementById('liveCallModal').style.display = 'flex';  // Make modal visible
