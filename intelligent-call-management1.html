@@ -913,6 +913,12 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 
 <style>
 
+.tooltip {
+  font-size: 0.85rem;
+  color: red;
+  margin-top: 5px;
+}
+
 #callBtn {
   border: none;
   border-radius: 20%;
@@ -1321,15 +1327,18 @@ header {
 <div id="callModal" class="modal-bg">
   <div class="modal-dialog">
     <button class="modal-close">&times;</button>
-    <h2 class="modal-title">Make a Call</h2>
+    <h2 class="modal-title">Try A Live Call Demo</h2>
+    <p>Enter your work email address and an SMS capable phone number to receive a call report when the call ends.</p>
     <form id="callForm">
       <div class="modal-form-group">
-        <label for="email">Enter Email</label>
+        <label for="email">Email</label>
         <input type="email" id="email" placeholder="Enter your email" required />
+        <div class="tooltip" id="email-tooltip" style="display: none;">Please enter a valid email address</div>
       </div>
       <div class="modal-form-group">
-        <label for="sms">Enter Phone Number</label>
+        <label for="sms">SMS Phone</label>
         <input type="tel" id="sms" placeholder="Enter your phone number" required />
+        <div class="tooltip" id="sms-tooltip" style="display: none;">Please enter a valid phone number</div>
       </div>
       <button type="button" id="callBtnModal" disabled>Start Call</button>
       <div id="status"></div>
@@ -2111,6 +2120,72 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const closeModalBtn = document.querySelector('.modal-close');
+  const callModal = document.getElementById('callModal');
+  const emailInput = document.getElementById('email');
+  const smsInput = document.getElementById('sms');
+  const emailTooltip = document.getElementById('email-tooltip');
+  const smsTooltip = document.getElementById('sms-tooltip');
+  const callBtnModal = document.getElementById('callBtnModal');
+  
+  // Close the modal when the close button is clicked
+  closeModalBtn.addEventListener('click', function () {
+    callModal.style.display = 'none'; // Hide the modal
+  });
+
+  // Close the modal if clicking outside of it
+  window.addEventListener('click', function (event) {
+    if (event.target === callModal) {
+      callModal.style.display = 'none'; // Hide the modal if clicked outside
+    }
+  });
+
+  // Enable the button if both fields are valid
+  function validateForm() {
+    if (emailInput.validity.valid && smsInput.validity.valid) {
+      callBtnModal.disabled = false;
+    } else {
+      callBtnModal.disabled = true;
+    }
+  }
+
+  // Show tooltips if the fields are not completed
+  function showTooltips() {
+    if (!emailInput.validity.valid) {
+      emailTooltip.style.display = 'block';
+    } else {
+      emailTooltip.style.display = 'none';
+    }
+
+    if (!smsInput.validity.valid) {
+      smsTooltip.style.display = 'block';
+    } else {
+      smsTooltip.style.display = 'none';
+    }
+  }
+
+  // Add event listeners for input validation
+  emailInput.addEventListener('input', function () {
+    validateForm();
+    showTooltips();
+  });
+
+  smsInput.addEventListener('input', function () {
+    validateForm();
+    showTooltips();
+  });
+
+  // Start the call when the button is clicked
+  callBtnModal.addEventListener('click', function () {
+    // Add your call initiation logic here
+    console.log('Starting the call...');
+  });
+});
+
 </script>
 
 <script>
