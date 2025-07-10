@@ -1885,14 +1885,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     });
 
-// Get the modal close button and modal background elements
-const closeModalBtn = document.querySelector('.modal-close');
-const callModal = document.getElementById('callModal');
+document.addEventListener('DOMContentLoaded', function () {
+  const closeModalBtn = document.querySelector('.modal-close');
+  console.log(closeModalBtn); // Log the button to check if it's selected correctly
 
-// Add event listener to the modal close button
-closeModalBtn.addEventListener('click', function () {
-  // Hide the modal
-  callModal.style.display = 'none';
+  const callModal = document.getElementById('callModal');
+
+  closeModalBtn.addEventListener('click', function () {
+    callModal.style.display = 'none'; // Hide the modal
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target === callModal) {
+      callModal.style.display = 'none'; // Hide the modal if clicked outside
+    }
+  });
 });
 
 // Add event listener to close the modal when clicking outside the modal
