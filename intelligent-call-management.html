@@ -50,8 +50,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
 <!-- End Google Tag Manager -->
 
-
-
   <style>
     #callButton {
       font-size: 2rem;
@@ -114,7 +112,6 @@ header{
     position:fixed;top:0;width:100%;z-index:1000;
     background:rgba(255,255,255,0.95);
     backdrop-filter:blur(10px);
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 .header-container{display:flex;justify-content:space-between;align-items:center;}
 .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
@@ -915,6 +912,12 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 
 <style>
 
+.tooltip {
+  font-size: 0.85rem;
+  color: red;
+  margin-top: 5px;
+}
+
 #callBtn {
   border: none;
   border-radius: 20%;
@@ -984,7 +987,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 header {
-  top: 40px;   /* exactly matches the bar height */
+  top: 28px;   /* exactly matches the bar height */
 }
 
 .top-contact-bar {
@@ -1081,22 +1084,12 @@ header {
 }
 .modal-title {
   margin-top: 0;
-  margin-bottom: 22px;
+  margin-bottom: 10px;
   font-size: 1.35rem;
   font-weight: 600;
-  color: #1a1a2e;
+  color: #4CAF50;
   letter-spacing: -0.5px;
   text-align: center;
-}
-.modal-close {
-  position: absolute; top: 18px; right: 18px;
-  font-size: 1.6rem; background: none; border: none;
-  color: #4f46e5; cursor: pointer; font-weight: bold; line-height: 1;
-  transition: color .18s;
-}
-.modal-close:hover { color: #e11d48; }
-.modal-form-group {
-  margin-bottom: 18px;
 }
 .modal-form-group label {
   font-weight: 600; color: #4f46e5;
@@ -1121,22 +1114,276 @@ header {
   border: none; border-radius: 12px;
   width: 100%; padding: 14px 0; cursor: pointer;
   transition: background .18s;
+  margin-top: 20px; /* Add space below the label */
+}
+#status {
+  display: none; /* Hide the status div by default */
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #f4f5fa;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+  color: #4f46e5;
 }
 .modal-submit-btn:hover { background: #7c3aed; }
 @media (max-width:480px){
   .modal-dialog { max-width: 98vw; padding: 16px 7px 20px 7px; }
 }
+.modal-form-group label {
+  display: block; /* Ensure the label takes up full width and is positioned on its own line */
+  text-align: left; /* Align the text to the left */
+  margin-bottom: 0px; /* Add space below the label */
+  margin-top: 15px; /* Add space below the label */
+  font-weight: 600; /* Make the label bold */
+  color: #4f46e5; /* Optional: set the label color */
+}
+
 @keyframes fadeInUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
 @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 </style>
 
+  <style>
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #888;
+    }
+    #status {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Modal styles */
+    .modal-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-dialog {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      text-align: center;
+    }
+    .modal-dialog input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .modal-dialog button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .modal-dialog .invalid {
+      border-color: #e11d48;
+      background-color: #fff1f2;
+    }
+
+    #callBtnModal.status-connected {
+      background-color: brown;
+    }
+
+    #callBtnModal.status-connected:hover {
+      background-color: darkbrown; /* You can adjust this to a darker shade of brown */
+    }
+
+  </style>
+
+
+<style>
+/* Override global button styles for the modal close button */
+.modal-bg .modal-close {
+  all: unset; /* Reset any inherited styles */
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.8rem;
+  color: #000000;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.3s ease;
+}
+
+.modal-bg .modal-close:hover {
+  color: #e11d48; /* Change color when hovered */
+}
+
+/* You can also define specific styles for the modal button if needed */
+.modal-bg .modal-close:focus {
+  outline: none; /* Prevent outline if needed */
+}
+
+.modal-dialog {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.modal-dialog:hover {
+  transform: scale(1.02);
+}
+
+#callBtnModal {
+  background-color: #4f46e5;
+  color: white;
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  margin-top: 10px;
+}
+
+#callBtnModal:hover {
+  background-color: #3b41b3;
+  transform: translateY(-2px);
+}
+
+#callBtnModal:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+#status {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #f4f5fa;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+  color: #4f46e5;
+}
+
+.modal-form-group input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #d4d4fd;
+  background-color: #f7f8fc;
+  color: #2c294f;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.modal-form-group input:focus {
+  border-color: #4f46e5;
+  background-color: #f0f4ff;
+  outline: none;
+}
+
+.modal-form-group input.invalid {
+  border-color: #e11d48;
+  background-color: #fff1f2;
+}
+
+#openModalBtn {
+  background-color: #4CAF50; /* Primary color */
+  color: white;
+  font-size: 1.1rem;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  text-align: center;
+  margin-top:5px;
+}
+
+#openModalBtn:hover {
+  background-color: #3b41b3; /* Slightly darker shade for hover effect */
+  transform: translateY(-2px); /* Adds a subtle lift effect on hover */
+}
+
+#openModalBtn:active {
+  background-color: #2e38a7; /* Darker shade on active */
+  transform: translateY(0); /* Reset hover effect on active */
+}
+
+#openModalBtn:focus {
+  outline: none; /* Remove the default focus outline */
+}
+
+
+/* Ensure the Live Call Answering Demo button is hidden by default */
+.mobile-demo-btn {
+  display: none;  /* Hide it on larger screens */
+  background-color: #4f46e5; /* Button's primary color */
+  color: white;
+  font-size: 1rem;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.mobile-demo-btn:hover {
+  background-color: #3b41b3; /* Slightly darker shade on hover */
+  transform: translateY(-2px);
+}
+
+.mobile-demo-btn:active {
+  background-color: #2e38a7; /* Darker shade on active */
+  transform: translateY(0);
+}
+
+/* For mobile screens (max-width 576px), display the button */
+@media (max-width: 576px) {
+  .mobile-demo-btn {
+    display: inline-block;  /* Show the button only on mobile */
+    margin-left: 20px;  /* Add some space between the menu and the button */
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Ensure menu and button are aligned */
+    align-items: center;
+  }
+  
+  nav ul {
+    display: none;  /* Hide the normal navigation for small screens */
+  }
+}
+
+
+
+</style>
+
+
 </head>
 <body>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <!-- Top Contact Bar: Desktop and Tablet only -->
 <div class="top-contact-bar">
@@ -1145,28 +1392,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
         <i class="fas fa-envelope"></i> jemima@jemima.ai
     </div>
-    <div class="top-contact-right">
-    </div>
   </div>
 </div>
 
-  <!-- Header -->
-  <header>
-    <div class="container header-container">
-      <a href="#" class="logo">jemima<span>.ai</span></a>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="container header-container">
+    <a href="#" class="logo">jemima<span>.ai</span></a>
+<div class="top-contact-right"><button id="openModalBtn">Live Call Demo</button></div>
+  </div>
+</header>
+
+<div id="callModal" class="modal-bg">
+  <div class="modal-dialog">
+    <button class="modal-close">&times;</button>
+    <h2 class="modal-title">Try A Live Call Demo</h2>
+    <p>Enter your work email address and an SMS capable phone number to receive a call report when the call ends.</p>
+    <form id="callForm">
+      <div class="modal-form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+        <div class="tooltip" id="email-tooltip" style="display: none;">Please enter a valid email address</div>
+      </div>
+      <div class="modal-form-group">
+        <label for="sms">SMS Phone</label>
+        <input type="tel" id="sms" placeholder="Enter your phone number" required />
+        <div class="tooltip" id="sms-tooltip" style="display: none;">Please enter a valid phone number</div>
+      </div>
+      <button type="button" id="callBtnModal" disabled>Start Call</button>
+      <div id="status"></div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
@@ -1532,110 +1796,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
----------------------------------------------------------
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Twilio Voice Call Demo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f4f4f4;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:disabled {
-      background-color: #888;
-    }
-    #status {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #f5f5f5;
-      border-radius: 4px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    /* Modal styles */
-    .modal-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-dialog {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      width: 300px;
-      text-align: center;
-    }
-    .modal-dialog input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    .modal-dialog button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border-radius: 4px;
-    }
-    .modal-dialog .invalid {
-      border-color: #e11d48;
-      background-color: #fff1f2;
-    }
-
-    #callBtnModal.status-connected {
-      background-color: brown;
-    }
-
-    #callBtnModal.status-connected:hover {
-      background-color: darkbrown; /* You can adjust this to a darker shade of brown */
-    }
-
-  </style>
-</head>
-<body>
-  <h1>Twilio Voice Call Demo</h1>
-
-  <!-- Trigger Button to Open Modal -->
-  <button id="openModalBtn">Open Call Modal</button>
-
-  <!-- Status message -->
-  <div id="status">Idle</div>
-
-  <!-- Modal -->
-  <div id="callModal" class="modal-bg">
-    <div class="modal-dialog">
-      <h2>Make a Call</h2>
-      <form id="callForm">
-        <input type="email" id="email" placeholder="Enter Email" required />
-        <input type="tel" id="sms" placeholder="Enter SMS (Phone)" required pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" />
-        <button type="button" id="callBtnModal" disabled>Start Call</button>
-      </form>
-    </div>
-  </div>
-
   <!-- Include the Twilio SDK script as a module -->
   <script type="module" crossorigin src="/voice/assets/index-DdEqXFKb.js"></script>
 
@@ -1657,8 +1817,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // Update the status text and button colors
     function updateUI(status) {
       const states = ['idle', 'connecting', 'connected', 'disconnected', 'cancelled', 'error'];
-      states.forEach(s => callBtnModal.classList.remove(`status-${s}`));
-      callBtnModal.classList.add(`status-${status}`);
+      states.forEach(s => callBtnModal.classList.remove(status-${s}));
+      callBtnModal.classList.add(status-${status});
 
       switch (status) {
         case 'idle':
@@ -1820,15 +1980,314 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     });
 
-    // Close the modal when clicking outside the modal content
-    window.addEventListener('click', (event) => {
-      if (event.target === callModal) {
-        callModal.style.display = 'none';
-      }
-    });
-
     // Initialize the device when the page loads
     setup();
   </script>
+
+
+
+<script>
+
+
+/* ── 1.  hidden page address sent to n8n ───────────────────── */
+const pageUrl   = window.location.href;
+
+/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
+const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+
+/* ── 3.  DOM handles ───────────────────────────────────────── */
+const box   = document.getElementById('chat-body');
+const input = document.getElementById('chat-input');
+
+/* ── 4.  helper: add a chat bubble ─────────────────────────── */
+function add (text, role = 'ai') {
+  const div       = document.createElement('div');
+  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+  div.innerHTML   = <p>${text}</p>;
+  box.appendChild(div);
+  box.scrollTop   = box.scrollHeight;
+  box.classList.add('show');
+}
+
+/* ── 5.  helper: unwrap JSON (object OR first element of array) */
+function parse (raw, hdr) {
+  if ((hdr.get('content-type') || '').includes('application/json')) {
+    try {
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
+      return (
+        d.reply   || d.output  || d.text || d.message ||
+        d.answer  || d.content ||
+        (d.choices && d.choices[0]?.message.content) ||
+        raw
+      );
+    } catch { /* fall through to raw */ }
+  }
+  return raw;
+}
+
+/* ── 6.  send routine, called on form submit ───────────────── */
+async function sendMessage () {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  add(msg, 'user');               // echo user text
+  input.value = '';               // clear
+  input.style.height = '60px';    // reset height
+
+  try {
+    const res = await fetch(webhook, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        sessionId,
+        route     : 'general',
+        action    : 'sendMessage',
+        chatInput : msg,
+        pageUrl                      // hidden field
+      })
+    });
+    const raw = await res.text();
+    add(parse(raw, res.headers), 'ai');
+  } catch (err) {
+    console.error(err);
+    add('Could not reach the server.', 'ai');
+  }
+}
+
+/* ── 7.  auto-grow textarea ───────────────────────────────── */
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = input.scrollHeight + 'px';
+});
+
+/* ── 8.  give focus on load (desktop only) ─────────────────── */
+window.addEventListener('load', () => {
+  const isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (!isMobile) {
+    input.focus({ preventScroll: true });
+  }
+});
+/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
+const menuBtn  = document.querySelector('.mobile-menu-btn');
+const navMenu  = document.querySelector('nav ul');
+if (menuBtn && navMenu) {
+  menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
+  navMenu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navMenu.classList.remove('show'))
+  );
+}
+
+
+/* quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    if(e.target.classList.contains('qlink')){
+      e.preventDefault();
+      input.value = e.target.dataset.msg;
+      sendMessage();               // reuse the same send routine
+    }
+  });
+</script>
+<script>
+/* ── Booking & floating message ─────────────────────────── */
+const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+const TIME_ZONE   = 'Europe/London';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* handles ------------------------------------------------ */
+  const dayInput   = document.getElementById('day');
+  const slotSelect = document.getElementById('slot');
+  const form       = document.getElementById('bookingForm');
+  const formMsg    = document.getElementById('formMsg');
+  const pageUrlIn  = document.getElementById('pageUrl');
+
+  /* helper: show / hide banner ----------------------------- */
+  function flash(type, text, keepMs = 3000){
+    formMsg.className = '';            // clear all classes
+    formMsg.textContent = text;
+    if(type) formMsg.classList.add(type);
+    formMsg.classList.add('show');     // slide-in
+    clearTimeout(flash._timer);
+    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+  }
+
+  /* init --------------------------------------------------- */
+  pageUrlIn.value = window.location.href;
+  dayInput.addEventListener('change',  fetchTimes);
+  form    .addEventListener('submit',  submitBooking);
+
+  /* fetch available times ---------------------------------- */
+  async function fetchTimes(){
+    const day = dayInput.value;
+    if(!day){
+      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+      return;
+    }
+    slotSelect.disabled = true;
+    slotSelect.innerHTML = '<option>Loading…</option>';
+
+    try{
+      const res  = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'check_availability', day})
+                  });
+      const data = await res.json();
+      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+      const free   = payload.slots ?? [];
+
+      slotSelect.innerHTML = free.length
+        ? '<option value="">Select a time</option>'
+        : '<option value="">No slots available</option>';
+
+      free.forEach(s=>{
+        if(!s.startsWith(day)) return;
+        const t = s.slice(11,16);
+        slotSelect.insertAdjacentHTML('beforeend',
+          <option value="${s}">${t}</option>);
+      });
+    }catch{
+      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+    }finally{
+      slotSelect.disabled = false;
+    }
+  }
+
+  /* submit booking ---------------------------------------- */
+  async function submitBooking(e){
+    e.preventDefault();
+    flash('sending','Sending…',10_000);         // orange bar
+
+    const payload = {
+      firstName:form.firstName.value,
+      lastName :form.lastName.value,
+      company  :form.company.value,
+      phone    :form.phone.value,
+      email    :form.email.value,
+      slot     :slotSelect.value,
+      pageUrl  :pageUrlIn.value,
+      timeZone :TIME_ZONE
+    };
+
+    try{
+      const res = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'create_booking',...payload})
+                  });
+
+      if(res.ok){
+        form.reset();
+        slotSelect.innerHTML =
+          '<option value="">Pick a day first</option>';
+        flash('success','Your meeting is confirmed. Check your inbox.');
+      }else if(res.status===409){
+        flash('error','That time has just been taken. Please choose another.');
+        fetchTimes();
+      }else{
+        flash('error','An error occurred. Please try again later.');
+      }
+    }catch{
+      flash('error','Could not reach the server. Try again later.');
+    }
+  }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const closeModalBtn = document.querySelector('.modal-close');
+  const callModal = document.getElementById('callModal');
+  const emailInput = document.getElementById('email');
+  const smsInput = document.getElementById('sms');
+  const emailTooltip = document.getElementById('email-tooltip');
+  const smsTooltip = document.getElementById('sms-tooltip');
+  const callBtnModal = document.getElementById('callBtnModal');
+  
+  // Close the modal when the close button is clicked
+  closeModalBtn.addEventListener('click', function () {
+    callModal.style.display = 'none'; // Hide the modal
+  });
+
+  // Close the modal if clicking outside of it
+  window.addEventListener('click', function (event) {
+    if (event.target === callModal) {
+      callModal.style.display = 'none'; // Hide the modal if clicked outside
+    }
+  });
+
+  // Enable the button if both fields are valid
+  function validateForm() {
+    if (emailInput.validity.valid && smsInput.validity.valid) {
+      callBtnModal.disabled = false;
+    } else {
+      callBtnModal.disabled = true;
+    }
+  }
+
+  // Show tooltips if the fields are not completed
+  function showTooltips() {
+    if (!emailInput.validity.valid) {
+      emailTooltip.style.display = 'block';
+    } else {
+      emailTooltip.style.display = 'none';
+    }
+
+    if (!smsInput.validity.valid) {
+      smsTooltip.style.display = 'block';
+    } else {
+      smsTooltip.style.display = 'none';
+    }
+  }
+
+  // Add event listeners for input validation
+  emailInput.addEventListener('input', function () {
+    validateForm();
+    showTooltips();
+  });
+
+  smsInput.addEventListener('input', function () {
+    validateForm();
+    showTooltips();
+  });
+
+  // Start the call when the button is clicked
+  callBtnModal.addEventListener('click', function () {
+    // Add your call initiation logic here
+    console.log('Starting the call...');
+  });
+});
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const closeModalBtn = document.querySelector('.modal-close');
+    console.log(closeModalBtn); // This should log the button or null
+    
+    const callModal = document.getElementById('callModal');
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', function () {
+        callModal.style.display = 'none'; // Hide the modal
+      });
+    }
+
+    window.addEventListener('click', function (event) {
+      if (event.target === callModal) {
+        callModal.style.display = 'none'; // Hide the modal if clicked outside
+      }
+    });
+  });
+</script>
+
+
+
 </body>
 </html>
