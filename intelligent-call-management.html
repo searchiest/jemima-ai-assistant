@@ -1409,6 +1409,11 @@ header {
     <p>Enter your work email address and an SMS capable phone number to receive a call report when the call ends.</p>
     <form id="callForm">
       <div class="modal-form-group">
+      <label for="firstName">First name</label>
+      <input type="text" id="firstName" placeholder="Enter your first name" required />
+      <div class="tooltip" id="first-tooltip" style="display:none;">Please enter your first name</div>
+      </div>
+      <div class="modal-form-group">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="Enter your email" required />
         <div class="tooltip" id="email-tooltip" style="display: none;">Please enter a valid email address</div>
@@ -2199,72 +2204,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+<!-- Include the Twilio SDK script as a module -->
+<script type="module" crossorigin src="https://jemima.ai/voice/assets/index-DdEqXFKb.js"></script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const closeModalBtn = document.querySelector('.modal-close');
-  const callModal = document.getElementById('callModal');
-  const emailInput = document.getElementById('email');
-  const smsInput = document.getElementById('sms');
-  const emailTooltip = document.getElementById('email-tooltip');
-  const smsTooltip = document.getElementById('sms-tooltip');
-  const callBtnModal = document.getElementById('callBtnModal');
-  
-  // Close the modal when the close button is clicked
-  closeModalBtn.addEventListener('click', function () {
-    callModal.style.display = 'none'; // Hide the modal
-  });
+  const closeModalBtn  = document.querySelector('.modal-close');
+  const callModal      = document.getElementById('callModal');
+  const firstNameInput = document.getElementById('firstName');
+ const firstNameTooltip = document.getElementById('first-tooltip');
+  const emailInput     = document.getElementById('email');
+  const smsInput       = document.getElementById('sms');
+  const emailTooltip   = document.getElementById('email-tooltip');
+  const smsTooltip     = document.getElementById('sms-tooltip');
+  const callBtnModal   = document.getElementById('callBtnModal');
 
-  // Close the modal if clicking outside of it
-  window.addEventListener('click', function (event) {
-    if (event.target === callModal) {
-      callModal.style.display = 'none'; // Hide the modal if clicked outside
-    }
-  });
+  const N8N_WEBHOOK = 'https://jemima-ai.app.n8n.cloud/webhook/live-call-demo';
 
-  // Enable the button if both fields are valid
-  function validateForm() {
-    if (emailInput.validity.valid && smsInput.validity.valid) {
-      callBtnModal.disabled = false;
-    } else {
-      callBtnModal.disabled = true;
-    }
+  /* ---------- helper functions ------------------------- */
+  function validateForm () {
+    const allGood = firstNameInput.value.trim().length > 1 &&
+                    emailInput  .validity.valid   &&
+                    smsInput    .validity.valid;
+    callBtnModal.disabled = !allGood;
   }
 
-  // Show tooltips if the fields are not completed
-  function showTooltips() {
-    if (!emailInput.validity.valid) {
-      emailTooltip.style.display = 'block';
-    } else {
-      emailTooltip.style.display = 'none';
-    }
-
-    if (!smsInput.validity.valid) {
-      smsTooltip.style.display = 'block';
-    } else {
-      smsTooltip.style.display = 'none';
-    }
+  function showTooltips () {
+ firstNameTooltip.style.display =firstNameInput.value.trim().length > 1 ? 'none' : 'block';   // ← add this
+    emailTooltip.style.display = emailInput.validity.valid ? 'none' : 'block';
+    smsTooltip  .style.display = smsInput  .validity.valid ? 'none' : 'block';
   }
 
-  // Add event listeners for input validation
-  emailInput.addEventListener('input', function () {
-    validateForm();
-    showTooltips();
+  /* ---------- live validation -------------------------- */
+  [firstNameInput, emailInput, smsInput].forEach(el =>
+    el.addEventListener('input', () => {
+      validateForm();
+      showTooltips();
+    })
+  );
+
+  /* ---------- CLICK ⇒ send to n8n then start call ------ */
+  callBtnModal.addEventListener('click', async () => {
+    if (callBtnModal.disabled) return;             // safety net
+
+    try {
+      await fetch(N8N_WEBHOOK, {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({
+          firstName : firstNameInput.value.trim(), // <-- NEW field
+          email     : emailInput    .value.trim(),
+          sms       : smsInput      .value.trim(),
+          url       : location.href,
+          ts        : new Date().toISOString()
+        })
+      });
+      console.log('✔ data sent to n8n');
+    } catch (err) {
+      console.warn('❌ could not reach n8n', err);
+    }
+
+    console.log('Starting the call…');
+    /* your existing Twilio-Device logic goes here */
   });
 
-  smsInput.addEventListener('input', function () {
-    validateForm();
-    showTooltips();
-  });
-
-  // Start the call when the button is clicked
-  callBtnModal.addEventListener('click', function () {
-    // Add your call initiation logic here
-    console.log('Starting the call...');
-  });
+  /* initial state --------------------------------------- */
+  validateForm();
 });
-
 </script>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -2286,7 +2295,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
-
 
 
 </body>
