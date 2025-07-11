@@ -117,7 +117,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         padding: 50px;
         margin: 50px auto;
         box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-        max-width: 1000px;
+        max-width: calc(560px * 2 + 30px);
         position: relative;
     }
     .solutions-content::before {
@@ -256,6 +256,378 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .cards-grid{grid-template-columns:1fr;}
     }
   </style>
+
+<style>
+/* ─────────── Top contact bar ─────────── */
+.top-contact-bar{
+  width:100%;
+  background:#fff;
+  color:#4f46e5;
+  font-size:0.9rem;
+  padding:7px 0;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:2001;
+}
+.top-contact-content{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.top-contact-left{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+.top-contact-left i{
+  margin-right:-16px;
+  margin-left:0;
+  vertical-align:middle;
+}
+.sms{font-weight:600;margin-right:-16px;}
+.top-contact-right{display:flex;align-items:center;}
+.top-contact-demo-btn{
+  background:#4f46e5;
+  color:#fff;
+  border-radius:10px;
+  padding:6px 12px;
+  font-weight:600;
+  text-decoration:none;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  transition:background .18s, color .18s, transform .13s;
+  border:none;
+  font-size:1rem;
+  margin-top:5px;
+}
+.top-contact-demo-btn:hover{
+  background:#7c3aed;
+  transform:translateY(-2px);
+}
+
+/* Hide the bar on phones */
+@media (max-width:576px){
+  .top-contact-bar{display:none;}
+  header{top:0;}           /* header moves up when bar is hidden */
+}
+
+/* ─────────── Header ─────────── */
+header{
+  padding:14px 0;
+  position:fixed;
+  top:40px;                /* space for the contact bar */
+  width:100%;
+  z-index:1000;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(10px);
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.header-container{display:flex;justify-content:space-between;align-items:center;}
+.logo{
+  font-size:1.8rem;
+  font-weight:700;
+  color:#000;
+  text-decoration:none;
+  letter-spacing:-.5px;
+}
+.logo span{color:#4f46e5;}
+nav ul{display:flex;list-style:none;}
+nav ul li{margin-left:30px;}
+nav ul li a{
+  color:#000;
+  text-decoration:none;
+  font-weight:500;
+  font-size:1rem;
+  position:relative;
+  transition:all .3s ease;
+}
+nav ul li a:hover{color:#4f46e5;}
+nav ul li a::after{
+  content:"";
+  position:absolute;
+  bottom:-5px;
+  left:0;
+  width:0;
+  height:2px;
+  background:#4f46e5;
+  transition:all .3s ease;
+}
+nav ul li a:hover::after{width:100%;}
+
+/* Burger, hidden by default */
+.mobile-menu-btn{
+  display:none;
+  background:none;
+  border:none;
+  color:#000;
+  font-size:1.5rem;
+  cursor:pointer;
+}
+
+/* Extra demo button, hidden by default */
+.header-demo-btn,
+.mobile-menu-btn{display:none;}
+
+/* Tablet menu behaviour */
+@media (max-width:768px){
+
+header{
+  top:0px;                /* space for the contact bar */
+  }
+  .mobile-menu-btn{display:block;margin-left:auto;}
+  nav ul{
+    display:none;
+    flex-direction:column;
+    position:absolute;
+    top:80px;
+    left:0;
+    width:100%;
+    background:#fff;
+    padding:20px 0;
+    box-shadow:0 10px 15px rgba(0,0,0,.1);
+  }
+  nav ul.show{display:flex;}
+  nav ul li{text-align:center;margin:10px 0;}
+}
+
+/* Phone layout: logo · Book A Demo · burger */
+@media (max-width:576px){
+  .header-container{display:flex;align-items:center;}
+
+  .header-demo-btn{
+    display:inline-block;
+    margin-left:auto;
+    font-size:0.92rem;
+    font-weight:600;
+    padding:6px 12px;
+    background:#4f46e5;
+    color:#fff;
+    border-radius:8px;
+    text-decoration:none;
+    transition:background .18s, transform .13s;
+  }
+  .header-demo-btn:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+  }
+
+  .mobile-menu-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.8rem;
+    background:none;
+    border:none;
+    color:inherit;
+    cursor:pointer;
+    margin-left:.5rem;
+  }
+}
+
+</style>
+
+<style>
+.mobile-bottom-buttons {
+  display: none; /* Hide by default */
+}
+
+@media (max-width: 576px) {
+  .mobile-bottom-buttons {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 6px; /* was 10px */
+    justify-content: space-around;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 -3px 12px rgba(0,0,0,0.09);
+    padding: 5px 4px 5px 4px; /* was 8px 8px 8px 8px */
+    z-index: 2000;
+  }
+  .mobile-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 0; /* was 10px 0 */
+    font-size: 0.95rem; /* was 1.1rem */
+    font-weight: 600;
+    color: white;
+    background: #4f46e5;
+    border: none;
+    border-radius: 10px; /* was 20px */
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+    transition: background 0.18s;
+  }
+  .call-btn { background: #22c55e; }
+  .sms-btn { background: #6366f1; }
+  .mobile-btn:active {
+    filter: brightness(0.93);
+  }
+  .mobile-btn i {
+    font-size: 1.1rem; /* was 1.3rem */
+  }
+}
+
+
+/* Optional: add space at the bottom so content is not hidden by buttons */
+@media (max-width: 576px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+
+
+</style>
+
+<style>
+
+/* ---------- Form Section ---------- */
+.form-section {
+    background: var(--accent);
+    padding: 30px 0;
+    border-radius: 30px;
+    margin: 60px auto;
+    color: white;
+    width: calc(100% - 100px);
+    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */
+}
+
+.form-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 200px;
+    max-width: calc(560px * 2 + 30px);
+}
+
+.form-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    font-weight: 600;
+}
+
+.form-section p {
+    max-width: 700px;
+    margin-bottom: 60px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.booking-form {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+}
+
+.booking-form label {
+    font-weight: 600;
+    color: white;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: var(--transition);
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255,255,255,0.2);
+}
+
+.booking-form input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.booking-form button {
+    background: white;
+    color: var(--accent);
+    padding: 16px 45px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.booking-form button:hover {
+    background: var(--light-gray);
+    transform: translateY(-2px);
+}
+
+
+
+/* ---------- Form Section – responsive fix ---------- */
+
+/* Reduce side padding on tablets */
+@media (max-width: 992px) {
+  .form-section .container {
+    padding: 0 40px;
+  }
+}
+
+/* Further reduce side padding on phones */
+@media (max-width: 576px) {
+  .form-section .container {
+    padding: 0 20px;
+  }
+}
+
+/* One-column layout by default */
+.booking-form {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+/* Two-column layout from 600 px upward */
+@media (min-width: 600px) {
+  .booking-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Keep the purple box away from the viewport edge */
+.form-section {
+  width: calc(100% - 40px);   /* 20 px gap each side */
+  margin: 60px auto;
+}
+
+/* Force one field per row on desktop */
+@media (min-width: 992px) {
+  .booking-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+
+
 </head>
 <body>
 
@@ -265,23 +637,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="/" class="logo">jemima<span>.ai</span></a>
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav>
-                <ul>
-                    <li><a href="solutions.html" class="active">Solutions</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="pricing.html">Pricing</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<!-- Top Contact Bar: Desktop and Tablet only -->
+<div class="top-contact-bar">
+  <div class="top-contact-content">
+    <div class="top-contact-left">
+        <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
+        <i class="fas fa-envelope"></i> jemima@jemima.ai
+    </div>
+    <div class="top-contact-right">
+      <a href="#book-demo" class="top-contact-demo-btn">Book A Demo</a>
+    </div>
+  </div>
+</div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo">jemima<span>.ai</span></a>
+<a href="#book-demo" class="header-demo-btn">Book A Demo</a>   <!-- new -->
+<button class="mobile-menu-btn">
+  <i class="fas fa-bars"></i>
+</button>
+      <nav>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -356,8 +742,100 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
             </div>
+<section id="book-demo"></section>
         </div>
+        </div>
+
+
+ <!-- Form Section with Booking Form -->
+  <section class="form-section">
+    <div class="container">
+      <h2>Book A Demo</h2>
+      <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
+      
+      <form class="booking-form" id="bookingForm" autocomplete="on">
+        <div>
+          <label for="firstName">First name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            autocomplete="given-name"
+            placeholder="Jane"
+            required
+          />
+        </div>
+        <div>
+          <label for="lastName">Last name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            autocomplete="family-name"
+            placeholder="Doe"
+            required
+          />
+        </div>
+        <div>
+          <label for="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            autocomplete="organization"
+            placeholder="Your company"
+          />
+        </div>
+        <div>
+          <label for="phone">Telephone number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            autocomplete="tel"
+            placeholder="01234567890"
+          />
+        </div>
+        <div>
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+        <div>
+          <label for="day">Choose a day</label>
+          <input
+            type="date"
+            id="day"
+            name="day"
+            required
+          />
+        </div>
+        <div>
+          <label for="slot">Choose a time</label>
+          <select
+            id="slot"
+            name="slot"
+            required
+          >
+            <option value="">Pick a day first</option>
+          </select>
+        </div>
+
+        <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+
+        <button type="submit">Book now</button>
+      </form>
+      <p id="formMsg"></p>
     </div>
+  </section>
+
+
 
   <!-- Footer -->
   <footer>
@@ -424,5 +902,121 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         });
     </script>
+
+<script>
+/* ── Booking & floating message ─────────────────────────── */
+const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+const TIME_ZONE   = 'Europe/London';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* handles ------------------------------------------------ */
+  const dayInput   = document.getElementById('day');
+  const slotSelect = document.getElementById('slot');
+  const form       = document.getElementById('bookingForm');
+  const formMsg    = document.getElementById('formMsg');
+  const pageUrlIn  = document.getElementById('pageUrl');
+
+  /* helper: show / hide banner ----------------------------- */
+  function flash(type, text, keepMs = 3000){
+    formMsg.className = '';            // clear all classes
+    formMsg.textContent = text;
+    if(type) formMsg.classList.add(type);
+    formMsg.classList.add('show');     // slide-in
+    clearTimeout(flash._timer);
+    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+  }
+
+  /* init --------------------------------------------------- */
+  pageUrlIn.value = window.location.href;
+  dayInput.addEventListener('change',  fetchTimes);
+  form    .addEventListener('submit',  submitBooking);
+
+  /* fetch available times ---------------------------------- */
+  async function fetchTimes(){
+    const day = dayInput.value;
+    if(!day){
+      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+      return;
+    }
+    slotSelect.disabled = true;
+    slotSelect.innerHTML = '<option>Loading…</option>';
+
+    try{
+      const res  = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'check_availability', day})
+                  });
+      const data = await res.json();
+      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+      const free   = payload.slots ?? [];
+
+      slotSelect.innerHTML = free.length
+        ? '<option value="">Select a time</option>'
+        : '<option value="">No slots available</option>';
+
+      free.forEach(s=>{
+        if(!s.startsWith(day)) return;
+        const t = s.slice(11,16);
+        slotSelect.insertAdjacentHTML('beforeend',
+          `<option value="${s}">${t}</option>`);
+      });
+    }catch{
+      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+    }finally{
+      slotSelect.disabled = false;
+    }
+  }
+
+  /* submit booking ---------------------------------------- */
+  async function submitBooking(e){
+    e.preventDefault();
+    flash('sending','Sending…',10_000);         // orange bar
+
+    const payload = {
+      firstName:form.firstName.value,
+      lastName :form.lastName.value,
+      company  :form.company.value,
+      phone    :form.phone.value,
+      email    :form.email.value,
+      slot     :slotSelect.value,
+      pageUrl  :pageUrlIn.value,
+      timeZone :TIME_ZONE
+    };
+
+    try{
+      const res = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'create_booking',...payload})
+                  });
+
+      if(res.ok){
+        form.reset();
+        slotSelect.innerHTML =
+          '<option value="">Pick a day first</option>';
+        flash('success','Your meeting is confirmed. Check your inbox.');
+      }else if(res.status===409){
+        flash('error','That time has just been taken. Please choose another.');
+        fetchTimes();
+      }else{
+        flash('error','An error occurred. Please try again later.');
+      }
+    }catch{
+      flash('error','Could not reach the server. Try again later.');
+    }
+  }
+});
+</script>
+
+<div class="mobile-bottom-buttons">
+  <a href="tel:+447479277657" class="mobile-btn call-btn">
+    <i class="fas fa-phone"></i> Call
+  </a>
+  <a href="sms:+447479277657" class="mobile-btn sms-btn">
+    <i class="fas fa-sms"></i> SMS
+  </a>
+</div>
 </body>
 </html>
