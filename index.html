@@ -1115,6 +1115,14 @@ header {
   }
 }
 
+/* ── make the mobile menu reach the Call/SMS bar ───────── */
+@media (max-width:576px){
+  nav ul.show{                 /* or nav ul { … } if you prefer */
+    bottom:70px;               /* = height of .mobile-bottom-buttons  */
+    min-height:calc(100vh - 70px);
+  }
+}
+
 
 
 </style>
