@@ -41,6 +41,7 @@
 
   <!-- Icons and extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+<script type="module" crossorigin src="/voice/assets/index-dBvI1JZo.js"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -50,8 +51,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
 <!-- End Google Tag Manager -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <style>
+    #callButton {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
+    }
+    #callButton.idle       { color: #4f46e5; }
+    #callButton.connecting { color: limegreen;    }
+    #callButton.connected  { color: crimson;      }
+
+    #status {
+      margin-top: 10px;
+      font-size: 0.6rem;
+      min-height: 0.8em;
+    }
+    .error { color: #ffb3b3; }
+  </style>
+
 
 <style>
 /* ---------- Reset and variables ---------- */
@@ -82,9 +104,14 @@ body{
 }
 .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
 
+.hero h1 {
+  margin-top: 20px;
+}
+
+
 /* ---------- Header ---------- */
 header{
-    padding:25px 0;
+    padding:14px 0;
     position:fixed;top:0;width:100%;z-index:1000;
     background:rgba(255,255,255,0.95);
     backdrop-filter:blur(10px);
@@ -102,20 +129,20 @@ nav ul li a:hover::after{width:100%;}
 .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
 
 /* ---------- Hero ---------- */
-.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
+.hero{padding:122px 0 0px;position:relative;overflow:hidden;text-align:center;}
 .hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
-.hero h1{font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
+.hero h1{font-size:3.2rem;font-weight:800;line-height:1.1;margin-bottom:0px;letter-spacing:-1px;color:var(--dark);}
 .hero h1 span{position:relative;}
 .hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
 
 /* ---------- Chat box ---------- */
 .ai-chat-box{
     background:#fff;border-radius:25px;padding:30px;
-    box-shadow:0 25px 50px rgba(0,0,0,0.08);
-    margin:50px auto 0;max-width:650px;position:relative;overflow:hidden;
+    box-shadow:0 10px 10px rgba(0,0,0,0.08);
+    margin:32px auto 0;max-width:650px;position:relative;overflow:hidden;
     border:1px solid rgba(0,0,0,0.05);animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;transform:translateY(20px);
 }
-.ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
+.ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;border-radius:25px 25px 0 0;}
 .chat-header{display:flex;align-items:center;margin-bottom:15px;}
 .ai-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#818cf8,var(--accent));display:flex;align-items:center;justify-content:center;margin-right:15px;overflow:hidden;border:3px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
 .ai-avatar img{width:100%;height:100%;object-fit:cover;}
@@ -146,6 +173,13 @@ nav ul li a:hover::after{width:100%;}
     display:inline-block;
 }
 
+.chat-bubble-1{
+    max-width:100%;padding:15px 20px;border-radius:20px;
+    animation:fadeIn 0.3s ease;box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    display:inline-block;
+    text-align:left;
+}
+
 .chat-bubble{
     width:100%;
     max-width:100%;
@@ -154,7 +188,8 @@ nav ul li a:hover::after{width:100%;}
 
 .ai-bubble{background:var(--ai-bubble);border-radius:20px 20px 20px 5px;color:var(--dark);}
 .user-bubble{background:var(--user-bubble);border-radius:20px 20px 5px 20px;color:#fff;align-self:flex-end;}
-.chat-bubble p{font-size:1.1rem;line-height:1.5;text-align:left;}
+.chat-bubble p{font-size:1.0rem;line-height:1.5;text-align:left;}
+.chat-bubble-1 p{font-size:1.1rem;line-height:1.5;text-align:left;}
 
 /* ---------- Chat input ---------- */
 .chat-input-form{
@@ -190,7 +225,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     border-radius: 30px;
     margin: 50px auto;
     color: white;
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
 
 .solutions
@@ -199,7 +234,7 @@ textarea#chat-input::placeholder{color:#a0aec0;}
     border-radius: 30px;
     margin: 50px auto;
     color: white;
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
 
 /*.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px; max-width:600px;}*/
@@ -252,11 +287,12 @@ textarea#chat-input::placeholder{color:#a0aec0;}
 }
 
 .qlink{
-    padding:6px 12px;
+    padding:8px 14px;
     border-radius:10px;
     background:#4f46e5;
     color:#ffffff;
-    font-size:0.85rem;
+    font-size: 0.95rem; /* was 1.1rem */
+    font-weight: 600;
     text-decoration:none;
     transition:var(--transition);
     white-space:nowrap;
@@ -291,7 +327,7 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 /* Description Text */
 .description-text {
     max-width: 800px;
-    margin: 40px auto 0;
+    margin: 30px auto 0;
     font-size: 1.25rem;
     color: var(--gray);
     line-height: 1.7;
@@ -299,7 +335,71 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
     opacity: 0;
     transform: translateY(20px);
     font-weight: 400;
+    text-align:center;
 }
+}
+
+@media (max-width: 480px) {
+
+.description-text {
+    max-width: 800px;
+    margin-top: 40px;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 1.25rem;
+    color: var(--gray);
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    font-weight: 400;
+    text-align:center;
+}
+
+
+  /* Make the avatar always circular and smaller */
+  .ai-avatar {
+    width: 75px;
+    height: 75px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50% !important;
+    margin-right: 0px;
+  }
+  .ai-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% !important;
+  }
+
+  /* Make job title smaller, single line, and avoid wrap */
+  .ai-info p {
+    font-size: 0.8rem !important;
+    padding: 3px 8px;
+    border-radius: 10px;
+/*    max-width: 130px; */
+    white-space: nowrap;
+    margin-bottom: 0;
+  }
+
+  .ai-info h3 {
+    font-size: 1.3rem !important;
+    margin-bottom: 2px;
+  }
+
+  /* Tidy up chat header spacing */
+  .chat-header {
+    gap: 12px !important;
+    padding-bottom: 4px;
+  }
+}
+
+
+
+
+
+
 .highlight {
     color: var(--accent);
     font-weight: 600;
@@ -335,18 +435,22 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
         margin:10px 0;
     }
 
-    .hero{padding:140px 0 20px;}
-    .hero h1{font-size:3.7rem;}
-
+    .hero{padding:120px 0 20px;}
+    .hero h1{font-size:2.2rem; padding-bottom:10px;}
+    .ai-chat-box{margin-top:40px;}
     .chat-body{max-height:300px;padding:15px;}
     .chat-bubble{padding:12px 16px;}
     .chat-bubble p{font-size:1rem;}
+
+    .chat-bubble-1{padding:12px 16px;}
+    .chat-bubble-1 p{font-size:1rem; text-align:left;}
 }
 
 @media (max-width:576px){
-    .hero h1{font-size:2.4rem;}
+    .hero h1{font-size:2.2rem;}
     .ai-chat-box{padding:20px;}
     .chat-bubble p{font-size:0.95rem;}
+    .chat-bubble-1 p{font-size:1.0rem; text-align:left;}
     .footer-grid{grid-template-columns:1fr;}
 }
 
@@ -568,6 +672,44 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 }
 
 
+/* Container for category pills */
+.category-pil ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Space between buttons */
+}
+
+/* Individual category buttons */
+.category-pil ul li {
+  background-color: #e6e6fa; /* Light purple */
+  color: #4b0082; /* Dark purple text for contrast */
+  padding: 2px 4px;
+  border-radius: 5px; /* Pill shape */
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border: 0px solid #d8bfd8; /* Light purple border */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Hover effect */
+/* .category-pil ul li:hover {*/
+/*   background-color: #d8bfd8; *//* Slightly darker purple */
+/*   transform: translateY(-1px);*/
+/*   box-shadow: 0 3px 6px rgba(0,0,0,0.1);*/
+}
+
+/* Active state */
+/*.category-pil ul li.active { */
+/*  background-color: #9370db; /* Medium purple */
+/*  color: white; */
+}
+
 /* ---------- Match section width on very small screens ---------- */
 @media (max-width: 575.98px) {
   .services,
@@ -678,10 +820,302 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 
 @media (max-width: 768px) {
   .hero h1 {
-    margin-top: -10px;      /* Reduced from original value */
-    margin-bottom: -20px;   /* Reduced from original 30px */
+    margin-top: -20px;      /* Reduced from original value */
+    margin-bottom: -30px;   /* Reduced from original 30px */
   }
 }
+
+.solution-card {
+  position: relative;
+  padding-bottom: 6rem;    /* enough room for the pills row + gap */
+}
+
+.solution-card .category-pil {
+  position: absolute;
+  bottom: 1rem;            /* distance from the bottom edge of the card */
+  left: 1rem;              /* align with your card’s inner padding */
+  right: 1rem;             /* stretch to the other side */
+  margin: 0;               /* reset any default margins */
+  justify-content: center; /* Center pills horizontally */
+}
+
+/* Make phone/status font smaller and always fixed position */
+.chat-header .call-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  /* Remove any extra margin/padding that could cause movement */
+}
+
+#status {
+  font-size: 0.60rem !important;  /* smaller and consistent */
+  margin: 0;
+  padding: 0;
+  min-height: 0.6em;
+  transition: none !important;    /* disables any animation */
+  opacity: 1 !important;          /* disables fade-in */
+}
+
+
+.mobile-bottom-buttons {
+  display: none; /* Hide by default */
+}
+
+@media (max-width: 576px) {
+  .mobile-bottom-buttons {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 6px; /* was 10px */
+    justify-content: space-around;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 -3px 12px rgba(0,0,0,0.09);
+    padding: 5px 4px 5px 4px; /* was 8px 8px 8px 8px */
+    z-index: 2000;
+  }
+  .mobile-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 0; /* was 10px 0 */
+    font-size: 0.95rem; /* was 1.1rem */
+    font-weight: 600;
+    color: white;
+    background: #4f46e5;
+    border: none;
+    border-radius: 10px; /* was 20px */
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+    transition: background 0.18s;
+  }
+  .call-btn { background: #22c55e; }
+  .sms-btn { background: #6366f1; }
+  .mobile-btn:active {
+    filter: brightness(0.93);
+  }
+  .mobile-btn i {
+    font-size: 1.1rem; /* was 1.3rem */
+  }
+}
+
+
+/* Optional: add space at the bottom so content is not hidden by buttons */
+@media (max-width: 576px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+
+
+</style>
+
+<style>
+
+#callBtn {
+  border: none;
+  border-radius: 20%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin-left: 20px;
+}
+
+#callBtn.status-idle        { background: #4f46e5 !important; }
+#callBtn.status-connecting  { background: #22c55e !important; }
+#callBtn.status-connected   { background: #f5425a !important; }
+#callBtn.status-disconnected{ background: #4f46e5 !important; }
+#callBtn.status-cancelled   { background: #c026d3 !important; }
+#callBtn.status-error       { background: #dc2626 !important; }
+
+#status {
+  margin-left: 20px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:480px){
+
+#callBtn {  margin-left: 0px;
+}
+#status {
+  margin-left: 0px;
+}
+    }
+
+</style>
+
+<style>
+@media (max-width: 768px) {
+  .voice-chat-block {
+    display: none !important;
+  }
+}
+
+<style>
+@media (max-width: 992px) {
+  .voice-chat-block {
+    display: none !important;
+  }
+}
+</style>
+<style>
+@media (max-width: 576px) {
+  .qlink-bookcall {
+    display: none !important;
+  }
+}
+</style>
+<style>
+#chat-send:hover {
+    background: #7c3aed;       /* Same as .qlink:hover */
+    transform: translateY(-2px); /* Same as .qlink:hover */
+}
+
+#callBtn:hover {
+    background: #7c3aed !important;   /* Same as .qlink:hover */
+    transform: translateY(-2px);      /* Same as .qlink:hover */
+}
+
+header {
+  top: 40px;   /* exactly matches the bar height */
+}
+
+.top-contact-bar {
+  width: 100%;
+  background: #fff;
+  color: #4f46e5;
+  font-size: 0.9rem;
+  padding: 7px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2001;
+}
+.top-contact-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.top-contact-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.top-contact-right {
+  display: flex;
+  align-items: center;
+}
+
+.sms{
+font-weight: 600;
+margin-right: -16px;
+}
+
+.top-contact-left i {
+  margin-right: -16px;   /* Change 6px to whatever is right for your design */
+  margin-left: 0;
+  vertical-align: middle;
+}
+.top-contact-demo-btn {
+  background: #4f46e5;
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: background 0.18s, color 0.18s, transform 0.13s;
+  border: none;
+  font-size: 1rem;
+  margin-top:5px;
+}
+.top-contact-demo-btn:hover {
+  background: #7c3aed;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Hide bar on mobile */
+@media (max-width: 576px) {
+  .top-contact-bar { display: none; }
+header {
+  top: 0px;   /* exactly matches the bar height */
+
+}
+}
+
+
+</style>
+
+<style>
+
+/* ───────────────── MOBILE HEADER LAYOUT ──────────────────
+   Goal: show Logo · (spacer) · “Book A Demo” · ☰
+   – Logo stays left, the last two items form a tight pair on the right.
+   – Both buttons are hidden on larger screens.
+   – Burger has a small gap (0.5 rem) from the demo button.
+─────────────────────────────────────────────────────────── */
+
+/* 1.  baseline (tablet / desktop) – both buttons off          */
+.header-demo-btn,
+.mobile-menu-btn{
+  display:none;
+}
+
+/* 2.  mobile view (≤ 576 px) -------------------------------- */
+@media (max-width:576px){
+
+  /* make the whole row a flat flex line                       */
+  .header-container{
+    display:flex;
+    align-items:center;
+  }
+
+  /* show “Book A Demo” and push it to the far right           */
+  .header-demo-btn{
+    display:inline-block;
+    margin-left:auto;      /* eats the remaining space after logo */
+    font-size:0.92rem;
+    font-weight:600;
+    padding:6px 12px;
+    background:#4f46e5;
+    color:#fff;
+    border-radius:8px;
+    text-decoration:none;
+  }
+
+  .header-demo-btn:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+    transition:background .18s, transform .13s;
+  }
+
+  /* show the burger just to the right of the demo button      */
+  .mobile-menu-btn{
+    display:inline-flex;           /* reveal */
+    align-items:center;
+    justify-content:center;
+    font-size:1.8rem;              /* icon size */
+    background:none;
+    border:none;
+    color:inherit;
+    cursor:pointer;
+    margin-left:0.5rem;            /* tiny gap between the two */
+  }
+}
+
+
 
 </style>
 
@@ -693,14 +1127,27 @@ footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px 
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+<!-- Top Contact Bar: Desktop and Tablet only -->
+<div class="top-contact-bar">
+  <div class="top-contact-content">
+    <div class="top-contact-left">
+        <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
+        <i class="fas fa-envelope"></i> jemima@jemima.ai
+    </div>
+    <div class="top-contact-right">
+      <a href="#book-demo" class="top-contact-demo-btn">Book A Demo</a>
+    </div>
+  </div>
+</div>
 
   <!-- Header -->
   <header>
     <div class="container header-container">
       <a href="#" class="logo">jemima<span>.ai</span></a>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
+<a href="#book-demo" class="header-demo-btn">Book A Demo</a>   <!-- new -->
+<button class="mobile-menu-btn">
+  <i class="fas fa-bars"></i>
+</button>
       <nav>
         <ul>
           <li><a href="solutions.html">Solutions</a></li>
@@ -711,52 +1158,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </nav>
     </div>
   </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>AI <span>Sales & Marketing</span> Solutions</h1>
-                
-                <!-- AI Chat Box -->
-                <div class="ai-chat-box">
-                    <div class="chat-header">
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Growing Your Business <span>24 | 7 | 365</span></h1>
+            
+            <!-- AI Chat Box -->
+            <div class="ai-chat-box">
+                <div class="chat-header" style="display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+                    <!-- Left: Avatar and Info -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
                         <div class="ai-avatar">
                             <img src="jemima.png" alt="Jemima AI">
                         </div>
                         <div class="ai-info">
                             <h3>Jemima</h3>
-                            <p>Business Solutions Manager</p>
+                            <p>Business Growth Manager</p>
                         </div>
                     </div>
-                    
-                    <div class="chat-bubble">
-                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
-                    </div>
-                    <!-- Chat area -->
-                    <div id="chat-body" class="chat-body"></div>
-                    <!-- Chat Input Form -->
-                    <div class="chat-input-form">
-                        <form onsubmit="sendMessage(); return false;">
-                            <textarea id="chat-input" required></textarea>
-                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
+                    <!-- Right: Call and Status -->
+<!-- Right: Call and Status, now vertical -->
+<div class="call-block voice-chat-block">
+  <button id="callBtn" class="status-idle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.57 2 2 0 0 1-.45 2.11L9.03 9.03a16 16 0 0 0 6.94 6.94l1.63-1.63a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.57.57A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  </button>
+  <div id="status">Voice Chat</div>
+</div>
+                </div>
+
+                <div class="chat-bubble-1">
+                    <p>I can generate leads, turn leads into sales, turn sales into upsells, for 24 hours of every day</p>
+                </div>
+                <!-- Chat area -->
+                <div id="chat-body" class="chat-body"></div>
+                <!-- Chat Input Form -->
+                <div class="chat-input-form">
+                    <form onsubmit="sendMessage(); return false;">
+                        <textarea id="chat-input" required placeholder="Ask me about growth"></textarea>
+                        <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
 
 <!-- Chat Suggestions -->
 <div class="quick-links-wrapper">
   <h4 class="quick-links-title">Chat Suggestions</h4>
-
   <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
-    <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
+    <a href="#" class="qlink" data-msg="Tell me about your business growth services">Business Growth Services</a>
     <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
-    <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
-    <button id="micBtn">Talk</button>
   </div>
 </div>
 
-                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
@@ -792,7 +1250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3>Sales Automation</h3>
+                    <h3>Sales</h3>
                     <p>Intelligent sales pipelines that nurture prospects and close deals automatically.</p>
                 </div>
                 <div class="service-card">
@@ -817,61 +1275,113 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="solutions">
         <div class="container">
             <div class="section-header">
-                <h2>Our Business Solutions</h2>
-                <p>End to end solutions shaped for your business needs</p>
+                <h2>Always On Business Solutions</h2>
+                <p>Data gathering, AI analysis, automated actions and regular review to drive efficiency and boost growth</p>
             </div>
             <div class="solutions-grid">
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>Process Automation</h3>
-                    <p>Automate repetitive tasks and workflows to increase efficiency and reduce costs.</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Intelligent Analytics</h3>
-                    <p>Turn data into useful insights with AI-powered analytics solutions.</p>
+                    <h3>Intelligent Chat</h3>
+                    <p>Jemima answers questions and qualifies visitors, capturing leads 24/7 and cutting response time to zero.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li> <li>Customer Service</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    <h3>Conversational AI</h3>
-                    <p>Implement chatbots and virtual assistants for enhanced customer interactions.</p>
+                    <h3>Email</h3>
+                    <p>Jemima organises, summarises and replies to emails, spots buying signals and sets up nurture campaigns to drive more sales.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Sales</li> <li>Customer Service</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-cogs"></i>
+                        <i class="fas fa-phone-alt"></i>
                     </div>
-                    <h3>System Integration</h3>
-                    <p>Connect your existing systems with our automation solutions.</p>
+                    <h3>Call Centre</h3>
+                    <p>Jemima handles incoming and outgoing voice calls plus SMS and WhatsApp to keep response times quick and free up time.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li> <li>Customer Service</li></ul>
+                </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Social Media</h3>
+                    <p>Jemima creates and schedules posts and replies on social channels to keep your network growing 24/7 and free up hours of work.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Digital Marketing</li> <li>Lead Generation</li> <li>Sales</li></ul>
+                </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-magnet"></i>
+                    </div>
+                    <h3>Lead Magnets</h3>
+                    <p>Jemima builds and shares helpful resources on email and social channels to attract contacts and showcase expertise on auto-pilot.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Digital Marketing</li> <li>Lead Generation</li> <li>Sales</li></ul>
+                </div>
+		    <p class="category-pil"></p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Lead Scoring</h3>
+                    <p>Jemima finds new leads, enriches their details, scores them and sends first-contact messages to speed up outreach and free up time.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Security Solutions</h3>
-                    <p>Protect your business with AI-powered threat detection and prevention systems.</p>
+                    <h3>Reputation Protection</h3>
+                    <p>Jemima scans search, social and review sites for negative mentions and crafts quick responses, continually protecting your brand.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Customer Service</li></ul>
+                </div>
                 </div>
                 <div class="solution-card">
                     <div class="solution-icon">
-                        <i class="fas fa-rocket"></i>
+                        <i class="fas fa-search"></i>
                     </div>
-                    <h3>Scalable Solutions</h3>
-                    <p>Grow your business with solutions that scale with your needs.</p>
+                    <h3>SEO AIO Monitor</h3>
+                    <p>Jemima tracks AI and search ranking and Google updates as well as website changes, to react to shifts faster.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Digital Marketing</li></ul>
+                </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h3>Overcome Objections</h3>
+                    <p>Jemima analyses internal logs and competitor reviews, to identify and overcome objections, increasing lead to sales conversion.</p>
+		    <div class="category-pil">
+                    <ul class="category-pil"><li>Sales</li></ul>
+
+                </div>
                 </div>
             </div>
+<section id="book-demo"></section>
         </div>
     </section>
+
 
 
   <!-- Form Section with Booking Form -->
   <section class="form-section">
     <div class="container">
-      <h2>Book A Call</h2>
+      <h2>Book A Demo</h2>
       <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
       
       <form class="booking-form" id="bookingForm" autocomplete="on">
@@ -1009,78 +1519,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
-<!-- 1) Official Twilio Voice JS v2 -->
-<script src="https://cdn.jsdelivr.net/npm/@twilio/voice-sdk/dist/twilio.min.js"></script>
-
-<!-- 2) Fully-instrumented voice-chat logic -->
 <script>
-  console.log('Voice script start');
-
-  const micBtn    = document.getElementById('micBtn');
-  const TOKEN_URL = 'https://voice-tokens-2997.twil.io/token';
-
-  if (!micBtn) {
-    console.error('❌ Could not find #micBtn');
-  } else {
-    console.log('✅ Found #micBtn, wiring click');
-    micBtn.addEventListener('click', startCall);
-  }
-
-  async function startCall() {
-    console.log('▶️ startCall()');
-
-    try {
-      // 1. Fetch token
-      const res = await fetch(TOKEN_URL);
-      console.log('🔄 token fetch status', res.status);
-      if (!res.ok) throw new Error('Token request failed: ' + res.status);
-      const { token } = await res.json();
-      console.log('🔑 Got token (first 20 chars):', token.slice(0,20));
-console.log(JSON.parse(atob(token.split('.')[1])));
-      // 2. Initialize Device
-      const device = new Twilio.Device(token, {
-        codecPreferences:['opus'],
-        logLevel: 'debug'   // extra verbosity
-      });
-      console.log('📱 Twilio.Device created');
-
-      // 3. Device-level events
-      device.on('error',           e  => console.error('📟 device error', e));
-      device.on('ready',          () => console.log('🟢 device ready'));
-      device.on('offline',        () => console.warn('🟡 device offline'));
-      device.on('registrationSuccess', () => console.log('✅ registered'));
-      device.on('registrationError',   e  => console.error('❌ registration error', e));
-
-      // 4. Register the client (so v2 can open the signaling channel)
-      device.register();
-
-      // 5. Once ready, connect
-      device.on('ready', async () => {
-        console.log('▶️ calling device.connect()');
-        try {
-          const call = await device.connect();
-          console.log('🔊 call.connect() resolved');
-
-          // 6. Connection-level events
-          call.on('accept',      () => console.log('🎧 call accepted'));
-          call.on('disconnect',  () => { console.log('📴 call disconnected'); micBtn.disabled = false; });
-          call.on('error',       e  => console.error('❌ call error', e));
-          micBtn.disabled = true;
-        } catch(connErr) {
-          console.error('❌ connect() failed', connErr);
-          alert('Could not connect call: ' + connErr.message);
-        }
-      });
-
-    } catch (err) {
-      console.error('❌ startCall error', err);
-      alert('Could not start voice chat: ' + err.message);
-    }
-  }
-</script>
 
 
-<script>
 /* ── 1.  hidden page address sent to n8n ───────────────────── */
 const pageUrl   = window.location.href;
 
@@ -1291,6 +1732,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<div class="mobile-bottom-buttons">
+  <a href="tel:+447479277657" class="mobile-btn call-btn">
+    <i class="fas fa-phone"></i> Call
+  </a>
+  <a href="sms:+447479277657" class="mobile-btn sms-btn">
+    <i class="fas fa-sms"></i> SMS
+  </a>
+</div>
+
 
 </body>
 </html>

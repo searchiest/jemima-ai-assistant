@@ -1058,6 +1058,66 @@ header {
 
 </style>
 
+<style>
+
+/* ───────────────── MOBILE HEADER LAYOUT ──────────────────
+   Goal: show Logo · (spacer) · “Book A Demo” · ☰
+   – Logo stays left, the last two items form a tight pair on the right.
+   – Both buttons are hidden on larger screens.
+   – Burger has a small gap (0.5 rem) from the demo button.
+─────────────────────────────────────────────────────────── */
+
+/* 1.  baseline (tablet / desktop) – both buttons off          */
+.header-demo-btn,
+.mobile-menu-btn{
+  display:none;
+}
+
+/* 2.  mobile view (≤ 576 px) -------------------------------- */
+@media (max-width:576px){
+
+  /* make the whole row a flat flex line                       */
+  .header-container{
+    display:flex;
+    align-items:center;
+  }
+
+  /* show “Book A Demo” and push it to the far right           */
+  .header-demo-btn{
+    display:inline-block;
+    margin-left:auto;      /* eats the remaining space after logo */
+    font-size:0.92rem;
+    font-weight:600;
+    padding:6px 12px;
+    background:#4f46e5;
+    color:#fff;
+    border-radius:8px;
+    text-decoration:none;
+  }
+
+  .header-demo-btn:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+    transition:background .18s, transform .13s;
+  }
+
+  /* show the burger just to the right of the demo button      */
+  .mobile-menu-btn{
+    display:inline-flex;           /* reveal */
+    align-items:center;
+    justify-content:center;
+    font-size:1.8rem;              /* icon size */
+    background:none;
+    border:none;
+    color:inherit;
+    cursor:pointer;
+    margin-left:0.5rem;            /* tiny gap between the two */
+  }
+}
+
+
+
+</style>
 
 </head>
 <body>
@@ -1084,9 +1144,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <header>
     <div class="container header-container">
       <a href="#" class="logo">jemima<span>.ai</span></a>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
+<a href="#book-demo" class="header-demo-btn">Book A Demo</a>   <!-- new -->
+<button class="mobile-menu-btn">
+  <i class="fas fa-bars"></i>
+</button>
       <nav>
         <ul>
           <li><a href="solutions.html">Solutions</a></li>
