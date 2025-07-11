@@ -1779,30 +1779,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
+<!-- ── CHAT WIDGET ─────────────────────────────────────────── -->
+<script>
+/* 1 ⃣  page URL sent to n8n */
+const pageUrl = window.location.href;
 
-/* ── 1.  hidden page address sent to n8n ───────────────────── */
-const pageUrl   = window.location.href;
-
-/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
+/* 2 ⃣  n8n chat webhook + visitor-session ID */
 const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
-const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+const sessionId = (crypto.randomUUID && crypto.randomUUID()) || Date.now().toString(36);
 
-/* ── 3.  DOM handles ───────────────────────────────────────── */
+/* 3 ⃣  DOM handles */
 const box   = document.getElementById('chat-body');
 const input = document.getElementById('chat-input');
 
-/* ── 4.  helper: add a chat bubble ─────────────────────────── */
-function add (text, role = 'ai') {
-  const div       = document.createElement('div');
-  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
-  div.innerHTML   = `<p>${text}</p>`;
+/* 4 ⃣  add a chat bubble */
+function add(text, role = 'ai') {
+  const div = document.createElement('div');
+  div.className = role === 'user'
+    ? 'chat-bubble user-bubble'
+    : 'chat-bubble ai-bubble';
+  div.innerHTML = `<p>${text}</p>`;
   box.appendChild(div);
-  box.scrollTop   = box.scrollHeight;
+  box.scrollTop = box.scrollHeight;
   box.classList.add('show');
 }
 
-/* ── 5.  helper: unwrap JSON (object OR first element of array) */
-function parse (raw, hdr) {
+/* 5 ⃣  unwrap JSON response if needed */
+function parse(raw, hdr) {
   if ((hdr.get('content-type') || '').includes('application/json')) {
     try {
       let d = JSON.parse(raw);
@@ -1810,33 +1813,33 @@ function parse (raw, hdr) {
       return (
         d.reply   || d.output  || d.text || d.message ||
         d.answer  || d.content ||
-        (d.choices && d.choices[0]?.message.content) ||
+        (d.choices && d.choices[0]?.message?.content) ||
         raw
       );
-    } catch { /* fall through to raw */ }
+    } catch { /* fall through */ }
   }
   return raw;
 }
 
-/* ── 6.  send routine, called on form submit ───────────────── */
-async function sendMessage () {
+/* 6 ⃣  send routine (called on form submit) */
+async function sendMessage() {
   const msg = input.value.trim();
   if (!msg) return;
 
-  add(msg, 'user');               // echo user text
-  input.value = '';               // clear
-  input.style.height = '60px';    // reset height
+  add(msg, 'user');
+  input.value = '';
+  input.style.height = '60px';   // reset
 
   try {
     const res = await fetch(webhook, {
       method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type':'application/json' },
       body   : JSON.stringify({
         sessionId,
-        route     : 'general',
-        action    : 'sendMessage',
-        chatInput : msg,
-        pageUrl                      // hidden field
+        route    : 'general',
+        action   : 'sendMessage',
+        chatInput: msg,
+        pageUrl
       })
     });
     const raw = await res.text();
@@ -1847,25 +1850,21 @@ async function sendMessage () {
   }
 }
 
-/* ── 7.  auto-grow textarea ───────────────────────────────── */
+/* 7 ⃣  auto-grow textarea */
 input.addEventListener('input', () => {
   input.style.height = 'auto';
-  input.style.height = input.scrollHeight + 'px';
+  input.style.height = `${input.scrollHeight}px`;
 });
 
-/* ── 8.  give focus on load (desktop only) ─────────────────── */
+/* 8 ⃣  give focus on load (desktop only) */
 window.addEventListener('load', () => {
-  const isMobile =
-    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  if (!isMobile) {
-    input.focus({ preventScroll: true });
-  }
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (!isMobile) input.focus({ preventScroll:true });
 });
-/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
-const menuBtn  = document.querySelector('.mobile-menu-btn');
-const navMenu  = document.querySelector('nav ul');
+
+/* 9 ⃣  mobile menu toggle */
+const menuBtn = document.querySelector('.mobile-menu-btn');
+const navMenu = document.querySelector('nav ul');
 if (menuBtn && navMenu) {
   menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
   navMenu.querySelectorAll('a').forEach(a =>
@@ -1873,123 +1872,122 @@ if (menuBtn && navMenu) {
   );
 }
 
-
-/* quick-link handler */
+/* 🔗 quick-link handler */
 document.getElementById('chat-quick-links')
   .addEventListener('click', e => {
-    if(e.target.classList.contains('qlink')){
+    if (e.target.classList.contains('qlink')) {
       e.preventDefault();
       input.value = e.target.dataset.msg;
-      sendMessage();               // reuse the same send routine
+      sendMessage();
     }
   });
 </script>
+
+<!-- ── BOOKING FORM + FLOATING BANNER ─────────────────────── -->
 <script>
-/* ── Booking & floating message ─────────────────────────── */
 const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
 const TIME_ZONE   = 'Europe/London';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  /* handles ------------------------------------------------ */
+  /* handles */
   const dayInput   = document.getElementById('day');
   const slotSelect = document.getElementById('slot');
   const form       = document.getElementById('bookingForm');
   const formMsg    = document.getElementById('formMsg');
   const pageUrlIn  = document.getElementById('pageUrl');
+  pageUrlIn.value  = window.location.href;
 
-  /* helper: show / hide banner ----------------------------- */
-  function flash(type, text, keepMs = 3000){
-    formMsg.className = '';            // clear all classes
+  /* helper: slide-in banner */
+  function flash(type, text, keepMs = 3000) {
+    formMsg.className = '';         // reset
     formMsg.textContent = text;
-    if(type) formMsg.classList.add(type);
-    formMsg.classList.add('show');     // slide-in
+    if (type) formMsg.classList.add(type);
+    formMsg.classList.add('show');
     clearTimeout(flash._timer);
     flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
   }
 
-  /* init --------------------------------------------------- */
-  pageUrlIn.value = window.location.href;
-  dayInput.addEventListener('change',  fetchTimes);
-  form    .addEventListener('submit',  submitBooking);
+  /* events */
+  dayInput.addEventListener('change', fetchTimes);
+  form.addEventListener('submit',   submitBooking);
 
-  /* fetch available times ---------------------------------- */
-  async function fetchTimes(){
+  /* fetch available slots for a given day */
+  async function fetchTimes() {
     const day = dayInput.value;
-    if(!day){
+    if (!day) {
       slotSelect.innerHTML = '<option value="">Pick a day first</option>';
       return;
     }
-    slotSelect.disabled = true;
+    slotSelect.disabled  = true;
     slotSelect.innerHTML = '<option>Loading…</option>';
 
-    try{
-      const res  = await fetch(BOOKING_URL,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({action:'check_availability', day})
-                  });
-      const data = await res.json();
-      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
-      const free   = payload.slots ?? [];
+    try {
+      const res  = await fetch(BOOKING_URL, {
+        method : 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body   : JSON.stringify({ action:'check_availability', day })
+      });
+      const data    = await res.json();
+      const payload = (Array.isArray(data) ? data[0] : data).data ?? data.body ?? data;
+      const free    = payload.slots ?? [];
 
       slotSelect.innerHTML = free.length
         ? '<option value="">Select a time</option>'
         : '<option value="">No slots available</option>';
 
-      free.forEach(s=>{
-        if(!s.startsWith(day)) return;
-        const t = s.slice(11,16);
+      free.forEach(s => {
+        if (!s.startsWith(day)) return;
+        const t = s.slice(11, 16);   // HH:MM
         slotSelect.insertAdjacentHTML('beforeend',
           `<option value="${s}">${t}</option>`);
       });
-    }catch{
+    } catch {
       slotSelect.innerHTML = '<option value="">Error loading slots</option>';
-    }finally{
+    } finally {
       slotSelect.disabled = false;
     }
   }
 
-  /* submit booking ---------------------------------------- */
-  async function submitBooking(e){
+  /* submit the booking */
+  async function submitBooking(e) {
     e.preventDefault();
-    flash('sending','Sending…',10_000);         // orange bar
+    flash('sending', 'Sending…', 10000);   // orange bar
 
     const payload = {
-      firstName:form.firstName.value,
-      lastName :form.lastName.value,
-      company  :form.company.value,
-      phone    :form.phone.value,
-      email    :form.email.value,
-      slot     :slotSelect.value,
-      pageUrl  :pageUrlIn.value,
-      timeZone :TIME_ZONE
+      firstName : form.firstName.value,
+      lastName  : form.lastName.value,
+      company   : form.company.value,
+      phone     : form.phone.value,
+      email     : form.email.value,
+      slot      : slotSelect.value,
+      pageUrl   : pageUrlIn.value,
+      timeZone  : TIME_ZONE
     };
 
-    try{
-      const res = await fetch(BOOKING_URL,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({action:'create_booking',...payload})
-                  });
+    try {
+      const res = await fetch(BOOKING_URL, {
+        method : 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body   : JSON.stringify({ action:'create_booking', ...payload })
+      });
 
-      if(res.ok){
+      if (res.ok) {
         form.reset();
-        slotSelect.innerHTML =
-          '<option value="">Pick a day first</option>';
-        flash('success','Your meeting is confirmed. Check your inbox.');
-      }else if(res.status===409){
-        flash('error','That time has just been taken. Please choose another.');
-        fetchTimes();
-      }else{
-        flash('error','An error occurred. Please try again later.');
+        slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+        flash('success', 'Your meeting is confirmed. Check your inbox.');
+      } else if (res.status === 409) {
+        flash('error', 'That time has just been taken. Please choose another.');
+        fetchTimes();               // refresh slots
+      } else {
+        flash('error', 'An error occurred. Please try again later.');
       }
-    }catch{
-      flash('error','Could not reach the server. Try again later.');
+    } catch {
+      flash('error', 'Could not reach the server. Try again later.');
     }
   }
 });
 </script>
+
 
 <div class="mobile-bottom-buttons">
   <a href="tel:+447479277657" class="mobile-btn call-btn">
