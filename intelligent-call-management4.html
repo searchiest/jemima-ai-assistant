@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Live Call Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── look & feel ───────────────────────────────────────── */
+:root{--purple:#4f46e5;--purple-dark:#3b41b3;--error:#e11d48}
+body{margin:0;padding:2rem;text-align:center;font-family:Poppins,sans-serif;background:#f7f8fc}
+button{padding:.7rem 1.2rem;font-size:1rem;color:#fff;background:var(--purple);border:0;border-radius:.5rem;cursor:pointer;transition:.18s}
+button:disabled{background:#9ca3af;cursor:not-allowed}
+
+/* ─── modal ─────────────────────────────────────────────── */
+.modal-bg{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(30,34,70,.38);z-index:2000;animation:fade .25s}
+.modal-dialog{background:#fff;border-radius:24px;box-shadow:0 14px 40px rgba(0,0,0,.15);width:90%;max-width:380px;padding:2rem 1.5rem;animation:pop .3s;position:relative}
+.modal-close{all:unset;position:absolute;top:.8rem;right:1.1rem;font-size:1.7rem;cursor:pointer;color:#000}
+.modal-dialog input{width:100%;padding:.8rem;font-size:1rem;border:1.5px solid #d4d4fd;border-radius:9px;margin:.8rem 0;transition:border .18s}
+.modal-dialog input:focus{border-color:var(--purple);outline:none}
+.modal-dialog input.invalid{border-color:var(--error);background:#fff1f2}
+.tooltip{display:none;color:var(--error);font-size:.85rem;margin-top:-.4rem;text-align:left}
+#status{margin-top:1rem;font-weight:600;font-size:1rem;color:var(--purple)}
+@media(max-width:480px){.modal-dialog{max-width:95vw}}
+
+@keyframes pop{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+
+<h1>Live Call Demo</h1>
+<button id="openModalBtn">Live Call Demo</button>
+
+<!-- modal ------------------------------------------------- -->
+<div id="callModal" class="modal-bg">
+  <div class="modal-dialog">
+    <button class="modal-close">&times;</button>
+    <h2 style="margin:0 0 .7rem">Try a Live Call</h2>
+
+    <form id="callForm" novalidate>
+      <input type="email" id="email" placeholder="Work e-mail" required>
+      <div id="emailTip" class="tooltip">Enter a valid e-mail</div>
+
+      <input type="tel" id="sms" placeholder="SMS phone (+44 …)" required
+             pattern="^\\+?\\d[\\d\\s]{6,}$">
+      <div id="smsTip"  class="tooltip">Enter a valid mobile</div>
+
+      <button id="callBtn" type="button" disabled>Start Call</button>
+      <div id="status"></div>
+    </form>
+  </div>
+</div>
+
+<!-- Twilio Voice SDK (ESM build) -->
+<script type="module" src="https://jemima.ai/voice/assets/index-DdEqXFKb.js"></script>
+
+<script type="module">
+import { Device }  from 'https://cdn.jsdelivr.net/npm/@twilio/voice-sdk@2.8.0/dist/voice.esm.js';
+
+/* ----- configuration ----- */
+const TOKEN_URL   = 'https://YOUR-FUNCTION.example.com/token';      // ← change
+const N8N_WEBHOOK = 'https://YOUR-N8N.example.com/webhook/live';   // ← change
+const TO_NUMBER   = '+441174632514';
+
+/* ----- Twilio device init (runs quietly in the background) ----- */
+let device, currentCall=null;
+(async()=>{
+  try{
+    const { token } = await (await fetch(TOKEN_URL)).json();
+    device = new Device(token,{enableIceRestart:true,logLevel:1});
+    await device.register();
+    console.log('Twilio device ready');
+  }catch(e){ console.error('Device setup fail:',e) }
+})();
+
+/* ----- DOM handles ----- */
+const modal       = document.getElementById('callModal');
+const openBtn     = document.getElementById('openModalBtn');
+const closeBtn    = modal.querySelector('.modal-close');
+const form        = document.getElementById('callForm');
+const emailIn     = document.getElementById('email');
+const smsIn       = document.getElementById('sms');
+const emailTip    = document.getElementById('emailTip');
+const smsTip      = document.getElementById('smsTip');
+const callBtn     = document.getElementById('callBtn');
+const statusBox   = document.getElementById('status');
+
+/* ----- helpers ----- */
+const showModal=()=>{ modal.style.display='flex' };
+const hideModal=()=>{ modal.style.display='none' };
+const valid    = ()=> emailIn.validity.valid && smsIn.validity.valid;
+const setTips  = ()=>{
+  emailTip.style.display = emailIn.validity.valid? 'none':'block';
+  smsTip.style.display   = smsIn.validity.valid  ? 'none':'block';
+};
+const setStatus = txt => statusBox.textContent = txt;
+
+/* ----- UI events ----- */
+openBtn .onclick = showModal;
+closeBtn.onclick = hideModal;
+window.addEventListener('click',e=>{ if(e.target===modal) hideModal() });
+
+[emailIn,smsIn].forEach(inp=>{
+  inp.addEventListener('input',()=>{
+    callBtn.disabled = !valid();
+    setTips();
+  });
+});
+
+/* ----- call logic ----- */
+async function startCall(){
+  if(!device){ alert('Voice device not ready'); return }
+  /* send to n8n ------------------------------------------------ */
+  try{
+    await fetch(N8N_WEBHOOK,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:emailIn.value,sms:smsIn.value,url:location.href,ts:new Date().toISOString()})
+    });
+  }catch(e){ console.warn('n8n webhook failed',e) }
+
+  /* connect ---------------------------------------------------- */
+  try{
+    setStatus('Connecting…');
+    currentCall = await device.connect({To:TO_NUMBER});
+    callBtn.textContent='End Call'; setStatus('Call Connected');
+
+    currentCall.on('disconnect', resetAfterCall);
+  }catch(err){ console.error(err); setStatus('Error') }
+}
+
+function endCall(){ currentCall?.disconnect() }
+
+function resetAfterCall(){
+  currentCall=null;
+  callBtn.textContent='Start Call';
+  setStatus('');
+}
+
+callBtn.onclick = ()=> currentCall ? endCall() : startCall();
+
+/* autofill safety (on load) */
+callBtn.disabled = !valid();
+});
+</script>
+</body>
+</html>

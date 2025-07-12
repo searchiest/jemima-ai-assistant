@@ -332,6 +332,11 @@
     <p>Enter your work email address and an SMS capable phone number to receive a call report when the call ends.</p>
     <form id="callForm">
       <div class="modal-form-group">
+      <label for="firstName">First name</label>
+      <input type="text" id="firstName" placeholder="Enter your first name" required />
+      <div class="tooltip" id="first-tooltip" style="display:none;">Please enter your first name</div>
+      </div>
+      <div class="modal-form-group">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="Enter your email" required />
         <div class="tooltip" id="email-tooltip" style="display: none;">Please enter a valid email address</div>
@@ -355,45 +360,68 @@
 document.addEventListener('DOMContentLoaded', function () {
   const closeModalBtn  = document.querySelector('.modal-close');
   const callModal      = document.getElementById('callModal');
+  const firstNameInput = document.getElementById('firstName');
+ const firstNameTooltip = document.getElementById('first-tooltip');
   const emailInput     = document.getElementById('email');
   const smsInput       = document.getElementById('sms');
   const emailTooltip   = document.getElementById('email-tooltip');
   const smsTooltip     = document.getElementById('sms-tooltip');
   const callBtnModal   = document.getElementById('callBtnModal');
 
-  /* ➊  ADD this line ------------------------------------ */
   const N8N_WEBHOOK = 'https://jemima-ai.app.n8n.cloud/webhook/live-call-demo';
 
-  /* … your existing validate / tooltip code remains … */
+  /* ---------- helper functions ------------------------- */
+  function validateForm () {
+    const allGood = firstNameInput.value.trim().length > 1 &&
+                    emailInput  .validity.valid   &&
+                    smsInput    .validity.valid;
+    callBtnModal.disabled = !allGood;
+  }
 
-  /* ---------- CLICK ⇒ send to n8n then start call ------- */
-  callBtnModal.addEventListener('click', async function () {
-    if (callBtnModal.disabled) return;           // safety
+  function showTooltips () {
+ firstNameTooltip.style.display =firstNameInput.value.trim().length > 1 ? 'none' : 'block';   // ← add this
+    emailTooltip.style.display = emailInput.validity.valid ? 'none' : 'block';
+    smsTooltip  .style.display = smsInput  .validity.valid ? 'none' : 'block';
+  }
 
-    /* ➋  NEW: send the payload to n8n -------------------- */
+  /* ---------- live validation -------------------------- */
+  [firstNameInput, emailInput, smsInput].forEach(el =>
+    el.addEventListener('input', () => {
+      validateForm();
+      showTooltips();
+    })
+  );
+
+  /* ---------- CLICK ⇒ send to n8n then start call ------ */
+  callBtnModal.addEventListener('click', async () => {
+    if (callBtnModal.disabled) return;             // safety net
+
     try {
       await fetch(N8N_WEBHOOK, {
         method : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body   : JSON.stringify({
-          email : emailInput.value.trim(),
-          sms   : smsInput.value.trim(),
-          url   : location.href,
-          ts    : new Date().toISOString()
+          firstName : firstNameInput.value.trim(), // <-- NEW field
+          email     : emailInput    .value.trim(),
+          sms       : smsInput      .value.trim(),
+          url       : location.href,
+          ts        : new Date().toISOString()
         })
       });
-      console.log('✔ Data sent to n8n');
+      console.log('✔ data sent to n8n');
     } catch (err) {
-      console.warn('❌ Could not send to n8n', err);
-      /* Optional: show a message to the user here */
+      console.warn('❌ could not reach n8n', err);
     }
 
-    /* ➌  Your original call-start logic follows ---------- */
     console.log('Starting the call…');
-    // … existing Twilio-Device code goes here …
+    /* your existing Twilio-Device logic goes here */
   });
+
+  /* initial state --------------------------------------- */
+  validateForm();
 });
 </script>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
