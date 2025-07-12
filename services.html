@@ -454,7 +454,6 @@ header{
   }
 }
 
-
 /* Optional: add space at the bottom so content is not hidden by buttons */
 @media (max-width: 576px) {
   body {
@@ -462,6 +461,20 @@ header{
   }
 }
 
+/* mobile padding from screen sides */
+@media (max-width: 768px) {
+  .description-text {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* mobile menu top border */
+@media (max-width: 768px) {
+  nav ul {
+    top: 75px !important;
+  }
+}
 
 </style>
 <style>
