@@ -2185,6 +2185,12 @@ p{
 /* ========== very small screens (up to 380 px) ========== */
 @media (max-width: 380px) {
 
+/* keep the bar thinner here too, if you wish */
+
+  .top-bar,
+  .top-bar .nav-container {height: 50px;}  /* was 80 px */
+  header                  {margin-top: 40px;}
+
   /* 1. chat card uses almost the whole width */
   .hero-chat       {width: 90%;}
 
