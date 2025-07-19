@@ -2157,7 +2157,47 @@ p{
 }
 </style>
 
+<style>
+/* ========== general mobile (up to 991 px) ========== */
+@media (max-width: 991px) {
 
+  /* 1. wider chat card */
+  .hero-chat       {width: 95%; max-width: 100%;}
+
+  /* 2. shorter top bar */
+  .top-bar,
+  .top-bar .nav-container {height: 60px;}
+
+  /* 3. pull page content up to match */
+  header            {margin-top: 60px;}
+
+  /* 4. drawer menu now sits under the new bar height */
+  .top-bar .nav-links {top: 60px;}
+}
+
+/* ========== very small screens (up to 380 px) ========== */
+@media (max-width: 380px) {
+
+  /* 1. chat card uses almost the whole width */
+  .hero-chat       {width: 98%;}
+
+  /* 2. make the bar even slimmer */
+  .top-bar,
+  .top-bar .nav-container {height: 50px;}
+
+  header            {margin-top: 50px;}
+  .top-bar .nav-links {top: 50px;}
+}
+
+/* ========== desktop (992 px and above) ========== */
+/* keep the bar thinner here too, if you wish */
+@media (min-width: 992px) {
+  .top-bar,
+  .top-bar .nav-container {height: 70px;}  /* was 80 px */
+  header                  {margin-top: 70px;}
+}
+
+</style>
 
 
     <script>
