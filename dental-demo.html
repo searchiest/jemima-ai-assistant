@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrightSmile Dental Care | Your Trusted Family Dentist</title>
+    <meta name="description" content="Professional dental care for the whole family. Pain-free treatments, advanced technology, and compassionate care in a comfortable environment.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a9df4;
+            --primary-dark: #187bcd;
+            --secondary: #f8f9fa;
+            --accent: #ff7e33;
+            --text: #333333;
+            --text-light: #6c757d;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            color: var(--white);
+        }
+        
+        .header-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 90%; /* 50 % from the left, 20 % from the top */
+            z-index: -1;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .header-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        
+        nav.scrolled .nav-logo {
+            color: var(--primary);
+        }
+        
+        nav.scrolled .nav-link {
+            color: var(--text);
+        }
+        
+        nav.scrolled .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        nav.scrolled .btn {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        nav.scrolled .btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .nav-logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #ff6a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+        
+        /* Main Content Sections */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* About Section */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .about-content p {
+            margin-bottom: 20px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: var(--secondary);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .header-content h1 {
+                font-size: 3rem;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-content h1 {
+                font-size: 4rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <style>
+
+
+/* The header stays as the main holder */
+header{
+    position: relative;
+    height: 80vh;          /* adjust to suit your design */
+    min-height: 600px;
+    overflow: hidden;      /* safety net */
+}
+
+/* This is the visible “window” for the video */
+.video-window{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;          /* same height as the header */
+    overflow: hidden;      /* hides anything outside the window */
+}
+
+/* Move the video inside the window */
+.header-video{
+    position: absolute;
+    top: -80px;            /* slide up to push the watermark off‑screen */
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: cover;     /* fills the window while keeping aspect */
+}
+    </style>
+
+<style>
+/* ----------  Top bar  ---------- */
+.top-bar{
+    position: fixed;          /* stays at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    z-index: 1000;
+    transition: box-shadow 0.3s ease;
+}
+
+.top-bar .nav-logo{
+    color: var(--primary);
+}
+
+.top-bar .nav-link{
+    color: var(--text);
+}
+
+.top-bar .nav-link:hover{
+    color: var(--primary);
+}
+
+.top-bar .btn{
+    background: var(--accent);
+    color: var(--white);
+}
+
+.top-bar .btn:hover{
+    background: var(--primary-dark);
+}
+
+/* add a little extra shadow when the page scrolls */
+.top-bar.scrolled{
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+/* ----------  Hero under the bar  ---------- */
+header{
+    margin-top: 80px;          /* height of the bar (adjust if you change padding) */
+}
+
+/* make sure the video still fills its area */
+.header-video{
+    object-fit: cover;
+}
+
+</style>
+
+<style>
+/* ====== Top navigation alignment ====== */
+
+.top-bar {                 /* the bar itself */
+    display: flex;
+    align-items: center;   /* centre everything vertically */
+    height: 80px;          /* sets a clear bar height */
+}
+
+.top-bar .nav-container {  /* inner flex wrapper you already use */
+    display: flex;
+    align-items: center;   /* makes sure logo + list sit on same line */
+}
+
+/* make the unordered list a flex row and centre its items */
+.top-bar .nav-links {
+    display: flex;
+    align-items: center;   /* keep anchors and button level */
+    gap: 20px;             /* even spacing, replace old margin‑left */
+    list-style: none;
+    margin: 0;             /* reset any browser default */
+    padding: 0;
+}
+
+/* anchors inside the list */
+.top-bar .nav-link {
+    display: inline-block;
+    padding: 0x 0;       /* balances the button’s vertical padding */
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text);
+}
+
+/* call button inside the list */
+.top-bar .btn {
+    padding: 10px 30px;    /* match the anchor line‑height above */
+    margin-left: 0;        /* gap now handled by flex‑box gap */
+}
+</style>
+
+<style>
+
+/* ----------  Two‑column hero layout  ---------- */
+.header-flex{
+    display: flex;
+    align-items: centre;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.hero-left
+{
+    flex: 1 1 50%;
+    padding: 0px;
+}
+
+.hero-chat{
+    flex: 1 1 50%;
+    padding: 0px;
+}
+
+/* limit chat width so it never dwarfs the text */
+.hero-chat{
+    max-width: 430px;
+    display: flex;
+    align-items: centre;
+    justify-content: centre;
+}
+
+/* ----------  Chat card  ---------- */
+.chat-card{
+    width: 100%;
+    background: rgba(255,255,255,0.40);
+    backdrop-filter: blur(8px);
+    border-radius: 25px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* top row */
+.chat-header{
+    display: flex;
+    align-items: centre;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.chat-avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-title h3{
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.chat-role{
+    display: inline-block;
+    margin-top: 5px;
+    padding: 4px 10px;
+    background: #edf1f5;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+.chat-call{
+    display: flex;
+    flex-direction: column;
+    align-items: centre;
+    justify-content: centre;
+    width: 60px;
+    height: 60px;
+    background: #e31919;
+    colour: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.chat-call span{
+    font-size: 0.7rem;
+    margin-top: 3px;
+}
+
+/* messages */
+.chat-messages{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.msg{
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.msg.bot{
+    background: #ffffff;
+}
+
+.msg.bot.fade{
+    background: linear-gradient(to right, #eef3ff, #ffffff);
+}
+
+.msg.user{
+    background: #2a9df4;
+    colour: #ffffff;
+    align-self: flex-start;      /* aligns left as per screenshot */
+}
+
+/* input */
+.chat-input{
+    display: flex;
+    align-items: centre;
+    gap: 10px;
+    border: 2px solid #ffffff;
+    border-radius: 12px;
+    padding: 6px 10px;
+}
+
+.chat-input input{
+    flex: 1;
+    border: none;
+    background: rgba(255,255,255,0);
+    font-size: 0.95rem;
+    padding: 12px 6px;
+    colour: #fff;
+}
+
+.chat-input button{
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    background: #2a9df4;
+    colour: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* suggestions */
+.chat-suggest p{
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.chat-suggest button{
+    background: #2a9df4;
+    colour: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 6px;
+}
+
+/* put this near the end of your CSS, before the first @media query */
+.header-flex{
+    position: relative;   /* creates a new stacking context */
+    z-index: 2;           /* higher than the overlay’s 0 ‑‑ now on top */
+}
+
+/* ----------  Responsive  ---------- */
+@media(max-width: 992px){
+    .header-flex{
+        flex-direction: column;
+        text-align: centre;
+    }
+    .hero-left,
+    .hero-chat{
+        flex: unset;
+        max-width: 100%;
+    }
+    .hero-chat{
+        margin-top: 40px;
+    }
+}
+</style>
+
+<style>
+/* --- fix start --- */
+
+/* 1. Replace every 'centre' typo with 'center' */
+.header-flex,
+.hero-chat,
+.chat-header,
+.chat-call{
+    align-items: center;
+    justify-content: center;   /* only for .hero-chat and .chat-call */
+}
+
+/* 2. Make the two‑column layout consistent */
+.header-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    gap: 40px;
+}
+
+/* 3. Keep the chat card readable */
+.chat-card{
+    background: rgba(255,255,255,0.40);   /* slightly less see‑through */
+    backdrop-filter: blur(6px);
+}
+
+/* 4. Avatar and title row */
+.chat-avatar{
+    flex-shrink: 0;
+}
+
+.chat-title h3{
+    colour: var(--text);
+}
+
+.chat-role{
+    background: #f0f2f6;
+    colour: var(--text-light);
+}
+
+/* 5. Call button */
+.chat-call{
+    width: 58px;
+    height: 58px;
+    background: #e31b1b;
+    color: #fff;
+}
+
+/* 6. Chat bubbles – add text colour so white text shows on white bubble */
+.msg{
+    colour: var(--text);
+}
+
+.msg.user{
+    colour: #000;
+    align-self: flex-end;      /* user bubble on the right */
+}
+
+/* 7. Suggestion buttons */
+.chat-suggest button{
+    margin-right: 8px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+/* 8. Header overlay – lighten a touch so hero text pops */
+.header-overlay{
+    background: rgba(0,0,0,0.35);
+}
+
+/* --- fix end --- */
+
+</style>
+
+<style>
+/* make text in light‑coloured chat bubbles dark */
+.msg:not(.user){
+    color: #000;   /* or use #222 for near‑black */
+}
+</style>
+
+<style>
+/* --- force name, role and heading text to solid black --- */
+
+.chat-role
+{
+    color: #000;   /* pure black */
+}
+.chat-title h3
+p{
+    color: #000;   /* pure black */
+}
+.chat-suggest 
+p{
+    color: #fff;   /* pure black */
+}
+</style>
+<style>
+/* chat input – make both typed text and placeholder white */
+.chat-input input{
+    color: #ffffff;                /* typed text */
+}
+
+.chat-input input::placeholder{
+    color: rgba(255,255,255,0.8);  /* placeholder text, 80 % white */
+}
+</style>
+<style>
+/* hero‑left text in white */
+.hero-left *{
+    color: #ffffff !important;   /* headline, paragraph, links, button text */
+}
+
+/* keep the outline button visible */
+.hero-left .btn-outline{
+    border-color: #ffffff !important;
+}
+
+</style>
+<style>
+/* make the paper‑plane icon white */
+.chat-input button i,
+.fas.fa-paper-plane{
+    color: #ffffff !important;   /* solid white */
+}
+</style>
+
+<style>
+/* ---------- larger hero text on desktop ---------- */
+@media (min-width: 1200px) {   /* fires on large laptops and bigger */
+
+    .hero-left h1{
+        font-size: 4rem;      /* much larger heading */
+        line-height: 1.1;
+        margin-bottom: 20px;
+    }
+
+    .hero-left p{
+        font-size: 1.2rem;    /* bigger supporting text */
+    }
+
+    .hero-left .btn{
+        padding: 16px 44px;   /* scale the buttons so they match */
+        font-size: 1.05rem;
+    }
+    .chat-avatar{
+        margin-right: 20px;
+    }
+    .nav-logo{
+        font-size: 2.4rem;
+        font-weight: 900;
+    }
+}
+</style>
+<style>
+/* align the avatar, name and role to the left */
+.chat-header{
+    display:flex;             /* keeps items in a row */
+    align-items:center;       /* vertical centre on the avatar */
+    justify-content:flex-start !important;  /* <— key change */
+    gap:15px;                 /* same spacing as before */
+}
+
+.chat-title{
+    text-align:left;          /* makes 'Jemima' and the role label left‑aligned */
+}
+</style>
+<style>
+/* ===== MOBILE & TABLET ADJUSTMENTS ===== */
+@media (max-width: 991px) {
+
+    /* 1.  Keep the menu readable */
+    .top-bar .nav-links{
+        display:none;          /* hide full menu */
+    }
+
+    /* 2.  Headline and paragraph back to sensible size */
+    .hero-left h1{
+        font-size:2.2rem;      /* fits small screens */
+        line-height:1.2;
+    }
+    .hero-left p{
+        font-size:1rem;
+    }
+
+    /* 3.  Stack hero content – chat below the text */
+    .header-flex{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+    }
+    .hero-chat{
+        max-width:90%;
+        margin-top:40px;
+    }
+
+    /* 4.  Give the chat card its own background so it stands out */
+    .chat-card{
+        background:rgba(255,255,255,0.95);
+        backdrop-filter:none;  /* remove blur on low‑power mobiles */
+    }
+}
+
+/* ===== DESKTOP ONLY ===== */
+@media (min-width: 992px){
+
+    /* larger headline only on wide screens */
+    .hero-left h1{
+        font-size:5rem;
+        line-height:1.1;
+    }
+    .hero-left p{
+        font-size:1.6rem;
+    }
+    .hero-left .btn{
+        padding:16px 44px;
+        font-size:1.05rem;
+    }
+}
+</style>
+<style>
+/* ---------- mobile tweaks (≤ 991 px) ---------- */
+@media (max-width: 991px){
+
+    /*  a) hide paragraph, shrink headline  */
+    .hero-left p{display:none;}
+    .hero-left h1{
+        font-size:2.2rem;
+        line-height:1.15;
+        text-align:center;
+    }
+
+    /*  b) move chat card over the video  */
+    .header-flex{
+        position:relative;          /* forms a stacking context */
+        flex-direction:column;      /* text first, chat second in the dom */
+        align-items:center;
+    }
+    .hero-chat{
+        position:absolute;          /* floats over the film */
+        top:55%;                    /* adjust to taste */
+        left:50%;
+        transform:translate(-50%,-50%);
+        max-width:90%;
+        margin:0;
+        z-index:3;
+    }
+    .chat-card{
+        background:rgba(255,255,255,0.40); /* near‑solid for legibility */
+        backdrop-filter:none;              /* spare mobile GPUs */
+    }
+
+    /*  c) hamburger styles  */
+    .hamburger{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        width:28px;
+        height:22px;
+        background:none;
+        border:0;
+        cursor:pointer;
+        padding:0;
+    }
+    .hamburger span{
+        width:100%;
+        height:3px;
+        background:var(--text);
+        border-radius:2px;
+        transition:all .3s ease;
+    }
+
+    /*                nav links hidden by default               */
+    .top-bar .nav-links{
+        position:fixed;
+        top:80px;                   /* just under the bar */
+        right:-100%;                /* off‑canvas */
+        width:70%;
+        max-width:240px;
+        height:calc(100% - 80px);
+        background:var(--white);
+        flex-direction:column;
+        gap:24px;
+        padding:40px 20px;
+        transition:right .3s ease;
+        box-shadow:-4px 0 10px rgba(0,0,0,.1);
+    }
+
+    /*  show links when .open  */
+    .top-bar .nav-links.open{right:0;}
+
+    /*  animate hamburger to an X when open  */
+    .hamburger.open span:nth-child(1){
+        transform:translateY(9px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){
+        transform:translateY(-9px) rotate(-45deg);
+    }
+}
+</style>
+
+<style>
+/* fill the whole viewport on phones */
+@media (max-width: 991px){
+    header{
+        height:100vh;           /* header now as tall as the screen */
+        margin-top:0;           /* remove the desktop offset */
+    }
+
+    .video-window,
+    .header-video{
+        width:100%;
+        height:100vh;           /* stretch to the full height */
+        object-fit:cover;       /* keep the video cropped, not squashed */
+        object-position:center; /* centre the focus point */
+    }
+}
+</style>
+<style>
+/* ---------- mobile tidy‑up (≤ 991 px) ---------- */
+@media (max-width: 991px){
+
+    /* 1. lift the chat card nearer the logo */
+    .hero-chat{
+        top:40%;                     /* was 55 % – move it up */
+        transform:translate(-50%,-40%);
+    }
+
+    /* 2. make all plain text inside the card black for good contrast */
+    .chat-card,
+    .chat-card h3,
+    .chat-card p,
+    .chat-role,
+    .msg.bot{
+        color:#000;                  /* solid black */
+    }
+
+    /* the user bubble still needs white text */
+    .msg.user{color:#fff;}
+
+    /* 3. shrink the suggestion buttons */
+    .chat-suggest button{
+        display:inline-block;        /* no full‑width bars */
+        font-size:.9rem;
+        padding:8px 16px;
+        border-radius:10px;
+        margin:6px 6px 12px 0;       /* tighter spacing */
+    }
+}
+</style>
+<style>
+/* keep the H1 clear of the top bar */
+@media (max-width: 991px){
+    .header-flex{            /* whole hero row */
+        padding-top: 90px;   /* 80 px bar + 10 px breathing room */
+    }
+}
+</style>
+<style>
+@media (max-width: 991px){
+    /* move the chat card lower so it no longer overlaps the headline */
+    .hero-chat{
+        top: 50%;                 /* try 55‑60 %. Fine‑tune to taste */
+    }
+}
+</style>
+<style>
+/* ===== extra mobile polish ===== */
+@media (max-width: 991px){
+
+    /* 1. move the chat card lower so it clears the heading */
+    .hero-chat{
+        top: 56%;                     /* adjust ±2 % if you need */
+        transform: translate(-50%, -50%);
+    }
+
+    /* 2. make the name and the Chat Suggestions heading white */
+    .chat-title h3,
+    .chat-suggest p{
+        color: #ffffff !important;
+    }
+
+    /* 3. show a white strip under the video instead of grey */
+    header::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;                /* height of the strip */
+        background: #ffffff;
+        z-index: 2;                  /* above the overlay, below nav */
+    }
+}
+</style>
+
+
+
+</head>
+<body>
+
+<!-- Top bar -->
+<nav id="navbar" class="top-bar">
+  <div class="container nav-container">
+
+    <a href="index.html" class="nav-logo">Bright<span>Smile</span></a>
+
+    <!-- mobile button, hidden on desktop -->
+    <a href="tel:+18005551234" class="btn appt-btn">Appointments</a>
+
+    <button id="hamburger" class="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links">
+      <li><a href="#home"           class="nav-link">General Dentistry</a></li>
+      <li><a href="#about"          class="nav-link">Cosmetic Dentistry</a></li>
+      <li><a href="#testimonials"   class="nav-link">Orthodontics</a></li>
+
+      <!-- desktop button, hidden on mobile -->
+      <li class="desktop-btn">
+        <a href="tel:+18005551234" class="btn">Appointments</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+
+
+
+<header id="home">
+    <div class="header-overlay"></div>
+    <video autoplay muted playsinline class="header-video">
+        <source src="dentist.mp4" type="video/mp4">
+    </video>
+
+    <div class="container header-flex">
+        <!-- LEFT : existing headline and buttons -->
+        <div class="hero-left">
+            <h1>Beautiful, Healthy Smiles That Last a Lifetime</h1>
+            <p>Our compassionate dental team provides personalised, gentle care using the latest technology to ensure your complete comfort and satisfaction.</p>
+        </div>
+
+<!-- RIGHT : chat card -->
+<div class="hero-chat">
+  <div class="chat-card">
+
+    <!-- header -->
+    <div class="chat-header">
+      <img src="jemima-dental.png" class="chat-avatar" alt="Jemima">
+      <div class="chat-title">
+        <h3>Jemima</h3>
+        <span class="chat-role">Dental Practice Manager</span>
+      </div>
+    </div>
+
+    <!-- messages (this is the ONLY scrollable pane) -->
+    <div id="chat-body" class="chat-messages">
+      <div class="msg bot">
+        I am available&nbsp;24/7 to answer questions about the practice and help with booking appointments.
+      </div>
+    </div>
+
+    <!-- input row -->
+    <form class="chat-input" onsubmit="sendMessage(); return false;">
+      <input id="chat-input" placeholder="Ask me about our services" required>
+      <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
+    </form>
+
+    <!-- suggestions -->
+    <div class="quick-links-wrapper">
+      <div id="chat-quick-links" class="quick-links-list">
+        <a href="#" class="qlink" data-msg="When is the next available check-up appointment">Next available check-up</a>
+        <a href="#" class="qlink" data-msg="When is the next available hygene appointment">Next available hygene</a>
+        <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Dental Services</h2>
+                <p>We offer comprehensive dental care for the whole family, from routine cleanings to advanced cosmetic and restorative treatments.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <h3>General Dentistry</h3>
+                    <p>Regular checkups, cleanings, fillings, and preventive care to maintain optimal oral health for you and your family.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-teeth"></i>
+                    </div>
+                    <h3>Cosmetic Dentistry</h3>
+                    <p>Transform your smile with teeth whitening, veneers, bonding, and other aesthetic treatments to boost your confidence.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-implant"></i>
+                    </div>
+                    <h3>Dental Implants</h3>
+                    <p>Permanent solution for missing teeth that look, feel, and function like natural teeth with a success rate over 95%.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-braces"></i>
+                    </div>
+                    <h3>Orthodontics</h3>
+                    <p>Traditional braces and clear aligners to correct misaligned teeth and improve both function and appearance.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-teeth-open"></i>
+                    </div>
+                    <h3>Restorative Dentistry</h3>
+                    <p>Crowns, bridges, and dentures to restore damaged or missing teeth and regain full dental function.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-sedative"></i>
+                    </div>
+                    <h3>Sedation Dentistry</h3>
+                    <p>Safe sedation options available for patients with dental anxiety or those undergoing complex procedures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>Why Choose Our Dental Practice</h2>
+                    <p>At BrightSmile Dental Care, we believe everyone deserves a healthy, beautiful smile. Our team of experienced dental professionals is committed to providing the highest quality care in a warm, welcoming environment.</p>
+                    <p>We utilize state-of-the-art technology including digital X-rays, intraoral cameras, and laser dentistry to ensure precise diagnoses and comfortable treatments with faster recovery times.</p>
+                    <p>Our patient-centered approach means we take the time to listen to your concerns, explain all treatment options, and work with you to develop a personalized care plan that fits your needs and budget.</p>
+                    <a href="#contact" class="btn">Meet Our Team</a>
+                </div>
+                <div class="about-image">
+                    <img src="images/dental-team.jpg" alt="Our dental team">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Patients Say</h2>
+                <p>Don't just take our word for it - hear from our satisfied patients about their experiences at our practice.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <p>"I used to dread going to the dentist, but the team at BrightSmile completely changed my perspective. They're gentle, thorough, and really care about their patients. My smile has never looked better!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="images/testimonial-1.jpg" alt="Sarah J.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <p>Patient for 5 years</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <p>"The dental implant procedure was explained to me in detail and went smoother than I expected. A year later, it feels and functions just like my natural tooth. Highly recommend this practice!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="images/testimonial-2.jpg" alt="Michael T.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael T.</h4>
+                            <p>Dental Implant Patient</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <p>"We bring our whole family here. The kids actually look forward to their dental visits because the staff makes it such a positive experience. The office is modern and clean, and they run on time."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="images/testimonial-3.jpg" alt="The Wilson Family">
+                        </div>
+                        <div class="author-info">
+                            <h4>The Wilson Family</h4>
+                            <p>Family Patients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready for Your Best Smile?</h2>
+            <p>Schedule your appointment today and experience the difference at BrightSmile Dental Care. New patients receive a complimentary consultation and teeth whitening special.</p>
+            <a href="tel:+18005551234" class="btn"><i class="fas fa-phone-alt"></i> Call (800) 555-1234</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <a href="index.html" class="footer-logo">Bright<span>Smile</span></a>
+                    <p>Providing exceptional dental care with compassion and advanced technology since 2005. Your smile is our priority.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">General Dentistry</a></li>
+                        <li><a href="#">Cosmetic Dentistry</a></li>
+                        <li><a href="#">Dental Implants</a></li>
+                        <li><a href="#">Orthodontics</a></li>
+                        <li><a href="#">Restorative Care</a></li>
+                        <li><a href="#">Sedation Dentistry</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Dental Avenue, Suite 100<br>Anytown, ST 12345</p>
+                    <p><i class="fas fa-phone-alt"></i> (800) 555-1234</p>
+                    <p><i class="fas fa-envelope"></i> info@brightsmiledental.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 8am - 6pm<br>Sat: 9am - 3pm<br>Sun: Closed</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 BrightSmile Dental Care. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+<style>
+/* ───────── CHAT BOX POLISH – desktop & mobile ───────────── */
+
+/* 1 ▸ keep the chat column neat on desktop */
+@media (min-width: 992px){
+    .hero-chat{
+        flex: 0 0 380px;          /* fixed width next to the heading   */
+        max-width: 380px;
+        margin-left: auto;        /* stays flush right                 */
+    }
+    .ai-chat-box{
+        background: rgba(255,255,255,.40);   /* frosted glass look      */
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,.6);
+        box-shadow: 0 10px 35px rgba(0,0,0,.15);
+    }
+}
+
+/* 2 ▸ mobile: centre card over the video & give it solid bg */
+@media (max-width: 991px){
+    .hero-chat{
+        position: absolute;
+        top: 56%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        max-width: 90%;
+    }
+    .ai-chat-box{
+        background: rgba(255,255,255,.95);  /* legible on phones       */
+        backdrop-filter: none;              /* lighter on GPUs         */
+        border: none;
+    }
+}
+
+/* 3 ▸ bubbles & spacing */
+.chat-bubble   {margin: 0 0 12px 0;}
+.chat-bubble p {margin: 0; font-size: 1rem; line-height: 1.45;}
+
+.ai-bubble     {background:#f4f6ff; color:#000;}
+.user-bubble   {background:#2a9df4; color:#fff;}
+
+/* 4 ▸ suggestion pills a bit smaller */
+.quick-links-list .qlink{
+    font-size: .85rem;
+    padding: 8px 14px;
+    border-radius: 10px;
+}
+
+
+
+</style>  
+<style>
+
+/* ───────────── Chat widget facelift ───────────── */
+
+/* ---------- Card shell ---------- */
+.ai-chat-box{
+    background:rgba(255,255,255,.25);      /* frosted glass */
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.45);
+    border-radius:25px;
+    padding:24px;
+    box-shadow:0 12px 35px rgba(0,0,0,.18);
+}
+
+/* ---------- message stream ---------- */
+.chat-body{display:flex;flex-direction:column;gap:14px;}
+
+/* bubbles */
+.chat-bubble{
+    max-width:85%;
+    padding:14px 18px;
+    font-size:1rem;
+    line-height:1.45;
+    border-radius:20px;
+}
+
+/* AI reply */
+.ai-bubble{
+    background:#f6f8ff;
+    color:#000;
+    border-radius:20px 20px 20px 6px;
+}
+
+/* User reply */
+.user-bubble{
+    background:#2a9df4;
+    color:#fff;
+    border-radius:20px 20px 6px 20px;
+    align-self:flex-end;
+}
+
+/* ---------- input row ---------- */
+.chat-input-form{
+    margin-top:16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid rgba(255,255,255,.75);
+    background:rgba(255,255,255,.20);
+    border-radius:14px;
+    padding:6px 10px;
+}
+.chat-input-form textarea{
+    flex:1;
+    min-height:46px;
+    background:transparent;
+    border:none;
+    resize:none;
+    color:#fff;
+    font-size:1rem;
+    line-height:1.4;
+}
+.chat-input-form textarea::placeholder{color:rgba(255,255,255,.8);}
+.chat-input-form button{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:#2a9df4;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background .18s,transform .15s;
+}
+.chat-input-form button:hover{background:#187bcd;transform:translateY(-2px);}
+
+/* ---------- suggestion pills ---------- */
+.quick-links-title{
+    margin:24px 0 8px;
+    font-weight:600;
+    color:#fff;
+}
+.quick-links-list{display:flex;flex-wrap:wrap;gap:8px;}
+.quick-links-list .qlink{
+    background:#2a9df4;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:.9rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:background .18s,transform .15s;
+}
+.quick-links-list .qlink:hover{
+    background:#187bcd;
+    transform:translateY(-2px);
+}
+
+/* ---------- desktop column width ---------- */
+@media (min-width:992px){
+    .hero-chat       {flex:0 0 380px;max-width:380px;margin-left:auto;}
+}
+
+/* ---------- mobile tweaks ---------- */
+@media (max-width:991px){
+    .hero-chat       {top:56%;left:50%;transform:translate(-50%,-50%);max-width:90%;}
+    .ai-chat-box     {background:rgba(255,255,255,.95);backdrop-filter:none;border:none;}
+}
+
+
+</style>
+
+<style>
+
+/* put this after every other chat‑related style */
+
+/* 1.  cap the overall card height */
+.ai-chat-box,          /* if you kept the extra wrapper */
+.chat-card{            /* …or target the card directly */
+    display:flex;
+    flex-direction:column;
+    height:60vh;           /* ≈ 60 % of the viewport */
+    max-height:550px;      /* desktop guard‑rail */
+}
+
+/* 2.  let the message column expand & scroll */
+.chat-body{
+    flex:1 1 auto;         /* fill the leftover height */
+    overflow-y:auto;       /* vertical scroll when full */
+    padding-right:4px;     /* keeps text clear of scrollbar */
+    scroll-behavior:smooth;/* nice glide on new replies   */
+}
+
+/* optional – slimmer, prettier scrollbar (WebKit only) */
+.chat-body::-webkit-scrollbar{
+    width:6px;
+}
+.chat-body::-webkit-scrollbar-thumb{
+    background:rgba(0,0,0,.25);
+    border-radius:4px;
+}
+.chat-body::-webkit-scrollbar-thumb:hover{
+    background:rgba(0,0,0,.45);
+}
+
+</style>
+
+<style>
+/* ——— Hero chat ‑ max‑height + scroll behaviour ——————————— */
+
+/* 1 ▸ the card itself never grows taller than the viewport       */
+.hero-chat .chat-card{
+    display:flex;                 /* header │ messages │ input      */
+    flex-direction:column;
+    height:70vh;                  /* 70 % of screen; tweak if needed*/
+    max-height:600px;             /* desktop guard‑rail             */
+}
+
+/* 2 ▸ only the messages column scrolls                           */
+.hero-chat .chat-messages{
+    flex:1 1 auto;                /* fills the remaining space      */
+    overflow-y:auto;
+    padding:22px 24px 26px;       /* room around bubbles            */
+    scroll-behavior:smooth;
+}
+
+/* optional—nicer scrollbar (WebKit browsers)                     */
+.hero-chat .chat-messages::-webkit-scrollbar{width:6px;}
+.hero-chat .chat-messages::-webkit-scrollbar-thumb{
+    background:rgba(0,0,0,.25);
+    border-radius:4px;
+}
+.hero-chat .chat-messages::-webkit-scrollbar-thumb:hover{
+    background:rgba(0,0,0,.45);
+}
+
+/* 3 ▸ keep the input row tidy & on one line                       */
+.hero-chat .chat-input{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid rgba(255,255,255,.50);
+    border-radius:14px;
+    background:rgba(255,255,255,.18);
+    padding:8px 12px;
+}
+.hero-chat .chat-input input{
+    flex:1;
+    border:0;
+    background:transparent;
+    color:#fff;
+    min-height:44px;
+    max-height:110px;
+    resize:none;                  /* prevents sideways resize grab  */
+}
+.hero-chat .chat-input button{
+    flex:0 0 44px;
+    height:44px;
+    border:0;
+    border-radius:12px;
+    background:#2a9df4;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:background .2s;
+}
+.hero-chat .chat-input button:hover{background:#187bcd;}
+.hero-chat .chat-input button i{color:#fff;font-size:1.1rem;}
+
+/* ——— Mobile tweak ————————————————————————— */
+@media (max-width:575.98px){
+  .hero-chat .chat-card{height:65vh;}
+  .hero-chat .chat-input input{min-height:40px;}
+  .hero-chat .chat-input button{flex-basis:40px;height:40px;}
+}
+
+
+</style>
+<style>
+/* ── desktop: let the chat breathe ───────────────────────── */
+@media (min-width: 992px){          /* laptops and larger */
+  .hero-chat{
+    flex: 0 0 500px;                /* fixed basis 560px  */
+    max-width: 500px !important;    /* and hard cap      */
+  }
+}
+</style>
+
+<style>
+<style>
+/* ── Make the scrolling chat area fill the whole card width ───────── */
+.chat-messages{
+  width:100%            !important;   /* stretch edge‑to‑edge inside .chat-card */
+  padding-left:0        !important;   /* remove the temporary side padding      */
+  padding-right:0       !important;
+
+}
+</style>
+
+<style>
+/* —— remove focus border / outline on the chat textarea —— */
+#chat-input:focus{
+  border: none !important;     /* kill the inner black line   */
+  outline: none !important;    /* kill the thin white outline */
+  box-shadow: none !important; /* in case a shadow is applied */
+}
+</style>
+
+
+<style>
+/* ── remove the leftover left‑hand margin inside the chat pane ── */
+.chat-messages{
+  padding-left: 0 !important;   /* wipe the green strip */
+}
+
+/* make sure every bubble can hug that edge */
+.msg{ margin-left: 0 !important; }
+</style>
+
+<style>
+/* —— small screens —————————————————————————————— */
+@media (max-width: 991px){
+
+    /* move the video 40 px lower */
+    .header-video{
+        top: -40px;          /* was –80px */
+    }
+
+    /* move the chat card 20 px lower */
+    .hero-chat{
+        top: calc(56%);   /* was 56 % */
+    }
+}
+</style>
+
+<style>
+/* —— mobile: smaller suggestion buttons —— */
+@media (max-width: 991px){
+
+    /* make each pill slimmer */
+    .quick-links-list .qlink{
+        font-size: 0.75rem; /* smaller text */
+        padding: 6px 12px;  /* tighter padding */
+    }
+}
+</style>
+
+<style>
+/* ——— mobile navigation panel ——— */
+@media (max-width: 991px){
+
+    /* slide‑in drawer (already in your sheet) */
+    .top-bar .nav-links{
+        position: fixed;
+        top: 80px;                 /* sits under the bar           */
+        right: -100%;              /* kept off‑screen by default   */
+        width: 70%;
+        max-width: 240px;
+        height: calc(100% - 80px);
+        background: var(--white);
+        flex-direction: column;
+        gap: 24px;
+        padding: 40px 20px;
+        transition: right 0.3s ease;
+        box-shadow: -4px 0 10px rgba(0,0,0,.1);
+
+        /* hide by default on small screens */
+        display: none;             /* this is what blocks it       */
+    }
+
+    /* when the burger adds .open → show the panel */
+    .top-bar .nav-links.open{
+        right: 0;
+        display: flex;             /* override the line above      */
+    }
+}
+</style>
+<style>
+/* ——— button visibility & spacing ——— */
+@media (max-width: 991px){
+
+    /* hide the drawer version on small screens */
+    .desktop-btn{ display: none; }
+
+    /* show the new bar button and push it right */
+    .appt-btn{ display: inline-flex; margin-left: auto; }
+
+    /* keep a small gap before the hamburger */
+    .hamburger{ margin-left: 14px; }
+}
+
+@media (min-width: 992px){
+    /* hide the bar button on laptops and bigger */
+    .appt-btn{ display: none; }
+}
+</style>
+<style>
+/* —— phone / tablet top‑bar tidy‑up —— */
+@media (max-width: 991px){
+
+    /* same specificity as .top-bar .btn, so it wins */
+    .top-bar .appt-btn{
+        display: inline-flex;
+        font-size: 0.8rem;
+        padding: 6px 14px;   /* now takes effect */
+        border-radius: 20px;
+        margin-left: 6px;
+        flex: 0 0 auto;
+    }
+
+    /* 2. push the hamburger to the right edge */
+    .hamburger{
+        margin-left: auto;
+    }
+}
+
+</style>
+
+<style>
+/* —— phone / tablet bar layout —— */
+@media (max-width: 991px){
+
+    /* push the button and everything after it to the far right */
+    .top-bar .appt-btn{
+        margin-left: auto;       /* soaks up the spare space       */
+        font-size: 0.9rem;       /* keep the pill neat             */
+        padding: 6px 8px;
+        border-radius: 10px;
+        flex: 0 0 auto;          /* stop any stretch               */
+    }
+
+    /* small gap between pill and burger */
+    .top-bar .hamburger{
+        margin-left: 8px;
+    }
+}
+</style>
+
+
+<style>
+/* —— mobile: slightly smaller heading —— */
+@media (max-width: 991px){
+    .hero-left h1{
+        font-size: 1.9rem;   /* was 2.2 rem */
+        line-height: 1.15;   /* keeps the lines tidy */
+    }
+}
+
+</style>
+
+
+<style>
+/* —— mobile chat tidy‑up —— */
+@media (max-width: 991px){
+
+    /* 1. smaller type in all bubbles */
+    .chat-bubble{
+        font-size: 0.6rem;   /* was 1 rem */
+    }
+
+    /* 2. white AI bubble spans the card */
+    .ai-bubble,                /* if you use this class */
+    .msg.bot{                  /* or this one */
+        width: 100%;
+        max-width: 100%;
+        align-self: stretch;   /* removes the auto width limit */
+    }
+}
+</style>
+<style>
+/* ——— mobile: taller chat card & tidy layout ——— */
+@media (max-width: 991px){
+
+    /* 1 ▸ overall card height (was 70 vh) */
+    .hero-chat .chat-card{
+        height: 71vh;       /* fills more of the screen   */
+        max-height: 680px;  /* guard‑rail for large phones */
+    }
+
+    /* 2 ▸ header row – smaller avatar and tighter gaps */
+    .chat-avatar{ width: 52px; height: 52px; }
+    .chat-header{ gap: 12px; padding-bottom: 2px; }
+
+    /* 3 ▸ message column – grabs spare height */
+    .hero-chat .chat-messages{
+        flex: 1 1 auto;      /* grows and shrinks          */
+        padding: 18px 18px 22px;
+        font-size: 0.85rem;  /* smaller bubble text        */
+        line-height: 1.45;
+    }
+    /* white (bot) bubble runs full width */
+    .hero-chat .chat-messages .msg.bot{
+        max-width: 100%;
+        align-self: stretch;
+    }
+
+    /* 4 ▸ input row – slimmer */
+    .chat-input{
+        padding: 6px 10px;
+    }
+    .chat-input input{ min-height: 40px; }
+    .chat-input button{
+        flex-basis: 40px;
+        height: 40px;
+    }
+
+    /* 5 ▸ suggestion pills – two on each line when space allows */
+    .quick-links-list{
+        gap: 6px;
+        justify-content: flex-start;
+    }
+    .quick-links-list .qlink{
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+</style>
+
+<style>
+/* —— mobile: tidy footer of the chat card —— */
+@media (max-width: 991px){
+
+    /* 1. lose the heading text */
+    .quick-links-title{ display: none; }
+
+    /* 2. tighter input row */
+    .chat-input{
+        margin: 6px 0;          /* was bigger */
+        padding: 6px 10px;      /* already set in the last tweak */
+    }
+
+    /* 3. keep the input row glued to the bottom */
+    .chat-card{ display: flex; flex-direction: column; }
+    .chat-input{ margin-top: auto; }   /* pushes it down */
+
+    /* 4. let messages fill what is left */
+    .chat-messages{ flex: 1 1 auto; }
+}
+</style>
+
+<style>
+/* —— desktop: taller chat card —— */
+@media (min-width: 992px){
+
+    /* 1. overall card height (was 70 vh, max 600 px) */
+    .hero-chat .chat-card{
+        height: 76vh;          /* fills more of the screen      */
+        max-height: 720px;     /* guard‑rail for very tall sets */
+    }
+
+    /* 2. header row – trim the gap so it wastes less space */
+    .chat-header{ gap: 12px; }
+
+    /* 3. message column – expands to use the new height */
+    .hero-chat .chat-messages{
+        flex: 1 1 auto;        /* grow and shrink               */
+        padding: 24px 24px 28px;
+    }
+
+    /* 4. input row – keeps the same size */
+    .chat-input{ padding: 8px 12px; }
+}
+</style>
+<style>
+/* ——— extra‑small screens (≤ 360 px) ——— */
+@media (max-width: 380px){
+
+    /* top bar */
+    .top-bar .nav-logo   {font-size: 1.25rem;}
+    .top-bar .appt-btn  {
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        border-radius: 16px;
+    }
+    .top-bar .hamburger {margin-left: 6px;}
+
+    /* heading */
+    .hero-left h1{
+        font-size: 1.2rem;
+        line-height: 1.15;
+    }
+
+    /* chat card placement and size */
+    .hero-chat{
+        top: 56%;
+        transform: translate(-50%,-50%);
+        max-width: 95%;
+    }
+    .hero-chat .chat-card{
+        height: 68vh;           /* taller message area      */
+    }
+
+    /* header inside the card */
+    .chat-avatar{width: 46px;height: 46px;}
+    .chat-header{gap: 10px;}
+
+    /* message bubbles */
+    .hero-chat .chat-messages{
+        padding: 16px 16px 20px;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    /* input row */
+    .chat-input{
+        padding: 4px 8px;
+    }
+    .chat-input input{
+        min-height: 36px;
+        font-size: 0.85rem;
+    }
+    .chat-input button{
+        width: 36px;
+        height: 36px;
+    }
+
+    /* suggestion pills */
+    .quick-links-list{gap: 5px;}
+    .quick-links-list .qlink{
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+}
+</style>
+
+<style>
+/* —— show burger only on small screens —— */
+
+/* 1. hide on laptops and bigger */
+.hamburger{ display: none; }
+
+/* 2. show and style on tablets / phones */
+@media (max-width: 991px){
+    .hamburger{
+        display: flex;                 /*   ←  makes it appear         */
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px;
+        height: 22px;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 8px;              /* small gap after the pill     */
+    }
+    .hamburger span{
+        width: 100%;
+        height: 3px;
+        background: var(--text);
+        border-radius: 2px;
+        transition: all .3s ease;
+    }
+}
+</style>
+
+
+
+
+    <script>
+        // Sticky Navigation
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Mobile Navigation Toggle (would be added with mobile menu implementation)
+        // const mobileMenuButton = document.getElementById('mobile-menu-button');
+        // const mobileMenu = document.getElementById('mobile-menu');
+        // 
+        // mobileMenuButton.addEventListener('click', function() {
+        //     mobileMenu.classList.toggle('active');
+        // });
+    </script>
+
+    <script>
+// Sticky Navigation
+window.addEventListener('scroll', function () {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+    </script>
+<script>
+document.getElementById('hamburger').addEventListener('click',function(){
+    this.classList.toggle('open');
+    document.querySelector('.nav-links').classList.toggle('open');
+});
+</script>
+
+<script>
+/* ── 1.  hidden page address sent to n8n ───────────────────── */
+const pageUrl   = window.location.href;
+
+/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
+const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+
+/* ── 3.  DOM handles ───────────────────────────────────────── */
+const box   = document.getElementById('chat-body');
+const input = document.getElementById('chat-input');
+
+/* ── 4.  helper: add a chat bubble ─────────────────────────── */
+function add (text, role = 'ai') {
+  const div       = document.createElement('div');
+  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+  div.innerHTML   = `<p>${text}</p>`;
+  box.appendChild(div);
+  box.scrollTop   = box.scrollHeight;
+  box.classList.add('show');
+}
+
+/* ── 5.  helper: unwrap JSON (object OR first element of array) */
+function parse (raw, hdr) {
+  if ((hdr.get('content-type') || '').includes('application/json')) {
+    try {
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
+      return (
+        d.reply   || d.output  || d.text || d.message ||
+        d.answer  || d.content ||
+        (d.choices && d.choices[0]?.message.content) ||
+        raw
+      );
+    } catch { /* fall through to raw */ }
+  }
+  return raw;
+}
+
+/* ── 6.  send routine, called on form submit ───────────────── */
+async function sendMessage () {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  add(msg, 'user');               // echo user text
+  input.value = '';               // clear
+  input.style.height = '60px';    // reset height
+
+  try {
+    const res = await fetch(webhook, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        sessionId,
+        route     : 'general',
+        action    : 'sendMessage',
+        chatInput : msg,
+        pageUrl                      // hidden field
+      })
+    });
+    const raw = await res.text();
+    add(parse(raw, res.headers), 'ai');
+  } catch (err) {
+    console.error(err);
+    add('Could not reach the server.', 'ai');
+  }
+}
+
+/* ── 7.  auto-grow textarea ───────────────────────────────── */
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = input.scrollHeight + 'px';
+});
+
+/* ── 8.  give focus on load (desktop only) ─────────────────── */
+window.addEventListener('load', () => {
+  const isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (!isMobile) {
+    input.focus({ preventScroll: true });
+  }
+});
+/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
+const menuBtn  = document.querySelector('.mobile-menu-btn');
+const navMenu  = document.querySelector('nav ul');
+if (menuBtn && navMenu) {
+  menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
+  navMenu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navMenu.classList.remove('show'))
+  );
+}
+
+
+/* quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    if(e.target.classList.contains('qlink')){
+      e.preventDefault();
+      input.value = e.target.dataset.msg;
+      sendMessage();               // reuse the same send routine
+    }
+  });
+</script>
+
+</body>
+</html>
