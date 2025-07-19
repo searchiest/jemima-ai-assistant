@@ -2182,57 +2182,47 @@ p{
   header                  {margin-top: 70px;}
 }
 
+</style>
+
+<style>
 /* ========== very small screens (up to 380 px) ========== */
 @media (max-width: 380px) {
 
-/* keep the bar thinner here too, if you wish */
-
+  /* slimmer bar */
   .top-bar,
-  .top-bar .nav-container {height: 40px;}  /* was 80 px */
-  header                  {margin-top: 30px;}
+  .top-bar .nav-container 
+{ height: 30px; }
+{ margin-top:10px;}
 
-  /* 1. chat card uses almost the whole width */
-  .hero-chat       {width: 90%;}
+  /* page offset matches bar height */
+  header { margin-top: 40px; }
+  .top-bar .nav-links { top: 40px; }
 
-  /* 2. make the bar even slimmer */
-  .top-bar,
-  .top-bar .nav-container {height: 40px;}
+  /* chat card */
+  .hero-chat {
+    width: 90%;
+    top: 40%;
+  }
 
-  header            {margin-top: 10px;}
-  .top-bar .nav-links {top: 10px;}
-}
+.hero-left h1 {margin-top 20px}
 
-    /* chat card placement and size */
-    .hero-chat{
-        top: 44%;}
+  /* whole hero row */
+  .header-flex { padding-top: 10px; } /* 40px bar + 10px gap */
 
-.header-flex{            /* whole hero row */
-padding-top: 60px;   /* 80 px bar + 10 px breathing room */
-    }
-
-    .hamburger{
-        display: flex;                 /*   ←  makes it appear         */
-        flex-direction: column;
-        justify-content: space-between;
-        width: 18px;
-        height: 16px;
-        background: none;
-        border: 0;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 8px;              /* small gap after the pill     */
-    }
-
-    /* chat card placement and size */
-    .hero-chat{
-        top: 44%;
-    }
-}
-
-
+  /* hamburger icon */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 18px;
+    height: 16px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    margin-left: 8px;
+    padding: 0;
 
 </style>
-
 
     <script>
         // Sticky Navigation
