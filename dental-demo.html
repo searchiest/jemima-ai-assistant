@@ -2156,41 +2156,68 @@ p{
     }
 }
 </style>
-
 <style>
-/* ========== general mobile (up to 991 px) ========== */
-@media (max-width: 992px) {
+/* ========== general mobile (up to 840 px) ========== */
+@media (max-width: 840px) {
+
+
+/* 1. overall card height (was 70 vh, max 600 px) */
+.hero-chat .chat-card{
+height: 74vh;          /* fills more of the screen      */
+max-height: 700px;     /* guard‑rail for very tall sets */
+    }
+
+    /* message bubbles */
+    .hero-chat .chat-messages{
+        padding: 16px 16px 20px;
+        font-size: 0.6rem;
+        line-height: 1.4;
+    }
+
+
+  /* slimmer bar */
+  .top-bar,
+  .top-bar .nav-container 
+{ height: 50px; }
+{ margin-top:30px;}
+
+  /* page offset matches bar height */
+  header { margin-top: 40px; }
+  .top-bar .nav-links { top: 40px; }
+
+  /* chat card */
+  .hero-chat {
+    width: 90%;
+    top: 52%; }
 
 /* heading */
 .hero-left h1{
-font-size: 1.6rem;
+font-size: 1.5rem;
 font-weight: 500;
 line-height: 1.15;
-margin-top: 12px; 
+margin-top: 50px; 
     }
 
-  /* 1. wider chat card */
-  .hero-chat       {width: 90%; max-width: 90%;}
+  /* whole hero row */
+  .header-flex { padding-top: 10px; } /* 40px bar + 10px gap */
 
-  /* 2. shorter top bar */
-  .top-bar,
-  .top-bar .nav-container {height: 40px;}
+  /* hamburger icon */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 18px;
+    height: 16px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    margin-left: 8px;
+    padding: 0;
 
-  /* 3. pull page content up to match */
-  header            {margin-top: 20px;}
 
-  /* 4. drawer menu now sits under the new bar height */
-  .top-bar .nav-links {top: 60px;}
-}
-
-/* keep the bar thinner here too, if you wish */
-
-  .top-bar,
-  .top-bar .nav-container {height: 70px;}  /* was 80 px */
-  header                  {margin-top: 70px;}
-}
 
 </style>
+
 
 <style>
 
