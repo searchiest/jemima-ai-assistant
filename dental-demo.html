@@ -2159,7 +2159,7 @@ p{
 
 <style>
 /* ========== general mobile (up to 991 px) ========== */
-@media (max-width: 991px) {
+@media (max-width: 992px) {
 
   /* 1. wider chat card */
   .hero-chat       {width: 90%; max-width: 90%;}
@@ -2173,6 +2173,13 @@ p{
 
   /* 4. drawer menu now sits under the new bar height */
   .top-bar .nav-links {top: 40px;}
+}
+
+/* keep the bar thinner here too, if you wish */
+
+  .top-bar,
+  .top-bar .nav-container {height: 70px;}  /* was 80 px */
+  header                  {margin-top: 70px;}
 }
 
 /* ========== very small screens (up to 380 px) ========== */
@@ -2191,7 +2198,7 @@ p{
 
     /* chat card placement and size */
     .hero-chat{
-        top: 48%;
+        top: 48%;}
 
 .header-flex{            /* whole hero row */
 padding-top: 70px;   /* 80 px bar + 10 px breathing room */
@@ -2212,17 +2219,11 @@ padding-top: 70px;   /* 80 px bar + 10 px breathing room */
 
     /* chat card placement and size */
     .hero-chat{
-        top: 50%;
+        top: 60%;
     }
 }
 
-/* ========== desktop (992 px and above) ========== */
-/* keep the bar thinner here too, if you wish */
-@media (min-width: 992px) {
-  .top-bar,
-  .top-bar .nav-container {height: 70px;}  /* was 80 px */
-  header                  {margin-top: 70px;}
-}
+
 
 </style>
 
