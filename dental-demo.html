@@ -189,7 +189,7 @@
             padding: 12px 30px;
             border-radius: 10px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
@@ -353,7 +353,7 @@
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
             text-align: center;
-            padding: 100px 0;
+            padding: 50px 0px;
         }
         
         .cta h2 {
@@ -366,6 +366,17 @@
             margin: 0 auto 30px;
             font-size: 1.1rem;
         }
+
+  	/* option list must be readable */
+	.appointment-form select option{
+  	color: var(--text) !important;
+  	background: var(--white);
+	}
+
+	/* Make the calendar icon white */
+	.appointment-form input[type="date"]::-webkit-calendar-picker-indicator{
+  	filter: invert(1);
+	}
         
         /* Footer */
         footer {
@@ -373,6 +384,21 @@
             color: var(--white);
             padding: 60px 0 20px;
         }
+
+/* Extra space below the submit button */
+.appointment-form button{
+  margin-top:8px;
+  margin-bottom:40px;
+}
+
+.appointment-form button{
+    padding: 12px 30px;       /* identical horizontal padding */
+    font-size: 1rem;          /* same text size */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 40px;      /* keeps the extra breathing room you wanted */
+}
         
         .footer-container {
             display: grid;
@@ -412,6 +438,7 @@
             border-radius: 50%;
             color: var(--white);
             transition: all 0.3s ease;
+	    text-decoration: none;
         }
         
         .social-link:hover {
@@ -645,7 +672,7 @@ header{
 
 /* call button inside the list */
 .top-bar .btn {
-    padding: 10px 30px;    /* match the anchor line‑height above */
+    padding: 4px 12px;    /* match the anchor line‑height above */
     margin-left: 0;        /* gap now handled by flex‑box gap */
 }
 </style>
@@ -1251,6 +1278,54 @@ html {
 }
 </style>
 
+<!-- ====== CTA FORM STYLES ====== -->
+<style>
+  .appointment-form{
+    max-width:700px;
+    margin:40px auto 0;
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+  .appointment-form .form-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .appointment-form .form-group{
+    flex:1 1 260px;
+    display:flex;
+    flex-direction:column;
+  }
+  .appointment-form .form-group.full{flex:1 1 100%;}
+  .appointment-form label{
+    margin-bottom:6px;
+    font-weight:600;
+    color:var(--white);
+  }
+  .appointment-form input,
+  .appointment-form select{
+    padding:12px;
+    border:2px solid rgba(255,255,255,.25);
+    border-radius:10px;
+    background:rgba(255,255,255,.15);
+    color:var(--white);
+    font-family:'Montserrat',sans-serif;
+    font-size:1rem;
+  }
+  .appointment-form input::placeholder{color:rgba(255,255,255,.85);}  
+  .appointment-form input:focus,
+  .appointment-form select:focus{
+    outline:none;
+    border-color:var(--accent);
+    background:rgba(255,255,255,.25);
+  }
+  @media (max-width:576px){
+    .appointment-form .form-row{flex-direction:column;}
+    .appointment-form{gap:20px;}
+  }
+</style>
+
 
 </head>
 <body>
@@ -1275,7 +1350,7 @@ html {
 
       <!-- desktop button, hidden on mobile -->
       <li class="desktop-btn">
-        <a href="tel:+18005551234" class="btn">Appointments</a>
+        <a href="#book" class="btn">Appointments</a>
       </li>
     </ul>
 
@@ -1469,14 +1544,71 @@ html {
         </div>
     </section>
     
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready for Your Best Smile?</h2>
-            <p>Schedule your appointment today and experience the difference at BrightSmile Dental Care. New patients receive a complimentary consultation and teeth whitening special.</p>
-            <a href="tel:+18005551234" class="btn"><i class="fas fa-phone-alt"></i> Call (800) 555-1234</a>
+<!-- UPDATED CTA SECTION WITH RESPONSIVE APPOINTMENT FORM (day → dynamic times) -->
+<section class="cta" id="book">
+  <div class="container">
+    <h2>Ready for Your Best Smile?</h2>
+    <p>Schedule your appointment today and experience the difference at BrightSmile Dental Care. New patients receive a complimentary consultation and teeth whitening special.</p>
+
+    <!-- Appointment Form -->
+    <form id="appointment-form" class="appointment-form" action="#" method="post" novalidate>
+      <!-- Row 1 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" name="firstName" placeholder="First Name" required>
         </div>
-    </section>
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" name="lastName" placeholder="Last Name" required>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Mobile Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="07123 456 789" pattern="[0-9]{10,15}" required>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="type">Appointment Type</label>
+          <select id="type" name="type" required>
+            <option value="" disabled selected>Select Type</option>
+            <option>New Patient</option>
+            <option>Check Up</option>
+            <option>Hygiene</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="day">Day</label>
+          <input type="date" id="day" name="day" required>
+        </div>
+      </div>
+
+      <!-- Row 4 : time slots populated after day lookup -->
+      <div class="form-row">
+        <div class="form-group full">
+          <label for="time">Time</label>
+          <select id="time" name="time" disabled required>
+            <option value="">Pick a day first</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Book Appointment</button>
+      <!-- feedback banner -->
+      <div id="formMsg" class="form-msg"></div>
+    </form>
+  </div>
+</section>
     
     <!-- Footer -->
     <footer id="contact">
@@ -1495,30 +1627,28 @@ html {
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#top">Home</a></li>
+                        <li><a href="#services">Dental Services</a></li>
+                        <li><a href="#about">Why Choose Us</a></li>
                         <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h3>Services</h3>
                     <ul>
-                        <li><a href="#">General Dentistry</a></li>
-                        <li><a href="#">Cosmetic Dentistry</a></li>
-                        <li><a href="#">Dental Implants</a></li>
-                        <li><a href="#">Orthodontics</a></li>
-                        <li><a href="#">Restorative Care</a></li>
-                        <li><a href="#">Sedation Dentistry</a></li>
+                        <li><a href="#services">General Dentistry</a></li>
+                        <li><a href="#services">Cosmetic Dentistry</a></li>
+                        <li><a href="#services">Dental Implants</a></li>
+                        <li><a href="#services">Orthodontics</a></li>
+                        <li><a href="#services">Restorative Care</a></li>
+                        <li><a href="#services">Sedation Dentistry</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Dental Avenue, Suite 100<br>Anytown, ST 12345</p>
-                    <p><i class="fas fa-phone-alt"></i> (800) 555-1234</p>
-                    <p><i class="fas fa-envelope"></i> info@brightsmiledental.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i>71-75 Shelton Street,</br> London,</br> WC2H 9JQ</p>
+                    <p><i class="fas fa-phone-alt"></i>+44 7429 669 381</p>
+                    <p><i class="fas fa-envelope"></i>jemima@jemima.ai</p>
                     <p><i class="fas fa-clock"></i> Mon-Fri: 8am - 6pm<br>Sat: 9am - 3pm<br>Sun: Closed</p>
                 </div>
             </div>
@@ -1529,6 +1659,48 @@ html {
     </footer>
 
 <style>
+
+  /* --- footer logo styling to match top logo on dark background --- */
+.footer-contact h3 {margin-bottom: 30px}
+
+  .footer-logo{
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+  }
+  .footer-logo:visited,
+  .footer-logo:hover{
+    color:var(--white) !important;
+  }
+  .footer-logo span{
+    color:var(--accent);
+  }
+
+/* orange underline for Contact Us heading */
+.footer-contact h3{
+  position: relative;
+  padding-bottom: 10px;
+}
+.footer-contact h3::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+}
+
+  /* light grey links in copyright line */
+  .copyright a{
+    color:#bdc3c7 !important;
+    text-decoration:none;
+  }
+  .copyright a:hover{
+    color:var(--accent) !important;
+  }
+
 /* ───────── CHAT BOX POLISH – desktop & mobile ───────────── */
 
 /* 1 ▸ keep the chat column neat on desktop */
@@ -2416,5 +2588,103 @@ document.getElementById('chat-quick-links')
   });
 </script>
 
+<!-- ====== APPOINTMENT BOOKING SCRIPT ====== -->
+<script>
+  const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+  const TIME_ZONE   = 'Europe/London';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form       = document.getElementById('appointment-form');
+    const msgBar     = document.getElementById('formMsg');
+    const dayInput   = form.day;
+    const timeSelect = form.time;
+
+    function flash(type, text){
+      msgBar.className = 'form-msg '+type;
+      msgBar.textContent = text;
+      msgBar.classList.add('show');
+      clearTimeout(flash._t);
+      flash._t = setTimeout(()=>msgBar.textContent='',3500);
+    }
+
+    /* -------- fetch available slots when day changes -------- */
+    dayInput.addEventListener('change', async () => {
+      const day = dayInput.value;
+      timeSelect.disabled = true;
+      timeSelect.innerHTML = '<option>Loading…</option>';
+      if(!day){
+        timeSelect.innerHTML = '<option value="">Pick a day first</option>';
+        return;
+      }
+      try{
+        const res  = await fetch(BOOKING_URL,{
+                      method :'POST',
+                      headers:{'Content-Type':'application/json'},
+                      body   :JSON.stringify({action:'check_availability', day})
+                    });
+        const data = await res.json();
+        const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+        const free   = payload.slots ?? [];
+
+        if(free.length){
+          timeSelect.innerHTML = '<option value="" disabled selected>Select a time</option>';
+          free.forEach(s => {
+            if(!s.startsWith(day)) return; // sanity guard
+            const t = s.slice(11,16);      // "YYYY-MM-DDTHH:MM" → "HH:MM"
+            timeSelect.insertAdjacentHTML('beforeend',`<option value="${s}">${t}</option>`);
+          });
+          timeSelect.disabled = false;
+        }else{
+          timeSelect.innerHTML = '<option value="">No slots available</option>';
+        }
+      }catch{
+        timeSelect.innerHTML = '<option value="">Error loading slots</option>';
+      }
+    });
+
+    /* ---------------- submit booking ---------------- */
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if(timeSelect.disabled || !timeSelect.value){
+        flash('error','Please choose a time.');
+        return;
+      }
+      flash('sending','Sending…');
+
+      const payload = {
+        firstName: form.firstName.value.trim(),
+        lastName : form.lastName.value.trim(),
+        email    : form.email.value.trim(),
+        phone    : form.phone.value.trim(),
+        type     : form.type.value,
+        slot     : timeSelect.value,   // ISO‑date string chosen
+        pageUrl  : window.location.href,
+        timeZone : TIME_ZONE
+      };
+
+      try{
+        const res = await fetch(BOOKING_URL,{
+          method :'POST',
+          headers:{'Content-Type':'application/json'},
+          body   :JSON.stringify({action:'create_booking', ...payload})
+        });
+
+        if(res.ok){
+          form.reset();
+          timeSelect.disabled = true;
+          timeSelect.innerHTML = '<option value="">Pick a day first</option>';
+          flash('success','Your appointment is confirmed. Check your inbox.');
+        }else if(res.status===409){
+          flash('error','That time has just been taken. Please choose another.');
+          dayInput.dispatchEvent(new Event('change')); // refresh times
+        }else{
+          flash('error','Could not complete booking. Try again later.');
+        }
+      }catch{
+        flash('error','Network problem. Try again later.');
+      }
+    });
+  });
+</script>
 </body>
 </html>
