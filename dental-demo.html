@@ -1240,17 +1240,26 @@ p{
     }
 }
 </style>
+<style>
+html {
+  scroll-behavior: smooth;      /* smooth scroll for every anchor */
+  scroll-padding-top: 80px;     /* bar height on desktop          */
+}
 
+@media (max-width: 992px) {     /* bar is 40 px on phone/tablet   */
+  html { scroll-padding-top: 40px; }
+}
+</style>
 
 
 </head>
 <body>
-
+<div id="top"></div>
 <!-- Top bar -->
 <nav id="navbar" class="top-bar">
   <div class="container nav-container">
 
-    <a href="index.html" class="nav-logo">Bright<span>Smile</span></a>
+    <a href="#top" class="nav-logo">Bright<span>Smile</span></a>
 
     <!-- mobile button, hidden on desktop -->
     <a href="tel:+18005551234" class="btn appt-btn">Appointments</a>
@@ -1260,9 +1269,9 @@ p{
     </button>
 
     <ul class="nav-links">
-      <li><a href="#home"           class="nav-link">General Dentistry</a></li>
-      <li><a href="#about"          class="nav-link">Cosmetic Dentistry</a></li>
-      <li><a href="#testimonials"   class="nav-link">Orthodontics</a></li>
+      <li><a href="#services"           class="nav-link">Dental Services</a></li>
+      <li><a href="#about"          class="nav-link">Why Choose Us</a></li>
+      <li><a href="#testimonials"   class="nav-link">Testimonials</a></li>
 
       <!-- desktop button, hidden on mobile -->
       <li class="desktop-btn">
@@ -1275,7 +1284,7 @@ p{
 
 
 
-<header id="home">
+<header>
     <div class="header-overlay"></div>
     <video autoplay muted playsinline class="header-video">
         <source src="dentist.mp4" type="video/mp4">
@@ -1329,12 +1338,13 @@ p{
 
             </div>
         </div> 
+
     </div>
+
 </header>
 
-    
     <!-- Services Section -->
-    <section id="services" class="services">
+    <section class="services" id="services">
         <div class="container">
             <div class="section-title">
                 <h2>Our Dental Services</h2>
@@ -1343,42 +1353,42 @@ p{
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-tooth"></i>
+                        <img src="general-dentistry.png" height="90" width="90" alt="General Dentistry Icon">
                     </div>
                     <h3>General Dentistry</h3>
                     <p>Regular checkups, cleanings, fillings, and preventive care to maintain optimal oral health for you and your family.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-teeth"></i>
+                        <img src="cosmetic-dentistry.png" height="90" width="90" alt="Cosmetic Dentistry Icon">
                     </div>
                     <h3>Cosmetic Dentistry</h3>
                     <p>Transform your smile with teeth whitening, veneers, bonding, and other aesthetic treatments to boost your confidence.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-implant"></i>
+                        <img src="dental-implants.png" height="90" width="90" alt="Dental Implants Icon">
                     </div>
                     <h3>Dental Implants</h3>
-                    <p>Permanent solution for missing teeth that look, feel, and function like natural teeth with a success rate over 95%.</p>
+                    <p>Permanent solution for missing teeth that look, feel, and function like natural teeth.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-braces"></i>
+                        <img src="orthodontics.png" height="90" width="90" alt="Orthodontics Icon">
                     </div>
                     <h3>Orthodontics</h3>
                     <p>Traditional braces and clear aligners to correct misaligned teeth and improve both function and appearance.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-teeth-open"></i>
+                        <img src="restorative-dentistry.png" height="90" width="90" alt="Restorative Dentistry Icon">
                     </div>
                     <h3>Restorative Dentistry</h3>
                     <p>Crowns, bridges, and dentures to restore damaged or missing teeth and regain full dental function.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-sedative"></i>
+                        <img src="sedation-dentistry.png" height="90" width="90" alt="Sedation Dentistry Icon">
                     </div>
                     <h3>Sedation Dentistry</h3>
                     <p>Safe sedation options available for patients with dental anxiety or those undergoing complex procedures.</p>
@@ -1399,12 +1409,12 @@ p{
                     <a href="#contact" class="btn">Meet Our Team</a>
                 </div>
                 <div class="about-image">
-                    <img src="images/dental-team.jpg" alt="Our dental team">
+                    <img src="dental-team.png" alt="Our dental team">
                 </div>
             </div>
         </div>
     </section>
-    
+  
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials">
         <div class="container">
@@ -1419,7 +1429,7 @@ p{
                     </div>
                     <div class="testimonial-author">
                         <div class="author-image">
-                            <img src="images/testimonial-1.jpg" alt="Sarah J.">
+                            <img src="testimonial-1.png" alt="Sarah J.">
                         </div>
                         <div class="author-info">
                             <h4>Sarah J.</h4>
@@ -1433,7 +1443,7 @@ p{
                     </div>
                     <div class="testimonial-author">
                         <div class="author-image">
-                            <img src="images/testimonial-2.jpg" alt="Michael T.">
+                            <img src="testimonial-2.png" alt="Michael T.">
                         </div>
                         <div class="author-info">
                             <h4>Michael T.</h4>
@@ -1447,7 +1457,7 @@ p{
                     </div>
                     <div class="testimonial-author">
                         <div class="author-image">
-                            <img src="images/testimonial-3.jpg" alt="The Wilson Family">
+                            <img src="testimonial-3.png" alt="The Wilson Family">
                         </div>
                         <div class="author-info">
                             <h4>The Wilson Family</h4>
