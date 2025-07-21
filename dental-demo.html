@@ -553,6 +553,19 @@
                 font-size: 2rem;
             }
         }
+
+  @media (max-width:576px){
+    .appointment-form .form-row{flex-direction:column;}
+    .appointment-form{gap:20px;}
+    /* stop mobile groups stretching tall */
+    .appointment-form .form-group{flex:1 1 auto !important;}
+}
+    .appointment-form{gap:20px;}
+    /* stop mobile groups stretching to 260px tall */
+    .appointment-form .form-group{flex:1 1 auto;}
+  }
+    .appointment-form{gap:20px;}
+  }
     </style>
     <style>
 
