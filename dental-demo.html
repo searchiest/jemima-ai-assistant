@@ -1591,15 +1591,15 @@ html {
 
       <!-- Row 3 -->
       <div class="form-row">
-        <div class="form-group">
-          <label for="type">Appointment Type</label>
-          <select id="type" name="type" required>
-            <option value="" disabled selected>Select Type</option>
-            <option>New Patient</option>
-            <option>Check Up</option>
-            <option>Hygiene</option>
-          </select>
-        </div>
+	<div class="form-group">
+  	<label for="type">Appointment Type</label>
+  	<select id="type" name="type" required>
+    	<option value="" disabled selected>Select Type</option>
+    	<option value="new_patient">New Patient</option>
+    	<option value="check_up">Check Up</option>
+    <option value="hygiene">Hygiene</option>
+  </select>
+</div>
         <div class="form-group">
           <label for="day">Day</label>
           <input type="date" id="day" name="day" required>
@@ -1616,7 +1616,7 @@ html {
         </div>
       </div>
 
-      <button type="submit" class="btn">Book Appointment</button>
+      <button type="submit" class="btn" id="submitBtn" disabled>Book Appointment</button>
       <!-- feedback banner -->
       <div id="formMsg" class="form-msg"></div>
     </form>
@@ -2445,6 +2445,20 @@ margin-top: 12px;
     padding-left: 0px;
 
 </style>
+<style>
+/* show a red outline and a short message when a field is wrong */
+.form-group.error input,
+.form-group.error select { border-color: #d33;}
+
+.form-group .error-msg {
+  color: #fff;
+  background-color:#d33; 
+  font-size: 0.85rem;
+  line-height: 1.2;
+  margin-top: 0.25rem;
+  padding: 3px;
+}
+</style>
 
     <script>
         // Sticky Navigation
@@ -2601,103 +2615,186 @@ document.getElementById('chat-quick-links')
   });
 </script>
 
-<!-- ====== APPOINTMENT BOOKING SCRIPT ====== -->
+<!-- ====== APPOINTMENT BOOKING SCRIPT (clean version) ====== -->
 <script>
-  const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook-test/dental-demo-booking-form';
-  const TIME_ZONE   = 'Europe/London';
+const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/dental-demo-booking-form';
+const TIME_ZONE   = 'Europe/London';
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const form       = document.getElementById('appointment-form');
-    const msgBar     = document.getElementById('formMsg');
-    const dayInput   = form.day;
-    const timeSelect = form.time;
+document.addEventListener('DOMContentLoaded',()=>{
 
-    function flash(type, text){
-      msgBar.className = 'form-msg '+type;
-      msgBar.textContent = text;
-      msgBar.classList.add('show');
-      clearTimeout(flash._t);
-      flash._t = setTimeout(()=>msgBar.textContent='',3500);
+  /* key handles */
+  const form       = document.getElementById('appointment-form');
+  const msgBar     = document.getElementById('formMsg');
+  const submitBtn  = document.getElementById('submitBtn');
+
+  const firstName  = form.firstName;
+  const lastName   = form.lastName;
+  const email      = form.email;
+  const phone      = form.phone;
+  const typeSelect = document.getElementById('type');
+  const dayInput   = document.getElementById('day');
+  const timeSelect = document.getElementById('time');
+
+  /* banner helper */
+  function flash(kind,text){
+    msgBar.className='form-msg '+kind;
+    msgBar.textContent=text;
+    msgBar.classList.add('show');
+    clearTimeout(flash._t);
+    flash._t=setTimeout(()=>msgBar.textContent='',3500);
+  }
+
+  /* lock / unlock the time list */
+  function resetTimes(text){
+    timeSelect.disabled=true;
+    timeSelect.innerHTML=`<option value="">${text}</option>`;
+  }
+
+  /* pull free slots for the chosen date + type */
+  async function loadSlots(){
+    const day  = dayInput.value;
+    const type = typeSelect.value;
+
+    if(!day || !type){
+      resetTimes('Pick a day and appointment type');
+      validate();                         // keep button state right
+      return;
     }
 
-    /* -------- fetch available slots when day changes -------- */
-    dayInput.addEventListener('change', async () => {
-      const day = dayInput.value;
-      timeSelect.disabled = true;
-      timeSelect.innerHTML = '<option>Loading…</option>';
-      if(!day){
-        timeSelect.innerHTML = '<option value="">Pick a day first</option>';
-        return;
-      }
-      try{
-        const res  = await fetch(BOOKING_URL,{
-                      method :'POST',
-                      headers:{'Content-Type':'application/json'},
-                      body   :JSON.stringify({action:'check_availability', day})
-                    });
-        const data = await res.json();
-        const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
-        const free   = payload.slots ?? [];
+    resetTimes('Loading…');
+    try{
+      const res=await fetch(BOOKING_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({action:'check_availability',day,type})
+      });
 
-        if(free.length){
-          timeSelect.innerHTML = '<option value="" disabled selected>Select a time</option>';
-          free.forEach(s => {
-            if(!s.startsWith(day)) return; // sanity guard
-            const t = s.slice(11,16);      // "YYYY-MM-DDTHH:MM" → "HH:MM"
-            timeSelect.insertAdjacentHTML('beforeend',`<option value="${s}">${t}</option>`);
-          });
-          timeSelect.disabled = false;
-        }else{
-          timeSelect.innerHTML = '<option value="">No slots available</option>';
-        }
-      }catch{
-        timeSelect.innerHTML = '<option value="">Error loading slots</option>';
-      }
-    });
+      const data    = await res.json();
+      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+      const free    = payload.slots ?? [];
 
-    /* ---------------- submit booking ---------------- */
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      if(timeSelect.disabled || !timeSelect.value){
-        flash('error','Please choose a time.');
-        return;
-      }
-      flash('sending','Sending…');
-
-      const payload = {
-        firstName: form.firstName.value.trim(),
-        lastName : form.lastName.value.trim(),
-        email    : form.email.value.trim(),
-        phone    : form.phone.value.trim(),
-        type     : form.type.value,
-        slot     : timeSelect.value,   // ISO‑date string chosen
-        pageUrl  : window.location.href,
-        timeZone : TIME_ZONE
-      };
-
-      try{
-        const res = await fetch(BOOKING_URL,{
-          method :'POST',
-          headers:{'Content-Type':'application/json'},
-          body   :JSON.stringify({action:'create_booking', ...payload})
+      if(free.length){
+        timeSelect.disabled=false;
+        timeSelect.innerHTML='<option value="" disabled selected>Select a time</option>';
+        free.forEach(s=>{
+          if(!s.startsWith(day)) return;
+          const t=s.slice(11,16);                         // HH:MM
+          timeSelect.insertAdjacentHTML('beforeend',`<option value="${s}">${t}</option>`);
         });
-
-        if(res.ok){
-          form.reset();
-          timeSelect.disabled = true;
-          timeSelect.innerHTML = '<option value="">Pick a day first</option>';
-          flash('success','Your appointment is confirmed. Check your inbox.');
-        }else if(res.status===409){
-          flash('error','That time has just been taken. Please choose another.');
-          dayInput.dispatchEvent(new Event('change')); // refresh times
-        }else{
-          flash('error','Could not complete booking. Try again later.');
-        }
-      }catch{
-        flash('error','Network problem. Try again later.');
+      }else{
+        resetTimes('No slots available');
       }
+    }catch(e){
+      console.error(e);
+      resetTimes('Error loading slots');
+    }
+    validate();                                         // update button state
+  }
+
+  dayInput .addEventListener('change',loadSlots);
+  typeSelect.addEventListener('change',loadSlots);
+
+  /* ============= live validator ============= */
+  let showErrors=false;        // stays false until first submit press
+
+  const rules=[
+    {el:firstName ,test:v=>v.trim()!==''                   ,msg:'Enter your first name'},
+    {el:lastName  ,test:v=>v.trim()!==''                   ,msg:'Enter your last name'},
+    {el:email     ,test:()=>email.validity.valid           ,msg:'Enter a valid email address'},
+    {el:phone     ,test:()=>phone.validity.valid           ,msg:'Enter a valid phone number'},
+    {el:typeSelect,test:v=>v!==''                          ,msg:'Choose an appointment type'},
+    {el:dayInput  ,test:v=>v!==''                          ,msg:'Pick a day'},
+    {el:timeSelect,test:()=>!timeSelect.disabled && timeSelect.value,msg:'Choose a time'}
+  ];
+
+  function toggleError(group,ok,msg){
+    if(!showErrors) return;                 // hide until first press
+    group.classList.toggle('error',!ok);
+    let span=group.querySelector('.error-msg');
+    if(!ok){
+      if(!span){
+        span=document.createElement('span');
+        span.className='error-msg';
+        group.appendChild(span);
+      }
+      span.textContent=msg;
+    }else if(span){
+      span.remove();
+    }
+  }
+
+  function validate(){
+    let firstErr='';
+    rules.forEach(r=>{
+      const val=r.el.value;
+      const ok =r.test(val);
+      toggleError(r.el.parentElement,ok,r.msg);
+      if(!ok && !firstErr) firstErr=r.msg;
     });
+
+    /* button logic */
+    submitBtn.disabled = showErrors ? !!firstErr : false;
+
+    /* banner */
+    if(showErrors && firstErr){
+      msgBar.className='form-msg error';
+      msgBar.textContent=firstErr;
+      msgBar.classList.add('show');
+    }else if(showErrors){
+      msgBar.textContent='';
+    }
+  }
+
+  /* watch every change, but messages wait for first press */
+  ['input','change'].forEach(ev=>form.addEventListener(ev,validate,true));
+
+  /* ============= submit handler ============= */
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+
+    showErrors=true;   // from now on messages are allowed
+    validate();        // run full check
+    if(submitBtn.disabled) return;
+
+    flash('sending','Sending…');
+
+    const payload={
+      firstName:firstName.value.trim(),
+      lastName :lastName.value.trim(),
+      email    :email.value.trim(),
+      phone    :phone.value.trim(),
+      type     :typeSelect.value,
+      slot     :timeSelect.value,
+      pageUrl  :window.location.href,
+      timeZone :TIME_ZONE
+    };
+
+    try{
+      const res=await fetch(BOOKING_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({action:'create_booking',...payload})
+      });
+
+      if(res.ok){
+        form.reset();
+        resetTimes('Pick a day first');
+        submitBtn.disabled=false;
+        showErrors=false;
+        flash('success','Your appointment is confirmed. Please check your inbox');
+      }else if(res.status===409){
+        flash('error','That time has just been taken. Choose another');
+        loadSlots();
+      }else{
+        flash('error','Could not complete booking. Try again later');
+      }
+    }catch(err){
+      console.error(err);
+      flash('error','Network problem. Try again later');
+    }
   });
+});
 </script>
+
 </body>
 </html>
