@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Request an SEO Uplift Scan • Jemima.ai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --bg:#f7f7f9; --card:#ffffff; --ink:#111; --muted:#666; --line:#e6e6e6; --brand:#0a66c2; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--ink); }
+    .wrap { max-width: 760px; margin: 48px auto; padding: 0 16px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+    h1 { font-size: 22px; margin: 0 0 12px 0; }
+    p.lead { color: var(--muted); margin: 0 0 16px 0; }
+    label { display:block; font-size:14px; margin: 12px 0 6px 0; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 8px; font-size: 14px; }
+    textarea { min-height: 110px; resize: vertical; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .muted { font-size: 12px; color: var(--muted); }
+    .actions { margin-top: 16px; display:flex; gap:12px; align-items:center; }
+    button { background: var(--brand); color:#fff; border:0; padding: 12px 16px; border-radius: 8px; font-size: 14px; cursor:pointer; }
+    .note { font-size:12px; color: var(--muted); margin-top: 8px; }
+    .inline { display:flex; gap:16px; align-items:center; flex-wrap: wrap; }
+    .inline label { margin: 0; }
+    .footer { margin-top: 14px; border-top:1px solid var(--line); padding-top:10px; font-size:12px; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Request an SEO uplift scan</h1>
+      <p class="lead">Enter the basics. We will email a 3-page pack with top pages by near-term gain and three ready tasks.</p>
+
+      <form action="YOUR_WEBHOOK_URL" method="post">
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" required>
+
+        <label for="domain">Website or domain</label>
+        <input id="domain" name="domain" type="text" placeholder="example.com" required>
+
+        <div class="row">
+          <div>
+            <label for="niche">Niche</label>
+            <select id="niche" name="niche" required>
+              <option value="">Select one</option>
+              <option value="cars">Cars</option>
+              <option value="jobs">Jobs</option>
+              <option value="real_estate">Real estate</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="location">Location</label>
+            <select id="location" name="location">
+              <option value="United Kingdom" selected>United Kingdom</option>
+              <option value="Ireland">Ireland</option>
+              <option value="United States">United States</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="device">Device</label>
+            <select id="device" name="device">
+              <option value="desktop" selected>Desktop</option>
+              <option value="mobile">Mobile</option>
+            </select>
+          </div>
+          <div>
+            <label for="plan">Scan type</label>
+            <div class="inline" role="group" aria-label="Scan type">
+              <label><input type="radio" name="plan" value="sample" checked> Free sample (5 terms)</label>
+              <label><input type="radio" name="plan" value="full"> Full run (40 terms, paid)</label>
+            </div>
+          </div>
+        </div>
+
+        <label for="keywords">Optional: paste up to 10 keywords (one per line)</label>
+        <textarea id="keywords" name="keywords" placeholder="car finance&#10;used cars near me"></textarea>
+
+        <div class="inline" style="margin-top:8px">
+          <label><input type="checkbox" name="consent" value="yes" required> I agree to receive the scan by email</label>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Send me the scan</button>
+          <span class="note">Delivery in 15–30 minutes. You will also get a copy.</span>
+        </div>
+
+        <!-- Optional: add a hidden field if you want to pass a custom redirect -->
+        <!-- <input type="hidden" name="redirect" value="https://yourdomain/thank-you.html"> -->
+
+        <div class="footer">
+          Built by Jemima.ai • Simple scan that points to fast gains. For a full run we may ask for payment first.
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
