@@ -269,6 +269,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   color: #6b7280;
 }
 
+/* Make the Chrome/Edge/Safari date icon white */
+.form-section .booking-form input[type="date"]::-webkit-calendar-picker-indicator{
+  color: #fff;                 /* new WebKit builds honour this */
+  filter: invert(1) brightness(2); /* fallback: flip dark icon to white */
+  opacity: 1;
+}
+
+/* Keep the date text white too (you already have this, shown for clarity) */
+.form-section .booking-form input[type="date"]{
+  color: #fff;
+}
+
+    
     /* Footer */
     footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
     .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
@@ -1124,3 +1137,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
