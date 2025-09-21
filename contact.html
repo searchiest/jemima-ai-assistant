@@ -277,7 +277,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       transition: font-size 0.3s; /* Smooth size changes */
     }
   
-    
+/* Fix white-on-white options in the time select */
+.form-section .booking-form select option,
+.form-section .booking-form select optgroup {
+  color: #000;          /* black text in the dropdown list */
+  background: #fff;     /* white option background */
+}
+
+/* Optional: keep the closed select readable on purple */
+.form-section .booking-form select {
+  color: #fff;          /* closed state text remains white */
+  background: rgba(255,255,255,0.1);
+}
+
+/* Optional: grey placeholder for "Select a time" */
+.form-section .booking-form select:invalid {
+  color: #6b7280;
+}
+
+	  
     /* Footer */
     footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
     .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
@@ -1298,4 +1316,5 @@ document.addEventListener('DOMContentLoaded', () => {
   </a>
 </div>
 </body>
+
 </html>
