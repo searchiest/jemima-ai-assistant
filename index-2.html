@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Basic setup -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Jemima AI — AI For Business Growth, Built on Trust</title>
+  <meta name="description" content="Fast, safe, ROI-driven AI consulting. Launch your first AI pilot in 30 days with governance built in." />
+  <link rel="canonical" href="https://jemima.ai/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="jemima.ai" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jemima.ai/" />
+  <meta property="og:title" content="jemima.ai | AI Automation Solutions" />
+  <meta property="og:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools." />
+  <meta property="og:image" content="og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://jemima.ai/" />
+  <meta name="twitter:title" content="jemima.ai | AI Automation Solutions" />
+  <meta name="twitter:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools." />
+  <meta name="twitter:image" content="og-image.jpg" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- Performance & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Keep both families available; Inter is default in CSS below -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN + minimal config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          borderRadius: { '2xl': '1rem' },
+        }
+      }
+    }
+  </script>
+
+  <!-- Site styles -->
+  <style>
+    :root { --radius: 1rem; }
+    html, body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                   Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+  </style>
+
+  <!-- Icons / extra CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+
+  <!-- Your voice module (kept from original) -->
+  <script type="module" crossorigin src="/voice/assets/index-dBvI1JZo.js"></script>
+
+  <!-- Google Tag Manager (single source of truth; remove separate gtag.js to avoid duplicates) -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5VBX6H2N');
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body class="bg-white text-gray-900">
+
+<!-- Book a Call: Modal -->
+<div id="bookcall-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true" inert>
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <!-- Dialog -->
+  <div class="absolute inset-0 flex items-center justify-center px-4">
+    <div role="dialog" aria-modal="true" aria-labelledby="bookcall-title"
+         class="w-full max-w-lg rounded-2xl bg-white shadow-xl">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b">
+        <h3 id="bookcall-title" class="text-lg font-semibold">Book An Exploration Call</h3>
+        <button type="button" class="p-2 rounded-md hover:bg-gray-100" data-close-modal aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <!-- Form Section with Booking Form -->
+      <section class="form-section">
+        <div class="px-6 py-5">
+          <p class="mt-1 text-sm text-gray-600">Lets meet online to discuss AI automation for your business.</p>
+
+          <form class="booking-form mt-5" id="bookingForm" autocomplete="on">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First name</label>
+                <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="Jane" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+                <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Doe" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                <input id="company" name="company" type="text" autocomplete="organization" placeholder="Your company"
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telephone number</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="01234567890"
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="day" class="block text-sm font-medium text-gray-700 mb-1">Choose a day</label>
+                <input id="day" name="day" type="date" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="slot" class="block text-sm font-medium text-gray-700 mb-1">Choose a time</label>
+                <select id="slot" name="slot" required
+                        class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="">Pick a day first</option>
+                </select>
+              </div>
+            </div>
+
+            <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+
+            <div class="mt-5 flex items-center justify-end gap-3">
+              <button type="button" data-close-modal
+                      class="inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Cancel
+              </button>
+              <button type="submit"
+                      class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                Book now
+              </button>
+            </div>
+
+            <p id="formMsg" role="status" aria-live="polite"
+               class="mt-3 hidden rounded-lg border px-3 py-2 text-sm"></p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  const modal = document.getElementById('bookcall-modal');
+  const closers = modal.querySelectorAll('[data-close-modal]');
+  const backdrop = modal.firstElementChild;
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    const first = modal.querySelector('input, textarea, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', escClose);
+  }
+  function closeModal() {
+    modal.classList.add('hidden');
+    document.removeEventListener('keydown', escClose);
+  }
+  function escClose(e) { if (e.key === 'Escape') closeModal(); }
+
+  // open via data-modal="bookcall"
+  document.addEventListener('click', (e) => {
+    const opener = e.target.closest('[data-modal="bookcall"]');
+    if (opener) {
+      e.preventDefault();
+      openModal();
+    }
+  });
+
+  closers.forEach(btn => btn.addEventListener('click', closeModal));
+  backdrop.addEventListener('click', closeModal);
+
+  // mailto submit (demo)
+  document.getElementById('bookcall-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const subject = encodeURIComponent('Book a Call request');
+    const body = encodeURIComponent(
+      `Name: ${data.get('name') || ''}\nCompany: ${data.get('company') || ''}\nTelephone: ${data.get('telephone') || ''}\nEmail: ${data.get('email') || ''}\n\nMessage:\n${data.get('message') || ''}`
+    );
+    window.location.href = `mailto:hello@jemima.ai?subject=${subject}&body=${body}`;
+    closeModal();
+  });
+</script>
+
+<!-- Top Contact Bar -->
+<div class="hidden sm:block bg-white text-blue-600 text-xs shadow-sm">
+  <div class="max-w-6xl mx-auto px-6 py-1 flex items-center">
+    <div class="flex items-center gap-4">
+      <span class="inline-flex items-center gap-2">
+        <!-- Phone icon -->
+<i class="fas fa-phone-alt"></i>
+        <b>SMS</b> +44 7479 277657
+      </span>
+      <span>jemima@jemima.ai</span>
+    </div>
+  </div>
+</div>
+
+<!-- Header (reduced height, working mobile menu) -->
+<header class="bg-white/95 backdrop-blur border-b sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 h-12 flex items-center">
+    <!-- Brand -->
+    <a href="#" class="flex items-center gap-2 font-extrabold text-lg tracking-tight">
+      <span class="text-gray-900">jemima.ai</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="ml-auto hidden sm:flex items-center gap-6">
+      <a href="#capabilities" class="py-2 text-gray-700 hover:text-indigo-600">Solutions</a>
+      <a href="#method" class="py-2 text-gray-700 hover:text-indigo-600">Methodology</a>
+      <a href="#compare" class="py-2 text-gray-700 hover:text-indigo-600">Compare</a>
+    </nav>
+
+    <!-- Desktop CTA -->
+    <a href="#contact" data-modal="bookcall"
+       class="ml-4 hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+      Book An Exploration Call
+    </a>
+
+    <!-- Mobile: CTA + burger -->
+    <div class="ml-auto sm:hidden flex items-center gap-2">
+
+      <button id="menuBtn" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false"
+              class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-200 text-gray-700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Panel -->
+  <div id="mobileNav" class="sm:hidden hidden absolute top-full left-0 right-0 z-50 border-t bg-white shadow-lg">
+    <nav class="px-6 py-3 flex flex-col">
+      <a href="#capabilities" class="py-2 text-gray-700 hover:text-indigo-600">Solutions</a>
+      <a href="#method" class="py-2 text-gray-700 hover:text-indigo-600">Methodology</a>
+      <a href="#compare" class="py-2 text-gray-700 hover:text-indigo-600">Compare</a>
+      <a href="#contact" data-modal="bookcall" class="mt-2 inline-flex items-center justify-center px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+        Book An Exploration Call
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile menu toggle -->
+<script>
+  (function () {
+    const btn = document.getElementById('menuBtn');
+    const panel = document.getElementById('mobileNav');
+    if (!btn || !panel) return;
+
+    function closeMenu() {
+      panel.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden'); // unlock scroll
+    }
+    function toggleMenu() {
+      const willOpen = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(willOpen));
+      document.body.classList.toggle('overflow-hidden', willOpen); // lock scroll when open
+    }
+
+    btn.addEventListener('click', toggleMenu);
+
+    // Close when a link is clicked
+    panel.addEventListener('click', (e) => {
+      if (e.target.closest('a')) closeMenu();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+</script>
+
+<!-- Hero Section (with image background) -->
+<section class="relative isolate">
+  <!-- Background image -->
+  <img
+    src="jemima-office-background.png"
+    alt="Modern office environment representing trustworthy AI for business"
+    class="absolute inset-0 -z-10 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <!-- Overlay -->
+  <div class="absolute inset-0 -z-10 bg-black/50"></div>
+
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32 text-center text-white">
+    <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+      AI Business Results in 30 Days
+    </h1>
+    <p class="text-lg sm:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+      Supporting your business with AI consulting that is fast, safe, and ROI driven. Complete your AI projects with measurable ROI in 30 days.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#contact" data-modal="bookcall"
+         class="inline-flex items-center px-5 py-3 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700">
+        Book An Exploration Call
+      </a>
+      <a href="#method"
+         class="inline-flex items-center px-5 py-3 rounded-md border border-white/30 text-white font-semibold hover:bg-white/10">
+        See Methodology
+      </a>
+    </div>
+
+    <div class="mt-8">
+      <span class="text-sm text-white/80">
+        Trusted by clients across SaaS, Recruitment, Marketing and More...
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- Capabilities Section -->
+<section id="capabilities" class="py-16 px-6 bg-white">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+    <div class="rounded-2xl shadow border border-gray-200 bg-gray-50">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Lead Generation</h3>
+        <p class="text-gray-600 text-sm">
+          AI solutions that streamline workflows, reduce manual effort, and deliver measurable business outcomes.
+        </p>
+      </div>
+    </div>
+    <div class="rounded-2xl shadow border border-gray-200 bg-gray-50">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Sales Automation</h3>
+        <p class="text-gray-600 text-sm">
+          AI solutions that streamline workflows, reduce manual effort, and deliver measurable business outcomes.
+        </p>
+      </div>
+    </div>
+    <div class="rounded-2xl shadow border border-gray-200 bg-gray-50">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Customer Service AI</h3>
+        <p class="text-gray-600 text-sm">
+          AI solutions that streamline workflows, reduce manual effort, and deliver measurable business outcomes.
+        </p>
+      </div>
+    </div>
+    <div class="rounded-2xl shadow border border-gray-200 bg-gray-50">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Governance &amp; Risk</h3>
+        <p class="text-gray-600 text-sm">
+          Privacy, transparency, and fairness checks aligned to NIST / ISO / EU AI Act.
+        </p>
+      </div>
+    </div>
+    <div class="rounded-2xl shadow border border-gray-200 bg-gray-50">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Analytics</h3>
+        <p class="text-gray-600 text-sm">
+          Dashboards that track value, adoption, and risk—no black boxes.
+        </p>
+      </div>
+    </div>
+    <div class="rounded-2xl shadow border border-gray-200 bg-gray-50">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Platform Fit</h3>
+        <p class="text-gray-600 text-sm">
+          Azure OpenAI · AWS Bedrock · Google Vertex · best-fit SaaS tools.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Methodology Section -->
+<section id="method" class="bg-gray-50 py-16 px-6 text-center">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8 flex items-center justify-center gap-3">
+      <img src="30-day-ai-flywheel-logo.png" alt="30 Day AI Flywheel logo" class="h-9 w-auto" loading="lazy">
+      <h2 class="text-3xl font-bold">30 Day AI Flywheel™</h2>
+    </div>
+    <p class="text-gray-600 mb-10 max-w-2xl mx-auto">
+      Unlike traditional consulting programs that take months, our Flywheel approach delivers results in weeks. Identify, Pilot, Measure, and Scale, all in 30 days.
+    </p>
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="rounded-2xl shadow border border-gray-200 bg-white">
+        <div class="p-6">
+          <h4 class="text-lg font-semibold mb-2">Identify</h4>
+          <p class="text-sm text-gray-600">Find quick-win opportunities in one workshop.</p>
+        </div>
+      </div>
+      <div class="rounded-2xl shadow border border-gray-200 bg-white">
+        <div class="p-6">
+          <h4 class="text-lg font-semibold mb-2">Build</h4>
+          <p class="text-sm text-gray-600">Launch a safe, focused MVP in week one.</p>
+        </div>
+      </div>
+      <div class="rounded-2xl shadow border border-gray-200 bg-white">
+        <div class="p-6">
+          <h4 class="text-lg font-semibold mb-2">Measure</h4>
+          <p class="text-sm text-gray-600">Track ROI with one clear metric.</p>
+        </div>
+      </div>
+      <div class="rounded-2xl shadow border border-gray-200 bg-white">
+        <div class="p-6">
+          <h4 class="text-lg font-semibold mb-2">Scale</h4>
+          <p class="text-sm text-gray-600">Decide to expand or pivot with confidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Section (left-aligned, plain tick icons) -->
+<section class="py-16 px-6 bg-white">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-8">Why You Can Trust Us</h2>
+    <p class="text-gray-600 mb-10 max-w-2xl mx-auto">
+      Governance and compliance are built in from day one, so you get enterprise confidence without enterprise cost.
+    </p>
+
+    <ul class="inline-grid mx-auto sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-start">
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Built-in governance</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">EU AI Act &amp; ISO alignment</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Audit trail included</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Privacy &amp; fairness checks</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">No training on your data</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Data residency &amp; isolation options</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Role-based access &amp; SSO</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Vendor-neutral platform fit</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">DPIA templates &amp; DPA support</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Independent pen-tested integrations</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">Transparent ROI &amp; risk metrics</span></li>
+      <li class="flex items-start gap-3"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" class="text-green-600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-gray-700 text-sm">SLA with weekly reporting</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- Case Studies Section -->
+<section class="bg-gray-50 py-16 px-6">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center">Results That Matter</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="rounded-2xl shadow border border-gray-200 bg-white">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">SaaS Company</h3>
+          <p class="text-sm text-gray-600 mb-2">
+            Delivered a lead-gen AI assistant in 30 days, improving conversions by 22%.
+          </p>
+        </div>
+      </div>
+      <div class="rounded-2xl shadow border border-gray-200 bg-white">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Recruitment Firm</h3>
+          <p class="text-sm text-gray-600 mb-2">
+            Automated CV screening, cutting time-to-hire by 40% while maintaining fairness checks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison Section -->
+<section class="py-16 px-6 bg-white" id="compare">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center">How We Compare</h2>
+    <p class="text-gray-600 mb-10 max-w-3xl mx-auto text-center">
+      Everything that large consulting firms promise: trust, control, ROI, we deliver in a lighter, faster format. Here is how the
+      <span class="font-semibold"> 30 Day AI Flywheel™</span> stacks up against traditional consulting approaches.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="rounded-2xl shadow border border-gray-200">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-4">PwC / Deloitte / Protiviti</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Multi-phase assessments, governance programs, and lifecycle controls.</li>
+            <li>Committees, policies, and model assurance embedded across functions.</li>
+            <li>Higher cost, longer timelines; great for complex global rollouts.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rounded-2xl shadow border border-gray-200">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-4">30 Day AI Flywheel™</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li><span class="font-medium">Day 1 Guardrails</span>: one-page governance, privacy &amp; fairness checks.</li>
+            <li><span class="font-medium">Week 1 Pilot</span>: a working MVP in a single workflow or team.</li>
+            <li><span class="font-medium">Day 30 Decision</span>: scale or pivot with a one-page audit trail and ROI proof.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-2 gap-6">
+      <div class="rounded-2xl shadow border border-gray-200">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-4">Accenture / McKinsey / EY</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Maturity indices, value accelerators, and change-at-scale programs.</li>
+            <li>Emphasis on enterprise benchmarks, operating model, and culture.</li>
+            <li>Requires significant leadership time and larger budgets.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rounded-2xl shadow border border-gray-200">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-4">30 Day AI Flywheel™</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li><span class="font-medium">Growth Driver Audit</span> in one hour—picks a single high-impact use case.</li>
+            <li><span class="font-medium">48-Hour Vendor Sprint</span>—selects the best tool, de-risks quickly.</li>
+            <li><span class="font-medium">One Metric That Matters</span>—simple ROI tracker to justify scaling.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10 overflow-x-auto">
+      <div class="min-w-[720px] grid grid-cols-3 text-sm">
+        <div class="font-semibold p-3 bg-gray-50">Dimension</div>
+        <div class="font-semibold p-3 bg-gray-50">Accenture / McKinsey / EY</div>
+        <div class="font-semibold p-3 bg-gray-50">Jemima</div>
+
+        <div class="p-3 border-t">Time to Value</div>
+        <div class="p-3 border-t">6–12+ weeks to first pilot</div>
+        <div class="p-3 border-t">Week 1 MVP, Day 30 decision</div>
+
+        <div class="p-3 border-t">Governance</div>
+        <div class="p-3 border-t">Committees, policy libraries, audits</div>
+        <div class="p-3 border-t">1 page guardrails + audit trail</div>
+
+        <div class="p-3 border-t">Cost Profile</div>
+        <div class="p-3 border-t">Premium, multi-team programs</div>
+        <div class="p-3 border-t">Fixed, low cost sprint</div>
+
+        <div class="p-3 border-t">People &amp; Change</div>
+        <div class="p-3 border-t">Broad culture programs</div>
+        <div class="p-3 border-t">1–2 hr enablement tied to live projects</div>
+
+        <div class="p-3 border-t">Proof of ROI</div>
+        <div class="p-3 border-t">Dashboards post implementation</div>
+        <div class="p-3 border-t">Live use data + single ROI metric</div>
+
+        <div class="p-3 border-t">Typical Cost</div>
+        <div class="p-3 border-t">$20,000 - $100,000</div>
+        <div class="p-3 border-t">$1,000 - $5,000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA / Footer -->
+<footer id="contact" class="bg-gray-900 text-white py-16 px-6 text-center">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+    <p class="mb-6 text-gray-300">Deliver AI ROI in just 30 days. With governance built in from the start.</p>
+    <a href="#contact" data-modal="bookcall" class="inline-flex items-center px-5 py-3 rounded-md bg-white text-gray-900 font-medium hover:bg-gray-200">Book An Exploration Call</a>
+    <p class="text-gray-400 text-xs mt-6">&copy; <span id="y"></span> Jemima AI. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Floating Chat Launcher (with Jemima avatar) -->
+<button id="chat-launcher"
+  class="fixed bottom-5 right-5 z-[90] inline-flex items-center gap-2 rounded-full bg-blue-600 px-3 pr-4 py-2 text-white shadow-lg hover:brightness-95">
+  <img src="jemima-chat.png" alt="" class="h-7 w-7 rounded-full object-cover ring-1 ring-white/30">
+  <span class="font-medium">Chat</span>
+  <span class="sr-only">Open chat with Jemima</span>
+</button>
+
+<!-- Chat Popup -->
+<div id="chat-popup" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/30 md:bg-transparent" id="chat-backdrop"></div>
+
+  <!-- Panel -->
+  <div class="absolute bottom-5 right-5 left-5 md:left-auto">
+    <div role="dialog" aria-modal="true" aria-labelledby="chat-title"
+         class="mx-auto md:mx-0 w-full max-w-sm rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
+      <!-- Header -->
+      <div class="flex items-center gap-3 border-b px-4 py-3">
+        <img src="jemima-chat.png" alt="Guide avatar"
+             class="h-8 w-8 rounded-full object-cover">
+        <div class="min-w-0">
+          <h3 id="chat-title" class="text-sm font-semibold leading-tight">Jemima</h3>
+          <p class="text-xs text-gray-500"></p>
+        </div>
+        <button type="button" id="chat-close"
+                class="ml-auto p-2 rounded-md text-gray-500 hover:bg-gray-100" aria-label="Close chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="px-4 pt-4 pb-2">
+        <!-- Opening bubble -->
+        <div class="rounded-xl bg-gray-50 p-3 text-sm text-gray-700 shadow-sm">
+          <p class="mb-2">Hi I'm a virtual guide. I can answer hundreds of questions related to Jemima services.</p>
+          <p class="text-gray-600">If you want to speak to a person Book An Exploration Call using the button below.</p>
+        </div>
+
+        <!-- Chat area for dynamic messages -->
+        <div id="chat-body" class="mt-3 max-h-80 overflow-y-auto pr-1 hidden"></div>
+      </div>
+
+      <!-- Input (textarea so auto-grow works) -->
+      <form id="chat-form" class="border-t px-3 py-3">
+        <label class="sr-only" for="chat-input">Ask a question</label>
+        <div class="flex items-center gap-2">
+          <textarea id="chat-input" name="message" rows="1" placeholder="Ask a question"
+                    class="w-full resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <button type="submit"
+                  class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white hover:brightness-95"
+                  aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 2L15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <!-- Quick suggestions -->
+<div class="mt-3">
+  <div id="chat-quick-links" class="flex flex-wrap gap-2 justify-start">
+    <a href="#contact" data-modal="bookcall"
+       class="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+      Book An Exploration Call
+    </a>
+  </div>
+</div>
+      </form>
+
+      <!-- Privacy note -->
+      <div class="border-t px-4 py-3">
+        <p class="text-[11px] leading-snug text-gray-500">
+          By sending a message you agree this session may be monitored, recorded, and shared with third-party service providers for analytics and other business purposes described in our
+          <a href="/privacy.html" class="underline hover:text-gray-700">Privacy policy</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- subbmit button for chat -->
+<script>
+(() => {
+  const form  = document.getElementById('chat-form');
+  const input = document.getElementById('chat-input');
+  if (!form || !input) return;
+
+  // Enter to send, Shift+Enter for newline
+  input.addEventListener('keydown', (e) => {
+    if (e.isComposing) return;                   // don't interfere with IME
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();                        // stop newline
+      if (input.value.trim()) {
+        if (typeof form.requestSubmit === 'function') form.requestSubmit();
+        else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+    }
+  });
+
+  // Mobile keyboard hint (optional)
+  input.setAttribute('enterkeyhint', 'send');
+})();
+</script>
+
+
+<!-- Tiny bubble styles for the dynamic messages -->
+<style>
+  #chat-body .chat-bubble{max-width:90%; margin:.375rem 0; padding:.5rem .75rem; border-radius:.75rem; font-size:.9rem; line-height:1.25rem;}
+  #chat-body .ai-bubble{background:#f3f4f6; color:#111827;}
+  #chat-body .user-bubble{background:#2563eb; color:#fff; margin-left:auto;}
+  #chat-body.show{display:block;}
+</style>
+
+<!-- Open/Close only (no submit here) -->
+<script>
+  const chatLauncher = document.getElementById('chat-launcher');
+  const chatPopup    = document.getElementById('chat-popup');
+  const chatClose    = document.getElementById('chat-close');
+  const chatBackdrop = document.getElementById('chat-backdrop');
+  const chatInputEl  = () => document.getElementById('chat-input');
+
+  function openChat() {
+    chatPopup.classList.remove('hidden');
+    chatPopup.setAttribute('aria-hidden', 'false');
+    setTimeout(() => chatInputEl()?.focus(), 0);
+    document.addEventListener('keydown', escClose);
+  }
+  function closeChat() {
+    chatPopup.classList.add('hidden');
+    chatPopup.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', escClose);
+  }
+  function escClose(e){ if(e.key === 'Escape') closeChat(); }
+
+  chatLauncher.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
+  chatBackdrop.addEventListener('click', closeChat);
+</script>
+
+<script>
+  // after openChat/closeChat are defined
+  window.openChat  = openChat;
+  window.closeChat = closeChat;
+</script>
+
+
+<!-- n8n chat behaviour -->
+<script>
+/* 1) page address sent to n8n */
+const pageUrl   = window.location.href;
+
+/* 2) n8n endpoint & per-visitor session ID */
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
+const sessionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36);
+
+/* 3) DOM handles */
+const box   = document.getElementById('chat-body');
+const form  = document.getElementById('chat-form');
+const input = document.getElementById('chat-input');
+
+/* 4) helper: add a chat bubble */
+function add (text, role = 'ai') {
+  const div     = document.createElement('div');
+  div.className = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+  div.innerHTML = `<p>${text}</p>`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  box.classList.add('show');
+}
+
+/* 5) unwrap JSON (object OR first element of array) */
+function parse (raw, hdr) {
+  if ((hdr.get('content-type') || '').includes('application/json')) {
+    try {
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
+      return (
+        d.reply   || d.output  || d.text || d.message ||
+        d.answer  || d.content ||
+        (d.choices && d.choices[0]?.message?.content) ||
+        raw
+      );
+    } catch { /* fall through to raw */ }
+  }
+  return raw;
+}
+
+/* 6) send routine */
+async function sendMessage (msg) {
+  if (!msg) return;
+  add(msg, 'user');               // echo user text
+  input.value = '';               // clear
+  input.style.height = '40px';    // reset height
+
+  try {
+    const res = await fetch(webhook, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        sessionId,
+        route     : 'general',
+        action    : 'sendMessage',
+        chatInput : msg,
+        pageUrl
+      })
+    });
+    const raw = await res.text();
+    add(parse(raw, res.headers), 'ai');
+  } catch (err) {
+    console.error(err);
+    add('Could not reach the server.', 'ai');
+  }
+}
+
+/* 7) submit handler */
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const msg = (new FormData(form).get('message') || '').toString().trim();
+  if (!msg) return;
+  sendMessage(msg);
+});
+
+/* 8) auto-grow textarea */
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = Math.min(140, input.scrollHeight) + 'px';
+});
+
+/* 9) quick-link handler */
+document.getElementById('chat-quick-links')
+  .addEventListener('click', e => {
+    const btn = e.target.closest('.qlink');
+    if (!btn) return;
+    e.preventDefault();
+    sendMessage(btn.dataset.msg || btn.textContent.trim());
+  });
+</script>
+
+
+
+
+
+<script>
+  (function () {
+    const modal   = document.getElementById('bookcall-modal');
+    const backdrop= modal.firstElementChild;
+    const dialog  = modal.querySelector('[role="dialog"]');
+
+    // Safety: ensure it's hidden on load (some builders strip classes)
+    document.addEventListener('DOMContentLoaded', () => {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+    });
+
+    function openModal() {
+      modal.classList.remove('hidden');
+      modal.removeAttribute('inert');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden'); // lock scroll
+      const first = modal.querySelector('input, select, textarea, button');
+      if (first) first.focus();
+      document.addEventListener('keydown', onEsc);
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+      document.body.classList.remove('overflow-hidden');
+      document.removeEventListener('keydown', onEsc);
+    }
+
+    function onEsc(e){ if(e.key === 'Escape') closeModal(); }
+
+    // Open via any element with data-modal="bookcall"
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-modal="bookcall"]');
+      if (opener) {
+        e.preventDefault();
+        openModal();
+      }
+    });
+
+    // Close via backdrop or any [data-close-modal]
+    backdrop.addEventListener('click', closeModal);
+    modal.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeModal));
+  })();
+</script>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+<script>
+(function () {
+  const DELAY_MS = 5000;
+
+  window.addEventListener('load', () => {
+    // Only auto-open once per session
+    if (sessionStorage.getItem('jemimaChatOpened') === '1') return;
+
+    setTimeout(() => {
+      const popup = document.getElementById('chat-popup');
+      if (!popup) return;
+      // If already open, do nothing
+      if (!popup.classList.contains('hidden')) return;
+
+      // Prefer your existing function if available
+      if (typeof window.openChat === 'function') {
+        window.openChat();
+      } else {
+        // Fallback: open manually
+        popup.classList.remove('hidden');
+        popup.setAttribute('aria-hidden', 'false');
+        document.getElementById('chat-input')?.focus();
+
+        // Minimal Escape-to-close for fallback
+        const onEsc = (e) => {
+          if (e.key === 'Escape') {
+            popup.classList.add('hidden');
+            popup.setAttribute('aria-hidden', 'true');
+            document.removeEventListener('keydown', onEsc);
+          }
+        };
+        document.addEventListener('keydown', onEsc);
+      }
+
+      // Mark as opened for this session
+      sessionStorage.setItem('jemimaChatOpened', '1');
+    }, DELAY_MS);
+  });
+})();
+</script>
+
+<script>
+/* ── Booking & floating message ─────────────────────────── */
+const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+const TIME_ZONE   = 'Europe/London';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* handles ------------------------------------------------ */
+  const dayInput   = document.getElementById('day');
+  const slotSelect = document.getElementById('slot');
+  const form       = document.getElementById('bookingForm');
+  const formMsg    = document.getElementById('formMsg');
+  const pageUrlIn  = document.getElementById('pageUrl');
+
+  /* helper: show / hide banner ----------------------------- */
+  function flash(type, text, keepMs = 3000){
+    formMsg.className = '';            // clear all classes
+    formMsg.textContent = text;
+    if(type) formMsg.classList.add(type);
+    formMsg.classList.add('show');     // slide-in
+    clearTimeout(flash._timer);
+    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+  }
+
+  /* init --------------------------------------------------- */
+  pageUrlIn.value = window.location.href;
+  dayInput.addEventListener('change',  fetchTimes);
+  form    .addEventListener('submit',  submitBooking);
+
+  /* fetch available times ---------------------------------- */
+  async function fetchTimes(){
+    const day = dayInput.value;
+    if(!day){
+      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+      return;
+    }
+    slotSelect.disabled = true;
+    slotSelect.innerHTML = '<option>Loading…</option>';
+
+    try{
+      const res  = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'check_availability', day})
+                  });
+      const data = await res.json();
+      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+      const free   = payload.slots ?? [];
+
+      slotSelect.innerHTML = free.length
+        ? '<option value="">Select a time</option>'
+        : '<option value="">No slots available</option>';
+
+      free.forEach(s=>{
+        if(!s.startsWith(day)) return;
+        const t = s.slice(11,16);
+        slotSelect.insertAdjacentHTML('beforeend',
+          `<option value="${s}">${t}</option>`);
+      });
+    }catch{
+      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+    }finally{
+      slotSelect.disabled = false;
+    }
+  }
+
+  /* submit booking ---------------------------------------- */
+  async function submitBooking(e){
+    e.preventDefault();
+    flash('sending','Sending…',10_000);         // orange bar
+
+    const payload = {
+      firstName:form.firstName.value,
+      lastName :form.lastName.value,
+      company  :form.company.value,
+      phone    :form.phone.value,
+      email    :form.email.value,
+      slot     :slotSelect.value,
+      pageUrl  :pageUrlIn.value,
+      timeZone :TIME_ZONE
+    };
+
+    try{
+      const res = await fetch(BOOKING_URL,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({action:'create_booking',...payload})
+                  });
+
+      if(res.ok){
+        form.reset();
+        slotSelect.innerHTML =
+          '<option value="">Pick a day first</option>';
+        flash('success','Your meeting is confirmed. Check your inbox.');
+      }else if(res.status===409){
+        flash('error','That time has just been taken. Please choose another.');
+        fetchTimes();
+      }else{
+        flash('error','An error occurred. Please try again later.');
+      }
+    }catch{
+      flash('error','Could not reach the server. Try again later.');
+    }
+  }
+});
+</script>
+
+</body>
+</html>
+
