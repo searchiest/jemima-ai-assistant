@@ -167,49 +167,66 @@
   </div>
 </div>
 
+<!-- place right after #bookcall-modal -->
+<script>
+  // Mark that we want the modal open immediately
+  (function () {
+    const wantsOpen = new URLSearchParams(location.search).get('bookcall') === 'open';
+    if (wantsOpen) window.__bookcallAutoOpen = true;
+  })();
+</script>
 
 
 <script>
-  const modal = document.getElementById('bookcall-modal');
-  const closers = modal.querySelectorAll('[data-close-modal]');
-  const backdrop = modal.firstElementChild;
+  (function () {
+    const modal    = document.getElementById('bookcall-modal');
+    const backdrop = modal.firstElementChild;
 
-  function openModal() {
-    modal.classList.remove('hidden');
-    const first = modal.querySelector('input, textarea, button');
-    if (first) first.focus();
-    document.addEventListener('keydown', escClose);
-  }
-  function closeModal() {
-    modal.classList.add('hidden');
-    document.removeEventListener('keydown', escClose);
-  }
-  function escClose(e) { if (e.key === 'Escape') closeModal(); }
-
-  // open via data-modal="bookcall"
-  document.addEventListener('click', (e) => {
-    const opener = e.target.closest('[data-modal="bookcall"]');
-    if (opener) {
-      e.preventDefault();
-      openModal();
+    // Make global so other code can call it
+    window.openBookcall = function openBookcall () {
+      modal.classList.remove('hidden');
+      modal.removeAttribute('inert');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+      const first = modal.querySelector('input, select, textarea, button');
+      if (first) first.focus();
+      document.addEventListener('keydown', onEsc);
     }
-  });
 
-  closers.forEach(btn => btn.addEventListener('click', closeModal));
-  backdrop.addEventListener('click', closeModal);
+    window.closeBookcall = function closeBookcall () {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+      document.body.classList.remove('overflow-hidden');
+      document.removeEventListener('keydown', onEsc);
+    }
 
-  // mailto submit (demo)
-  document.getElementById('bookcall-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const subject = encodeURIComponent('Book a Call request');
-    const body = encodeURIComponent(
-      `Name: ${data.get('name') || ''}\nCompany: ${data.get('company') || ''}\nTelephone: ${data.get('telephone') || ''}\nEmail: ${data.get('email') || ''}\n\nMessage:\n${data.get('message') || ''}`
-    );
-    window.location.href = `mailto:hello@jemima.ai?subject=${subject}&body=${body}`;
-    closeModal();
-  });
+    function onEsc(e){ if(e.key === 'Escape') window.closeBookcall(); }
+
+    // Open via any [data-modal="bookcall"]
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-modal="bookcall"]');
+      if (opener) { e.preventDefault(); window.openBookcall(); }
+    });
+
+    // Close via backdrop or [data-close-modal]
+    backdrop.addEventListener('click', window.closeBookcall);
+    modal.querySelectorAll('[data-close-modal]')
+         .forEach(b => b.addEventListener('click', window.closeBookcall));
+
+    // Initial state / auto-open WITHOUT delaying to DOMContentLoaded
+    if (window.__bookcallAutoOpen) {
+      // Do NOT hide; open immediately
+      window.openBookcall();
+    } else {
+      // Default: start hidden/inert
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+    }
+  })();
 </script>
+
 
 <!-- Top Contact Bar -->
 <div class="hidden sm:block mt-2 bg-white text-blue-600 text-xs shadow-sm">
@@ -226,7 +243,7 @@
 </div>
 
 <!-- Header (reduced height, working mobile menu) -->
-<header class="bg-white/95 backdrop-blur border-b sticky top-0 z-50">
+<header class="bg-white/95 backdrop-blur border-b sticky top-0 z-50 pb-1">
   <div class="max-w-6xl mx-auto px-6 h-12 flex items-center">
     <!-- Brand -->
     <a href="#" class="flex items-center gap-2 font-extrabold text-lg tracking-tight">
@@ -508,7 +525,7 @@
 
 
 <!-- Methodology Section -->
-<section id="method" class="bg-gray-50 py-16 px-6 text-center">
+<section id="method" class="bg-gray-50 py-16 px-6 text-center border-t border-b border-gray-300">
   <div class="max-w-4xl mx-auto">
     <div class="mb-8 flex items-center justify-center gap-3">
       <img src="30-day-ai-flywheel-logo.png" alt="30 Day AI Flywheel logo" class="h-9 w-auto" loading="lazy">
@@ -570,7 +587,7 @@
 </section>
 
 <!-- Case Studies Section -->
-<section class="bg-gray-50 py-16 px-6">
+<section class="bg-gray-50 py-16 px-6 border-t border-b border-gray-300">
   <div class="max-w-6xl mx-auto">
     <h2 class="text-3xl font-bold mb-8 text-center">Results That Matter</h2>
     <div class="grid md:grid-cols-2 gap-6">
@@ -683,7 +700,7 @@
 </section>
 
 <!-- Lean AI Audits Section (with prices + Talk First) -->
-<section id="lean-audits" class="py-16 px-6 bg-gray-50">
+<section id="lean-audits" class="py-16 px-6 bg-gray-50 border-t border-b border-gray-300">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10">
       <h2 class="text-3xl font-bold">Lean AI Audit Services</h2>
@@ -1325,6 +1342,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<!-- if url includes bookcall=open open book a call box on page load -->
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('bookcall') === 'open') {
+      if (typeof window.openModal === 'function') {
+        window.openModal();
+      } else {
+        const modal = document.getElementById('bookcall-modal');
+        modal.classList.remove('hidden');
+        modal.removeAttribute('inert');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    }
+  });
+</script>
+
 
 </body>
 </html>
