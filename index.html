@@ -3153,7 +3153,7 @@
              class="h-8 w-8 rounded-full object-cover">
         <div class="min-w-0">
           <h3 id="chat-title" class="text-sm font-semibold leading-tight">Jemima</h3>
-          <p class="text-xs text-gray-500"></p>
+          <p class="text-xs text-gray-500">Virtual Guide</p>
         </div>
         <button type="button" id="chat-close"
                 class="ml-auto p-2 rounded-md text-gray-500 hover:bg-gray-100" aria-label="Close chat">
@@ -3284,7 +3284,7 @@
 const pageUrl   = window.location.href;
 
 /* 2) n8n endpoint & per-visitor session ID */
-const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
+const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/4322b02c-7c17-479f-9ded-fcde11fa4a8d/chat';
 const sessionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36);
 
 /* 3) DOM handles */
