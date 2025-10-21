@@ -37,9 +37,23 @@
     .user-bubble { background:#2563eb; color:#fff; align-self:flex-end; }
     #chat-body { display:flex; flex-direction:column; }
 
-    .composer { display:flex; gap:.5rem; padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80); }
-    .composer textarea { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff; resize:none; min-height:60px; max-height:160px; }
-    .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer; }
+.composer {
+  display:flex; align-items:flex-end; gap:.5rem;
+  padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80);
+}
+.composer textarea{
+  flex:1;
+  border:1px solid #d1d5db; border-radius:.7rem;
+  padding:.58rem .75rem;
+  font-size:14px; line-height:1.35;
+  background:#fff; resize:none; overflow:hidden;
+  max-height:160px;   /* cap growth */
+  min-height:40px;    /* nice starting height */
+}
+.composer button{
+  border:0; background:#2563eb; color:#fff;
+  border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
+}
 
     .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); text-align:left; }
     .cta-wrap a { display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem; padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow: 0 6px 18px rgba(37,99,235,.35); }
@@ -322,6 +336,51 @@
       /* … booking code unchanged … */
     });
   </script>
+
+<script>
+  // handles you already have:
+  const form  = document.getElementById('form');
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('sendBtn');
+
+  // helper: grow the textarea to fit content
+  function autoresize(el){
+    // lock to one row then expand to scroll height
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+  }
+
+  // run once on load
+  autoresize(input);
+
+  // grow as user types
+  input.addEventListener('input', () => autoresize(input));
+
+  // track IME composition so Enter does not submit mid-composition
+  let composing = false;
+  input.addEventListener('compositionstart', () => composing = true);
+  input.addEventListener('compositionend',   () => composing = false);
+
+  // Return submits, Shift+Return makes a newline
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (composing) return;          // ignore while composing characters
+    if (e.shiftKey) return;         // allow newline with Shift+Enter
+    e.preventDefault();
+    form.requestSubmit ? form.requestSubmit(sendBtn) : form.dispatchEvent(new Event('submit', {cancelable:true}));
+  });
+
+  // Submit hook stays the same, just make sure it calls your existing sendMessage()
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // call your existing send routine here
+    if (typeof sendMessage === 'function') sendMessage();
+    // reset height after send
+    input.value = '';
+    autoresize(input);
+  });
+</script>
+
 
 </body>
 </html>
