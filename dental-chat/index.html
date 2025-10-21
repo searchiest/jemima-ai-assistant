@@ -54,7 +54,8 @@
     .header-image img {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
+      border-radius: 50%;  /* circular avatar */
+      object-fit: cover;
     }
     .header-image .title {
       font-size: 14px;
@@ -124,7 +125,7 @@
       padding:.5rem;
       border-top:1px solid rgba(0,0,0,.06);
       background: transparent;
-      text-align: center;
+      text-align: left;  /* align left */
     }
     .cta-wrap a {
       display:inline-block;
@@ -165,7 +166,6 @@
       .controls { left: 50%; transform: translateX(-50%); top: .75rem; width: calc(100vw - 1.5rem); gap: .4rem; padding: .45rem; }
       .controls input, .controls select, .controls button { width: 100%; }
     }
-
   </style>
 </head>
 <body>
@@ -232,7 +232,6 @@
     const badge = $('badge');
     const chat = $('chat');
     const launcher = $('launcher');
-    const where = $('where');  // Note: element with id="where" removed, so this may be unused
     const log = $('log');
     const ctaWrap = $('ctaWrap');
     const cta = $('cta');
@@ -336,14 +335,12 @@
 
     function applyState() {
       parseRoute();
-
       if (!state.targetUrl) {
         setBadge('Set a target URL to start');
         chat.style.display = 'none';
         launcher.style.display = 'none';
         return;
       }
-
       $('vertical').value = state.vertical;
       $('host').value = state.targetUrl;
       $('mode').value = state.mode;
@@ -378,7 +375,6 @@
 
     window.addEventListener('hashchange', applyState);
 
-    // On first load, if no hash, set a default
     if (!location.hash) {
       location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     }
