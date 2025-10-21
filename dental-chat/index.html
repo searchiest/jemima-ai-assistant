@@ -15,27 +15,123 @@
     .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem; background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px; font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
     .hidden { display:none; }
 
-    /* Chat window */
-    .chat { position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); color: #0b0b0c; z-index: 50; }
-    .chat-card { background: rgba(255,255,255,.60); backdrop-filter: blur(10px) saturate(140%); border-radius: 1rem; box-shadow: 0 12px 36px rgba(0,0,0,.25); overflow: hidden; border:1px solid rgba(255,255,255,.35); }
-    .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom: 1px solid rgba(0,0,0,.06); background: transparent; }
-    .brand { display:flex; align-items:center; gap:.5rem; font-weight:600; font-size:14px; }
-    .brand .dot { width:10px; height:10px; border-radius:999px; background:#2563eb; }
-    .body { height: 420px; max-height: 60vh; overflow: auto; padding: .75rem; font-size: 14px; background:#fff; }
-    .sys { font-size: 12px; opacity: .7; margin-bottom: .5rem; }
-    .row { display: flex; margin: .45rem 0; }
-    .row.me { justify-content: flex-end; }
-    .bubble { max-width: 85%; padding: .5rem .75rem; border-radius: 1rem; background: #f2f2f3; }
-    .me .bubble { background: #2563eb; color: #fff; }
-    .composer { display:flex; gap:.5rem; padding:.5rem; border-top: 1px solid #ececec; background:#fff; }
-    .composer input { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; }
-    .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; }
+/* Chat window */
+.chat {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: 380px;
+  max-width: calc(100vw - 1rem);
+  z-index: 50;
+  color: #0b0b0c;
+}
 
 .chat-card {
-  background: rgba(255, 255, 255, 0.6);   /* semi transparent white */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);     /* for Safari */
-  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .6rem .8rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: transparent;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.brand .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #2563eb;
+}
+
+.body {
+  height: 420px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: .75rem;
+  font-size: 14px;
+  background: transparent;
+}
+
+.sys {
+  font-size: 12px;
+  opacity: .7;
+  margin-bottom: .5rem;
+}
+
+.row {
+  display: flex;
+  margin: .45rem 0;
+}
+.row.me {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 85%;
+  padding: .5rem .75rem;
+  border-radius: 1rem;
+  background: #f2f2f3;
+}
+.me .bubble {
+  background: #2563eb;
+  color: #fff;
+}
+
+.composer {
+  display: flex;
+  gap: .5rem;
+  padding: .5rem;
+  border-top: 1px solid #ececec;
+  background: rgba(255, 255, 255, 0.80);
+}
+
+.composer input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: .7rem;
+  padding: .58rem .75rem;
+  font-size: 14px;
+  background: white;
+}
+
+.composer button {
+  border: 0;
+  background: #2563eb;
+  color: #fff;
+  border-radius: .7rem;
+  padding: .58rem .95rem;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .chat {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+  }
+  .chat-card {
+    border-radius: 1rem 1rem 0 0;
+  }
 }
 
 
