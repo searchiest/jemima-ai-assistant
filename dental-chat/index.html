@@ -45,9 +45,6 @@
       .controls { left: 50%; transform: translateX(-50%); top: .75rem; width: calc(100vw - 1.5rem); gap: .4rem; padding: .45rem; }
       .controls input, .controls select, .controls button { width: 100%; }
     }
-      .chat-card { border-radius: 1rem 1rem 0 0; }
-      .controls { left: 50%; transform: translateX(-50%); top: .75rem; }
-    }
   </style>
 </head>
 <body>
@@ -61,6 +58,7 @@
       </select>
     </label>
     <input id="host" placeholder="example.com or https://example.com/path" size="28" />
+    <input id="booking" placeholder="Booking URL (optional)" size="28" />
     <select id="mode">
       <option value="auto">auto</option>
       <option value="iframe">iframe</option>
@@ -82,6 +80,9 @@
           <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
         </div>
       </div>
+      <div id="ctaWrap" style="padding:.5rem; border-bottom:1px solid #ececec; display:none">
+        <a id="cta" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;background:#2563eb;color:#fff;text-decoration:none;border-radius:.7rem;padding:.55rem .9rem;font-weight:600;font-size:14px;box-shadow:0 6px 18px rgba(37,99,235,.35)">Book Appointment</a>
+      </div>
       <div class="body" id="log">
         <div class="sys" id="where"></div>
         <div class="row"><div class="bubble">Hi, I am Jemima. Ask me about this page.</div></div>
@@ -94,187 +95,171 @@
   </div>
   <button id="launcher" class="launcher" style="display:none">Chat</button>
 
-  <script>
-    /**
-     * Jemima GH Pages Test
-     * Single static file to host on GitHub Pages.
-     * Features:
-     *  - Hash routing: #/vertical/host/path?mode=auto|iframe|proxy
-     *  - Full viewport iframe with responsive overlay chat
-     *  - Auto detection and fallback to proxy when iframing fails
-     *  - Optional external proxy origin (Cloudflare Worker or any edge function)
-     *  - Share link generator UI (top left)
-     */
+<script>
+  /** Jemima GH Pages Test — routing + iframe + overlay chat with booking CTA */
+  const PROXY_ORIGIN = "";  // Set if you deploy a proxy worker
+  const LOAD_TIMEOUT_MS = 5000;
 
-    // Set this to your Worker origin to enable proxy mode
-    // Example: const PROXY_ORIGIN = "https://proxy.jemima.workers.dev";
-    const PROXY_ORIGIN = "";
+  const $ = id => document.getElementById(id);
+  const frame = $('frame');
+  const badge = $('badge');
+  const chat = $('chat');
+  const launcher = $('launcher');
+  const where = $('where');
+  const log = $('log');
+  const ctaWrap = $('ctaWrap');
+  const cta = $('cta');
 
-    // How long to wait before deciding the iframe failed to load
-    const LOAD_TIMEOUT_MS = 5000;
+  const state = {
+    vertical: 'default',
+    targetUrl: '',
+    mode: 'auto',
+    booking: ''
+  };
 
-    const $ = (id) => document.getElementById(id);
-    const frame = $('frame');
-    const badge = $('badge');
-    const chat = $('chat');
-    const launcher = $('launcher');
-    const where = $('where');
-    const log = $('log');
-    const ctaWrap = $('ctaWrap');
-    const cta = $('cta');
+  function normaliseTarget(input) {
+    if (!input) return '';
+    if (/^https?:\/\//i.test(input)) return input;
+    return 'https://' + input.replace(/^\/*/, '');
+  }
 
-    // Chat open/close
-    $('min').addEventListener('click', (e) => { e.preventDefault();
+  function parseRoute() {
+    const hash = location.hash || '';
+    const m = hash.match(/^#\/(.*?)\/(.*)$/);
+    state.vertical = m ? decodeURIComponent(m[1]) : 'default';
+    let rest = m ? m[2] : '';
+    let query = '';
+    const qm = rest.indexOf('?');
+    if (qm !== -1) {
+      query = rest.slice(qm + 1);
+      rest = rest.slice(0, qm);
+    }
+    const params = new URLSearchParams(query);
+    state.mode = params.get('mode') || 'auto';
+    state.booking = params.get('booking') || '';
+    state.targetUrl = normaliseTarget(rest);
+  }
+
+  function setBadge(text) {
+    if (!text) {
+      badge.classList.add('hidden');
+      badge.textContent = '';
+    } else {
+      badge.textContent = text;
+      badge.classList.remove('hidden');
+    }
+  }
+
+  function shareLink(v, target, mode, booking) {
+    const base = location.href.split('#')[0];
+    const core = `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i, ''));
+    const params = new URLSearchParams();
+    if (mode) params.set('mode', mode);
+    if (booking) params.set('booking', booking);
+    const qs = params.toString();
+    return qs ? `${core}?${qs}` : core;
+  }
+
+  async function openFromControls() {
+    const v = $('vertical').value;
+    const raw = $('host').value.trim();
+    const m = $('mode').value;
+    const booking = $('booking').value.trim();
+    const target = normaliseTarget(raw);
+    const url = shareLink(v, target, m, booking);
+    location.replace(url);
+  }
+
+  $('go').addEventListener('click', openFromControls);
+
+  $('copy').addEventListener('click', async () => {
+    const v = $('vertical').value;
+    const raw = $('host').value.trim();
+    const m = $('mode').value;
+    const booking = $('booking').value.trim();
+    if (!raw) return;
+    const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m, booking);
+    await navigator.clipboard.writeText(u);
+    setBadge('Link copied');
+    setTimeout(() => setBadge(''), 1500);
+  });
+
+  function loadIframe(src) {
+    frame.src = src;
+  }
+
+  function autoLoad(target) {
+    let done = false;
+    frame.addEventListener('load', () => {
+      if (done) return;
+      done = true;
+      setBadge('');
+    }, { once: true });
+    frame.src = target;
+    setTimeout(() => {
+      if (done) return;
+      if (PROXY_ORIGIN) {
+        setBadge(`Target refused iframe. Switching to proxy for ${target}`);
+        frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`;
+      } else {
+        setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.');
+      }
+    }, LOAD_TIMEOUT_MS);
+  }
+
+  function applyState() {
+    if (!state.targetUrl) {
+      setBadge('Set a target URL to start');
       chat.style.display = 'none';
-      launcher.style.display = 'inline-block';
-    });
-    $('launcher').addEventListener('click', () => {
       launcher.style.display = 'none';
-      chat.style.display = 'block';
-    });
-    $('form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = $('q');
-      if (!q.value.trim()) return;
-      appendRow(q.value, true);
-      // TODO: call your real backend here. Pass current target in payload.
-      // fetch('https://api.jemima.ai/chat', { method: 'POST', body: JSON.stringify({ q: q.value, target: state.targetUrl }) })
-      q.value = '';
-      log.scrollTop = log.scrollHeight;
-    });
-
-    function appendRow(text, mine) {
-      const row = document.createElement('div');
-      row.className = 'row' + (mine ? ' me' : '');
-      row.innerHTML = '<div class="bubble"></div>';
-      row.querySelector('.bubble').textContent = text;
-      log.appendChild(row);
+      return;
     }
 
-    // Routing: #/vertical/host[/path][?mode=]
-    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '' };
+    $('vertical').value = state.vertical;
+    $('host').value = state.targetUrl;
+    $('mode').value = state.mode;
+    $('booking').value = state.booking;
 
-    function normaliseTarget(input) {
-      if (!input) return '';
-      if (/^https?:\/\//i.test(input)) return input;
-      return 'https://' + input.replace(/^\/+/, '');
+    where.textContent = `You are viewing: ${state.targetUrl}`;
+    chat.style.display = 'block';
+    launcher.style.display = 'none';
+
+    if (state.booking) {
+      cta.href = state.booking;
+      ctaWrap.style.display = 'block';
+    } else {
+      ctaWrap.style.display = 'none';
     }
 
-    function parseRoute() {
-      const hash = location.hash || '';
-      const m = hash.match(/^#\/(.*?)\/(.*)$/); // vertical / rest
-      state.vertical = m ? decodeURIComponent(m[1]) : 'default';
-      let rest = m ? m[2] : '';
-      let query = '';
-      const qm = rest.indexOf('?');
-      if (qm !== -1) { query = rest.slice(qm+1); rest = rest.slice(0, qm); }
-      const params = new URLSearchParams(query);
-      state.mode = params.get('mode') || 'auto';
-      state.booking = params.get('booking') || '';
-      state.targetUrl = normaliseTarget(rest);
-    }
-      state.mode = new URLSearchParams(query).get('mode') || 'auto';
-      state.targetUrl = normaliseTarget(rest);
-    }
-
-    function setBadge(text) {
-      if (!text) { badge.classList.add('hidden'); badge.textContent = ''; return; }
-      badge.textContent = text; badge.classList.remove('hidden');
-    }
-
-    function shareLink(v, target, mode) {
-      const base = location.href.split('#')[0];
-      return `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i, '')) + (mode ? `?mode=${mode}` : '');
-    }
-
-    async function openFromControls() {
-      const v = $('vertical').value;
-      const raw = $('host').value.trim();
-      const m = $('mode').value; // auto | iframe | proxy
-      const target = normaliseTarget(raw);
-      const url = shareLink(v, target, m);
-      location.replace(url);
-    }
-    $('go').addEventListener('click', openFromControls);
-    $('copy').addEventListener('click', async () => {
-      const v = $('vertical').value; const raw = $('host').value.trim(); const m = $('mode').value;
-      if (!raw) return;
-      const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m);
-      await navigator.clipboard.writeText(u);
-      setBadge('Link copied');
-      setTimeout(() => setBadge(''), 1500);
-    });
-
-    function applyState() {
-      if (!state.targetUrl) {
-        setBadge('Set a target URL to start');
-        chat.style.display = 'none'; launcher.style.display = 'none';
-        return;
-      }
-
-      // Update controls to reflect route
-      $('vertical').value = state.vertical;
-      $('host').value = state.targetUrl;
-      $('mode').value = state.mode;
-
-      // Update chat
-      where.textContent = `You are viewing: ${state.targetUrl}`;
-      chat.style.display = 'block'; launcher.style.display = 'none';
-      if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; } else { ctaWrap.style.display = 'none'; }
-
-      // Select mode
-      if (state.mode === 'proxy') {
-        if (!PROXY_ORIGIN) {
-          setBadge('Proxy mode requires PROXY_ORIGIN');
-          loadIframe(state.targetUrl);
-        } else {
-          setBadge(`Viewing proxied copy of ${state.targetUrl}`);
-          loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`);
-        }
-        return;
-      }
-
-      if (state.mode === 'iframe') {
-        setBadge('');
+    if (state.mode === 'proxy') {
+      if (!PROXY_ORIGIN) {
+        setBadge('Proxy mode requires PROXY_ORIGIN');
         loadIframe(state.targetUrl);
-        return;
+      } else {
+        setBadge(`Viewing proxied copy of ${state.targetUrl}`);
+        loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`);
       }
-
-      // Auto: try iframe, then proxy if available, else show message
+    } else if (state.mode === 'iframe') {
+      setBadge('');
+      loadIframe(state.targetUrl);
+    } else {
       setBadge('Loading target in iframe');
       autoLoad(state.targetUrl);
     }
+  }
 
-    function loadIframe(src) {
-      frame.src = src;
-    }
-
-    function autoLoad(target) {
-      let done = false;
-      const onLoaded = () => { if (done) return; done = true; setBadge(''); };
-      frame.addEventListener('load', onLoaded, { once: true });
-      frame.src = target;
-      setTimeout(() => {
-        if (done) return; // loaded
-        if (PROXY_ORIGIN) {
-          setBadge(`Target refused iframe. Switching to proxy for ${target}`);
-          frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`;
-        } else {
-          setBadge('This site likely blocks iframes. Set PROXY_ORIGIN or use proxy mode');
-        }
-      }, LOAD_TIMEOUT_MS);
-    }
-
-    window.addEventListener('hashchange', () => { parseRoute(); applyState(); });
-
-    // First load: optional defaults for quick test
-    // Example: #/dental/dentessentials.com
-    if (!location.hash) {
-      location.hash = '#/dental/dentessentials.com?mode=auto';
-    }
+  window.addEventListener('hashchange', () => {
     parseRoute();
     applyState();
-  </script>
+  });
+
+  if (!location.hash) {
+    location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
+  }
+  parseRoute();
+  applyState();
+</script>
+
 
   <!--
   Optional proxy implementation (Cloudflare Worker) to enable proxy mode
@@ -308,4 +293,5 @@
   -->
 </body>
 </html>
+
 
