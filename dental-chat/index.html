@@ -19,22 +19,14 @@
     .chat { position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); z-index: 50; color: #0b0b0c; }
     .chat-card {
       background: rgba(255, 255, 255, 0.60);
-      backdrop-filter: blur(12px) saturate(140%);
-      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem;
-      overflow: hidden;
+      border-radius: 1rem; overflow: hidden;
     }
-    .bar {
-      display: flex; align-items: center; justify-content: space-between; gap: .5rem;
-      padding: .6rem .8rem; background: transparent; border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
+    .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; background:transparent; border-bottom:1px solid rgba(0,0,0,.06); }
     .header-image { display:flex; align-items:center; gap:.75rem; }
-    .header-image img {
-      width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display:block;
-      outline: 0px solid #fff; outline-offset: 0;
-    }
+    .header-image img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display:block; outline: 0px solid #fff; outline-offset: 0; }
     .header-image .title { font-size: 12px; font-weight: 600; }
 
     .body { height: 420px; max-height: 60vh; overflow-y: auto; padding: .75rem; font-size: 14px; background: transparent; }
@@ -43,30 +35,16 @@
     .bubble { max-width:85%; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; }
     .me .bubble { background:#2563eb; color:#fff; }
 
-    .composer {
-      display:flex; gap:.5rem; align-items:center; padding:.5rem; border-top:1px solid #ececec;
-      background: rgba(255,255,255,0.80);
-    }
-    .composer input {
-      flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff;
-    }
-    .composer button {
-      border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
-    }
+    .composer { display:flex; gap:.5rem; align-items:center; padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80); }
+    .composer input { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff; }
+    .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer; }
 
     /* WhatsApp button (inside composer) */
-    .wa-btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      width:40px; height:40px; border-radius:999px; border:0; cursor:pointer;
-      background:#22c55e; box-shadow:0 6px 16px rgba(0,0,0,.18);
-    }
+    .wa-btn{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:999px; border:0; cursor:pointer; background:#22c55e; box-shadow:0 6px 16px rgba(0,0,0,.18); }
     .wa-btn svg{ width:22px; height:22px; fill:#fff; display:block; }
 
     .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); background:transparent; text-align:left; }
-    .cta-wrap a {
-      display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem;
-      padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow:0 6px 18px rgba(37,99,235,.35);
-    }
+    .cta-wrap a { display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem; padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow:0 6px 18px rgba(37,99,235,.35); }
     .cta-wrap a:hover { filter:brightness(0.95); }
 
     @media (max-width:640px) {
@@ -74,26 +52,54 @@
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
 
-    /* Closed (launcher) button — pill with avatar + "Chat" + WhatsApp badge */
+    /* Launcher (closed) — pill with avatar + "Chat" + WhatsApp badge */
     .launcher {
       position: fixed; right: 1rem; bottom: 1rem; z-index: 80;
       border: 0; border-radius: 9999px; padding: .375rem .9rem .375rem .375rem;
-      background: #2563eb; color: #fff; display: none; /* shown when chat hidden */
-      align-items: center; gap: .5rem; cursor: pointer;
+      background: #2563eb; color: #fff; display: none; align-items: center; gap: .5rem; cursor: pointer;
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-    .launcher img {
-      width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display:block;
-      outline: 2px solid #fff; outline-offset: 0;
-    }
+    .launcher img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display:block; outline: 2px solid #fff; outline-offset: 0; }
     .launcher span { font-size: 14px; font-weight: 600; line-height: 1; padding-right: .25rem; }
-    .launcher .wa-badge {
-      margin-left:.35rem; display:none; align-items:center; justify-content:center;
-      width:24px; height:24px; border-radius:999px; background:#22c55e;
-    }
+    .launcher .wa-badge { margin-left:.35rem; display:none; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#22c55e; }
     .launcher .wa-badge svg{ width:14px; height:14px; fill:#fff; }
 
-    /* Top controls (optional; hide if you don't want them) */
+    /* WhatsApp window (clone-style) */
+    .wa-window {
+      position: fixed; right: 1rem; bottom: 5.5rem; width: 360px; max-width: calc(100vw - 1rem);
+      background:#fff; border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.35); overflow:hidden; z-index: 70; display:none;
+    }
+    .wa-head {
+      background:#0a6c4a; color:#fff; padding:14px 16px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .wa-head-left { display:flex; gap:10px; align-items:center; }
+    .wa-head-left img { width:38px; height:38px; border-radius:50%; object-fit:cover; outline:2px solid rgba(255,255,255,.3); }
+    .wa-name { font-weight:700; }
+    .wa-sub { font-size:12px; opacity:.9; }
+    .wa-close { border:0; background:transparent; color:#c1e2d8; font-size:20px; cursor:pointer; }
+    .wa-body {
+      background:
+        radial-gradient(circle at 20% 10%, rgba(0,0,0,0.02) 0 60%, transparent 61%),
+        repeating-linear-gradient(45deg, rgba(0,0,0,.02) 0 10px, rgba(0,0,0,.03) 10px 20px),
+        #f6f7f6;
+      padding:16px; min-height:220px;
+    }
+    .wa-bubble {
+      background:#fff; color:#0b0b0c; padding:14px 16px; border-radius:18px; border:1px solid rgba(0,0,0,.06);
+      max-width:90%; box-shadow:0 1px 0 rgba(0,0,0,.05); margin: 4px 0 10px 0;
+    }
+    .wa-time { font-size:12px; text-align:center; color:#6b7280; margin:4px 0 10px; }
+    .wa-start {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin: 8px auto 18px; padding:14px 18px; width: fit-content;
+      border-radius:999px; background:#22c55e; color:#fff; font-weight:700; border:0; cursor:pointer;
+      box-shadow:0 6px 16px rgba(0,0,0,.18);
+    }
+    .wa-start svg{ width:18px; height:18px; fill:#fff; }
+
+    @media (max-width:640px){ .wa-window{ left:.5rem; right:.5rem; width:auto; bottom:5.5rem; } }
+
+    /* Top controls (leave visible for testing; hide in prod with .controls{display:none}) */
     .controls {
       position: fixed; left: 1rem; top: 1rem; z-index: 70; display:flex; gap:.5rem; align-items:center;
       background: rgba(255,255,255,.08); color:#fff; padding:.5rem; border-radius:.75rem;
@@ -112,22 +118,14 @@
   <div id="badge" class="badge hidden"></div>
   <div class="controls" id="controls">
     <label style="font-size:12px">Vertical
-      <select id="vertical">
-        <option value="dental">dental</option>
-        <option value="default">default</option>
-      </select>
+      <select id="vertical"><option value="dental">dental</option><option value="default">default</option></select>
     </label>
     <input id="host" placeholder="example.com or https://example.com/path" size="28" />
     <input id="booking" placeholder="Booking URL (optional)" size="28" />
     <input id="wa" placeholder="WhatsApp (link or +number)" size="26" />
     <input id="wamessage" placeholder="Prefill message (optional)" size="24" />
-    <select id="mode">
-      <option value="auto">auto</option>
-      <option value="iframe">iframe</option>
-      <option value="proxy">proxy</option>
-    </select>
-    <button id="go">Open</button>
-    <button id="copy">Copy link</button>
+    <select id="mode"><option value="auto">auto</option><option value="iframe">iframe</option><option value="proxy">proxy</option></select>
+    <button id="go">Open</button><button id="copy">Copy link</button>
   </div>
 
   <!-- Target site frame -->
@@ -139,7 +137,7 @@
       <div class="bar">
         <div class="header-image">
           <img src="https://jemima.ai/jemima-chat.png" alt="Jemima">
-          <div class="title">Jemima </br>Practice Assistant</div>
+          <div class="title">Jemima <br/>Practice Assistant</div>
         </div>
         <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
       </div>
@@ -150,10 +148,10 @@
 
       <form class="composer" id="form" onsubmit="return false;">
         <input id="q" placeholder="Ask Jemima!" autocomplete="off" />
-        <!-- WhatsApp icon (shown only if configured) -->
-        <a id="waLink" class="wa-btn" href="#" target="_blank" rel="noopener" style="display:none" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+        <!-- WhatsApp icon (shows WhatsApp window) -->
+        <button type="button" id="waIcon" class="wa-btn" style="display:none" aria-label="WhatsApp">
           <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.09c-.31-.15-1.82-.9-2.1-1.01-.28-.1-.49-.15-.7.16-.21.31-.81 1.01-.99 1.22-.18.21-.36.24-.67.09-.31-.15-1.29-.48-2.46-1.52-.91-.81-1.53-1.81-1.71-2.12-.18-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223.74.32 1.31.51 1.76.65.74.24 1.41.21 1.94.13.59-.09 1.82-.74 2.08-1.45.26-.71.26-1.32.18-1.45-.07-.13-.28-.2-.59-.35zM16 3C9.93 3 5 7.93 5 14c0 2.4.79 4.62 2.14 6.42L5 27l6.78-2.11C13.5 25.62 14.72 26 16 26c6.07 0 11-4.93 11-11S22.07 3 16 3z"/></svg>
-        </a>
+        </button>
         <button type="submit">Send</button>
       </form>
 
@@ -163,7 +161,32 @@
     </div>
   </div>
 
-  <!-- Closed state (pill with avatar + text + WhatsApp badge) -->
+  <!-- WhatsApp window -->
+  <div id="waWindow" class="wa-window" role="dialog" aria-label="WhatsApp chat">
+    <div class="wa-head">
+      <div class="wa-head-left">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Agent">
+        <div>
+          <div class="wa-name" id="waAgentName">Dr. Mark Flynn</div>
+          <div class="wa-sub">Typically replies in minutes</div>
+        </div>
+      </div>
+      <button id="waClose" class="wa-close" aria-label="Close">×</button>
+    </div>
+    <div class="wa-body">
+      <div class="wa-time" id="waTime">13:22</div>
+      <div class="wa-bubble">
+        <div>Welcome to The Modern Dentist! 👋</div><br/>
+        <div>How can I help you?</div>
+      </div>
+      <button id="waStart" class="wa-start">
+        <svg viewBox="0 0 32 32"><path d="M19.11 17.09c-.31-.15-1.82-.9-2.1-1.01-.28-.1-.49-.15-.7.16-.21.31-.81 1.01-.99 1.22-.18.21-.36.24-.67.09-.31-.15-1.29-.48-2.46-1.52-.91-.81-1.53-1.81-1.71-2.12-.18-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223.74.32 1.31.51 1.76.65.74.24 1.41.21 1.94.13.59-.09 1.82-.74 2.08-1.45.26-.71.26-1.32.18-1.45-.07-.13-.28-.2-.59-.35zM16 3C9.93 3 5 7.93 5 14c0 2.4.79 4.62 2.14 6.42L5 27l6.78-2.11C13.5 25.62 14.72 26 16 26c6.07 0 11-4.93 11-11S22.07 3 16 3z"/></svg>
+        Start Chat
+      </button>
+    </div>
+  </div>
+
+  <!-- Closed pill -->
   <button id="launcher" class="launcher" aria-label="Open chat" title="Open chat">
     <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" />
     <span>Chat</span>
@@ -173,37 +196,27 @@
   </button>
 
   <script>
-    /** Jemima GH Pages — overlay chat with booking + WhatsApp support */
+    /* Jemima GH Pages — overlay chat + booking + WhatsApp window */
     const PROXY_ORIGIN = "";  // Set if you deploy a proxy worker
     const LOAD_TIMEOUT_MS = 5000;
 
     const $ = id => document.getElementById(id);
-    const frame = $('frame');
-    const badge = $('badge');
-    const chat = $('chat');
-    const launcher = $('launcher');
-    const launcherWa = $('launcherWa');
-    const log = $('log');
-    const ctaWrap = $('ctaWrap');
-    const cta = $('cta');
-    const waLink = $('waLink');
+    const frame = $('frame'), badge = $('badge'), chat = $('chat'), launcher = $('launcher');
+    const launcherWa = $('launcherWa'), ctaWrap = $('ctaWrap'), cta = $('cta');
+    const waIcon = $('waIcon'), waWindow = $('waWindow'), waStart = $('waStart'), waClose = $('waClose'), waTime = $('waTime');
 
-    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', whatsapp: '', wamessage: '' };
+    const state = { vertical:'default', targetUrl:'', mode:'auto', booking:'', whatsapp:'', wamessage:'' };
 
-    function normaliseTarget(input) {
-      if (!input) return '';
-      if (/^https?:\/\//i.test(input)) return input;
-      return 'https://' + input.replace(/^\/*/, '');
-    }
+    const nowHM = () => { const d=new Date(); return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
 
-    function parseRoute() {
+    function normaliseTarget(input){ if(!input) return ''; if(/^https?:\/\//i.test(input)) return input; return 'https://' + input.replace(/^\/*/, ''); }
+
+    function parseRoute(){
       const hash = location.hash || '';
       const m = hash.match(/^#\/(.*?)\/(.*)$/);
       state.vertical = m ? decodeURIComponent(m[1]) : 'default';
-      let rest = m ? m[2] : '';
-      let query = '';
-      const qm = rest.indexOf('?');
-      if (qm !== -1) { query = rest.slice(qm + 1); rest = rest.slice(0, qm); }
+      let rest = m ? m[2] : ''; let query = '';
+      const qm = rest.indexOf('?'); if (qm !== -1){ query = rest.slice(qm+1); rest = rest.slice(0,qm); }
       const params = new URLSearchParams(query);
       state.mode = params.get('mode') || 'auto';
       state.booking = params.get('booking') || '';
@@ -212,156 +225,126 @@
       state.targetUrl = normaliseTarget(rest);
     }
 
-    function setBadge(text) {
-      if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
-      else { badge.textContent = text; badge.classList.remove('hidden'); }
-    }
+    function setBadge(text){ if(!text){ badge.classList.add('hidden'); badge.textContent=''; } else { badge.textContent=text; badge.classList.remove('hidden'); } }
 
-    function buildWhatsAppHref(val, message) {
-      if (!val) return '';
-      if (/^https?:\/\//i.test(val)) {
-        // full link; add text if provided and not present
-        try { const u = new URL(val); if (message && !u.searchParams.get('text')) u.searchParams.set('text', message); return u.toString(); }
+    function buildWhatsAppHref(val, message){
+      if(!val) return '';
+      if(/^https?:\/\//i.test(val)){
+        try{ const u=new URL(val); if(message && !u.searchParams.get('text')) u.searchParams.set('text', message); return u.toString(); }
         catch { return val; }
       }
-      // assume phone number; digits only
       const digits = (''+val).replace(/[^0-9]/g,'');
       const base = `https://wa.me/${digits}`;
       return message ? `${base}?text=${encodeURIComponent(message)}` : base;
     }
 
-    function shareLink(v, target, mode, booking, whatsapp, wamessage) {
+    function shareLink(v, target, mode, booking, whatsapp, wamessage){
       const base = location.href.split('#')[0];
-      const core = `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i, ''));
+      const core = `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i,''));
       const params = new URLSearchParams();
-      if (mode) params.set('mode', mode);
-      if (booking) params.set('booking', booking);
-      if (whatsapp) params.set('whatsapp', whatsapp);
-      if (wamessage) params.set('wamessage', wamessage);
-      const qs = params.toString();
-      return qs ? `${core}?${qs}` : core;
+      if(mode) params.set('mode', mode);
+      if(booking) params.set('booking', booking);
+      if(whatsapp) params.set('whatsapp', whatsapp);
+      if(wamessage) params.set('wamessage', wamessage);
+      const qs = params.toString(); return qs ? `${core}?${qs}` : core;
     }
 
-    async function openFromControls() {
-      const v = $('vertical').value;
-      const raw = $('host').value.trim();
-      const m = $('mode').value;
-      const booking = $('booking').value.trim();
-      const whatsapp = $('wa').value.trim();
-      const wamessage = $('wamessage').value.trim();
-      const target = normaliseTarget(raw);
-      const url = shareLink(v, target, m, booking, whatsapp, wamessage);
-      location.replace(url);
-    }
+    function loadIframe(src){ frame.src = src; }
 
-    function loadIframe(src) { frame.src = src; }
-
-    function autoLoad(target) {
-      let done = false;
-      frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true });
+    function autoLoad(target){
+      let done=false;
+      frame.addEventListener('load', ()=>{ if(done) return; done=true; setBadge(''); }, {once:true});
       frame.src = target;
-      setTimeout(() => {
-        if (done) return;
-        if (PROXY_ORIGIN) { setBadge(`Target refused iframe. Switching to proxy for ${target}`); frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`; }
-        else { setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.'); }
-      }, LOAD_TIMEOUT_MS);
+      setTimeout(()=>{ if(done) return; if(PROXY_ORIGIN){ setBadge(`Target refused iframe. Switching to proxy for ${target}`); frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`; } else { setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.'); } }, LOAD_TIMEOUT_MS);
     }
 
-    function applyState() {
+    function applyState(){
       parseRoute();
+      if(!state.targetUrl){ setBadge('Set a target URL to start'); chat.style.display='none'; launcher.style.display='none'; return; }
 
-      if (!state.targetUrl) {
-        setBadge('Set a target URL to start');
-        chat.style.display = 'none';
-        launcher.style.display = 'none';
-        return;
-      }
+      document.getElementById('vertical').value = state.vertical;
+      document.getElementById('host').value = state.targetUrl;
+      document.getElementById('mode').value = state.mode;
+      document.getElementById('booking').value = state.booking;
+      document.getElementById('wa').value = state.whatsapp;
+      document.getElementById('wamessage').value = state.wamessage;
 
-      $('vertical').value = state.vertical;
-      $('host').value = state.targetUrl;
-      $('mode').value = state.mode;
-      $('booking').value = state.booking;
-      $('wa').value = state.whatsapp;
-      $('wamessage').value = state.wamessage;
-
-      chat.style.display = 'block';
-      launcher.style.display = 'none';
+      chat.style.display='block'; launcher.style.display='none';
 
       // Booking CTA
-      if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
-      else { ctaWrap.style.display = 'none'; }
+      if(state.booking){ cta.href = state.booking; ctaWrap.style.display='block'; } else { ctaWrap.style.display='none'; }
 
-      // WhatsApp destinations
-      const defaultMsg = state.wamessage || `Hi! I'm reviewing ${state.targetUrl}`;
-      const waHref = buildWhatsAppHref(state.whatsapp, defaultMsg);
+      // WhatsApp config
+      const msg = state.wamessage || `Hi! I'm reviewing ${state.targetUrl}`;
+      const waHref = buildWhatsAppHref(state.whatsapp, msg);
+      if(waHref){ waIcon.style.display='inline-flex'; launcherWa.style.display='inline-flex'; launcherWa.dataset.href = waHref; }
+      else { waIcon.style.display='none'; launcherWa.style.display='none'; launcherWa.removeAttribute('data-href'); }
 
-      // Composer icon
-      if (waHref) { waLink.href = waHref; waLink.style.display = 'inline-flex'; }
-      else { waLink.style.display = 'none'; }
-
-      // Launcher badge (opens WhatsApp directly)
-      if (waHref) {
-        launcherWa.style.display = 'inline-flex';
-        launcherWa.dataset.href = waHref;
-      } else {
-        launcherWa.style.display = 'none';
-        launcherWa.removeAttribute('data-href');
-      }
+      // Set time in widget
+      waTime.textContent = nowHM();
 
       // Load target
-      if (state.mode === 'proxy') {
-        if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
+      if(state.mode==='proxy'){
+        if(!PROXY_ORIGIN){ setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
         else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
-      } else if (state.mode === 'iframe') {
-        setBadge(''); loadIframe(state.targetUrl);
-      } else {
-        setBadge('Loading target in iframe'); autoLoad(state.targetUrl);
-      }
+      } else if(state.mode==='iframe'){ setBadge(''); loadIframe(state.targetUrl); }
+      else { setBadge('Loading target in iframe'); autoLoad(state.targetUrl); }
     }
 
-    // Controls bar actions & minimise/restore
-    document.addEventListener('DOMContentLoaded', () => {
-      $('go').addEventListener('click', openFromControls);
-      $('copy').addEventListener('click', async () => {
-        const v = $('vertical').value; const raw = $('host').value.trim();
-        const m = $('mode').value; const booking = $('booking').value.trim();
-        const whatsapp = $('wa').value.trim(); const wamessage = $('wamessage').value.trim();
-        if (!raw) return;
-        const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m, booking, whatsapp, wamessage);
-        await navigator.clipboard.writeText(u); setBadge('Link copied'); setTimeout(() => setBadge(''), 1500);
+    // Controls + interactions
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('go').addEventListener('click', ()=>{
+        const v = document.getElementById('vertical').value;
+        const raw = document.getElementById('host').value.trim();
+        const m = document.getElementById('mode').value;
+        const booking = document.getElementById('booking').value.trim();
+        const whatsapp = document.getElementById('wa').value.trim();
+        const wamessage = document.getElementById('wamessage').value.trim();
+        const target = normaliseTarget(raw);
+        const url = shareLink(v, target, m, booking, whatsapp, wamessage);
+        location.replace(url);
+      });
+
+      document.getElementById('copy').addEventListener('click', async ()=>{
+        const v = document.getElementById('vertical').value;
+        const raw = document.getElementById('host').value.trim();
+        const m = document.getElementById('mode').value;
+        const booking = document.getElementById('booking').value.trim();
+        const whatsapp = document.getElementById('wa').value.trim();
+        const wamessage = document.getElementById('wamessage').value.trim();
+        if(!raw) return;
+        const u = shareLink(v, normaliseTarget(raw), m==='auto' ? '' : m, booking, whatsapp, wamessage);
+        await navigator.clipboard.writeText(u); setBadge('Link copied'); setTimeout(()=>setBadge(''), 1500);
       });
 
       // Minimise / restore
-      const minBtn = $('min');
-      minBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        chat.style.display = 'none';
-        launcher.style.display = 'inline-flex';
-      });
+      document.getElementById('min').addEventListener('click', (e)=>{ e.preventDefault(); chat.style.display='none'; launcher.style.display='inline-flex'; });
 
-      // Clicking pill: open chat; clicking green badge only: open WhatsApp
-      launcher.addEventListener('click', (e) => {
+      launcher.addEventListener('click', (e)=>{
         const inBadge = e.target.closest('.wa-badge');
-        if (inBadge && launcherWa.dataset.href) {
-          window.open(launcherWa.dataset.href, '_blank', 'noopener');
+        if(inBadge && launcherWa.dataset.href){  // open WA widget
+          waWindow.style.display = 'block';
           return;
         }
-        chat.style.display = 'block';
-        launcher.style.display = 'none';
+        chat.style.display='block'; launcher.style.display='none';
       });
 
-      launcherWa.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (launcherWa.dataset.href) window.open(launcherWa.dataset.href, '_blank', 'noopener');
+      launcherWa.addEventListener('click', (e)=>{ e.stopPropagation(); waWindow.style.display='block'; });
+
+      // WhatsApp window controls
+      waIcon.addEventListener('click', ()=>{ waWindow.style.display='block'; });
+      waClose.addEventListener('click', ()=>{ waWindow.style.display='none'; });
+      waStart.addEventListener('click', ()=>{
+        const href = launcherWa.dataset.href;
+        if(href) window.open(href, '_blank', 'noopener');
       });
     });
 
     window.addEventListener('hashchange', applyState);
 
-    if (!location.hash) {
-      location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
-    }
+    if(!location.hash){ location.hash = '#/dental/themoderndentist.co.uk?mode=auto'; }
     applyState();
   </script>
 </body>
 </html>
+
