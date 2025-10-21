@@ -157,6 +157,26 @@
   position:relative;
 }
 
+/* Small round WhatsApp bubble inside launcher — matches .wa-btn look */
+.wa-mini{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#22c55e;               /* same green */
+  margin-left:6px;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  text-decoration:none;
+}
+
+.wa-mini svg{
+  width:16px;
+  height:16px;
+  fill:#fff;                         /* white glyph */
+  display:block;
+}
 
 
     @media (max-width:640px){ .wa-window{ left:.5rem; right:.5rem; width:auto; bottom:5.5rem; } }
