@@ -43,9 +43,47 @@
     .wa-btn{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:999px; border:0; cursor:pointer; background:#22c55e; box-shadow:0 6px 16px rgba(0,0,0,.18); }
     .wa-btn svg{ width:22px; height:22px; fill:#fff; display:block; }
 
-    .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); background:transparent; text-align:left; }
-    .cta-wrap a { display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem; padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow:0 6px 18px rgba(37,99,235,.35); }
-    .cta-wrap a:hover { filter:brightness(0.95); }
+/* Footer with CTA + WhatsApp */
+.cta-wrap{
+  display:flex;            /* put them on one row */
+  align-items:center;      /* vertical alignment */
+  gap:12px;                /* space between buttons */
+  padding:.5rem;
+  border-top:1px solid rgba(0,0,0,.06);
+  background:transparent;
+}
+
+/* one height to rule them all */
+:root { --cta-h: 44px; }
+
+.cta-wrap a#cta{
+  display:inline-flex;
+  align-items:center;      /* vertically center text */
+  height:var(--cta-h);
+  padding:0 16px;
+  border-radius:.7rem;
+  background:#2563eb;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  box-shadow:0 6px 18px rgba(37,99,235,.35);
+}
+
+/* WhatsApp round button next to it */
+.cta-wrap .wa-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:var(--cta-h);
+  height:var(--cta-h);
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  text-decoration:none;
+}
+.cta-wrap .wa-btn svg{ width:22px; height:22px; fill:#fff; display:block; }
+
 
     @media (max-width:640px) {
       .chat { left:0; right:0; bottom:0; width:100vw; }
@@ -151,7 +189,7 @@
         <button type="submit">Send</button>
       </form>
 
-      <div class="cta-wrap" id="ctaWrap" style="display:none">
+      <div class="cta-wrap" id="ctaWrap">
         <a id="cta" href="#" target="_blank" rel="noopener">Book Appointment</a>
         <!-- WhatsApp icon (shows WhatsApp window) -->
         <button type="button" id="waIcon" class="wa-btn" style="display:none" aria-label="WhatsApp">
