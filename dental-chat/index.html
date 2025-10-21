@@ -142,6 +142,31 @@
       filter:brightness(0.95);
     }
 
+
+.launcher {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  border: 0;
+  background: #2563eb;       /* or match your brand colour */
+  color: #fff;
+  border-radius: 999px;
+  padding: .65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+.launcher-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
     @media (max-width:640px) {
       .chat {
         left:0;
@@ -153,9 +178,6 @@
         border-radius:1rem 1rem 0 0;
       }
     }
-
-    /* Launcher button when minimised */
-    .launcher { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border:0; background:#2563eb; color:#fff; border-radius:999px; padding:.65rem 1rem; font-size:14px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
 
     /* Top controls to generate share links */
     .controls { position: fixed; left: 1rem; top: 1rem; z-index: 70; display:flex; gap:.5rem; align-items:center; background: rgba(255,255,255,.08); color:#fff; padding:.5rem; border-radius:.75rem; backdrop-filter: blur(8px) saturate(140%); border:1px solid rgba(255,255,255,.18); flex-wrap: wrap; }
@@ -220,7 +242,8 @@
     </div>
   </div>
 
-  <button id="launcher" class="launcher" style="display:none">Chat</button>
+<button id="launcher" class="launcher" style="display:none">
+  <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" class="launcher-icon" />Chat</button>
 
   <script>
     /** Jemima GH Pages Test — routing + iframe + overlay chat with booking CTA */
