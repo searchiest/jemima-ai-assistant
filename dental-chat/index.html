@@ -379,6 +379,41 @@
       location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     }
     applyState();
+
+
+// Attach minimise toggle handler after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const minBtn = document.getElementById('min');
+  const chatEl = document.getElementById('chat');
+  const launcherBtn = document.getElementById('launcher');
+
+  if (minBtn && chatEl && launcherBtn) {
+    minBtn.addEventListener('click', (e) => {
+      e.preventDefault();  // stop default action
+      // Toggle visibility
+      if (chatEl.style.display === 'none') {
+        chatEl.style.display = 'block';
+        launcherBtn.style.display = 'none';
+      } else {
+        chatEl.style.display = 'none';
+        launcherBtn.style.display = 'inline-block';
+      }
+    });
+  } else {
+    // log for debug
+    console.warn('Minimise button or chat/launcher element missing', {minBtn, chatEl, launcherBtn});
+  }
+
+  // Also attach launcher click to reopen chat
+  launcherBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    chatEl.style.display = 'block';
+    launcherBtn.style.display = 'none';
+  });
+});
+
+
+
   </script>
 
 </body>
