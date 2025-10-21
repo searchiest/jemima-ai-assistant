@@ -42,23 +42,23 @@
   justify-content: space-between;
   gap: .5rem;
   padding: .6rem .8rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.brand {
+.header-image {
   display: flex;
   align-items: center;
-  gap: .5rem;
-  font-weight: 600;
-  font-size: 14px;
+  gap: 0.75rem;
 }
-
-.brand .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: #2563eb;
+.header-image img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.header-image .title {
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .body {
@@ -97,40 +97,59 @@
 
 .composer {
   display: flex;
-  gap: .5rem;
-  padding: .5rem;
-  border-top: 1px solid #ececec;
-  background: rgba(255, 255, 255, 0.80);
+  gap:.5rem;
+  padding:.5rem;
+  border-top:1px solid #ececec;
+  background: rgba(255,255,255,0.80);
 }
-
 .composer input {
-  flex: 1;
-  border: 1px solid #d1d5db;
-  border-radius: .7rem;
-  padding: .58rem .75rem;
-  font-size: 14px;
-  background: white;
+  flex:1;
+  border:1px solid #d1d5db;
+  border-radius:.7rem;
+  padding:.58rem .75rem;
+  font-size:14px;
+  background:#fff;
 }
-
 .composer button {
-  border: 0;
-  background: #2563eb;
-  color: #fff;
-  border-radius: .7rem;
-  padding: .58rem .95rem;
-  font-size: 14px;
-  cursor: pointer;
+  border:0;
+  background:#2563eb;
+  color:#fff;
+  border-radius:.7rem;
+  padding:.58rem .95rem;
+  font-size:14px;
+  cursor:pointer;
 }
 
-@media (max-width: 640px) {
+.cta-wrap {
+  padding:.5rem;
+  border-top:1px solid rgba(0,0,0,.06);
+  background: transparent;
+  text-align: center;
+}
+.cta-wrap a {
+  display:inline-block;
+  background:#2563eb;
+  color:#fff;
+  text-decoration:none;
+  border-radius:.7rem;
+  padding:.6rem .9rem;
+  font-weight:600;
+  font-size:14px;
+  box-shadow: 0 6px 18px rgba(37,99,235,.35);
+}
+.cta-wrap a:hover {
+  filter:brightness(0.95);
+}
+
+@media (max-width:640px) {
   .chat {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100vw;
   }
   .chat-card {
-    border-radius: 1rem 1rem 0 0;
+    border-radius:1rem 1rem 0 0;
   }
 }
 
@@ -175,29 +194,27 @@
   <!-- Target site frame -->
   <iframe id="frame" class="frame" referrerpolicy="no-referrer" loading="eager" title="Framed Site"></iframe>
 
-  <!-- Chat overlay -->
-  <div id="chat" class="chat" role="dialog" aria-label="Jemima AI chat" style="display:none">
-    <div class="chat-card">
-      <div class="bar">
-        <div class="brand"><span class="dot"></span> Jemima AI</div>
-        <div style="display:flex; gap:.5rem; align-items:center;">
-          <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
-        </div>
-      </div>
-      <div id="ctaWrap" style="padding:.5rem; border-bottom:1px solid #ececec; display:none">
-        <a id="cta" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;background:#2563eb;color:#fff;text-decoration:none;border-radius:.7rem;padding:.55rem .9rem;font-weight:600;font-size:14px;box-shadow:0 6px 18px rgba(37,99,235,.35)">Book Appointment</a>
-      </div>
-      <div class="body" id="log">
-        <div class="sys" id="where"></div>
-        <div class="row"><div class="bubble">Hi, I am Jemima. Ask me about this page.</div></div>
-      </div>
-      <form class="composer" id="form">
-        <input id="q" placeholder="Ask Jemima AI about this page" autocomplete="off" />
-        <button type="submit">Send</button>
-      </form>
-    </div>
+<div class="bar">
+  <div class="header-image">
+    <img src="https://jemima.ai/jemima-chat.png" alt="Jemima">
+    <div class="title">Jemima Practice Assistant</div>
   </div>
-  <button id="launcher" class="launcher" style="display:none">Chat</button>
+  <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
+</div>
+
+<div class="body" id="log">
+  <!-- your message rows go here -->
+</div>
+
+<div class="composer" id="form">
+  <input id="q" placeholder="Ask Jemima AI about this page" autocomplete="off" />
+  <button type="submit">Send</button>
+</div>
+
+<div class="cta-wrap" id="ctaWrap" style="display:none">
+  <a id="cta" href="#" target="_blank" rel="noopener">Book Appointment</a>
+</div>
+
 
 <script>
   /** Jemima GH Pages Test — routing + iframe + overlay chat with booking CTA */
