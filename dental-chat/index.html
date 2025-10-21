@@ -39,65 +39,53 @@
     .composer input { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff; }
     .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer; }
 
-    /* WhatsApp button (inside composer) */
+    /* WhatsApp button (inside composer/footer) */
     .wa-btn{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:999px; border:0; cursor:pointer; background:#22c55e; box-shadow:0 6px 16px rgba(0,0,0,.18); }
     .wa-btn svg{ width:22px; height:22px; fill:#fff; display:block; }
 
-/* Footer with CTA + WhatsApp */
-.cta-wrap{
-  display:flex;            /* put them on one row */
-  align-items:center;      /* vertical alignment */
-  gap:12px;                /* space between buttons */
-  padding:.5rem;
-  border-top:1px solid rgba(0,0,0,.06);
-  background:transparent;
-}
-
-/* one height to rule them all */
-:root { --cta-h: 44px; }
-
-.cta-wrap a#cta{
-  display:inline-flex;
-  align-items:center;      /* vertically center text */
-  height:var(--cta-h);
-  padding:0 16px;
-  border-radius:.7rem;
-  background:#2563eb;
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-  font-size:14px;
-  box-shadow:0 6px 18px rgba(37,99,235,.35);
-}
-
-/* WhatsApp round button next to it */
-.cta-wrap .wa-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:var(--cta-h);
-  height:var(--cta-h);
-  border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 6px 16px rgba(0,0,0,.18);
-  margin-top: 3px; /* 👈 Move down by 3px (tweak 2–5px as needed) */
-  text-decoration:none;
-}
-
-.cta-wrap .wa-btn {
-  position: relative;
-  top: 5px;                 /* ← moves visually down 3px */
-}
-
-.cta-wrap .wa-btn svg{ width:22px; height:22px; fill:#fff; display:block; }
-
+    /* Footer with CTA + WhatsApp */
+    .cta-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:.5rem;
+      border-top:1px solid rgba(0,0,0,.06);
+      background:transparent;
+    }
+    :root { --cta-h: 44px; }
+    .cta-wrap a#cta{
+      display:inline-flex;
+      align-items:center;
+      height:var(--cta-h);
+      padding:0 16px;
+      border-radius:.7rem;
+      background:#2563eb;
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      box-shadow:0 6px 18px rgba(37,99,235,.35);
+    }
+    .cta-wrap .wa-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:var(--cta-h);
+      height:var(--cta-h);
+      border-radius:50%;
+      background:#22c55e;
+      box-shadow:0 6px 16px rgba(0,0,0,.18);
+      position: relative;
+      top: 5px; /* nudge down to align optically with CTA */
+      text-decoration:none;
+    }
 
     @media (max-width:640px) {
       .chat { left:0; right:0; bottom:0; width:100vw; }
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
 
-    /* Launcher (closed) — pill with avatar + "Chat" + WhatsApp badge */
+    /* Launcher (closed) — pill with avatar + "Chat" + WhatsApp bubble */
     .launcher {
       position: fixed; right: 1rem; bottom: 1rem; z-index: 80;
       border: 0; border-radius: 9999px; padding: .375rem .9rem .375rem .375rem;
@@ -106,8 +94,26 @@
     }
     .launcher img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display:block; outline: 2px solid #fff; outline-offset: 0; }
     .launcher span { font-size: 14px; font-weight: 600; line-height: 1; padding-right: .25rem; }
-    .launcher .wa-badge { margin-left:.35rem; display:none; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#22c55e; }
-    .launcher .wa-badge svg{ width:14px; height:14px; fill:#fff; }
+
+    /* Small round WhatsApp bubble inside launcher — same look as .wa-btn */
+    .wa-mini{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:#22c55e;
+      margin-left:6px;
+      box-shadow:0 4px 10px rgba(0,0,0,.25);
+      text-decoration:none;
+    }
+    .wa-mini svg{
+      width:16px;
+      height:16px;
+      fill:#fff;
+      display:block;
+    }
 
     /* WhatsApp window (clone-style) */
     .wa-window {
@@ -141,43 +147,6 @@
       box-shadow:0 6px 16px rgba(0,0,0,.18);
     }
     .wa-start svg{ width:18px; height:18px; fill:#fff; }
-
-/* Round WhatsApp bubble inside the launcher */
-.wa-mini{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:28px;               /* keep in sync with launcher avatar if you want */
-  height:28px;
-  border-radius:50%;
-  background:#22c55e;       /* WhatsApp green */
-  margin-left:6px;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
-  text-decoration:none;
-  position:relative;
-}
-
-/* Small round WhatsApp bubble inside launcher — matches .wa-btn look */
-.wa-mini{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  background:#22c55e;               /* same green */
-  margin-left:6px;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
-  text-decoration:none;
-}
-
-.wa-mini svg{
-  width:16px;
-  height:16px;
-  fill:#fff;                         /* white glyph */
-  display:block;
-}
-
 
     @media (max-width:640px){ .wa-window{ left:.5rem; right:.5rem; width:auto; bottom:5.5rem; } }
 
@@ -237,7 +206,7 @@
         <a id="cta" href="#" target="_blank" rel="noopener">Book Appointment</a>
         <!-- WhatsApp icon (shows WhatsApp window) -->
         <button type="button" id="waIcon" class="wa-btn" style="display:none" aria-label="WhatsApp">
-<svg xmlns="http://www.w3.org/2000/svg" fill="#00ff00" viewBox="0 0 90 90" class="injected-svg" data-src="https://static.elfsight.com/icons/app-chats-whatsapp-chat-multicolor.svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M90 43.841c0 24.213-19.779 43.841-44.182 43.841a44.256 44.256 0 0 1-21.357-5.455L0 90l7.975-23.522a43.38 43.38 0 0 1-6.34-22.637C1.635 19.628 21.416 0 45.818 0 70.223 0 90 19.628 90 43.841zM45.818 6.982c-20.484 0-37.146 16.535-37.146 36.859 0 8.065 2.629 15.534 7.076 21.61L11.107 79.14l14.275-4.537A37.122 37.122 0 0 0 45.819 80.7c20.481 0 37.146-16.533 37.146-36.857S66.301 6.982 45.818 6.982zm22.311 46.956c-.273-.447-.994-.717-2.076-1.254-1.084-.537-6.41-3.138-7.4-3.495-.993-.358-1.717-.538-2.438.537-.721 1.076-2.797 3.495-3.43 4.212-.632.719-1.263.809-2.347.271-1.082-.537-4.571-1.673-8.708-5.333-3.219-2.848-5.393-6.364-6.025-7.441-.631-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223C58.2 65.771 58.2 64.336 60.186 64.156c1.984-.179 6.406-2.599 7.312-5.107.9-2.512.9-4.663.631-5.111z"></path></svg>
+          <svg viewBox="0 0 90 90" aria-hidden="true"><path d="M90 43.841c0 24.213-19.779 43.841-44.182 43.841a44.256 44.256 0 0 1-21.357-5.455L0 90l7.975-23.522a43.38 43.38 0 0 1-6.34-22.637C1.635 19.628 21.416 0 45.818 0 70.223 0 90 19.628 90 43.841zM45.818 6.982c-20.484 0-37.146 16.535-37.146 36.859 0 8.065 2.629 15.534 7.076 21.61L11.107 79.14l14.275-4.537A37.122 37.122 0 0 0 45.819 80.7c20.481 0 37.146-16.533 37.146-36.857S66.301 6.982 45.818 6.982zm22.311 46.956c-.273-.447-.994-.717-2.076-1.254-1.084-.537-6.41-3.138-7.4-3.495-.993-.358-1.717-.538-2.438.537-.721 1.076-2.797 3.495-3.43 4.212-.632.719-1.263.809-2.347.271-1.082-.537-4.571-1.673-8.708-5.333-3.219-2.848-5.393-6.364-6.025-7.441-.631-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223C58.2 65.771 58.2 64.336 60.186 64.156c1.984-.179 6.406-2.599 7.312-5.107.9-2.512.9-4.663.631-5.111z"></path></svg>
         </button>
       </div>
     </div>
@@ -262,20 +231,21 @@
         <div>How can I help you?</div>
       </div>
       <button id="waStart" class="wa-start">
-<svg xmlns="http://www.w3.org/2000/svg" fill="#00ff00" viewBox="0 0 90 90" class="injected-svg" data-src="https://static.elfsight.com/icons/app-chats-whatsapp-chat-multicolor.svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M90 43.841c0 24.213-19.779 43.841-44.182 43.841a44.256 44.256 0 0 1-21.357-5.455L0 90l7.975-23.522a43.38 43.38 0 0 1-6.34-22.637C1.635 19.628 21.416 0 45.818 0 70.223 0 90 19.628 90 43.841zM45.818 6.982c-20.484 0-37.146 16.535-37.146 36.859 0 8.065 2.629 15.534 7.076 21.61L11.107 79.14l14.275-4.537A37.122 37.122 0 0 0 45.819 80.7c20.481 0 37.146-16.533 37.146-36.857S66.301 6.982 45.818 6.982zm22.311 46.956c-.273-.447-.994-.717-2.076-1.254-1.084-.537-6.41-3.138-7.4-3.495-.993-.358-1.717-.538-2.438.537-.721 1.076-2.797 3.495-3.43 4.212-.632.719-1.263.809-2.347.271-1.082-.537-4.571-1.673-8.708-5.333-3.219-2.848-5.393-6.364-6.025-7.441-.631-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223C58.2 65.771 58.2 64.336 60.186 64.156c1.984-.179 6.406-2.599 7.312-5.107.9-2.512.9-4.663.631-5.111z"></path></svg>
+        <svg viewBox="0 0 90 90" aria-hidden="true"><path d="M90 43.841c0 24.213-19.779 43.841-44.182 43.841a44.256 44.256 0 0 1-21.357-5.455L0 90l7.975-23.522a43.38 43.38 0 0 1-6.34-22.637C1.635 19.628 21.416 0 45.818 0 70.223 0 90 19.628 90 43.841zM45.818 6.982c-20.484 0-37.146 16.535-37.146 36.859 0 8.065 2.629 15.534 7.076 21.61L11.107 79.14l14.275-4.537A37.122 37.122 0 0 0 45.819 80.7c20.481 0 37.146-16.533 37.146-36.857S66.301 6.982 45.818 6.982zm22.311 46.956c-.273-.447-.994-.717-2.076-1.254-1.084-.537-6.41-3.138-7.4-3.495-.993-.358-1.717-.538-2.438.537-.721 1.076-2.797 3.495-3.43 4.212-.632.719-1.263.809-2.347.271-1.082-.537-4.571-1.673-8.708-5.333-3.219-2.848-5.393-6.364-6.025-7.441-.631-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223C58.2 65.771 58.2 64.336 60.186 64.156c1.984-.179 6.406-2.599 7.312-5.107.9-2.512.9-4.663.631-5.111z"></path></svg>
         Start Chat
       </button>
     </div>
   </div>
 
-<!-- Closed pill -->
-<button id="launcher" class="launcher" aria-label="Open chat" title="Open chat">
-  <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" />
-  <span>Chat</span>
-
-  <!-- Small round WhatsApp bubble -->
-  <a id="launcherWa" class="wa-mini" href="#" aria-label="Open WhatsApp" title="WhatsApp"></a>
-</button>
+  <!-- Closed pill -->
+  <button id="launcher" class="launcher" aria-label="Open chat" title="Open chat">
+    <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" />
+    <span>Chat</span>
+    <!-- Small round WhatsApp bubble WITH the SVG -->
+    <a id="launcherWa" class="wa-mini" href="#" aria-label="Open WhatsApp" title="WhatsApp">
+      <svg viewBox="0 0 90 90" aria-hidden="true"><path d="M90 43.841c0 24.213-19.779 43.841-44.182 43.841a44.256 44.256 0 0 1-21.357-5.455L0 90l7.975-23.522a43.38 43.38 0 0 1-6.34-22.637C1.635 19.628 21.416 0 45.818 0 70.223 0 90 19.628 90 43.841zM45.818 6.982c-20.484 0-37.146 16.535-37.146 36.859 0 8.065 2.629 15.534 7.076 21.61L11.107 79.14l14.275-4.537A37.122 37.122 0 0 0 45.819 80.7c20.481 0 37.146-16.533 37.146-36.857S66.301 6.982 45.818 6.982zm22.311 46.956c-.273-.447-.994-.717-2.076-1.254-1.084-.537-6.41-3.138-7.4-3.495-.993-.358-1.717-.538-2.438.537-.721 1.076-2.797 3.495-3.43 4.212-.632.719-1.263.809-2.347.271-1.082-.537-4.571-1.673-8.708-5.333-3.219-2.848-5.393-6.364-6.025-7.441-.631-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223C58.2 65.771 58.2 64.336 60.186 64.156c1.984-.179 6.406-2.599 7.312-5.107.9-2.512.9-4.663.631-5.111z"></path></svg>
+    </a>
+  </button>
 
   <script>
     /* Jemima GH Pages — overlay chat + booking + WhatsApp window */
@@ -344,12 +314,12 @@
       parseRoute();
       if(!state.targetUrl){ setBadge('Set a target URL to start'); chat.style.display='none'; launcher.style.display='none'; return; }
 
-      document.getElementById('vertical').value = state.vertical;
-      document.getElementById('host').value = state.targetUrl;
-      document.getElementById('mode').value = state.mode;
-      document.getElementById('booking').value = state.booking;
-      document.getElementById('wa').value = state.whatsapp;
-      document.getElementById('wamessage').value = state.wamessage;
+      $('vertical').value = state.vertical;
+      $('host').value = state.targetUrl;
+      $('mode').value = state.mode;
+      $('booking').value = state.booking;
+      $('wa').value = state.whatsapp;
+      $('wamessage').value = state.wamessage;
 
       chat.style.display='block'; launcher.style.display='none';
 
@@ -375,43 +345,47 @@
 
     // Controls + interactions
     document.addEventListener('DOMContentLoaded', ()=>{
-      document.getElementById('go').addEventListener('click', ()=>{
-        const v = document.getElementById('vertical').value;
-        const raw = document.getElementById('host').value.trim();
-        const m = document.getElementById('mode').value;
-        const booking = document.getElementById('booking').value.trim();
-        const whatsapp = document.getElementById('wa').value.trim();
-        const wamessage = document.getElementById('wamessage').value.trim();
+      $('go').addEventListener('click', ()=>{
+        const v = $('vertical').value;
+        const raw = $('host').value.trim();
+        const m = $('mode').value;
+        const booking = $('booking').value.trim();
+        const whatsapp = $('wa').value.trim();
+        const wamessage = $('wamessage').value.trim();
         const target = normaliseTarget(raw);
         const url = shareLink(v, target, m, booking, whatsapp, wamessage);
         location.replace(url);
       });
 
-      document.getElementById('copy').addEventListener('click', async ()=>{
-        const v = document.getElementById('vertical').value;
-        const raw = document.getElementById('host').value.trim();
-        const m = document.getElementById('mode').value;
-        const booking = document.getElementById('booking').value.trim();
-        const whatsapp = document.getElementById('wa').value.trim();
-        const wamessage = document.getElementById('wamessage').value.trim();
+      $('copy').addEventListener('click', async ()=>{
+        const v = $('vertical').value;
+        const raw = $('host').value.trim();
+        const m = $('mode').value;
+        const booking = $('booking').value.trim();
+        const whatsapp = $('wa').value.trim();
+        const wamessage = $('wamessage').value.trim();
         if(!raw) return;
         const u = shareLink(v, normaliseTarget(raw), m==='auto' ? '' : m, booking, whatsapp, wamessage);
         await navigator.clipboard.writeText(u); setBadge('Link copied'); setTimeout(()=>setBadge(''), 1500);
       });
 
       // Minimise / restore
-      document.getElementById('min').addEventListener('click', (e)=>{ e.preventDefault(); chat.style.display='none'; launcher.style.display='inline-flex'; });
+      $('min').addEventListener('click', (e)=>{ e.preventDefault(); chat.style.display='none'; launcher.style.display='inline-flex'; });
 
+      // Clicking the launcher:
       launcher.addEventListener('click', (e)=>{
-        const inBadge = e.target.closest('.wa-badge');
-        if(inBadge && launcherWa.dataset.href){  // open WA widget
+        const onWaMini = e.target.closest('.wa-mini');   // FIX: was .wa-badge
+        if(onWaMini && launcherWa.dataset.href){
+          e.stopPropagation();
+          // open the WhatsApp widget bubble
           waWindow.style.display = 'block';
           return;
         }
         chat.style.display='block'; launcher.style.display='none';
       });
 
-      launcherWa.addEventListener('click', (e)=>{ e.stopPropagation(); waWindow.style.display='block'; });
+      // Explicit click on the mini bubble
+      launcherWa.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); waWindow.style.display='block'; });
 
       // WhatsApp window controls
       waIcon.addEventListener('click', ()=>{ waWindow.style.display='block'; });
