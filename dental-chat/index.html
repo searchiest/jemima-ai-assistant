@@ -8,85 +8,119 @@
     html, body { height: 100%; margin: 0; }
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#f5f7fb; }
 
+    /* Framed site fills viewport */
     .frame { position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh; background: transparent; }
 
+    /* Small status badge */
     .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem;
       background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px;
       font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
     .hidden { display:none; }
 
-    .chat { position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); z-index: 50; color: #0b0b0c; }
+    /* Chat container */
+    .chat { position: fixed; right: var(--pad-right); bottom: var(--pad-bottom); width: var(--chat-w); z-index: 50; color: #0b0b0c; }
     .chat-card {
       background: rgba(255, 255, 255, 0.60);
       backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem; overflow: hidden; display:flex; flex-direction:column;
-      max-height: min(var(--chat-h), calc(var(--vh-px) - 96px));
+      border-radius: 1rem; overflow: hidden;
+      display:flex; flex-direction:column;
+      max-height: var(--chat-h);
     }
     .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom:1px solid rgba(0,0,0,.06); }
     .header-image { display:flex; align-items:center; gap:.75rem; }
     .header-image img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
     .header-image .title { font-size: 12px; font-weight: 600; }
 
-    .body { flex:1; min-height:0; max-height: 60vh; overflow-y: auto; padding: .75rem; font-size: 14px; }
-
+    /* Messages area */
+    .body { flex:1; min-height:0; overflow:auto; padding: .75rem; font-size: 14px; background: transparent; }
     .chat-bubble { max-width: 85%; margin:.45rem 0; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; line-height:1.35; }
     .chat-bubble p { margin:0; }
     .ai-bubble { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
     .user-bubble { background:#2563eb; color:#fff; align-self:flex-end; }
     #chat-body { display:flex; flex-direction:column; }
 
-.composer {
-  display:flex; align-items:flex-end; gap:.5rem;
-  padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80);
-}
-.composer textarea{
-  flex:1;
-  border:1px solid #d1d5db; border-radius:.7rem;
-  padding:.58rem .75rem;
-  font-size:14px; line-height:1.35;
-  background:#fff; resize:none; overflow:hidden;
-  max-height:160px;   /* cap growth */
-  min-height:40px;    /* nice starting height */
-}
-.composer button{
-  border:0; background:#2563eb; color:#fff;
-  border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
-}
+    /* Composer: single line input */
+    .composer {
+      display:flex; align-items:center; gap:.5rem;
+      padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80);
+    }
+    .composer input{
+      flex:1;
+      border:1px solid #d1d5db; border-radius:.7rem;
+      padding:.58rem .75rem;
+      font-size:14px; line-height:1.35;
+      background:#fff; height:40px;
+    }
+    .composer button{
+      border:0; background:#2563eb; color:#fff;
+      border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
+    }
 
     .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); text-align:left; }
     .cta-wrap a { display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem; padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow: 0 6px 18px rgba(37,99,235,.35); }
     .cta-wrap a:hover { filter:brightness(0.95); }
 
-    .launcher { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: #2563eb; color: #fff;
+    /* Launcher (minimised) */
+    .launcher {
+      position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: #2563eb; color: #fff;
       border-radius: 999px; padding: .55rem .8rem; display: none; align-items: center; gap:.5rem; cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
     .launcher-icon { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
     .launcher span { font-size: 14px; font-weight: 700; }
 
-    @media (max-width:640px) { .chat { left:0; right:0; bottom:0; width:100vw; } .chat-card { border-radius:1rem 1rem 0 0; } }
-
+    /* Responsive sizing via CSS vars driven by the visual viewport */
     :root{
-      --chat-w: clamp(280px, 28vw, 380px);
-      --chat-h: clamp(360px, 60vh, 560px);
+      /* width and height adapt to screen */
+      --chat-w: clamp(320px, 28vw, 420px);
+      --chat-h: min(72vh, calc(var(--vh-px) - 96px));
+
+      /* safe-area padding */
       --pad-right: max(1rem, env(safe-area-inset-right));
       --pad-bottom: max(1rem, env(safe-area-inset-bottom));
+
+      /* updated by JS below */
       --vh-px: 100vh;
     }
-    .chat{ right: var(--pad-right); bottom: var(--pad-bottom); width: var(--chat-w); }
 
-    @media (max-width: 1024px){ :root{ --chat-w: clamp(280px, 34vw, 360px); --chat-h: clamp(340px, 56vh, 520px); } }
-    @media (max-width: 768px){ :root{ --chat-w: min(92vw, 420px); --chat-h: min(58vh, 520px); } }
-    @media (max-width: 480px){ :root{ --chat-w: 92vw; --chat-h: 56vh; } }
+    /* Large tablets */
+    @media (max-width: 1024px){
+      :root{
+        --chat-w: min(40vw, 420px);
+        --chat-h: min(68vh, calc(var(--vh-px) - 88px));
+      }
+    }
+
+    /* Tablets / large phones */
+    @media (max-width: 768px){
+      :root{
+        --chat-w: min(96vw, 460px);
+        --chat-h: min(64vh, calc(var(--vh-px) - 80px));
+      }
+    }
+
+    /* Phones */
+    @media (max-width: 480px){
+      :root{
+        --chat-w: 100vw;
+        --chat-h: calc(var(--vh-px) - 72px);
+      }
+      .chat { left:0; right:0; bottom:0; }
+      .chat-card { border-radius:1rem 1rem 0 0; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Status badge -->
   <div id="badge" class="badge hidden"></div>
 
+  <!-- Target site frame -->
   <iframe id="frame" class="frame" referrerpolicy="no-referrer" loading="eager" title="Framed Site"></iframe>
 
+  <!-- Chat overlay -->
   <div id="chat" class="chat" role="dialog" aria-label="Jemima AI chat">
     <div class="chat-card">
       <div class="bar">
@@ -103,18 +137,19 @@
 
       <div id="chat-quick-links" style="display:flex; gap:.5rem; padding:0 .75rem .75rem;"></div>
 
-<form class="composer" id="form">
-  <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
-  <textarea
-    id="chat-input"
-    placeholder="Ask Jemima"
-    rows="1"
-    autocomplete="off"
-    autocapitalize="sentences"
-    spellcheck="true"
-  ></textarea>
-  <button type="submit" id="sendBtn" aria-label="Send">Send</button>
-</form>
+      <!-- Single line composer -->
+      <form class="composer" id="form">
+        <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="Ask Jemima"
+          autocomplete="off"
+          autocapitalize="sentences"
+          spellcheck="true"
+        />
+        <button type="submit" id="sendBtn" aria-label="Send">Send</button>
+      </form>
 
       <div class="cta-wrap" id="ctaWrap" style="display:none">
         <a id="cta" href="#" target="_blank" rel="noopener">Book Appointment</a>
@@ -122,13 +157,14 @@
     </div>
   </div>
 
+  <!-- Launcher -->
   <button id="launcher" class="launcher" aria-label="Open chat">
     <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" class="launcher-icon" />
     <span>Chat</span>
   </button>
 
   <script>
-    /* Shell: iframe + launcher */
+    /* Overlay shell: iframe routing, launcher, badge */
     const PROXY_ORIGIN = "";
     const LOAD_TIMEOUT_MS = 5000;
 
@@ -190,8 +226,10 @@
       }
       chat.style.display = 'block';
       launcher.style.display = 'none';
+
       if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
       else { ctaWrap.style.display = 'none'; }
+
       if (state.mode === 'proxy') {
         if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
         else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
@@ -220,6 +258,7 @@
     if (!location.hash) location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     applyState();
 
+    /* Keep --vh-px synced to the visual viewport so heights adapt on mobile chrome show/hide */
     (function(){
       const setVh = () => {
         const h = (window.visualViewport?.height || window.innerHeight);
@@ -231,10 +270,10 @@
     })();
   </script>
 
-  <!-- N8N CHAT CLIENT -->
+  <!-- N8N Chat Client -->
   <script>
-    const pageUrl  = window.location.href;
-    const webhook  = 'https://jemima-ai.app.n8n.cloud/webhook/e1b970c6-a889-406c-b0f3-9479bae639e1/chat';
+    const pageUrl   = window.location.href;
+    const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/e1b970c6-a889-406c-b0f3-9479bae639e1/chat';
     const sessionId = (crypto.randomUUID && crypto.randomUUID()) || Date.now().toString(36);
 
     const box   = document.getElementById('chat-body');
@@ -249,6 +288,7 @@
       box.scrollTop = box.scrollHeight;
       box.classList.add('show');
     }
+
     function parse (raw, hdr) {
       if ((hdr.get('content-type') || '').includes('application/json')) {
         try {
@@ -260,16 +300,18 @@
             (d.choices && d.choices[0]?.message.content) ||
             raw
           );
-        } catch { /* fall through */ }
+        } catch {}
       }
       return raw;
     }
+
     async function sendMessage () {
       const msg = input.value.trim();
       if (!msg) return;
+
       add(msg, 'user');
       input.value = '';
-      input.style.height = '60px';
+
       try {
         const res = await fetch(webhook, {
           method : 'POST',
@@ -290,30 +332,22 @@
       }
     }
 
-    // Bind submit
+    /* Submit on Return (Enter) */
     form.addEventListener('submit', (e) => { e.preventDefault(); sendMessage(); });
-
-    // Send on Enter, newline with Shift+Enter
     input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
+      if (e.key === 'Enter') {
         e.preventDefault();
-        sendMessage();
+        form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', {cancelable:true}));
       }
     });
 
-    // Auto-grow textarea
-    input.addEventListener('input', () => {
-      input.style.height = 'auto';
-      input.style.height = input.scrollHeight + 'px';
-    });
-
-    // Focus on load for desktop
+    /* Focus desktop users on load */
     window.addEventListener('load', () => {
       const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       if (!isMobile) input.focus({ preventScroll: true });
     });
 
-    // Quick links, if you add any
+    /* Optional quick-links */
     const qlinks = document.getElementById('chat-quick-links');
     if (qlinks) {
       qlinks.addEventListener('click', e => {
@@ -326,64 +360,20 @@
     }
   </script>
 
-  <!-- Booking script unchanged (kept) -->
+  <!-- Booking script placeholder (kept, no conflicts) -->
   <script>
     const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/dental-demo-booking-form';
     const TIME_ZONE   = 'Europe/London';
     document.addEventListener('DOMContentLoaded',()=>{
       const form = document.getElementById('appointment-form');
       if (!form) return;
-      /* … booking code unchanged … */
+      /* booking logic lives here when present */
     });
   </script>
 
-<script>
-  // handles you already have:
-  const form  = document.getElementById('form');
-  const input = document.getElementById('chat-input');
-  const sendBtn = document.getElementById('sendBtn');
-
-  // helper: grow the textarea to fit content
-  function autoresize(el){
-    // lock to one row then expand to scroll height
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
-  }
-
-  // run once on load
-  autoresize(input);
-
-  // grow as user types
-  input.addEventListener('input', () => autoresize(input));
-
-  // track IME composition so Enter does not submit mid-composition
-  let composing = false;
-  input.addEventListener('compositionstart', () => composing = true);
-  input.addEventListener('compositionend',   () => composing = false);
-
-  // Return submits, Shift+Return makes a newline
-  input.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') return;
-    if (composing) return;          // ignore while composing characters
-    if (e.shiftKey) return;         // allow newline with Shift+Enter
-    e.preventDefault();
-    form.requestSubmit ? form.requestSubmit(sendBtn) : form.dispatchEvent(new Event('submit', {cancelable:true}));
-  });
-
-  // Submit hook stays the same, just make sure it calls your existing sendMessage()
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // call your existing send routine here
-    if (typeof sendMessage === 'function') sendMessage();
-    // reset height after send
-    input.value = '';
-    autoresize(input);
-  });
-</script>
-
-
 </body>
 </html>
+
 
 
 
