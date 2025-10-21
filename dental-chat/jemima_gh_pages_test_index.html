@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jemima AI — Site Review with Overlay Chat</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#0b0b0c; }
+
+    /* Frame fills viewport */
+    .frame { position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh; background:#111; }
+
+    /* Overlay UI */
+    .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem; background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px; font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
+    .hidden { display:none; }
+
+    /* Chat window */
+    .chat { position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); color: #0b0b0c; z-index: 50; }
+    .chat-card { background: #fff; border-radius: 1rem; box-shadow: 0 12px 36px rgba(0,0,0,.25); overflow: hidden; border:1px solid rgba(0,0,0,.06); }
+    .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom: 1px solid #ececec; background:#fff; }
+    .brand { display:flex; align-items:center; gap:.5rem; font-weight:600; font-size:14px; }
+    .brand .dot { width:10px; height:10px; border-radius:999px; background:#2563eb; }
+    .body { height: 420px; max-height: 60vh; overflow: auto; padding: .75rem; font-size: 14px; background:#fff; }
+    .sys { font-size: 12px; opacity: .7; margin-bottom: .5rem; }
+    .row { display: flex; margin: .45rem 0; }
+    .row.me { justify-content: flex-end; }
+    .bubble { max-width: 85%; padding: .5rem .75rem; border-radius: 1rem; background: #f2f2f3; }
+    .me .bubble { background: #2563eb; color: #fff; }
+    .composer { display:flex; gap:.5rem; padding:.5rem; border-top: 1px solid #ececec; background:#fff; }
+    .composer input { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; }
+    .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; }
+
+    /* Launcher button when minimised */
+    .launcher { position: fixed; right: 1rem; bottom: 1rem; z-index: 50; border:0; background:#2563eb; color:#fff; border-radius:999px; padding:.65rem 1rem; font-size:14px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+    /* Top controls to generate share links */
+    .controls { position: fixed; left: 1rem; top: 1rem; z-index: 55; display:flex; gap:.5rem; align-items:center; background: rgba(255,255,255,.05); color:#fff; padding:.5rem; border-radius:.75rem; backdrop-filter: blur(8px) saturate(140%); border:1px solid rgba(255,255,255,.12); }
+    .controls input, .controls select { background: rgba(255,255,255,.85); color:#0b0b0c; border:1px solid #d1d5db; border-radius:.5rem; padding:.4rem .5rem; font-size: 12px; }
+    .controls button { background:#fff; color:#0b0b0c; border:1px solid #d1d5db; border-radius:.5rem; padding:.4rem .6rem; font-size:12px; }
+
+    @media (max-width: 640px) {
+      .chat { left: 0; right: 0; bottom: 0; width: 100vw; }
+      .chat-card { border-radius: 1rem 1rem 0 0; }
+      .controls { left: 50%; transform: translateX(-50%); top: .75rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Status badge and link generator -->
+  <div id="badge" class="badge hidden"></div>
+  <div class="controls" id="controls">
+    <label style="font-size:12px">Vertical
+      <select id="vertical">
+        <option value="dental">dental</option>
+        <option value="default">default</option>
+      </select>
+    </label>
+    <input id="host" placeholder="example.com or https://example.com/path" size="28" />
+    <select id="mode">
+      <option value="auto">auto</option>
+      <option value="iframe">iframe</option>
+      <option value="proxy">proxy</option>
+    </select>
+    <button id="go">Open</button>
+    <button id="copy">Copy link</button>
+  </div>
+
+  <!-- Target site frame -->
+  <iframe id="frame" class="frame" referrerpolicy="no-referrer" loading="eager" title="Framed Site"></iframe>
+
+  <!-- Chat overlay -->
+  <div id="chat" class="chat" role="dialog" aria-label="Jemima AI chat" style="display:none">
+    <div class="chat-card">
+      <div class="bar">
+        <div class="brand"><span class="dot"></span> Jemima AI</div>
+        <div style="display:flex; gap:.5rem; align-items:center;">
+          <button id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
+        </div>
+      </div>
+      <div class="body" id="log">
+        <div class="sys" id="where"></div>
+        <div class="row"><div class="bubble">Hi, I am Jemima. Ask me about this page.</div></div>
+      </div>
+      <form class="composer" id="form">
+        <input id="q" placeholder="Ask Jemima AI about this page" autocomplete="off" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  <button id="launcher" class="launcher" style="display:none">Chat</button>
+
+  <script>
+    /**
+     * Jemima GH Pages Test
+     * Single static file to host on GitHub Pages.
+     * Features:
+     *  - Hash routing: #/vertical/host/path?mode=auto|iframe|proxy
+     *  - Full viewport iframe with responsive overlay chat
+     *  - Auto detection and fallback to proxy when iframing fails
+     *  - Optional external proxy origin (Cloudflare Worker or any edge function)
+     *  - Share link generator UI (top left)
+     */
+
+    // Set this to your Worker origin to enable proxy mode
+    // Example: const PROXY_ORIGIN = "https://proxy.jemima.workers.dev";
+    const PROXY_ORIGIN = "";
+
+    // How long to wait before deciding the iframe failed to load
+    const LOAD_TIMEOUT_MS = 5000;
+
+    const $ = (id) => document.getElementById(id);
+    const frame = $('frame');
+    const badge = $('badge');
+    const chat = $('chat');
+    const launcher = $('launcher');
+    const where = $('where');
+    const log = $('log');
+
+    // Chat open/close
+    $('min').addEventListener('click', () => {
+      chat.style.display = 'none';
+      launcher.style.display = 'inline-block';
+    });
+    $('launcher').addEventListener('click', () => {
+      launcher.style.display = 'none';
+      chat.style.display = 'block';
+    });
+    $('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = $('q');
+      if (!q.value.trim()) return;
+      appendRow(q.value, true);
+      // TODO: call your real backend here. Pass current target in payload.
+      // fetch('https://api.jemima.ai/chat', { method: 'POST', body: JSON.stringify({ q: q.value, target: state.targetUrl }) })
+      q.value = '';
+      log.scrollTop = log.scrollHeight;
+    });
+
+    function appendRow(text, mine) {
+      const row = document.createElement('div');
+      row.className = 'row' + (mine ? ' me' : '');
+      row.innerHTML = '<div class="bubble"></div>';
+      row.querySelector('.bubble').textContent = text;
+      log.appendChild(row);
+    }
+
+    // Routing: #/vertical/host[/path][?mode=]
+    const state = { vertical: 'default', targetUrl: '', mode: 'auto' };
+
+    function normaliseTarget(input) {
+      if (!input) return '';
+      if (/^https?:\/\//i.test(input)) return input;
+      return 'https://' + input.replace(/^\/+/, '');
+    }
+
+    function parseRoute() {
+      const hash = location.hash || '';
+      const m = hash.match(/^#\/(.*?)\/(.*)$/); // vertical / rest
+      state.vertical = m ? decodeURIComponent(m[1]) : 'default';
+      let rest = m ? m[2] : '';
+      let query = '';
+      const qm = rest.indexOf('?');
+      if (qm !== -1) { query = rest.slice(qm+1); rest = rest.slice(0, qm); }
+      state.mode = new URLSearchParams(query).get('mode') || 'auto';
+      state.targetUrl = normaliseTarget(rest);
+    }
+
+    function setBadge(text) {
+      if (!text) { badge.classList.add('hidden'); badge.textContent = ''; return; }
+      badge.textContent = text; badge.classList.remove('hidden');
+    }
+
+    function shareLink(v, target, mode) {
+      const base = location.href.split('#')[0];
+      return `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i, '')) + (mode ? `?mode=${mode}` : '');
+    }
+
+    async function openFromControls() {
+      const v = $('vertical').value;
+      const raw = $('host').value.trim();
+      const m = $('mode').value; // auto | iframe | proxy
+      const target = normaliseTarget(raw);
+      const url = shareLink(v, target, m);
+      location.replace(url);
+    }
+    $('go').addEventListener('click', openFromControls);
+    $('copy').addEventListener('click', async () => {
+      const v = $('vertical').value; const raw = $('host').value.trim(); const m = $('mode').value;
+      if (!raw) return;
+      const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m);
+      await navigator.clipboard.writeText(u);
+      setBadge('Link copied');
+      setTimeout(() => setBadge(''), 1500);
+    });
+
+    function applyState() {
+      if (!state.targetUrl) {
+        setBadge('Set a target URL to start');
+        chat.style.display = 'none'; launcher.style.display = 'none';
+        return;
+      }
+
+      // Update controls to reflect route
+      $('vertical').value = state.vertical;
+      $('host').value = state.targetUrl;
+      $('mode').value = state.mode;
+
+      // Update chat
+      where.textContent = `You are viewing: ${state.targetUrl}`;
+      chat.style.display = 'block'; launcher.style.display = 'none';
+
+      // Select mode
+      if (state.mode === 'proxy') {
+        if (!PROXY_ORIGIN) {
+          setBadge('Proxy mode requires PROXY_ORIGIN');
+          loadIframe(state.targetUrl);
+        } else {
+          setBadge(`Viewing proxied copy of ${state.targetUrl}`);
+          loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`);
+        }
+        return;
+      }
+
+      if (state.mode === 'iframe') {
+        setBadge('');
+        loadIframe(state.targetUrl);
+        return;
+      }
+
+      // Auto: try iframe, then proxy if available, else show message
+      setBadge('Loading target in iframe');
+      autoLoad(state.targetUrl);
+    }
+
+    function loadIframe(src) {
+      frame.src = src;
+    }
+
+    function autoLoad(target) {
+      let done = false;
+      const onLoaded = () => { if (done) return; done = true; setBadge(''); };
+      frame.addEventListener('load', onLoaded, { once: true });
+      frame.src = target;
+      setTimeout(() => {
+        if (done) return; // loaded
+        if (PROXY_ORIGIN) {
+          setBadge(`Target refused iframe. Switching to proxy for ${target}`);
+          frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`;
+        } else {
+          setBadge('This site likely blocks iframes. Set PROXY_ORIGIN or use proxy mode');
+        }
+      }, LOAD_TIMEOUT_MS);
+    }
+
+    window.addEventListener('hashchange', () => { parseRoute(); applyState(); });
+
+    // First load: optional defaults for quick test
+    // Example: #/dental/dentessentials.com
+    if (!location.hash) {
+      location.hash = '#/dental/dentessentials.com?mode=auto';
+    }
+    parseRoute();
+    applyState();
+  </script>
+
+  <!--
+  Optional proxy implementation (Cloudflare Worker) to enable proxy mode
+  ==============================================================
+  1) Deploy this as a Worker, note the URL, and set PROXY_ORIGIN at the top of this file
+  2) For example PROXY_ORIGIN = https://proxy.jemima.workers.dev
+
+  // Cloudflare Worker (proxy.js)
+  export default {
+    async fetch(req, env, ctx) {
+      const url = new URL(req.url);
+      const target = url.searchParams.get('url');
+      if (!target) return new Response('Missing url', { status: 400 });
+      const upstream = await fetch(target, { redirect: 'follow', headers: { 'user-agent': req.headers.get('user-agent') || 'jemima-proxy' }});
+      const ct = upstream.headers.get('content-type') || '';
+      const buf = await upstream.arrayBuffer();
+      const headers = new Headers({ 'cache-control': 'no-store', 'content-type': ct });
+      if (ct.includes('text/html')) {
+        let html = new TextDecoder().decode(buf);
+        const o = new URL(target);
+        html = html
+          .replace(/(href|src)=("|')(\/[^"']*)("|')/g, (_m, a, q, p, q2) => `${a}=${q}${o.origin}${p}${q2}`)
+          .replace(/<head(.*?)>/i, `<head$1><base href="${o.origin}/">`)
+          .replace(/<\/body>/i, `\n<div id="jemima-root" style="display:none"></div>\n</body>`);
+        return new Response(html, { headers, status: upstream.status });
+      }
+      return new Response(buf, { headers, status: upstream.status });
+    }
+  }
+
+  -->
+</body>
+</html>
