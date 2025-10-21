@@ -6,16 +6,15 @@
   <title>Jemima AI — Site Review with Overlay Chat</title>
   <style>
     html, body { height: 100%; margin: 0; }
-    /* Light page bg so there's never a black screen */
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#f5f7fb; }
 
     /* Frame fills viewport */
     .frame {
       position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh;
-      background: transparent; /* was #111 (black). Make it transparent. */
+      background: transparent;
     }
 
-    /* Small status badge (safe even if unused) */
+    /* Small status badge */
     .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem;
       background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px;
       font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
@@ -28,21 +27,25 @@
       backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem; overflow: hidden;
+      border-radius: 1rem; overflow: hidden; display:flex; flex-direction:column;
+      max-height: min(var(--chat-h), calc(var(--vh-px) - 96px));
     }
     .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; background:transparent; border-bottom:1px solid rgba(0,0,0,.06); }
     .header-image { display:flex; align-items:center; gap:.75rem; }
     .header-image img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
     .header-image .title { font-size: 12px; font-weight: 600; }
 
-    .body { height: 420px; max-height: 60vh; overflow-y: auto; padding: .75rem; font-size: 14px; background: transparent; }
-    .row { display:flex; margin:.45rem 0; }
-    .row.me { justify-content:flex-end; }
-    .bubble { max-width:85%; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; }
-    .me .bubble { background:#2563eb; color:#fff; }
+    .body { flex:1; min-height:0; max-height: 60vh; overflow-y: auto; padding: .75rem; font-size: 14px; background: transparent; }
+
+    /* Bubbles for the n8n client */
+    .chat-bubble { max-width: 85%; margin:.45rem 0; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; line-height:1.35; }
+    .chat-bubble p { margin:0; }
+    .ai-bubble { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
+    .user-bubble { background:#2563eb; color:#fff; align-self:flex-end; }
+    #chat-body { display:flex; flex-direction:column; }
 
     .composer { display:flex; gap:.5rem; padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80); }
-    .composer input { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff; }
+    .composer textarea { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff; resize:none; min-height:60px; max-height:160px; }
     .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer; }
 
     .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); background: transparent; text-align:left; }
@@ -63,63 +66,45 @@
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
 
-/* === Responsive chat sizing === */
-:root{
-  /* Default desktop-ish */
-  --chat-w: clamp(280px, 28vw, 380px);
-  --chat-h: clamp(360px, 60vh, 560px);
+    /* === Responsive chat sizing driven by CSS vars === */
+    :root{
+      --chat-w: clamp(280px, 28vw, 380px);
+      --chat-h: clamp(360px, 60vh, 560px);
+      --pad-right: max(1rem, env(safe-area-inset-right));
+      --pad-bottom: max(1rem, env(safe-area-inset-bottom));
+      --vh-px: 100vh;
+    }
+    .chat{ right: var(--pad-right); bottom: var(--pad-bottom); width: var(--chat-w); }
 
-  /* Respect iOS notches/safe areas */
-  --pad-right: max(1rem, env(safe-area-inset-right));
-  --pad-bottom: max(1rem, env(safe-area-inset-bottom));
-
-  /* Visual viewport height in px (set by JS below) */
-  --vh-px: 100vh;
-}
-
-/* Position + size driven by variables */
-.chat{ right: var(--pad-right); bottom: var(--pad-bottom); width: var(--chat-w); }
-.chat-card{
-  display:flex; flex-direction:column;
-  max-height: min(var(--chat-h), calc(var(--vh-px) - 96px)); /* never taller than screen */
-}
-.body{ flex:1; min-height:0; } /* lets the message area flex correctly */
-
-/* Tablet */
-@media (max-width: 1024px){
-  :root{
-    --chat-w: clamp(280px, 34vw, 360px);
-    --chat-h: clamp(340px, 56vh, 520px);
-  }
-}
-
-/* Large phones / small tablets (portrait) */
-@media (max-width: 768px){
-  :root{
-    --chat-w: min(92vw, 420px);
-    --chat-h: min(58vh, 520px);
-  }
-}
-
-/* Phones */
-@media (max-width: 480px){
-  :root{
-    --chat-w: 92vw;
-    --chat-h: 56vh;          /* shorter so it feels lighter */
-  }
-}
-
+    @media (max-width: 1024px){
+      :root{
+        --chat-w: clamp(280px, 34vw, 360px);
+        --chat-h: clamp(340px, 56vh, 520px);
+      }
+    }
+    @media (max-width: 768px){
+      :root{
+        --chat-w: min(92vw, 420px);
+        --chat-h: min(58vh, 520px);
+      }
+    }
+    @media (max-width: 480px){
+      :root{
+        --chat-w: 92vw;
+        --chat-h: 56vh;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Safe badge so setBadge() never errors -->
+  <!-- Safe badge so setBadge never errors -->
   <div id="badge" class="badge hidden"></div>
 
   <!-- Target site frame -->
   <iframe id="frame" class="frame" referrerpolicy="no-referrer" loading="eager" title="Framed Site"></iframe>
 
-  <!-- Chat overlay -->
+  <!-- Chat overlay using n8n client -->
   <div id="chat" class="chat" role="dialog" aria-label="Jemima AI chat">
     <div class="chat-card">
       <div class="bar">
@@ -127,15 +112,24 @@
           <img src="https://jemima.ai/jemima-chat.png" alt="Jemima">
           <div class="title">Jemima <br/>Practice Assistant</div>
         </div>
-        <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer"><b>X</b></button>
+        <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer" aria-label="Minimise chat"><b>X</b></button>
       </div>
 
-      <div class="body" id="log">
-        <div class="row"><div class="bubble">Hi, I'm Jemima. I can answer thousands of Dental and Service questions.</div></div>
+      <!-- Chat body that the n8n script writes into -->
+      <div class="body" id="chat-body" aria-live="polite">
+        <div class="chat-bubble ai-bubble"><p>Hi, I am Jemima. I can answer thousands of Dental and Service questions.</p></div>
       </div>
 
-      <form class="composer" id="form" onsubmit="return false;">
-        <input id="q" placeholder="Ask Jemima!" autocomplete="off" />
+      <!-- Optional quick links row the n8n script can use -->
+      <div id="chat-quick-links" style="display:flex; gap:.5rem; padding:0 .75rem .75rem;">
+        <!-- Example:
+        <a href="#" class="qlink" data-msg="What are your opening hours?">Opening hours</a>
+        -->
+      </div>
+
+      <form class="composer" id="form">
+        <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
+        <textarea id="chat-input" placeholder="Ask Jemima" autocomplete="off" rows="1"></textarea>
         <button type="submit">Send</button>
       </form>
 
@@ -152,14 +146,14 @@
   </button>
 
   <script>
-    /** Jemima overlay with robust, guard-checked script */
+    /** Jemima overlay shell, iframe routing, launcher, badge */
     const PROXY_ORIGIN = "";   // set if you deploy a proxy worker
     const LOAD_TIMEOUT_MS = 5000;
 
     const $ = id => document.getElementById(id);
     const frame = $('frame');
-    const badge = $('badge');          // may exist (we added it)
-    const chat = $('chat');
+    const badge = $('badge');
+    const chat  = $('chat');
     const launcher = $('launcher');
     const ctaWrap = $('ctaWrap');
     const cta = $('cta');
@@ -187,7 +181,7 @@
     }
 
     function setBadge(text) {
-      if (!badge) return;           // guard if removed
+      if (!badge) return;
       if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
       else { badge.textContent = text; badge.classList.remove('hidden'); }
     }
@@ -213,22 +207,18 @@
       parseRoute();
 
       if (!state.targetUrl) {
-        // No target -> keep launcher hidden and chat hidden; show a gentle badge
         setBadge('Add a #/vertical/host route to load a site');
         chat.style.display = 'none';
         launcher.style.display = 'none';
         return;
       }
 
-      // Show chat; hide launcher
       chat.style.display = 'block';
       launcher.style.display = 'none';
 
-      // Booking CTA (optional)
       if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
       else { ctaWrap.style.display = 'none'; }
 
-      // Load site
       if (state.mode === 'proxy') {
         if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
         else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
@@ -239,7 +229,6 @@
       }
     }
 
-    // Minimise / restore
     document.addEventListener('DOMContentLoaded', () => {
       const minBtn = $('min');
       if (minBtn) {
@@ -259,25 +248,428 @@
     window.addEventListener('hashchange', applyState);
 
     if (!location.hash) {
-      // Default target if none supplied
       location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     }
     applyState();
 
-// Keep --vh-px synced to the *visual* viewport (prevents overflow when URL bar shows/hides)
-(function(){
-  const setVh = () => {
-    const h = (window.visualViewport?.height || window.innerHeight);
-    document.documentElement.style.setProperty('--vh-px', `${h}px`);
-  };
-  setVh();
-  window.addEventListener('resize', setVh);
-  window.visualViewport && window.visualViewport.addEventListener('resize', setVh);
-})();
-
+    // Keep --vh-px synced to the visual viewport
+    (function(){
+      const setVh = () => {
+        const h = (window.visualViewport?.height || window.innerHeight);
+        document.documentElement.style.setProperty('--vh-px', `${h}px`);
+      };
+      setVh();
+      window.addEventListener('resize', setVh);
+      window.visualViewport && window.visualViewport.addEventListener('resize', setVh);
+    })();
   </script>
+
+  <!-- ====== SITE SCRIPTS YOU SHARED (nav, hamburger) ====== -->
+  <script>
+    // Sticky Navigation
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      if (window.scrollY > 100) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Secondary sticky logic
+    window.addEventListener('scroll', function () {
+      const navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    // Hamburger
+    const ham = document.getElementById('hamburger');
+    if (ham) {
+      ham.addEventListener('click',function(){
+        this.classList.toggle('open');
+        const links = document.querySelector('.nav-links');
+        if (links) links.classList.toggle('open');
+      });
+    }
+  </script>
+
+  <!-- ====== N8N CHAT CLIENT, WIRED TO THE OVERLAY ====== -->
+  <script>
+    /* 1. page address sent to n8n */
+    const pageUrl = window.location.href;
+
+    /* 2. n8n endpoint and per-visitor session ID */
+    const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/e1b970c6-a889-406c-b0f3-9479bae639e1/chat';
+    const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+
+    /* 3. DOM handles mapped to overlay */
+    const box   = document.getElementById('chat-body');
+    const input = document.getElementById('chat-input');
+    const form  = document.getElementById('form');
+
+    /* 4. add a chat bubble */
+    function add (text, role = 'ai') {
+      const div     = document.createElement('div');
+      div.className = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+      div.innerHTML = `<p>${text}</p>`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+      box.classList.add('show');
+    }
+
+    /* 5. unwrap JSON if needed */
+    function parse (raw, hdr) {
+      if ((hdr.get('content-type') || '').includes('application/json')) {
+        try {
+          let d = JSON.parse(raw);
+          if (Array.isArray(d)) d = d[0] || {};
+          return (
+            d.reply   || d.output  || d.text || d.message ||
+            d.answer  || d.content ||
+            (d.choices && d.choices[0]?.message.content) ||
+            raw
+          );
+        } catch { /* fall through to raw */ }
+      }
+      return raw;
+    }
+
+    /* 6. send routine bound to the overlay form */
+    async function sendMessage () {
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      add(msg, 'user');
+      input.value = '';
+      input.style.height = '60px';
+
+      try {
+        const res = await fetch(webhook, {
+          method : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body   : JSON.stringify({
+            sessionId,
+            route     : 'general',
+            action    : 'sendMessage',
+            chatInput : msg,
+            pageUrl
+          })
+        });
+        const raw = await res.text();
+        add(parse(raw, res.headers), 'ai');
+      } catch (err) {
+        console.error(err);
+        add('Could not reach the server.', 'ai');
+      }
+    }
+
+    /* Bind submit to sendMessage */
+    form.addEventListener('submit', (e) => { e.preventDefault(); sendMessage(); });
+
+    /* 7. auto-grow textarea */
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = input.scrollHeight + 'px';
+    });
+
+    /* 8. focus on load for desktop */
+    window.addEventListener('load', () => {
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (!isMobile) input.focus({ preventScroll: true });
+    });
+
+    /* 9. quick-link handler, optional container exists above composer */
+    const qlinks = document.getElementById('chat-quick-links');
+    if (qlinks) {
+      qlinks.addEventListener('click', e => {
+        if(e.target.classList.contains('qlink')){
+          e.preventDefault();
+          input.value = e.target.dataset.msg;
+          sendMessage();
+        }
+      });
+    }
+  </script>
+
+  <!-- ====== APPOINTMENT BOOKING SCRIPT (unchanged, optional) ====== -->
+  <script>
+    const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/dental-demo-booking-form';
+    const TIME_ZONE   = 'Europe/London';
+
+    document.addEventListener('DOMContentLoaded',()=>{
+
+      const form       = document.getElementById('appointment-form');
+      if (!form) return; /* only run on pages that include the form */
+
+      const msgBar     = document.getElementById('formMsg');
+      const submitBtn  = document.getElementById('submitBtn');
+
+      const firstName  = form.firstName;
+      const lastName   = form.lastName;
+      const email      = form.email;
+      const phone      = form.phone;
+      const typeSelect = document.getElementById('type');
+      const dayInput   = document.getElementById('day');
+      const timeSelect = document.getElementById('time');
+
+      function flash(kind,text){
+        msgBar.className='form-msg '+kind;
+        msgBar.textContent=text;
+        msgBar.classList.add('show');
+        clearTimeout(flash._t);
+        flash._t=setTimeout(()=>msgBar.textContent='',3500);
+      }
+
+      function resetTimes(text){
+        timeSelect.disabled=true;
+        timeSelect.innerHTML=`<option value="">${text}</option>`;
+      }
+
+      async function loadSlots(){
+        const day  = dayInput.value;
+        const type = typeSelect.value;
+
+        if(!day || !type){
+          resetTimes('Pick a day and appointment type');
+          validate();
+          return;
+        }
+
+        resetTimes('Loading…');
+        try{
+          const res=await fetch(BOOKING_URL,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({action:'check_availability',day,type})
+          });
+
+          const data    = await res.json();
+          const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+          const free    = payload.slots ?? [];
+
+          if(free.length){
+            timeSelect.disabled=false;
+            timeSelect.innerHTML='<option value="" disabled selected>Select a time</option>';
+            free.forEach(s=>{
+              if(!s.startsWith(day)) return;
+              const t=s.slice(11,16);
+              timeSelect.insertAdjacentHTML('beforeend',`<option value="${s}">${t}</option>`);
+            });
+          }else{
+            resetTimes('No slots available');
+          }
+        }catch(e){
+          console.error(e);
+          resetTimes('Error loading slots');
+        }
+        validate();
+      }
+
+      dayInput .addEventListener('change',loadSlots);
+      typeSelect.addEventListener('change',loadSlots);
+
+      let showErrors=false;
+
+      const rules=[
+        {el:firstName ,test:v=>v.trim()!==''                   ,msg:'Enter your first name'},
+        {el:lastName  ,test:v=>v.trim()!==''                   ,msg:'Enter your last name'},
+        {el:email     ,test:()=>email.validity.valid           ,msg:'Enter a valid email address'},
+        {el:phone     ,test:()=>phone.validity.valid           ,msg:'Enter a valid phone number'},
+        {el:typeSelect,test:v=>v!==''                          ,msg:'Choose an appointment type'},
+        {el:dayInput  ,test:v=>v!==''                          ,msg:'Pick a day'},
+        {el:timeSelect,test:()=>!timeSelect.disabled && timeSelect.value,msg:'Choose a time'}
+      ];
+
+      function toggleError(group,ok,msg){
+        if(!showErrors) return;
+        group.classList.toggle('error',!ok);
+        let span=group.querySelector('.error-msg');
+        if(!ok){
+          if(!span){
+            span=document.createElement('span');
+            span.className='error-msg';
+            group.appendChild(span);
+          }
+          span.textContent=msg;
+        }else if(span){
+          span.remove();
+        }
+      }
+
+      function validate(){
+        let firstErr='';
+        rules.forEach(r=>{
+          const val=r.el.value;
+          const ok =r.test(val);
+          toggleError(r.el.parentElement,ok,r.msg);
+          if(!ok && !firstErr) firstErr=r.msg;
+        });
+
+        submitBtn.disabled = showErrors ? !!firstErr : false;
+
+        if(showErrors && firstErr){
+          msgBar.className='form-msg error';
+          msgBar.textContent=firstErr;
+          msgBar.classList.add('show');
+        }else if(showErrors){
+          msgBar.textContent='';
+        }
+      }
+
+      ['input','change'].forEach(ev=>form.addEventListener(ev,validate,true));
+
+      form.addEventListener('submit',async e=>{
+        e.preventDefault();
+
+        showErrors=true;
+        validate();
+        if(submitBtn.disabled) return;
+
+        flash('sending','Sending…');
+
+        const payload={
+          firstName:firstName.value.trim(),
+          lastName :lastName.value.trim(),
+          email    :email.value.trim(),
+          phone    :phone.value.trim(),
+          type     :typeSelect.value,
+          slot     :timeSelect.value,
+          pageUrl  :window.location.href,
+          timeZone :TIME_ZONE
+        };
+
+        try{
+          const res=await fetch(BOOKING_URL,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({action:'create_booking',...payload})
+          });
+
+          if(res.ok){
+            form.reset();
+            resetTimes('Pick a day first');
+            submitBtn.disabled=false;
+            showErrors=false;
+            flash('success','Your appointment is confirmed. Please check your inbox');
+          }else if(res.status===409){
+            flash('error','That time has just been taken. Choose another');
+            loadSlots();
+          }else{
+            flash('error','Could not complete booking. Try again later');
+          }
+        }catch(err){
+          console.error(err);
+          flash('error','Network problem. Try again later');
+        }
+      });
+    });
+  </script>
+<script>
+/* ===== Jemima n8n chat wiring for existing #log / #q UI ===== */
+
+/* 1) session + endpoint */
+const JEMIMA_WEBHOOK = 'https://jemima-ai.app.n8n.cloud/webhook/e1b970c6-a889-406c-b0f3-9479bae639e1/chat';
+const JEMIMA_SESSION = (crypto.randomUUID && crypto.randomUUID()) || Date.now().toString(36);
+
+/* 2) DOM handles from your current markup */
+const chatBox = document.getElementById('log');     // messages container
+const chatForm = document.getElementById('form');   // <form id="form">
+const chatInput = document.getElementById('q');     // <input id="q">
+
+/* 3) helpers */
+function escapeHTML(s){
+  return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function addBubble(text, role){                     // role: 'user' | 'ai'
+  const row = document.createElement('div');
+  row.className = 'row' + (role === 'user' ? ' me' : '');
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = text;
+  row.appendChild(bubble);
+  chatBox.appendChild(row);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+function parseReply(raw, headers){
+  const ct = (headers.get('content-type') || '').toLowerCase();
+  if (ct.includes('application/json')) {
+    try {
+      let d = JSON.parse(raw);
+      if (Array.isArray(d)) d = d[0] || {};
+      return (
+        d.reply   || d.output  || d.text || d.message ||
+        d.answer  || d.content ||
+        (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content) ||
+        raw
+      );
+    } catch(e){ /* fall back to raw */ }
+  }
+  return raw;
+}
+
+/* 4) send routine */
+async function sendMessage(){
+  const msg = (chatInput.value || '').trim();
+  if (!msg) return;
+
+  addBubble(escapeHTML(msg), 'user');
+  chatInput.value = '';
+
+  try {
+    const res = await fetch(JEMIMA_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        sessionId: JEMIMA_SESSION,
+        route: 'general',
+        action: 'sendMessage',
+        chatInput: msg,
+        pageUrl: window.location.href
+      })
+    });
+    const raw = await res.text();
+    const reply = parseReply(raw, res.headers);
+    addBubble(escapeHTML(String(reply)).replace(/\n/g,'<br>'), 'ai');
+  } catch (err){
+    console.error(err);
+    addBubble('Could not reach the server.', 'ai');
+  }
+}
+
+/* 5) bind events */
+if (chatForm) {
+  chatForm.addEventListener('submit', (e) => { e.preventDefault(); sendMessage(); });
+}
+if (chatInput) {
+  // Enter to send, Shift+Enter for newline
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+}
+
+/* 6) optional: focus desktop users */
+window.addEventListener('load', () => {
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (!isMobile && chatInput) chatInput.focus({ preventScroll: true });
+});
+</script>
+
 </body>
 </html>
+
 
 
 
