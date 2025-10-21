@@ -6,195 +6,70 @@
   <title>Jemima AI — Site Review with Overlay Chat</title>
   <style>
     html, body { height: 100%; margin: 0; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#0b0b0c; }
+    /* Light page bg so there's never a black screen */
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#f5f7fb; }
 
     /* Frame fills viewport */
-    .frame { position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh; background:#111; }
+    .frame {
+      position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh;
+      background: transparent; /* was #111 (black). Make it transparent. */
+    }
 
-    /* Overlay UI */
-    .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem; background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px; font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
+    /* Small status badge (safe even if unused) */
+    .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem;
+      background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px;
+      font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
     .hidden { display:none; }
 
     /* Chat window */
-    .chat {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      width: 380px;
-      max-width: calc(100vw - 1rem);
-      z-index: 50;
-      color: #0b0b0c;
-    }
-
+    .chat { position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); z-index: 50; color: #0b0b0c; }
     .chat-card {
       background: rgba(255, 255, 255, 0.60);
-      backdrop-filter: blur(12px) saturate(140%);
-      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem;
-      overflow: hidden;
+      border-radius: 1rem; overflow: hidden;
     }
+    .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; background:transparent; border-bottom:1px solid rgba(0,0,0,.06); }
+    .header-image { display:flex; align-items:center; gap:.75rem; }
+    .header-image img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+    .header-image .title { font-size: 12px; font-weight: 600; }
 
-    .bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: .5rem;
-      padding: .6rem .8rem;
-      background: transparent;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
+    .body { height: 420px; max-height: 60vh; overflow-y: auto; padding: .75rem; font-size: 14px; background: transparent; }
+    .row { display:flex; margin:.45rem 0; }
+    .row.me { justify-content:flex-end; }
+    .bubble { max-width:85%; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; }
+    .me .bubble { background:#2563eb; color:#fff; }
 
-    .header-image {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .header-image img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;  /* circular avatar */
-      object-fit: cover;
-    }
-    .header-image .title {
-      font-size: 12px;
-      font-weight: 600;
-    }
+    .composer { display:flex; gap:.5rem; padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80); }
+    .composer input { flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff; }
+    .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer; }
 
-    .body {
-      height: 420px;
-      max-height: 60vh;
-      overflow-y: auto;
-      padding: .75rem;
-      font-size: 14px;
-      background: transparent;
-    }
+    .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); background: transparent; text-align:left; }
+    .cta-wrap a { display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem; padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow: 0 6px 18px rgba(37,99,235,.35); }
+    .cta-wrap a:hover { filter:brightness(0.95); }
 
-    .sys {
-      font-size: 12px;
-      opacity: .7;
-      margin-bottom: .5rem;
+    /* Launcher (minimised) */
+    .launcher {
+      position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: #2563eb; color: #fff;
+      border-radius: 999px; padding: .55rem .8rem; display: none; align-items: center; gap:.5rem; cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-
-    .row {
-      display: flex;
-      margin: .45rem 0;
-    }
-    .row.me {
-      justify-content: flex-end;
-    }
-
-    .bubble {
-      max-width: 85%;
-      padding: .5rem .75rem;
-      border-radius: 1rem;
-      background: #f2f2f3;
-    }
-    .me .bubble {
-      background: #2563eb;
-      color: #fff;
-    }
-
-    .composer {
-      display: flex;
-      gap:.5rem;
-      padding:.5rem;
-      border-top:1px solid #ececec;
-      background: rgba(255,255,255,0.80);
-    }
-    .composer input {
-      flex:1;
-      border:1px solid #d1d5db;
-      border-radius:.7rem;
-      padding:.58rem .75rem;
-      font-size:14px;
-      background:#fff;
-    }
-    .composer button {
-      border:0;
-      background:#2563eb;
-      color:#fff;
-      border-radius:.7rem;
-      padding:.58rem .95rem;
-      font-size:14px;
-      cursor:pointer;
-    }
-
-    .cta-wrap {
-      padding:.5rem;
-      border-top:1px solid rgba(0,0,0,.06);
-      background: transparent;
-      text-align: left;  /* align left */
-    }
-    .cta-wrap a {
-      display:inline-block;
-      background:#2563eb;
-      color:#fff;
-      text-decoration:none;
-      border-radius:.7rem;
-      padding:.6rem .9rem;
-      font-weight:600;
-      font-size:14px;
-      box-shadow: 0 6px 18px rgba(37,99,235,.35);
-    }
-    .cta-wrap a:hover {
-      filter:brightness(0.95);
-    }
-
-
-.launcher {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  z-index: 80;
-  border: 0;
-  background: #2563eb;       /* or match your brand colour */
-  color: #fff;
-  border-radius: 999px;
-  padding: .65rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-}
-.launcher-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
+    .launcher-icon { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+    .launcher span { font-size: 14px; font-weight: 700; }
 
     @media (max-width:640px) {
-      .chat {
-        left:0;
-        right:0;
-        bottom:0;
-        width:100vw;
-      }
-      .chat-card {
-        border-radius:1rem 1rem 0 0;
-      }
-    }
-
-    /* Top controls to generate share links */
-    .controls { position: fixed; left: 1rem; top: 1rem; z-index: 70; display:flex; gap:.5rem; align-items:center; background: rgba(255,255,255,.08); color:#fff; padding:.5rem; border-radius:.75rem; backdrop-filter: blur(8px) saturate(140%); border:1px solid rgba(255,255,255,.18); flex-wrap: wrap; }
-    .controls input, .controls select { background: rgba(255,255,255,.85); color:#0b0b0c; border:1px solid #d1d5db; border-radius:.5rem; padding:.4rem .5rem; font-size: 12px; }
-    .controls button { background:#fff; color:#0b0b0c; border:1px solid #d1d5db; border-radius:.5rem; padding:.4rem .6rem; font-size:12px; }
-
-    @media (max-width: 640px) {
-      .controls { left: 50%; transform: translateX(-50%); top: .75rem; width: calc(100vw - 1.5rem); gap: .4rem; padding: .45rem; }
-      .controls input, .controls select, .controls button { width: 100%; }
+      .chat { left:0; right:0; bottom:0; width:100vw; }
+      .chat-card { border-radius:1rem 1rem 0 0; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Safe badge so setBadge() never errors -->
+  <div id="badge" class="badge hidden"></div>
 
   <!-- Target site frame -->
-  <div id="badge" class="badge hidden"></div>
   <iframe id="frame" class="frame" referrerpolicy="no-referrer" loading="eager" title="Framed Site"></iframe>
 
   <!-- Chat overlay -->
@@ -203,18 +78,16 @@
       <div class="bar">
         <div class="header-image">
           <img src="https://jemima.ai/jemima-chat.png" alt="Jemima">
-          <div class="title">Jemima </br>Practice Assistant</div>
+          <div class="title">Jemima <br/>Practice Assistant</div>
         </div>
-        <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer"><b>X</b></button>
+        <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer"><b>Minimise</b></button>
       </div>
 
       <div class="body" id="log">
-        <div class="row">
-          <div class="bubble">Hi, I'm Jemima I can answer thousands of Dental and Service questions.</div>
-        </div>
+        <div class="row"><div class="bubble">Hi, I'm Jemima. I can answer thousands of Dental and Service questions.</div></div>
       </div>
 
-      <form class="composer" id="form">
+      <form class="composer" id="form" onsubmit="return false;">
         <input id="q" placeholder="Ask Jemima!" autocomplete="off" />
         <button type="submit">Send</button>
       </form>
@@ -225,29 +98,26 @@
     </div>
   </div>
 
-<button id="launcher" class="launcher" style="display:none">
-  <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" class="launcher-icon" />Chat</button>
+  <!-- Launcher -->
+  <button id="launcher" class="launcher" aria-label="Open chat">
+    <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" class="launcher-icon" />
+    <span>Chat</span>
+  </button>
 
   <script>
-    /** Jemima GH Pages Test — routing + iframe + overlay chat with booking CTA */
-    const PROXY_ORIGIN = "";  // Set if you deploy a proxy worker
+    /** Jemima overlay with robust, guard-checked script */
+    const PROXY_ORIGIN = "";   // set if you deploy a proxy worker
     const LOAD_TIMEOUT_MS = 5000;
 
     const $ = id => document.getElementById(id);
     const frame = $('frame');
-    const badge = $('badge');
+    const badge = $('badge');          // may exist (we added it)
     const chat = $('chat');
     const launcher = $('launcher');
-    const log = $('log');
     const ctaWrap = $('ctaWrap');
     const cta = $('cta');
 
-    const state = {
-      vertical: 'default',
-      targetUrl: '',
-      mode: 'auto',
-      booking: ''
-    };
+    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '' };
 
     function normaliseTarget(input) {
       if (!input) return '';
@@ -262,10 +132,7 @@
       let rest = m ? m[2] : '';
       let query = '';
       const qm = rest.indexOf('?');
-      if (qm !== -1) {
-        query = rest.slice(qm + 1);
-        rest = rest.slice(0, qm);
-      }
+      if (qm !== -1) { query = rest.slice(qm + 1); rest = rest.slice(0, qm); }
       const params = new URLSearchParams(query);
       state.mode = params.get('mode') || 'auto';
       state.booking = params.get('booking') || '';
@@ -273,60 +140,16 @@
     }
 
     function setBadge(text) {
-      if (!text) {
-        badge.classList.add('hidden');
-        badge.textContent = '';
-      } else {
-        badge.textContent = text;
-        badge.classList.remove('hidden');
-      }
+      if (!badge) return;           // guard if removed
+      if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
+      else { badge.textContent = text; badge.classList.remove('hidden'); }
     }
 
-    function shareLink(v, target, mode, booking) {
-      const base = location.href.split('#')[0];
-      const core = `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i, ''));
-      const params = new URLSearchParams();
-      if (mode) params.set('mode', mode);
-      if (booking) params.set('booking', booking);
-      const qs = params.toString();
-      return qs ? `${core}?${qs}` : core;
-    }
-
-    async function openFromControls() {
-      const v = $('vertical').value;
-      const raw = $('host').value.trim();
-      const m = $('mode').value;
-      const booking = $('booking').value.trim();
-      const target = normaliseTarget(raw);
-      const url = shareLink(v, target, m, booking);
-      location.replace(url);
-    }
-
-    $('go').addEventListener('click', openFromControls);
-
-    $('copy').addEventListener('click', async () => {
-      const v = $('vertical').value;
-      const raw = $('host').value.trim();
-      const m = $('mode').value;
-      const booking = $('booking').value.trim();
-      if (!raw) return;
-      const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m, booking);
-      await navigator.clipboard.writeText(u);
-      setBadge('Link copied');
-      setTimeout(() => setBadge(''), 1500);
-    });
-
-    function loadIframe(src) {
-      frame.src = src;
-    }
+    function loadIframe(src) { frame.src = src; }
 
     function autoLoad(target) {
       let done = false;
-      frame.addEventListener('load', () => {
-        if (done) return;
-        done = true;
-        setBadge('');
-      }, { once: true });
+      frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true });
       frame.src = target;
       setTimeout(() => {
         if (done) return;
@@ -341,87 +164,59 @@
 
     function applyState() {
       parseRoute();
+
       if (!state.targetUrl) {
-        setBadge('Set a target URL to start');
+        // No target -> keep launcher hidden and chat hidden; show a gentle badge
+        setBadge('Add a #/vertical/host route to load a site');
         chat.style.display = 'none';
         launcher.style.display = 'none';
         return;
       }
-      $('vertical').value = state.vertical;
-      $('host').value = state.targetUrl;
-      $('mode').value = state.mode;
-      $('booking').value = state.booking;
 
+      // Show chat; hide launcher
       chat.style.display = 'block';
       launcher.style.display = 'none';
 
-      if (state.booking) {
-        cta.href = state.booking;
-        ctaWrap.style.display = 'block';
-      } else {
-        ctaWrap.style.display = 'none';
-      }
+      // Booking CTA (optional)
+      if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
+      else { ctaWrap.style.display = 'none'; }
 
+      // Load site
       if (state.mode === 'proxy') {
-        if (!PROXY_ORIGIN) {
-          setBadge('Proxy mode requires PROXY_ORIGIN');
-          loadIframe(state.targetUrl);
-        } else {
-          setBadge(`Viewing proxied copy of ${state.targetUrl}`);
-          loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`);
-        }
+        if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
+        else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
       } else if (state.mode === 'iframe') {
-        setBadge('');
-        loadIframe(state.targetUrl);
+        setBadge(''); loadIframe(state.targetUrl);
       } else {
-        setBadge('Loading target in iframe');
-        autoLoad(state.targetUrl);
+        setBadge('Loading target in iframe'); autoLoad(state.targetUrl);
       }
     }
+
+    // Minimise / restore
+    document.addEventListener('DOMContentLoaded', () => {
+      const minBtn = $('min');
+      if (minBtn) {
+        minBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          chat.style.display = 'none';
+          launcher.style.display = 'inline-flex';
+        });
+      }
+      launcher.addEventListener('click', (e) => {
+        e.preventDefault();
+        chat.style.display = 'block';
+        launcher.style.display = 'none';
+      });
+    });
 
     window.addEventListener('hashchange', applyState);
 
     if (!location.hash) {
+      // Default target if none supplied
       location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     }
     applyState();
-
-
-// Attach minimise toggle handler after DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  const minBtn = document.getElementById('min');
-  const chatEl = document.getElementById('chat');
-  const launcherBtn = document.getElementById('launcher');
-
-  if (minBtn && chatEl && launcherBtn) {
-    minBtn.addEventListener('click', (e) => {
-      e.preventDefault();  // stop default action
-      // Toggle visibility
-      if (chatEl.style.display === 'none') {
-        chatEl.style.display = 'block';
-        launcherBtn.style.display = 'none';
-      } else {
-        chatEl.style.display = 'none';
-        launcherBtn.style.display = 'inline-block';
-      }
-    });
-  } else {
-    // log for debug
-    console.warn('Minimise button or chat/launcher element missing', {minBtn, chatEl, launcherBtn});
-  }
-
-  // Also attach launcher click to reopen chat
-  launcherBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    chatEl.style.display = 'block';
-    launcherBtn.style.display = 'none';
-  });
-});
-
-
-
   </script>
-
 </body>
 </html>
 
