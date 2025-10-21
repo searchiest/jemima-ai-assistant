@@ -17,56 +17,50 @@
 
     /* Chat window */
     .chat {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      width: 380px;
-      max-width: calc(100vw - 1rem);
-      z-index: 50;
-      color: #0b0b0c;
+      position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); z-index: 50; color: #0b0b0c;
     }
     .chat-card {
       background: rgba(255, 255, 255, 0.60);
-      backdrop-filter: blur(12px) saturate(140%);
-      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem;
-      overflow: hidden;
+      border-radius: 1rem; overflow: hidden;
     }
     .bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: .5rem;
-      padding: .6rem .8rem;
-      background: transparent;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+      padding:.6rem .8rem; background:transparent; border-bottom:1px solid rgba(0,0,0,.06);
     }
     .header-image { display:flex; align-items:center; gap:.75rem; }
     .header-image img {
-      width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display:block;
-      outline: 0px solid #fff; /* nice ring like Tailwind's ring-white */
-      outline-offset: 0;
+      width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;
+      outline:2px solid #fff; outline-offset:0;
     }
-    .header-image .title { font-size: 12px; font-weight: 600; }
+    .header-image .title { font-size:14px; font-weight:600; }
 
-    .body { height: 420px; max-height: 60vh; overflow-y: auto; padding: .75rem; font-size: 14px; background: transparent; }
+    .body { height: 420px; max-height: 60vh; overflow-y:auto; padding:.75rem; font-size:14px; background:transparent; }
     .row { display:flex; margin:.45rem 0; }
     .row.me { justify-content:flex-end; }
     .bubble { max-width:85%; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; }
     .me .bubble { background:#2563eb; color:#fff; }
 
     .composer {
-      display:flex; gap:.5rem; padding:.5rem; border-top:1px solid #ececec;
+      display:flex; align-items:center; gap:.5rem; padding:.5rem; border-top:1px solid #ececec;
       background: rgba(255,255,255,0.80);
     }
     .composer input {
       flex:1; border:1px solid #d1d5db; border-radius:.7rem; padding:.58rem .75rem; font-size:14px; background:#fff;
     }
-    .composer button {
+    .composer button[type="submit"] {
       border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
     }
+
+    /* WhatsApp icon button (inside composer) */
+    .wa-btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:40px; height:40px; border-radius:999px; border:0; cursor:pointer;
+      background:#22c55e; box-shadow:0 6px 16px rgba(0,0,0,.18);
+    }
+    .wa-btn svg { width:22px; height:22px; fill:#fff; display:block; }
 
     .cta-wrap {
       padding:.5rem; border-top:1px solid rgba(0,0,0,.06); background:transparent; text-align:left;
@@ -82,11 +76,11 @@
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
 
-    /* Closed (launcher) button — pill with avatar + "Chat" */
+    /* Closed (launcher) button — pill with avatar + "Chat" + WhatsApp badge */
     .launcher {
       position: fixed; right: 1rem; bottom: 1rem; z-index: 80;
-      border: 0; border-radius: 9999px; padding: .375rem .625rem .375rem .375rem;
-      background: #2563eb; color: #fff; display: none; /* shown when chat hidden */
+      border: 0; border-radius: 9999px; padding: .375rem .9rem .375rem .375rem;
+      background: #2563eb; color: #fff; display: none;
       align-items: center; gap: .5rem; cursor: pointer;
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
@@ -94,11 +88,14 @@
       width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display:block;
       outline: 2px solid #fff; outline-offset: 0;
     }
-    .launcher span {
-      font-size: 14px; font-weight: 600; line-height: 1; padding-right: .25rem;
+    .launcher .label { font-size: 14px; font-weight: 600; line-height: 1; }
+    .launcher .wa-badge {
+      margin-left:.35rem; display:inline-flex; align-items:center; justify-content:center;
+      width:24px; height:24px; border-radius:999px; background:#22c55e;
     }
+    .launcher .wa-badge svg { width:14px; height:14px; fill:#fff; }
 
-    /* Top controls (optional; hide if you don't want them) */
+    /* Top controls (hide in prod if you want) */
     .controls {
       position: fixed; left: 1rem; top: 1rem; z-index: 70; display:flex; gap:.5rem; align-items:center;
       background: rgba(255,255,255,.08); color:#fff; padding:.5rem; border-radius:.75rem;
@@ -124,6 +121,8 @@
     </label>
     <input id="host" placeholder="example.com or https://example.com/path" size="28" />
     <input id="booking" placeholder="Booking URL (optional)" size="28" />
+    <input id="wa" placeholder="WhatsApp (link or +number)" size="26" />
+    <input id="wamessage" placeholder="Prefill message (optional)" size="24" />
     <select id="mode">
       <option value="auto">auto</option>
       <option value="iframe">iframe</option>
@@ -142,17 +141,21 @@
       <div class="bar">
         <div class="header-image">
           <img src="https://jemima.ai/jemima-chat.png" alt="Jemima">
-          <div class="title">Jemima </br>Practice Assistant</div>
+          <div class="title">Jemima Practice Assistant</div>
         </div>
         <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
       </div>
 
       <div class="body" id="log">
-        <div class="row"><div class="bubble">Hi, I'm Jemima. I can answer thousands of dental and service questions.</div></div>
+        <div class="row"><div class="bubble">Hi, I am Jemima. Ask me about this page.</div></div>
       </div>
 
-      <form class="composer" id="form">
-        <input id="q" placeholder="Ask Jemima!" autocomplete="off" />
+      <form class="composer" id="form" onsubmit="return false;">
+        <input id="q" placeholder="Ask Jemima AI about this page" autocomplete="off" />
+        <!-- WhatsApp icon (visible only when whatsapp is configured) -->
+        <a id="waLink" class="wa-btn" href="#" target="_blank" rel="noopener" style="display:none" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.09c-.31-.15-1.82-.9-2.1-1.01-.28-.1-.49-.15-.7.16-.21.31-.81 1.01-.99 1.22-.18.21-.36.24-.67.09-.31-.15-1.29-.48-2.46-1.52-.91-.81-1.53-1.81-1.71-2.12-.18-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223.74.32 1.31.51 1.76.65.74.24 1.41.21 1.94.13.59-.09 1.82-.74 2.08-1.45.26-.71.26-1.32.18-1.45-.07-.13-.28-.2-.59-.35zM16 3C9.93 3 5 7.93 5 14c0 2.4.79 4.62 2.14 6.42L5 27l6.78-2.11C13.5 25.62 14.72 26 16 26c6.07 0 11-4.93 11-11S22.07 3 16 3z"/></svg>
+        </a>
         <button type="submit">Send</button>
       </form>
 
@@ -162,14 +165,17 @@
     </div>
   </div>
 
-  <!-- Closed state (pill button with avatar + text) -->
+  <!-- Closed state (pill with avatar + "Chat" + WhatsApp badge) -->
   <button id="launcher" class="launcher" aria-label="Open chat" title="Open chat">
     <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" />
-    <span>Chat</span>
+    <span class="label">Chat</span>
+    <span id="launcherWa" class="wa-badge" style="display:none" title="WhatsApp">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.09c-.31-.15-1.82-.9-2.1-1.01-.28-.1-.49-.15-.7.16-.21.31-.81 1.01-.99 1.22-.18.21-.36.24-.67.09-.31-.15-1.29-.48-2.46-1.52-.91-.81-1.53-1.81-1.71-2.12-.18-1.075-.066-1.656.475-2.191.488-.482 1.084-1.255 1.625-1.882.543-.628.723-1.075 1.082-1.793.363-.717.182-1.344-.09-1.883-.27-.537-2.438-5.825-3.34-7.977-.902-2.15-1.803-1.792-2.436-1.792-.631 0-1.354-.09-2.076-.09s-1.896.269-2.889 1.344c-.992 1.076-3.789 3.676-3.789 8.963 0 5.288 3.879 10.397 4.422 11.113.541.716 7.49 11.92 18.5 16.223.74.32 1.31.51 1.76.65.74.24 1.41.21 1.94.13.59-.09 1.82-.74 2.08-1.45.26-.71.26-1.32.18-1.45-.07-.13-.28-.2-.59-.35zM16 3C9.93 3 5 7.93 5 14c0 2.4.79 4.62 2.14 6.42L5 27l6.78-2.11C13.5 25.62 14.72 26 16 26c6.07 0 11-4.93 11-11S22.07 3 16 3z"/></svg>
+    </span>
   </button>
 
   <script>
-    /** Jemima GH Pages Test — routing + iframe + overlay chat with booking CTA */
+    /** Jemima GH Pages Test — overlay chat with booking + WhatsApp */
     const PROXY_ORIGIN = "";  // Set if you deploy a proxy worker
     const LOAD_TIMEOUT_MS = 5000;
 
@@ -178,11 +184,13 @@
     const badge = $('badge');
     const chat = $('chat');
     const launcher = $('launcher');
+    const launcherWa = $('launcherWa');
     const log = $('log');
     const ctaWrap = $('ctaWrap');
     const cta = $('cta');
+    const waLink = $('waLink');
 
-    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '' };
+    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', whatsapp: '', wamessage: '' };
 
     function normaliseTarget(input) {
       if (!input) return '';
@@ -201,6 +209,8 @@
       const params = new URLSearchParams(query);
       state.mode = params.get('mode') || 'auto';
       state.booking = params.get('booking') || '';
+      state.whatsapp = params.get('whatsapp') || '';
+      state.wamessage = params.get('wamessage') || '';
       state.targetUrl = normaliseTarget(rest);
     }
 
@@ -209,12 +219,30 @@
       else { badge.textContent = text; badge.classList.remove('hidden'); }
     }
 
-    function shareLink(v, target, mode, booking) {
+    function buildWhatsAppHref(val, message) {
+      if (!val) return '';
+      if (/^https?:\/\//i.test(val)) {
+        // Full link provided; add text= if not present and message exists
+        try {
+          const u = new URL(val);
+          if (message && !u.searchParams.get('text')) u.searchParams.set('text', message);
+          return u.toString();
+        } catch { return val; }
+      }
+      // Assume phone number; keep digits only
+      const digits = (''+val).replace(/[^0-9]/g,'');
+      const base = `https://wa.me/${digits}`;
+      return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+    }
+
+    function shareLink(v, target, mode, booking, whatsapp, wamessage) {
       const base = location.href.split('#')[0];
       const core = `${base}#/` + encodeURIComponent(v) + '/' + encodeURIComponent(target.replace(/^https?:\/\//i, ''));
       const params = new URLSearchParams();
       if (mode) params.set('mode', mode);
       if (booking) params.set('booking', booking);
+      if (whatsapp) params.set('whatsapp', whatsapp);
+      if (wamessage) params.set('wamessage', wamessage);
       const qs = params.toString();
       return qs ? `${core}?${qs}` : core;
     }
@@ -224,8 +252,10 @@
       const raw = $('host').value.trim();
       const m = $('mode').value;
       const booking = $('booking').value.trim();
+      const whatsapp = $('wa').value.trim();
+      const wamessage = $('wamessage').value.trim();
       const target = normaliseTarget(raw);
-      const url = shareLink(v, target, m, booking);
+      const url = shareLink(v, target, m, booking, whatsapp, wamessage);
       location.replace(url);
     }
 
@@ -250,17 +280,34 @@
         launcher.style.display = 'none';
         return;
       }
+
       $('vertical').value = state.vertical;
       $('host').value = state.targetUrl;
       $('mode').value = state.mode;
       $('booking').value = state.booking;
+      $('wa').value = state.whatsapp;
+      $('wamessage').value = state.wamessage;
 
       chat.style.display = 'block';
       launcher.style.display = 'none';
 
+      // Booking CTA
       if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
       else { ctaWrap.style.display = 'none'; }
 
+      // WhatsApp destinations
+      const defaultMsg = state.wamessage || `Hi! I'm reviewing ${state.targetUrl}`;
+      const waHref = buildWhatsAppHref(state.whatsapp, defaultMsg);
+
+      // Composer icon
+      if (waHref) { waLink.href = waHref; waLink.style.display = 'inline-flex'; }
+      else { waLink.style.display = 'none'; }
+
+      // Launcher badge
+      if (waHref) { launcherWa.style.display = 'inline-flex'; launcherWa.dataset.href = waHref; }
+      else { launcherWa.style.display = 'none'; launcherWa.removeAttribute('data-href'); }
+
+      // Load target
       if (state.mode === 'proxy') {
         if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
         else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
@@ -271,34 +318,40 @@
       }
     }
 
-    // Controls bar actions
     document.addEventListener('DOMContentLoaded', () => {
+      // Controls bar
       $('go').addEventListener('click', openFromControls);
       $('copy').addEventListener('click', async () => {
-        const v = $('vertical').value; const raw = $('host').value.trim();
-        const m = $('mode').value; const booking = $('booking').value.trim();
+        const v = $('vertical').value, raw = $('host').value.trim();
+        const m = $('mode').value, booking = $('booking').value.trim();
+        const whatsapp = $('wa').value.trim(), wamessage = $('wamessage').value.trim();
         if (!raw) return;
-        const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m, booking);
-        await navigator.clipboard.writeText(u); setBadge('Link copied'); setTimeout(() => setBadge(''), 1500);
+        const u = shareLink(v, normaliseTarget(raw), m === 'auto' ? '' : m, booking, whatsapp, wamessage);
+        await navigator.clipboard.writeText(u);
+        setBadge('Link copied'); setTimeout(() => setBadge(''), 1500);
       });
 
-      // Reliable minimise / restore
-      const minBtn = $('min');
-      minBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        chat.style.display = 'none';
-        launcher.style.display = 'inline-flex';  // show pill with avatar + "Chat"
+      // Minimise / restore
+      $('min').addEventListener('click', (e) => {
+        e.preventDefault(); chat.style.display = 'none'; launcher.style.display = 'inline-flex';
       });
-
       launcher.addEventListener('click', (e) => {
-        e.preventDefault();
-        chat.style.display = 'block';
-        launcher.style.display = 'none';
+        // Only open WhatsApp immediately if badge was clicked; otherwise open chat
+        const t = e.target.closest('.wa-badge');
+        if (t && launcherWa.dataset.href) { window.open(launcherWa.dataset.href, '_blank', 'noopener'); return; }
+        chat.style.display = 'block'; launcher.style.display = 'none';
+      });
+
+      // Also allow clicking the badge itself without opening chat
+      launcherWa.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (launcherWa.dataset.href) window.open(launcherWa.dataset.href, '_blank', 'noopener');
       });
     });
 
     window.addEventListener('hashchange', applyState);
 
+    // Default route for quick test
     if (!location.hash) {
       location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     }
@@ -306,3 +359,4 @@
   </script>
 </body>
 </html>
+
