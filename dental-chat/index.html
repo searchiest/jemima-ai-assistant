@@ -62,6 +62,53 @@
       .chat { left:0; right:0; bottom:0; width:100vw; }
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
+
+/* === Responsive chat sizing === */
+:root{
+  /* Default desktop-ish */
+  --chat-w: clamp(280px, 28vw, 380px);
+  --chat-h: clamp(360px, 60vh, 560px);
+
+  /* Respect iOS notches/safe areas */
+  --pad-right: max(1rem, env(safe-area-inset-right));
+  --pad-bottom: max(1rem, env(safe-area-inset-bottom));
+
+  /* Visual viewport height in px (set by JS below) */
+  --vh-px: 100vh;
+}
+
+/* Position + size driven by variables */
+.chat{ right: var(--pad-right); bottom: var(--pad-bottom); width: var(--chat-w); }
+.chat-card{
+  display:flex; flex-direction:column;
+  max-height: min(var(--chat-h), calc(var(--vh-px) - 96px)); /* never taller than screen */
+}
+.body{ flex:1; min-height:0; } /* lets the message area flex correctly */
+
+/* Tablet */
+@media (max-width: 1024px){
+  :root{
+    --chat-w: clamp(280px, 34vw, 360px);
+    --chat-h: clamp(340px, 56vh, 520px);
+  }
+}
+
+/* Large phones / small tablets (portrait) */
+@media (max-width: 768px){
+  :root{
+    --chat-w: min(92vw, 420px);
+    --chat-h: min(58vh, 520px);
+  }
+}
+
+/* Phones */
+@media (max-width: 480px){
+  :root{
+    --chat-w: 92vw;
+    --chat-h: 56vh;          /* shorter so it feels lighter */
+  }
+}
+
   </style>
 </head>
 <body>
@@ -216,6 +263,18 @@
       location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
     }
     applyState();
+
+// Keep --vh-px synced to the *visual* viewport (prevents overflow when URL bar shows/hides)
+(function(){
+  const setVh = () => {
+    const h = (window.visualViewport?.height || window.innerHeight);
+    document.documentElement.style.setProperty('--vh-px', `${h}px`);
+  };
+  setVh();
+  window.addEventListener('resize', setVh);
+  window.visualViewport && window.visualViewport.addEventListener('resize', setVh);
+})();
+
   </script>
 </body>
 </html>
