@@ -17,8 +17,8 @@
 
     /* Chat window */
     .chat { position: fixed; right: 1rem; bottom: 1rem; width: 380px; max-width: calc(100vw - 1rem); color: #0b0b0c; z-index: 50; }
-    .chat-card { background: #fff; border-radius: 1rem; box-shadow: 0 12px 36px rgba(0,0,0,.25); overflow: hidden; border:1px solid rgba(0,0,0,.06); }
-    .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom: 1px solid #ececec; background:#fff; }
+    .chat-card { background: rgba(255,255,255,.60); backdrop-filter: blur(10px) saturate(140%); border-radius: 1rem; box-shadow: 0 12px 36px rgba(0,0,0,.25); overflow: hidden; border:1px solid rgba(255,255,255,.35); }
+    .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom: 1px solid rgba(0,0,0,.06); background: transparent; }
     .brand { display:flex; align-items:center; gap:.5rem; font-weight:600; font-size:14px; }
     .brand .dot { width:10px; height:10px; border-radius:999px; background:#2563eb; }
     .body { height: 420px; max-height: 60vh; overflow: auto; padding: .75rem; font-size: 14px; background:#fff; }
@@ -32,15 +32,19 @@
     .composer button { border:0; background:#2563eb; color:#fff; border-radius:.7rem; padding:.58rem .95rem; font-size:14px; }
 
     /* Launcher button when minimised */
-    .launcher { position: fixed; right: 1rem; bottom: 1rem; z-index: 50; border:0; background:#2563eb; color:#fff; border-radius:999px; padding:.65rem 1rem; font-size:14px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .launcher { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border:0; background:#2563eb; color:#fff; border-radius:999px; padding:.65rem 1rem; font-size:14px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
 
     /* Top controls to generate share links */
-    .controls { position: fixed; left: 1rem; top: 1rem; z-index: 55; display:flex; gap:.5rem; align-items:center; background: rgba(255,255,255,.05); color:#fff; padding:.5rem; border-radius:.75rem; backdrop-filter: blur(8px) saturate(140%); border:1px solid rgba(255,255,255,.12); }
+    .controls { position: fixed; left: 1rem; top: 1rem; z-index: 70; display:flex; gap:.5rem; align-items:center; background: rgba(255,255,255,.08); color:#fff; padding:.5rem; border-radius:.75rem; backdrop-filter: blur(8px) saturate(140%); border:1px solid rgba(255,255,255,.18); flex-wrap: wrap; }
     .controls input, .controls select { background: rgba(255,255,255,.85); color:#0b0b0c; border:1px solid #d1d5db; border-radius:.5rem; padding:.4rem .5rem; font-size: 12px; }
     .controls button { background:#fff; color:#0b0b0c; border:1px solid #d1d5db; border-radius:.5rem; padding:.4rem .6rem; font-size:12px; }
 
     @media (max-width: 640px) {
       .chat { left: 0; right: 0; bottom: 0; width: 100vw; }
+      .chat-card { border-radius: 1rem 1rem 0 0; }
+      .controls { left: 50%; transform: translateX(-50%); top: .75rem; width: calc(100vw - 1.5rem); gap: .4rem; padding: .45rem; }
+      .controls input, .controls select, .controls button { width: 100%; }
+    }
       .chat-card { border-radius: 1rem 1rem 0 0; }
       .controls { left: 50%; transform: translateX(-50%); top: .75rem; }
     }
@@ -75,7 +79,7 @@
       <div class="bar">
         <div class="brand"><span class="dot"></span> Jemima AI</div>
         <div style="display:flex; gap:.5rem; align-items:center;">
-          <button id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
+          <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer">Minimise</button>
         </div>
       </div>
       <div class="body" id="log">
@@ -116,9 +120,11 @@
     const launcher = $('launcher');
     const where = $('where');
     const log = $('log');
+    const ctaWrap = $('ctaWrap');
+    const cta = $('cta');
 
     // Chat open/close
-    $('min').addEventListener('click', () => {
+    $('min').addEventListener('click', (e) => { e.preventDefault();
       chat.style.display = 'none';
       launcher.style.display = 'inline-block';
     });
@@ -146,7 +152,7 @@
     }
 
     // Routing: #/vertical/host[/path][?mode=]
-    const state = { vertical: 'default', targetUrl: '', mode: 'auto' };
+    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '' };
 
     function normaliseTarget(input) {
       if (!input) return '';
@@ -162,6 +168,11 @@
       let query = '';
       const qm = rest.indexOf('?');
       if (qm !== -1) { query = rest.slice(qm+1); rest = rest.slice(0, qm); }
+      const params = new URLSearchParams(query);
+      state.mode = params.get('mode') || 'auto';
+      state.booking = params.get('booking') || '';
+      state.targetUrl = normaliseTarget(rest);
+    }
       state.mode = new URLSearchParams(query).get('mode') || 'auto';
       state.targetUrl = normaliseTarget(rest);
     }
@@ -209,6 +220,7 @@
       // Update chat
       where.textContent = `You are viewing: ${state.targetUrl}`;
       chat.style.display = 'block'; launcher.style.display = 'none';
+      if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; } else { ctaWrap.style.display = 'none'; }
 
       // Select mode
       if (state.mode === 'proxy') {
@@ -296,3 +308,4 @@
   -->
 </body>
 </html>
+
