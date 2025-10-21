@@ -89,11 +89,18 @@
 
       <div id="chat-quick-links" style="display:flex; gap:.5rem; padding:0 .75rem .75rem;"></div>
 
-      <form class="composer" id="form">
-        <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
-        <textarea id="chat-input" placeholder="Ask Jemima" autocomplete="off" rows="1"></textarea>
-        <button type="submit">Send</button>
-      </form>
+<form class="composer" id="form">
+  <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
+  <textarea
+    id="chat-input"
+    placeholder="Ask Jemima"
+    rows="1"
+    autocomplete="off"
+    autocapitalize="sentences"
+    spellcheck="true"
+  ></textarea>
+  <button type="submit" id="sendBtn" aria-label="Send">Send</button>
+</form>
 
       <div class="cta-wrap" id="ctaWrap" style="display:none">
         <a id="cta" href="#" target="_blank" rel="noopener">Book Appointment</a>
