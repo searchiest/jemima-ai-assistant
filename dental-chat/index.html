@@ -8,7 +8,7 @@
     html, body { height: 100%; margin: 0; }
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#f5f7fb; }
 
-    /* ---------- Theme variables (overridable by URL or Sheet) ---------- */
+    /* ---------- Theme variables (can be overridden by URL) ---------- */
     :root{
       /* Chat sizing */
       --chat-w: clamp(320px, 28vw, 420px);
@@ -17,7 +17,7 @@
       --pad-bottom: max(1rem, env(safe-area-inset-bottom));
       --vh-px: 100vh;
 
-      /* Accent colors (default): user bubbles + buttons */
+      /* Accent colors (default): bubbles + buttons */
       --accent-bg: #2563eb;  /* background */
       --accent-fg: #ffffff;  /* text */
     }
@@ -51,8 +51,8 @@
     .body { flex:1; min-height:0; overflow:auto; padding: .75rem; font-size: 14px; background: transparent; }
     .chat-bubble { max-width: 85%; margin:.45rem 0; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; line-height:1.35; }
     .chat-bubble p { margin:0; }
-    .ai-bubble  { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
-    .user-bubble{ background: var(--accent-bg); color: var(--accent-fg); align-self:flex-end; }
+    .ai-bubble { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
+    .user-bubble { background: var(--accent-bg); color: var(--accent-fg); align-self:flex-end; }
     #chat-body { display:flex; flex-direction:column; }
 
     /* Composer: single line input */
@@ -72,16 +72,18 @@
       border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
     }
 
-    /* CTA follows theme */
-    .cta-wrap a{
-      display:inline-block; text-decoration:none;
-      background: var(--accent-bg);
-      color: var(--accent-fg);
-      border-radius:.7rem; padding:.6rem .9rem; margin: 5px;
-      font-weight:600; font-size:14px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.25);
-    }
-    .cta-wrap a:hover { filter:brightness(0.95); }
+.cta-wrap a{
+  display:inline-block; text-decoration:none;
+  background: var(--accent-bg);
+  color: var(--accent-fg);
+  border-radius:.7rem; padding:.6rem .9rem;
+  margin: 5px;
+  font-weight:600; font-size:14px;
+  /* neutral shadow so it works with any theme color */
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.cta-wrap a:hover { filter:brightness(0.95); }
+
 
     /* Launcher (minimised) */
     .launcher {
@@ -134,7 +136,14 @@
       <!-- Single line composer -->
       <form class="composer" id="form">
         <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
-        <input id="chat-input" type="text" placeholder="Ask Jemima" autocomplete="off" autocapitalize="sentences" spellcheck="true" />
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="Ask Jemima"
+          autocomplete="off"
+          autocapitalize="sentences"
+          spellcheck="true"
+        />
         <button type="submit" id="sendBtn" aria-label="Send">Send</button>
       </form>
 
@@ -151,51 +160,60 @@
   </button>
 
   <script>
-    /* -------- Overlay shell + path/query-based config via Google Sheet -------- */
-
-    const PROXY_ORIGIN    = "";     // set if you deploy a proxy worker
+    /* Overlay shell: iframe routing, launcher, badge + COLOR PARAM SUPPORT */
+    const PROXY_ORIGIN = "";
     const LOAD_TIMEOUT_MS = 5000;
 
-    // 1) Your published gviz JSON URL:
-    // (This is the URL you shared — keep if correct)
-    const SHEET_GVIZ_URL =
-      "https://docs.google.com/spreadsheets/d/1bok0FcKAOPVR9eFPss55ebWAsQ_IdB0ypQ_9G8sRrGk/gviz/tq?tqx=out:json&gid=0";
-
     const $ = id => document.getElementById(id);
-    const frame    = $('frame');
-    const badge    = $('badge');
-    const chat     = $('chat');
+    const frame = $('frame');
+    const badge = $('badge');
+    const chat  = $('chat');
     const launcher = $('launcher');
-    const ctaWrap  = $('ctaWrap');
-    const cta      = $('cta');
+    const ctaWrap = $('ctaWrap');
+    const cta = $('cta');
 
     const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', color: '' };
-    let overrides = null; // values sourced from sheet (path/query host)
 
-    /* ---------- Helpers ---------- */
-    function getHostFromPath(){
-      // /dental-chat/<host>
-      const m = location.pathname.match(/\/dental-chat\/([^\/?#]+)/i);
-      if (!m) return '';
-      let host = decodeURIComponent(m[1] || '').trim();
-      host = host.replace(/^https?:\/\//i,'').replace(/^www\./,'').replace(/\/+$/,'').toLowerCase();
-      return host;
-    }
-    function getHostFromQuery(){
-      const qs = new URLSearchParams(location.search);
-      return (qs.get('host') || '').trim();
-    }
     function normaliseTarget(input) {
       if (!input) return '';
       if (/^https?:\/\//i.test(input)) return input;
       return 'https://' + input.replace(/^\/*/, '');
     }
+
+    function parseHashParams(hash) {
+      // Expect format: #/vertical/host?key=val&color=%23003a3d;%23fff
+      const m = hash.match(/^#\/(.*?)\/(.*)$/);
+      let routeRest = m ? m[2] : '';
+      let query = '';
+      const qm = routeRest.indexOf('?');
+      if (qm !== -1) { query = routeRest.slice(qm + 1); routeRest = routeRest.slice(0, qm); }
+      const params = new URLSearchParams(query);
+      return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
+    }
+
+    function parseRoute() {
+      const hash = location.hash || '';
+      const { routeRest, params, vertical } = parseHashParams(hash);
+      state.vertical = vertical;
+      state.mode = params.get('mode') || 'auto';
+      state.booking = params.get('booking') || '';
+      state.color = params.get('color') || '';               // color from HASH query
+      state.targetUrl = normaliseTarget(routeRest);
+      // Also allow standard querystring (?color=...) as fallback if not set in hash
+      if (!state.color) {
+        const qs = new URLSearchParams(location.search);
+        state.color = qs.get('color') || '';
+      }
+    }
+
     function setBadge(text) {
       if (!badge) return;
       if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
       else { badge.textContent = text; badge.classList.remove('hidden'); }
     }
+
     function loadIframe(src) { frame.src = src; }
+
     function autoLoad(target) {
       let done = false;
       frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true });
@@ -211,37 +229,11 @@
       }, LOAD_TIMEOUT_MS);
     }
 
-    /* ---------- URL parsing: hash + query (legacy + new) ---------- */
-    function parseHashParams(hash) {
-      // format: #/vertical/host?key=val&color=%23xx;%23yy
-      const m = hash.match(/^#\/(.*?)\/(.*)$/);
-      let routeRest = m ? m[2] : '';
-      let query = '';
-      const qm = routeRest.indexOf('?');
-      if (qm !== -1) { query = routeRest.slice(qm + 1); routeRest = routeRest.slice(0, qm); }
-      const params = new URLSearchParams(query);
-      return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
-    }
-    function parseRoute() {
-      const hash = location.hash || '';
-      const { routeRest, params, vertical } = parseHashParams(hash);
-      state.vertical = vertical;
-      state.mode     = params.get('mode') || 'auto';
-      state.booking  = params.get('booking') || '';
-      state.color    = params.get('color') || ''; // color from HASH
-
-      // Also allow standard ?color=... query
-      if (!state.color) {
-        const qs = new URLSearchParams(location.search);
-        state.color = qs.get('color') || '';
-      }
-      state.targetUrl = normaliseTarget(routeRest);
-    }
-
-    /* ---------- Color helpers ---------- */
     function isHex(x){ return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(x); }
+
     function applyAccentFromParam(colorParam){
-      if (!colorParam) return; // keep defaults
+      if (!colorParam) return;               // keep defaults
+      // Accept "bg;fg" or "bg,fg"
       const parts = colorParam.split(/[;,]/).map(s => s.trim());
       const bg = parts[0] || '';
       const fg = parts[1] || '';
@@ -249,87 +241,25 @@
       if (isHex(fg)) document.documentElement.style.setProperty('--accent-fg', fg);
     }
 
-    /* ---------- Google Sheet (gviz) fetch & parse ---------- */
-    async function fetchSheetConfig(){
-      if (!SHEET_GVIZ_URL) return [];
-      const res = await fetch(SHEET_GVIZ_URL, { cache:'no-store' });
-      const txt = await res.text();
-      // Strip JSONP wrapper
-      const json = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
-      const cols = (json.table.cols || []).map(c => (c.label || c.id || '').toString().trim().toLowerCase());
-      const rows = json.table.rows || [];
-      const out  = [];
-      rows.forEach(r => {
-        const obj = {};
-        (r.c || []).forEach((cell, i) => {
-          const key = cols[i] || ('col' + i);
-          const v   = cell && (cell.v != null ? cell.v : cell.f);
-          if (v != null) obj[key] = String(v).trim();
-        });
-        if (Object.keys(obj).length) out.push(obj);
-      });
-      return out;
-    }
-    async function loadConfigForHost(host){
-      try{
-        const rows = await fetchSheetConfig();
-        if (!rows.length) return null;
-        const norm = (h) => (h||'').toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/+$/,'');
-        const row  = rows.find(r => norm(r.host) === norm(host));
-        if (!row) return null;
-
-        const colorCombined = row.color || (
-          (row.color_bg && row.color_fg) ? `${row.color_bg};${row.color_fg}` : ''
-        );
-
-        return {
-          host      : row.host || host,
-          targetUrl : row.targeturl || row.targetUrl || '',
-          mode      : (row.mode || '').toLowerCase() || 'auto',
-          booking   : row.booking || '',
-          color     : colorCombined
-        };
-      }catch(e){
-        console.error('Sheet config error', e);
-        return null;
-      }
-    }
-
-    /* ---------- Apply current state to UI ---------- */
     function applyState() {
-      // 1) parse URL-based route (legacy hash/query)
       parseRoute();
 
-      // 2) merge sheet overrides (but let explicit URL color win)
-      const hasUrlColor = !!state.color;
-      if (overrides){
-        if (overrides.targetUrl) state.targetUrl = normaliseTarget(overrides.targetUrl || overrides.host);
-        if (overrides.mode)      state.mode      = overrides.mode || state.mode;
-        if (overrides.booking)   state.booking   = overrides.booking || state.booking;
-        if (overrides.color && !hasUrlColor) state.color = overrides.color; // URL color has precedence
-        if (!overrides.targetUrl && overrides.host) {
-          state.targetUrl = normaliseTarget(overrides.host);
-        }
-      }
-
-      // 3) apply theme colors from (URL or sheet)
+      // Apply theme colors from URL if present
       applyAccentFromParam(state.color);
 
-      // 4) guard target
       if (!state.targetUrl) {
-        setBadge('Add /dental-chat/<host> or ?host=<host>');
+        setBadge('Add a #/vertical/host route to load a site');
         chat.style.display = 'none';
         launcher.style.display = 'none';
         return;
       }
 
-      // 5) show chat & booking
       chat.style.display = 'block';
       launcher.style.display = 'none';
+
       if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
       else { ctaWrap.style.display = 'none'; }
 
-      // 6) load site
       if (state.mode === 'proxy') {
         if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
         else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
@@ -340,9 +270,7 @@
       }
     }
 
-    /* ---------- Boot ---------- */
-    document.addEventListener('DOMContentLoaded', async () => {
-      // Minimise / restore
+    document.addEventListener('DOMContentLoaded', () => {
       const minBtn = $('min');
       if (minBtn) {
         minBtn.addEventListener('click', (e) => {
@@ -356,25 +284,17 @@
         chat.style.display = 'block';
         launcher.style.display = 'none';
       });
-
-      // Read host from clean path OR from ?host= (used by root 404.html redirect)
-      const slugHost = getHostFromPath() || getHostFromQuery();
-      if (slugHost) {
-        setBadge('Loading site config…');
-        overrides = await loadConfigForHost(slugHost);
-        setBadge('');
-      } else if (!location.hash) {
-        // Legacy default if neither path nor query nor hash is present
-        location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
-      }
-
-      applyState();
     });
 
-    // Re-apply on hash change (legacy routing still supported)
     window.addEventListener('hashchange', applyState);
 
-    // Visual viewport → CSS var for responsive height
+    if (!location.hash) {
+      // Default target if none supplied
+      location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
+    }
+    applyState();
+
+    /* Keep --vh-px synced to the visual viewport so heights adapt on mobile chrome show/hide */
     (function(){
       const setVh = () => {
         const h = (window.visualViewport?.height || window.innerHeight);
