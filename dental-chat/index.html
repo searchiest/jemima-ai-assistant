@@ -72,9 +72,17 @@
       border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
     }
 
-    .cta-wrap { padding:.5rem; border-top:1px solid rgba(0,0,0,.06); text-align:left; }
-    .cta-wrap a { display:inline-block; background:#2563eb; color:#fff; text-decoration:none; border-radius:.7rem; padding:.6rem .9rem; font-weight:600; font-size:14px; box-shadow: 0 6px 18px rgba(37,99,235,.35); }
-    .cta-wrap a:hover { filter:brightness(0.95); }
+.cta-wrap a{
+  display:inline-block; text-decoration:none;
+  background: var(--accent-bg);
+  color: var(--accent-fg);
+  border-radius:.7rem; padding:.6rem .9rem;
+  font-weight:600; font-size:14px;
+  /* neutral shadow so it works with any theme color */
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.cta-wrap a:hover { filter:brightness(0.95); }
+
 
     /* Launcher (minimised) */
     .launcher {
