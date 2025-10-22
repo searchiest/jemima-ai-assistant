@@ -151,14 +151,15 @@
   </button>
 
   <script>
-    /* -------- Overlay shell + path-based config via Google Sheet -------- */
+    /* -------- Overlay shell + path/query-based config via Google Sheet -------- */
 
-    const PROXY_ORIGIN   = "";     // set if you deploy a proxy worker
-    const LOAD_TIMEOUT_MS= 5000;
+    const PROXY_ORIGIN    = "";     // set if you deploy a proxy worker
+    const LOAD_TIMEOUT_MS = 5000;
 
-    // 1) PASTE your published gviz JSON URL here:
-    // Example: https://docs.google.com/spreadsheets/d/<<SHEET_ID>>/gviz/tq?tqx=out:json&sheet=Config
-    const SHEET_GVIZ_URL = "https://docs.google.com/spreadsheets/d/1bok0FcKAOPVR9eFPss55ebWAsQ_IdB0ypQ_9G8sRrGk/gviz/tq?tqx=out:json&sheet=Config";
+    // 1) Your published gviz JSON URL:
+    // (This is the URL you shared — keep if correct)
+    const SHEET_GVIZ_URL =
+      "https://docs.google.com/spreadsheets/d/1bok0FcKAOPVR9eFPss55ebWAsQ_IdB0ypQ_9G8sRrGk/gviz/tq?tqx=out:json&sheet=Config";
 
     const $ = id => document.getElementById(id);
     const frame    = $('frame');
@@ -169,32 +170,32 @@
     const cta      = $('cta');
 
     const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', color: '' };
-    let overrides = null; // values sourced from sheet (path-based)
+    let overrides = null; // values sourced from sheet (path/query host)
 
-    /* Utility: get host slug from path: /dental-chat/<host> */
+    /* ---------- Helpers ---------- */
     function getHostFromPath(){
+      // /dental-chat/<host>
       const m = location.pathname.match(/\/dental-chat\/([^\/?#]+)/i);
       if (!m) return '';
       let host = decodeURIComponent(m[1] || '').trim();
-      host = host.replace(/^https?:\/\//i,'').replace(/\/+$/,'').toLowerCase();
-      host = host.replace(/^www\./,''); // normalize
+      host = host.replace(/^https?:\/\//i,'').replace(/^www\./,'').replace(/\/+$/,'').toLowerCase();
       return host;
     }
-
+    function getHostFromQuery(){
+      const qs = new URLSearchParams(location.search);
+      return (qs.get('host') || '').trim();
+    }
     function normaliseTarget(input) {
       if (!input) return '';
       if (/^https?:\/\//i.test(input)) return input;
       return 'https://' + input.replace(/^\/*/, '');
     }
-
     function setBadge(text) {
       if (!badge) return;
       if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
       else { badge.textContent = text; badge.classList.remove('hidden'); }
     }
-
     function loadIframe(src) { frame.src = src; }
-
     function autoLoad(target) {
       let done = false;
       frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true });
@@ -210,7 +211,7 @@
       }, LOAD_TIMEOUT_MS);
     }
 
-    /* ---------- URL parsing: hash + query for backward compat ---------- */
+    /* ---------- URL parsing: hash + query (legacy + new) ---------- */
     function parseHashParams(hash) {
       // format: #/vertical/host?key=val&color=%23xx;%23yy
       const m = hash.match(/^#\/(.*?)\/(.*)$/);
@@ -221,7 +222,6 @@
       const params = new URLSearchParams(query);
       return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
     }
-
     function parseRoute() {
       const hash = location.hash || '';
       const { routeRest, params, vertical } = parseHashParams(hash);
@@ -240,7 +240,6 @@
 
     /* ---------- Color helpers ---------- */
     function isHex(x){ return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(x); }
-
     function applyAccentFromParam(colorParam){
       if (!colorParam) return; // keep defaults
       const parts = colorParam.split(/[;,]/).map(s => s.trim());
@@ -252,7 +251,7 @@
 
     /* ---------- Google Sheet (gviz) fetch & parse ---------- */
     async function fetchSheetConfig(){
-      if (!SHEET_GVIZ_URL || SHEET_GVIZ_URL.includes("PASTE_YOUR")) return [];
+      if (!SHEET_GVIZ_URL) return [];
       const res = await fetch(SHEET_GVIZ_URL, { cache:'no-store' });
       const txt = await res.text();
       // Strip JSONP wrapper
@@ -271,12 +270,10 @@
       });
       return out;
     }
-
     async function loadConfigForHost(host){
       try{
         const rows = await fetchSheetConfig();
         if (!rows.length) return null;
-        // normalize + match on host
         const norm = (h) => (h||'').toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/+$/,'');
         const row  = rows.find(r => norm(r.host) === norm(host));
         if (!row) return null;
@@ -310,7 +307,6 @@
         if (overrides.mode)      state.mode      = overrides.mode || state.mode;
         if (overrides.booking)   state.booking   = overrides.booking || state.booking;
         if (overrides.color && !hasUrlColor) state.color = overrides.color; // URL color has precedence
-        // If no targetUrl in row, default to https://<host>
         if (!overrides.targetUrl && overrides.host) {
           state.targetUrl = normaliseTarget(overrides.host);
         }
@@ -321,7 +317,7 @@
 
       // 4) guard target
       if (!state.targetUrl) {
-        setBadge('Add a #/vertical/host route or use /dental-chat/<host>');
+        setBadge('Add /dental-chat/<host> or ?host=<host>');
         chat.style.display = 'none';
         launcher.style.display = 'none';
         return;
@@ -361,15 +357,14 @@
         launcher.style.display = 'none';
       });
 
-      // Path-based mapping: /dental-chat/<host>
-      const slugHost = getHostFromPath();
+      // Read host from clean path OR from ?host= (used by root 404.html redirect)
+      const slugHost = getHostFromPath() || getHostFromQuery();
       if (slugHost) {
         setBadge('Loading site config…');
-        const cfg = await loadConfigForHost(slugHost);
-        overrides = cfg || null;
+        overrides = await loadConfigForHost(slugHost);
         setBadge('');
       } else if (!location.hash) {
-        // Legacy default if neither path nor hash is present
+        // Legacy default if neither path nor query nor hash is present
         location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
       }
 
@@ -494,4 +489,3 @@
 
 </body>
 </html>
-
