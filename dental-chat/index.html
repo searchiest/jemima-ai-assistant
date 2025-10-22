@@ -85,6 +85,44 @@
 .cta-wrap a:hover { filter:brightness(0.95); }
 
 
+.header-image {
+  position: relative;
+  display: inline-block;
+}
+
+/* Circle behind the image */
+.header-image::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160px; /* adjust size */
+  height: 160px; /* adjust size */
+  border-radius: 50%;
+  background-color: var(--circle-color, #f0f0f0); /* fallback if CSS variable not found */
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* Ensure image stays on top */
+.header-image img {
+  position: relative;
+  z-index: 1;
+  width: 120px; /* optional */
+  height: auto;
+  border-radius: 50%; /* optional, if you want round image */
+}
+
+/* Text */
+.header-image .title {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+
     /* Launcher (minimised) */
     .launcher {
       position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: var(--accent-bg); color: var(--accent-fg);
