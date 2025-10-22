@@ -18,8 +18,12 @@
       --vh-px: 100vh;
 
       /* Accent colors (default): bubbles + buttons */
-      --accent-bg: #2563eb;  /* background */
-      --accent-fg: #ffffff;  /* text */
+      --accent-bg: #2563eb;
+      --accent-fg: #ffffff;
+
+      /* NEW: shared avatar sizes (slightly bigger) */
+      --avatar: 46px;       /* circle diameter */
+      --avatar-img: 46px;   /* inner photo size */
     }
 
     /* Framed site fills viewport */
@@ -43,6 +47,7 @@
       max-height: var(--chat-h);
     }
     .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom:1px solid rgba(0,0,0,.06); }
+
     .header-image { display:flex; align-items:center; gap:.75rem; }
     .header-image img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
     .header-image .title { font-size: 12px; font-weight: 600; }
@@ -72,56 +77,17 @@
       border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
     }
 
-.cta-wrap a{
-  display:inline-block; text-decoration:none;
-  background: var(--accent-bg);
-  color: var(--accent-fg);
-  border-radius:.7rem; padding:.6rem .9rem;
-  margin: 5px;
-  font-weight:600; font-size:14px;
-  /* neutral shadow so it works with any theme color */
-  box-shadow: 0 6px 18px rgba(0,0,0,.25);
-}
-.cta-wrap a:hover { filter:brightness(0.95); }
-
-
-.header-image {
-  position: relative;
-  display: inline-block;
-}
-
-/* Circle behind the image */
-.header-image::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 160px; /* adjust size */
-  height: 160px; /* adjust size */
-  border-radius: 50%;
-  background-color: var(--circle-color, #f0f0f0); /* fallback if CSS variable not found */
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
-
-/* Ensure image stays on top */
-.header-image img {
-  position: relative;
-  z-index: 1;
-  width: 120px; /* optional */
-  height: auto;
-  border-radius: 50%; /* optional, if you want round image */
-}
-
-/* Text */
-.header-image .title {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
+    .cta-wrap a{
+      display:inline-block; text-decoration:none;
+      background: var(--accent-bg);
+      color: var(--accent-fg);
+      border-radius:.7rem; padding:.6rem .9rem;
+      margin: 5px;
+      font-weight:600; font-size:14px;
+      /* neutral shadow so it works with any theme color */
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    }
+    .cta-wrap a:hover { filter:brightness(0.95); }
 
     /* Launcher (minimised) */
     .launcher {
@@ -144,10 +110,67 @@
       .chat { left:0; right:0; bottom:0; }
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
+
+    /* === Chat header fixes (CSS-only) === */
+    /* slightly bigger circle and photo */
+    .bar{
+      justify-content: flex-start;
+      gap: .65rem;
+    }
+    #min{ margin-left: auto; }
+
+    .header-image{
+      position: relative !important;
+      display: inline-block !important;
+      width: var(--avatar) !important;
+      height: var(--avatar) !important;
+      flex: 0 0 var(--avatar);
+    }
+
+    .header-image::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background: var(--accent-bg);
+      z-index:0;
+    }
+
+    .header-image img{
+      position:absolute !important;
+      top:50%;
+      left:50%;
+      transform: translate(-50%, -50%);
+      width: var(--avatar-img) !important;
+      height: var(--avatar-img) !important;
+      border-radius:50%;
+      object-fit: cover;
+      z-index:1;
+      box-shadow: 0 0 0 2px rgba(255,255,255,.85);
+    }
+
+    .header-title{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      text-align:left;
+      line-height:1.1;
+      font-weight:600;
+      font-size:12px;
+      margin-top:0 !important;
+    }
+
+    /* NEW: apply the same avatar sizing + rim to the closed pill icon */
+    .launcher-icon{
+      width: var(--avatar-img) !important;
+      height: var(--avatar-img) !important;
+      border-radius:50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 2px rgba(255,255,255,.85); /* white rim */
+    }
   </style>
 </head>
 <body>
-
   <!-- Status badge -->
   <div id="badge" class="badge hidden"></div>
 
@@ -160,6 +183,8 @@
       <div class="bar">
         <div class="header-image">
           <img src="https://jemima.ai/jemima-chat-transparent.png" alt="Jemima">
+        </div>
+        <div class="header-title">
           <div class="title">Jemima <br/>Practice Assistant</div>
         </div>
         <button type="button" id="min" style="background:none;border:0;color:#6b7280;cursor:pointer" aria-label="Minimise chat"><b>X</b></button>
@@ -174,14 +199,7 @@
       <!-- Single line composer -->
       <form class="composer" id="form">
         <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
-        <input
-          id="chat-input"
-          type="text"
-          placeholder="Ask Jemima"
-          autocomplete="off"
-          autocapitalize="sentences"
-          spellcheck="true"
-        />
+        <input id="chat-input" type="text" placeholder="Ask Jemima" autocomplete="off" autocapitalize="sentences" spellcheck="true" />
         <button type="submit" id="sendBtn" aria-label="Send">Send</button>
       </form>
 
@@ -197,11 +215,11 @@
     <span>Chat</span>
   </button>
 
+  <!-- overlay / routing script (unchanged) -->
   <script>
     /* Overlay shell: iframe routing, launcher, badge + COLOR PARAM SUPPORT */
     const PROXY_ORIGIN = "";
     const LOAD_TIMEOUT_MS = 5000;
-
     const $ = id => document.getElementById(id);
     const frame = $('frame');
     const badge = $('badge');
@@ -209,142 +227,25 @@
     const launcher = $('launcher');
     const ctaWrap = $('ctaWrap');
     const cta = $('cta');
-
     const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', color: '' };
-
-    function normaliseTarget(input) {
-      if (!input) return '';
-      if (/^https?:\/\//i.test(input)) return input;
-      return 'https://' + input.replace(/^\/*/, '');
+    function normaliseTarget(input) { if (!input) return ''; if (/^https?:\/\//i.test(input)) return input; return 'https://' + input.replace(/^\/*/, ''); }
+    function parseHashParams(hash) { const m = hash.match(/^#\/(.*?)\/(.*)$/); let routeRest = m ? m[2] : ''; let query = ''; const qm = routeRest.indexOf('?'); if (qm !== -1) { query = routeRest.slice(qm + 1); routeRest = routeRest.slice(0, qm); } const params = new URLSearchParams(query); return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
     }
-
-    function parseHashParams(hash) {
-      // Expect format: #/vertical/host?key=val&color=%23003a3d;%23fff
-      const m = hash.match(/^#\/(.*?)\/(.*)$/);
-      let routeRest = m ? m[2] : '';
-      let query = '';
-      const qm = routeRest.indexOf('?');
-      if (qm !== -1) { query = routeRest.slice(qm + 1); routeRest = routeRest.slice(0, qm); }
-      const params = new URLSearchParams(query);
-      return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
-    }
-
-    function parseRoute() {
-      const hash = location.hash || '';
-      const { routeRest, params, vertical } = parseHashParams(hash);
-      state.vertical = vertical;
-      state.mode = params.get('mode') || 'auto';
-      state.booking = params.get('booking') || '';
-      state.color = params.get('color') || '';               // color from HASH query
-      state.targetUrl = normaliseTarget(routeRest);
-      // Also allow standard querystring (?color=...) as fallback if not set in hash
-      if (!state.color) {
-        const qs = new URLSearchParams(location.search);
-        state.color = qs.get('color') || '';
-      }
-    }
-
-    function setBadge(text) {
-      if (!badge) return;
-      if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
-      else { badge.textContent = text; badge.classList.remove('hidden'); }
-    }
-
+    function parseRoute() { const hash = location.hash || ''; const { routeRest, params, vertical } = parseHashParams(hash); state.vertical = vertical; state.mode = params.get('mode') || 'auto'; state.booking = params.get('booking') || ''; state.color = params.get('color') || ''; state.targetUrl = normaliseTarget(routeRest); if (!state.color) { const qs = new URLSearchParams(location.search); state.color = qs.get('color') || ''; } }
+    function setBadge(text) { if (!badge) return; if (!text) { badge.classList.add('hidden'); badge.textContent = ''; } else { badge.textContent = text; badge.classList.remove('hidden'); } }
     function loadIframe(src) { frame.src = src; }
-
-    function autoLoad(target) {
-      let done = false;
-      frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true });
-      frame.src = target;
-      setTimeout(() => {
-        if (done) return;
-        if (PROXY_ORIGIN) {
-          setBadge(`Target refused iframe. Switching to proxy for ${target}`);
-          frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`;
-        } else {
-          setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.');
-        }
-      }, LOAD_TIMEOUT_MS);
-    }
-
+    function autoLoad(target) { let done = false; frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true }); frame.src = target; setTimeout(() => { if (done) return; if (PROXY_ORIGIN) { setBadge(`Target refused iframe. Switching to proxy for ${target}`); frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`; } else { setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.'); } }, LOAD_TIMEOUT_MS); }
     function isHex(x){ return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(x); }
-
-    function applyAccentFromParam(colorParam){
-      if (!colorParam) return;               // keep defaults
-      // Accept "bg;fg" or "bg,fg"
-      const parts = colorParam.split(/[;,]/).map(s => s.trim());
-      const bg = parts[0] || '';
-      const fg = parts[1] || '';
-      if (isHex(bg)) document.documentElement.style.setProperty('--accent-bg', bg);
-      if (isHex(fg)) document.documentElement.style.setProperty('--accent-fg', fg);
-    }
-
-    function applyState() {
-      parseRoute();
-
-      // Apply theme colors from URL if present
-      applyAccentFromParam(state.color);
-
-      if (!state.targetUrl) {
-        setBadge('Add a #/vertical/host route to load a site');
-        chat.style.display = 'none';
-        launcher.style.display = 'none';
-        return;
-      }
-
-      chat.style.display = 'block';
-      launcher.style.display = 'none';
-
-      if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; }
-      else { ctaWrap.style.display = 'none'; }
-
-      if (state.mode === 'proxy') {
-        if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); }
-        else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); }
-      } else if (state.mode === 'iframe') {
-        setBadge(''); loadIframe(state.targetUrl);
-      } else {
-        setBadge('Loading target in iframe'); autoLoad(state.targetUrl);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const minBtn = $('min');
-      if (minBtn) {
-        minBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          chat.style.display = 'none';
-          launcher.style.display = 'inline-flex';
-        });
-      }
-      launcher.addEventListener('click', (e) => {
-        e.preventDefault();
-        chat.style.display = 'block';
-        launcher.style.display = 'none';
-      });
-    });
-
+    function applyAccentFromParam(colorParam){ if (!colorParam) return; const parts = colorParam.split(/[;,]/).map(s => s.trim()); const bg = parts[0] || ''; const fg = parts[1] || ''; if (isHex(bg)) document.documentElement.style.setProperty('--accent-bg', bg); if (isHex(fg)) document.documentElement.style.setProperty('--accent-fg', fg); }
+    function applyState() { parseRoute(); applyAccentFromParam(state.color); if (!state.targetUrl) { setBadge('Add a #/vertical/host route to load a site'); chat.style.display = 'none'; launcher.style.display = 'none'; return; } chat.style.display = 'block'; launcher.style.display = 'none'; if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; } else { ctaWrap.style.display = 'none'; } if (state.mode === 'proxy') { if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); } else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); } } else if (state.mode === 'iframe') { setBadge(''); loadIframe(state.targetUrl); } else { setBadge('Loading target in iframe'); autoLoad(state.targetUrl); } }
+    document.addEventListener('DOMContentLoaded', () => { const minBtn = $('min'); if (minBtn) { minBtn.addEventListener('click', (e) => { e.preventDefault(); chat.style.display = 'none'; launcher.style.display = 'inline-flex'; }); } launcher.addEventListener('click', (e) => { e.preventDefault(); chat.style.display = 'block'; launcher.style.display = 'none'; }); });
     window.addEventListener('hashchange', applyState);
-
-    if (!location.hash) {
-      // Default target if none supplied
-      location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
-    }
+    if (!location.hash) { location.hash = '#/dental/themoderndentist.co.uk?mode=auto'; }
     applyState();
-
-    /* Keep --vh-px synced to the visual viewport so heights adapt on mobile chrome show/hide */
-    (function(){
-      const setVh = () => {
-        const h = (window.visualViewport?.height || window.innerHeight);
-        document.documentElement.style.setProperty('--vh-px', `${h}px`);
-      };
-      setVh();
-      window.addEventListener('resize', setVh);
-      window.visualViewport && window.visualViewport.addEventListener('resize', setVh);
-    })();
+    (function(){ const setVh = () => { const h = (window.visualViewport?.height || window.innerHeight); document.documentElement.style.setProperty('--vh-px', `${h}px`); }; setVh(); window.addEventListener('resize', setVh); window.visualViewport && window.visualViewport.addEventListener('resize', setVh); })();
   </script>
 
-  <!-- N8N Chat Client -->
+  <!-- N8N Chat Client (unchanged) -->
   <script>
     const pageUrl   = window.location.href;
     const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/e1b970c6-a889-406c-b0f3-9479bae639e1/chat';
@@ -433,17 +334,5 @@
       });
     }
   </script>
-
-  <!-- Booking script placeholder (kept, no conflicts) -->
-  <script>
-    const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/dental-demo-booking-form';
-    const TIME_ZONE   = 'Europe/London';
-    document.addEventListener('DOMContentLoaded',()=>{
-      const form = document.getElementById('appointment-form');
-      if (!form) return;
-      /* booking logic lives here when present */
-    });
-  </script>
-
 </body>
 </html>
