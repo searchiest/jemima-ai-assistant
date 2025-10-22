@@ -8,6 +8,20 @@
     html, body { height: 100%; margin: 0; }
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:#f5f7fb; }
 
+    /* ---------- Theme variables (can be overridden by URL) ---------- */
+    :root{
+      /* Chat sizing */
+      --chat-w: clamp(320px, 28vw, 420px);
+      --chat-h: min(72vh, calc(var(--vh-px) - 96px));
+      --pad-right: max(1rem, env(safe-area-inset-right));
+      --pad-bottom: max(1rem, env(safe-area-inset-bottom));
+      --vh-px: 100vh;
+
+      /* Accent colors (default): bubbles + buttons */
+      --accent-bg: #2563eb;  /* background */
+      --accent-fg: #ffffff;  /* text */
+    }
+
     /* Framed site fills viewport */
     .frame { position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh; background: transparent; }
 
@@ -38,7 +52,7 @@
     .chat-bubble { max-width: 85%; margin:.45rem 0; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; line-height:1.35; }
     .chat-bubble p { margin:0; }
     .ai-bubble { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
-    .user-bubble { background:#2563eb; color:#fff; align-self:flex-end; }
+    .user-bubble { background: var(--accent-bg); color: var(--accent-fg); align-self:flex-end; }
     #chat-body { display:flex; flex-direction:column; }
 
     /* Composer: single line input */
@@ -54,7 +68,7 @@
       background:#fff; height:40px;
     }
     .composer button{
-      border:0; background:#2563eb; color:#fff;
+      border:0; background: var(--accent-bg); color: var(--accent-fg);
       border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
     }
 
@@ -64,49 +78,22 @@
 
     /* Launcher (minimised) */
     .launcher {
-      position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: #2563eb; color: #fff;
+      position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: var(--accent-bg); color: var(--accent-fg);
       border-radius: 999px; padding: .55rem .8rem; display: none; align-items: center; gap:.5rem; cursor: pointer;
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
     .launcher-icon { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
     .launcher span { font-size: 14px; font-weight: 700; }
 
-    /* Responsive sizing via CSS vars driven by the visual viewport */
-    :root{
-      /* width and height adapt to screen */
-      --chat-w: clamp(320px, 28vw, 420px);
-      --chat-h: min(72vh, calc(var(--vh-px) - 96px));
-
-      /* safe-area padding */
-      --pad-right: max(1rem, env(safe-area-inset-right));
-      --pad-bottom: max(1rem, env(safe-area-inset-bottom));
-
-      /* updated by JS below */
-      --vh-px: 100vh;
-    }
-
-    /* Large tablets */
+    /* Responsive via visual viewport */
     @media (max-width: 1024px){
-      :root{
-        --chat-w: min(40vw, 420px);
-        --chat-h: min(68vh, calc(var(--vh-px) - 88px));
-      }
+      :root{ --chat-w: min(40vw, 420px); --chat-h: min(68vh, calc(var(--vh-px) - 88px)); }
     }
-
-    /* Tablets / large phones */
     @media (max-width: 768px){
-      :root{
-        --chat-w: min(96vw, 460px);
-        --chat-h: min(64vh, calc(var(--vh-px) - 80px));
-      }
+      :root{ --chat-w: min(96vw, 460px); --chat-h: min(64vh, calc(var(--vh-px) - 80px)); }
     }
-
-    /* Phones */
     @media (max-width: 480px){
-      :root{
-        --chat-w: 100vw;
-        --chat-h: calc(var(--vh-px) - 72px);
-      }
+      :root{ --chat-w: 100vw; --chat-h: calc(var(--vh-px) - 72px); }
       .chat { left:0; right:0; bottom:0; }
       .chat-card { border-radius:1rem 1rem 0 0; }
     }
@@ -164,7 +151,7 @@
   </button>
 
   <script>
-    /* Overlay shell: iframe routing, launcher, badge */
+    /* Overlay shell: iframe routing, launcher, badge + COLOR PARAM SUPPORT */
     const PROXY_ORIGIN = "";
     const LOAD_TIMEOUT_MS = 5000;
 
@@ -176,32 +163,48 @@
     const ctaWrap = $('ctaWrap');
     const cta = $('cta');
 
-    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '' };
+    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', color: '' };
 
     function normaliseTarget(input) {
       if (!input) return '';
       if (/^https?:\/\//i.test(input)) return input;
       return 'https://' + input.replace(/^\/*/, '');
     }
+
+    function parseHashParams(hash) {
+      // Expect format: #/vertical/host?key=val&color=%23003a3d;%23fff
+      const m = hash.match(/^#\/(.*?)\/(.*)$/);
+      let routeRest = m ? m[2] : '';
+      let query = '';
+      const qm = routeRest.indexOf('?');
+      if (qm !== -1) { query = routeRest.slice(qm + 1); routeRest = routeRest.slice(0, qm); }
+      const params = new URLSearchParams(query);
+      return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
+    }
+
     function parseRoute() {
       const hash = location.hash || '';
-      const m = hash.match(/^#\/(.*?)\/(.*)$/);
-      state.vertical = m ? decodeURIComponent(m[1]) : 'default';
-      let rest = m ? m[2] : '';
-      let query = '';
-      const qm = rest.indexOf('?');
-      if (qm !== -1) { query = rest.slice(qm + 1); rest = rest.slice(0, qm); }
-      const params = new URLSearchParams(query);
+      const { routeRest, params, vertical } = parseHashParams(hash);
+      state.vertical = vertical;
       state.mode = params.get('mode') || 'auto';
       state.booking = params.get('booking') || '';
-      state.targetUrl = normaliseTarget(rest);
+      state.color = params.get('color') || '';               // color from HASH query
+      state.targetUrl = normaliseTarget(routeRest);
+      // Also allow standard querystring (?color=...) as fallback if not set in hash
+      if (!state.color) {
+        const qs = new URLSearchParams(location.search);
+        state.color = qs.get('color') || '';
+      }
     }
+
     function setBadge(text) {
       if (!badge) return;
       if (!text) { badge.classList.add('hidden'); badge.textContent = ''; }
       else { badge.textContent = text; badge.classList.remove('hidden'); }
     }
+
     function loadIframe(src) { frame.src = src; }
+
     function autoLoad(target) {
       let done = false;
       frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true });
@@ -216,14 +219,32 @@
         }
       }, LOAD_TIMEOUT_MS);
     }
+
+    function isHex(x){ return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(x); }
+
+    function applyAccentFromParam(colorParam){
+      if (!colorParam) return;               // keep defaults
+      // Accept "bg;fg" or "bg,fg"
+      const parts = colorParam.split(/[;,]/).map(s => s.trim());
+      const bg = parts[0] || '';
+      const fg = parts[1] || '';
+      if (isHex(bg)) document.documentElement.style.setProperty('--accent-bg', bg);
+      if (isHex(fg)) document.documentElement.style.setProperty('--accent-fg', fg);
+    }
+
     function applyState() {
       parseRoute();
+
+      // Apply theme colors from URL if present
+      applyAccentFromParam(state.color);
+
       if (!state.targetUrl) {
         setBadge('Add a #/vertical/host route to load a site');
         chat.style.display = 'none';
         launcher.style.display = 'none';
         return;
       }
+
       chat.style.display = 'block';
       launcher.style.display = 'none';
 
@@ -239,6 +260,7 @@
         setBadge('Loading target in iframe'); autoLoad(state.targetUrl);
       }
     }
+
     document.addEventListener('DOMContentLoaded', () => {
       const minBtn = $('min');
       if (minBtn) {
@@ -254,8 +276,13 @@
         launcher.style.display = 'none';
       });
     });
+
     window.addEventListener('hashchange', applyState);
-    if (!location.hash) location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
+
+    if (!location.hash) {
+      // Default target if none supplied
+      location.hash = '#/dental/themoderndentist.co.uk?mode=auto';
+    }
     applyState();
 
     /* Keep --vh-px synced to the visual viewport so heights adapt on mobile chrome show/hide */
@@ -373,9 +400,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
