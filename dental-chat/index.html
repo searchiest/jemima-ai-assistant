@@ -21,104 +21,45 @@
       --accent-bg: #2563eb;
       --accent-fg: #ffffff;
 
-      /* NEW: shared avatar sizes (slightly bigger) */
-      --avatar: 46px;       /* circle diameter */
-      --avatar-img: 46px;   /* inner photo size */
+      /* Shared avatar sizes */
+      --avatar: 46px;
+      --avatar-img: 46px;
     }
 
     /* Framed site fills viewport */
     .frame { position: fixed; inset: 0; border: 0; width: 100vw; height: 100vh; background: transparent; }
 
-    /* Small status badge */
+    /* Status badge */
     .badge { position: fixed; left: 50%; transform: translateX(-50%); top: .5rem;
       background: rgba(12,12,13,.85); color:#fff; padding:.35rem .7rem; border-radius:999px;
       font-size:12px; z-index: 60; backdrop-filter: saturate(120%) blur(6px); }
     .hidden { display:none; }
 
     /* Chat container */
-    .chat { position: fixed; right: calc(var(--pad-right) + 3px); bottom: var(--pad-bottom); width: var(--chat-w); z-index: 50; color: #0b0b0c; }
+    .chat {
+      position: fixed;
+      right: calc(var(--pad-right) + 3px);  /* Added 3px margin */
+      bottom: var(--pad-bottom);
+      width: var(--chat-w);
+      z-index: 50;
+      color: #0b0b0c;
+    }
     .chat-card {
       background: rgba(255, 255, 255, 0.60);
-      backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.35);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem; overflow: hidden;
-      display:flex; flex-direction:column;
+      border-radius: 1rem;
+      overflow: hidden;
+      display:flex;
+      flex-direction:column;
       max-height: var(--chat-h);
     }
+
     .bar { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.6rem .8rem; border-bottom:1px solid rgba(0,0,0,.06); }
 
-    .header-image { display:flex; align-items:center; gap:.75rem; }
-    .header-image img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
-    .header-image .title { font-size: 12px; font-weight: 600; }
-
-    /* Messages area */
-    .body { flex:1; min-height:0; overflow:auto; padding: .75rem; font-size: 14px; background: transparent; }
-    .chat-bubble { max-width: 85%; margin:.45rem 0; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; line-height:1.35; }
-    .chat-bubble p { margin:0; }
-    .ai-bubble { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
-    .user-bubble { background: var(--accent-bg); color: var(--accent-fg); align-self:flex-end; }
-    #chat-body { display:flex; flex-direction:column; }
-
-    /* Composer: single line input */
-    .composer {
-      display:flex; align-items:center; gap:.5rem;
-      padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80);
-    }
-    .composer input{
-      flex:1;
-      border:1px solid #d1d5db; border-radius:.7rem;
-      padding:.58rem .75rem;
-      font-size:14px; line-height:1.35;
-      background:#fff; height:40px;
-    }
-    .composer button{
-      border:0; background: var(--accent-bg); color: var(--accent-fg);
-      border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
-    }
-
-    .cta-wrap a{
-      display:inline-block; text-decoration:none;
-      background: var(--accent-bg);
-      color: var(--accent-fg);
-      border-radius:.7rem; padding:.6rem .9rem;
-      margin: 5px;
-      font-weight:600; font-size:14px;
-      /* neutral shadow so it works with any theme color */
-      box-shadow: 0 6px 18px rgba(0,0,0,.25);
-    }
-    .cta-wrap a:hover { filter:brightness(0.95); }
-
-    /* Launcher (minimised) */
-    .launcher {
-      position: fixed; right: 1rem; bottom: 1rem; z-index: 80; border: 0; background: var(--accent-bg); color: var(--accent-fg);
-      border-radius: 999px; padding: .55rem .8rem; display: none; align-items: center; gap:.5rem; cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    .launcher-icon { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-    .launcher span { font-size: 14px; font-weight: 700; }
-
-    /* Responsive via visual viewport */
-    @media (max-width: 1024px){
-      :root{ --chat-w: min(40vw, 420px); --chat-h: min(68vh, calc(var(--vh-px) - 88px)); }
-    }
-    @media (max-width: 768px){
-      :root{ --chat-w: min(96vw, 460px); --chat-h: min(64vh, calc(var(--vh-px) - 80px)); }
-    }
-    @media (max-width: 480px){
-      :root{ --chat-w: 100vw; --chat-h: calc(var(--vh-px) - 72px); }
-      .chat { left:0; right:0; bottom:0; }
-      .chat-card { border-radius:1rem 1rem 0 0; }
-    }
-
-    /* === Chat header fixes (CSS-only) === */
-    /* slightly bigger circle and photo */
-    .bar{
-      justify-content: flex-start;
-      gap: .65rem;
-    }
-    #min{ margin-left: auto; }
-
+    /* Chat header */
     .header-image{
       position: relative !important;
       display: inline-block !important;
@@ -126,7 +67,6 @@
       height: var(--avatar) !important;
       flex: 0 0 var(--avatar);
     }
-
     .header-image::before{
       content:"";
       position:absolute;
@@ -135,7 +75,6 @@
       background: var(--accent-bg);
       z-index:0;
     }
-
     .header-image img{
       position:absolute !important;
       top:50%;
@@ -148,7 +87,6 @@
       z-index:1;
       box-shadow: 0 0 0 2px rgba(255,255,255,.85);
     }
-
     .header-title{
       display:flex;
       flex-direction:column;
@@ -159,15 +97,94 @@
       font-size:14px;
       margin-top:0 !important;
     }
+    #min{ margin-left: auto; }
 
-    /* Match pill icon to main avatar: custom accent background under image */
-    .launcher-icon{
-      width: var(--avatar-img) !important;
-      height: var(--avatar-img) !important;
+    /* Messages */
+    .body { flex:1; min-height:0; overflow:auto; padding:.75rem; font-size:14px; background: transparent; }
+    .chat-bubble { max-width:85%; margin:.45rem 0; padding:.5rem .75rem; border-radius:1rem; background:#f2f2f3; line-height:1.35; }
+    .chat-bubble p { margin:0; }
+    .ai-bubble { background:#f2f2f3; color:#0b0b0c; align-self:flex-start; }
+    .user-bubble { background: var(--accent-bg); color: var(--accent-fg); align-self:flex-end; }
+    #chat-body { display:flex; flex-direction:column; }
+
+    /* Composer */
+    .composer {
+      display:flex; align-items:center; gap:.5rem;
+      padding:.5rem; border-top:1px solid #ececec; background: rgba(255,255,255,0.80);
+    }
+    .composer input{
+      flex:1; border:1px solid #d1d5db; border-radius:.7rem;
+      padding:.58rem .75rem; font-size:14px; background:#fff; height:40px;
+    }
+    .composer button{
+      border:0; background: var(--accent-bg); color: var(--accent-fg);
+      border-radius:.7rem; padding:.58rem .95rem; font-size:14px; cursor:pointer;
+    }
+
+    .cta-wrap a{
+      display:inline-block; text-decoration:none;
+      background: var(--accent-bg); color: var(--accent-fg);
+      border-radius:.7rem; padding:.6rem .9rem;
+      margin:5px; font-weight:600; font-size:14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    }
+
+    /* Launcher (minimised) */
+    .launcher {
+      position: fixed;
+      right: calc(1rem + 3px); /* same 3px margin */
+      bottom: 1rem;
+      z-index: 80;
+      border: 0;
+      background: var(--accent-bg);
+      color: var(--accent-fg);
+      border-radius: 999px;
+      padding: .55rem .8rem;
+      display: none;
+      align-items: center;
+      gap:.5rem;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    /* Launcher icon matches chat avatar */
+    .launcher-icon {
+      position: relative;
+      width: var(--avatar) !important;
+      height: var(--avatar) !important;
       border-radius:50%;
-      object-fit: cover;
-      background: var(--accent-bg);         /* accent-colored circle under PNG */
-      box-shadow: 0 0 0 2px rgba(255,255,255,.85); /* white rim */
+      flex-shrink:0;
+      display:block;
+      background: var(--accent-bg);
+      box-shadow: 0 0 0 2px rgba(255,255,255,.85);
+    }
+    .launcher-icon::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background: var(--accent-bg);
+      z-index:0;
+    }
+    .launcher-icon img,
+    .launcher-icon[src] {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      width: var(--avatar-img);
+      height: var(--avatar-img);
+      border-radius:50%;
+      object-fit:cover;
+      z-index:1;
+    }
+
+    .launcher span { font-size: 14px; font-weight: 700; }
+
+    @media (max-width:480px){
+      :root{ --chat-w:100vw; --chat-h:calc(var(--vh-px) - 72px); }
+      .chat{ left:0; right:0; bottom:0; }
+      .chat-card{ border-radius:1rem 1rem 0 0; }
     }
   </style>
 </head>
@@ -197,7 +214,6 @@
 
       <div id="chat-quick-links" style="display:flex; gap:.5rem; padding:0 .75rem .75rem;"></div>
 
-      <!-- Single line composer -->
       <form class="composer" id="form">
         <label for="chat-input" class="visually-hidden" style="position:absolute;left:-9999px;">Message</label>
         <input id="chat-input" type="text" placeholder="Ask Jemima About Anything Dental" autocomplete="off" autocapitalize="sentences" spellcheck="true" />
@@ -212,128 +228,36 @@
 
   <!-- Launcher -->
   <button id="launcher" class="launcher" aria-label="Open chat">
-    <img src="https://jemima.ai/jemima-chat.png" alt="Jemima" class="launcher-icon" />
+    <div class="launcher-icon">
+      <img src="https://jemima.ai/jemima-chat-transparent.png" alt="Jemima" />
+    </div>
     <span>Chat</span>
   </button>
 
-  <!-- overlay / routing script (unchanged) -->
+  <!-- scripts unchanged -->
   <script>
-    /* Overlay shell: iframe routing, launcher, badge + COLOR PARAM SUPPORT */
     const PROXY_ORIGIN = "";
     const LOAD_TIMEOUT_MS = 5000;
     const $ = id => document.getElementById(id);
-    const frame = $('frame');
-    const badge = $('badge');
-    const chat  = $('chat');
-    const launcher = $('launcher');
-    const ctaWrap = $('ctaWrap');
-    const cta = $('cta');
-    const state = { vertical: 'default', targetUrl: '', mode: 'auto', booking: '', color: '' };
-    function normaliseTarget(input) { if (!input) return ''; if (/^https?:\/\//i.test(input)) return input; return 'https://' + input.replace(/^\/*/, ''); }
-    function parseHashParams(hash) { const m = hash.match(/^#\/(.*?)\/(.*)$/); let routeRest = m ? m[2] : ''; let query = ''; const qm = routeRest.indexOf('?'); if (qm !== -1) { query = routeRest.slice(qm + 1); routeRest = routeRest.slice(0, qm); } const params = new URLSearchParams(query); return { routeRest, params, vertical: m ? decodeURIComponent(m[1]) : 'default' };
-    }
-    function parseRoute() { const hash = location.hash || ''; const { routeRest, params, vertical } = parseHashParams(hash); state.vertical = vertical; state.mode = params.get('mode') || 'auto'; state.booking = params.get('booking') || ''; state.color = params.get('color') || ''; state.targetUrl = normaliseTarget(routeRest); if (!state.color) { const qs = new URLSearchParams(location.search); state.color = qs.get('color') || ''; } }
-    function setBadge(text) { if (!badge) return; if (!text) { badge.classList.add('hidden'); badge.textContent = ''; } else { badge.textContent = text; badge.classList.remove('hidden'); } }
-    function loadIframe(src) { frame.src = src; }
-    function autoLoad(target) { let done = false; frame.addEventListener('load', () => { if (done) return; done = true; setBadge(''); }, { once: true }); frame.src = target; setTimeout(() => { if (done) return; if (PROXY_ORIGIN) { setBadge(`Target refused iframe. Switching to proxy for ${target}`); frame.src = `${PROXY_ORIGIN}/?url=${encodeURIComponent(target)}`; } else { setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.'); } }, LOAD_TIMEOUT_MS); }
-    function isHex(x){ return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(x); }
-    function applyAccentFromParam(colorParam){ if (!colorParam) return; const parts = colorParam.split(/[;,]/).map(s => s.trim()); const bg = parts[0] || ''; const fg = parts[1] || ''; if (isHex(bg)) document.documentElement.style.setProperty('--accent-bg', bg); if (isHex(fg)) document.documentElement.style.setProperty('--accent-fg', fg); }
-    function applyState() { parseRoute(); applyAccentFromParam(state.color); if (!state.targetUrl) { setBadge('Add a #/vertical/host route to load a site'); chat.style.display = 'none'; launcher.style.display = 'none'; return; } chat.style.display = 'block'; launcher.style.display = 'none'; if (state.booking) { cta.href = state.booking; ctaWrap.style.display = 'block'; } else { ctaWrap.style.display = 'none'; } if (state.mode === 'proxy') { if (!PROXY_ORIGIN) { setBadge('Proxy mode requires PROXY_ORIGIN'); loadIframe(state.targetUrl); } else { setBadge(`Viewing proxied copy of ${state.targetUrl}`); loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`); } } else if (state.mode === 'iframe') { setBadge(''); loadIframe(state.targetUrl); } else { setBadge('Loading target in iframe'); autoLoad(state.targetUrl); } }
-    document.addEventListener('DOMContentLoaded', () => { const minBtn = $('min'); if (minBtn) { minBtn.addEventListener('click', (e) => { e.preventDefault(); chat.style.display = 'none'; launcher.style.display = 'inline-flex'; }); } launcher.addEventListener('click', (e) => { e.preventDefault(); chat.style.display = 'block'; launcher.style.display = 'none'; }); });
-    window.addEventListener('hashchange', applyState);
-    if (!location.hash) { location.hash = '#/dental/themoderndentist.co.uk?mode=auto'; }
+    const frame = $('frame'), badge = $('badge'), chat = $('chat'), launcher = $('launcher');
+    const ctaWrap = $('ctaWrap'), cta = $('cta');
+    const state = { vertical:'default', targetUrl:'', mode:'auto', booking:'', color:'' };
+
+    function normaliseTarget(i){if(!i)return'';if(/^https?:\/\//i.test(i))return i;return'https://'+i.replace(/^\/*/,'');}
+    function parseHashParams(h){const m=h.match(/^#\/(.*?)\/(.*)$/);let r=m?m[2]:'';let q='';const qm=r.indexOf('?');if(qm!==-1){q=r.slice(qm+1);r=r.slice(0,qm);}const p=new URLSearchParams(q);return{routeRest:r,params:p,vertical:m?decodeURIComponent(m[1]):'default'};}
+    function parseRoute(){const h=location.hash||'';const{routeRest,params,vertical}=parseHashParams(h);state.vertical=vertical;state.mode=params.get('mode')||'auto';state.booking=params.get('booking')||'';state.color=params.get('color')||'';state.targetUrl=normaliseTarget(routeRest);if(!state.color){const qs=new URLSearchParams(location.search);state.color=qs.get('color')||'';}}
+    function setBadge(t){if(!badge)return;if(!t){badge.classList.add('hidden');badge.textContent='';}else{badge.textContent=t;badge.classList.remove('hidden');}}
+    function loadIframe(s){frame.src=s;}
+    function autoLoad(t){let d=false;frame.addEventListener('load',()=>{if(d)return;d=true;setBadge('');},{once:true});frame.src=t;setTimeout(()=>{if(d)return;if(PROXY_ORIGIN){setBadge(`Target refused iframe. Switching to proxy for ${t}`);frame.src=`${PROXY_ORIGIN}/?url=${encodeURIComponent(t)}`;}else{setBadge('This site likely blocks iframes. Use proxy mode or set PROXY_ORIGIN.');}},LOAD_TIMEOUT_MS);}
+    function isHex(x){return/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(x);}
+    function applyAccentFromParam(c){if(!c)return;const p=c.split(/[;,]/).map(s=>s.trim());const b=p[0]||'',f=p[1]||'';if(isHex(b))document.documentElement.style.setProperty('--accent-bg',b);if(isHex(f))document.documentElement.style.setProperty('--accent-fg',f);}
+    function applyState(){parseRoute();applyAccentFromParam(state.color);if(!state.targetUrl){setBadge('Add a #/vertical/host route to load a site');chat.style.display='none';launcher.style.display='none';return;}chat.style.display='block';launcher.style.display='none';if(state.booking){cta.href=state.booking;ctaWrap.style.display='block';}else{ctaWrap.style.display='none';}if(state.mode==='proxy'){if(!PROXY_ORIGIN){setBadge('Proxy mode requires PROXY_ORIGIN');loadIframe(state.targetUrl);}else{setBadge(`Viewing proxied copy of ${state.targetUrl}`);loadIframe(`${PROXY_ORIGIN}/?url=${encodeURIComponent(state.targetUrl)}`);}}else if(state.mode==='iframe'){setBadge('');loadIframe(state.targetUrl);}else{setBadge('Loading target in iframe');autoLoad(state.targetUrl);}}
+    document.addEventListener('DOMContentLoaded',()=>{const m=$('min');if(m){m.addEventListener('click',e=>{e.preventDefault();chat.style.display='none';launcher.style.display='inline-flex';});}launcher.addEventListener('click',e=>{e.preventDefault();chat.style.display='block';launcher.style.display='none';});});
+    window.addEventListener('hashchange',applyState);
+    if(!location.hash){location.hash='#/dental/themoderndentist.co.uk?mode=auto';}
     applyState();
-    (function(){ const setVh = () => { const h = (window.visualViewport?.height || window.innerHeight); document.documentElement.style.setProperty('--vh-px', `${h}px`); }; setVh(); window.addEventListener('resize', setVh); window.visualViewport && window.visualViewport.addEventListener('resize', setVh); })();
-  </script>
-
-  <!-- N8N Chat Client (unchanged) -->
-  <script>
-    const pageUrl   = window.location.href;
-    const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/8c1e652f-f59e-4489-9541-2c6d0504af75/chat';
-    const sessionId = (crypto.randomUUID && crypto.randomUUID()) || Date.now().toString(36);
-
-    const box   = document.getElementById('chat-body');
-    const input = document.getElementById('chat-input');
-    const form  = document.getElementById('form');
-
-    function add (text, role = 'ai') {
-      const div     = document.createElement('div');
-      div.className = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
-      div.innerHTML = `<p>${text}</p>`;
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
-      box.classList.add('show');
-    }
-
-    function parse (raw, hdr) {
-      if ((hdr.get('content-type') || '').includes('application/json')) {
-        try {
-          let d = JSON.parse(raw);
-          if (Array.isArray(d)) d = d[0] || {};
-          return (
-            d.reply   || d.output  || d.text || d.message ||
-            d.answer  || d.content ||
-            (d.choices && d.choices[0]?.message.content) ||
-            raw
-          );
-        } catch {}
-      }
-      return raw;
-    }
-
-    async function sendMessage () {
-      const msg = input.value.trim();
-      if (!msg) return;
-
-      add(msg, 'user');
-      input.value = '';
-
-      try {
-        const res = await fetch(webhook, {
-          method : 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body   : JSON.stringify({
-            sessionId,
-            route     : 'general',
-            action    : 'sendMessage',
-            chatInput : msg,
-            pageUrl
-          })
-        });
-        const raw = await res.text();
-        add(parse(raw, res.headers), 'ai');
-      } catch (err) {
-        console.error(err);
-        add('Could not reach the server.', 'ai');
-      }
-    }
-
-    /* Submit on Return (Enter) */
-    form.addEventListener('submit', (e) => { e.preventDefault(); sendMessage(); });
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', {cancelable:true}));
-      }
-    });
-
-    /* Focus desktop users on load */
-    window.addEventListener('load', () => {
-      const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      if (!isMobile) input.focus({ preventScroll: true });
-    });
-
-    /* Optional quick-links */
-    const qlinks = document.getElementById('chat-quick-links');
-    if (qlinks) {
-      qlinks.addEventListener('click', e => {
-        if(e.target.classList.contains('qlink')){
-          e.preventDefault();
-          input.value = e.target.dataset.msg || '';
-          sendMessage();
-        }
-      });
-    }
+    (function(){const setVh=()=>{const h=(window.visualViewport?.height||window.innerHeight);document.documentElement.style.setProperty('--vh-px',`${h}px`);};setVh();window.addEventListener('resize',setVh);window.visualViewport&&window.visualViewport.addEventListener('resize',setVh);})();
   </script>
 </body>
 </html>
+
