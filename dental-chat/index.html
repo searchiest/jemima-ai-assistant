@@ -36,7 +36,7 @@
     .hidden { display:none; }
 
     /* Chat container */
-    .chat { position: fixed; right: var(--pad-right); bottom: var(--pad-bottom); width: var(--chat-w); z-index: 50; color: #0b0b0c; }
+    .chat { position: fixed; right: calc(var(--pad-right) + 3px); bottom: var(--pad-bottom); width: var(--chat-w); z-index: 50; color: #0b0b0c; }
     .chat-card {
       background: rgba(255, 255, 255, 0.60);
       backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
@@ -160,12 +160,13 @@
       margin-top:0 !important;
     }
 
-    /* NEW: apply the same avatar sizing + rim to the closed pill icon */
+    /* Match pill icon to main avatar: custom accent background under image */
     .launcher-icon{
       width: var(--avatar-img) !important;
       height: var(--avatar-img) !important;
       border-radius:50%;
       object-fit: cover;
+      background: var(--accent-bg);         /* accent-colored circle under PNG */
       box-shadow: 0 0 0 2px rgba(255,255,255,.85); /* white rim */
     }
   </style>
