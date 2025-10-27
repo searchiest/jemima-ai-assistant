@@ -372,6 +372,54 @@
   </div>
 </main>
 
+<!-- Spacer so the sticky bar does not cover content on small screens -->
+<div class="h-20 sm:hidden"></div>
+
+<!-- Sticky Mobile Contact Bar -->
+<div id="mobile-cta-bar"
+     class="fixed inset-x-0 bottom-0 sm:hidden z-[95]">
+  <div class="mx-auto max-w-6xl px-4 pb-[calc(env(safe-area-inset-bottom))]">
+    <nav class="grid grid-cols-3 gap-3 rounded-t-2xl border border-gray-200 bg-white/95 backdrop-blur shadow-[0_-6px_20px_rgba(0,0,0,.08)] p-3">
+      <!-- Call -->
+      <a href="tel:+447479277657"
+         aria-label="Call Jemima AI"
+         class="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-2 text-gray-900 hover:bg-gray-50">
+        <i class="fa-solid fa-phone text-base"></i>
+        <span class="mt-1 text-[11px] font-medium tracking-wide">Call</span>
+      </a>
+
+      <!-- SMS -->
+      <a href="sms:+447479277657"
+         aria-label="Send SMS to Jemima AI"
+         class="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-2 text-gray-900 hover:bg-gray-50">
+        <i class="fa-solid fa-message text-base"></i>
+        <span class="mt-1 text-[11px] font-medium tracking-wide">SMS</span>
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:jemima@jemima.ai?subject=Enquiry%20from%20jemima.ai"
+         aria-label="Email Jemima AI"
+         class="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-2 text-gray-900 hover:bg-gray-50">
+        <i class="fa-solid fa-envelope text-base"></i>
+        <span class="mt-1 text-[11px] font-medium tracking-wide">Email</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+<!-- Mobile footer helpers -->
+<style>
+  /* Respect iOS notch and lift the chat launcher above the sticky bar on mobile */
+  @media (max-width: 639px){
+    #chat-launcher{
+      /* 1.25rem default bottom + about 4.5rem bar + safe area */
+      bottom: calc(env(safe-area-inset-bottom) + 5.75rem) !important;
+    }
+  }
+</style>
+
+
+
 <!-- Footer -->
 <footer id="contact" class="bg-gray-900 text-white py-16 px-6 text-center">
   <div class="max-w-3xl mx-auto">
