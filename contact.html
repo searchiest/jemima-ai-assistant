@@ -346,6 +346,44 @@
   </section>
 </main>
 
+
+
+<!-- Spacer so the sticky bar does not cover content on small screens -->
+<div class="h-20 sm:hidden"></div>
+
+<!-- Sticky Mobile Contact Bar (full-width) -->
+<div id="mobile-cta-bar"
+     class="fixed left-0 right-0 bottom-0 sm:hidden z-[95]">
+  <nav class="w-full grid grid-cols-3 gap-2 bg-white/95 backdrop-blur
+              border-t border-gray-200 p-3
+              pb-[calc(12px+env(safe-area-inset-bottom))]">
+    <!-- Call -->
+    <a href="tel:+447479277657"
+       aria-label="Call Jemima AI"
+       class="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-2 text-gray-900 hover:bg-gray-50">
+      <i class="fa-solid fa-phone text-base"></i>
+      <span class="mt-1 text-[11px] font-medium tracking-wide">Call</span>
+    </a>
+
+    <!-- SMS -->
+    <a href="sms:+447479277657"
+       aria-label="Send SMS to Jemima AI"
+       class="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-2 text-gray-900 hover:bg-gray-50">
+      <i class="fa-solid fa-message text-base"></i>
+      <span class="mt-1 text-[11px] font-medium tracking-wide">SMS</span>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:jemima@jemima.ai?subject=Enquiry%20from%20jemima.ai"
+       aria-label="Email Jemima AI"
+       class="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-2 text-gray-900 hover:bg-gray-50">
+      <i class="fa-solid fa-envelope text-base"></i>
+      <span class="mt-1 text-[11px] font-medium tracking-wide">Email</span>
+    </a>
+  </nav>
+</div>
+
+
 <!-- Footer -->
 <footer id="contact" class="bg-gray-900 text-white py-16 px-6 text-center">
   <div class="max-w-3xl mx-auto">
