@@ -80,7 +80,7 @@
     #chat-launcher{
       position: fixed !important;
       z-index: 9996 !important;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 12px) !important;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 22px) !important;
       right: 1.25rem !important;
       transition: opacity .3s ease, transform .3s ease;
     }
@@ -99,31 +99,14 @@
   }
 </style>
 
-<script>
-  (function () {
-    const chatLauncher = document.getElementById('chat-launcher');
-    const chatPopup = document.getElementById('chat-popup');
-
-    function hidePill() {
-      chatLauncher?.classList.add('hidden');
+<style>
+  @media (max-width: 640px){
+    /* When chat is open, hide the floating pill entirely */
+    body.chat-open #chat-launcher{
+      display: none !important;
     }
-    function showPill() {
-      chatLauncher?.classList.remove('hidden');
-    }
-
-    // Observe chat popup visibility and toggle pill accordingly
-    const observer = new MutationObserver(() => {
-      const isVisible = !chatPopup.classList.contains('hidden');
-      if (isVisible) hidePill();
-      else showPill();
-    });
-
-    if (chatPopup) {
-      observer.observe(chatPopup, { attributes: true, attributeFilter: ['class'] });
-    }
-  })();
-</script>
-
+  }
+</style>
 
 
   <!-- Icons / extra CSS -->
@@ -3784,6 +3767,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<script>
+  (function () {
+    var chatPopup = document.getElementById('chat-popup');
+
+    function syncBodyClass() {
+      var visible = chatPopup && !chatPopup.classList.contains('hidden') && chatPopup.getAttribute('aria-hidden') !== 'true';
+      document.body.classList.toggle('chat-open', !!visible);
+    }
+
+    // Initial sync on load
+    syncBodyClass();
+
+    // Watch for chat open/close (your code toggles the 'hidden' class and aria-hidden)
+    if (chatPopup) {
+      new MutationObserver(syncBodyClass).observe(chatPopup, {
+        attributes: true,
+        attributeFilter: ['class', 'aria-hidden']
+      });
+    }
+
+    // Extra safety: also listen for ESC close that your script triggers
+    window.addEventListener('keydown', function(e){ if (e.key === 'Escape') setTimeout(syncBodyClass, 0); });
+  })();
+</script>
+
 
 <!-- if url includes bookcall=open open book a call box on page load -->
 
