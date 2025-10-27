@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Basic setup -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Privacy Notice | Jemima AI</title>
+  <meta name="description" content="How Jemima AI collects and uses personal data, the services we use, your choices, and how to contact us." />
+  <link rel="canonical" href="https://jemima.ai/privacy.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="jemima.ai" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://jemima.ai/privacy.html" />
+  <meta property="og:title" content="Privacy Notice | Jemima AI" />
+  <meta property="og:description" content="How Jemima AI collects and uses personal data, the services we use, your choices, and how to contact us." />
+  <meta property="og:image" content="og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://jemima.ai/privacy.html" />
+  <meta name="twitter:title" content="Privacy Notice | Jemima AI" />
+  <meta name="twitter:description" content="How Jemima AI collects and uses personal data, the services we use, your choices, and how to contact us." />
+  <meta name="twitter:image" content="og-image.jpg" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- Performance & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Tailwind CDN + Typography plugin -->
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: { borderRadius: { '2xl': '1rem' } } }
+  }
+</script>
+
+  <!-- Site styles -->
+  <style>
+    :root { --radius: 1rem; }
+    html, body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                   Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .prose :where(h2,h3){ scroll-margin-top: 6rem; }
+  </style>
+
+  <!-- Icons / extra CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+
+  <!-- Your voice module (kept from original) -->
+  <script type="module" crossorigin src="/voice/assets/index-dBvI1JZo.js"></script>
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5VBX6H2N');
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body class="bg-white text-gray-900">
+
+<!-- Book a Call: Modal (kept) -->
+<div id="bookcall-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true" inert>
+  <div class="absolute inset-0 bg-black/50"></div>
+  <div class="absolute inset-0 flex items-center justify-center px-4">
+    <div role="dialog" aria-modal="true" aria-labelledby="bookcall-title"
+         class="w-full max-w-lg rounded-2xl bg-white shadow-xl">
+      <div class="flex items-center justify-between px-6 py-4 border-b">
+        <h3 id="bookcall-title" class="text-lg font-semibold">Book Discovery Call</h3>
+        <button type="button" class="p-2 rounded-md hover:bg-gray-100" data-close-modal aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <section class="form-section">
+        <div class="px-6 py-5">
+          <p class="mt-1 text-sm text-gray-600">Lets meet online to discuss AI automation for your business.</p>
+          <form class="booking-form mt-5" id="bookingForm" autocomplete="on">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First name</label>
+                <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="Jane" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+                <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Doe" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                <input id="company" name="company" type="text" autocomplete="organization" placeholder="Your company"
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telephone number</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="01234567890"
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="day" class="block text-sm font-medium text-gray-700 mb-1">Choose a day</label>
+                <input id="day" name="day" type="date" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="slot" class="block text-sm font-medium text-gray-700 mb-1">Choose a time</label>
+                <select id="slot" name="slot" required
+                        class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="">Pick a day first</option>
+                </select>
+              </div>
+            </div>
+
+            <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+
+            <div class="mt-5 flex items-center justify-end gap-3">
+              <button type="button" data-close-modal
+                      class="inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Cancel
+              </button>
+              <button type="submit"
+                      class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:brightness-95">
+                Book now
+              </button>
+            </div>
+
+            <p id="formMsg" role="status" aria-live="polite"
+               class="mt-3 hidden rounded-lg border px-3 py-2 text-sm"></p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Toggle logic for Book a Call modal -->
+<script>
+  (function () {
+    const modal    = document.getElementById('bookcall-modal');
+    const backdrop = modal.firstElementChild;
+
+    window.openBookcall = function () {
+      modal.classList.remove('hidden');
+      modal.removeAttribute('inert');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+      const first = modal.querySelector('input, select, textarea, button');
+      if (first) first.focus();
+      document.addEventListener('keydown', onEsc);
+    }
+
+    window.closeBookcall = function () {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+      document.body.classList.remove('overflow-hidden');
+      document.removeEventListener('keydown', onEsc);
+    }
+
+    function onEsc(e){ if(e.key === 'Escape') window.closeBookcall(); }
+
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-modal="bookcall"]');
+      if (opener) { e.preventDefault(); window.openBookcall(); }
+    });
+
+    backdrop.addEventListener('click', window.closeBookcall);
+    modal.querySelectorAll('[data-close-modal]')
+         .forEach(b => b.addEventListener('click', window.closeBookcall));
+
+    modal.classList.add('hidden');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('inert', '');
+  })();
+</script>
+
+<!-- Top Contact Bar -->
+<div class="hidden sm:block mt-2 bg-white text-blue-600 text-xs shadow-sm">
+  <div class="max-w-6xl mx-auto px-6 py-1 flex items-center">
+    <div class="flex items-center gap-4">
+      <span class="inline-flex items-center gap-2">
+        <i class="fas fa-phone-alt"></i>
+        <b>SMS</b> +44 7479 277657
+      </span>
+      <span>
+        <i class="fa-solid fa-envelope text-[14px] text-blue-600 align-middle"></i>
+        jemima@jemima.ai
+      </span>
+      <!-- WhatsApp code slot -->
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="bg-white/95 backdrop-blur border-b sticky top-0 z-50 pb-1">
+  <div class="max-w-6xl mx-auto px-6 h-12 flex items-center">
+    <a href="/" class="flex items-center gap-2 font-extrabold text-lg tracking-tight">
+      <span class="text-gray-900">jemima.ai</span>
+    </a>
+    <nav class="ml-auto hidden sm:flex items-center gap-6">
+      <a href="https://jemima.ai#capabilities" class="py-2 text-gray-700 hover:text-indigo-600">Solutions</a>
+      <a href="https://jemima.ai#method" class="py-2 text-gray-700 hover:text-indigo-600">Methodology</a>
+      <a href="https://jemima.ai#compare" class="py-2 text-gray-700 hover:text-indigo-600">Compare</a>
+    </nav>
+    <a href="#contact" data-modal="bookcall"
+       class="ml-4 hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+      Book Discovery Call
+    </a>
+    <div class="ml-auto sm:hidden flex items-center gap-2">
+      <button id="menuBtn" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false"
+              class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-200 text-gray-700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileNav" class="sm:hidden hidden absolute top-full left-0 right-0 z-50 border-t bg-white shadow-lg">
+    <nav class="px-6 py-3 flex flex-col">
+      <a href="#" class="py-2 text-gray-700 hover:text-indigo-600">Solutions</a>
+      <a href="#" class="py-2 text-gray-700 hover:text-indigo-600">Methodology</a>
+      <a href="#" class="py-2 text-gray-700 hover:text-indigo-600">Compare</a>
+      <a href="#contact" data-modal="bookcall" class="mt-2 inline-flex items-center justify-center px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+        Book Discovery Call
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile menu toggle -->
+<script>
+  (function () {
+    const btn = document.getElementById('menuBtn');
+    const panel = document.getElementById('mobileNav');
+    if (!btn || !panel) return;
+
+    function closeMenu() {
+      panel.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    }
+    function toggleMenu() {
+      const willOpen = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(willOpen));
+      document.body.classList.toggle('overflow-hidden', willOpen);
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    panel.addEventListener('click', (e) => { if (e.target.closest('a')) closeMenu(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  })();
+</script>
+
+<!-- Main Article Layout (no hero) -->
+<main id="main" class="mx-auto max-w-6xl px-6 py-12">
+  <!-- Breadcrumbs -->
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500">
+    <ol class="flex gap-2 flex-wrap">
+      <li><a href="https://jemima.ai/" class="hover:text-gray-700">Jemima AI</a></li>
+      <li>/</li>
+      <li><span class="text-gray-800">Privacy</span></li>
+    </ol>
+  </nav>
+
+  <!-- H1 and intro paragraph -->
+  <header class="mt-4 mb-8">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Privacy Notice</h1>
+    <p class="mt-3 text-lg text-gray-600 max-w-3xl">How Jemima AI collects and uses personal data.</p>
+
+    <!-- Meta row -->
+    <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+      <span>Updated <time datetime="2025-10-27">27 Oct 2025</time></span>
+      <span>•</span>
+      <span>~ 4 min read</span>
+    </div>
+  </header>
+
+  <!-- Table of Contents card -->
+  <aside class="mb-10">
+    <div class="rounded-2xl border border-gray-200 p-5 bg-white/60">
+      <h2 class="text-sm font-semibold text-gray-900">On this page</h2>
+      <nav class="mt-3">
+        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700" id="toc">
+          <li><a href="#who-we-are" class="hover:text-indigo-600">Who we are</a></li>
+          <li><a href="#data-we-collect" class="hover:text-indigo-600">Data we collect</a></li>
+          <li><a href="#why-we-collect-it" class="hover:text-indigo-600">Why we collect it</a></li>
+          <li><a href="#services-we-use" class="hover:text-indigo-600">Services we use</a></li>
+          <li><a href="#cookies" class="hover:text-indigo-600">Cookies</a></li>
+          <li><a href="#how-long-we-keep-data" class="hover:text-indigo-600">How long we keep data</a></li>
+          <li><a href="#your-choices" class="hover:text-indigo-600">Your choices</a></li>
+          <li><a href="#changes-to-this-notice" class="hover:text-indigo-600">Changes to this notice</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Article body: FLAT, hardcoded content -->
+  <article class="prose max-w-none prose-headings:scroll-mt-24">
+    <p class="text-gray-700 text-lg">How Jemima AI collects and uses personal data.</p>
+
+    <h2 id="who-we-are">Who we are</h2>
+    <p>Jemima AI, 71-75 Shelton Street, London WC2H 9JQ.</p>
+    <p>Contact email: <a href="mailto:jemima@jemima.ai">jemima@jemima.ai</a></p>
+
+    <h2 id="data-we-collect">Data we collect</h2>
+    <ul>
+      <li>Contact details you provide, such as name, phone number, and email address.</li>
+      <li>Website usage data, such as pages viewed and time on page.</li>
+    </ul>
+
+    <h2 id="why-we-collect-it">Why we collect it</h2>
+    <ul>
+      <li>To reply to your questions.</li>
+      <li>To run our SMS service.</li>
+      <li>To improve site content.</li>
+      <li>To fix technical problems.</li>
+    </ul>
+
+    <h2 id="services-we-use">Services we use</h2>
+    <p>Twilio routes and stores SMS messages.</p>
+    <p>Google Analytics measures website activity without identifying visitors by name.</p>
+    <p>Both services store data on secure servers outside the United Kingdom under standard GDPR contract clauses.</p>
+
+    <h2 id="cookies">Cookies</h2>
+    <p>Our site sets a small Google Analytics cookie. This cookie stays on our domain only and does not track you across other sites.</p>
+
+    <h2 id="how-long-we-keep-data">How long we keep data</h2>
+    <ul>
+      <li>SMS logs: twelve months.</li>
+      <li>Analytics data: twenty four months.</li>
+      <li>Contact emails and form entries: as long as needed to provide support, then removed within one year.</li>
+    </ul>
+
+    <h2 id="your-choices">Your choices</h2>
+    <p>You may ask to see, change, or erase your personal data. Write to us at the contact email above and we will reply within seven days.</p>
+
+    <h2 id="changes-to-this-notice">Changes to this notice</h2>
+    <p>We review this text every six months. We will post any update on this page with a fresh date stamp.</p>
+  </article>
+
+  <!-- Inline CTA -->
+  <div class="mt-12 rounded-2xl border border-indigo-100 bg-indigo-50 p-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div>
+        <h3 class="text-lg font-semibold">Questions about privacy</h3>
+        <p class="text-sm text-gray-700">If you have a data request, book a quick discovery call or email <a class="underline" href="mailto:jemima@jemima.ai">jemima@jemima.ai</a>.</p>
+      </div>
+      <button data-modal="bookcall" class="inline-flex items-center px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">Book Discovery Call</button>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer id="contact" class="bg-gray-900 text-white py-16 px-6 text-center">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+    <p class="mb-6 text-gray-300">Deliver AI ROI in just 30 days. With governance built in from the start.</p>
+    <a href="#contact" data-modal="bookcall" class="inline-flex items-center px-5 py-3 rounded-md bg-white text-gray-900 font-medium hover:bg-gray-200">Book Discovery Call</a>
+    <p class="text-gray-400 text-xs mt-6">&copy; <span id="y"></span> Jemima AI. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Floating Chat Launcher -->
+<button id="chat-launcher"
+  class="fixed bottom-5 right-5 z-[90] inline-flex items-center gap-2 rounded-full bg-blue-600 px-3 pr-4 py-2 text-white shadow-lg hover:brightness-95">
+  <img src="https://jemima.ai/jemima-chat.png" alt="" class="h-7 w-7 rounded-full object-cover ring-1 ring-white/30">
+  <span class="font-medium">Chat</span>
+  <span class="sr-only">Open chat with Jemima</span>
+</button>
+
+<!-- Chat Popup -->
+<div id="chat-popup" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+  <div class="absolute inset-0 bg-black/30 md:bg-transparent" id="chat-backdrop"></div>
+  <div class="absolute bottom-5 right-5 left-5 md:left-auto">
+    <div role="dialog" aria-modal="true" aria-labelledby="chat-title"
+         class="mx-auto md:mx-0 w-full max-w-sm rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
+      <div class="flex items-center gap-3 border-b px-4 py-3">
+        <img src="https://jemima.ai/jemima-chat.png" alt="Guide avatar" class="h-8 w-8 rounded-full object-cover"/>
+        <div class="min-w-0">
+          <h3 id="chat-title" class="text-sm font-semibold leading-tight">Jemima</h3>
+          <p class="text-xs text-gray-500">Virtual Guide</p>
+        </div>
+        <button type="button" id="chat-close" class="ml-auto p-2 rounded-md text-gray-500 hover:bg-gray-100" aria-label="Close chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="px-4 pt-4 pb-2">
+        <div class="rounded-xl bg-gray-50 p-3 text-sm text-gray-700 shadow-sm">
+          <p class="mb-2">Hi I am a virtual guide. I can answer questions related to Jemima services.</p>
+          <p class="text-gray-600">If you want to speak to a person, book a discovery call using the button below.</p>
+        </div>
+        <div id="chat-body" class="mt-3 max-h-80 overflow-y-auto pr-1 hidden"></div>
+      </div>
+      <form id="chat-form" class="border-t px-3 py-3">
+        <label class="sr-only" for="chat-input">Ask a question</label>
+        <div class="flex items-center gap-2">
+          <textarea id="chat-input" name="message" rows="1" placeholder="Ask a question"
+                    class="w-full resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <button type="submit"
+                  class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white hover:brightness-95"
+                  aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 2L15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <div class="mt-3">
+          <div id="chat-quick-links" class="flex flex-wrap gap-2 justify-start">
+            <a href="#contact" data-modal="bookcall"
+               class="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+              Book Discovery Call
+            </a>
+          </div>
+        </div>
+      </form>
+      <div class="border-t px-4 py-3">
+        <p class="text-[11px] leading-snug text-gray-500">
+          By sending a message you agree this session may be monitored, recorded, and shared with third-party service providers for analytics and other business purposes described in our
+          <a href="/privacy.html" class="underline hover:text-gray-700">Privacy policy</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tiny bubble styles for dynamic messages -->
+<style>
+  #chat-body .chat-bubble{max-width:90%; margin:.375rem 0; padding:.5rem .75rem; border-radius:.75rem; font-size:.9rem; line-height:1.25rem;}
+  #chat-body .ai-bubble{background:#f3f4f6; color:#111827;}
+  #chat-body .user-bubble{background:#2563eb; color:#fff; margin-left:auto;}
+  #chat-body.show{display:block;}
+</style>
+
+<!-- Chat open/close and send behavior -->
+<script>
+  const chatLauncher = document.getElementById('chat-launcher');
+  const chatPopup    = document.getElementById('chat-popup');
+  const chatClose    = document.getElementById('chat-close');
+  const chatBackdrop = document.getElementById('chat-backdrop');
+  const chatInputEl  = () => document.getElementById('chat-input');
+
+  function openChat() {
+    chatPopup.classList.remove('hidden');
+    chatPopup.setAttribute('aria-hidden', 'false');
+    setTimeout(() => chatInputEl()?.focus(), 0);
+    document.addEventListener('keydown', escClose);
+  }
+  function closeChat() {
+    chatPopup.classList.add('hidden');
+    chatPopup.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', escClose);
+  }
+  function escClose(e){ if(e.key === 'Escape') closeChat(); }
+
+  chatLauncher.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
+  chatBackdrop.addEventListener('click', closeChat);
+
+  (function () {
+    const form  = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const box   = document.getElementById('chat-body');
+
+    function add (text, role = 'ai') {
+      const div = document.createElement('div');
+      div.className = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+      div.innerHTML = `<p>${text}</p>`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+      box.classList.add('show');
+    }
+
+    function parse (raw, hdr) {
+      if ((hdr.get('content-type') || '').includes('application/json')) {
+        try {
+          let d = JSON.parse(raw);
+          if (Array.isArray(d)) d = d[0] || {};
+          return (
+            d.reply || d.output || d.text || d.message || d.answer || d.content ||
+            (d.choices && d.choices[0]?.message?.content) || raw
+          );
+        } catch {}
+      }
+      return raw;
+    }
+
+    const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/4322b02c-7c17-479f-9ded-fcde11fa4a8d/chat';
+    const sessionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36);
+    const pageUrl   = window.location.href;
+
+    input.addEventListener('keydown', (e) => {
+      if (e.isComposing) return;
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (input.value.trim()) form.requestSubmit();
+      }
+    });
+
+    input.setAttribute('enterkeyhint', 'send');
+
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(140, input.scrollHeight) + 'px';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = (new FormData(form).get('message') || '').toString().trim();
+      if (!msg) return;
+      add(msg, 'user');
+      input.value = '';
+      input.style.height = '40px';
+
+      try {
+        const res = await fetch(webhook, {
+          method : 'POST', headers:{'Content-Type':'application/json'},
+          body   : JSON.stringify({ sessionId, route:'general', action:'sendMessage', chatInput: msg, pageUrl })
+        });
+        const raw = await res.text();
+        add(parse(raw, res.headers), 'ai');
+      } catch (err) {
+        console.error(err);
+        add('Could not reach the server.', 'ai');
+      }
+    });
+  })();
+</script>
+
+<!-- Booking wiring and helpers -->
+<script>
+  const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+  const TIME_ZONE   = 'Europe/London';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const dayInput   = document.getElementById('day');
+    const slotSelect = document.getElementById('slot');
+    const form       = document.getElementById('bookingForm');
+    const formMsg    = document.getElementById('formMsg');
+    const pageUrlIn  = document.getElementById('pageUrl');
+
+    function flash(type, text, keepMs = 3000){
+      formMsg.className = '';
+      formMsg.textContent = text;
+      if(type) formMsg.classList.add(type);
+      formMsg.classList.add('show');
+      clearTimeout(flash._timer);
+      flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+    }
+
+    pageUrlIn.value = window.location.href;
+    dayInput.addEventListener('change',  fetchTimes);
+    form    .addEventListener('submit',  submitBooking);
+
+    async function fetchTimes(){
+      const day = dayInput.value;
+      if(!day){ slotSelect.innerHTML = '<option value="">Pick a day first</option>'; return; }
+      slotSelect.disabled = true;
+      slotSelect.innerHTML = '<option>Loading…</option>';
+
+      try{
+        const res  = await fetch(BOOKING_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'check_availability', day}) });
+        const data = await res.json();
+        const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+        const free   = payload.slots ?? [];
+
+        slotSelect.innerHTML = free.length ? '<option value="">Select a time</option>' : '<option value="">No slots available</option>';
+        free.forEach(s=>{ if(!s.startsWith(day)) return; const t = s.slice(11,16); slotSelect.insertAdjacentHTML('beforeend', `<option value="${s}">${t}</option>`); });
+      }catch{
+        slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+      }finally{
+        slotSelect.disabled = false;
+      }
+    }
+
+    async function submitBooking(e){
+      e.preventDefault();
+      flash('sending','Sending…',10_000);
+
+      const payload = {
+        firstName:form.firstName.value,
+        lastName :form.lastName.value,
+        company  :form.company.value,
+        phone    :form.phone.value,
+        email    :form.email.value,
+        slot     :slotSelect.value,
+        pageUrl  :pageUrlIn.value,
+        timeZone :TIME_ZONE
+      };
+
+      try{
+        const res = await fetch(BOOKING_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'create_booking',...payload}) });
+        if(res.ok){
+          form.reset();
+          slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+          flash('success','Your meeting is confirmed. Check your inbox.');
+        }else if(res.status===409){
+          flash('error','That time has just been taken. Please choose another.');
+          fetchTimes();
+        }else{
+          flash('error','An error occurred. Please try again later.');
+        }
+      }catch{
+        flash('error','Could not reach the server. Try again later.');
+      }
+    }
+  });
+</script>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
