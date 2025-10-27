@@ -1,1334 +1,610 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<!-- Basic setup -->
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact Jemima | jemima.ai</title>
+  <!-- Basic setup -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- SEO -->
-<meta name="description" content="Contact jemima.ai for AI sales and marketing solutions. For advice and consultation on lead generation, sales, customer service and digital marketing automation.">
-<link rel="canonical" href="https://jemima.ai/contact.html">
-<meta name="robots" content="index, follow">
-<meta name="author" content="jemima.ai">
+  <title>Contact | Jemima AI</title>
+  <meta name="description" content="Get in touch with Jemima AI. Email, phone, or book a free consultation. 24/7 coverage." />
+  <link rel="canonical" href="https://jemima.ai/contact.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="jemima.ai" />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://jemima.ai/contact.html">
-<meta property="og:title"       content="Contact jemima.ai | AI Automation Solutions">
-<meta property="og:description" content="Reach out to discuss AI sales and marketing solutions.">
-<meta property="og:image"       content="og-image.jpg">
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://jemima.ai/contact.html" />
+  <meta property="og:title" content="Contact | Jemima AI" />
+  <meta property="og:description" content="We'd love to hear from you and discuss your AI needs. Email, phone, or book a call." />
+  <meta property="og:image" content="og-image.jpg" />
 
-<!-- Twitter -->
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:url"         content="https://jemima.ai/contact.html">
-<meta name="twitter:title"       content="Contact jemima.ai | AI Automation Solutions">
-<meta name="twitter:description" content="Reach out to discuss AI sales and marketing solutions.">
-<meta name="twitter:image"       content="og-image.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://jemima.ai/contact.html" />
+  <meta name="twitter:title" content="Contact | Jemima AI" />
+  <meta name="twitter:description" content="Ask about solutions, integrations, or book a free consultation. 24/7 coverage." />
+  <meta name="twitter:image" content="og-image.jpg" />
 
-<!-- Icons -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#4f46e5">
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
 
-<!-- Performance: pre-connect and fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Performance & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<!-- Icons and extra CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  <!-- Tailwind CDN + Typography plugin -->
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { borderRadius: { '2xl': '1rem' } } }
+    }
+  </script>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
-<!-- End Google Tag Manager -->
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+  <!-- Site styles -->
   <style>
-
-    /* Added space below Contact Information heading */
-    .contact-info h3 {
-        margin-bottom: 25px;
+    :root { --radius: 1rem; }
+    html, body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                   Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
-
-    
-    /* Phone number field adjustments - FIXED */
-    .phone-field-container {
-      width: 100%;
-    }
-
-.phone-field-container .iti {
-  width: 100%;
-}
-    
-    /* International phone input styling - Enhanced for responsiveness */
-    .intl-tel-input {
-        width: 100% !important;
-        display: block;
-    }
-    .intl-tel-input input {
-        width: 100% !important;
-        padding: 14px 14px 14px 60px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        font-family: "Poppins", sans-serif;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        overflow-x: auto;
-        white-space: nowrap;
-        box-sizing: border-box;
-    }
-    .intl-tel-input input:focus {
-        border-color: #4f46e5;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
-    }
-    
-    /* Existing styles remain unchanged */
-    *{margin:0;padding:0;box-sizing:border-box;}
-    :root{--primary:#1a1a2e;--accent:#4f46e5;--light:#ffffff;--dark:#000000;--gray:#4a4a4a;--light-gray:#f5f7fa;--transition:all 0.3s ease;}
-    body{font-family:"Poppins",sans-serif;background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);color:var(--dark);line-height:1.6;overflow-x:hidden;min-height:100vh;}
-    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
-    
-    /* Header */
-    header{padding:25px 0;position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-    .header-container{display:flex;justify-content:space-between;align-items:center;}
-    .logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
-    .logo span{color:var(--accent);}
-    nav ul{display:flex;list-style:none;}
-    nav ul li{margin-left:30px;}
-    nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
-    nav ul li a:hover{color:var(--accent);}
-    nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
-    nav ul li a:hover::after{width:100%;}
-    .mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
-    
-    /* Hero */
-    .hero{padding:118px 0 0px;position:relative;overflow:hidden;text-align:center;}
-    .hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
-    .hero h1 {font-size:3.5rem;font-weight:800;line-height:1.1;margin-top:20px;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
-    .hero h1 span{position:relative;}
-    .hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
-    
-    /* Contact Page Specific */
-    .contact-content {
-        background: white;
-        border-radius: 30px;
-        padding: 50px;
-        margin: 50px auto;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-        max-width: calc(560px * 2 + 30px);
-        position: relative;
-    }
-    .contact-content::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 6px;
-        background: linear-gradient(90deg, var(--accent), #818cf8);
-        border-radius: 30px 30px 0 0;
-
-}
-    }
-    .section {
-        margin-bottom: 60px;
-    }
-    .section h2 {
-        font-size: 2.2rem;
-        margin-bottom: 20px;
-        color: var(--dark);
-        position: relative;
-        padding-bottom: 15px;
-    }
-    .section h2::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 80px;
-        height: 4px;
-        background: var(--accent);
-        border-radius: 2px;
-    }
-    
-    .contact-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-    }
-    
-    .contact-form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        width: 100%;
-    }
-    .form-group {
-        margin-bottom: 20px;
-    }
-    .form-group.full {
-        grid-column: span 2;
-        width: 100%;
-    }
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-    }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-        padding: 14px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        font-family: "Poppins", sans-serif;
-        font-size: 1rem;
-        transition: var(--transition);
-        box-sizing: border-box;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-        border-color: var(--accent);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
-    }
-    .form-group textarea {
-        min-height: 150px;
-        resize: vertical;
-    }
-    .btn {
-        background: var(--accent);
-        color: white;
-        border: none;
-        padding: 14px 30px;
-        border-radius: 10px;
-        font-family: "Poppins", sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: var(--transition);
-        display: block;
-        width: 100%;
-    }
-    .btn:hover {
-        background: #4338ca;
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    
-    .contact-info {
-        background: var(--light-gray);
-        border-radius: 20px;
-        padding: 30px;
-    }
-    .contact-item {
-        display: flex;
-        margin-bottom: 30px;
-    }
-    .contact-item i {
-        font-size: 1.8rem;
-        color: var(--accent);
-        margin-right: 20px;
-        min-width: 40px;
-    }
-    .contact-item h4 {
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-        color: var(--dark);
-    }
-    
-    .map {
-        border-radius: 20px;
-        overflow: hidden;
-        height: 300px;
-        background: #eee;
-	background: url('jemima-map.png') center center / cover no-repeat;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 30px;
-    }
-    .map i {
-        font-size: 3rem;
-        color: var(--accent);
-    }
-
-    .contact-content {
-    position: relative;
-    overflow: hidden;    /* ← add this */
-    /* the rest of your rules (background, padding, border-radius…) */
-    }
-
-    .description {
-      font-size: 20px; /* Default size */
-      transition: font-size 0.3s; /* Smooth size changes */
-    }
-  
-/* Fix white-on-white options in the time select */
-.form-section .booking-form select option,
-.form-section .booking-form select optgroup {
-  color: #000;          /* black text in the dropdown list */
-  background: #fff;     /* white option background */
-}
-
-/* Optional: keep the closed select readable on purple */
-.form-section .booking-form select {
-  color: #fff;          /* closed state text remains white */
-  background: rgba(255,255,255,0.1);
-}
-
-/* Optional: grey placeholder for "Select a time" */
-.form-section .booking-form select:invalid {
-  color: #6b7280;
-}
-
-/* Make the Chrome/Edge/Safari date icon white */
-.form-section .booking-form input[type="date"]::-webkit-calendar-picker-indicator{
-  color: #fff;                 /* new WebKit builds honour this */
-  filter: invert(1) brightness(2); /* fallback: flip dark icon to white */
-  opacity: 1;
-}
-
-/* Keep the date text white too (you already have this, shown for clarity) */
-.form-section .booking-form input[type="date"]{
-  color: #fff;
-}
-
-	  
-    /* Footer */
-    footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
-    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
-    .footer-col h3{font-size:1.3rem;margin-bottom:20px;color:#fff;font-weight:600;}
-    .footer-links{list-style:none;}
-    .footer-links li{margin-bottom:12px;}
-    .footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);font-weight:400;}
-    .footer-links a:hover{color:#fff;}
-    .social-links{display:flex;gap:15px;margin-top:20px;}
-    .social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
-    .social-links a:hover{background:var(--accent);transform:translateY(-3px);}
-    footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:30px;}
-    
-    /* Responsive */
-    @media (max-width:768px){
-        .mobile-menu-btn{display:block;margin-left:auto;}
-        nav ul{
-            display:none;flex-direction:column;position:absolute;top:80px;left:0;width:100%;
-            background:#fff;padding:20px 0;box-shadow:0 10px 15px rgba(0,0,0,0.1);
-        }
-        nav ul.show{display:flex;}
-        nav ul li{margin:10px 0;text-align:center;}
-        .hero{padding:140px 0 20px;}
-        .contact-content{padding:30px 20px;margin:30px auto;}
-        .contact-container{grid-template-columns:1fr;}
-        .contact-form{grid-template-columns:1fr;}
-        .form-group.full{grid-column:span 1;}
-        
-        /* Telephone field mobile adjustments */
-        .intl-tel-input input {
-            padding: 14px 14px 14px 50px;
-            font-size: 0.95rem;
-        }
-    }
-    @media (max-width:576px){
-         .hero h1{font-size:2.4rem;}
-       
-        /* Telephone field small mobile adjustments */
-        .intl-tel-input input {
-            padding: 12px 12px 12px 45px;
-        }
-    }
-
-@media (max-width:576px){
-  .hero{padding:90px 0 10px;}      /* less space above & below the hero */
-  .hero h1{margin:10px 0 6px;}     /* tighten the gap around the heading */
-  .hero .description{margin:0;}    /* remove extra space under the paragraph */
-}
-    
-    /* Loading spinner */
-    .spinner {
-      display: none;
-      width: 40px;
-      height: 40px;
-      margin: 10px auto;
-      border: 4px solid rgba(0, 0, 0, 0.1);
-      border-radius: 50%;
-      border-top: 4px solid #4f46e5;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Form feedback */
-    .form-feedback {
-      display: none;
-      padding: 15px;
-      margin-top: 20px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    .form-success {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-    .form-error {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
-    
-    /* Global Message */
-    #globalMessage {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 15px;
-      text-align: center;
-      font-weight: 500;
-      z-index: 2000;
-      transform: translateY(-100%);
-      transition: transform 0.3s ease;
-    }
-    #globalMessage.show {
-      transform: translateY(0);
-    }
-    .global-success {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-
+    .prose :where(h2,h3){ scroll-margin-top: 6rem; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; border-radius:.5rem; padding:.5rem 1rem; font-weight:600; }
   </style>
 
-<style>
-/* ─────────── Top contact bar ─────────── */
-.top-contact-bar{
-  width:100%;
-  background:#fff;
-  color:#4f46e5;
-  font-size:0.9rem;
-  padding:7px 0;
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:2001;
-}
-.top-contact-content{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.top-contact-left{
-  display:flex;
-  align-items:center;
-  gap:24px;
-}
-.top-contact-left i{
-  margin-right:-16px;
-  margin-left:0;
-  vertical-align:middle;
-}
-.sms{font-weight:600;margin-right:-16px;}
-.top-contact-right{display:flex;align-items:center;}
-.top-contact-demo-btn{
-  background:#4f46e5;
-  color:#fff;
-  border-radius:10px;
-  padding:6px 12px;
-  font-weight:600;
-  text-decoration:none;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-  transition:background .18s, color .18s, transform .13s;
-  border:none;
-  font-size:1rem;
-  margin-top:5px;
-}
-.top-contact-demo-btn:hover{
-  background:#7c3aed;
-  transform:translateY(-2px);
-}
+  <!-- Icons / extra CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 
-/* Hide the bar on phones */
-@media (max-width:576px){
-  .top-contact-bar{display:none;}
-  header{top:0;}           /* header moves up when bar is hidden */
-}
+  <!-- Your voice module (kept) -->
+  <script type="module" crossorigin src="/voice/assets/index-dBvI1JZo.js"></script>
 
-/* ─────────── Header ─────────── */
-header{
-  padding:14px 0;
-  position:fixed;
-  top:40px;                /* space for the contact bar */
-  width:100%;
-  z-index:1000;
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-.header-container{display:flex;justify-content:space-between;align-items:center;}
-.logo{
-  font-size:1.8rem;
-  font-weight:700;
-  color:#000;
-  text-decoration:none;
-  letter-spacing:-.5px;
-}
-.logo span{color:#4f46e5;}
-nav ul{display:flex;list-style:none;}
-nav ul li{margin-left:30px;}
-nav ul li a{
-  color:#000;
-  text-decoration:none;
-  font-weight:500;
-  font-size:1rem;
-  position:relative;
-  transition:all .3s ease;
-}
-nav ul li a:hover{color:#4f46e5;}
-nav ul li a::after{
-  content:"";
-  position:absolute;
-  bottom:-5px;
-  left:0;
-  width:0;
-  height:2px;
-  background:#4f46e5;
-  transition:all .3s ease;
-}
-nav ul li a:hover::after{width:100%;}
-
-/* Burger, hidden by default */
-.mobile-menu-btn{
-  display:none;
-  background:none;
-  border:none;
-  color:#000;
-  font-size:1.5rem;
-  cursor:pointer;
-}
-
-/* Extra demo button, hidden by default */
-.header-demo-btn,
-.mobile-menu-btn{display:none;}
-
-/* Tablet menu behaviour */
-@media (max-width:768px){
-  .mobile-menu-btn{display:block;margin-left:auto;}
-  nav ul{
-    display:none;
-    flex-direction:column;
-    position:absolute;
-    top:80px;
-    left:0;
-    width:100%;
-    background:#fff;
-    padding:20px 0;
-    box-shadow:0 10px 15px rgba(0,0,0,.1);
-  }
-  nav ul.show{display:flex;}
-  nav ul li{text-align:center;margin:10px 0;}
-}
-
-/* Phone layout: logo · Book A Demo · burger */
-@media (max-width:576px){
-  .header-container{display:flex;align-items:center;}
-
-  .header-demo-btn{
-    display:inline-block;
-    margin-left:auto;
-    font-size:0.92rem;
-    font-weight:600;
-    padding:6px 12px;
-    background:#4f46e5;
-    color:#fff;
-    border-radius:8px;
-    text-decoration:none;
-    transition:background .18s, transform .13s;
-  }
-  .header-demo-btn:hover{
-    background:#7c3aed;
-    transform:translateY(-2px);
-  }
-
-  .mobile-menu-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    font-size:1.8rem;
-    background:none;
-    border:none;
-    color:inherit;
-    cursor:pointer;
-    margin-left:.5rem;
-  }
-}
-
-</style>
-
-<style>
-.mobile-bottom-buttons {
-  display: none; /* Hide by default */
-}
-
-@media (max-width: 576px) {
-
-header{
-  top:0px;                /* space for the contact bar */
-  }
-
-  .mobile-bottom-buttons {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    gap: 6px; /* was 10px */
-    justify-content: space-around;
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 -3px 12px rgba(0,0,0,0.09);
-    padding: 5px 4px 5px 4px; /* was 8px 8px 8px 8px */
-    z-index: 2000;
-  }
-  .mobile-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 7px 0; /* was 10px 0 */
-    font-size: 0.95rem; /* was 1.1rem */
-    font-weight: 600;
-    color: white;
-    background: #4f46e5;
-    border: none;
-    border-radius: 10px; /* was 20px */
-    text-decoration: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
-    transition: background 0.18s;
-  }
-  .call-btn { background: #22c55e; }
-  .sms-btn { background: #6366f1; }
-  .mobile-btn:active {
-    filter: brightness(0.93);
-  }
-  .mobile-btn i {
-    font-size: 1.1rem; /* was 1.3rem */
-  }
-}
-
-
-/* Optional: add space at the bottom so content is not hidden by buttons */
-@media (max-width: 576px) {
-  body {
-    padding-bottom: 40px;
-  }
-}
-
-/* mobile padding from screen sides */
-@media (max-width: 768px) {
-  .description-text {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-}
-
-/* mobile menu top border */
-@media (max-width: 768px) {
-  nav ul {
-    top: 75px !important;
-  }
-}
-
-
-</style>
-
-<style>
-
-/* ---------- Form Section ---------- */
-.form-section {
-    background: var(--accent);
-    padding: 30px 0;
-    border-radius: 30px;
-    margin: 60px auto;
-    color: white;
-    width: calc(100% - 100px);
-    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */
-}
-
-.form-section .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 0 200px;
-    max-width: calc(560px * 2 + 30px);
-}
-
-.form-section h2 {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    margin-top: 40px;
-    font-weight: 600;
-}
-
-.form-section p {
-    max-width: 700px;
-    margin-bottom: 60px;
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.booking-form {
-    display: grid;
-    gap: 20px;
-    width: 100%;
-}
-
-.booking-form label {
-    font-weight: 600;
-    color: white;
-    display: block;
-    margin-bottom: 8px;
-    text-align: left;
-}
-
-.booking-form input,
-.booking-form select {
-    width: 100%;
-    padding: 14px 18px;
-    font-size: 1rem;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1);
-    color: white;
-    transition: var(--transition);
-}
-
-.booking-form input:focus,
-.booking-form select:focus {
-    outline: none;
-    border-color: white;
-    background: rgba(255,255,255,0.2);
-}
-
-.booking-form input::placeholder {
-    color: rgba(255,255,255,0.7);
-}
-
-.booking-form button {
-    background: white;
-    color: var(--accent);
-    padding: 16px 45px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: var(--transition);
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 40px;
-}
-
-.booking-form button:hover {
-    background: var(--light-gray);
-    transform: translateY(-2px);
-}
-
-
-
-/* ---------- Form Section – responsive fix ---------- */
-
-/* Reduce side padding on tablets */
-@media (max-width: 992px) {
-  .form-section .container {
-    padding: 0 40px;
-  }
-}
-
-/* Further reduce side padding on phones */
-@media (max-width: 576px) {
-  .form-section .container {
-    padding: 0 20px;
-  }
-}
-
-/* One-column layout by default */
-.booking-form {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr;
-}
-
-/* Two-column layout from 600 px upward */
-@media (min-width: 600px) {
-  .booking-form {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Keep the purple box away from the viewport edge */
-.form-section {
-  width: calc(100% - 40px);   /* 20 px gap each side */
-  margin: 60px auto;
-}
-
-/* Force one field per row on desktop */
-@media (min-width: 992px) {
-  .booking-form {
-    grid-template-columns: 1fr;
-  }
-}
-
-</style>
-
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5VBX6H2N');
+  </script>
+  <!-- End Google Tag Manager -->
 </head>
-<body>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<body class="bg-white text-gray-900">
 
-    <!-- Global Message -->
-    <div id="globalMessage"></div>
+<!-- Book a Call: Modal (kept) -->
+<div id="bookcall-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true" inert>
+  <div class="absolute inset-0 bg-black/50"></div>
+  <div class="absolute inset-0 flex items-center justify-center px-4">
+    <div role="dialog" aria-modal="true" aria-labelledby="bookcall-title"
+         class="w-full max-w-lg rounded-2xl bg-white shadow-xl">
+      <div class="flex items-center justify-between px-6 py-4 border-b">
+        <h3 id="bookcall-title" class="text-lg font-semibold">Book Discovery Call</h3>
+        <button type="button" class="p-2 rounded-md hover:bg-gray-100" data-close-modal aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <section class="form-section">
+        <div class="px-6 py-5">
+          <p class="mt-1 text-sm text-gray-600">Lets meet online to discuss AI automation for your business.</p>
+          <!-- Booking form kept from your template -->
+          <form class="booking-form mt-5" id="bookingForm" autocomplete="on">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First name</label>
+                <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="Jane" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+                <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Doe" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                <input id="company" name="company" type="text" autocomplete="organization" placeholder="Your company"
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telephone number</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="01234567890"
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="day" class="block text-sm font-medium text-gray-700 mb-1">Choose a day</label>
+                <input id="day" name="day" type="date" required
+                       class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              </div>
+              <div>
+                <label for="slot" class="block text-sm font-medium text-gray-700 mb-1">Choose a time</label>
+                <select id="slot" name="slot" required
+                        class="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="">Pick a day first</option>
+                </select>
+              </div>
+            </div>
 
-<!-- Top Contact Bar: Desktop and Tablet only -->
-<div class="top-contact-bar">
-  <div class="top-contact-content">
-    <div class="top-contact-left">
-        <i class="fas fa-phone-alt"></i> <span class="sms">SMS</span> +44 7479 277657
-        <i class="fas fa-envelope"></i> jemima@jemima.ai
-    </div>
-    <div class="top-contact-right">
-      <a href="#book-demo" class="top-contact-demo-btn">Book A Demo</a>
+            <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+
+            <div class="mt-5 flex items-center justify-end gap-3">
+              <button type="button" data-close-modal
+                      class="inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Cancel
+              </button>
+              <button type="submit"
+                      class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:brightness-95">
+                Book now
+              </button>
+            </div>
+
+            <p id="formMsg" role="status" aria-live="polite"
+               class="mt-3 hidden rounded-lg border px-3 py-2 text-sm"></p>
+          </form>
+        </div>
+      </section>
     </div>
   </div>
 </div>
 
-  <!-- Header -->
-  <header>
-    <div class="container header-container">
-      <a href="/" class="logo">jemima<span>.ai</span></a>
-<a href="#book-demo" class="header-demo-btn">Book A Demo</a>   <!-- new -->
-<button class="mobile-menu-btn">
-  <i class="fas fa-bars"></i>
-</button>
-      <nav>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+<!-- Toggle logic for Book a Call modal -->
+<script>
+  (function () {
+    const modal    = document.getElementById('bookcall-modal');
+    const backdrop = modal.firstElementChild;
+
+    window.openBookcall = function () {
+      modal.classList.remove('hidden');
+      modal.removeAttribute('inert');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+      const first = modal.querySelector('input, select, textarea, button');
+      if (first) first.focus();
+      document.addEventListener('keydown', onEsc);
+    }
+
+    window.closeBookcall = function () {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+      document.body.classList.remove('overflow-hidden');
+      document.removeEventListener('keydown', onEsc);
+    }
+
+    function onEsc(e){ if(e.key === 'Escape') window.closeBookcall(); }
+
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-modal="bookcall"]');
+      if (opener) { e.preventDefault(); window.openBookcall(); }
+    });
+
+    backdrop.addEventListener('click', window.closeBookcall);
+    modal.querySelectorAll('[data-close-modal]')
+         .forEach(b => b.addEventListener('click', window.closeBookcall));
+
+    modal.classList.add('hidden');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('inert', '');
+  })();
+</script>
+
+<!-- Top Contact Bar -->
+<div class="hidden sm:block mt-2 bg-white text-blue-600 text-xs shadow-sm">
+  <div class="max-w-6xl mx-auto px-6 py-1 flex items-center">
+    <div class="flex items-center gap-4">
+      <span class="inline-flex items-center gap-2">
+        <i class="fas fa-phone-alt"></i>
+        <b>SMS</b> +44 7479 277657
+      </span>
+      <span>
+        <i class="fa-solid fa-envelope text-[14px] text-blue-600 align-middle"></i>
+        jemima@jemima.ai
+      </span>
+      <!-- WhatsApp code slot -->
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="bg-white/95 backdrop-blur border-b sticky top-0 z-50 pb-1">
+  <div class="max-w-6xl mx-auto px-6 h-12 flex items-center">
+    <a href="/" class="flex items-center gap-2 font-extrabold text-lg tracking-tight">
+      <span class="text-gray-900">jemima.ai</span>
+    </a>
+    <nav class="ml-auto hidden sm:flex items-center gap-6">
+      <a href="https://jemima.ai#capabilities" class="py-2 text-gray-700 hover:text-indigo-600">Solutions</a>
+      <a href="https://jemima.ai#method" class="py-2 text-gray-700 hover:text-indigo-600">Methodology</a>
+      <a href="https://jemima.ai#compare" class="py-2 text-gray-700 hover:text-indigo-600">Compare</a>
+    </nav>
+    <a href="#contact" data-modal="bookcall"
+       class="ml-4 hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+      Book Discovery Call
+    </a>
+    <div class="ml-auto sm:hidden flex items-center gap-2">
+      <button id="menuBtn" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false"
+              class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-200 text-gray-700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileNav" class="sm:hidden hidden absolute top-full left-0 right-0 z-50 border-t bg-white shadow-lg">
+    <nav class="px-6 py-3 flex flex-col">
+      <a href="https://jemima.ai#" class="py-2 text-gray-700 hover:text-indigo-600">Solutions</a>
+      <a href="https://jemima.ai#" class="py-2 text-gray-700 hover:text-indigo-600">Methodology</a>
+      <a href="https://jemima.ai#" class="py-2 text-gray-700 hover:text-indigo-600">Compare</a>
+    <a href="#contact" data-modal="bookcall"
+       class="ml-4 hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+      Book Discovery Call
+    </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile menu toggle -->
+<script>
+  (function () {
+    const btn = document.getElementById('menuBtn');
+    const panel = document.getElementById('mobileNav');
+    if (!btn || !panel) return;
+
+    function closeMenu() {
+      panel.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    }
+    function toggleMenu() {
+      const willOpen = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(willOpen));
+      document.body.classList.toggle('overflow-hidden', willOpen);
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    panel.addEventListener('click', (e) => { if (e.target.closest('a')) closeMenu(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  })();
+</script>
+
+<!-- Main Content -->
+<main id="main" class="mx-auto max-w-6xl px-6 py-12">
+  <!-- Breadcrumbs -->
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500">
+    <ol class="flex gap-2 flex-wrap">
+      <li><a href="https://jemima.ai/" class="hover:text-gray-700">Jemima AI</a></li>
+      <li>/</li>
+      <li><span class="text-gray-800">Contact</span></li>
+    </ol>
+  </nav>
+
+  <!-- H1 and intro -->
+  <header class="mt-4 mb-10 text-center">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Get in Touch</h1>
+    <p class="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">We'd love to hear from you and discuss your AI needs.</p>
+    <div class="mt-4 text-sm text-gray-500">
+      <span>Updated <time datetime="2025-10-27">27 Oct 2025</time></span>
     </div>
   </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Get in <span>Touch</span></h1>
-                <p class="description">We'd love to hear from you and discuss your AI needs</p>
-            </div>
-        </div>
-    </section>
+  <!-- Contact-only body (no form) -->
+  <section class="grid gap-8 md:grid-cols-5 items-start">
+    <!-- Contact info -->
+    <div class="md:col-span-3 rounded-2xl border border-gray-200 p-6 bg-white">
+      <h2 class="text-xl font-semibold">Contact Jemima</h2>
+      <p class="mt-2 text-gray-700">Have questions about our AI solutions? Ready to transform your business? Reach out and we’ll respond quickly.</p>
 
-    <!-- Contact Content -->
-    <div class="container">
-        <div class="contact-content">
-            <div class="section">
-                <h2>Contact Jemima</h2>
-                <p>Have questions about our AI solutions? Ready to transform your business? Contact Jemima today for a free consultation.</p>
-            </div>
-            
-            <div class="contact-container">
-                <div class="contact-form-container">
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" required autocomplete="given-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" required autocomplete="family-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required autocomplete="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" name="company" autocomplete="organization">
-                        </div>
-                        
-                        <!-- Fixed Telephone Field -->
-                        <div class="form-group full">
-                            <label for="phone">Phone</label>
-                            <div class="phone-field-container">
-                                <input type="tel" id="phone" name="phone" autocomplete="tel">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group full">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" required autocomplete="off"></textarea>
-                        </div>
-                        <div class="form-group full">
-                            <button type="submit" class="btn">Send Message</button>
-                            <div class="spinner" id="spinner"></div>
-                        </div>
-                        <div class="form-feedback" id="formFeedback"></div>
-                    </form>
-                </div>
-                
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>jemima@jemima.ai</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+44 7479 277657</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4>Office</h4>
-                            <p>71-75 Shelton Street<br>London<br>WC2H 9JQ</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <h4>Business Hours</h4>
-                            <p>24 Hours Every Day</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-<a href="https://www.google.com/maps/place/71-75+Shelton+St,+London+WC2H+9JQ/@51.5149209,-0.1238584,17z/data=!4m6!3m5!1s0x487605cb0ea27389:0xb5047512b40a3683!8m2!3d51.5148609!4d-0.1235902!16s%2Fg%2F11ltv878jc?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none;">
-    <div class="map">
-        <!-- Your map content here (or leave empty if only using the background image) -->
+      <div class="mt-6 grid sm:grid-cols-2 gap-6">
+        <div class="rounded-xl border border-gray-200 p-5">
+          <h3 class="font-semibold">Email</h3>
+          <p class="mt-2"><a class="underline" href="mailto:jemima@jemima.ai">jemima@jemima.ai</a></p>
+        </div>
+        <div class="rounded-xl border border-gray-200 p-5">
+          <h3 class="font-semibold">Phone</h3>
+          <p class="mt-2"><a class="underline" href="tel:+447479277657">+44 7479 277657</a></p>
+        </div>
+        <div class="rounded-xl border border-gray-200 p-5 sm:col-span-2">
+          <h3 class="font-semibold">Office</h3>
+          <p class="mt-2">71-75 Shelton Street<br/>London<br/>WC2H 9JQ</p>
+        </div>
+        <div class="rounded-xl border border-gray-200 p-5 sm:col-span-2">
+          <h3 class="font-semibold">Business Hours</h3>
+          <p class="mt-2">24 Hours Every Day</p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="mailto:jemima@jemima.ai" class="btn bg-blue-600 text-white hover:brightness-95"><i class="fa-solid fa-envelope mr-2"></i>Email Us</a>
+        <a href="tel:+447479277657" class="btn bg-white border border-gray-300 text-gray-900 hover:bg-gray-50"><i class="fa-solid fa-phone mr-2"></i>Call Us</a>
+      </div>
     </div>
-</a><section id="book-demo"></section>
-        </div>
 
-        </div>
-
-
-
- <!-- Form Section with Booking Form -->
-  <section class="form-section">
-    <div class="container">
-      <h2>Book A Demo</h2>
-      <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
-      
-      <form class="booking-form" id="bookingForm" autocomplete="on">
-        <div>
-          <label for="firstName">First name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            autocomplete="given-name"
-            placeholder="Jane"
-            required
-          />
-        </div>
-        <div>
-          <label for="lastName">Last name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            autocomplete="family-name"
-            placeholder="Doe"
-            required
-          />
-        </div>
-        <div>
-          <label for="company">Company</label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            autocomplete="organization"
-            placeholder="Your company"
-          />
-        </div>
-        <div>
-          <label for="phone">Telephone number</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            autocomplete="tel"
-            placeholder="01234567890"
-          />
-        </div>
-        <div>
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-            required
-          />
-        </div>
-        <div>
-          <label for="day">Choose a day</label>
-          <input
-            type="date"
-            id="day"
-            name="day"
-            required
-          />
-        </div>
-        <div>
-          <label for="slot">Choose a time</label>
-          <select
-            id="slot"
-            name="slot"
-            required
-          >
-            <option value="">Pick a day first</option>
-          </select>
-        </div>
-
-        <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
-
-        <button type="submit">Book now</button>
-      </form>
-      <p id="formMsg"></p>
-    </div>
+    <!-- CTA card -->
+    <aside class="md:col-span-2 space-y-6">
+      <div class="rounded-2xl border border-indigo-100 bg-indigo-50 p-6">
+        <h3 class="text-lg font-semibold">Prefer a quick call?</h3>
+        <p class="text-sm text-gray-700">Book a free consultation to discuss your use case.</p>
+        <button data-modal="bookcall" class="mt-3 inline-flex items-center px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+          Book Discovery Call
+        </button>
+      </div>
+      <div class="rounded-2xl border border-gray-200 p-6 bg-white">
+        <h3 class="text-lg font-semibold">Response Times</h3>
+        <p class="text-sm text-gray-700">We monitor inboxes around the clock and typically respond within a few business hours.</p>
+      </div>
+    </aside>
   </section>
+</main>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="#" class="logo" style="color: white;">jemima<span style="color: #818cf8;">.ai</span></a>
-          <p style="color: #a0aec0; margin-top: 20px; line-height: 1.7;">Leading business solutions for forward-thinking businesses.</p>
-          <div class="social-links">
-            <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
-            <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
+<!-- Footer -->
+<footer id="contact" class="bg-gray-900 text-white py-16 px-6 text-center">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+    <p class="mb-6 text-gray-300">Deliver AI ROI in just 30 days. With governance built in from the start.</p>
+    <a href="#contact" data-modal="bookcall" class="inline-flex items-center px-5 py-3 rounded-md bg-white text-gray-900 font-medium hover:bg-gray-200">Book Discovery Call</a>
+    <p class="text-gray-400 text-xs mt-6">&copy; <span id="y"></span> Jemima AI. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Floating Chat Launcher -->
+<button id="chat-launcher"
+  class="fixed bottom-5 right-5 z-[90] inline-flex items-center gap-2 rounded-full bg-blue-600 px-3 pr-4 py-2 text-white shadow-lg hover:brightness-95">
+  <img src="https://jemima.ai/jemima-chat.png" alt="" class="h-7 w-7 rounded-full object-cover ring-1 ring-white/30">
+  <span class="font-medium">Chat</span>
+  <span class="sr-only">Open chat with Jemima</span>
+</button>
+
+<!-- Chat Popup (kept) -->
+<div id="chat-popup" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+  <div class="absolute inset-0 bg-black/30 md:bg-transparent" id="chat-backdrop"></div>
+  <div class="absolute bottom-5 right-5 left-5 md:left-auto">
+    <div role="dialog" aria-modal="true" aria-labelledby="chat-title"
+         class="mx-auto md:mx-0 w-full max-w-sm rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
+      <div class="flex items-center gap-3 border-b px-4 py-3">
+        <img src="https://jemima.ai/jemima-chat.png" alt="Guide avatar" class="h-8 w-8 rounded-full object-cover"/>
+        <div class="min-w-0">
+          <h3 id="chat-title" class="text-sm font-semibold leading-tight">Jemima</h3>
+          <p class="text-xs text-gray-500">Virtual Guide</p>
+        </div>
+        <button type="button" id="chat-close" class="ml-auto p-2 rounded-md text-gray-500 hover:bg-gray-100" aria-label="Close chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="px-4 pt-4 pb-2">
+        <div class="rounded-xl bg-gray-50 p-3 text-sm text-gray-700 shadow-sm">
+          <p class="mb-2">Hi I am a virtual guide. I can answer questions related to Jemima services.</p>
+          <p class="text-gray-600">If you want to speak to a person, book a discovery call using the button below.</p>
+        </div>
+        <div id="chat-body" class="mt-3 max-h-80 overflow-y-auto pr-1 hidden"></div>
+      </div>
+      <form id="chat-form" class="border-t px-3 py-3">
+        <label class="sr-only" for="chat-input">Ask a question</label>
+        <div class="flex items-center gap-2">
+          <textarea id="chat-input" name="message" rows="1" placeholder="Ask a question"
+                    class="w-full resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <button type="submit"
+                  class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white hover:brightness-95"
+                  aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 2L15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <div class="mt-3">
+          <div id="chat-quick-links" class="flex flex-wrap gap-2 justify-start">
+            <a href="#contact" data-modal="bookcall"
+               class="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:brightness-95">
+              Book Discovery Call
+            </a>
           </div>
         </div>
-        <div class="footer-col">
-          <h3>Solutions</h3>
-          <ul class="footer-links">
-            <li><a href="ai-lead-generation.html">Lead Generation</a></li>
-            <li><a href="ai-sales-automation.html">Sales</a></li>
-            <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
-            <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
-            <li><a href="ai-automation.html">AI Automation</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Company</h3>
-          <ul class="footer-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="careers.html">Careers</a></li>
-            <li><a href="faq.html">FAQs</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-            <li><a href="privacy.html">Privacy</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Resources</h3>
-          <ul class="footer-links">
-            <li><a href="ai-business-guides.html">AI Business Guides</a></li>
-            <li><a href="ai-workflows.html">Workflows</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="copyright">
-        <p>&copy; 2025 jemima.ai. All rights reserved.</p>
+      </form>
+      <div class="border-t px-4 py-3">
+        <p class="text-[11px] leading-snug text-gray-500">
+          By sending a message you agree this session may be monitored, recorded, and shared with third-party service providers for analytics and other business purposes described in our
+          <a href="/privacy.html" class="underline hover:text-gray-700">Privacy policy</a>.
+        </p>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navMenu = document.querySelector('nav ul');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('show');
-        });
-        
-        // Close menu when clicking on links
-        const navLinks = document.querySelectorAll('nav ul li a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('show');
-            });
-        });
-        
-        // Initialize international phone input with auto-complete fix
-        const phoneInput = document.querySelector("#phone");
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "auto",
-            geoIpLookup: function(success, failure) {
-                fetch("https://ipapi.co/json")
-                    .then(res => res.json())
-                    .then(data => success(data.country_code))
-                    .catch(() => success("gb"));
-            },
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            // Preserve the original input for auto-complete
-            separateDialCode: false,
-            autoPlaceholder: "aggressive",
-            // Allow browser to manage the field
-            customContainer: "",
-            useFullscreenPopup: false
-        });
-        
-        // Set autocomplete attribute for the visible input
-        const visibleInput = phoneInput.parentElement.querySelector('.iti__tel-input');
-        if (visibleInput) {
-            visibleInput.setAttribute('autocomplete', 'tel');
-        }
-        
-        // Form submission with AJAX to n8n
-        const contactForm = document.getElementById('contactForm');
-        const spinner = document.getElementById('spinner');
-        const formFeedback = document.getElementById('formFeedback');
-        const globalMessage = document.getElementById('globalMessage');
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                // Validate phone number
-                if (phoneInput.value.trim()) {
-                    const isValidNumber = iti.isValidNumber();
-                    if (!isValidNumber) {
-                        formFeedback.textContent = "Please enter a valid phone number";
-                        formFeedback.className = 'form-feedback form-error';
-                        formFeedback.style.display = 'block';
-                        return;
-                    }
-                }
-                
-                // Show loading spinner
-                spinner.style.display = 'block';
-                formFeedback.style.display = 'none';
-                
-                // Disable submit button
-                const submitButton = contactForm.querySelector('button[type="submit"]');
-                submitButton.disabled = true;
-                
-                try {
-                    // Create form data
-                    const formData = new FormData(contactForm);
-                    
-                    // Add full international number
-                    const fullNumber = iti.getNumber();
-                    if (fullNumber) {
-                        formData.set('phone', fullNumber);
-                    }
-                    
-                    // Convert to URLSearchParams for n8n
-                    const urlEncodedData = new URLSearchParams();
-                    for (const [key, value] of formData.entries()) {
-                        urlEncodedData.append(key, value);
-                    }
-                    
-                    // Send to n8n
-                    const response = await fetch('https://jemima-ai.app.n8n.cloud/webhook/contact-form', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: urlEncodedData
-                    });
-                    
-                    if (response.ok) {
-                        // Show global success message
-                        globalMessage.textContent = 'Thank you for your message! Our team will contact you shortly.';
-                        globalMessage.className = 'global-success show';
-                        
-                        // Hide after 3 seconds
-                        setTimeout(() => {
-                            globalMessage.classList.remove('show');
-                        }, 3000);
-                        
-                        // Reset form
-                        contactForm.reset();
-                        iti.setNumber(""); // Clear phone input
-                    } else {
-                        // Handle server errors
-                        const errorData = await response.text();
-                        throw new Error('Form submission failed. Please try again later.');
-                    }
-                } catch (error) {
-                    // Show error message
-                    formFeedback.textContent = `There was a problem: ${error.message}`;
-                    formFeedback.className = 'form-feedback form-error';
-                    formFeedback.style.display = 'block';
-                    
-                    console.error('Form submission error:', error);
-                } finally {
-                    // Hide spinner and re-enable button
-                    spinner.style.display = 'none';
-                    submitButton.disabled = false;
-                }
-            });
-        }
-    </script>
+<!-- Tiny bubble styles -->
+<style>
+  #chat-body .chat-bubble{max-width:90%; margin:.375rem 0; padding:.5rem .75rem; border-radius:.75rem; font-size:.9rem; line-height:1.25rem;}
+  #chat-body .ai-bubble{background:#f3f4f6; color:#111827;}
+  #chat-body .user-bubble{background:#2563eb; color:#fff; margin-left:auto;}
+  #chat-body.show{display:block;}
+</style>
 
+<!-- Chat behavior + Booking wiring (unchanged) -->
 <script>
-/* ── Booking & floating message ─────────────────────────── */
-const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
-const TIME_ZONE   = 'Europe/London';
+  const chatLauncher = document.getElementById('chat-launcher');
+  const chatPopup    = document.getElementById('chat-popup');
+  const chatClose    = document.getElementById('chat-close');
+  const chatBackdrop = document.getElementById('chat-backdrop');
+  const chatInputEl  = () => document.getElementById('chat-input');
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* handles ------------------------------------------------ */
-  const dayInput   = document.getElementById('day');
-  const slotSelect = document.getElementById('slot');
-  const form       = document.getElementById('bookingForm');
-  const formMsg    = document.getElementById('formMsg');
-  const pageUrlIn  = document.getElementById('pageUrl');
-
-  /* helper: show / hide banner ----------------------------- */
-  function flash(type, text, keepMs = 3000){
-    formMsg.className = '';            // clear all classes
-    formMsg.textContent = text;
-    if(type) formMsg.classList.add(type);
-    formMsg.classList.add('show');     // slide-in
-    clearTimeout(flash._timer);
-    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+  function openChat() {
+    chatPopup.classList.remove('hidden');
+    chatPopup.setAttribute('aria-hidden', 'false');
+    setTimeout(() => chatInputEl()?.focus(), 0);
+    document.addEventListener('keydown', escClose);
   }
-
-  /* init --------------------------------------------------- */
-  pageUrlIn.value = window.location.href;
-  dayInput.addEventListener('change',  fetchTimes);
-  form    .addEventListener('submit',  submitBooking);
-
-  /* fetch available times ---------------------------------- */
-  async function fetchTimes(){
-    const day = dayInput.value;
-    if(!day){
-      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-      return;
-    }
-    slotSelect.disabled = true;
-    slotSelect.innerHTML = '<option>Loading…</option>';
-
-    try{
-      const res  = await fetch(BOOKING_URL,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({action:'check_availability', day})
-                  });
-      const data = await res.json();
-      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
-      const free   = payload.slots ?? [];
-
-      slotSelect.innerHTML = free.length
-        ? '<option value="">Select a time</option>'
-        : '<option value="">No slots available</option>';
-
-      free.forEach(s=>{
-        if(!s.startsWith(day)) return;
-        const t = s.slice(11,16);
-        slotSelect.insertAdjacentHTML('beforeend',
-          `<option value="${s}">${t}</option>`);
-      });
-    }catch{
-      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
-    }finally{
-      slotSelect.disabled = false;
-    }
+  function closeChat() {
+    chatPopup.classList.add('hidden');
+    chatPopup.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', escClose);
   }
+  function escClose(e){ if(e.key === 'Escape') closeChat(); }
 
-  /* submit booking ---------------------------------------- */
-  async function submitBooking(e){
-    e.preventDefault();
-    flash('sending','Sending…',10_000);         // orange bar
+  chatLauncher.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
+  chatBackdrop.addEventListener('click', closeChat);
 
-    const payload = {
-      firstName:form.firstName.value,
-      lastName :form.lastName.value,
-      company  :form.company.value,
-      phone    :form.phone.value,
-      email    :form.email.value,
-      slot     :slotSelect.value,
-      pageUrl  :pageUrlIn.value,
-      timeZone :TIME_ZONE
-    };
+  (function () {
+    const form  = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const box   = document.getElementById('chat-body');
 
-    try{
-      const res = await fetch(BOOKING_URL,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({action:'create_booking',...payload})
-                  });
+    function add (text, role = 'ai') {
+      const div = document.createElement('div');
+      div.className = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
+      div.innerHTML = `<p>${text}</p>`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+      box.classList.add('show');
+    }
 
-      if(res.ok){
-        form.reset();
-        slotSelect.innerHTML =
-          '<option value="">Pick a day first</option>';
-        flash('success','Your meeting is confirmed. Check your inbox.');
-      }else if(res.status===409){
-        flash('error','That time has just been taken. Please choose another.');
-        fetchTimes();
-      }else{
-        flash('error','An error occurred. Please try again later.');
+    function parse (raw, hdr) {
+      if ((hdr.get('content-type') || '').includes('application/json')) {
+        try {
+          let d = JSON.parse(raw);
+          if (Array.isArray(d)) d = d[0] || {};
+          return (
+            d.reply || d.output || d.text || d.message || d.answer || d.content ||
+            (d.choices && d.choices[0]?.message?.content) || raw
+          );
+        } catch {}
       }
-    }catch{
-      flash('error','Could not reach the server. Try again later.');
+      return raw;
     }
-  }
-});
+
+    const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/4322b02c-7c17-479f-9ded-fcde11fa4a8d/chat';
+    const sessionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36);
+    const pageUrl   = window.location.href;
+
+    input.addEventListener('keydown', (e) => {
+      if (e.isComposing) return;
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (input.value.trim()) form.requestSubmit();
+      }
+    });
+
+    input.setAttribute('enterkeyhint', 'send');
+
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(140, input.scrollHeight) + 'px';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = (new FormData(form).get('message') || '').toString().trim();
+      if (!msg) return;
+      add(msg, 'user');
+      input.value = '';
+      input.style.height = '40px';
+
+      try {
+        const res = await fetch(webhook, {
+          method : 'POST', headers:{'Content-Type':'application/json'},
+          body   : JSON.stringify({ sessionId, route:'general', action:'sendMessage', chatInput: msg, pageUrl })
+        });
+        const raw = await res.text();
+        add(parse(raw, res.headers), 'ai');
+      } catch (err) {
+        console.error(err);
+        add('Could not reach the server.', 'ai');
+      }
+    });
+  })();
 </script>
 
-<div class="mobile-bottom-buttons">
-  <a href="tel:+447479277657" class="mobile-btn call-btn">
-    <i class="fas fa-phone"></i> Call
-  </a>
-  <a href="sms:+447479277657" class="mobile-btn sms-btn">
-    <i class="fas fa-sms"></i> SMS
-  </a>
-</div>
+<!-- Booking wiring and helpers -->
+<script>
+  const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
+  const TIME_ZONE   = 'Europe/London';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const dayInput   = document.getElementById('day');
+    const slotSelect = document.getElementById('slot');
+    const form       = document.getElementById('bookingForm');
+    const formMsg    = document.getElementById('formMsg');
+    const pageUrlIn  = document.getElementById('pageUrl');
+
+    function flash(type, text, keepMs = 3000){
+      formMsg.className = '';
+      formMsg.textContent = text;
+      if(type) formMsg.classList.add(type);
+      formMsg.classList.add('show');
+      clearTimeout(flash._timer);
+      flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
+    }
+
+    pageUrlIn.value = window.location.href;
+    dayInput?.addEventListener('change',  fetchTimes);
+    form    ?.addEventListener('submit',  submitBooking);
+
+    async function fetchTimes(){
+      const day = dayInput.value;
+      if(!day){ slotSelect.innerHTML = '<option value="">Pick a day first</option>'; return; }
+      slotSelect.disabled = true;
+      slotSelect.innerHTML = '<option>Loading…</option>';
+
+      try{
+        const res  = await fetch(BOOKING_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'check_availability', day}) });
+        const data = await res.json();
+        const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
+        const free   = payload.slots ?? [];
+
+        slotSelect.innerHTML = free.length ? '<option value="">Select a time</option>' : '<option value="">No slots available</option>';
+        free.forEach(s=>{ if(!s.startsWith(day)) return; const t = s.slice(11,16); slotSelect.insertAdjacentHTML('beforeend', `<option value="${s}">${t}</option>`); });
+      }catch{
+        slotSelect.innerHTML = '<option value="">Error loading slots</option>';
+      }finally{
+        slotSelect.disabled = false;
+      }
+    }
+
+    async function submitBooking(e){
+      e.preventDefault();
+      flash('sending','Sending…',10_000);
+
+      const payload = {
+        firstName:form.firstName.value,
+        lastName :form.lastName.value,
+        company  :form.company.value,
+        phone    :form.phone.value,
+        email    :form.email.value,
+        slot     :slotSelect.value,
+        pageUrl  :pageUrlIn.value,
+        timeZone :TIME_ZONE
+      };
+
+      try{
+        const res = await fetch(BOOKING_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'create_booking',...payload}) });
+        if(res.ok){
+          form.reset();
+          slotSelect.innerHTML = '<option value="">Pick a day first</option>';
+          flash('success','Your meeting is confirmed. Check your inbox.');
+        }else if(res.status===409){
+          flash('error','That time has just been taken. Please choose another.');
+          fetchTimes();
+        }else{
+          flash('error','An error occurred. Please try again later.');
+        }
+      }catch{
+        flash('error','Could not reach the server. Try again later.');
+      }
+    }
+  });
+
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
 </body>
-
 </html>
-
 
