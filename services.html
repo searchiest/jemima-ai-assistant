@@ -56,6 +56,54 @@
     .prose :where(h2,h3){ scroll-margin-top: 6rem; }
   </style>
 
+<style>
+  :root { --cta-h: 76px; }
+
+  @media (max-width: 640px){
+    /* Layering order: chat popup > modals > footer */
+    #chat-popup     { z-index: 9999 !important; }
+    #bookcall-modal { z-index: 9998 !important; }
+    #mobile-cta-bar { z-index: 9997 !important; }
+
+    /* Chat popup: lift above sticky footer */
+    #chat-popup > div.bottom-5{
+      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 16px) !important;
+      left: 1rem !important;
+      right: 1rem !important;
+    }
+
+    /* Chat pill sits above footer when visible */
+    #chat-launcher{
+      position: fixed !important;
+      z-index: 9996 !important;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 22px) !important;
+      right: 1.25rem !important;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    /* Hidden state when chat is open */
+    #chat-launcher.hidden{
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+    }
+
+    /* Avoid overlap of footer with page content */
+    body{
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h));
+    }
+  }
+</style>
+
+<style>
+  @media (max-width: 640px){
+    /* When chat is open, hide the floating pill entirely */
+    body.chat-open #chat-launcher{
+      display: none !important;
+    }
+  }
+</style>
+
   <!-- Icons / extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 
@@ -669,6 +717,22 @@
 
 <script>
   document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('bookcall') === 'open') {
+      if (typeof window.openModal === 'function') {
+        window.openModal();
+      } else {
+        const modal = document.getElementById('bookcall-modal');
+        modal.classList.remove('hidden');
+        modal.removeAttribute('inert');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    }
+  });
 </script>
 
 </body>
