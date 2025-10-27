@@ -61,25 +61,70 @@
   </style>
 
 <style>
-  /* Set a concrete height for the sticky bar and use it everywhere */
-  :root { --cta-h: 76px; } /* tweak if your bar is taller/shorter */
+  :root { --cta-h: 76px; }
 
   @media (max-width: 640px){
-    /* Make sure the bar has a known height (or at least a min-height) */
-    #mobile-cta-bar { min-height: var(--cta-h); z-index: 120; }
+    /* Layering order: chat popup > modals > footer */
+    #chat-popup     { z-index: 9999 !important; }
+    #bookcall-modal { z-index: 9998 !important; }
+    #mobile-cta-bar { z-index: 9997 !important; }
 
-    /* Lift the chat pill above the bar and notch, and beat Tailwind utilities */
-    #chat-launcher{
-      position: fixed;
-      z-index: 130 !important;
-      right: 1.25rem;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 22px) !important;
+    /* Chat popup: lift above sticky footer */
+    #chat-popup > div.bottom-5{
+      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 16px) !important;
+      left: 1rem !important;
+      right: 1rem !important;
     }
 
-    /* Keep page content readable behind the bar */
-    body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h)); }
+    /* Chat pill sits above footer when visible */
+    #chat-launcher{
+      position: fixed !important;
+      z-index: 9996 !important;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h) + 12px) !important;
+      right: 1.25rem !important;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    /* Hidden state when chat is open */
+    #chat-launcher.hidden{
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+    }
+
+    /* Avoid overlap of footer with page content */
+    body{
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--cta-h));
+    }
   }
 </style>
+
+<script>
+  (function () {
+    const chatLauncher = document.getElementById('chat-launcher');
+    const chatPopup = document.getElementById('chat-popup');
+
+    function hidePill() {
+      chatLauncher?.classList.add('hidden');
+    }
+    function showPill() {
+      chatLauncher?.classList.remove('hidden');
+    }
+
+    // Observe chat popup visibility and toggle pill accordingly
+    const observer = new MutationObserver(() => {
+      const isVisible = !chatPopup.classList.contains('hidden');
+      if (isVisible) hidePill();
+      else showPill();
+    });
+
+    if (chatPopup) {
+      observer.observe(chatPopup, { attributes: true, attributeFilter: ['class'] });
+    }
+  })();
+</script>
+
+
 
   <!-- Icons / extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
