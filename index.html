@@ -60,6 +60,18 @@
     }
   </style>
 
+  /* 2) Lift the chat launcher above the bar & safe areas */
+  @media (max-width: 640px) {
+    #chat-launcher {
+      position: fixed; /* already, but safe */
+      z-index: 120;    /* higher than the footer */
+      right: 1.25rem;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + var(--mobile-cta-height) + 12px);
+    }
+    /* If you open a full chat window, keep it above everything */
+    #chat-popup { z-index: 130; }
+  }
+
   <!-- Icons / extra CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 
