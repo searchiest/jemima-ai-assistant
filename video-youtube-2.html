@@ -173,8 +173,8 @@
             const loopFlag = loop ? 1 : 0;
             
             // YouTube Autoplay Params
-            // modestbranding=1, controls=0, rel=0 for a cleaner look
-            let finalUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${muteFlag}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3`;
+            // Added playsinline=1 and enablejsapi=1 for better autoplay support
+            let finalUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${muteFlag}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1`;
             
             if (loop) {
                 // playlist parameter is required by YouTube to loop embedded videos
@@ -185,6 +185,7 @@
             iframe.className = "youtube-iframe";
             iframe.setAttribute('title', 'YouTube video player');
             iframe.setAttribute('frameborder', '0');
+            // allow attributes are critical for modern browsers to permit autoplay
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
             iframe.src = finalUrl;
             
@@ -198,13 +199,13 @@
         }
 
         window.addEventListener('load', () => {
-            // Initial load: Muted loop background
+            // Initial load: Muted loop background to comply with browser autoplay policies
             playVideo(true, true);
         });
 
         function activateAI() {
             videoPlaceholder.style.display = 'none';
-            // Transition to unmuted single play
+            // Transition to unmuted play now that user has interacted
             playVideo(false, false);
         }
 
