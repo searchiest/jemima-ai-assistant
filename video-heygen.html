@@ -229,7 +229,7 @@
             const muteFlag = muted ? 1 : 0;
             const loopFlag = loop ? 1 : 0;
             
-            // Added &loop parameter to support background looping persona
+            // Build HeyGen parameters
             const finalUrl = `${url}${separator}autoplay=1&muted=${muteFlag}&m=${muteFlag}&enable_unmute=1&loop=${loopFlag}`;
             
             const iframe = document.createElement('iframe');
