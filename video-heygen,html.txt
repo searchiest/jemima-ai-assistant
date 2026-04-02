@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jemima AI | Double Your Conversions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .sentiment-pie { background: conic-gradient(#10b981 0% 85%, #f1f5f9 85% 100%); }
+        
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        @keyframes pulse-blue {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pulse-anim { animation: pulse-blue 2s infinite ease-in-out; }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+
+        .loader {
+            border: 2px solid #334155;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="flex items-center gap-2 font-extrabold text-lg lg:text-xl tracking-tighter">
+            <span class="text-blue-600">✦</span> Jemima <span class="text-blue-600">AI</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#" class="hover:text-blue-600">Product</a>
+            <a href="#" class="hover:text-blue-600">Pricing</a>
+            <a href="#" class="hover:text-blue-600">Contact</a>
+        </div>
+        <button class="px-4 py-2 text-[10px] lg:text-xs font-black bg-blue-600 text-white rounded-none shadow-lg shadow-blue-100 uppercase tracking-widest">Free Audit</button>
+    </nav>
+
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-4 lg:pt-8 pb-8 lg:pb-16">
+        
+        <div class="flex flex-col items-center space-y-8 lg:space-y-12 mb-16 lg:mb-20">
+            
+            <div class="max-w-4xl text-center space-y-4 lg:space-y-5">
+                <div class="inline-block bg-slate-900 text-white text-[7px] lg:text-[8px] font-bold px-3 py-1 lg:px-5 lg:py-1.5 rounded-none uppercase tracking-[0.3em] shadow-lg">
+                    100% Lead Capture Engine
+                </div>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-[800] leading-tight lg:leading-[1.1] tracking-tight text-slate-950">
+                    Add Jemima to your site. <br class="hidden sm:block"> <span class="text-blue-600">Increase Conversions.</span>
+                </h1>
+                <p class="text-sm lg:text-base text-slate-500 leading-relaxed max-w-xl mx-auto font-medium">
+                    The specialized AI agent that captures every lead and <span class="text-slate-900 font-bold">books your calendar 24/7.</span>
+                </p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+                
+                <!-- Box 1: Video Module (HeyGen API Optimized) -->
+                <div class="w-full md:w-[45%] lg:w-[45%] space-y-3 lg:space-y-4">
+                    <div id="video-container" class="relative aspect-video bg-black shadow-2xl border border-slate-200 overflow-hidden">
+                        
+                        <!-- Player Mount Point -->
+                        <div id="player-mount" class="absolute inset-0 w-full h-full z-10 bg-black"></div>
+
+                        <!-- Initial Placeholder (Transparent to show muted video behind) -->
+                        <div id="video-placeholder" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/10 backdrop-blur-[1px] text-white text-center p-6 cursor-pointer" onclick="activateAI()">
+                            <div class="w-16 h-16 bg-blue-600/90 rounded-full flex items-center justify-center mb-4 pulse-anim shadow-xl hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-play text-xl ml-1"></i>
+                            </div>
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] mb-1 drop-shadow-md">Meet Jemima AI</p>
+                            <p class="text-[8px] text-white font-bold uppercase tracking-widest flex items-center gap-2 drop-shadow-md">
+                                <i class="fas fa-volume-up text-blue-400"></i> Click to start with sound
+                            </p>
+                        </div>
+                        
+                        <!-- Loading Indicator -->
+                        <div id="loading-indicator" class="absolute inset-0 z-15 hidden flex flex-col items-center justify-center bg-black">
+                            <div class="loader mb-2"></div>
+                            <p class="text-[8px] text-blue-500 font-black uppercase tracking-widest">Waking up Jemima...</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-3 flex items-center justify-center md:justify-between gap-4 shadow-sm">
+                        <div class="flex items-center gap-6">
+                            <a href="tel:02079460000" class="group flex items-center gap-2 text-[8px] font-black uppercase tracking-wider">
+                                <div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white group-hover:bg-blue-600 transition-colors">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <span class="text-slate-900 group-hover:text-blue-600 font-black">Call Now</span>
+                            </a>
+                            <a href="sms:02079460000" class="group flex items-center gap-2 text-[8px] font-black uppercase tracking-wider">
+                                <div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white group-hover:bg-blue-600 transition-colors">
+                                    <i class="fas fa-sms"></i>
+                                </div>
+                                <span class="text-slate-900 group-hover:text-blue-600 font-black">SMS Now</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box 2: Interactive Chat Module -->
+                <div class="w-full md:w-[45%] lg:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col justify-between">
+                    <div class="p-4 md:p-6 space-y-4 overflow-hidden">
+                        <div class="flex items-center justify-between border-b border-slate-50 pb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-blue-100 flex items-center justify-center text-blue-600 border border-slate-100 relative">
+                                    <i class="fas fa-robot text-[10px]"></i>
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-none"></div>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-black leading-none uppercase">Jemima AI</p>
+                                    <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Online & Ready</p>
+                                </div>
+                            </div>
+                            <div class="px-1.5 py-0.5 bg-blue-50 text-blue-600 text-[6px] font-black uppercase">Live</div>
+                        </div>
+
+                        <div id="chat-feed" class="space-y-3 h-[180px] md:h-[220px] overflow-y-auto chat-scroll pr-1 flex flex-col">
+                            <div class="bg-blue-600 text-white p-3 rounded-none text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-blue-50">
+                                Hello! I'm Jemima. Select a question below, or <button onclick="activateAI()" class="underline font-black hover:text-blue-200 decoration-blue-300">click here to play the video</button> and I'll explain how I grow your business.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 md:p-6 bg-slate-50/50 border-t border-slate-100 space-y-3 md:space-y-4">
+                        <div class="flex flex-col gap-1.5">
+                            <button onclick="playVideoAnswer('howItWorks', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border border-slate-100 text-slate-700 hover:text-blue-600 hover:border-blue-200 transition-all uppercase tracking-widest text-left px-3">
+                                <i class="fas fa-play mr-2 text-[6px] text-blue-400"></i> How do you book my calendar?
+                            </button>
+                            <button onclick="playVideoAnswer('pricing', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border border-slate-100 text-slate-700 hover:text-blue-600 hover:border-blue-200 transition-all uppercase tracking-widest text-left px-3">
+                                <i class="fas fa-play mr-2 text-[6px] text-blue-400"></i> How much does it cost?
+                            </button>
+                            <button onclick="playVideoAnswer('results', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border border-slate-100 text-slate-700 hover:text-blue-600 hover:border-blue-200 transition-all uppercase tracking-widest text-left px-3">
+                                <i class="fas fa-play mr-2 text-[6px] text-blue-400"></i> Can I see your results?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <div class="bg-white p-6 md:p-10 border border-slate-200 shadow-sm text-center">
+                <span class="text-[7px] lg:text-[8px] font-black text-blue-600 uppercase tracking-widest">[ SMS AUTO-REPLY ]</span>
+                <h4 class="text-base lg:text-lg font-black mt-2 mb-4 uppercase tracking-tight">100% Lead Capture</h4>
+                <p class="text-[11px] lg:text-xs text-slate-500 leading-relaxed">Missed calls turn into text conversations and booked jobs instantly.</p>
+            </div>
+            <div class="bg-white p-6 md:p-10 border border-slate-200 shadow-sm text-center">
+                <span class="text-[7px] lg:text-[8px] font-black text-blue-600 uppercase tracking-widest">[ GOOGLE REVIEWS ]</span>
+                <h4 class="text-base lg:text-lg font-black mt-2 mb-4 uppercase tracking-tight">Reputation Guard</h4>
+                <p class="text-[11px] lg:text-xs text-slate-500 leading-relaxed">Automatically collect and manage 5-star Google reviews after every job.</p>
+            </div>
+            <div class="bg-white p-6 md:p-10 border border-slate-200 shadow-sm text-center">
+                <span class="text-[7px] lg:text-[8px] font-black text-blue-600 uppercase tracking-widest">[ QUOTE ENGINE ]</span>
+                <h4 class="text-base lg:text-lg font-black mt-2 mb-4 uppercase tracking-tight">Booking Hub</h4>
+                <p class="text-[11px] lg:text-xs text-slate-500 leading-relaxed">Calculate exact quotes and secure bookings without lifting a finger.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 bg-white border-t text-center grayscale opacity-30 mt-8">
+        <div class="flex flex-wrap justify-center gap-8 md:gap-12 text-sm md:text-xl font-black italic tracking-tighter">
+            <span>TRADIEFLOW</span><span>CONSULT.IO</span><span>SAAS.CO</span><span>SPARK-TECH</span>
+        </div>
+    </footer>
+
+    <script>
+        const chatFeed = document.getElementById('chat-feed');
+        const playerMount = document.getElementById('player-mount');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        
+        // Configuration for HeyGen Embed URLs
+        const videoConfig = {
+            intro: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67", 
+            questions: {
+                howItWorks: {
+                    url: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67", 
+                    message: "I check your live calendar, calculate exact quotes based on service type, and secure the booking instantly."
+                },
+                pricing: {
+                    url: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67", 
+                    message: "I typically pay for myself within 48 hours. I handle all leads for a flat monthly fee that's significantly cheaper than a human receptionist."
+                },
+                results: {
+                    url: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67", 
+                    message: "Our clients see a 100% increase in captured leads. Every missed call becomes a text conversation."
+                }
+            }
+        };
+
+        /**
+         * Injects a HeyGen iframe into the mount point
+         * @param {string} url The HeyGen embed URL
+         * @param {boolean} muted Whether to start muted
+         * @param {boolean} hidePlaceholder Whether to hide the interaction overlay
+         */
+        function injectHeyGen(url, muted = false, hidePlaceholder = true) {
+            if (hidePlaceholder) {
+                videoPlaceholder.style.display = 'none';
+            }
+            
+            loadingIndicator.style.display = 'flex';
+            
+            const separator = url.includes('?') ? '&' : '?';
+            // m=0 is HeyGen's internal flag for unmuted autoplay
+            const muteFlag = muted ? 1 : 0;
+            const finalUrl = `${url}${separator}autoplay=1&muted=${muteFlag}&m=${muteFlag}&enable_unmute=1`;
+            
+            const iframe = document.createElement('iframe');
+            iframe.className = "absolute inset-0 w-full h-full bg-black";
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media; microphone; camera;');
+            iframe.src = finalUrl;
+            
+            iframe.onload = () => {
+                loadingIndicator.style.display = 'none';
+            };
+
+            playerMount.innerHTML = '';
+            playerMount.appendChild(iframe);
+        }
+
+        // Logic for page load - starts the "intro" muted to mimic an active AI
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                injectHeyGen(videoConfig.intro, true, false);
+            }, 500);
+        });
+
+        // Triggered by click on video overlay OR chat link
+        function activateAI() {
+            // Re-inject the intro video but unmuted
+            injectHeyGen(videoConfig.intro, false, true);
+        }
+
+        function playVideoAnswer(type, el) {
+            const answer = videoConfig.questions[type];
+            if (!answer) return;
+
+            // Trigger unmuted HeyGen video for the specific answer
+            injectHeyGen(answer.url, false, true);
+
+            // UI Chat updates
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-slate-100 text-slate-700 p-3 rounded-none text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border border-slate-200';
+            userMsg.innerText = el.innerText.trim();
+            chatFeed.appendChild(userMsg);
+
+            addMessage(answer.message);
+        }
+
+        function addMessage(text) {
+            const typing = document.createElement('div');
+            typing.className = 'bg-slate-50 text-slate-400 p-2 text-[9px] font-bold w-fit italic';
+            typing.innerText = 'Jemima is responding...';
+            chatFeed.appendChild(typing);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            setTimeout(() => {
+                typing.remove();
+                const msg = document.createElement('div');
+                msg.className = 'bg-blue-600 text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-blue-50';
+                msg.innerHTML = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
