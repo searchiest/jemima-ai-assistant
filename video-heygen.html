@@ -191,9 +191,9 @@
         
         // Configuration for HeyGen Embed URLs
         const videoConfig = {
-            // idle URL is played on loop muted upon page load
-            idle: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67",
-            // intro is the "New Video" with sound triggered by interaction
+            // Updated idle URL with your provided HeyGen embed
+            idle: "https://app.heygen.com/embeds/3d245109effc4431ae5d993b3cfe889f",
+            // intro is the "active" video with sound triggered by interaction
             intro: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67", 
             questions: {
                 howItWorks: {
@@ -246,7 +246,7 @@
             playerMount.appendChild(iframe);
         }
 
-        // Logic for page load - starts the "idle" video muted on a loop
+        // Logic for page load - starts the new "idle" video muted on a loop
         window.addEventListener('load', function() {
             setTimeout(() => {
                 // muted=true, hidePlaceholder=false, loop=true
