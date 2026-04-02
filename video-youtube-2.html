@@ -41,16 +41,6 @@
         .youtube-iframe.visible {
             opacity: 1;
         }
-
-        .loader {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #e2e8f0;
-            border-top: 2px solid #3b82f6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -85,21 +75,8 @@
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
                         <div id="player-mount" class="absolute inset-0"></div>
 
-                        <!-- Interaction Overlay -->
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-center bg-transparent cursor-pointer" onclick="activateAI()">
-                            <div class="bg-black/20 p-6 rounded-2xl backdrop-blur-md">
-                                <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg">
-                                    <i class="fas fa-play text-sm text-white ml-1"></i>
-                                </div>
-                                <p class="text-[10px] font-black uppercase tracking-[0.2em] mb-1 text-white">Meet Jemima AI</p>
-                                <p class="text-[8px] text-white/90 font-bold uppercase tracking-widest">
-                                    <i class="fas fa-volume-up mr-1 text-blue-400"></i> Click to start with sound
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div id="loading-indicator" class="absolute inset-0 hidden flex flex-col items-center justify-center bg-slate-900/10">
-                            <div class="loader mb-2"></div>
+                        <!-- Transparent Interaction Layer (Visible items removed) -->
+                        <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer" onclick="activateAI()">
                         </div>
                     </div>
 
@@ -160,24 +137,19 @@
     <script>
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
-        const loadingIndicator = document.getElementById('loading-indicator');
         const playerMount = document.getElementById('player-mount');
         
         // YouTube Video ID from your URL
         const youtubeId = "gPP9ZaY_E-8";
 
         function playVideo(muted = false, loop = false) {
-            loadingIndicator.style.display = 'flex';
-
             const muteFlag = muted ? 1 : 0;
             const loopFlag = loop ? 1 : 0;
             
             // YouTube Autoplay Params
-            // Added playsinline=1 and enablejsapi=1 for better autoplay support
             let finalUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${muteFlag}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1`;
             
             if (loop) {
-                // playlist parameter is required by YouTube to loop embedded videos
                 finalUrl += `&loop=1&playlist=${youtubeId}`;
             }
 
@@ -185,13 +157,11 @@
             iframe.className = "youtube-iframe";
             iframe.setAttribute('title', 'YouTube video player');
             iframe.setAttribute('frameborder', '0');
-            // allow attributes are critical for modern browsers to permit autoplay
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
             iframe.src = finalUrl;
             
             iframe.onload = () => {
                 iframe.classList.add('visible');
-                loadingIndicator.style.display = 'none';
             };
 
             playerMount.innerHTML = '';
@@ -199,13 +169,11 @@
         }
 
         window.addEventListener('load', () => {
-            // Initial load: Muted loop background to comply with browser autoplay policies
             playVideo(true, true);
         });
 
         function activateAI() {
             videoPlaceholder.style.display = 'none';
-            // Transition to unmuted play now that user has interacted
             playVideo(false, false);
         }
 
