@@ -79,7 +79,7 @@
                         <!-- Player Mount Point -->
                         <div id="player-mount" class="absolute inset-0 w-full h-full z-10 bg-black"></div>
 
-                        <!-- Initial Placeholder (Transparent to show muted video behind) -->
+                        <!-- Initial Placeholder (Transparent to show muted background loop video) -->
                         <div id="video-placeholder" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/10 backdrop-blur-[1px] text-white text-center p-6 cursor-pointer" onclick="activateAI()">
                             <div class="w-16 h-16 bg-blue-600/90 rounded-full flex items-center justify-center mb-4 pulse-anim shadow-xl hover:bg-blue-600 transition-colors">
                                 <i class="fas fa-play text-xl ml-1"></i>
@@ -191,6 +191,9 @@
         
         // Configuration for HeyGen Embed URLs
         const videoConfig = {
+            // idle URL is played on loop muted upon page load
+            idle: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67",
+            // intro is the "New Video" with sound triggered by interaction
             intro: "https://app.heygen.com/embeds/2c19feb618b6479387052efd0d0b8f67", 
             questions: {
                 howItWorks: {
@@ -213,8 +216,9 @@
          * @param {string} url The HeyGen embed URL
          * @param {boolean} muted Whether to start muted
          * @param {boolean} hidePlaceholder Whether to hide the interaction overlay
+         * @param {boolean} loop Whether to loop the video
          */
-        function injectHeyGen(url, muted = false, hidePlaceholder = true) {
+        function injectHeyGen(url, muted = false, hidePlaceholder = true, loop = false) {
             if (hidePlaceholder) {
                 videoPlaceholder.style.display = 'none';
             }
@@ -222,9 +226,11 @@
             loadingIndicator.style.display = 'flex';
             
             const separator = url.includes('?') ? '&' : '?';
-            // m=0 is HeyGen's internal flag for unmuted autoplay
             const muteFlag = muted ? 1 : 0;
-            const finalUrl = `${url}${separator}autoplay=1&muted=${muteFlag}&m=${muteFlag}&enable_unmute=1`;
+            const loopFlag = loop ? 1 : 0;
+            
+            // Added &loop parameter to support background looping persona
+            const finalUrl = `${url}${separator}autoplay=1&muted=${muteFlag}&m=${muteFlag}&enable_unmute=1&loop=${loopFlag}`;
             
             const iframe = document.createElement('iframe');
             iframe.className = "absolute inset-0 w-full h-full bg-black";
@@ -240,17 +246,18 @@
             playerMount.appendChild(iframe);
         }
 
-        // Logic for page load - starts the "intro" muted to mimic an active AI
+        // Logic for page load - starts the "idle" video muted on a loop
         window.addEventListener('load', function() {
             setTimeout(() => {
-                injectHeyGen(videoConfig.intro, true, false);
+                // muted=true, hidePlaceholder=false, loop=true
+                injectHeyGen(videoConfig.idle, true, false, true);
             }, 500);
         });
 
         // Triggered by click on video overlay OR chat link
         function activateAI() {
-            // Re-inject the intro video but unmuted
-            injectHeyGen(videoConfig.intro, false, true);
+            // Transitions to the "intro" video unmuted (no loop)
+            injectHeyGen(videoConfig.intro, false, true, false);
         }
 
         function playVideoAnswer(type, el) {
@@ -258,7 +265,7 @@
             if (!answer) return;
 
             // Trigger unmuted HeyGen video for the specific answer
-            injectHeyGen(answer.url, false, true);
+            injectHeyGen(answer.url, false, true, false);
 
             // UI Chat updates
             const userMsg = document.createElement('div');
@@ -280,7 +287,7 @@
                 typing.remove();
                 const msg = document.createElement('div');
                 msg.className = 'bg-blue-600 text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-blue-50';
-                msg.innerHTML = text;
+                msg.innerText = text;
                 chatFeed.appendChild(msg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
             }, 800);
