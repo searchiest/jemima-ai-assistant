@@ -35,11 +35,13 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
+            z-index: 10;
         }
 
-        .youtube-iframe.visible {
+        .youtube-iframe.active {
             opacity: 1;
+            z-index: 20;
         }
     </style>
 </head>
@@ -73,9 +75,11 @@
                 
                 <div class="w-full md:w-[45%] space-y-3">
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
-                        <div id="player-mount" class="absolute inset-0"></div>
+                        <div id="player-mount" class="absolute inset-0">
+                            <!-- Dual iframes will be managed here -->
+                        </div>
 
-                        <!-- Transparent Interaction Layer (Visible items removed) -->
+                        <!-- Transparent Interaction Layer -->
                         <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer" onclick="activateAI()">
                         </div>
                     </div>
@@ -139,47 +143,74 @@
         const videoPlaceholder = document.getElementById('video-placeholder');
         const playerMount = document.getElementById('player-mount');
         
-        // YouTube Video ID from your URL
         const youtubeId = "gPP9ZaY_E-8";
+        let players = [];
+        let activeIndex = 0;
+        let loopInterval = null;
 
-        function playVideo(muted = false, loop = false) {
-            const muteFlag = muted ? 1 : 0;
-            const loopFlag = loop ? 1 : 0;
-            
-            // YouTube Autoplay Params
-            let finalUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${muteFlag}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1`;
-            
-            if (loop) {
-                finalUrl += `&loop=1&playlist=${youtubeId}`;
-            }
-
+        // Function to create a clean iframe
+        function createPlayer(muted = true) {
             const iframe = document.createElement('iframe');
             iframe.className = "youtube-iframe";
-            iframe.setAttribute('title', 'YouTube video player');
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-            iframe.src = finalUrl;
-            
-            iframe.onload = () => {
-                iframe.classList.add('visible');
-            };
+            const muteParam = muted ? 1 : 0;
+            iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=${muteParam}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1&version=3`;
+            iframe.setAttribute('allow', 'autoplay; encrypted-media');
+            return iframe;
+        }
 
+        function initSeamlessLoop() {
+            // Clear any existing state
+            clearInterval(loopInterval);
             playerMount.innerHTML = '';
-            playerMount.appendChild(iframe);
+            
+            // Create two layers
+            const p1 = createPlayer(true);
+            const p2 = createPlayer(true);
+            
+            players = [p1, p2];
+            playerMount.appendChild(p1);
+            playerMount.appendChild(p2);
+            
+            p1.classList.add('active');
+            
+            // Start the swap interval (YouTube video is roughly 15s)
+            // We swap slightly early (e.g., at 14.5s) to hide the reset
+            loopInterval = setInterval(swapPlayers, 14500);
+        }
+
+        function swapPlayers() {
+            const prevIndex = activeIndex;
+            activeIndex = (activeIndex + 1) % 2;
+            
+            // Fade in new, fade out old
+            players[activeIndex].classList.add('active');
+            
+            setTimeout(() => {
+                players[prevIndex].classList.remove('active');
+                // Reload the hidden iframe so it's ready for next loop
+                const oldSrc = players[prevIndex].src;
+                players[prevIndex].src = '';
+                players[prevIndex].src = oldSrc;
+            }, 800);
         }
 
         window.addEventListener('load', () => {
-            playVideo(true, true);
+            initSeamlessLoop();
         });
 
         function activateAI() {
+            clearInterval(loopInterval);
             videoPlaceholder.style.display = 'none';
-            playVideo(false, false);
+            
+            // Switch to a single high-quality unmuted player
+            playerMount.innerHTML = '';
+            const finalPlayer = createPlayer(false);
+            finalPlayer.classList.add('active');
+            playerMount.appendChild(finalPlayer);
         }
 
         function playVideoAnswer(type, el) {
-            videoPlaceholder.style.display = 'none';
-            playVideo(false, false);
+            activateAI(); // Ensure we are in interaction mode
 
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border';
