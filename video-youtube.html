@@ -79,14 +79,14 @@
                         <!-- Player Mount Point -->
                         <div id="player-mount" class="absolute inset-0 w-full h-full z-10 bg-black"></div>
 
-                        <!-- Initial Placeholder (Hidden once video autoplays or user activates) -->
-                        <div id="video-placeholder" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900 text-white text-center p-6 cursor-pointer" onclick="activateAI()">
-                            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4 pulse-anim shadow-xl">
+                        <!-- Initial Placeholder (Transparent to show muted video behind) -->
+                        <div id="video-placeholder" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/10 backdrop-blur-[1px] text-white text-center p-6 cursor-pointer" onclick="activateAI()">
+                            <div class="w-16 h-16 bg-blue-600/90 rounded-full flex items-center justify-center mb-4 pulse-anim shadow-xl hover:bg-blue-600 transition-colors">
                                 <i class="fas fa-play text-xl ml-1"></i>
                             </div>
-                            <p class="text-[10px] font-black uppercase tracking-[0.2em] mb-1">Meet Jemima AI</p>
-                            <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                                <i class="fas fa-volume-up text-blue-500"></i> Click to start with sound
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] mb-1 drop-shadow-md">Meet Jemima AI</p>
+                            <p class="text-[8px] text-white font-bold uppercase tracking-widest flex items-center gap-2 drop-shadow-md">
+                                <i class="fas fa-volume-up text-blue-400"></i> Click to start with sound
                             </p>
                         </div>
                         
@@ -134,7 +134,7 @@
 
                         <div id="chat-feed" class="space-y-3 h-[180px] md:h-[220px] overflow-y-auto chat-scroll pr-1 flex flex-col">
                             <div class="bg-blue-600 text-white p-3 rounded-none text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-blue-50">
-                                Hello! I'm Jemima. Select a question and I'll explain how I grow your business.
+                                Hello! I'm Jemima. Select a question below, or <button onclick="activateAI()" class="underline font-black hover:text-blue-200 decoration-blue-300">click here to play the video</button> and I'll explain how I grow your business.
                             </div>
                         </div>
                     </div>
@@ -191,18 +191,18 @@
         
         // Configuration for YouTube IDs
         const videoConfig = {
-            intro: "dQw4w9WgXcQ", // Video to play on page load (muted)
+            intro: "dQw4w9WgXcQ", // Background video on page load
             questions: {
                 howItWorks: {
-                    id: "jNQXAC9IVRw", // Replace with your specific YouTube ID
+                    id: "jNQXAC9IVRw", 
                     message: "I check your live calendar, calculate exact quotes based on service type, and secure the booking instantly."
                 },
                 pricing: {
-                    id: "9bZkp7q19f0", // Replace with your specific YouTube ID
+                    id: "9bZkp7q19f0", 
                     message: "I typically pay for myself within 48 hours. I handle all leads for a flat monthly fee that's significantly cheaper than a human receptionist."
                 },
                 results: {
-                    id: "kJQP7kiw5Fk", // Replace with your specific YouTube ID
+                    id: "kJQP7kiw5Fk", 
                     message: "Our clients see a 100% increase in captured leads. Every missed call becomes a text conversation."
                 }
             }
@@ -221,14 +221,9 @@
             
             loadingIndicator.style.display = 'flex';
             
-            // Build parameters:
-            // autoplay=1 (Play immediately)
-            // mute=1 or 0 (Sound control)
-            // rel=0 (No related videos)
-            // playsinline=1 (Better for mobile/sandboxes)
-            // controls=0 (Clean UI)
             const muteFlag = muted ? 1 : 0;
-            const finalUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${muteFlag}&rel=0&playsinline=1&controls=0&modestbranding=1`;
+            // playlist parameter and loop ensures the intro acts as a background persona
+            const finalUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${muteFlag}&rel=0&playsinline=1&controls=0&modestbranding=1&playlist=${videoId}&loop=1`;
             
             const iframe = document.createElement('iframe');
             iframe.className = "absolute inset-0 w-full h-full bg-black";
@@ -244,15 +239,16 @@
             playerMount.appendChild(iframe);
         }
 
-        // Logic for page load - starts the "intro" muted to bypass browser blocks
-        window.onload = function() {
-            // We play the intro muted so it actually autoplays
-            // We keep the placeholder visible so the user still has an 'activate sound' target
-            injectYouTube(videoConfig.intro, true, false);
-        };
+        // Logic for page load - starts the "intro" muted
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                injectYouTube(videoConfig.intro, true, false);
+            }, 500);
+        });
 
+        // Triggered by click on video overlay OR chat link
         function activateAI() {
-            // Once they click the play button, we play the intro unmuted
+            // Re-inject the intro video but with sound unmuted
             injectYouTube(videoConfig.intro, false, true);
         }
 
@@ -260,7 +256,7 @@
             const answer = videoConfig.questions[type];
             if (!answer) return;
 
-            // Trigger unique unmuted YouTube video
+            // Trigger unmuted YouTube video for the specific answer
             injectYouTube(answer.id, false, true);
 
             // UI Chat updates
@@ -283,7 +279,7 @@
                 typing.remove();
                 const msg = document.createElement('div');
                 msg.className = 'bg-blue-600 text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-blue-50';
-                msg.innerText = text;
+                msg.innerHTML = text;
                 chatFeed.appendChild(msg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
             }, 800);
