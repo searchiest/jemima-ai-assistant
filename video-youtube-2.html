@@ -35,7 +35,7 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity(0.8s) ease-in-out;
             z-index: 10;
         }
 
@@ -143,7 +143,7 @@
         const videoPlaceholder = document.getElementById('video-placeholder');
         const playerMount = document.getElementById('player-mount');
         
-        const youtubeId = "gPP9ZaY_E-8";
+        const youtubeId = "-eq1iBNv-Z4";
         let players = [];
         let activeIndex = 0;
         let loopInterval = null;
@@ -173,8 +173,7 @@
             
             p1.classList.add('active');
             
-            // Start the swap interval (YouTube video is roughly 15s)
-            // We swap slightly early (e.g., at 14.5s) to hide the reset
+            // Start the swap interval (Approx loop duration)
             loopInterval = setInterval(swapPlayers, 14500);
         }
 
