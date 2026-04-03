@@ -34,34 +34,13 @@
             top: 0;
             left: 0;
             opacity: 0;
-            z-index: 10;
-        }
-
-        /* Seamless loop transition */
-        .loop-node {
             transition: opacity 0.8s ease-in-out;
+            z-index: 10;
         }
 
         .youtube-iframe.active {
             opacity: 1;
             z-index: 20;
-        }
-
-        /* Interaction player gets top-tier priority with no fade-in delay for speed */
-        .youtube-iframe.interaction-node {
-            z-index: 100;
-            transition: none !important;
-        }
-
-        #interaction-loader {
-            position: absolute;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.2);
-            z-index: 110;
-            pointer-events: none;
         }
     </style>
 </head>
@@ -96,13 +75,12 @@
                 
                 <div class="w-full md:w-[45%] space-y-3">
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
-                        <div id="player-mount" class="absolute inset-0"></div>
-
-                        <div id="interaction-loader">
-                            <div class="w-5 h-5 border-2 border-[#c2155a]/20 border-t-[#c2155a] rounded-full animate-spin"></div>
+                        <div id="player-mount" class="absolute inset-0">
+                            <!-- Dual iframes managed here -->
                         </div>
 
-                        <div id="video-placeholder" class="absolute inset-0 z-[120] bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
+                        <!-- Interaction Layer with Overlay Message -->
+                        <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
                             <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3">
                                 <span class="flex h-2 w-2 relative">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span>
@@ -172,38 +150,18 @@
         const videoPlaceholder = document.getElementById('video-placeholder');
         const overlayPill = document.getElementById('overlay-pill');
         const playerMount = document.getElementById('player-mount');
-        const interactionLoader = document.getElementById('interaction-loader');
         
         const idleYoutubeId = "-eq1iBNv-Z4";
         const interactionYoutubeId = "z_ZvCzjZGok";
 
-        let activeLoopPlayers = [];
+        let players = [];
         let activeIndex = 0;
         let loopInterval = null;
         let isInteracting = false;
-        let pendingInteractionIframe = null;
 
-        window.addEventListener('message', function(event) {
-            try {
-                const data = JSON.parse(event.data);
-                
-                if (data.event === 'onStateChange') {
-                    // State 1: Playing, State 3: Buffering
-                    if (pendingInteractionIframe && (data.info === 1 || data.info === 3)) {
-                        finalizeInteraction();
-                    }
-                    
-                    if (isInteracting && data.info === 0) {
-                        isInteracting = false;
-                        initSeamlessLoop();
-                    }
-                }
-            } catch (e) {}
-        });
-
-        function createPlayer(muted = true, vid = idleYoutubeId, isInteraction = false) {
+        function createPlayer(muted = true, vid = idleYoutubeId) {
             const iframe = document.createElement('iframe');
-            iframe.className = isInteraction ? "youtube-iframe interaction-node" : "youtube-iframe loop-node";
+            iframe.className = "youtube-iframe";
             const muteParam = muted ? 1 : 0;
             iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=${muteParam}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1&version=3&origin=${window.location.origin}`;
             iframe.setAttribute('allow', 'autoplay; encrypted-media');
@@ -214,89 +172,56 @@
             clearInterval(loopInterval);
             playerMount.innerHTML = '';
             
-            const p1 = createPlayer(true, idleYoutubeId, false);
-            const p2 = createPlayer(true, idleYoutubeId, false);
+            const p1 = createPlayer(true, idleYoutubeId);
+            const p2 = createPlayer(true, idleYoutubeId);
             
-            activeLoopPlayers = [p1, p2];
+            players = [p1, p2];
             playerMount.appendChild(p1);
             playerMount.appendChild(p2);
             
             p1.classList.add('active');
-            loopInterval = setInterval(swapLoopPlayers, 14500);
+            
+            loopInterval = setInterval(swapPlayers, 14500);
         }
 
-        function swapLoopPlayers() {
-            if (isInteracting || pendingInteractionIframe) return;
+        function swapPlayers() {
+            if (isInteracting) return;
             const prevIndex = activeIndex;
             activeIndex = (activeIndex + 1) % 2;
             
-            activeLoopPlayers[activeIndex].classList.add('active');
+            players[activeIndex].classList.add('active');
             
             setTimeout(() => {
-                if (isInteracting || pendingInteractionIframe) return;
-                activeLoopPlayers[prevIndex].classList.remove('active');
-                const oldSrc = activeLoopPlayers[prevIndex].src;
-                activeLoopPlayers[prevIndex].src = '';
-                activeLoopPlayers[prevIndex].src = oldSrc;
+                if (isInteracting) return;
+                players[prevIndex].classList.remove('active');
+                const oldSrc = players[prevIndex].src;
+                players[prevIndex].src = '';
+                players[prevIndex].src = oldSrc;
             }, 800);
         }
 
-        window.addEventListener('load', initSeamlessLoop);
+        window.addEventListener('load', () => {
+            initSeamlessLoop();
+        });
 
-        function activateAI(customVid = null) {
-            const vidToPlay = customVid || interactionYoutubeId;
-            
-            if (pendingInteractionIframe && pendingInteractionIframe.dataset.vid === vidToPlay) return;
-
+        function activateAI() {
+            if (isInteracting) return;
             isInteracting = true;
+            
             clearInterval(loopInterval);
             
-            if (overlayPill) overlayPill.style.display = 'none';
-            interactionLoader.style.display = 'flex';
-
-            const newPlayer = createPlayer(false, vidToPlay, true);
-            newPlayer.dataset.vid = vidToPlay;
+            if (videoPlaceholder) {
+                videoPlaceholder.remove();
+            }
             
-            if (pendingInteractionIframe) pendingInteractionIframe.remove();
-            pendingInteractionIframe = newPlayer;
-            
-            playerMount.appendChild(newPlayer);
-        }
-
-        function finalizeInteraction() {
-            if (!pendingInteractionIframe) return;
-            
-            const playerToActivate = pendingInteractionIframe;
-            pendingInteractionIframe = null;
-            
-            // 1. INSTANT SWAP
-            interactionLoader.style.display = 'none';
-            playerToActivate.style.opacity = "1";
-            playerToActivate.classList.add('active');
-            
-            // 2. AGGRESSIVE HIDE OF ALL BACKGROUND LAYERS
-            const allIframes = playerMount.querySelectorAll('iframe');
-            allIframes.forEach(f => {
-                if (f !== playerToActivate) {
-                    f.classList.remove('active');
-                    f.style.display = "none";
-                    f.style.opacity = "0";
-                    f.style.zIndex = "1";
-                }
-            });
-
-            // 3. DOM CLEANUP
-            setTimeout(() => {
-                const currentFrames = playerMount.querySelectorAll('iframe');
-                currentFrames.forEach(f => {
-                    if (f !== playerToActivate) f.remove();
-                });
-                activeLoopPlayers = [playerToActivate];
-            }, 50);
+            // Clean player swap for interaction
+            playerMount.innerHTML = '';
+            const finalPlayer = createPlayer(false, interactionYoutubeId);
+            finalPlayer.classList.add('active');
+            playerMount.appendChild(finalPlayer);
         }
 
         function playVideoAnswer(type, el) {
-            // Reverted: Now all buttons trigger the main interaction video
             activateAI(); 
 
             const userMsg = document.createElement('div');
