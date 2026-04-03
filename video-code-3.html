@@ -34,7 +34,7 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 0.4s ease-in-out; /* Shortened for snappier switch */
             z-index: 10;
         }
 
@@ -43,7 +43,11 @@
             z-index: 20;
         }
 
-        /* Loading Spinner for interaction layer transition */
+        /* Interaction player gets higher priority */
+        .youtube-iframe.interaction-node {
+            z-index: 30;
+        }
+
         #interaction-loader {
             position: absolute;
             inset: 0;
@@ -51,7 +55,7 @@
             align-items: center;
             justify-content: center;
             background: rgba(0,0,0,0.1);
-            z-index: 25;
+            z-index: 40;
             pointer-events: none;
         }
     </style>
@@ -93,7 +97,7 @@
                             <div class="w-5 h-5 border-2 border-[#c2155a]/20 border-t-[#c2155a] rounded-full animate-spin"></div>
                         </div>
 
-                        <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
+                        <div id="video-placeholder" class="absolute inset-0 z-50 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
                             <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3">
                                 <span class="flex h-2 w-2 relative">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span>
@@ -244,7 +248,6 @@
         window.addEventListener('load', initSeamlessLoop);
 
         function activateAI(customVid = null) {
-            // Already processing this specific interaction? Skip to avoid spam
             const vidToPlay = customVid || interactionYoutubeId;
             if (pendingInteractionIframe && pendingInteractionIframe.dataset.vid === vidToPlay) return;
 
@@ -254,17 +257,14 @@
             if (overlayPill) overlayPill.style.display = 'none';
             interactionLoader.style.display = 'flex';
 
-            // Create new player, but keep it hidden at 0 opacity
             const newPlayer = createPlayer(false, vidToPlay);
             newPlayer.dataset.vid = vidToPlay;
-            newPlayer.style.zIndex = "25";
+            newPlayer.classList.add('interaction-node'); // Higher z-index but still opacity 0
             
-            // Clean up any other pending ones
             if (pendingInteractionIframe) pendingInteractionIframe.remove();
             pendingInteractionIframe = newPlayer;
             
             playerMount.appendChild(newPlayer);
-            // Now we wait for the window message event (onStateChange: 1) to finalize
         }
 
         function finalizeInteraction() {
@@ -274,17 +274,23 @@
             pendingInteractionIframe = null;
             interactionLoader.style.display = 'none';
 
-            // FADE IN
+            // BRING NEW ONE IN IMMEDIATELY
             playerToActivate.classList.add('active');
             
-            // FADE OUT / REMOVE ALL OTHERS
+            // HIDE IDLE PLAYERS IMMEDIATELY (no waiting for fade)
+            // This prevents "shining through" during the transition
+            activePlayers.forEach(p => {
+                if (p !== playerToActivate) p.classList.remove('active');
+            });
+
+            // Cleanup DOM after the visual swap
             setTimeout(() => {
                 const frames = playerMount.querySelectorAll('iframe');
                 frames.forEach(f => {
                     if (f !== playerToActivate) f.remove();
                 });
                 activePlayers = [playerToActivate];
-            }, 800);
+            }, 500);
         }
 
         function playVideoAnswer(type, el) {
