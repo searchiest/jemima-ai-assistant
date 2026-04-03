@@ -171,7 +171,14 @@
         
         // Video IDs
         const idleYoutubeId = "-eq1iBNv-Z4";
-        const interactionYoutubeId = "naJHOcstmOU";
+        const interactionYoutubeId = "ggWocv8qG0s";
+        
+        // FAQ Specific Video Mapping
+        const faqVideoIds = {
+            howItWorks: "dQw4w9WgXcQ", // Example Test Video 1
+            pricing: "jNQXAC9IVRw",    // Example Test Video 2
+            results: "3JZ_D3ELwOQ"     // Example Test Video 3
+        };
 
         let players = [];
         let activeIndex = 0;
@@ -241,8 +248,9 @@
             initSeamlessLoop();
         });
 
-        function activateAI() {
-            if (isInteracting) return;
+        function activateAI(customVid = null) {
+            // If already interacting with the same video type, we can ignore or restart
+            // For testing, let's allow switching videos even if already interacting
             isInteracting = true;
             
             clearInterval(loopInterval);
@@ -252,8 +260,10 @@
                 overlayPill.style.display = 'none';
             }
 
+            const vidToPlay = customVid || interactionYoutubeId;
+
             // SMOOTH HANDOVER: Load the new video in a hidden layer first
-            const interactionPlayer = createPlayer(false, interactionYoutubeId);
+            const interactionPlayer = createPlayer(false, vidToPlay);
             interactionPlayer.style.zIndex = "25"; // Place it above loop players
             playerMount.appendChild(interactionPlayer);
 
@@ -261,10 +271,11 @@
                 setTimeout(() => {
                     interactionPlayer.classList.add('active');
                     
-                    // Cleanup the old loop players after transition
+                    // Cleanup the old players after transition
                     setTimeout(() => {
-                        players.forEach(p => {
-                            if (p !== interactionPlayer) p.remove();
+                        const allFrames = playerMount.querySelectorAll('iframe');
+                        allFrames.forEach(f => {
+                            if (f !== interactionPlayer) f.remove();
                         });
                         players = [interactionPlayer];
                     }, 800);
@@ -273,7 +284,8 @@
         }
 
         function playVideoAnswer(type, el) {
-            activateAI(); 
+            // Pass the specific video ID based on the question type
+            activateAI(faqVideoIds[type]); 
 
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border';
