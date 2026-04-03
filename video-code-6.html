@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         <div id="chat-feed" class="space-y-3 h-[180px] md:h-[220px] overflow-y-auto chat-scroll pr-1 flex flex-col">
-                            <div class="bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10">
+                            <div class="bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2">
                                 Hello! I'm Jemima. Select a question and I'll explain how I grow your business.
                             </div>
                         </div>
@@ -175,7 +175,7 @@
         
         // FAQ Specific Video Mapping
         const faqVideoIds = {
-            integration: "o_IdIP_uvEE", 
+            integration: "dQw4w9WgXcQ", 
             setup: "jNQXAC9IVRw",    
             natural: "9bZkp7q19f0"     
         };
@@ -309,28 +309,42 @@
             chatFeed.appendChild(userMsg);
 
             const messages = {
-                integration: "I'm designed to fit right into your workflow. I sync instantly with your Google or Outlook calendars, and I can push lead data straight to your CRM—whether that’s HubSpot, Salesforce, or anything in between. No more manual entry, just confirmed bookings.",
-                setup: "Getting me up and running is incredibly fast. With our zero-code installation, I can be live on your website and capturing leads in under 15 minutes. It’s as simple as copy-pasting a single line of code, and I’m ready to work.",
-                natural: "I know how important first impressions are. That’s why I’m powered by advanced natural language processing. I don’t just follow a script; I have real conversations that feel helpful and professional, so your customers always feel like they’re being taken care of by a person."
+                integration: [
+                    "I'm designed to fit right into your workflow. I sync instantly with your Google or Outlook calendars, and I can push lead data straight to your CRM—whether that’s HubSpot, Salesforce, or anything in between.",
+                    "No more manual entry, just confirmed bookings."
+                ],
+                setup: [
+                    "Getting me up and running is incredibly fast. With our zero-code installation, I can be live on your website and capturing leads in under 15 minutes.",
+                    "It’s as simple as copy-pasting a single line of code, and I’m ready to work."
+                ],
+                natural: [
+                    "I know how important first impressions are. That’s why I’m powered by advanced natural language processing.",
+                    "I don’t just follow a script; I have real conversations that feel helpful and professional, so your customers always feel like they’re being taken care of by a person."
+                ]
             };
-            addMessage(messages[type]);
+            addMessages(messages[type]);
         }
 
-        function addMessage(text) {
-            const typing = document.createElement('div');
-            typing.className = 'bg-slate-50 text-slate-400 p-2 text-[9px] font-bold w-fit italic';
-            typing.innerText = 'Jemima is responding...';
-            chatFeed.appendChild(typing);
-            chatFeed.scrollTop = chatFeed.scrollHeight;
+        async function addMessages(msgArray) {
+            if (!Array.isArray(msgArray)) msgArray = [msgArray];
+            
+            for (const text of msgArray) {
+                const typing = document.createElement('div');
+                typing.className = 'bg-slate-50 text-slate-400 p-2 text-[9px] font-bold w-fit italic';
+                typing.innerText = 'Jemima is responding...';
+                chatFeed.appendChild(typing);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
 
-            setTimeout(() => {
+                // Typing delay simulation
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
                 typing.remove();
                 const msg = document.createElement('div');
-                msg.className = 'bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10';
+                msg.className = 'bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2';
                 msg.innerText = text;
                 chatFeed.appendChild(msg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
-            }, 800);
+            }
         }
     </script>
 </body>
