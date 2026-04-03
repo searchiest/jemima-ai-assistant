@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jemima AI | Double Your Conversions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+
+        /* Clean YouTube Container */
+        #video-container {
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            /* Fix for iOS z-index issues */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        .youtube-iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            z-index: 10;
+        }
+
+        .youtube-iframe.active {
+            opacity: 1;
+            z-index: 20;
+        }
+
+        /* Loading Spinner for interaction */
+        #interaction-loader {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.2);
+            z-index: 25;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="flex items-center gap-2 font-extrabold text-lg lg:text-xl tracking-tighter">
+            <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+            <span>Jemima</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#" class="hover:text-[#c2155a]">Product</a>
+            <a href="#" class="hover:text-[#c2155a]">Pricing</a>
+            <a href="#" class="hover:text-[#c2155a]">Contact</a>
+        </div>
+        <button class="px-4 py-2 text-[10px] lg:text-xs font-black bg-[#c2155a] text-white rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest">Free Audit</button>
+    </nav>
+
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-4 lg:pt-8 pb-8 lg:pb-16">
+        
+        <div class="flex flex-col items-center space-y-8 lg:space-y-12 mb-16 lg:mb-20">
+            <div class="max-w-4xl text-center space-y-4">
+                <div class="inline-block bg-slate-900 text-white text-[7px] lg:text-[8px] font-bold px-3 py-1 lg:px-5 lg:py-1.5 uppercase tracking-[0.3em] shadow-lg">
+                    100% Lead Capture Engine
+                </div>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-[800] leading-tight text-slate-950">
+                    Add Jemima to your site. <br> <span class="text-[#c2155a]">Increase Conversions.</span>
+                </h1>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+                
+                <div class="w-full md:w-[45%] space-y-3">
+                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
+                        <div id="player-mount" class="absolute inset-0">
+                            <!-- Dual iframes managed here -->
+                        </div>
+
+                        <div id="interaction-loader">
+                            <div class="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        </div>
+
+                        <!-- Interaction Layer with Overlay Message -->
+                        <!-- bg-black/0 is a fix for iOS to ensure the div is clickable -->
+                        <div id="video-placeholder" class="absolute inset-0 z-30 bg-black/0 cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8 touch-manipulation" onclick="activateAI()">
+                            <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3 pointer-events-none">
+                                <span class="flex h-2 w-2 relative">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#c2155a]"></span>
+                                </span>
+                                Click the video to interact
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 p-4 flex items-center justify-center gap-8 shadow-sm">
+                        <div class="flex items-center gap-2 text-[9px] font-black uppercase tracking-wider">
+                            <div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white"><i class="fas fa-phone-alt"></i></div>
+                            <span>Call Now</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[9px] font-black uppercase tracking-wider">
+                            <div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white"><i class="fas fa-sms"></i></div>
+                            <span>SMS Now</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col justify-between">
+                    <div class="p-4 md:p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b pb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden">
+                                    <img src="jemima-chat-icon.png" alt="Jemima Avatar" class="w-full h-full object-cover">
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-none border border-white"></div>
+                                </div>
+                                <p class="text-[11px] font-black uppercase">Jemima</p>
+                            </div>
+                        </div>
+                        <div id="chat-feed" class="space-y-3 h-[180px] md:h-[220px] overflow-y-auto chat-scroll pr-1 flex flex-col">
+                            <div class="bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2">
+                                Hello! I'm Jemima. Select a question and I'll explain how I grow your business.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 md:p-6 bg-slate-50/50 border-t space-y-3">
+                        <div class="flex flex-col gap-1.5">
+                            <button onclick="playVideoAnswer('integration', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border text-slate-700 hover:text-[#c2155a] transition-all uppercase tracking-widest text-left px-3">
+                                <i class="fas fa-play mr-2 text-[6px] text-[#c2155a]/60"></i> Will it work with my CRM and Calendar?
+                            </button>
+                            <button onclick="playVideoAnswer('setup', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border text-slate-700 hover:text-[#c2155a] transition-all uppercase tracking-widest text-left px-3">
+                                <i class="fas fa-play mr-2 text-[6px] text-[#c2155a]/60"></i> How long does the setup take?
+                            </button>
+                            <button onclick="playVideoAnswer('natural', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border text-slate-700 hover:text-[#c2155a] transition-all uppercase tracking-widest text-left px-3">
+                                <i class="fas fa-play mr-2 text-[6px] text-blue-400"></i> Does she sound natural to customers?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 bg-white border-t text-center grayscale opacity-30 mt-8">
+        <div class="flex flex-wrap justify-center gap-8 text-xl font-black italic tracking-tighter">
+            <span>TRADIEFLOW</span><span>CONSULT.IO</span><span>SAAS.CO</span><span>SPARK-TECH</span>
+        </div>
+    </footer>
+
+    <script>
+        const chatFeed = document.getElementById('chat-feed');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const overlayPill = document.getElementById('overlay-pill');
+        const playerMount = document.getElementById('player-mount');
+        const interactionLoader = document.getElementById('interaction-loader');
+        
+        // Video IDs
+        const idleYoutubeId = "-eq1iBNv-Z4";
+        const interactionYoutubeId = "naJHOcstmOU";
+        
+        // FAQ Specific Video Mapping
+        const faqVideoIds = {
+            integration: "o_IdIP_uvEE", 
+            setup: "jNQXAC9IVRw",    
+            natural: "9bZkp7q19f0"     
+        };
+
+        let players = [];
+        let activeIndex = 0;
+        let loopInterval = null;
+        let isInteracting = false;
+
+        // Listen for YouTube Player state changes to return to loop when done
+        window.addEventListener('message', function(event) {
+            try {
+                const data = JSON.parse(event.data);
+                // event === "onStateChange", info === 0 means Ended
+                if (data.event === 'onStateChange' && data.info === 0) {
+                    if (isInteracting) {
+                        isInteracting = false;
+                        if (overlayPill) overlayPill.style.display = 'flex';
+                        initSeamlessLoop();
+                    }
+                }
+            } catch (e) {
+                // Not a relevant JSON message
+            }
+        });
+
+        // Function to create a clean iframe
+        function createPlayer(muted = true, vid = idleYoutubeId) {
+            const iframe = document.createElement('iframe');
+            iframe.className = "youtube-iframe";
+            const muteParam = muted ? 1 : 0;
+            // enablejsapi=1 is required to receive postMessage events (like video end)
+            iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=${muteParam}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1&version=3`;
+            iframe.setAttribute('allow', 'autoplay; encrypted-media');
+            return iframe;
+        }
+
+        function initSeamlessLoop() {
+            clearInterval(loopInterval);
+            playerMount.innerHTML = '';
+            
+            const p1 = createPlayer(true, idleYoutubeId);
+            const p2 = createPlayer(true, idleYoutubeId);
+            
+            players = [p1, p2];
+            playerMount.appendChild(p1);
+            playerMount.appendChild(p2);
+            
+            p1.classList.add('active');
+            
+            loopInterval = setInterval(swapPlayers, 14500);
+        }
+
+        function swapPlayers() {
+            if (isInteracting) return;
+            const prevIndex = activeIndex;
+            activeIndex = (activeIndex + 1) % 2;
+            
+            players[activeIndex].classList.add('active');
+            
+            setTimeout(() => {
+                if (isInteracting) return;
+                players[prevIndex].classList.remove('active');
+                const oldSrc = players[prevIndex].src;
+                players[prevIndex].src = '';
+                players[prevIndex].src = oldSrc;
+            }, 800);
+        }
+
+        window.addEventListener('load', () => {
+            initSeamlessLoop();
+            
+            // Mobile Specific: Ensure the placeholder registers clicks on iOS
+            videoPlaceholder.addEventListener('touchstart', function(e) {
+                // We let the 'click' event handle the logic, but this triggers the focus
+            }, {passive: true});
+        });
+
+        function activateAI(customVid = null) {
+            // Toggle logic for Primary Explainer: If clicking the main area while interacting, reset to loop
+            if (isInteracting && !customVid) {
+                isInteracting = false;
+                if (overlayPill) overlayPill.style.display = 'flex';
+                initSeamlessLoop();
+                return;
+            }
+            
+            isInteracting = true;
+            clearInterval(loopInterval);
+            
+            // Hide the visual overlay pill
+            if (overlayPill) {
+                overlayPill.style.display = 'none';
+            }
+
+            const vidToPlay = customVid || interactionYoutubeId;
+
+            // SMOOTH HANDOVER: Load the new video in a hidden layer first
+            const interactionPlayer = createPlayer(false, vidToPlay);
+            interactionPlayer.style.zIndex = "25"; // Place it above loop players
+            playerMount.appendChild(interactionPlayer);
+
+            interactionPlayer.onload = () => {
+                setTimeout(() => {
+                    interactionPlayer.classList.add('active');
+                    
+                    // Cleanup the old players after transition
+                    setTimeout(() => {
+                        const allFrames = playerMount.querySelectorAll('iframe');
+                        allFrames.forEach(f => {
+                            if (f !== interactionPlayer) f.remove();
+                        });
+                        players = [interactionPlayer];
+                    }, 800);
+                }, 100);
+            };
+        }
+
+        function playVideoAnswer(type, el) {
+            const vidId = faqVideoIds[type];
+            
+            isInteracting = true;
+            clearInterval(loopInterval);
+            if (overlayPill) overlayPill.style.display = 'none';
+
+            playerMount.innerHTML = '';
+            const faqPlayer = createPlayer(false, vidId);
+            faqPlayer.classList.add('active');
+            faqPlayer.style.zIndex = "25";
+            playerMount.appendChild(faqPlayer);
+            players = [faqPlayer];
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border';
+            userMsg.innerText = el.innerText.trim();
+            chatFeed.appendChild(userMsg);
+
+            const messages = {
+                integration: [
+                    "I'm designed to fit right into your workflow. I sync instantly with your Google or Outlook calendars, and I can push lead data straight to your CRM—whether that’s HubSpot, Salesforce, or anything in between.",
+                    "No more manual entry, just confirmed bookings."
+                ],
+                setup: [
+                    "Getting me up and running is incredibly fast. With our zero-code installation, I can be live on your website and capturing leads in under 15 minutes.",
+                    "It’s as simple as copy-pasting a single line of code, and I’m ready to work."
+                ],
+                natural: [
+                    "I know how important first impressions are. That’s why I’m powered by advanced natural language processing.",
+                    "I don’t just follow a script; I have real conversations that feel helpful and professional, so your customers always feel like they’re being taken care of by a person."
+                ]
+            };
+            addMessages(messages[type]);
+        }
+
+        async function addMessages(msgArray) {
+            if (!Array.isArray(msgArray)) msgArray = [msgArray];
+            
+            for (const text of msgArray) {
+                const typing = document.createElement('div');
+                typing.className = 'bg-slate-50 text-slate-400 p-2 text-[9px] font-bold w-fit italic mb-2';
+                typing.innerText = 'Jemima is responding...';
+                chatFeed.appendChild(typing);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+
+                // Typing delay simulation
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                typing.remove();
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
