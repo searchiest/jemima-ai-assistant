@@ -11,26 +11,26 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
        .chat-scroll::-webkit-scrollbar { width: 4px; }
        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
        .message-anim { animation: slideIn 0.3s ease forwards; }
 
-        #video-container { background-color: #000; position: relative; overflow: hidden; }
+        #video-container { background-color: #000; position: relative; overflow: hidden; -webkit-transform: translateZ(0); transform: translateZ(0); }
        .youtube-iframe {
             width: 100%!important; height: 100%!important; border: none;
             position: absolute; top: 0; left: 0; opacity: 0;
-            transition: opacity 0.4s ease-in-out; z-index: 10;
+            z-index: 10;
         }
        .youtube-iframe.active { opacity: 1; z-index: 20; }
+        /* iPhone-specific gesture priority node */
        .youtube-iframe.interaction-node { z-index: 100!important; transition: none!important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
-    <audio id="ios-audio-promoter" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=="></audio>
+    <audio id="ios-promoter" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=="></audio>
 
     <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
         <div class="flex items-center gap-2 font-extrabold text-lg lg:text-xl tracking-tighter">
-            <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+            <img src="jemima-logo.png" alt="Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full">
             <span>Jemima</span>
         </div>
         <button class="px-4 py-2 text-[10px] lg:text-xs font-black bg-[#c2155a] text-white rounded-none uppercase tracking-widest">Free Audit</button>
@@ -38,7 +38,7 @@
 
     <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-4 lg:pt-8 pb-8 lg:pb-16">
         <div class="flex flex-col items-center space-y-12">
-            <h1 class="text-2xl md:text-3xl lg:text-4xl font- text-center text-slate-950">
+            <h1 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center text-slate-950">
                 Add Jemima to your site. <br> <span class="text-[#c2155a]">Increase Conversions.</span>
             </h1>
 
@@ -46,7 +46,7 @@
                 <div class="w-full md:w-[45%] space-y-3">
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
                         <div id="player-mount" class="absolute inset-0"></div>
-                        <div id="video-placeholder" class="absolute inset-0 z- bg-transparent cursor-pointer flex flex-col justify-end items-center pb-8" onclick="activateAI()">
+                        <div id="video-placeholder" class="absolute inset-0 z- bg-black/0 cursor-pointer flex flex-col justify-end items-center pb-8" onclick="activateAI()">
                             <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full text-white text-[10px] font-black uppercase tracking-widest shadow-2xl flex items-center gap-3">
                                 <span class="flex h-2 w-2 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-[#c2155a]"></span></span>
                                 Click the video to interact
@@ -54,32 +54,26 @@
                         </div>
                     </div>
                     <div class="bg-white border border-slate-200 p-4 flex justify-center gap-8 shadow-sm">
-                        <div class="flex items-center gap-2 text-[9px] font-black uppercase">
-                            <div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white"><i class="fas fa-phone-alt"></i></div>
-                            <span>Call Now</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-[9px] font-black uppercase">
-                            <div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white"><i class="fas fa-sms"></i></div>
-                            <span>SMS Now</span>
-                        </div>
+                        <div class="flex items-center gap-2 text-[9px] font-black uppercase"><div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white"><i class="fas fa-phone-alt"></i></div><span>Call Now</span></div>
+                        <div class="flex items-center gap-2 text-[9px] font-black uppercase"><div class="w-8 h-8 bg-slate-950 flex items-center justify-center text-white"><i class="fas fa-sms"></i></div><span>SMS Now</span></div>
                     </div>
                 </div>
 
                 <div class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col justify-between">
                     <div class="p-6 space-y-4">
                         <div class="flex items-center gap-2 border-b pb-3">
-                            <img src="jemima-chat-icon.png" alt="Avatar" class="w-8 h-8 border">
+                            <img src="jemima-chat-icon.png" alt="Jemima" class="w-8 h-8 border">
                             <p class="text-[11px] font-black uppercase">Jemima</p>
                         </div>
-                        <div id="chat-feed" class="h-[200px] overflow-y-auto chat-scroll flex flex-col space-y-3">
+                        <div id="chat-feed" class="h-[200px] overflow-y-auto chat-scroll flex flex-col space-y-3 pr-2">
                             <div class="bg-[#c2155a] text-white p-3 text-[10px] font-medium leading-relaxed message-anim">
                                 Hello! I'm Jemima. Select a question and I'll explain how I grow your business.
                             </div>
                         </div>
                     </div>
                     <div class="p-6 bg-slate-50/50 border-t space-y-2">
-                        <button onclick="playVideoAnswer('integration', this)" class="w-full py-2 text-[9px] font-black bg-white border text-left px-3 hover:text-[#c2155a] transition-all">How do you book my calendar?</button>
-                        <button onclick="playVideoAnswer('setup', this)" class="w-full py-2 text-[9px] font-black bg-white border text-left px-3 hover:text-[#c2155a] transition-all">How long does setup take?</button>
+                        <button onclick="playVideoAnswer('integration', this)" class="w-full py-2 text-[9px] font-black bg-white border text-left px-3 hover:text-[#c2155a] transition-all">Will it work with my CRM and Calendar?</button>
+                        <button onclick="playVideoAnswer('setup', this)" class="w-full py-2 text-[9px] font-black bg-white border text-left px-3 hover:text-[#c2155a] transition-all">How long does the setup take?</button>
                     </div>
                 </div>
             </div>
@@ -87,6 +81,7 @@
     </main>
 
     <script>
+        const chatFeed = document.getElementById('chat-feed');
         const playerMount = document.getElementById('player-mount');
         const overlayPill = document.getElementById('overlay-pill');
         const idleVid = "-eq1iBNv-Z4";
@@ -98,8 +93,8 @@
             const iframe = document.createElement('iframe');
             iframe.className = "youtube-iframe" + (isInteraction? " interaction-node" : "");
             const muteParam = muted? 1 : 0;
-            // SYNC FIX: referrerpolicy and origin added for iOS Error 153 resolution
-            iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=${muteParam}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&origin=${window.location.origin}`;
+            // Strict referer and playsinline for iOS stability
+            iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=${muteParam}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&version=3&origin=${window.location.origin}`;
             iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
             iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
             return iframe;
@@ -112,18 +107,22 @@
             playerMount.appendChild(p1);
             p1.classList.add('active');
             loopInterval = setInterval(() => {
-                if (!isInteracting) {
-                    const p2 = createPlayer(true, idleVid);
-                    playerMount.appendChild(p2);
-                    setTimeout(() => { p2.classList.add('active'); p1.remove(); }, 800);
-                }
+                if (isInteracting) return;
+                const p2 = createPlayer(true, idleVid);
+                playerMount.appendChild(p2);
+                setTimeout(() => { 
+                    if (isInteracting) { p2.remove(); return; }
+                    p2.classList.add('active'); 
+                    p1.remove(); 
+                }, 800);
             }, 14500);
         }
 
         function activateAI(customVid = null) {
-            // iOS Audio Session Promotion
-            document.getElementById('ios-audio-promoter').play().catch(() => {});
+            // Unblock iOS Audio context immediately on gesture
+            document.getElementById('ios-promoter').play().catch(() => {});
 
+            // Toggle Logic: Reset on second click
             if (isInteracting &&!customVid) {
                 isInteracting = false;
                 overlayPill.style.display = 'flex';
@@ -134,24 +133,57 @@
             clearInterval(loopInterval);
             overlayPill.style.display = 'none';
 
-            // AGGRESSIVE SWAP: Create and show immediately to keep gesture alive on iPhone
+            // SYNC SWAP: Inject and show immediately to maintain gesture Context on iPhone
             const newPlayer = createPlayer(false, customVid |
 
 | interactVid, true);
-            playerMount.querySelectorAll('iframe').forEach(f => {
-                f.style.display = 'none'; // Instant hide prevents ghosting image
-            });
             playerMount.appendChild(newPlayer);
             newPlayer.classList.add('active');
+
+            // Hard-hide background loop to kill visuals ghosting
+            setTimeout(() => {
+                playerMount.querySelectorAll('iframe').forEach(f => {
+                    if (f!== newPlayer) f.style.display = 'none';
+                });
+            }, 50);
         }
 
         function playVideoAnswer(type, el) {
             const ids = { integration: "o_IdIP_uvEE", setup: "jNQXAC9IVRw" };
             activateAI(ids[type]);
+
+            // Split Bubble Chat Logic
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] font-bold self-end border mb-2';
             userMsg.innerText = el.innerText;
-            document.getElementById('chat-feed').appendChild(userMsg);
+            chatFeed.appendChild(userMsg);
+
+            const responses = {
+                integration:,
+                setup:
+            };
+            addMessages(responses[type] |
+
+| ["One moment, loading your answer..."]);
+        }
+
+        async function addMessages(msgArray) {
+            for (const text of msgArray) {
+                const typing = document.createElement('div');
+                typing.className = 'bg-slate-50 text-slate-400 p-2 text-[9px] font-bold w-fit italic mb-2';
+                typing.innerText = 'Jemima is typing...';
+                chatFeed.appendChild(typing);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+
+                await new Promise(r => setTimeout(r, 1000));
+                typing.remove();
+
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a] text-white p-3 text-[10px] font-medium leading-relaxed message-anim mb-2';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
         }
 
         window.addEventListener('load', initSeamlessLoop);
