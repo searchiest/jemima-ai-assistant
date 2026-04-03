@@ -34,7 +34,7 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 0.4s ease-in-out; /* Shortened for snappier switch */
+            transition: opacity 0.3s ease-in-out; /* Faster switch */
             z-index: 10;
         }
 
@@ -43,9 +43,9 @@
             z-index: 20;
         }
 
-        /* Interaction player gets higher priority */
+        /* Interaction player gets absolute priority */
         .youtube-iframe.interaction-node {
-            z-index: 30;
+            z-index: 40; /* High priority layering */
         }
 
         #interaction-loader {
@@ -55,7 +55,7 @@
             align-items: center;
             justify-content: center;
             background: rgba(0,0,0,0.1);
-            z-index: 40;
+            z-index: 50;
             pointer-events: none;
         }
     </style>
@@ -97,7 +97,7 @@
                             <div class="w-5 h-5 border-2 border-[#c2155a]/20 border-t-[#c2155a] rounded-full animate-spin"></div>
                         </div>
 
-                        <div id="video-placeholder" class="absolute inset-0 z-50 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
+                        <div id="video-placeholder" class="absolute inset-0 z-[60] bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
                             <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3">
                                 <span class="flex h-2 w-2 relative">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span>
@@ -147,7 +147,7 @@
                                 <i class="fas fa-play mr-2 text-[6px] text-[#c2155a]/60"></i> How much does it cost?
                             </button>
                             <button onclick="playVideoAnswer('results', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border text-slate-700 hover:text-[#c2155a] transition-all uppercase tracking-widest text-left px-3">
-                                <i class="fas fa-play mr-2 text-[6px] text-blue-400"></i> Can I see your results?
+                                <i class="fas fa-play mr-2 text-[6px] text-[#c2155a]/60"></i> Can I see your results?
                             </button>
                         </div>
                     </div>
@@ -274,22 +274,29 @@
             pendingInteractionIframe = null;
             interactionLoader.style.display = 'none';
 
-            // BRING NEW ONE IN IMMEDIATELY
+            // 1. FORCE THE NEW PLAYER TO TOP AND SHOW
             playerToActivate.classList.add('active');
             
-            // HIDE IDLE PLAYERS IMMEDIATELY (no waiting for fade)
-            // This prevents "shining through" during the transition
-            activePlayers.forEach(p => {
-                if (p !== playerToActivate) p.classList.remove('active');
+            // 2. AGGRESSIVELY HIDE BACKGROUND PLAYERS IMMEDIATELY
+            // By setting z-index and opacity manually we skip the "shining through" issue
+            const allIframes = playerMount.querySelectorAll('iframe');
+            allIframes.forEach(f => {
+                if (f !== playerToActivate) {
+                    f.classList.remove('active');
+                    f.style.opacity = "0";
+                    f.style.zIndex = "1";
+                }
             });
 
-            // Cleanup DOM after the visual swap
+            // Update active tracker
+            activePlayers = [playerToActivate];
+
+            // 3. CLEAN UP DOM
             setTimeout(() => {
-                const frames = playerMount.querySelectorAll('iframe');
-                frames.forEach(f => {
+                const currentFrames = playerMount.querySelectorAll('iframe');
+                currentFrames.forEach(f => {
                     if (f !== playerToActivate) f.remove();
                 });
-                activePlayers = [playerToActivate];
             }, 500);
         }
 
