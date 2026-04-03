@@ -80,8 +80,15 @@
                             <!-- Dual iframes will be managed here -->
                         </div>
 
-                        <!-- Transparent Interaction Layer -->
-                        <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer" onclick="activateAI()">
+                        <!-- Interaction Layer with Overlay Message -->
+                        <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
+                            <div class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3">
+                                <span class="flex h-2 w-2 relative">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#c2155a]"></span>
+                                </span>
+                                Click the video to interact
+                            </div>
                         </div>
                     </div>
 
@@ -101,7 +108,6 @@
                     <div class="p-4 md:p-6 space-y-4">
                         <div class="flex items-center justify-between border-b pb-3">
                             <div class="flex items-center gap-2">
-                                <!-- Updated Chat Icon: Robot replaced with Sprite image_a61748.png -->
                                 <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden">
                                     <img src="jemima-chat-icon.png" alt="Jemima Avatar" class="w-full h-full object-cover">
                                     <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-none border border-white"></div>
@@ -161,11 +167,9 @@
         }
 
         function initSeamlessLoop() {
-            // Clear any existing state
             clearInterval(loopInterval);
             playerMount.innerHTML = '';
             
-            // Create two layers
             const p1 = createPlayer(true);
             const p2 = createPlayer(true);
             
@@ -175,7 +179,6 @@
             
             p1.classList.add('active');
             
-            // Start the swap interval (Approx loop duration)
             loopInterval = setInterval(swapPlayers, 14500);
         }
 
@@ -183,12 +186,10 @@
             const prevIndex = activeIndex;
             activeIndex = (activeIndex + 1) % 2;
             
-            // Fade in new, fade out old
             players[activeIndex].classList.add('active');
             
             setTimeout(() => {
                 players[prevIndex].classList.remove('active');
-                // Reload the hidden iframe so it's ready for next loop
                 const oldSrc = players[prevIndex].src;
                 players[prevIndex].src = '';
                 players[prevIndex].src = oldSrc;
@@ -201,9 +202,12 @@
 
         function activateAI() {
             clearInterval(loopInterval);
-            videoPlaceholder.style.display = 'none';
             
-            // Switch to a single high-quality unmuted player
+            // Permanently remove the overlay from the DOM
+            if (videoPlaceholder) {
+                videoPlaceholder.remove();
+            }
+            
             playerMount.innerHTML = '';
             const finalPlayer = createPlayer(false);
             finalPlayer.classList.add('active');
@@ -211,7 +215,7 @@
         }
 
         function playVideoAnswer(type, el) {
-            activateAI(); // Ensure we are in interaction mode
+            activateAI(); 
 
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border';
