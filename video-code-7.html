@@ -44,9 +44,10 @@
             z-index: 20;
         }
 
-        /* Interaction players get priority layering */
+        /* Interaction players get absolute priority layering */
         .youtube-iframe.interaction-node {
-            z-index: 25;
+            z-index: 100 !important;
+            transition: none !important; /* Instant visibility for interaction nodes */
         }
 
         /* Loading Spinner for interaction */
@@ -57,7 +58,7 @@
             align-items: center;
             justify-content: center;
             background: rgba(0,0,0,0.2);
-            z-index: 30;
+            z-index: 110;
             pointer-events: none;
         }
     </style>
@@ -102,7 +103,7 @@
                         </div>
 
                         <!-- Interaction Layer with Overlay Message -->
-                        <div id="video-placeholder" class="absolute inset-0 z-40 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
+                        <div id="video-placeholder" class="absolute inset-0 z-[120] bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
                             <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3">
                                 <span class="flex h-2 w-2 relative">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c2155a] opacity-75"></span>
@@ -285,25 +286,29 @@
             
             if (interactionLoader) interactionLoader.style.display = 'none';
 
-            // Show the new player
+            // Show the new player instantly
             playerToActivate.classList.add('active');
+            playerToActivate.style.opacity = "1";
             
-            // Instantly hide and eventually remove all other players
+            // AGGRESSIVE HIDE: Instantly hide all loop players to prevent ghosting
             const allIframes = playerMount.querySelectorAll('iframe');
             allIframes.forEach(f => {
                 if (f !== playerToActivate) {
                     f.classList.remove('active');
-                    f.style.display = "none";
+                    f.style.display = "none"; // Immediate hard-hide
+                    f.style.opacity = "0";
+                    f.style.zIndex = "1";
                 }
             });
 
+            // Cleanup the DOM shortly after
             setTimeout(() => {
                 const currentFrames = playerMount.querySelectorAll('iframe');
                 currentFrames.forEach(f => {
                     if (f !== playerToActivate) f.remove();
                 });
                 players = [playerToActivate];
-            }, 500);
+            }, 100);
         }
 
         function activateAI(customVid = null) {
