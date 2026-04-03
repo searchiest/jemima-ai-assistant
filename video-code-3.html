@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jemima AI | Double Your Conversions</title>
+    <title>Jemima | Double Your Conversions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -20,7 +20,6 @@
         }
         .message-anim { animation: slideIn 0.3s ease forwards; }
 
-        /* Clean YouTube Container */
         #video-container {
             background-color: #000;
             position: relative;
@@ -44,14 +43,14 @@
             z-index: 20;
         }
 
-        /* Loading Spinner for interaction */
+        /* Loading Spinner for interaction layer transition */
         #interaction-loader {
             position: absolute;
             inset: 0;
             display: none;
             align-items: center;
             justify-content: center;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.1);
             z-index: 25;
             pointer-events: none;
         }
@@ -88,15 +87,12 @@
                 
                 <div class="w-full md:w-[45%] space-y-3">
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
-                        <div id="player-mount" class="absolute inset-0">
-                            <!-- Dual iframes managed here -->
-                        </div>
+                        <div id="player-mount" class="absolute inset-0"></div>
 
                         <div id="interaction-loader">
-                            <div class="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                            <div class="w-5 h-5 border-2 border-[#c2155a]/20 border-t-[#c2155a] rounded-full animate-spin"></div>
                         </div>
 
-                        <!-- Interaction Layer with Overlay Message -->
                         <div id="video-placeholder" class="absolute inset-0 z-30 bg-transparent cursor-pointer flex flex-col justify-end items-center pb-6 lg:pb-8" onclick="activateAI()">
                             <div id="overlay-pill" class="bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 text-white text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] shadow-2xl message-anim flex items-center gap-3">
                                 <span class="flex h-2 w-2 relative">
@@ -169,44 +165,46 @@
         const playerMount = document.getElementById('player-mount');
         const interactionLoader = document.getElementById('interaction-loader');
         
-        // Video IDs
         const idleYoutubeId = "-eq1iBNv-Z4";
-        const interactionYoutubeId = "naJHOcstmOU";
+        const interactionYoutubeId = "ggWocv8qG0s";
         
-        // FAQ Specific Video Mapping
         const faqVideoIds = {
-            howItWorks: "naJHOcstmOU", // Example Test Video 1
-            pricing: "naJHOcstmOU",    // Example Test Video 2
-            results: "naJHOcstmOU"     // Example Test Video 3
+            howItWorks: "dQw4w9WgXcQ",
+            pricing: "jNQXAC9IVRw",
+            results: "3JZ_D3ELwOQ"
         };
 
-        let players = [];
+        let activePlayers = [];
         let activeIndex = 0;
         let loopInterval = null;
         let isInteracting = false;
+        let pendingInteractionIframe = null;
 
-        // Listen for YouTube Player state changes to return to loop when done
+        // Listen for YouTube API messages
         window.addEventListener('message', function(event) {
             try {
                 const data = JSON.parse(event.data);
-                // event === "onStateChange", info === 0 means Ended
-                if (data.event === 'onStateChange' && data.info === 0) {
-                    if (isInteracting) {
+                
+                // DATA.INFO: 1 = Playing, 0 = Ended
+                if (data.event === 'onStateChange') {
+                    // SEAMLESS HANDOVER: If we have a pending interaction video, wait until it is PLAYING (1)
+                    if (pendingInteractionIframe && data.info === 1 && event.source === pendingInteractionIframe.contentWindow) {
+                        finalizeInteraction();
+                    }
+                    
+                    // AUTO-LOOP: If current interactive video ends (0), go back to loop
+                    if (isInteracting && data.info === 0) {
                         isInteracting = false;
                         initSeamlessLoop();
                     }
                 }
-            } catch (e) {
-                // Not a relevant JSON message
-            }
+            } catch (e) {}
         });
 
-        // Function to create a clean iframe
         function createPlayer(muted = true, vid = idleYoutubeId) {
             const iframe = document.createElement('iframe');
             iframe.className = "youtube-iframe";
             const muteParam = muted ? 1 : 0;
-            // enablejsapi=1 is required to receive postMessage events (like video end)
             iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=${muteParam}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&enablejsapi=1&version=3`;
             iframe.setAttribute('allow', 'autoplay; encrypted-media');
             return iframe;
@@ -219,72 +217,77 @@
             const p1 = createPlayer(true, idleYoutubeId);
             const p2 = createPlayer(true, idleYoutubeId);
             
-            players = [p1, p2];
+            activePlayers = [p1, p2];
             playerMount.appendChild(p1);
             playerMount.appendChild(p2);
             
             p1.classList.add('active');
-            
-            loopInterval = setInterval(swapPlayers, 14500);
+            loopInterval = setInterval(swapLoopPlayers, 14500);
         }
 
-        function swapPlayers() {
-            if (isInteracting) return;
+        function swapLoopPlayers() {
+            if (isInteracting || pendingInteractionIframe) return;
             const prevIndex = activeIndex;
             activeIndex = (activeIndex + 1) % 2;
             
-            players[activeIndex].classList.add('active');
+            activePlayers[activeIndex].classList.add('active');
             
             setTimeout(() => {
-                if (isInteracting) return;
-                players[prevIndex].classList.remove('active');
-                const oldSrc = players[prevIndex].src;
-                players[prevIndex].src = '';
-                players[prevIndex].src = oldSrc;
+                if (isInteracting || pendingInteractionIframe) return;
+                activePlayers[prevIndex].classList.remove('active');
+                const oldSrc = activePlayers[prevIndex].src;
+                activePlayers[prevIndex].src = '';
+                activePlayers[prevIndex].src = oldSrc;
             }, 800);
         }
 
-        window.addEventListener('load', () => {
-            initSeamlessLoop();
-        });
+        window.addEventListener('load', initSeamlessLoop);
 
         function activateAI(customVid = null) {
-            // If already interacting with the same video type, we can ignore or restart
-            // For testing, let's allow switching videos even if already interacting
+            // Already processing this specific interaction? Skip to avoid spam
+            const vidToPlay = customVid || interactionYoutubeId;
+            if (pendingInteractionIframe && pendingInteractionIframe.dataset.vid === vidToPlay) return;
+
             isInteracting = true;
-            
             clearInterval(loopInterval);
             
-            // Permanently hide the visual overlay pill
-            if (overlayPill) {
-                overlayPill.style.display = 'none';
-            }
+            if (overlayPill) overlayPill.style.display = 'none';
+            interactionLoader.style.display = 'flex';
 
-            const vidToPlay = customVid || interactionYoutubeId;
+            // Create new player, but keep it hidden at 0 opacity
+            const newPlayer = createPlayer(false, vidToPlay);
+            newPlayer.dataset.vid = vidToPlay;
+            newPlayer.style.zIndex = "25";
+            
+            // Clean up any other pending ones
+            if (pendingInteractionIframe) pendingInteractionIframe.remove();
+            pendingInteractionIframe = newPlayer;
+            
+            playerMount.appendChild(newPlayer);
+            // Now we wait for the window message event (onStateChange: 1) to finalize
+        }
 
-            // SMOOTH HANDOVER: Load the new video in a hidden layer first
-            const interactionPlayer = createPlayer(false, vidToPlay);
-            interactionPlayer.style.zIndex = "25"; // Place it above loop players
-            playerMount.appendChild(interactionPlayer);
+        function finalizeInteraction() {
+            if (!pendingInteractionIframe) return;
+            
+            const playerToActivate = pendingInteractionIframe;
+            pendingInteractionIframe = null;
+            interactionLoader.style.display = 'none';
 
-            interactionPlayer.onload = () => {
-                setTimeout(() => {
-                    interactionPlayer.classList.add('active');
-                    
-                    // Cleanup the old players after transition
-                    setTimeout(() => {
-                        const allFrames = playerMount.querySelectorAll('iframe');
-                        allFrames.forEach(f => {
-                            if (f !== interactionPlayer) f.remove();
-                        });
-                        players = [interactionPlayer];
-                    }, 800);
-                }, 100);
-            };
+            // FADE IN
+            playerToActivate.classList.add('active');
+            
+            // FADE OUT / REMOVE ALL OTHERS
+            setTimeout(() => {
+                const frames = playerMount.querySelectorAll('iframe');
+                frames.forEach(f => {
+                    if (f !== playerToActivate) f.remove();
+                });
+                activePlayers = [playerToActivate];
+            }, 800);
         }
 
         function playVideoAnswer(type, el) {
-            // Pass the specific video ID based on the question type
             activateAI(faqVideoIds[type]); 
 
             const userMsg = document.createElement('div');
