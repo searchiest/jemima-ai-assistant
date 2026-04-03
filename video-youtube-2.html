@@ -43,6 +43,18 @@
             opacity: 1;
             z-index: 20;
         }
+
+        /* Loading Spinner for interaction */
+        #interaction-loader {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.2);
+            z-index: 25;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -77,7 +89,11 @@
                 <div class="w-full md:w-[45%] space-y-3">
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden">
                         <div id="player-mount" class="absolute inset-0">
-                            <!-- Dual iframes will be managed here -->
+                            <!-- Dual iframes managed here -->
+                        </div>
+
+                        <div id="interaction-loader">
+                            <div class="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                         </div>
 
                         <!-- Interaction Layer with Overlay Message -->
@@ -131,7 +147,7 @@
                                 <i class="fas fa-play mr-2 text-[6px] text-[#c2155a]/60"></i> How much does it cost?
                             </button>
                             <button onclick="playVideoAnswer('results', this)" class="w-full py-2 text-[7px] md:text-[9px] font-black bg-white border text-slate-700 hover:text-[#c2155a] transition-all uppercase tracking-widest text-left px-3">
-                                <i class="fas fa-play mr-2 text-[6px] text-[#c2155a]/60"></i> Can I see your results?
+                                <i class="fas fa-play mr-2 text-[6px] text-blue-400"></i> Can I see your results?
                             </button>
                         </div>
                     </div>
@@ -150,6 +166,7 @@
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
         const playerMount = document.getElementById('player-mount');
+        const interactionLoader = document.getElementById('interaction-loader');
         
         // Video IDs
         const idleYoutubeId = "-eq1iBNv-Z4";
@@ -158,6 +175,7 @@
         let players = [];
         let activeIndex = 0;
         let loopInterval = null;
+        let isInteracting = false;
 
         // Function to create a clean iframe
         function createPlayer(muted = true, vid = idleYoutubeId) {
@@ -186,12 +204,14 @@
         }
 
         function swapPlayers() {
+            if (isInteracting) return;
             const prevIndex = activeIndex;
             activeIndex = (activeIndex + 1) % 2;
             
             players[activeIndex].classList.add('active');
             
             setTimeout(() => {
+                if (isInteracting) return;
                 players[prevIndex].classList.remove('active');
                 const oldSrc = players[prevIndex].src;
                 players[prevIndex].src = '';
@@ -204,18 +224,33 @@
         });
 
         function activateAI() {
+            if (isInteracting) return;
+            isInteracting = true;
+            
             clearInterval(loopInterval);
             
-            // Permanently remove the overlay from the DOM
+            // Permanently remove the overlay UI
             if (videoPlaceholder) {
                 videoPlaceholder.remove();
             }
-            
-            playerMount.innerHTML = '';
-            // Load the new interaction video unmuted
-            const finalPlayer = createPlayer(false, interactionYoutubeId);
-            finalPlayer.classList.add('active');
-            playerMount.appendChild(finalPlayer);
+
+            // SMOOTH HANDOVER: Load the new video in a hidden layer first
+            const interactionPlayer = createPlayer(false, interactionYoutubeId);
+            interactionPlayer.style.zIndex = "25"; // Place it above loop players
+            playerMount.appendChild(interactionPlayer);
+
+            interactionPlayer.onload = () => {
+                // Give it a tiny bit of time to buffer the first frames
+                setTimeout(() => {
+                    interactionPlayer.classList.add('active');
+                    
+                    // Cleanup the old loop players after transition
+                    setTimeout(() => {
+                        players.forEach(p => p.remove());
+                        players = [interactionPlayer];
+                    }, 800);
+                }, 100);
+            };
         }
 
         function playVideoAnswer(type, el) {
