@@ -213,7 +213,6 @@
                         event.target.playVideo();
                     },
                     onStateChange: (event) => {
-                        // YT.PlayerState.ENDED is 0
                         if (event.data === 0 && isInteracting) {
                             resetToLoop();
                         }
@@ -232,9 +231,10 @@
             
             players = [p1, p2];
             
-            // Wait a moment for objects to exist, then set classes
             setTimeout(() => {
-                players[0].getIframe().classList.add('active');
+                if (players[0] && players[0].getIframe()) {
+                    players[0].getIframe().classList.add('active');
+                }
             }, 500);
             
             loopInterval = setInterval(swapPlayers, 14500);
@@ -248,13 +248,13 @@
             const nextIframe = players[activeIndex].getIframe();
             const prevIframe = players[prevIndex].getIframe();
             
-            nextIframe.classList.add('active');
+            if (nextIframe) nextIframe.classList.add('active');
             players[activeIndex].seekTo(0);
             players[activeIndex].playVideo();
             
             setTimeout(() => {
                 if (isInteracting) return;
-                prevIframe.classList.remove('active');
+                if (prevIframe) prevIframe.classList.remove('active');
             }, 800);
         }
 
@@ -271,14 +271,16 @@
             isInteracting = true;
             clearInterval(loopInterval);
             
-            // CRITICAL: Hide the overlay immediately so it doesn't block clicks to the YouTube player
             videoPlaceholder.style.display = 'none';
 
             const vidToPlay = customVid || interactionYoutubeId;
+            
+            // Fix: Create the container div and append it to the DOM BEFORE calling YT.Player
             playerMount.innerHTML = '';
+            const interactionDiv = document.createElement('div');
+            playerMount.appendChild(interactionDiv);
 
-            // Create a single interaction player unmuted
-            const interactionPlayer = new YT.Player(document.createElement('div'), {
+            new YT.Player(interactionDiv, {
                 videoId: vidToPlay,
                 playerVars: {
                     autoplay: 1,
@@ -295,7 +297,6 @@
                     onReady: (event) => {
                         const iframe = event.target.getIframe();
                         iframe.className = "youtube-iframe active";
-                        playerMount.appendChild(iframe);
                         event.target.unMute();
                         event.target.playVideo();
                     },
