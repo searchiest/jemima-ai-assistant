@@ -278,21 +278,32 @@
         }
 
         function onYouTubeIframeAPIReady() {
+            // Player 1: Idle Loop (Muted)
             idlePlayer = new YT.Player('idle-player-mount', {
                 videoId: idleVid,
                 playerVars: {
-                    autoplay: 1, mute: 1, controls: 0, modestbranding: 1,
-                    rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1,
-                    loop: 1, playlist: idleVid
+                    autoplay: 1, 
+                    mute: 1, 
+                    controls: 0, 
+                    modestbranding: 1,
+                    rel: 0, 
+                    showinfo: 0, 
+                    iv_load_policy: 3, 
+                    playsinline: 1,
+                    loop: 1, 
+                    playlist: idleVid,
+                    origin: window.location.origin
                 },
                 events: {
                     onReady: (event) => {
                         event.target.getIframe().classList.add('yt-player-frame');
-                        // Force play to handle browser autoplay restrictions
+                        // Ensure it plays muted to satisfy browser policies
+                        event.target.mute();
                         event.target.playVideo();
                         checkReady();
                     },
                     onStateChange: (event) => {
+                        // Once we detect it's actually playing, reveal the video
                         if (event.data === YT.PlayerState.PLAYING && !isInteracting) {
                             event.target.getIframe().classList.add('active');
                             videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
@@ -302,19 +313,23 @@
                 }
             });
 
+            // Player 2: Interaction Player
             interactionPlayer = new YT.Player('interaction-player-mount', {
                 videoId: mainExplainer,
                 playerVars: {
-                    autoplay: 0, mute: 1, controls: 0, modestbranding: 1,
-                    rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1
+                    autoplay: 0, 
+                    mute: 0, 
+                    controls: 0, 
+                    modestbranding: 1,
+                    rel: 0, 
+                    showinfo: 0, 
+                    iv_load_policy: 3, 
+                    playsinline: 1,
+                    origin: window.location.origin
                 },
                 events: {
                     onReady: (event) => {
                         event.target.getIframe().classList.add('yt-player-frame');
-                        event.target.playVideo();
-                        setTimeout(() => { 
-                            if (!isInteracting) event.target.pauseVideo(); 
-                        }, 600);
                         checkReady();
                     },
                     onStateChange: (event) => {
@@ -335,6 +350,7 @@
             videoPlaceholder.style.display = 'flex';
             interactionPlayer.getIframe().classList.remove('active');
             idlePlayer.getIframe().classList.add('active');
+            idlePlayer.mute();
             idlePlayer.playVideo();
         }
 
@@ -342,10 +358,11 @@
             if (playersReady < 2) return;
             isInteracting = true;
             videoPlaceholder.style.display = 'none';
+            
             idlePlayer.pauseVideo();
             idlePlayer.getIframe().classList.remove('active');
-            interactionPlayer.getIframe().classList.add('active');
             
+            interactionPlayer.getIframe().classList.add('active');
             if (vidId !== interactionPlayer.getVideoData().video_id) {
                 interactionPlayer.loadVideoById({ videoId: vidId });
             }
