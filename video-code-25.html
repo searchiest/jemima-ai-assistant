@@ -288,6 +288,8 @@
                 events: {
                     onReady: (event) => {
                         event.target.getIframe().classList.add('yt-player-frame');
+                        // Force play to handle browser autoplay restrictions
+                        event.target.playVideo();
                         checkReady();
                     },
                     onStateChange: (event) => {
