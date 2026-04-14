@@ -198,17 +198,17 @@
                     <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
                         <div class="flex items-center justify-between border-b pb-3 shrink-0">
                             <div class="flex items-center gap-2">
-                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
                                     <img src="jemima-chat-icon.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
-                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white"></div>
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
                                 </div>
                                 <p class="text-[11px] font-black uppercase">Jemima</p>
                             </div>
                         </div>
 
                         <!-- Scrollable Feed - Height adjusted to align with left blocks -->
-                        <div id="chat-feed" class="space-y-3 h-[240px] md:h-[300px] overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow">
-                            <div class="bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2">
+                        <div id="chat-feed" class="space-y-4 h-[240px] md:h-[300px] overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
+                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-[13px] font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
                                 Hi! I'm Jemima. Tap on the video to interact with me, or select a frequently asked question, or type your own question in this chat.
                             </div>
                         </div>
@@ -274,7 +274,7 @@
 
         function createTypingIndicator() {
             const typing = document.createElement('div');
-            typing.className = 'bg-slate-50 p-3 w-fit mb-2 message-anim flex gap-1 items-center rounded-sm border border-slate-100';
+            typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
             typing.innerHTML = `
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
@@ -359,7 +359,7 @@
             const vidId = faqVideoIds[type];
             activateAI(vidId);
             const userMsg = document.createElement('div');
-            userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border rounded-sm';
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[13px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
             userMsg.innerText = el.innerText.trim();
             chatFeed.appendChild(userMsg);
             const messages = {
@@ -378,7 +378,7 @@
                 await new Promise(r => setTimeout(r, 1200));
                 indicator.remove();
                 const msg = document.createElement('div');
-                msg.className = 'bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2';
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-[13px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
                 msg.innerText = text;
                 chatFeed.appendChild(msg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
@@ -394,7 +394,7 @@
 
             // 1. Add User Message to Feed
             const userMsg = document.createElement('div');
-            userMsg.className = 'bg-slate-100 text-slate-700 p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border rounded-sm';
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[13px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
             userMsg.innerText = text;
             chatFeed.appendChild(userMsg);
             chatFeed.scrollTop = chatFeed.scrollHeight;
@@ -470,7 +470,7 @@
             if (isUserTriggered && !hasSubmitted) {
                 activateAI(faqVideoIds.abandon);
                 const jemimaWarn = document.createElement('div');
-                jemimaWarn.className = 'bg-[#c2155a] text-white p-3 text-[10px] md:text-[11px] font-medium leading-relaxed message-anim shadow-lg shadow-[#c2155a]/10 mb-2';
+                jemimaWarn.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-[13px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
                 jemimaWarn.innerText = "Wait! You're missing out on a massive conversion boost. Are you sure you don't want the audit?";
                 chatFeed.appendChild(jemimaWarn);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
@@ -487,7 +487,7 @@
             const phone = document.getElementById('form-phone').value;
             activateAI(faqVideoIds.thanks);
             const userAction = document.createElement('div');
-            userAction.className = 'bg-slate-900 text-white p-3 text-[10px] md:text-[11px] font-bold self-end w-fit mb-2 border rounded-sm';
+            userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
             userAction.innerText = `Audit Requested for ${website}`;
             chatFeed.appendChild(userAction);
             addMessages([
