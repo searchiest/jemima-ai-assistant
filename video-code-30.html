@@ -28,6 +28,10 @@
             overflow: hidden;
             border-radius: 4px;
             width: 100%;
+            /* Screenshot / Poster Image Fallback */
+            background-image: url('/video-fallback.png'); 
+            background-size: cover;
+            background-position: center;
         }
 
         .yt-player-frame {
@@ -161,9 +165,9 @@
                         <div id="interaction-player-mount"></div>
 
                         <!-- Interaction Overlay -->
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black/20 backdrop-blur-[2px] transition-colors duration-700 cursor-pointer" onclick="activateAI()">
                             <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300 opacity-0" style="transition-delay: 400ms">
-                                <div class="bg-black/40 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#c2155a]/80 transition-colors">
+                                <div class="bg-black/60 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#c2155a]/80 transition-colors">
                                     tap to interact
                                 </div>
                             </div>
@@ -301,7 +305,7 @@
                     onStateChange: (event) => {
                         if (event.data === YT.PlayerState.PLAYING && !isInteracting) {
                             event.target.getIframe().classList.add('active');
-                            videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
+                            videoPlaceholder.classList.replace('bg-black/20', 'bg-transparent');
                             interactionUI.classList.remove('opacity-0');
                         }
                     }
@@ -469,10 +473,11 @@
         function closeModal(isUserTriggered = false) {
             if (isUserTriggered && !hasSubmitted) {
                 activateAI(faqVideoIds.abandon);
-                const jemimaWarn = document.createElement('div');
-                jemimaWarn.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-[13px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
-                jemimaWarn.innerText = "Wait! You're missing out on a massive conversion boost. Are you sure you don't want the audit?";
-                chatFeed.appendChild(jemimaWarn);
+                const jemimaWarn = document.getElementById('chat-feed').querySelector('.bg-[#c2155a]/5'); // Check if first message exists
+                const jemimaWarnMsg = document.createElement('div');
+                jemimaWarnMsg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-[13px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+                jemimaWarnMsg.innerText = "Wait! You're missing out on a massive conversion boost. Are you sure you don't want the audit?";
+                chatFeed.appendChild(jemimaWarnMsg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
             }
             modalOverlay.classList.add('hidden');
