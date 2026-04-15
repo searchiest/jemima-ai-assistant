@@ -149,15 +149,34 @@
 
     <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-2 lg:pt-8 pb-8 lg:pb-16">
         
-       <div class="max-w-4xl text-center space-y-4">
-                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.2em]">Website presenter for service businesses</div>
-                <h1 class="text-3xl md:text-4xl lg:text-6xl font-[800] leading-tight text-slate-950 tracking-tight">Turn your website into a <br><span class="text-[#c2155a]">24/7 sales conversation</span></h1>
-                <p class="max-w-3xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium">Add a human presenter that explains what you do, builds trust, and turns visitors into enquiries — without filming anything.</p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <div class="flex flex-col items-center space-y-4 lg:space-y-12 mb-6 lg:mb-20">
+            <div class="max-w-4xl text-center space-y-4">
+<h1 class="text-3xl md:text-4xl lg:text-6xl font-[800] leading-tight text-slate-950 tracking-tight">Turn your website into a <br><span class="text-[#c2155a]">24/7 sales conversation</span></h1>
+<p class="max-w-3xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium">Add a human presenter that explains what you do, builds trust, and turns visitors into enquiries — without filming anything.</p>
+            </div>
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                     <button onclick="activateAI()" class="px-6 py-3 bg-slate-900 text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-slate-800 transition-colors shadow-lg">See how it works</button>
                     <button onclick="openModal()" class="px-6 py-3 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-colors shadow-lg shadow-[#c2155a]/20">Get your free conversion audit</button>
                 </div>
-            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+                
+                <div class="w-full md:w-[45%] space-y-4">
+                    <!-- Video Section -->
+                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+                        <div id="idle-player-mount"></div>
+                        <div id="interaction-player-mount"></div>
+
+                        <!-- Interaction Overlay -->
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
+                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300 opacity-0" style="transition-delay: 400ms">
+                                <div class="bg-black/40 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#c2155a]/80 transition-colors">
+                                    tap to interact
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- FAQ Section -->
                     <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
