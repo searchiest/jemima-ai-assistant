@@ -442,16 +442,46 @@
                     const response = await fetch(n8nWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+                        body: JSON.stringify({ 
+                            chatInput: text, 
+                            message: text, 
+                            sessionId: sessionId, 
+                            timestamp: new Date().toISOString() 
+                        })
                     });
+
+                    if (!response.ok) throw new Error('Network error');
+
                     const data = await response.json();
                     indicator.remove();
-                    const jemimaReply = data.output || data.text || data.response || "I've received your message, but I'm having trouble phrasing my response!";
+
+                    // Robust response parsing helper
+                    const getBotText = (input) => {
+                        if (typeof input === 'string') return input;
+                        if (!input) return null;
+                        if (Array.isArray(input)) return getBotText(input[0]);
+                        const candidates = [
+                            input.output, input.text, input.response, input.message, 
+                            input.fulfillmentText, input.content
+                        ];
+                        const found = candidates.find(c => typeof c === 'string' && c.length > 0);
+                        if (found) return found;
+                        if (input.json) return getBotText(input.json);
+                        return null;
+                    };
+
+                    const jemimaReply = getBotText(data) || "I've received your message, but I'm having trouble phrasing my response!";
                     addMessages([jemimaReply]);
+
                 } catch (error) {
                     indicator.remove();
-                    addMessages(["I'm having a little trouble connecting right now. Please try again!"]);
+                    addMessages(["I'm having a little trouble connecting to my brain right now. Please try again!"]);
                 }
+            } else {
+                setTimeout(() => {
+                    indicator.remove();
+                    addMessages(["I'm ready for integration! To make this live, paste your n8n webhook URL into the script settings."]);
+                }, 1500);
             }
         }
 
