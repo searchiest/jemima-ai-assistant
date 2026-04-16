@@ -144,7 +144,7 @@
             <a href="javascript:void(0)" onclick="activateAI(); toggleMobileMenu();" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
         </div>
         <div class="mt-auto">
-            <button onclick="openModal(); toggleMobileMenu();" class="w-full bg-[#c2155a] text-white py-5 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30">
+            <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full bg-[#c2155a] text-white py-5 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30">
                 Free Conversion Audit
             </button>
         </div>
@@ -183,7 +183,7 @@
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button onclick="activateAI()" class="px-8 py-3.5 bg-slate-900 text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-slate-800 transition-colors shadow-lg">How it Works</button>
-                <button onclick="openModal()" class="px-8 py-3.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-colors shadow-lg shadow-[#c2155a]/20"><i class="fas fa-chart-line"></i> Free Conversion Audit</button>
+                <button onclick="openModal(false, 'Hero CTA')" class="px-8 py-3.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-colors shadow-lg shadow-[#c2155a]/20"><i class="fas fa-chart-line"></i> Free Conversion Audit</button>
             </div>
 
             <div class="flex flex-col md:flex-row justify-center items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
@@ -257,7 +257,7 @@
                                 </button>
                             </form>
                             
-                            <button onclick="openModal()" class="w-full py-2.5 text-[10px] font-black bg-[#c2155a] text-white rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
+                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-2.5 text-[10px] font-black bg-[#c2155a] text-white rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
                                 <i class="fas fa-chart-line"></i>
                                 <span>Get My Free Audit</span>
                             </button>
@@ -275,7 +275,7 @@
     <script>
         // Webhook Configuration
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/form"; // Updated endpoint for form leads
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
@@ -285,6 +285,7 @@
         const mobileMenu = document.getElementById('mobile-menu');
         
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        let lastTriggerSource = 'Direct Click';
 
         const idleVid = "ykrp1aY5nt8";
         const mainExplainer = "n1hn447KpZA";
@@ -488,8 +489,10 @@
             }
         }
 
-        function openModal(isExitIntent = false) {
+        function openModal(isExitIntent = false, source = 'Direct Click') {
             hasSubmitted = false;
+            lastTriggerSource = source; // Store the source for form processing
+
             if (isExitIntent) {
                 document.getElementById('modal-tag').innerText = "WAIT! BEFORE YOU GO...";
                 document.getElementById('modal-title').innerText = "Don't leave without your audit!";
@@ -521,7 +524,7 @@
             const email = document.getElementById('form-email').value;
             const phone = document.getElementById('form-phone').value;
 
-            // Send Data to n8n
+            // Send Data to n8n with URL and trigger metadata
             if (n8nFormWebhookUrl) {
                 try {
                     await fetch(n8nFormWebhookUrl, {
@@ -533,6 +536,8 @@
                             website: website,
                             email: email,
                             phone: phone,
+                            triggerUrl: window.location.href, // Captures current URL
+                            triggerButton: lastTriggerSource, // Captures which button was clicked
                             sessionId: sessionId,
                             timestamp: new Date().toISOString()
                         })
@@ -562,7 +567,9 @@
         document.addEventListener('mouseleave', (e) => {
             if (e.clientY < 0 && !hasExited) {
                 hasExited = true;
-                if (modalOverlay.classList.contains('hidden')) openModal(true);
+                if (modalOverlay.classList.contains('hidden')) {
+                    openModal(true, 'Exit Intent');
+                }
             }
         });
     </script>
