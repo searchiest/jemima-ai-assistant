@@ -273,7 +273,10 @@
     </footer>
 
     <script>
-        const n8nWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+        // Webhook Configuration
+        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/form"; // Updated endpoint for form leads
+
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
         const interactionUI = document.getElementById('interaction-ui');
@@ -437,9 +440,9 @@
             chatFeed.appendChild(indicator);
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
-            if (n8nWebhookUrl) {
+            if (n8nChatWebhookUrl) {
                 try {
-                    const response = await fetch(n8nWebhookUrl, {
+                    const response = await fetch(n8nChatWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
@@ -492,7 +495,6 @@
                 document.getElementById('modal-title').innerText = "Don't leave without your audit!";
                 document.getElementById('modal-subtitle').innerText = "See exactly where your website is losing money.";
             } else {
-                // Restore Step 1 of 1 messaging
                 document.getElementById('modal-tag').innerText = "Step 1 of 1";
                 document.getElementById('modal-title').innerText = "Get Your Free Audit";
                 document.getElementById('modal-subtitle').innerText = "Jemima will personally review your site layout.";
@@ -509,20 +511,49 @@
             }
         }
 
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
             hasSubmitted = true;
+            
+            // Gather Form Data
             const name = document.getElementById('form-name').value;
             const website = document.getElementById('form-website').value;
+            const email = document.getElementById('form-email').value;
+            const phone = document.getElementById('form-phone').value;
+
+            // Send Data to n8n
+            if (n8nFormWebhookUrl) {
+                try {
+                    await fetch(n8nFormWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: 'audit_lead',
+                            name: name,
+                            website: website,
+                            email: email,
+                            phone: phone,
+                            sessionId: sessionId,
+                            timestamp: new Date().toISOString()
+                        })
+                    });
+                } catch (error) {
+                    console.error('Audit lead submission error:', error);
+                }
+            }
+
+            // Local UI Feedback
             activateAI(faqVideoIds.thanks);
             const userAction = document.createElement('div');
             userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
             userAction.innerText = `Audit Requested for ${website}`;
             chatFeed.appendChild(userAction);
+            
             addMessages([
                 `Thanks ${name.split(' ')[0]}! We're analyzing ${website} now.`,
                 "Expect your full video report via email within 24 hours."
             ]);
+            
             closeModal(false);
             e.target.reset();
         }
