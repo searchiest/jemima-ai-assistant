@@ -460,8 +460,9 @@
                 const iframe = item.querySelector('iframe');
                 if (iframe) {
                     const baseSrc = item.getAttribute('data-base-src');
-                    // Add autoplay and mute to trigger browser-allowed playback
-                    iframe.src = baseSrc + "&autoplay=1&mute=1";
+                    // Removed &mute=1 to enable sound on autoplay
+                    // (Autoplay with sound is permitted because it was triggered by a user click)
+                    iframe.src = baseSrc + "&autoplay=1";
                 }
             }
         }
