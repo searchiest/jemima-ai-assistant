@@ -141,7 +141,7 @@
                             class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
                 </div>
                 
-                <button type="submit" class="w-full bg-[#c2155a] text-white py-3.5 md:py-4 font-black uppercase tracking-[0.2em] text-[10px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-3.5 md:py-4 font-black uppercase tracking-[0.2em] text-[10px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
                     Submit Audit Request
                 </button>
                 
@@ -282,7 +282,7 @@
                             
                             <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-2.5 text-[10px] font-black bg-[#c2155a] text-white rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
                                 <i class="fas fa-chart-line"></i>
-                                <span>Free Conversion Audit</span>
+                                <span>Get My Free Audit</span>
                             </button>
                         </div>
                     </div>
@@ -297,6 +297,7 @@
 
     <script>
         // Webhook Configuration
+        // NOTE: Ensure your n8n workflow is set to "Active" for the /webhook/ URL to receive data.
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/form"; 
 
@@ -547,8 +548,11 @@
 
         async function handleFormSubmit(e) {
             e.preventDefault();
-            hasSubmitted = true;
             
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "SENDING...";
+
             // Gather Form Data
             const name = document.getElementById('form-name').value;
             const website = document.getElementById('form-website').value;
@@ -556,10 +560,12 @@
             const email = document.getElementById('form-email').value;
             const phone = document.getElementById('form-phone').value;
 
+            let leadSuccess = false;
+
             // Send Data to n8n with URL and trigger metadata
             if (n8nFormWebhookUrl) {
                 try {
-                    await fetch(n8nFormWebhookUrl, {
+                    const response = await fetch(n8nFormWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -575,11 +581,14 @@
                             timestamp: new Date().toISOString()
                         })
                     });
+                    if(response.ok) leadSuccess = true;
                 } catch (error) {
                     console.error('Audit lead submission error:', error);
                 }
             }
 
+            hasSubmitted = true;
+            
             // Local UI Feedback
             activateAI(faqVideoIds.thanks);
             const userAction = document.createElement('div');
@@ -587,12 +596,21 @@
             userAction.innerText = `Audit Requested for ${website}`;
             chatFeed.appendChild(userAction);
             
-            addMessages([
-                `Thanks ${name.split(' ')[0]}! We're analyzing ${website} now.`,
-                "Expect your full video report via email within 24 hours."
-            ]);
+            if (leadSuccess) {
+                addMessages([
+                    `Thanks ${name.split(' ')[0]}! We're analyzing ${website} now.`,
+                    "Expect your full video report via email within 24 hours."
+                ]);
+            } else {
+                addMessages([
+                    `I've noted your interest, ${name.split(' ')[0]}, but I had a hiccup sending the data to my team.`,
+                    "Please try the form again, or reach out to us directly if the issue persists!"
+                ]);
+            }
             
             closeModal(false);
+            submitBtn.disabled = false;
+            submitBtn.innerText = "SUBMIT AUDIT REQUEST";
             e.target.reset();
         }
 
