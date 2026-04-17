@@ -100,15 +100,15 @@
                 <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[9px] font-black px-3 py-1 uppercase tracking-[0.2em] mb-2.5">
                     Step 1 of 1
                 </div>
-                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-900">Get Your Free Audit</h3>
-                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-sm font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-900 leading-tight">Get Your Free Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-[10px] md:text-xs font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
             </div>
 
             <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-3.5 md:space-y-4">
                 <div class="space-y-1">
                     <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Full Name</label>
                     <input type="text" id="form-name" required placeholder="John Doe"
-                            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
                 </div>
                 <div class="space-y-1">
                     <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Website URL</label>
@@ -297,9 +297,9 @@
 
     <script>
         // Webhook Configuration
-        // NOTE: Ensure your n8n workflow is set to "Active" for the /webhook/ URL to receive data.
+        // IMPORTANT: Webhooks ONLY work when the n8n workflow is set to "Active". 
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/form"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
@@ -505,11 +505,6 @@
                     indicator.remove();
                     addMessages(["I'm having a little trouble connecting to my brain right now. Please try again!"]);
                 }
-            } else {
-                setTimeout(() => {
-                    indicator.remove();
-                    addMessages(["I'm ready for integration! To make this live, paste your n8n webhook URL into the script settings."]);
-                }, 1500);
             }
         }
 
@@ -517,7 +512,6 @@
             hasSubmitted = false;
             lastTriggerSource = source; 
 
-            // Reset traffic dropdown style
             const trafficSelect = document.getElementById('form-traffic');
             if (trafficSelect) {
                 trafficSelect.value = "";
@@ -550,6 +544,7 @@
             e.preventDefault();
             
             const submitBtn = document.getElementById('submit-btn');
+            const originalBtnText = submitBtn.innerText;
             submitBtn.disabled = true;
             submitBtn.innerText = "SENDING...";
 
@@ -562,7 +557,6 @@
 
             let leadSuccess = false;
 
-            // Send Data to n8n with URL and trigger metadata
             if (n8nFormWebhookUrl) {
                 try {
                     const response = await fetch(n8nFormWebhookUrl, {
@@ -581,9 +575,14 @@
                             timestamp: new Date().toISOString()
                         })
                     });
-                    if(response.ok) leadSuccess = true;
+                    
+                    if(response.ok) {
+                        leadSuccess = true;
+                    } else {
+                        console.error('Webhook Status Error:', response.status);
+                    }
                 } catch (error) {
-                    console.error('Audit lead submission error:', error);
+                    console.error('Webhook Network/CORS Error:', error);
                 }
             }
 
@@ -603,14 +602,14 @@
                 ]);
             } else {
                 addMessages([
-                    `I've noted your interest, ${name.split(' ')[0]}, but I had a hiccup sending the data to my team.`,
-                    "Please try the form again, or reach out to us directly if the issue persists!"
+                    `I've noted your interest, ${name.split(' ')[0]}, but I'm having trouble connecting to my team right now.`,
+                    "Tip: Check if your n8n workflow is 'Active' and handles CORS headers. I'll alert the tech team!"
                 ]);
             }
             
             closeModal(false);
             submitBtn.disabled = false;
-            submitBtn.innerText = "SUBMIT AUDIT REQUEST";
+            submitBtn.innerText = originalBtnText;
             e.target.reset();
         }
 
