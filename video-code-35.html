@@ -448,7 +448,6 @@
                     el.classList.remove('active');
                     const iframe = el.querySelector('iframe');
                     if (iframe) {
-                        // Resetting to base src stops the video
                         iframe.src = el.getAttribute('data-base-src');
                     }
                 }
@@ -456,12 +455,16 @@
 
             if (!isActive) {
                 item.classList.add('active');
-                // Auto-play newly opened video
+                
+                // Mute main hero video if it's currently active and playing
+                if (isInteracting && interactionPlayer && typeof interactionPlayer.mute === 'function') {
+                    interactionPlayer.mute();
+                }
+
+                // Auto-play newly opened FAQ video with sound
                 const iframe = item.querySelector('iframe');
                 if (iframe) {
                     const baseSrc = item.getAttribute('data-base-src');
-                    // Removed &mute=1 to enable sound on autoplay
-                    // (Autoplay with sound is permitted because it was triggered by a user click)
                     iframe.src = baseSrc + "&autoplay=1";
                 }
             }
