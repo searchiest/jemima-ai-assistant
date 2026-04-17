@@ -456,19 +456,18 @@
             if (!isActive) {
                 item.classList.add('active');
                 
-                // Return main hero video to idle if it's currently active
+                // Fully stop/close main hero video if active
                 if (isInteracting) {
                     resetToLoop();
                 }
 
-                // Auto-play newly opened FAQ video
+                // Auto-play newly opened FAQ video with SOUND
+                // We remove mute=1 because user click on accordion allows audio context
                 const iframe = item.querySelector('iframe');
                 if (iframe) {
                     const baseSrc = item.getAttribute('data-base-src');
-                    // Mobile fix: Browsers REQUIRE mute=1 and playsinline=1 to allow autoplay.
-                    // Because this is inside an iframe revealed by a click elsewhere, 
-                    // sound is initially blocked by mobile browser safety policies.
-                    iframe.src = baseSrc + "&autoplay=1&mute=1&playsinline=1";
+                    // playsinline=1 is still required for mobile behavior
+                    iframe.src = baseSrc + "&autoplay=1&playsinline=1";
                 }
             }
         }
@@ -534,7 +533,7 @@
             videoPlaceholder.style.display = 'flex';
             if (interactionPlayer && interactionPlayer.getIframe()) {
                 interactionPlayer.getIframe().classList.remove('active');
-                interactionPlayer.pauseVideo(); // Pause explainer to ensure no audio bleed
+                interactionPlayer.pauseVideo();
             }
             if (idlePlayer && idlePlayer.getIframe()) {
                 idlePlayer.getIframe().classList.add('active');
@@ -621,7 +620,6 @@
                     const data = await response.json();
                     indicator.remove();
 
-                    // Robust response parsing helper
                     const getBotText = (input) => {
                         if (typeof input === 'string') return input;
                         if (!input) return null;
@@ -686,7 +684,6 @@
             submitBtn.disabled = true;
             submitBtn.innerText = "SENDING...";
 
-            // Gather Form Data
             const name = document.getElementById('form-name').value;
             const website = document.getElementById('form-website').value;
             const traffic = document.getElementById('form-traffic').value;
@@ -716,17 +713,13 @@
                     
                     if(response.ok) {
                         leadSuccess = true;
-                    } else {
-                        console.error('Webhook Status Error:', response.status);
                     }
                 } catch (error) {
-                    console.error('Webhook Network/CORS Error:', error);
+                    console.error('Webhook Error:', error);
                 }
             }
 
             hasSubmitted = true;
-            
-            // Local UI Feedback
             activateAI(faqVideoIds.thanks);
             const userAction = document.createElement('div');
             userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
@@ -741,7 +734,7 @@
             } else {
                 addMessages([
                     `I've noted your interest, ${name.split(' ')[0]}, but I'm having trouble connecting to my team right now.`,
-                    "Tip: Check if your n8n workflow is 'Active' and handles CORS headers. I'll alert the tech team!"
+                    "Tip: Check if your n8n workflow is 'Active'. I'll alert the tech team!"
                 ]);
             }
             
