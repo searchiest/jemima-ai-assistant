@@ -127,7 +127,7 @@
                 <div class="space-y-1">
                     <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Website URL</label>
                     <input type="url" id="form-website" required placeholder="https://yourwebsite.com"
-                            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
                 </div>
                 
                 <!-- Monthly Traffic Field -->
@@ -456,9 +456,9 @@
             if (!isActive) {
                 item.classList.add('active');
                 
-                // Mute main hero video if it's currently active and playing
-                if (isInteracting && interactionPlayer && typeof interactionPlayer.mute === 'function') {
-                    interactionPlayer.mute();
+                // Return main hero video to idle if it's currently active
+                if (isInteracting) {
+                    resetToLoop();
                 }
 
                 // Auto-play newly opened FAQ video with sound
@@ -530,6 +530,7 @@
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
             interactionPlayer.getIframe().classList.remove('active');
+            interactionPlayer.pauseVideo(); // Pause explainer to ensure no audio bleed
             idlePlayer.getIframe().classList.add('active');
             idlePlayer.mute();
             idlePlayer.playVideo();
