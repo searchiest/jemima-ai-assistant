@@ -461,11 +461,14 @@
                     resetToLoop();
                 }
 
-                // Auto-play newly opened FAQ video with sound
+                // Auto-play newly opened FAQ video
                 const iframe = item.querySelector('iframe');
                 if (iframe) {
                     const baseSrc = item.getAttribute('data-base-src');
-                    iframe.src = baseSrc + "&autoplay=1";
+                    // Mobile fix: Browsers REQUIRE mute=1 and playsinline=1 to allow autoplay.
+                    // Because this is inside an iframe revealed by a click elsewhere, 
+                    // sound is initially blocked by mobile browser safety policies.
+                    iframe.src = baseSrc + "&autoplay=1&mute=1&playsinline=1";
                 }
             }
         }
@@ -529,11 +532,15 @@
         function resetToLoop() {
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
-            interactionPlayer.getIframe().classList.remove('active');
-            interactionPlayer.pauseVideo(); // Pause explainer to ensure no audio bleed
-            idlePlayer.getIframe().classList.add('active');
-            idlePlayer.mute();
-            idlePlayer.playVideo();
+            if (interactionPlayer && interactionPlayer.getIframe()) {
+                interactionPlayer.getIframe().classList.remove('active');
+                interactionPlayer.pauseVideo(); // Pause explainer to ensure no audio bleed
+            }
+            if (idlePlayer && idlePlayer.getIframe()) {
+                idlePlayer.getIframe().classList.add('active');
+                idlePlayer.mute();
+                idlePlayer.playVideo();
+            }
         }
 
         function activateAI(vidId = mainExplainer) {
