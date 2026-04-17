@@ -85,6 +85,20 @@
             background-position: right 0 center;
             background-size: 1em;
         }
+
+        /* Accordion transition */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            padding-bottom: 2rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -113,7 +127,7 @@
                 <div class="space-y-1">
                     <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Website URL</label>
                     <input type="url" id="form-website" required placeholder="https://yourwebsite.com"
-                            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
                 </div>
                 
                 <!-- Monthly Traffic Field -->
@@ -163,7 +177,7 @@
         </div>
         <div class="flex flex-col gap-8 text-lg font-black uppercase tracking-[0.2em] text-slate-900">
             <a href="#problem" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Solution</a>
-            <a href="#features" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Features</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
             <a href="javascript:void(0)" onclick="activateAI(); toggleMobileMenu();" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
         </div>
         <div class="mt-auto">
@@ -182,7 +196,7 @@
         <!-- Desktop Menu -->
         <div class="hidden md:flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
             <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
-            <a href="#features" class="hover:text-[#c2155a]">Features</a>
+            <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
             <a href="javascript:void(0)" onclick="activateAI()" class="hover:text-[#c2155a]">How it Works</a>
         </div>
 
@@ -227,10 +241,10 @@
                         </div>
                     </div>
 
-                    <!-- FAQ Section -->
+                    <!-- Side Questions (Mini FAQ) -->
                     <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
                         <div class="space-y-1">
-                            <h2 class="text-[10px] lg:text-[11px] font-black uppercase tracking-[0.25em] text-[#c2155a]">Common Questions</h2>
+                            <h2 class="text-[10px] lg:text-[11px] font-black uppercase tracking-[0.25em] text-[#c2155a]">Quick Answers</h2>
                         </div>
                         
                         <div class="flex flex-col gap-2">
@@ -290,14 +304,98 @@
             </div>
         </div>
 
+        <!-- Problem/Solution Section -->
+        <section id="problem" class="py-16 md:py-24 border-t border-slate-100">
+            <div class="max-w-3xl mx-auto text-center space-y-6">
+                <h2 class="text-3xl md:text-4xl font-[800] tracking-tight">Standard websites are leaky buckets.</h2>
+                <p class="text-lg text-slate-600 leading-relaxed font-medium">98% of your visitors leave without ever saying a word. Jemima changes that by engaging them the second they land, answering their specific objections, and leading them directly to your calendar.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 border-t border-slate-100">
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div class="text-center space-y-4">
+                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.2em] rounded-full">Learn More</div>
+                    <h2 class="text-3xl md:text-5xl font-[800] tracking-tighter text-slate-950">Everything you need to know.</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">How does Jemima learn my business?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+                                    <p class="text-slate-600 text-sm leading-relaxed">
+                                        We train your AI assistant by crawling your website, reading your PDFs, and analyzing your previous sales conversations. Jemima becomes an expert on your product, pricing, and FAQs in minutes.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ Section')" class="text-[10px] font-black text-[#c2155a] uppercase tracking-widest border-b-2 border-[#c2155a]/20 hover:border-[#c2155a] transition-all pb-1">Get Started Today</button>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/n1hn447KpZA?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Is it hard to install?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+                                    <p class="text-slate-600 text-sm leading-relaxed">
+                                        If you can copy and paste a single line of code, you can install Jemima. It works with WordPress, Shopify, Webflow, Wix, and custom-coded sites. We even offer white-glove installation for free.
+                                    </p>
+                                    <p class="text-slate-600 text-sm leading-relaxed">
+                                        No developers required. You'll be up and running in under 15 minutes.
+                                    </p>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/CiR8xtyCMSU?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">What languages does Jemima support?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+                                    <p class="text-slate-600 text-sm leading-relaxed">
+                                        Jemima is a polyglot. She can greet visitors and answer questions in over 50 languages, automatically detecting the visitor's browser settings to provide a seamless localized experience.
+                                    </p>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/3UfBbhUT7TA?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="py-12 bg-white border-t text-center grayscale opacity-30">
+    <footer class="py-12 bg-white border-t text-center">
+        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2024 Jemima AI. All rights reserved.</p>
     </footer>
 
     <script>
         // Webhook Configuration
-        // IMPORTANT: Webhooks ONLY work when the n8n workflow is set to "Active". 
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
@@ -337,6 +435,20 @@
             } else {
                 mobileMenu.classList.add('-translate-y-full');
                 document.body.style.overflow = 'auto';
+            }
+        }
+
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close others
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
             }
         }
 
