@@ -77,62 +77,75 @@
         #mobile-menu {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
+        /* Custom dropdown arrow color hack */
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1em;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
 
     <!-- Modal Overlay -->
     <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
-        <div class="bg-white w-full max-w-md p-8 relative shadow-2xl modal-content border border-slate-100">
-            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
+        <div class="bg-white w-full max-w-md p-5 md:p-7 relative shadow-2xl modal-content border border-slate-100">
+            <button onclick="closeModal(true)" class="absolute top-3 right-3 text-slate-300 hover:text-slate-600 transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
             
-            <div class="text-center mb-6">
-                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.2em] mb-4">
+            <div class="text-center mb-4">
+                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[9px] font-black px-3 py-1 uppercase tracking-[0.2em] mb-2">
                     Step 1 of 1
                 </div>
-                <h3 id="modal-title" class="text-2xl font-[800] tracking-tighter text-slate-900">Get Your Free Audit</h3>
-                <p id="modal-subtitle" class="text-slate-500 text-xs font-medium mt-2 leading-relaxed">My team will manually review your site layout.</p>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-900">Get Your Free Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-[10px] md:text-xs font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
             </div>
 
-            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400">Full Name</label>
+            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-2.5 md:space-y-3">
+                <div class="space-y-0.5">
+                    <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Full Name</label>
                     <input type="text" id="form-name" required placeholder="John Doe"
-                            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                            class="w-full border-b border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
                 </div>
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400">Website URL</label>
+                <div class="space-y-0.5">
+                    <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Website URL</label>
                     <input type="url" id="form-website" required placeholder="https://yourwebsite.com"
-                            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400">Work Email</label>
-                    <input type="email" id="form-email" required placeholder="john@company.com"
-                            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400">Phone Number</label>
-                    <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000"
-                            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1">
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400">Monthly Traffic</label>
-                    <select id="form-traffic" required
-                            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold bg-transparent cursor-pointer">
-                        <option value="" disabled selected>Select traffic range</option>
-                        <option value="100+">100+</option>
-                        <option value="1,000+">1,000+</option>
-                        <option value="10,000+">10,000+</option>
-                    </select>
+                            class="w-full border-b border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
                 </div>
                 
-                <button type="submit" class="w-full bg-[#c2155a] text-white py-4 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-4 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                <!-- Monthly Traffic Field -->
+                <div class="space-y-0.5">
+                    <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Monthly Website Traffic</label>
+                    <select id="form-traffic" required
+                            onchange="this.classList.remove('text-slate-300'); this.classList.add('text-slate-900')"
+                            class="w-full border-b border-slate-100 py-1.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold text-slate-300 appearance-none bg-transparent">
+                        <option value="" disabled selected>Select traffic range...</option>
+                        <option value="0-1k" class="text-slate-900">0 - 1,000</option>
+                        <option value="1k-5k" class="text-slate-900">1,000 - 5,000</option>
+                        <option value="5k-20k" class="text-slate-900">5,000 - 20,000</option>
+                        <option value="20k+" class="text-slate-900">20,000+</option>
+                    </select>
+                </div>
+
+                <div class="space-y-0.5">
+                    <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Work Email</label>
+                    <input type="email" id="form-email" required placeholder="john@company.com"
+                            class="w-full border-b border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-0.5">
+                    <label class="block text-[9px] font-black uppercase tracking-widest text-slate-400">Phone Number</label>
+                    <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000"
+                            class="w-full border-b border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                </div>
+                
+                <button type="submit" class="w-full bg-[#c2155a] text-white py-3 md:py-4 font-black uppercase tracking-[0.2em] text-[10px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
                     Submit Audit Request
                 </button>
                 
-                <p class="text-center text-[9px] text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+                <p class="text-center text-[8px] text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
             </form>
         </div>
     </div>
@@ -221,8 +234,8 @@
                         </div>
                         
                         <div class="flex flex-col gap-2">
-                            <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 md:py-5 text-[11px] md:text-[13px] font-black bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
-                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>Will this really get more bookings?</span>
+                            <button onclick="playVideoAnswer('integration', this)" class="w-full py-4 md:py-5 text-[11px] md:text-[13px] font-black bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i> Does it sync with my CRM?</span>
                                 <i class="fas fa-chevron-right text-[8px] opacity-20"></i>
                             </button>
                             <button onclick="playVideoAnswer('setup', this)" class="w-full py-4 md:py-5 text-[11px] md:text-[13px] font-black bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
@@ -253,7 +266,7 @@
                         <!-- Scrollable Feed -->
                         <div id="chat-feed" class="space-y-4 h-[240px] md:h-[300px] overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
                             <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-[13px] font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi, I’m Jemima. Want to turn more visitors into bookings? Ask me anything.
+                                Hi! I'm Jemima. Ask me anything about your business or tap the video to see me in action.
                             </div>
                         </div>
 
@@ -269,7 +282,7 @@
                             
                             <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-2.5 text-[10px] font-black bg-[#c2155a] text-white rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
                                 <i class="fas fa-chart-line"></i>
-                                <span>Free Conversion Audit</span>
+                                <span>Get My Free Audit</span>
                             </button>
                         </div>
                     </div>
@@ -285,7 +298,7 @@
     <script>
         // Webhook Configuration
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/form"; 
 
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
@@ -300,8 +313,7 @@
         const idleVid = "ykrp1aY5nt8";
         const mainExplainer = "n1hn447KpZA";
         const faqVideoIds = {
-            bookings: "dYBbDIWHcPo",
-            integration: "3UfBbhUT7TA",  
+            integration: "3UfBbhUT7TA", 
             setup: "CiR8xtyCMSU",
             presenter: "l2QDsEHQtA4",
             thanks: "yWKtH2teY_Y", 
@@ -414,7 +426,6 @@
             userMsg.innerText = el.innerText.trim();
             chatFeed.appendChild(userMsg);
             const messages = {
-                bookings: ["sure it works", "just look at what you are doing."],
                 integration: ["I sync with Google, Outlook, and most CRMs instantly.", "Your data flows exactly where it needs to go."],
                 setup: ["We can have you live in under 15 minutes.", "It's a simple one-line script install."],
                 presenter: ["Yes! You can choose from our library or we can create a custom digital twin of you.", "You provide the voice and face, I provide the brain."]
@@ -505,6 +516,14 @@
             hasSubmitted = false;
             lastTriggerSource = source; 
 
+            // Reset traffic dropdown style
+            const trafficSelect = document.getElementById('form-traffic');
+            if (trafficSelect) {
+                trafficSelect.value = "";
+                trafficSelect.classList.add('text-slate-300');
+                trafficSelect.classList.remove('text-slate-900');
+            }
+
             if (isExitIntent) {
                 document.getElementById('modal-tag').innerText = "WAIT! BEFORE YOU GO...";
                 document.getElementById('modal-title').innerText = "Don't leave without your audit!";
@@ -512,7 +531,7 @@
             } else {
                 document.getElementById('modal-tag').innerText = "Step 1 of 1";
                 document.getElementById('modal-title').innerText = "Get Your Free Audit";
-                document.getElementById('modal-subtitle').innerText = "Jemima will personally review your site layout.";
+                document.getElementById('modal-subtitle').innerText = "My team will manually review your site layout.";
             }
             modalOverlay.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -533,9 +552,9 @@
             // Gather Form Data
             const name = document.getElementById('form-name').value;
             const website = document.getElementById('form-website').value;
+            const traffic = document.getElementById('form-traffic').value;
             const email = document.getElementById('form-email').value;
             const phone = document.getElementById('form-phone').value;
-            const traffic = document.getElementById('form-traffic').value;
 
             // Send Data to n8n with URL and trigger metadata
             if (n8nFormWebhookUrl) {
@@ -547,9 +566,9 @@
                             type: 'audit_lead',
                             name: name,
                             website: website,
+                            traffic: traffic,
                             email: email,
                             phone: phone,
-                            traffic: traffic, // New data point
                             triggerUrl: window.location.href, 
                             triggerButton: lastTriggerSource, 
                             sessionId: sessionId,
@@ -565,7 +584,7 @@
             activateAI(faqVideoIds.thanks);
             const userAction = document.createElement('div');
             userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
-            userAction.innerText = `Audit Requested for ${website} (${traffic} visits)`;
+            userAction.innerText = `Audit Requested for ${website}`;
             chatFeed.appendChild(userAction);
             
             addMessages([
