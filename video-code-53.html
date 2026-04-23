@@ -34,23 +34,22 @@
         }
 
         .yt-player-frame {
-            /* Reset to standard frame - no cropping */
             width: 100% !important;
             height: 100% !important;
             position: absolute;
-            top: 0 !important;
-            left: 0 !important;
+            top: 0;
+            left: 0;
             border: 0;
             opacity: 0; 
             transition: opacity 0.6s ease-in-out;
             z-index: 10;
-            /* Critical: Prevents mouse hover from triggering YouTube's UI overlays */
             pointer-events: none;
         }
 
         .yt-player-frame.active {
             opacity: 1;
             z-index: 20;
+            pointer-events: auto;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -74,10 +73,12 @@
             40% { transform: scale(1); opacity: 1; }
         }
 
+        /* Mobile Menu Transition */
         #mobile-menu {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
+        /* Custom dropdown arrow color hack */
         select {
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
@@ -85,6 +86,7 @@
             background-size: 1em;
         }
 
+        /* Accordion transition */
         .faq-content {
             max-height: 0;
             overflow: hidden;
@@ -128,6 +130,7 @@
                             class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
                 </div>
                 
+                <!-- Monthly Traffic Field -->
                 <div class="space-y-1.5">
                     <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Monthly Website Traffic</label>
                     <select id="form-traffic" required
@@ -198,6 +201,7 @@
             <span>Jemima</span>
         </div>
         
+        <!-- Desktop Menu -->
         <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
             <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
             <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
@@ -206,6 +210,7 @@
             <a href="javascript:void(0)" onclick="activateAI()" class="hover:text-[#c2155a]">How it Works</a>
         </div>
 
+        <!-- Mobile Burger Btn -->
         <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
             <i class="fas fa-bars text-xl"></i>
         </button>
@@ -219,7 +224,7 @@
                     Stop losing leads<br><span class="text-[#c2155a]">to a static website</span>
                 </h1>
                 <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium">
-                    Answer key decision questions with video 24/7, then capture, follow up, and convert the leads you're losing.
+                    Answer key decision questions with video, then capture, follow up, and convert leads 24/7.
                 </p>
             </div>
 
@@ -238,9 +243,10 @@
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-center items-start gap-6 lg:gap-8 w-full max-w-5xl">
+            <!-- Changed parent to md:items-stretch to allow chat to match height -->
+            <div id="hero-grid-parent" class="flex flex-col md:flex-row justify-center items-start md:items-start gap-6 lg:gap-8 w-full max-w-5xl transition-all duration-500">
                 
-                <div class="w-full md:w-[45%] space-y-4">
+                <div id="left-hero-col" class="w-full md:w-[45%] space-y-4">
                     <!-- Video Section -->
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
                         <div id="idle-player-mount"></div>
@@ -256,6 +262,7 @@
                         </div>
                     </div>
 
+                    <!-- Side Questions (Mini FAQ) -->
                     <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
                         <div class="space-y-1">
                             <h2 class="text-xs lg:text-sm font-black uppercase tracking-[0.25em] text-[#c2155a]">Quick Answers</h2>
@@ -278,6 +285,7 @@
                     </div>
                 </div>
 
+                <!-- Chat Feed Section -->
                 <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col transition-all duration-500">
                     <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
                         <div class="flex items-center justify-between border-b pb-3 shrink-0">
@@ -290,13 +298,15 @@
                             </div>
                         </div>
 
-                        <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
+                        <!-- Initial reduced height with transition -->
+                        <div id="chat-feed" class="space-y-4 h-[120px] transition-all duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col pt-2">
                             <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi! I'm Jemima. Want to convert more visits into bookings? Ask me anything.
+                                Hi I'm Jemima. Want to capture more of the leads you're currently losing? Ask me anything!
                             </div>
                         </div>
 
-                        <div class="border-t pt-4 mt-2 shrink-0 space-y-3">
+                        <!-- Chat Input Bar -->
+                        <div class="border-t pt-4 mt-auto shrink-0 space-y-3">
                             <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
                                 <input type="text" id="user-chat-input" placeholder="Type a question..."
                                         class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
@@ -315,6 +325,7 @@
             </div>
         </div>
 
+        <!-- Problem/Solution Section -->
         <section id="problem" class="py-16 lg:py-24 border-t border-slate-200">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
@@ -351,6 +362,7 @@
             </div>
         </section>
 
+        <!-- Features Section -->
         <section id="features" class="py-20 bg-slate-900 text-white -mx-4 lg:-mx-12 px-4 lg:px-12">
             <div class="max-w-[1200px] mx-auto">
                 <div class="text-center mb-16 space-y-4">
@@ -377,6 +389,7 @@
             </div>
         </section>
 
+        <!-- Section: How the Audit Works (Roadmap) -->
         <section id="how-it-works" class="py-20 lg:py-32">
             <div class="text-center mb-20">
                 <h2 class="text-4xl font-black tracking-tighter uppercase mb-4">Your Roadmap to 2x Conversions</h2>
@@ -384,21 +397,25 @@
             </div>
             <div class="grid md:grid-cols-4 gap-4 relative">
                 <div class="hidden md:block absolute top-12 left-0 right-0 h-px bg-slate-200 z-0"></div>
+                <!-- Step 1 -->
                 <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
                     <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">1</div>
                     <h4 class="font-black uppercase text-sm tracking-widest">Site Scan</h4>
                     <p class="text-sm md:text-base text-slate-500 leading-relaxed">We analyze your current landing page structure and friction points.</p>
                 </div>
+                <!-- Step 2 -->
                 <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
                     <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">2</div>
                     <h4 class="font-black uppercase text-sm tracking-widest">Strategy Call</h4>
                     <p class="text-sm md:text-base text-slate-500 leading-relaxed">A 15 minute breakdown of how Jemima will plug your lead leaks.</p>
                 </div>
+                <!-- Step 3 -->
                 <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
                     <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">3</div>
                     <h4 class="font-black uppercase text-sm tracking-widest">Custom Setup</h4>
                     <p class="text-sm md:text-base text-slate-500 leading-relaxed">We build your custom AI persona tailored to your industry voice.</p>
                 </div>
+                <!-- Step 4 -->
                 <div class="relative z-10 bg-[#c2155a] p-6 text-white flex flex-col items-center text-center space-y-4 shadow-xl">
                     <div class="w-10 h-10 rounded-full bg-white text-[#c2155a] flex items-center justify-center font-black">4</div>
                     <h4 class="font-black uppercase text-sm tracking-widest">Launch</h4>
@@ -407,6 +424,7 @@
             </div>
         </section>
 
+        <!-- About Jemima Section -->
         <section id="about-jemima" class="py-20 lg:py-32 bg-white border-t border-slate-100 -mx-4 lg:-mx-12 px-4 lg:px-12">
             <div class="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
                 <div class="space-y-8">
@@ -417,7 +435,7 @@
                     
                     <div class="space-y-6 text-slate-600 font-medium leading-relaxed text-lg md:text-xl">
                         <p>Jemima isn't just a chatbot she's a high performance sales asset. By combining hyper realistic video avatars with advanced AI intelligence, Jemima greets your visitors, handles objections, and schedules meetings as if your best salesperson was always online.</p>
-                        <p>Built by conversion experts, every interaction is engineered to move visitors closer to a booking. We believe that in a world of automated noise, a human style presence is the key to breaking through and building genuine trust at scale.</p>
+                        <p>Built by conversion experts, every interaction is engineered to move visitors closer to a booking. We believe that in a world of automated noise, a human style presence is the key to breaking through and genuine trust at scale.</p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-8 pt-4">
@@ -462,6 +480,7 @@
             </div>
         </section>
 
+        <!-- Pricing Section -->
         <section id="pricing" class="py-20 border-t border-slate-200">
             <div class="text-center mb-14 space-y-4">
                 <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black px-4 py-1.5 uppercase tracking-[0.2em]">Pricing</div>
@@ -518,6 +537,7 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
         <section id="faq" class="py-20 border-t border-slate-100">
             <div class="max-w-4xl mx-auto space-y-12">
                 <div class="text-center space-y-4">
@@ -526,6 +546,7 @@
                 </div>
 
                 <div class="space-y-4">
+                    <!-- FAQ 1 -->
                     <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20" data-base-src="https://www.youtube.com/embed/n1hn447KpZA?rel=0&modestbranding=1">
                         <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
                             <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">How does Jemima learn my business?</span>
@@ -546,6 +567,7 @@
                         </div>
                     </div>
 
+                    <!-- FAQ 2 -->
                     <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20" data-base-src="https://www.youtube.com/embed/CiR8xtyCMSU?rel=0&modestbranding=1">
                         <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
                             <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Is it hard to install?</span>
@@ -568,6 +590,7 @@
                         </div>
                     </div>
 
+                    <!-- FAQ 3 -->
                     <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20" data-base-src="https://www.youtube.com/embed/3UfBbhUT7TA?rel=0&modestbranding=1">
                         <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
                             <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">What languages does Jemima support?</span>
@@ -590,6 +613,7 @@
             </div>
         </section>
 
+        <!-- Final CTA Banner -->
         <section class="py-20 bg-[#c2155a]/5 border-2 border-dashed border-[#c2155a]/20 text-center space-y-8 mb-20">
             <div class="space-y-2">
                 <h2 class="text-4xl font-black tracking-tighter uppercase">Ready to out perform your competition?</h2>
@@ -622,7 +646,7 @@
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         let lastTriggerSource = 'Direct Click';
         let currentSelectedPackage = null;
-        let isChatExpanded = false;
+        let isChatExpanded = false; // State to track height expansion
 
         const idleVid = "ykrp1aY5nt8";
         const mainExplainer = "n1hn447KpZA";
@@ -661,6 +685,7 @@
             const item = button.parentElement;
             const isActive = item.classList.contains('active');
             
+            // Close others and stop their videos via API
             document.querySelectorAll('.faq-item').forEach(el => {
                 if (el.classList.contains('active')) {
                     el.classList.remove('active');
@@ -673,9 +698,13 @@
 
             if (!isActive) {
                 item.classList.add('active');
+                
+                // Return main hero video to idle if it's currently active
                 if (isInteracting) {
                     resetToLoop();
                 }
+
+                // Trigger FAQ video via API for mobile sound and autoplay compatibility
                 const iframe = item.querySelector('iframe');
                 if (iframe && faqPlayers[iframe.id]) {
                     faqPlayers[iframe.id].unMute();
@@ -697,8 +726,7 @@
                 playerVars: {
                     autoplay: 1, mute: 1, controls: 0, modestbranding: 1,
                     rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1,
-                    loop: 1, playlist: idleVid, origin: window.location.origin,
-                    disablekb: 1, fs: 0
+                    loop: 1, playlist: idleVid, origin: window.location.origin
                 },
                 events: {
                     onReady: (event) => {
@@ -721,8 +749,7 @@
                 videoId: mainExplainer,
                 playerVars: {
                     autoplay: 0, mute: 0, controls: 0, modestbranding: 1,
-                    rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1, origin: window.location.origin,
-                    disablekb: 1, fs: 0
+                    rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1, origin: window.location.origin
                 },
                 events: {
                     onReady: (event) => {
@@ -737,6 +764,7 @@
                 }
             });
 
+            // Initialize Bottom FAQ players via ID to enable API control
             document.querySelectorAll('#faq .faq-item iframe').forEach((iframe, index) => {
                 const id = `faq-player-${index + 1}`;
                 iframe.id = id;
@@ -764,6 +792,7 @@
 
         function activateAI(vidId = mainExplainer) {
             if (playersReady < 2) return;
+            // Scroll to the top before playing the main video
             window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
             videoPlaceholder.style.display = 'none';
@@ -780,7 +809,10 @@
         function playVideoAnswer(type, el) {
             const vidId = faqVideoIds[type];
             activateAI(vidId);
+            
+            // Expand chat if first time
             expandChatWindow();
+
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[13px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
             userMsg.innerText = el.innerText.trim();
@@ -808,11 +840,21 @@
             }
         }
 
+        // Helper to expand chat height and scroll into view
         function expandChatWindow() {
             if (!isChatExpanded) {
                 isChatExpanded = true;
+                
+                // Allow the parent container to stretch to match the left column on desktop
+                const parent = document.getElementById('hero-grid-parent');
+                parent.classList.remove('md:items-start');
+                parent.classList.add('md:items-stretch');
+                
+                // Expand chat feed height. On desktop, it now takes the full remaining height.
                 chatFeed.classList.remove('h-[120px]');
-                chatFeed.classList.add('h-[240px]', 'md:h-[300px]');
+                chatFeed.classList.add('md:flex-grow', 'h-[300px]');
+
+                // Scroll the chat container into view after expansion begins
                 setTimeout(() => {
                     const chatContainer = document.getElementById('chat-container');
                     chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -825,37 +867,55 @@
             const text = chatInput.value.trim();
             if (!text) return;
             chatInput.value = '';
+
+            // Expand height on first message
             expandChatWindow();
+
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
             userMsg.innerText = text;
             chatFeed.appendChild(userMsg);
             chatFeed.scrollTop = chatFeed.scrollHeight;
+
             const indicator = createTypingIndicator();
             chatFeed.appendChild(indicator);
             chatFeed.scrollTop = chatFeed.scrollHeight;
+
             if (n8nChatWebhookUrl) {
                 try {
                     const response = await fetch(n8nChatWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+                        body: JSON.stringify({ 
+                            chatInput: text, 
+                            message: text, 
+                            sessionId: sessionId, 
+                            timestamp: new Date().toISOString() 
+                        })
                     });
+
                     if (!response.ok) throw new Error('Network error');
+
                     const data = await response.json();
                     indicator.remove();
+
                     const getBotText = (input) => {
                         if (typeof input === 'string') return input;
                         if (!input) return null;
                         if (Array.isArray(input)) return getBotText(input[0]);
-                        const candidates = [input.output, input.text, input.response, input.message, input.fulfillmentText, input.content];
+                        const candidates = [
+                            input.output, input.text, input.response, input.message, 
+                            input.fulfillmentText, input.content
+                        ];
                         const found = candidates.find(c => typeof c === 'string' && c.length > 0);
                         if (found) return found;
                         if (input.json) return getBotText(input.json);
                         return null;
                     };
+
                     const jemimaReply = getBotText(data) || "I've received your message, but I'm having trouble phrasing my response!";
                     addMessages([jemimaReply]);
+
                 } catch (error) {
                     indicator.remove();
                     addMessages(["I'm having a little trouble connecting to my brain right now. Please try again!"]);
@@ -867,27 +927,42 @@
             hasSubmitted = false;
             lastTriggerSource = source; 
             currentSelectedPackage = pkg;
+
             const trafficSelect = document.getElementById('form-traffic');
             const submitBtn = document.getElementById('submit-btn');
             const cardNote = document.getElementById('modal-card-note');
+
             if (trafficSelect) {
                 trafficSelect.value = "";
                 trafficSelect.classList.add('text-slate-300');
                 trafficSelect.classList.remove('text-slate-900');
             }
+
+            // Always reset note visibility first
             cardNote.classList.remove('hidden');
+
             if (isExitIntent) {
                 document.getElementById('modal-tag').innerText = "WAIT! BEFORE YOU GO...";
                 document.getElementById('modal-title').innerText = "Don't leave without your audit!";
                 document.getElementById('modal-subtitle').innerText = "See exactly where your website is losing money.";
                 submitBtn.innerText = "Submit Audit Request";
             } else if (pkg) {
-                const titleMap = { 'starter': 'Start With Starter', 'growth': 'Choose Growth', 'pro': 'About Pro' };
-                const buttonMap = { 'starter': 'Submit Starter Audit Request', 'growth': 'Submit Growth Audit Request', 'pro': 'Submit Pro Audit Request' };
+                const titleMap = {
+                    'starter': 'Start With Starter',
+                    'growth': 'Choose Growth',
+                    'pro': 'About Pro'
+                };
+                const buttonMap = {
+                    'starter': 'Submit Starter Audit Request',
+                    'growth': 'Submit Growth Audit Request',
+                    'pro': 'Submit Pro Audit Request'
+                };
                 document.getElementById('modal-tag').innerText = "Step 1 of 1";
                 document.getElementById('modal-title').innerText = titleMap[pkg] || "Get Your Free Audit";
                 document.getElementById('modal-subtitle').innerText = `So we can ensure that the "${pkg}" package is the best choice for you, let's start with a free conversion audit.`;
                 submitBtn.innerText = buttonMap[pkg] || "Submit Audit Request";
+                
+                // Hide credit card note for pricing tier versions
                 cardNote.classList.add('hidden');
             } else {
                 document.getElementById('modal-tag').innerText = "Step 1 of 1";
@@ -909,38 +984,69 @@
 
         async function handleFormSubmit(e) {
             e.preventDefault();
+            
             const submitBtn = document.getElementById('submit-btn');
             const originalBtnText = submitBtn.innerText;
             submitBtn.disabled = true;
             submitBtn.innerText = "SENDING...";
+
             const name = document.getElementById('form-name').value;
             const website = document.getElementById('form-website').value;
             const traffic = document.getElementById('form-traffic').value;
             const email = document.getElementById('form-email').value;
             const phone = document.getElementById('form-phone').value;
             const smsOptin = document.getElementById('form-sms-optin').checked;
+
             let leadSuccess = false;
+
             if (n8nFormWebhookUrl) {
                 try {
                     const response = await fetch(n8nFormWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ type: 'audit_lead', name, website, traffic, email, phone, smsOptin, selectedPackage: currentSelectedPackage, triggerUrl: window.location.href, triggerButton: lastTriggerSource, sessionId, timestamp: new Date().toISOString() })
+                        body: JSON.stringify({
+                            type: 'audit_lead',
+                            name: name,
+                            website: website,
+                            traffic: traffic,
+                            email: email,
+                            phone: phone,
+                            smsOptin: smsOptin,
+                            selectedPackage: currentSelectedPackage,
+                            triggerUrl: window.location.href, 
+                            triggerButton: lastTriggerSource, 
+                            sessionId: sessionId,
+                            timestamp: new Date().toISOString()
+                        })
                     });
-                    if(response.ok) leadSuccess = true;
-                } catch (error) { console.error('Webhook Error:', error); }
+                    
+                    if(response.ok) {
+                        leadSuccess = true;
+                    }
+                } catch (error) {
+                    console.error('Webhook Error:', error);
+                }
             }
+
             hasSubmitted = true;
             activateAI(faqVideoIds.thanks);
             const userAction = document.createElement('div');
             userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
             userAction.innerText = `Audit Requested for ${website}`;
             chatFeed.appendChild(userAction);
+            
             if (leadSuccess) {
-                addMessages([`Thanks ${name.split(' ')[0]}! We're analyzing ${website} now.`, "Expect your full video report via email within 24 hours."]);
+                addMessages([
+                    `Thanks ${name.split(' ')[0]}! We're analyzing ${website} now.`,
+                    "Expect your full video report via email within 24 hours."
+                ]);
             } else {
-                addMessages([`I've noted your interest, ${name.split(' ')[0]}, but I'm having trouble connecting to my team right now.`, "Tip: Check if your n8n workflow is 'Active'. I'll alert the tech team!"]);
+                addMessages([
+                    `I've noted your interest, ${name.split(' ')[0]}, but I'm having trouble connecting to my team right now.`,
+                    "Tip: Check if your n8n workflow is 'Active'. I'll alert the tech team!"
+                ]);
             }
+            
             closeModal(false);
             submitBtn.disabled = false;
             submitBtn.innerText = originalBtnText;
@@ -951,7 +1057,9 @@
         document.addEventListener('mouseleave', (e) => {
             if (e.clientY < 0 && !hasExited) {
                 hasExited = true;
-                if (modalOverlay.classList.contains('hidden')) openModal(true, 'Exit Intent');
+                if (modalOverlay.classList.contains('hidden')) {
+                    openModal(true, 'Exit Intent');
+                }
             }
         });
     </script>
