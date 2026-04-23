@@ -224,7 +224,7 @@
                     Stop losing leads<br><span class="text-[#c2155a]">to a static website</span>
                 </h1>
                 <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium">
-                    Answer key decision questions with video, then capture, follow up, and convert leads 24/7.
+                    Answer key decision questions with video, <br class="hidden md:block"> then capture, follow up, and convert leads 24/7.
                 </p>
             </div>
 
@@ -243,8 +243,8 @@
                 </div>
             </div>
 
-            <!-- Changed parent to md:items-stretch to allow chat to match height -->
-            <div id="hero-grid-parent" class="flex flex-col md:flex-row justify-center items-start md:items-start gap-6 lg:gap-8 w-full max-w-5xl transition-all duration-500">
+            <!-- Changed parent to md:items-start initially. JS will switch to items-stretch on expansion -->
+            <div id="hero-grid-parent" class="flex flex-col md:flex-row justify-center items-start gap-6 lg:gap-8 w-full max-w-5xl transition-all duration-500">
                 
                 <div id="left-hero-col" class="w-full md:w-[45%] space-y-4">
                     <!-- Video Section -->
@@ -300,9 +300,8 @@
 
                         <!-- Initial reduced height with transition -->
                         <div id="chat-feed" class="space-y-4 h-[120px] transition-all duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col pt-2">
-                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi I'm Jemima. Want to capture more of the leads you're currently losing? Ask me anything!
-                            </div>
+                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none whitespace-pre-wrap">Hi I'm Jemima. 
+Want to capture more of the leads you're currently losing? Ask me anything!</div>
                         </div>
 
                         <!-- Chat Input Bar -->
@@ -833,7 +832,7 @@
                 await new Promise(r => setTimeout(r, 1200));
                 indicator.remove();
                 const msg = document.createElement('div');
-                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none whitespace-pre-wrap';
                 msg.innerText = text;
                 chatFeed.appendChild(msg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
@@ -846,13 +845,13 @@
                 isChatExpanded = true;
                 
                 // Allow the parent container to stretch to match the left column on desktop
-                const parent = document.getElementById('hero-grid-parent');
-                parent.classList.remove('md:items-start');
-                parent.classList.add('md:items-stretch');
+                const gridParent = document.getElementById('hero-grid-parent');
+                gridParent.classList.replace('md:items-start', 'md:items-stretch');
                 
-                // Expand chat feed height. On desktop, it now takes the full remaining height.
+                // On desktop, flex-grow will now fill the stretched container. 
+                // We keep a fallback height for mobile.
                 chatFeed.classList.remove('h-[120px]');
-                chatFeed.classList.add('md:flex-grow', 'h-[300px]');
+                chatFeed.classList.add('flex-grow', 'h-[300px]');
 
                 // Scroll the chat container into view after expansion begins
                 setTimeout(() => {
@@ -872,7 +871,7 @@
             expandChatWindow();
 
             const userMsg = document.createElement('div');
-            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm whitespace-pre-wrap';
             userMsg.innerText = text;
             chatFeed.appendChild(userMsg);
             chatFeed.scrollTop = chatFeed.scrollHeight;
