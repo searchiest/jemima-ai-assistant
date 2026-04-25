@@ -765,22 +765,20 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             return typing;
         }
 
-function addMessages(msgArray) {
-    for (const text of msgArray) {
-        const indicator = createTypingIndicator();
-        chatFeed.appendChild(indicator);
-        chatFeed.scrollTop = chatFeed.scrollHeight;
-        setTimeout(async () => {
-            indicator.remove();
-            const msg = document.createElement('div');
-            msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
-            // FIX: Use innerHTML and convert newlines to <br>
-            msg.innerHTML = text.replace(/\n/g, '<br>');
-            chatFeed.appendChild(msg);
-            chatFeed.scrollTop = chatFeed.scrollHeight;
-        }, 1200);
-    }
-}
+        async function addMessages(msgArray) {
+            for (const text of msgArray) {
+                const indicator = createTypingIndicator();
+                chatFeed.appendChild(indicator);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+                await new Promise(r => setTimeout(r, 1200));
+                indicator.remove();
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
+        }
 
         function toggleFaq(button) {
             const item = button.closest('.faq-item');
@@ -847,21 +845,22 @@ function addMessages(msgArray) {
             addMessages(messages[type] || ["I can certainly help with that."]);
         }
 
-function expandChatWindow() {
-    if (!isChatExpanded) {
-        isChatExpanded = true;
-        chatFeed.classList.remove('h-[120px]');
-        // FIX: Replaced md:h-auto with md:h-[550px] to match your FAQ box height
-        chatFeed.classList.add('h-[400px]', 'md:h-[550px]'); 
-        
-        const chatContainer = document.getElementById('chat-container');
-        chatContainer.classList.remove('md:self-start');
-        
-        setTimeout(() => {
-            chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-    }
-}
+        function expandChatWindow() {
+            if (!isChatExpanded) {
+                isChatExpanded = true;
+                chatFeed.classList.remove('h-[120px]');
+                // Match mobile expansion but allow desktop to fill the stretched container naturally
+                chatFeed.classList.add('h-[400px]', 'md:h-auto');
+                
+                const chatContainer = document.getElementById('chat-container');
+                // Remove self-start to allow the parent's stretch alignment to take effect
+                chatContainer.classList.remove('md:self-start');
+                
+                setTimeout(() => {
+                    chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
     </script>
 
     <script id="lead-capture">
@@ -930,20 +929,23 @@ function expandChatWindow() {
             e.target.reset();
         }
 
-async function handleChatSubmit(e) {
-    e.preventDefault();
-    const text = chatInput.value.trim();
-    if (!text) return;
-    chatInput.value = '';
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            chatInput.value = '';
 
-    expandChatWindow();
+            expandChatWindow();
 
-    const userMsg = document.createElement('div');
-    userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
-    // FIX: Use innerHTML for user side as well
-    userMsg.innerHTML = text.replace(/\n/g, '<br>');
-    chatFeed.appendChild(userMsg);
-    chatFeed.scrollTop = chatFeed.scrollHeight;
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = text;
+            chatFeed.appendChild(userMsg);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            const indicator = createTypingIndicator();
+            chatFeed.appendChild(indicator);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
 
             if (n8nChatWebhookUrl) {
                 try {
