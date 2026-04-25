@@ -440,8 +440,8 @@
 
     <script id="ui-management">
         function toggleMobileMenu() {
-            isMobileMenuOpen = !isMobileMenuOpen;
-            if (isMobileMenuOpen) {
+            isMobileOpen = !isMobileMenuOpen;
+            if (isMobileOpen) {
                 mobileMenu.classList.remove('-translate-y-full');
                 document.body.style.overflow = 'hidden';
             } else {
@@ -478,7 +478,8 @@
                     rel: 0, 
                     playsinline: 1, 
                     loop: 1, 
-                    playlist: idleVid 
+                    playlist: idleVid,
+                    iv_load_policy: 3 
                 },
                 events: {
                     onReady: (e) => {
@@ -500,7 +501,9 @@
                     mute: 0, 
                     controls: 0, 
                     playsinline: 1,
-                    modestbranding: 1
+                    modestbranding: 1,
+                    rel: 0,
+                    iv_load_policy: 3
                 },
                 events: {
                     onReady: () => {
@@ -526,6 +529,7 @@
             if (vidId !== interactionPlayer.getVideoData().video_id) {
                 interactionPlayer.loadVideoById(vidId);
             } else {
+                interactionPlayer.seekTo(0);
                 interactionPlayer.unMute();
                 interactionPlayer.playVideo();
             }
@@ -549,28 +553,23 @@
             const vId = videoContainer?.getAttribute('data-video-id');
             const containerId = videoContainer?.id;
 
-            // Step 1: Pause all FAQ videos and hide their frames
             Object.values(faqPlayers).forEach(player => {
                 if (player && typeof player.pauseVideo === 'function') {
                     player.pauseVideo();
                 }
             });
 
-            // Step 2: Close all accordion items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
             if (!wasActive) {
-                // Step 3: Handle Opening a new FAQ
                 item.classList.add('active');
-                
-                // If the hero video explainer is playing, reset it to idle loop
                 if (isInteracting) resetToLoop();
 
                 if (vId && containerId) {
                     if (!faqPlayers[containerId]) {
                         faqPlayers[containerId] = new YT.Player(containerId, {
                             videoId: vId,
-                            playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
+                            playerVars: { playsinline: 1, rel: 0, modestbranding: 1, iv_load_policy: 3 },
                             events: {
                                 onReady: (e) => { 
                                     e.target.getIframe().classList.add('yt-player-frame', 'active');
@@ -580,14 +579,13 @@
                             }
                         });
                     } else {
-                        // Just resume/replay the existing player
                         if (typeof faqPlayers[containerId].playVideo === 'function') {
+                            faqPlayers[containerId].seekTo(0);
                             faqPlayers[containerId].playVideo();
                         }
                     }
                 }
             }
-            // If it was active, it is now closed and videos are paused via the loop in Step 1.
         }
 
         function playVideoAnswer(type, el) { 
