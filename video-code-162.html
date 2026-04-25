@@ -112,7 +112,7 @@
                 <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black px-4 py-1 uppercase tracking-[0.2em] mb-2.5">
                     Step 1 of 1
                 </div>
-                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Get Your Free Audit</h3>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 text-slate-950 leading-tight">Get Your Free Audit</h3>
                 <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
             </div>
 
@@ -409,12 +409,11 @@
         
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         
-        // Base HeyGen Embed ID provided in prompt
+        // Base minimalist HeyGen Embed ID provided in prompt
         const heygenBaseId = "c989df9b87b04241843d564bdc147939";
         
-        // Map types to specific HeyGen IDs
         const faqVideoIds = { 
-            bookings: heygenBaseId, // Example using same ID
+            bookings: heygenBaseId, 
             cost: heygenBaseId, 
             time: heygenBaseId,
             thanks: heygenBaseId, 
@@ -496,15 +495,17 @@
     </script>
 
     <script id="video-engine">
-        // HeyGen Performance Engine
-        function initHeyGen() {
-            // Idle frame starts muted and autoplaying immediately
-            idleFrame.src = `https://app.heygen.com/embeds/${heygenBaseId}?autoplay=1&muted=1&controls=0&loop=1`;
-            
-            // Interaction frame preloads hidden
-            interactionFrame.src = `https://app.heygen.com/embeds/${heygenBaseId}?autoplay=0&muted=0&controls=0`;
+        // Standard minimalist parameters for HeyGen Embeds
+        // controls=0: Hides the play bar and UI tools
+        // hide_banner=1: Minimizes extra branding where supported
+        // loading_bg: Sets background color during load
+        const cleanParams = "autoplay=1&controls=0&hide_banner=1&hide_loading=1&loading_bg=%23000000";
 
-            // Display UI after slight delay for visual smoothness
+        function initHeyGen() {
+            // Idle frame starts muted and autoplaying immediately with clean params
+            idleFrame.src = `https://app.heygen.com/embeds/${heygenBaseId}?${cleanParams}&muted=1&loop=1`;
+            
+            // Display UI after slight delay
             setTimeout(() => {
                 videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
                 interactionUI.classList.remove('opacity-0');
@@ -512,7 +513,7 @@
         }
 
         function activateAI(vidId = heygenBaseId) {
-            // Logic to Reset All FAQ players when main interaction starts
+            // Reset FAQ players
             document.querySelectorAll('.faq-player').forEach(iframe => {
                 iframe.src = ""; 
             });
@@ -522,19 +523,18 @@
             isInteracting = true;
             videoPlaceholder.style.display = 'none';
             
-            // Swap visibility
             idleFrame.classList.remove('active');
             interactionFrame.classList.add('active');
             
-            // Set source with autoplay=1 to force reset and start from 0:00
-            interactionFrame.src = `https://app.heygen.com/embeds/${vidId}?autoplay=1&muted=0&controls=0`;
+            // Set source with autoplay and minimalist flags to ensure no tools/overlays
+            interactionFrame.src = `https://app.heygen.com/embeds/${vidId}?${cleanParams}&muted=0`;
         }
 
         function resetToLoop() {
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
             interactionFrame.classList.remove('active');
-            interactionFrame.src = ""; // Stop the interaction video completely
+            interactionFrame.src = ""; 
             idleFrame.classList.add('active');
         }
 
@@ -570,23 +570,20 @@
             const iframe = item.querySelector('.faq-player');
             const vId = iframe?.getAttribute('data-video-id');
 
-            // Reset/Stop all FAQ players by clearing src
+            // Reset all FAQ players
             document.querySelectorAll('.faq-player').forEach(player => {
                 player.src = ""; 
             });
 
-            // Close all items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
             if (!wasActive) {
                 item.classList.add('active');
-                
-                // Return hero to idle if it was active
                 if (isInteracting) resetToLoop();
 
                 if (iframe && vId) {
-                    // Set src with autoplay to start playback immediately on open
-                    iframe.src = `https://app.heygen.com/embeds/${vId}?autoplay=1&muted=0&controls=1`;
+                    // Use standard clean parameters for FAQ videos
+                    iframe.src = `https://app.heygen.com/embeds/${vId}?${cleanParams}&muted=0`;
                 }
             }
         }
