@@ -6,6 +6,7 @@
     <title>Jemima AI | Double Your Conversions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://www.google.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- YouTube IFrame API -->
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -81,7 +82,7 @@
         
         /* Custom dropdown arrow color hack */
         select {
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3c/polyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 0 center;
             background-size: 1em;
@@ -466,7 +467,6 @@
     </script>
 
     <script id="video-engine">
-        // (1) Load idle video immediately
         function onYouTubeIframeAPIReady() {
             idlePlayer = new YT.Player('idle-player-mount', {
                 videoId: idleVid,
@@ -486,7 +486,6 @@
                         videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
                         interactionUI.classList.remove('opacity-0');
                         playersReady++;
-                        // (2) Preload explainer immediately after idle is stable
                         initSecondaryPlayer();
                     }
                 }
@@ -524,7 +523,6 @@
             idlePlayer.getIframe().classList.remove('active');
             interactionPlayer.getIframe().classList.add('active');
             
-            // Check if we need to switch the video or just play the preloaded one
             if (vidId !== interactionPlayer.getVideoData().video_id) {
                 interactionPlayer.loadVideoById(vidId);
             } else {
@@ -544,37 +542,52 @@
     </script>
 
     <script id="chat-faq-logic">
-        // (3) FAQ videos load and play on-demand to avoid delaying main videos
         function toggleFaq(button) {
             const item = button.closest('.faq-item');
-            const isActive = item.classList.contains('active');
+            const wasActive = item.classList.contains('active');
             const videoContainer = item.querySelector('[data-video-id]');
             const vId = videoContainer?.getAttribute('data-video-id');
             const containerId = videoContainer?.id;
-            
+
+            // Step 1: Pause all FAQ videos and hide their frames
+            Object.values(faqPlayers).forEach(player => {
+                if (player && typeof player.pauseVideo === 'function') {
+                    player.pauseVideo();
+                }
+            });
+
+            // Step 2: Close all accordion items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
-            if (!isActive) {
+            if (!wasActive) {
+                // Step 3: Handle Opening a new FAQ
                 item.classList.add('active');
+                
+                // If the hero video explainer is playing, reset it to idle loop
                 if (isInteracting) resetToLoop();
 
-                if (vId && containerId && !faqPlayers[containerId]) {
-                    faqPlayers[containerId] = new YT.Player(containerId, {
-                        videoId: vId,
-                        playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
-                        events: {
-                            onReady: (e) => { 
-                                // FIX: Apply fitting classes to FAQ iframes to prevent "zoomed in" appearance
-                                e.target.getIframe().classList.add('yt-player-frame', 'active');
-                                e.target.unMute(); 
-                                e.target.playVideo(); 
+                if (vId && containerId) {
+                    if (!faqPlayers[containerId]) {
+                        faqPlayers[containerId] = new YT.Player(containerId, {
+                            videoId: vId,
+                            playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
+                            events: {
+                                onReady: (e) => { 
+                                    e.target.getIframe().classList.add('yt-player-frame', 'active');
+                                    e.target.unMute(); 
+                                    e.target.playVideo(); 
+                                }
                             }
+                        });
+                    } else {
+                        // Just resume/replay the existing player
+                        if (typeof faqPlayers[containerId].playVideo === 'function') {
+                            faqPlayers[containerId].playVideo();
                         }
-                    });
-                } else if (faqPlayers[containerId]) {
-                    faqPlayers[containerId].playVideo();
+                    }
                 }
             }
+            // If it was active, it is now closed and videos are paused via the loop in Step 1.
         }
 
         function playVideoAnswer(type, el) { 
