@@ -33,7 +33,7 @@
             background-position: center;
         }
 
-        /* Video Frame Styling */
+        /* Video Frame Styling for HeyGen */
         .video-frame {
             width: 100% !important;
             height: 100% !important;
@@ -241,12 +241,12 @@
             <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
                 
                 <div class="w-full md:w-[45%] space-y-4">
-                    <!-- Video Section -->
+                    <!-- HeyGen Video Container -->
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
-                        <!-- HeyGen Idle Player -->
-                        <iframe id="idle-video-frame" class="video-frame active" src="" allow="autoplay; fullscreen"></iframe>
-                        <!-- HeyGen Interaction Player -->
-                        <iframe id="interaction-video-frame" class="video-frame" src="" allow="autoplay; fullscreen"></iframe>
+                        <!-- Idle Frame: Always ready and looping -->
+                        <iframe id="idle-video-frame" class="video-frame active" src="" frameborder="0" allow="encrypted-media; fullscreen;" allowfullscreen></iframe>
+                        <!-- Interaction Frame: Preloaded but inactive -->
+                        <iframe id="interaction-video-frame" class="video-frame" src="" frameborder="0" allow="encrypted-media; fullscreen;" allowfullscreen></iframe>
 
                         <!-- Interaction Overlay -->
                         <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
@@ -344,7 +344,8 @@
                                     </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <iframe class="faq-player absolute inset-0 w-full h-full" data-video-id="HEYGEN_FAQ_ID_1" allow="autoplay; fullscreen"></iframe>
+                                    <!-- HeyGen FAQ iframe -->
+                                    <iframe class="faq-player absolute inset-0 w-full h-full" data-video-id="c989df9b87b04241843d564bdc147939" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
                                 </div>
                             </div>
                         </div>
@@ -367,7 +368,7 @@
                                     </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <iframe class="faq-player absolute inset-0 w-full h-full" data-video-id="HEYGEN_FAQ_ID_2" allow="autoplay; fullscreen"></iframe>
+                                    <iframe class="faq-player absolute inset-0 w-full h-full" data-video-id="c989df9b87b04241843d564bdc147939" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
                                 </div>
                             </div>
                         </div>
@@ -408,15 +409,16 @@
         
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         
-        // Placeholder IDs - Replace with your actual HeyGen embed IDs
-        const idleVidId = "HEYGEN_ID_IDLE";
-        const mainExplainerId = "HEYGEN_ID_MAIN";
+        // Base HeyGen Embed ID provided in prompt
+        const heygenBaseId = "c989df9b87b04241843d564bdc147939";
+        
+        // Map types to specific HeyGen IDs
         const faqVideoIds = { 
-            bookings: "HEYGEN_ID_BOOKINGS", 
-            cost: "HEYGEN_ID_COST", 
-            time: "HEYGEN_ID_TIME",
-            thanks: "HEYGEN_ID_THANKS", 
-            abandon: "HEYGEN_ID_ABANDON"
+            bookings: heygenBaseId, // Example using same ID
+            cost: heygenBaseId, 
+            time: heygenBaseId,
+            thanks: heygenBaseId, 
+            abandon: heygenBaseId
         };
 
         const idleFrame = document.getElementById('idle-video-frame');
@@ -494,23 +496,23 @@
     </script>
 
     <script id="video-engine">
-        // Initialize HeyGen Frames
+        // HeyGen Performance Engine
         function initHeyGen() {
-            // Setup Idle Frame
-            idleFrame.src = `https://app.heygen.com/embed/${idleVidId}?autoplay=1&muted=1&controls=0&loop=1`;
+            // Idle frame starts muted and autoplaying immediately
+            idleFrame.src = `https://app.heygen.com/embeds/${heygenBaseId}?autoplay=1&muted=1&controls=0&loop=1`;
             
-            // Setup Interaction Frame (Preloaded but inactive)
-            interactionFrame.src = `https://app.heygen.com/embed/${mainExplainerId}?autoplay=0&muted=0&controls=0`;
+            // Interaction frame preloads hidden
+            interactionFrame.src = `https://app.heygen.com/embeds/${heygenBaseId}?autoplay=0&muted=0&controls=0`;
 
-            // UI Readiness
+            // Display UI after slight delay for visual smoothness
             setTimeout(() => {
                 videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
                 interactionUI.classList.remove('opacity-0');
-            }, 1000);
+            }, 800);
         }
 
-        function activateAI(vidId = mainExplainerId) {
-            // Stop/Reset all FAQ videos
+        function activateAI(vidId = heygenBaseId) {
+            // Logic to Reset All FAQ players when main interaction starts
             document.querySelectorAll('.faq-player').forEach(iframe => {
                 iframe.src = ""; 
             });
@@ -520,19 +522,19 @@
             isInteracting = true;
             videoPlaceholder.style.display = 'none';
             
-            // Hide Idle, Show Interaction
+            // Swap visibility
             idleFrame.classList.remove('active');
             interactionFrame.classList.add('active');
             
-            // Load and Play (Refreshing src ensures reset to 0:00)
-            interactionFrame.src = `https://app.heygen.com/embed/${vidId}?autoplay=1&muted=0&controls=0`;
+            // Set source with autoplay=1 to force reset and start from 0:00
+            interactionFrame.src = `https://app.heygen.com/embeds/${vidId}?autoplay=1&muted=0&controls=0`;
         }
 
         function resetToLoop() {
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
             interactionFrame.classList.remove('active');
-            interactionFrame.src = ""; // Clear interaction
+            interactionFrame.src = ""; // Stop the interaction video completely
             idleFrame.classList.add('active');
         }
 
@@ -568,21 +570,23 @@
             const iframe = item.querySelector('.faq-player');
             const vId = iframe?.getAttribute('data-video-id');
 
-            // Reset all FAQ players
+            // Reset/Stop all FAQ players by clearing src
             document.querySelectorAll('.faq-player').forEach(player => {
                 player.src = ""; 
             });
 
-            // Visually close all
+            // Close all items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
             if (!wasActive) {
                 item.classList.add('active');
+                
+                // Return hero to idle if it was active
                 if (isInteracting) resetToLoop();
 
                 if (iframe && vId) {
-                    // Set src with autoplay to start immediately
-                    iframe.src = `https://app.heygen.com/embed/${vId}?autoplay=1&muted=0&controls=1`;
+                    // Set src with autoplay to start playback immediately on open
+                    iframe.src = `https://app.heygen.com/embeds/${vId}?autoplay=1&muted=0&controls=1`;
                 }
             }
         }
