@@ -675,7 +675,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
     </footer>
 
-    <script>
+       <script>
         // Webhook Configuration
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
@@ -687,122 +687,187 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         const chatInput = document.getElementById('user-chat-input');
         const mobileMenu = document.getElementById('mobile-menu');
         
-            <script>
-        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
-
-        const chatFeed = document.getElementById('chat-feed');
-        const videoPlaceholder = document.getElementById('video-placeholder');
-        const interactionUI = document.getElementById('interaction-ui');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const chatInput = document.getElementById('user-chat-input');
-        
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        let lastTriggerSource = 'Direct Click';
+        let currentSelectedPackage = null;
+        let isChatExpanded = false; // State to track height expansion
+
         const idleVid = "ykrp1aY5nt8";
         const mainExplainer = "n1hn447KpZA";
-        const faqVideoIds = { bookings: "6EnpTy7bxnQ", cost: "s5wGFapXPro", thanks: "yWKtH2teY_Y" };
+        const faqVideoIds = {
+            bookings: "6EnpTy7bxnQ", 
+            cost: "s5wGFapXPro",
+            time: "MP8yDswdW4o",
+            integration: "3UfBbhUT7TA", 
+            setup: "CiR8xtyCMSU",
+            presenter: "l2QDsEHQtA4",
+            thanks: "yWKtH2teY_Y", 
+            abandon: "1UykiZr9xWI"
+        };
 
-        let idlePlayer, interactionPlayer;
+        let idlePlayer;
+        let interactionPlayer;
         let faqPlayers = {};
-        let playersReady = 0;
         let isInteracting = false;
+        let playersReady = 0;
+        let hasExited = false; 
+        let hasSubmitted = false;
+        let isMobileMenuOpen = false;
 
-        // Speed Fix: Start with only the top video
-        function onYouTubeIframeAPIReady() {
-            idlePlayer = new YT.Player('idle-player-mount', {
-                videoId: idleVid,
-                playerVars: { autoplay: 1, mute: 1, controls: 0, modestbranding: 1, rel: 0, playsinline: 1, loop: 1, playlist: idleVid },
-                events: {
-                    onReady: (e) => {
-                        e.target.getIframe().classList.add('yt-player-frame', 'active');
-                        videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
-                        interactionUI.classList.remove('opacity-0');
-                        playersReady++;
-                        // Sequential Load: Now that top video is running, load the interaction video
-                        initSecondaryPlayer();
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('-translate-y-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('-translate-y-full');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close others and stop their videos via API
+            document.querySelectorAll('.faq-item').forEach(el => {
+                if (el.classList.contains('active')) {
+                    el.classList.remove('active');
+                    const iframe = el.querySelector('iframe');
+                    if (iframe && faqPlayers[iframe.id]) {
+                        faqPlayers[iframe.id].stopVideo();
                     }
                 }
-            });
-        }
-
-        function initSecondaryPlayer() {
-            interactionPlayer = new YT.Player('interaction-player-mount', {
-                videoId: mainExplainer,
-                playerVars: { autoplay: 0, mute: 0, controls: 0, playsinline: 1 },
-                events: {
-                    onReady: () => {
-                        interactionPlayer.getIframe().classList.add('yt-player-frame');
-                        playersReady++;
-                    },
-                    onStateChange: (e) => { if (e.data === YT.PlayerState.ENDED) resetToLoop(); }
-                }
-            });
-        }
-
-        // Speed Fix: Lazy load FAQ videos only on click
-        function toggleFaq(button) {
-            const item = button.closest('.faq-item');
-            const isActive = item.classList.contains('active');
-            const videoContainer = item.querySelector('[data-video-id]');
-            const vId = videoContainer?.getAttribute('data-video-id');
-            const containerId = videoContainer?.id;
-            
-            // Close others
-            document.querySelectorAll('.faq-item').forEach(el => {
-                el.classList.remove('active');
-                const pId = el.querySelector('[data-video-id]')?.id;
-                if (faqPlayers[pId]) faqPlayers[pId].pauseVideo();
             });
 
             if (!isActive) {
                 item.classList.add('active');
-                if (isInteracting) resetToLoop();
+                
+                // Return main hero video to idle if it's currently active
+                if (isInteracting) {
+                    resetToLoop();
+                }
 
-                // Initialize player if it doesn't exist
-                if (vId && containerId && !faqPlayers[containerId]) {
-                    faqPlayers[containerId] = new YT.Player(containerId, {
-                        videoId: vId,
-                        playerVars: { playsinline: 1, rel: 0 },
-                        events: {
-                            onReady: (e) => {
-                                e.target.unMute();
-                                e.target.playVideo();
-                            }
-                        }
-                    });
-                } else if (faqPlayers[containerId]) {
-                    faqPlayers[containerId].playVideo();
+                // Trigger FAQ video via API for mobile sound and autoplay compatibility
+                const iframe = item.querySelector('iframe');
+                if (iframe && faqPlayers[iframe.id]) {
+                    faqPlayers[iframe.id].unMute();
+                    faqPlayers[iframe.id].playVideo();
                 }
             }
         }
 
-        function activateAI(vidId = mainExplainer) {
-            if (playersReady < 2) return;
-            isInteracting = true;
-            videoPlaceholder.style.display = 'none';
-            idlePlayer.pauseVideo();
-            idlePlayer.getIframe().classList.remove('active');
-            interactionPlayer.getIframe().classList.add('active');
-            if (vidId !== interactionPlayer.getVideoData().video_id) interactionPlayer.loadVideoById(vidId);
-            interactionPlayer.unMute();
-            interactionPlayer.playVideo();
+        function createTypingIndicator() {
+            const typing = document.createElement('div');
+            typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
+            typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+            return typing;
+        }
+
+        function onYouTubeIframeAPIReady() {
+            idlePlayer = new YT.Player('idle-player-mount', {
+                videoId: idleVid,
+                playerVars: {
+                    autoplay: 1, mute: 1, controls: 0, modestbranding: 1,
+                    rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1,
+                    loop: 1, playlist: idleVid, origin: window.location.origin
+                },
+                events: {
+                    onReady: (event) => {
+                        event.target.getIframe().classList.add('yt-player-frame');
+                        event.target.mute();
+                        event.target.playVideo();
+                        checkReady();
+                    },
+                    onStateChange: (event) => {
+                        if (event.data === YT.PlayerState.PLAYING && !isInteracting) {
+                            event.target.getIframe().classList.add('active');
+                            videoPlaceholder.classList.replace('bg-black', 'bg-transparent');
+                            interactionUI.classList.remove('opacity-0');
+                        }
+                    }
+                }
+            });
+
+            interactionPlayer = new YT.Player('interaction-player-mount', {
+                videoId: mainExplainer,
+                playerVars: {
+                    autoplay: 0, mute: 0, controls: 0, modestbranding: 1,
+                    rel: 0, showinfo: 0, iv_load_policy: 3, playsinline: 1, origin: window.location.origin
+                },
+                events: {
+                    onReady: (event) => {
+                        event.target.getIframe().classList.add('yt-player-frame');
+                        checkReady();
+                    },
+                    onStateChange: (event) => {
+                        if (event.data === YT.PlayerState.ENDED && isInteracting) {
+                            resetToLoop();
+                        }
+                    }
+                }
+            });
+
+            // Initialize Bottom FAQ players via ID to enable API control
+            document.querySelectorAll('#faq .faq-item iframe').forEach((iframe, index) => {
+                const id = `faq-player-${index + 1}`;
+                iframe.id = id;
+                faqPlayers[id] = new YT.Player(id);
+            });
+        }
+
+        function checkReady() {
+            playersReady++;
         }
 
         function resetToLoop() {
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
-            interactionPlayer.getIframe().classList.remove('active');
-            interactionPlayer.pauseVideo();
-            idlePlayer.getIframe().classList.add('active');
-            idlePlayer.playVideo();
+            if (interactionPlayer && interactionPlayer.getIframe()) {
+                interactionPlayer.getIframe().classList.remove('active');
+                interactionPlayer.pauseVideo();
+            }
+            if (idlePlayer && idlePlayer.getIframe()) {
+                idlePlayer.getIframe().classList.add('active');
+                idlePlayer.mute();
+                idlePlayer.playVideo();
+            }
         }
 
-        function playVideoAnswer(type, el) { activateAI(faqVideoIds[type]); }
-        function openModal() { modalOverlay.classList.remove('hidden'); }
-        function closeModal() { modalOverlay.classList.add('hidden'); }
-        function handleChatSubmit(e) { e.preventDefault(); }
-        async function handleFormSubmit(e) { e.preventDefault(); closeModal(); activateAI(faqVideoIds.thanks); }
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        function activateAI(vidId = mainExplainer) {
+            if (playersReady < 2) return;
+            // Scroll to the top before playing the main video
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            isInteracting = true;
+            videoPlaceholder.style.display = 'none';
+            idlePlayer.pauseVideo();
+            idlePlayer.getIframe().classList.remove('active');
+            interactionPlayer.getIframe().classList.add('active');
+            if (vidId !== interactionPlayer.getVideoData().video_id) {
+                interactionPlayer.loadVideoById({ videoId: vidId });
+            }
+            interactionPlayer.unMute();
+            interactionPlayer.playVideo();
+        }
+
+        function playVideoAnswer(type, el) {
+            const vidId = faqVideoIds[type];
+            activateAI(vidId);
+            
+            // Expand chat if first time
+            expandChatWindow();
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[13px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = el.innerText.trim();
+            chatFeed.appendChild(userMsg);
+            const messages = {
+                bookings: ["Jemima typically increases lead conversion by 30-50% in the first month.", "She captures visitors who would usually bounce."],
+                cost: ["Starter setup is £495. It's usually worth it within the first few qualified leads.", "Compared to a full-time hire, it's a tiny fraction of the cost."],
+                time: ["It takes about 15 minutes to set up.", "Just copy a small script onto your site and you're live."]
+            };
+            addMessages(messages[type] || ["I can certainly help with that."]);
+        }
 
         async function addMessages(msgArray) {
             for (const text of msgArray) {
