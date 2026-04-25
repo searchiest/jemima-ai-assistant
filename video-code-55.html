@@ -6,7 +6,6 @@
     <title>Jemima AI | Double Your Conversions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://www.youtube.com">
-    <link rel="preconnect" href="https://www.google.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- YouTube IFrame API -->
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -565,6 +564,8 @@
                         playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
                         events: {
                             onReady: (e) => { 
+                                // FIX: Apply fitting classes to FAQ iframes to prevent "zoomed in" appearance
+                                e.target.getIframe().classList.add('yt-player-frame', 'active');
                                 e.target.unMute(); 
                                 e.target.playVideo(); 
                             }
