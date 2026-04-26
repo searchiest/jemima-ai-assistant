@@ -64,10 +64,10 @@
             top: 0;
             left: 0;
             border: 0;
-            opacity: 0; 
+            opacity: 1; 
             transition: opacity 0.6s ease-in-out;
             z-index: 10;
-            pointer-events: none;
+            pointer-events: auto;
         }
 
         .yt-player-frame.active {
@@ -780,28 +780,29 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-        function toggleFaq(button) {
-            const item = button.closest('.faq-item');
-            const wasActive = item.classList.contains('active');
-            const videoContainer = item.querySelector('[data-video-id]');
-            const vId = videoContainer?.getAttribute('data-video-id');
-            const containerId = videoContainer?.id;
+function toggleFaq(button) {
+    const item = button.closest('.faq-item');
+    const wasActive = item.classList.contains('active');
+    const videoContainer = item.querySelector('[data-video-id]');
+    const vId = videoContainer?.getAttribute('data-video-id');
+    const containerId = videoContainer?.id;
 
-            // Close all first
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    // Close all first
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
-            if (!wasActive) {
-                item.classList.add('active');
-                if (isInteracting) resetToLoop();
+    if (!wasActive) {
+        item.classList.add('active');
+        if (isInteracting) resetToLoop();
 
-                setTimeout(() => {
-                    if (vId && containerId) {
-                        const container = document.getElementById(containerId);
-                        container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
-                    }
-                }, 300);
+        setTimeout(() => {
+            if (vId && containerId) {
+                const container = document.getElementById(containerId);
+                // Minimal Fix: Ensure Bunny URL is used here
+                container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
             }
-        }
+        }, 300);
+    }
+}
 
             // Visually close all FAQ items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
