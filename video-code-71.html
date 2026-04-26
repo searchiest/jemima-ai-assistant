@@ -615,7 +615,8 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     </footer>
 
     <!-- Scripts -->
-<script id="config-state">
+<script type="text/javascript" src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
+    <script id="config-state">
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
@@ -730,8 +731,9 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 <script id="video-engine">
         const idlePlayer = document.getElementById('idle-player-mount');
         const interactionPlayer = document.getElementById('interaction-player-mount');
+        let currentPlayer = null;
 
-function activateAI(vidGuid = mainExplainer) {
+        function activateAI(vidGuid = mainExplainer) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
             
@@ -743,14 +745,24 @@ function activateAI(vidGuid = mainExplainer) {
             
             const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
             
-            // If it's a NEW video, we need to hide it while it loads
+            // If it's a NEW video, we need to load it and attach the listener
             if (interactionPlayer.src !== newSrc) {
                 // Fade out the current video and show the idle loop as a bridge
                 interactionPlayer.classList.remove('active');
                 idlePlayer.classList.add('active');
                 
-                // Inject the new source invisibly
+                // Inject the new source
                 interactionPlayer.src = newSrc;
+                
+                // When the iframe finishes loading, attach the Bunny Player API
+                interactionPlayer.onload = () => {
+                    if (interactionPlayer.getAttribute('src')) {
+                        currentPlayer = new playerjs.Player(interactionPlayer);
+                        currentPlayer.on('ended', () => {
+                            resetToLoop();
+                        });
+                    }
+                };
                 
                 // Wait 800ms for the flash/UI to pass, then crossfade back
                 setTimeout(() => {
@@ -759,9 +771,14 @@ function activateAI(vidGuid = mainExplainer) {
                 }, 800);
                 
             } else {
-                // If it's the exact same video, just ensure it stays visible
+                // If it's the exact same video, ensure it's visible and restart it instantly
                 idlePlayer.classList.remove('active');
                 interactionPlayer.classList.add('active');
+                
+                if (currentPlayer) {
+                    currentPlayer.setCurrentTime(0);
+                    currentPlayer.play();
+                }
             }
         }
 
@@ -773,26 +790,12 @@ function activateAI(vidGuid = mainExplainer) {
             interactionPlayer.classList.remove('active');
             idlePlayer.classList.add('active');
             
-            // Wait for the fade animation to finish before stopping the video
+            // Wait for the fade animation to finish before clearing the iframe
             setTimeout(() => {
-                interactionPlayer.src = ""; 
+                interactionPlayer.removeAttribute('src'); 
+                currentPlayer = null; // Clear the player so it re-binds cleanly next time
             }, 500);
         }
-
-// Listen for Bunny.net video end
-        window.addEventListener('message', (e) => {
-            try {
-                // Bunny.net uses the Player.js standard, which sends a JSON payload
-                const message = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-                
-                // Check if the message is from the player and if the event is 'ended'
-                if (message.context === 'player.js' && message.event === 'ended') {
-                    resetToLoop();
-                }
-            } catch (error) {
-                // Safely ignore any messages on the page that aren't JSON
-            }
-        });
     </script>
 
 <script id="chat-faq-logic">
