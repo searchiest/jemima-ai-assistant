@@ -164,6 +164,17 @@
         margin-top: 0.5rem;           /* Gives the "Audit" button in the FAQ more room */
     }
 }
+
+/* Prevent hover controls and hide the 'flash' during transitions */
+#interaction-player, #idle-player {
+    pointer-events: none; /* Mouse moves 'through' the video to the container */
+    background: black;    /* Ensures no white flash if the video takes a millisecond to load */
+}
+
+/* Ensure the interaction player is truly hidden when not active */
+.yt-player-frame {
+    transition: opacity 0.4s ease-in-out;
+}
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -635,11 +646,8 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
         const faqVideoIds = { 
-            bookings: TEST_GUID, 
-            cost: TEST_GUID, 
-            time: TEST_GUID, 
-            thanks: TEST_GUID, 
-            abandon: TEST_GUID 
+            bookings: TEST_GUID, cost: TEST_GUID, time: TEST_GUID, 
+            thanks: TEST_GUID, abandon: TEST_GUID 
         };
 
         // DOM Elements
@@ -656,49 +664,86 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         let isChatExpanded = false;
         let hasExited = false;
         let hasSubmitted = false;
+        let isPaused = false;
         let loggedQuestions = new Set();
         let playerInstance = null;
 
         // 2. VIDEO ENGINE (BUNNY.NET + PLAYER.JS)
+        
+        // This function handles the "Naked" Play/Pause toggle
+        function togglePlayPause() {
+            if (!playerInstance || !isInteracting) return;
+            
+            if (isPaused) {
+                playerInstance.play();
+                isPaused = false;
+            } else {
+                playerInstance.pause();
+                isPaused = true;
+            }
+        }
+
         function activateAI(vidGuid = TEST_GUID) {
-            console.log("Switching to interaction video...");
+            console.log("Activating interaction...");
             isInteracting = true;
+            isPaused = false;
             
             // UI Swapping
             videoPlaceholder.style.display = 'none';
             idlePlayer.style.opacity = "0";
             
-            // Set Source
-            interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
-            interactionPlayer.style.opacity = "1";
-            interactionPlayer.style.zIndex = "20";
+            // Set Source (controls=false ensures naked look)
+            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
+            interactionPlayer.src = newSrc;
+            
+            // Visual transition
+            setTimeout(() => {
+                interactionPlayer.style.opacity = "1";
+                interactionPlayer.style.zIndex = "20";
+                // Enable pointer events ONLY for interaction so it can be clicked to pause
+                interactionPlayer.style.pointerEvents = "auto";
+            }, 100);
 
-            // Initialize Player.js handshake
+            // Initialize Player.js
             playerInstance = new playerjs.Player(interactionPlayer);
             
             playerInstance.on('ready', () => {
-                console.log("Bunny Handshake Successful");
-                // The critical listener for the end of the video
+                // Video End Listener
                 playerInstance.on('ended', () => {
-                    console.log("Video Finished - Returning to Idle");
                     resetToLoop();
                 });
+
+                // Add the Play/Pause click listener to the player container
+                // Note: Since pointer-events are auto, clicking the iframe works
             });
         }
 
         function resetToLoop() {
             isInteracting = false;
             interactionPlayer.style.opacity = "0";
-            
+            interactionPlayer.style.pointerEvents = "none"; // Disable clicks on idle
+            idlePlayer.style.opacity = "1";
+
+            // Wait for fade to finish before clearing source to avoid "Orange Flash"
             setTimeout(() => {
                 interactionPlayer.style.zIndex = "5";
-                interactionPlayer.src = ""; // Stop the video
-                idlePlayer.style.opacity = "1";
+                interactionPlayer.src = ""; 
                 videoPlaceholder.style.display = 'flex';
-            }, 400);
+                playerInstance = null;
+            }, 600);
         }
 
-        // 3. UI, CHAT & IPHONE FIXES
+        // Handle clicks on the video container
+        // If idle: Start Interaction. If interacting: Toggle Pause.
+        document.getElementById('video-container').addEventListener('click', (e) => {
+            if (!isInteracting) {
+                activateAI();
+            } else {
+                togglePlayPause();
+            }
+        });
+
+        // 3. UI & CHAT LOGIC
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const isOpen = menu.classList.contains('-translate-y-full');
@@ -720,8 +765,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
         function playVideoAnswer(type, el) { 
             activateAI(faqVideoIds[type]); 
-            expandChatWindow(false); // Mobile: Don't jump to chat while video plays
-            
+            expandChatWindow(false); 
             if (loggedQuestions.has(type)) return;
             loggedQuestions.add(type);
 
@@ -730,12 +774,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             userMsg.innerText = el.innerText.trim();
             chatFeed.appendChild(userMsg);
 
-            const answers = {
-                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
-                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
-                time: ["Most businesses can have it up and running within a week.", "We handle the heavy lifting."]
-            };
-            addMessages(answers[type] || ["I'm happy to help with that!"]);
+            addMessages(["I've updated the video with that answer.", "Is there anything else I can help with?"]);
         }
 
         function toggleFaq(button) {
@@ -749,7 +788,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             if (!wasActive) {
                 item.classList.add('active');
                 if (isInteracting) resetToLoop();
-                // We leave controls ON for FAQ videos so users can scrub
                 container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${guid}?autoplay=true&muted=false&controls=true" style="border:none;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
             }
         }
@@ -777,8 +815,8 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             return typing;
         }
 
-        // 4. FORM & MODAL
-        function openModal(isExitIntent = false) {
+        // 4. MODALS & IPHONE FIXES
+        function openModal() {
             modalOverlay.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
@@ -789,7 +827,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             if (isUserTriggered && !hasSubmitted) activateAI(faqVideoIds.abandon);
         }
 
-        // Fix for iOS zoom/scroll offset on input focus
+        // iPhone Zoom Fix: Reset viewport on keyboard close
         document.addEventListener('focusout', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
                 window.scrollTo({ top: window.scrollY, behavior: 'smooth' });
@@ -816,21 +854,20 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                         body: JSON.stringify({ message: text, sessionId: sessionId })
                     });
                     const data = await res.json();
-                    addMessages([data.output || data.text || "Message received!"]);
+                    addMessages([data.output || data.text || "I've received your message!"]);
                 } catch (err) { addMessages(["Connection error. Please try again!"]); }
             }
         }
 
-        // 5. INIT
+        // 5. EVENT LISTENERS
         document.getElementById('chat-input-form').onsubmit = handleChatSubmit;
         modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(true); };
         
         document.addEventListener('mouseleave', (e) => {
-            if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(true); }
+            if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(); }
         });
 
-        document.addEventListener('touchstart', () => {}, {once: true}); // Prime iOS Audio
-        
+        document.addEventListener('touchstart', () => {}, {once: true});
         window.onload = () => { idlePlayer.style.opacity = "1"; };
     </script>
 </body>
