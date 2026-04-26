@@ -127,6 +127,29 @@
             transform: rotate(180deg);
         }
 
+@media screen and (max-width: 768px) {
+    /* 1. Make Labels Darker and slightly larger */
+    #audit-form label {
+        color: #475569 !important; /* Slate-600 instead of Slate-400 */
+        font-size: 11px !important; /* Slight bump from 10px */
+        letter-spacing: 0.15em !important;
+    }
+
+    /* 2. Make Input Text larger and Pitch Black for maximum contrast */
+    #audit-form input, 
+    #audit-form select {
+        font-size: 16px !important; /* Critical to prevent iOS zoom */
+        color: #000000 !important;   /* Pure black text for readability */
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+    }
+
+    /* 3. Make the Placeholder (hint text) easier to see */
+    #audit-form input::placeholder {
+        color: #94a3b8 !important; /* Slate-400 instead of Slate-300 */
+        font-weight: 500;
+    }
+}
 
 /* Improve FAQ readability on mobile */
 @media screen and (max-width: 768px) {
