@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jemima AI | Double Your Conversions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://video.bunnycdn.com">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
+            #audit-form label { color: #475569 !important; font-size: 11px !important; letter-spacing: 0.15em !important; }
+            #audit-form input, #audit-form select { color: #000000 !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+        }
+
+        /* Video Container Fixes */
+        #video-container {
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+
+        .video-frame {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+            display: none; /* Hidden by default */
+            z-index: 10;
+        }
+
+        .video-frame.active {
+            display: block; /* Only show when active */
+            z-index: 20;
+        }
+
+        /* Chat & UI Styles */
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
+        .modal-content { animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .typing-dot { width: 6px; height: 6px; background-color: #94a3b8; border-radius: 50%; display: inline-block; animation: typingPulse 1.4s infinite ease-in-out both; }
+        @keyframes typingPulse { 0%, 80%, 100% { transform: scale(0); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; } }
+
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .faq-item.active .faq-content { max-height: 1000px; padding-bottom: 2rem; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
+            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Get Your Free Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
+            </div>
+            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
+                    <input type="text" id="form-name" required class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] text-base font-semibold">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Website URL</label>
+                    <input type="url" id="form-website" required class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] text-base font-semibold">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Monthly Traffic</label>
+                    <select id="form-traffic" required class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] text-base font-semibold bg-transparent">
+                        <option value="" disabled selected>Select traffic range...</option>
+                        <option value="0-1k">0 - 1,000</option>
+                        <option value="1k-5k">1,000 - 5,000</option>
+                        <option value="5k-20k">5,000 - 20,000</option>
+                        <option value="20k+">20,000+</option>
+                    </select>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Work Email</label>
+                    <input type="email" id="form-email" required class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] text-base font-semibold">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Phone Number</label>
+                    <div class="flex items-center gap-4">
+                        <input type="tel" id="form-phone" required class="flex-grow border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] text-sm font-semibold">
+                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a]">
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-400">SMS?</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl mt-2 hover:bg-[#a0124a] transition-all">Submit Audit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-6 py-4 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="flex items-center gap-2 font-extrabold text-xl tracking-tighter cursor-pointer" onclick="window.location.reload()">
+            <span>Jemima</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
+            <a href="javascript:void(0)" onclick="activateAI()" class="hover:text-[#c2155a]">How it Works</a>
+        </div>
+    </nav>
+
+    <main class="max-w-[1200px] mx-auto px-6 pt-8 pb-16">
+        <div class="flex flex-col items-center space-y-12 mb-12">
+            <div class="text-center space-y-4">
+                <h1 class="text-4xl md:text-6xl font-[800] text-slate-950 tracking-tight">Stop losing leads <span class="text-[#c2155a]">to static sites</span></h1>
+                <p class="text-slate-600 text-lg font-medium">Answer questions with video and convert 24/7.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 w-full max-w-5xl items-stretch">
+                <div class="w-full md:w-1/2 space-y-4">
+                    <div id="video-container">
+                        <iframe id="idle-player-mount" 
+                                src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
+                                class="video-frame active" allow="autoplay; fullscreen"></iframe>
+                        <iframe id="interaction-player-mount" 
+                                src="" 
+                                class="video-frame" allow="autoplay; fullscreen"></iframe>
+
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-12 cursor-pointer" onclick="activateAI()">
+                            <div class="bg-[#c2155a]/90 backdrop-blur-md px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-widest shadow-xl">tap to interact</div>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-2">
+                        <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 bg-white border text-left px-6 text-sm font-bold uppercase tracking-widest hover:border-[#c2155a] transition-all flex justify-between items-center">
+                            <span>Will this get me leads?</span> <i class="fas fa-chevron-right text-xs opacity-30"></i>
+                        </button>
+                        <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 bg-white border text-left px-6 text-sm font-bold uppercase tracking-widest hover:border-[#c2155a] transition-all flex justify-between items-center">
+                            <span>How much does it cost?</span> <i class="fas fa-chevron-right text-xs opacity-30"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="chat-container" class="w-full md:w-1/2 bg-white border shadow-xl flex flex-col">
+                    <div class="p-6 flex flex-col h-full">
+                        <div id="chat-feed" class="space-y-4 h-[300px] overflow-y-auto chat-scroll pr-2 flex-grow">
+                            <div class="bg-[#c2155a]/5 text-slate-800 p-4 text-base font-medium rounded-2xl rounded-tl-none border border-[#c2155a]/10">
+                                Hi I'm Jemima! Ask me anything about doubling your conversions.
+                            </div>
+                        </div>
+                        <div class="border-t pt-4 mt-4">
+                            <form onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border p-3 outline-none focus:border-[#c2155a] font-semibold">
+                                <button type="submit" class="bg-[#c2155a] text-white px-5"><i class="fas fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="faq" class="py-20 border-t">
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="faq-item border bg-white">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-black uppercase tracking-widest flex justify-between items-center">
+                        <span>Will this work with my site?</span>
+                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-6">
+                        <div id="faq-vid-1" class="aspect-video bg-black mb-4" data-video-id="61d91a66-c2f8-4ad7-b584-f2aca6709f7c"></div>
+                        <p class="text-slate-600 pb-4">Yes, it integrates with any existing website seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const libraryId = "646015";
+        const BUNNY_BASE = `https://iframe.mediadelivery.net/embed/${libraryId}/`;
+        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat";
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+
+        const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
+        const faqVideoIds = {
+            bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", // Use your actual GUIDs
+            cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
+            thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
+            abandon: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
+        };
+
+        let isInteracting = false;
+        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        const chatFeed = document.getElementById('chat-feed');
+
+        // --- Video Engine ---
+        function activateAI(vidGuid = mainExplainer) {
+            isInteracting = true;
+            document.getElementById('video-placeholder').style.display = 'none';
+            
+            const idle = document.getElementById('idle-player-mount');
+            const interaction = document.getElementById('interaction-player-mount');
+            
+            idle.classList.remove('active');
+            interaction.classList.add('active');
+            
+            const targetSrc = `${BUNNY_BASE}${vidGuid}?autoplay=true&controls=false`;
+            if (interaction.src !== targetSrc) interaction.src = targetSrc;
+        }
+
+        function resetToLoop() {
+            isInteracting = false;
+            document.getElementById('video-placeholder').style.display = 'flex';
+            document.getElementById('interaction-player-mount').classList.remove('active');
+            document.getElementById('interaction-player-mount').src = "";
+            document.getElementById('idle-player-mount').classList.add('active');
+        }
+
+        window.addEventListener('message', e => { if (e.data === 'player:ended') resetToLoop(); });
+
+        // --- FAQ Logic ---
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            
+            if (!wasActive) {
+                item.classList.add('active');
+                const container = item.querySelector('[data-video-id]');
+                const vidId = container.getAttribute('data-video-id');
+                container.innerHTML = `<iframe src="${BUNNY_BASE}${vidId}?autoplay=true" class="w-full h-full" allow="autoplay; fullscreen"></iframe>`;
+            }
+        }
+
+        // --- Chat & Form Logic ---
+        function expandChatWindow() {
+            chatFeed.classList.replace('h-[300px]', 'h-[500px]');
+        }
+
+        async function addMessages(msgs) {
+            for (const text of msgs) {
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 p-4 text-base font-medium rounded-2xl rounded-tl-none border border-[#c2155a]/10 mb-3 message-anim';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+                await new Promise(r => setTimeout(r, 800));
+            }
+        }
+
+        function playVideoAnswer(type, el) {
+            activateAI(faqVideoIds[type]);
+            expandChatWindow();
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-slate-100 p-3 text-sm font-bold self-end w-fit mb-3 rounded-2xl rounded-tr-none ml-auto';
+            userMsg.innerText = el.innerText;
+            chatFeed.appendChild(userMsg);
+            addMessages(["Let me explain that for you in the video above!"]);
+        }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('user-chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+            input.value = "";
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-slate-100 p-3 text-sm font-bold self-end w-fit mb-3 rounded-2xl rounded-tr-none ml-auto';
+            userMsg.innerText = text;
+            chatFeed.appendChild(userMsg);
+            // Simple placeholder response
+            addMessages(["I've received your question and am looking for the best answer!"]);
+        }
+
+        function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+        
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "SENDING...";
+            // Simulate webhook
+            setTimeout(() => {
+                closeModal();
+                btn.innerText = "Submit Audit Request";
+                activateAI(faqVideoIds.thanks);
+                addMessages(["Thanks! My team is on it. Watch the video above for next steps."]);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
