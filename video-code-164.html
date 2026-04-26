@@ -38,45 +38,40 @@
 
 #video-container {
     position: relative;
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: black;
 }
 
-/* The background looping video */
+#idle-player, #interaction-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
 #idle-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     z-index: 10;
-    transition: opacity 0.4s ease;
 }
 
-/* The video that plays when you click a button */
 #interaction-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 20; /* Higher than idle */
+    z-index: 20;
+    display: block !important; /* Ensure it's not set to display:none by other scripts */
+}
+
+/* The visual 'Active' state */
+.video-active #interaction-player {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.video-active #idle-player {
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease;
 }
-
-/* The loading shield should sit on the very top during transitions */
-#loading-shield {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         
@@ -680,67 +675,51 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
 <script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
 
-<script id="config-state">
+<script id="full-merged-logic">
+    // --- Configuration ---
+    const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
     const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
     const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
-    const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
 
-    const chatFeed = document.getElementById('chat-feed');
-    const videoPlaceholder = document.getElementById('video-placeholder');
-    const interactionUI = document.getElementById('interaction-ui');
-    const modalOverlay = document.getElementById('modal-overlay');
-    const chatInput = document.getElementById('user-chat-input');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    const idlePlayer = document.getElementById('idle-player');
-    const interactionPlayer = document.getElementById('interaction-player');
-    const loadingShield = document.getElementById('loading-shield');
-
-    const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+    // GUIDs - Update these with your real Bunny GUIDs
     const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
-    
     const faqVideoIds = { 
         bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
         cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
         time: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
-        integration: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-        setup: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
-        presenter: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
         thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
         abandon: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
     };
 
+    // --- State Management ---
+    const videoContainer = document.getElementById('video-container');
+    const idlePlayer = document.getElementById('idle-player');
+    const interactionPlayer = document.getElementById('interaction-player');
+    const chatFeed = document.getElementById('chat-feed');
+    const chatInput = document.getElementById('user-chat-input');
+    const modalOverlay = document.getElementById('modal-overlay');
+    
     let playerInstance = null;
     let isInteracting = false;
-    let isPaused = false;
     let loggedQuestions = new Set();
-</script>
+    const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
 
-<script id="video-engine">
+    // --- Video Core ---
     function activateAI(vidGuid = mainExplainer) {
         isInteracting = true;
-        isPaused = false;
-
-        // 1. Show loading shield immediately to hide the swap
-        if(loadingShield) loadingShield.style.opacity = "1";
-
-        // 2. Load the new video source with a timestamp to force refresh
+        
+        // 1. Update Source with Cache Buster
         const t = new Date().getTime();
         interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&t=${t}`;
 
-        // 3. Setup the PlayerJS handshake
+        // 2. Initialize Bunny Handshake
         playerInstance = new playerjs.Player(interactionPlayer);
         
         playerInstance.on('ready', () => {
             playerInstance.on('play', () => {
-                // Once playing, show interaction player and hide idle player
-                interactionPlayer.style.opacity = "1";
-                interactionPlayer.style.pointerEvents = "auto";
-                
-                if(idlePlayer) idlePlayer.style.opacity = "0";
-                if(videoPlaceholder) videoPlaceholder.style.display = 'none';
-                if(loadingShield) loadingShield.style.opacity = "0";
-                if(interactionUI) interactionUI.classList.remove('opacity-0');
+                // Once it's playing, swap the view via CSS class
+                videoContainer.classList.add('video-active');
+                document.getElementById('video-placeholder').style.display = 'none';
             });
 
             playerInstance.on('ended', () => {
@@ -751,34 +730,23 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
     function resetToLoop() {
         isInteracting = false;
-        interactionPlayer.style.opacity = "0";
-        interactionPlayer.style.pointerEvents = "none";
+        videoContainer.classList.remove('video-active');
         
-        if(idlePlayer) idlePlayer.style.opacity = "1";
-
         setTimeout(() => {
             interactionPlayer.src = ""; 
-            if(videoPlaceholder) videoPlaceholder.style.display = 'flex';
+            document.getElementById('video-placeholder').style.display = 'flex';
             playerInstance = null;
         }, 400);
     }
 
-    document.getElementById('video-container').addEventListener('click', (e) => {
-        if (!isInteracting) activateAI();
-    });
-</script>
-
-<script id="chat-faq-logic">
-    // This handles the FAQ button clicks specifically
+    // --- FAQ Logic ---
     function playVideoAnswer(type, el) { 
         const vidGuid = faqVideoIds[type];
         if (!vidGuid) return;
 
-        // Force the video swap
         activateAI(vidGuid); 
-        
-        // Chat UI Logic
         expandChatWindow(false); 
+
         if (!loggedQuestions.has(type)) {
             loggedQuestions.add(type);
             const userMsg = document.createElement('div');
@@ -787,16 +755,78 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             chatFeed.appendChild(userMsg);
 
             const messages = {
-                bookings: ["It typically increases conversions as soon as it goes live."],
-                cost: ["There is transparent pricing on this page."],
-                time: ["Most businesses can have it up and running within a week."]
+                bookings: ["It typically increases conversions immediately.", "It catches people before they leave."],
+                cost: ["Pricing is transparent and based on your needs.", "Most clients see ROI within the first month."],
+                time: ["Setup usually takes less than 7 days.", "We do all the heavy lifting for you."]
             };
-            addMessages(messages[type] || ["I can help with that."]);
+            addMessages(messages[type] || ["I can definitely help with that!"]);
         }
     }
 
-    // Keep your other chat functions (addMessages, createTypingIndicator, expandChatWindow) here...
-    // [I've omitted them for brevity, but keep them in your final script]
-</script>
-</body>
+    // --- Chat UI Helpers ---
+    function createTypingIndicator() {
+        const typing = document.createElement('div');
+        typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
+        typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        return typing;
+    }
+
+    async function addMessages(msgArray) {
+        for (const text of msgArray) {
+            const indicator = createTypingIndicator();
+            chatFeed.appendChild(indicator);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+            await new Promise(r => setTimeout(r, 1200));
+            indicator.remove();
+            const msg = document.createElement('div');
+            msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+            msg.innerText = text;
+            chatFeed.appendChild(msg);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+        }
+    }
+
+    function expandChatWindow(shouldScroll = true) {
+        chatFeed.classList.remove('h-[120px]');
+        chatFeed.classList.add('h-[400px]', 'md:h-1200');
+        if (shouldScroll) {
+            document.getElementById('chat-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    // --- Form & Interaction Handlers ---
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.innerText = "SENDING...";
+
+        // Collect Form Data
+        const formData = {
+            name: document.getElementById('form-name').value,
+            website: document.getElementById('form-website').value,
+            email: document.getElementById('form-email').value,
+            sessionId: sessionId
+        };
+
+        try {
+            await fetch(n8nFormWebhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+        } catch (e) { console.error(e); }
+
+        activateAI(faqVideoIds.thanks);
+        modalOverlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        addMessages([`Thanks ${formData.name}! My team will review ${formData.website} and get back to you.`]);
+    }
+
+    // Global Listeners
+    videoContainer.addEventListener('click', () => { if (!isInteracting) activateAI(); });
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) modalOverlay.classList.add('hidden'); });
+    
+    window.onload = () => { if(idlePlayer) idlePlayer.style.opacity = "1"; };
+</script></body>
 </html>
