@@ -57,23 +57,19 @@
             background-position: center;
         }
 
-        .yt-player-frame {
+.yt-player-frame {
             width: 100% !important;
             height: 100% !important;
             position: absolute;
             top: 0;
             left: 0;
             border: 0;
-            opacity: 0; 
-            transition: opacity 0.6s ease-in-out;
+            display: none; /* Hide inactive iframes completely */
             z-index: 10;
-            pointer-events: none;
         }
-
         .yt-player-frame.active {
-            opacity: 1;
+            display: block; /* Show only when active */
             z-index: 20;
-            pointer-events: auto;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -316,7 +312,7 @@
 <iframe id="interaction-player-mount" src="" class="yt-player-frame" allow="autoplay; fullscreen" loading="lazy"></iframe>
 
                         <!-- Interaction Overlay -->
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI()">
                             <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300 opacity-0" style="transition-delay: 400ms">
                                 <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
                                     tap to interact
