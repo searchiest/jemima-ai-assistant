@@ -165,126 +165,208 @@
         </section>
     </main>
 
-    <script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
-    <script>
-        const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
-        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+<style>
+    #video-container { position: relative; background: #000; overflow: hidden; }
+    #idle-player, #interaction-player { 
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; transition: opacity 0.4s ease; 
+    }
+    #idle-player { z-index: 10; opacity: 1; }
+    #interaction-player { z-index: 20; opacity: 0; pointer-events: none; }
+    
+    /* When active, swap them */
+    .video-active #interaction-player { opacity: 1; pointer-events: auto; }
+    .video-active #idle-player { opacity: 0; pointer-events: none; }
+</style>
 
-        const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
-        const faqVideoIds = { 
-            bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-            cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-            time: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
-            thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
+<script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
+
+<script id="jemima-merged-logic">
+    // --- Configuration ---
+    const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
+    const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+    const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
+
+    // Replace these GUIDs with your actual Bunny video IDs
+    const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
+    const faqVideoIds = { 
+        bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        time: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
+        thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        abandon: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
+    };
+
+    // DOM Elements
+    const videoContainer = document.getElementById('video-container');
+    const interactionPlayer = document.getElementById('interaction-player');
+    const chatFeed = document.getElementById('chat-feed');
+    const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+    
+    let playerInstance = null;
+    let faqPlayers = {}; // For accordion videos
+    let isInteracting = false;
+    let loggedQuestions = new Set();
+
+    // --- MAIN VIDEO ENGINE ---
+    function activateAI(vidGuid = mainExplainer) {
+        isInteracting = true;
+        
+        // Pause any FAQ accordion videos that might be playing
+        Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
+
+        // Update interaction player source
+        const t = new Date().getTime();
+        interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&t=${t}`;
+        
+        // Swap layers
+        videoContainer.classList.add('video-active');
+        document.getElementById('video-placeholder').style.display = 'none';
+
+        // Initialize PlayerJS for interaction
+        playerInstance = new playerjs.Player(interactionPlayer);
+        playerInstance.on('ready', () => {
+            playerInstance.on('ended', () => resetToLoop());
+        });
+    }
+
+    function resetToLoop() {
+        isInteracting = false;
+        videoContainer.classList.remove('video-active');
+        setTimeout(() => {
+            interactionPlayer.src = ""; 
+            document.getElementById('video-placeholder').style.display = 'flex';
+            playerInstance = null;
+        }, 400);
+    }
+
+    // --- HERO FAQ BUTTONS ---
+    function playVideoAnswer(type, el) { 
+        const vidGuid = faqVideoIds[type];
+        if (!vidGuid) return;
+
+        activateAI(vidGuid); 
+        expandChatWindow(false); 
+
+        if (!loggedQuestions.has(type)) {
+            loggedQuestions.add(type);
+            addMessageToFeed(el.innerText.trim(), 'user');
+            
+            const messages = {
+                bookings: ["It typically increases conversions immediately.", "It catches people before they leave."],
+                cost: ["Pricing is transparent and based on your needs."],
+                time: ["Setup usually takes less than 7 days."]
+            };
+            addMessages(messages[type] || ["I can help with that!"]);
+        }
+    }
+
+    // --- ACCORDION FAQ ENGINE ---
+    function toggleFaq(button) {
+        const item = button.closest('.faq-item');
+        const wasActive = item.classList.contains('active');
+        const iframe = item.querySelector('iframe');
+        const vGuid = item.querySelector('[data-video-id]')?.getAttribute('data-video-id');
+
+        // Close all other items
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+        Object.values(faqPlayers).forEach(p => p.pause());
+
+        if (!wasActive) {
+            item.classList.add('active');
+            if (isInteracting) resetToLoop();
+
+            if (iframe && vGuid) {
+                // If the iframe hasn't been loaded yet
+                if (!iframe.src || iframe.src.includes('about:blank')) {
+                    iframe.src = `${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true`;
+                    faqPlayers[iframe.id] = new playerjs.Player(iframe);
+                } else {
+                    faqPlayers[iframe.id].play();
+                }
+            }
+        }
+    }
+
+    // --- UI HELPERS ---
+    function expandChatWindow(shouldScroll = true) {
+        chatFeed.classList.remove('h-[120px]');
+        chatFeed.classList.add('h-[400px]');
+        if (shouldScroll) {
+            document.getElementById('chat-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function addMessageToFeed(text, type = 'bot') {
+        const msg = document.createElement('div');
+        msg.className = type === 'bot' 
+            ? 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium rounded-2xl rounded-tl-none message-anim mb-2'
+            : 'bg-white text-slate-700 px-4 py-3 text-sm font-semibold self-end w-fit mb-2 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm message-anim';
+        msg.innerText = text;
+        chatFeed.appendChild(msg);
+        chatFeed.scrollTop = chatFeed.scrollHeight;
+    }
+
+    async function addMessages(msgArray) {
+        for (const text of msgArray) {
+            const typing = document.createElement('div');
+            typing.className = 'flex gap-1 p-3';
+            typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatFeed.appendChild(typing);
+            await new Promise(r => setTimeout(r, 1000));
+            typing.remove();
+            addMessageToFeed(text, 'bot');
+        }
+    }
+
+    async function handleChatSubmit(e) {
+        e.preventDefault();
+        const input = document.getElementById('user-chat-input');
+        const text = input.value.trim();
+        if(!text) return;
+        input.value = '';
+        expandChatWindow();
+        addMessageToFeed(text, 'user');
+
+        try {
+            const res = await fetch(n8nChatWebhookUrl, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: text, sessionId})
+            });
+            const data = await res.json();
+            addMessageToFeed(data.output || "I've received your message!");
+        } catch(e) { addMessageToFeed("Connection error. Please try again."); }
+    }
+
+    // --- MODAL & FORM ---
+    function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); }
+    function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true; btn.innerText = "SENDING...";
+        
+        const data = {
+            name: document.getElementById('form-name').value,
+            website: document.getElementById('form-website').value,
+            email: document.getElementById('form-email').value,
+            sessionId
         };
 
-        const videoContainer = document.getElementById('video-container');
-        const interactionPlayer = document.getElementById('interaction-player');
-        const chatFeed = document.getElementById('chat-feed');
-        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
-        
-        let activeHeroPlayer = null;
-        let faqPlayers = {};
-        let isInteracting = false;
-        let loggedQuestions = new Set();
+        try {
+            await fetch(n8nFormWebhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
+        } catch(e) {}
 
-        // MAIN HERO VIDEO LOGIC
-        function activateAI(vidGuid = mainExplainer) {
-            isInteracting = true;
-            // Add the class that swaps opacity in CSS
-            videoContainer.classList.add('video-active');
-            document.getElementById('video-placeholder').style.display = 'none';
+        activateAI(faqVideoIds.thanks);
+        closeModal();
+        addMessages([`Thanks ${data.name}! My team will review ${data.website} now.`]);
+    }
 
-            // Pause accordion players
-            Object.values(faqPlayers).forEach(p => p.pause());
-
-            const t = new Date().getTime();
-            interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&t=${t}`;
-
-            activeHeroPlayer = new playerjs.Player(interactionPlayer);
-            activeHeroPlayer.on('ended', () => resetToLoop());
-        }
-
-        function resetToLoop() {
-            isInteracting = false;
-            videoContainer.classList.remove('video-active');
-            setTimeout(() => {
-                interactionPlayer.src = ""; 
-                document.getElementById('video-placeholder').style.display = 'flex';
-                activeHeroPlayer = null;
-            }, 400);
-        }
-
-        // HERO FAQ BUTTONS
-        function playVideoAnswer(type, el) { 
-            const vidGuid = faqVideoIds[type];
-            if (vidGuid) {
-                activateAI(vidGuid);
-                expandChatWindow();
-                if (!loggedQuestions.has(type)) {
-                    loggedQuestions.add(type);
-                    addMessageToFeed(el.innerText.trim(), 'user');
-                }
-            }
-        }
-
-        // ACCORDION FAQ LOGIC
-        function toggleFaq(button) {
-            const item = button.closest('.faq-item');
-            const wasActive = item.classList.contains('active');
-            const iframe = item.querySelector('iframe');
-            const vGuid = iframe?.getAttribute('data-video-id');
-
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            Object.values(faqPlayers).forEach(p => p.pause());
-
-            if (!wasActive) {
-                item.classList.add('active');
-                if (isInteracting) resetToLoop();
-                if (iframe && vGuid) {
-                    if (!iframe.src || iframe.src.includes('about:blank')) {
-                        iframe.src = `${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true`;
-                        faqPlayers[iframe.id] = new playerjs.Player(iframe);
-                    } else {
-                        faqPlayers[iframe.id].play();
-                    }
-                }
-            }
-        }
-
-        // UI & FORM
-        function expandChatWindow() { chatFeed.classList.remove('h-[120px]'); chatFeed.classList.add('h-[400px]'); }
-        function addMessageToFeed(text, type = 'bot') {
-            const msg = document.createElement('div');
-            msg.className = type === 'bot' ? 'bg-[#c2155a]/5 text-slate-800 border px-4 py-3 rounded-2xl rounded-tl-none message-anim' : 'bg-white text-slate-700 border self-end px-4 py-3 rounded-2xl rounded-tr-none shadow-sm message-anim';
-            msg.innerText = text; chatFeed.appendChild(msg); chatFeed.scrollTop = chatFeed.scrollHeight;
-        }
-
-        async function handleChatSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('user-chat-input');
-            const text = input.value.trim();
-            if(!text) return;
-            input.value = ''; addMessageToFeed(text, 'user');
-            try {
-                const res = await fetch(n8nChatWebhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: text, sessionId}) });
-                const data = await res.json();
-                addMessageToFeed(data.output || "Received!");
-            } catch(e) { addMessageToFeed("Error connecting."); }
-        }
-
-        function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); }
-        function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
-
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true; btn.innerText = "SENDING...";
-            activateAI(faqVideoIds.thanks);
-            closeModal();
-            addMessageToFeed("Audit requested! Analyzing your site.");
-        }
-    </script>
+    // Initialize UI
+    window.onload = () => { 
+        if(document.getElementById('idle-player')) document.getElementById('idle-player').style.opacity = "1"; 
+    };
+</script>
 </body>
 </html>
