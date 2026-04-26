@@ -64,14 +64,16 @@
             top: 0;
             left: 0;
             border: 0;
-            display: none; /* Hide inactive iframes completely */
+            opacity: 0; /* Hides the frame but allows it to buffer */
+            transition: opacity 0.4s ease; /* Smooth crossfade */
             z-index: 10;
+            pointer-events: none;
         }
         .yt-player-frame.active {
-            display: block; /* Show only when active */
+            opacity: 1;
             z-index: 20;
+            pointer-events: auto;
         }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
@@ -736,24 +738,32 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             // Close accordions
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             
-            // Hide UI and Pause Idle
+            // Hide the tap button immediately so it feels responsive
             videoPlaceholder.style.display = 'none';
-            idlePlayer.classList.remove('active');
             
-            // Set new video source and fade in
+            // Load the new video in the background (at 0 opacity)
             const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
             if (interactionPlayer.src !== newSrc) {
                 interactionPlayer.src = newSrc;
             }
-            interactionPlayer.classList.add('active');
+            
+            // Wait 400ms for the thumbnail flash to pass, then fade it in
+            setTimeout(() => {
+                idlePlayer.classList.remove('active');
+                interactionPlayer.classList.add('active');
+            }, 400);
         }
 
         function resetToLoop() {
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
             interactionPlayer.classList.remove('active');
-            interactionPlayer.src = ""; // Stops the video
             idlePlayer.classList.add('active');
+            
+            // Wait for the fade out to finish before stopping the video
+            setTimeout(() => {
+                interactionPlayer.src = ""; 
+            }, 400);
         }
 
         // Listen for Bunny.net video end
