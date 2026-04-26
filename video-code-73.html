@@ -312,13 +312,13 @@
                         
                         <iframe id="idle-player" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
-                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
                         
-                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
                         
-                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
                         
-                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
                         <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
@@ -746,7 +746,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         window.addEventListener('load', () => {
             interactionIframes.forEach(iframe => {
                 const player = new playerjs.Player(iframe);
-                const id = iframe.id.replace('player-', ''); // creates keys like 'main', 'bookings', etc.
+                const id = iframe.id.replace('player-', ''); 
                 
                 players[id] = { instance: player, iframe: iframe };
                 
@@ -758,49 +758,53 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
         // Triggered instantly by tap
         function activateAI(videoId = 'main') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            isInteracting = true;
-            
-            // Close accordions
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            
-            // Hide the tap overlay and idle player
-            videoPlaceholder.style.display = 'none';
-            idlePlayerIframe.classList.remove('active');
+            try {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                isInteracting = true;
+                
+                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                
+                if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+                if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
 
-            // Pause and hide the currently active interaction video (if jumping between questions)
-            if (activePlayerId && players[activePlayerId]) {
-                players[activePlayerId].iframe.classList.remove('active');
-                players[activePlayerId].instance.pause();
-                players[activePlayerId].instance.setCurrentTime(0);
-            }
+                // Pause the currently active video if switching
+                if (activePlayerId && players[activePlayerId]) {
+                    players[activePlayerId].iframe.classList.remove('active');
+                    players[activePlayerId].instance.pause();
+                    players[activePlayerId].instance.setCurrentTime(0);
+                }
 
-            // Show and play the requested video immediately
-            if (players[videoId]) {
-                players[videoId].iframe.classList.add('active');
-                players[videoId].instance.setCurrentTime(0);
-                players[videoId].instance.play();
-                activePlayerId = videoId;
+                // Show, play, and unmute the requested video
+                if (players[videoId]) {
+                    players[videoId].iframe.classList.add('active');
+                    players[videoId].instance.setCurrentTime(0);
+                    players[videoId].instance.play();
+                    
+                    // Force unmute after play registers
+                    setTimeout(() => {
+                        players[videoId].instance.unmute();
+                    }, 50);
+                    
+                    activePlayerId = videoId;
+                }
+            } catch (error) {
+                console.error("Player initialization error:", error);
             }
         }
 
         function resetToLoop() {
             isInteracting = false;
-            videoPlaceholder.style.display = 'flex';
+            if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
             
             if (activePlayerId && players[activePlayerId]) {
                 players[activePlayerId].iframe.classList.remove('active');
                 players[activePlayerId].instance.pause();
             }
             
-            idlePlayerIframe.classList.add('active');
+            if (idlePlayerIframe) idlePlayerIframe.classList.add('active');
         }
     </script>
-
 <script id="chat-faq-logic">
-
-        // Add this to your script section
-// Prime the mobile audio context to allow API unmuting
         document.addEventListener('touchstart', function() {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (AudioContext) {
@@ -831,67 +835,17 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-        function toggleFaq(button) {
-            const item = button.closest('.faq-item');
-            const wasActive = item.classList.contains('active');
-            const videoContainer = item.querySelector('[data-video-id]');
-            const vId = videoContainer?.getAttribute('data-video-id');
-            const containerId = videoContainer?.id;
-
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-
-            if (!wasActive) {
-                item.classList.add('active');
-                if (isInteracting) resetToLoop();
-
-                setTimeout(() => {
-                    if (vId && containerId) {
-                        const container = document.getElementById(containerId);
-                        // Inject Bunny Iframe
-                        if (!container.querySelector('iframe')) {
-                            container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
-                        }
-                    }
-                }, 300);
-            }
-        }
-
-        // Track which questions have already been "logged" to the chat
+        // Must be declared outside the function!
         let loggedQuestions = new Set();
 
-function playVideoAnswer(type, el) { 
+        function playVideoAnswer(type, el) { 
             const questionText = el.innerText.trim();
 
-            // 1. Play the video answer by its pre-mounted ID (e.g., 'bookings')
             activateAI(type); 
-
-            // 2. Expand the chat container visually without auto-scrolling
             expandChatWindow(false); 
 
-            // 3. Prevent duplicate logging
-            if (loggedQuestions.has(type)) {
-                console.log("Question already in chat, skipping duplicate log.");
-                return; 
-            }
+            if (loggedQuestions.has(type)) return; 
 
-            // 4. Log the question and answer to chat
-            loggedQuestions.add(type);
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
-            userMsg.innerText = questionText;
-            chatFeed.appendChild(userMsg);
-
-            const messages = {
-                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
-                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
-                time: ["Most businesses can have it up and running within a week.", "We handle most of the work, you just need to add it to your site."]
-            };
-            
-            addMessages(messages[type] || ["I can certainly help with that."]);
-        }
-
-            // 4. Log the question and answer to chat
             loggedQuestions.add(type);
 
             const userMsg = document.createElement('div');
@@ -917,8 +871,6 @@ function playVideoAnswer(type, el) {
                 const chatContainer = document.getElementById('chat-container');
                 chatContainer.classList.remove('md:self-start');
                 
-                // Only scroll if explicitly asked (e.g., when typing manually)
-                // and if it's not a mobile device during a video play
                 if (shouldScroll) {
                     setTimeout(() => {
                         chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -926,9 +878,7 @@ function playVideoAnswer(type, el) {
                 }
             }
         }
-
-    </script> 
-
+    </script>
 
 
     <script id="lead-capture">
