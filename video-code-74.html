@@ -59,6 +59,7 @@
         .yt-player-frame.active {
             opacity: 1; 
             z-index: 20;
+            pointer-events: auto;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -198,7 +199,7 @@
             <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Process</a>
             <a href="#about-jemima" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">About</a>
             <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
-            <a href="javascript:void(0)" onclick="activateAI(); toggleMobileMenu();" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
+            <a href="javascript:void(0)" onclick="activateAI('main'); toggleMobileMenu();" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
         </div>
         <div class="mt-auto">
             <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full bg-[#c2155a] text-white py-5 font-black uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Free Conversion Audit</button>
@@ -215,7 +216,7 @@
             <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
             <a href="#about-jemima" class="hover:text-[#c2155a]">About</a>
             <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
-            <a href="javascript:void(0)" onclick="activateAI()" class="hover:text-[#c2155a]">How it Works</a>
+            <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a]">How it Works</a>
         </div>
         <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
             <i class="fas fa-bars text-xl"></i>
@@ -237,7 +238,7 @@
                 </button>
                 <div class="text-center">
                     <p class="text-slate-500 text-xs md:text-sm font-medium">No credit card required. We’ll find at least 3 lead leaks in your current site.</p>
-                    <button onclick="activateAI()" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or watch how it works</button>
+                    <button onclick="activateAI('main')" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or watch how it works</button>
                 </div>
             </div>
 
@@ -246,13 +247,19 @@
                     
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
                         
-                        <iframe id="idle-player" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-                        
-                        <div id="interaction-player-mount" class="absolute inset-0 w-full h-full z-20 pointer-events-none"></div>
+                        <iframe id="idle-player" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI()">
+                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        
+                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        
+                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        
+                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
-                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors pointer-events-auto">
+                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
                                     tap to interact
                                 </div>
                             </div>
@@ -403,15 +410,6 @@
         const libraryId = "646015"; 
         const BUNNY_BASE_URL = `https://iframe.mediadelivery.net/embed/${libraryId}/`;
         
-        const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
-        const faqVideoIds = { 
-            bookings: "64eedbbd-1f10-4ca9-b8e4-159817aab205", 
-            cost: "106e205a-2671-4a84-8818-5b87dff997c8", 
-            time: "52c27e3c-ad67-4ed6-ad55-21be85f6cf4b",
-            thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-            abandon: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
-        };
-
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         let isInteracting = false;
         let isChatExpanded = false;
@@ -438,31 +436,25 @@
             hasSubmitted = false;
             lastTriggerSource = source; 
             currentSelectedPackage = pkg;
-
             const trafficSelect = document.getElementById('form-traffic');
             const submitBtn = document.getElementById('submit-btn');
             const cardNote = document.getElementById('modal-card-note');
-
             if (trafficSelect) {
                 trafficSelect.value = "";
                 trafficSelect.classList.add('text-slate-300');
                 trafficSelect.classList.remove('text-slate-900');
             }
-
             cardNote.classList.remove('hidden');
 
             if (isExitIntent) {
                 document.getElementById('modal-tag').innerText = "WAIT! BEFORE YOU GO...";
                 document.getElementById('modal-title').innerText = "Don't leave without your audit!";
-                document.getElementById('modal-subtitle').innerText = "See exactly where your website is losing money.";
                 submitBtn.innerText = "Submit Audit Request";
             } else {
                 document.getElementById('modal-tag').innerText = "Step 1 of 1";
                 document.getElementById('modal-title').innerText = "Get Your Free Audit";
-                document.getElementById('modal-subtitle').innerText = "My team will manually review your site layout.";
                 submitBtn.innerText = "Submit Audit Request";
             }
-
             modalOverlay.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
@@ -474,41 +466,69 @@
     </script>
 
     <script id="video-engine">
-        const idlePlayerIframe = document.getElementById('idle-player');
-        const interactionPlayerMount = document.getElementById('interaction-player-mount');
+        const players = {};
+        let activePlayerId = null;
 
-        // CRITICAL MOBILE FIX: Synchronous injection
-        // By injecting the iframe exactly when the user clicks, the browser 
-        // applies the tap gesture to the iframe allowing it to play unmuted natively.
-        function activateAI(vidGuid = mainExplainer) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            isInteracting = true;
-            
-            // Close accordions
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            
-            videoPlaceholder.style.display = 'none';
-            idlePlayerIframe.classList.remove('active');
-
-            // Injecting with autoplay=true AND muted=false. This ONLY works because it's inside a click handler!
-            interactionPlayerMount.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&playsinline=true" class="yt-player-frame active pointer-events-auto" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
-            
-            // Attach Player.js strictly to reset the UI when the video finishes.
-            const newIframe = interactionPlayerMount.querySelector('iframe');
-            const player = new playerjs.Player(newIframe);
-            
-            player.on('ready', () => {
+        // Initialize API on pre-mounted iframes the moment the DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            const interactionIframes = document.querySelectorAll('.interaction-iframe');
+            interactionIframes.forEach(iframe => {
+                const player = new playerjs.Player(iframe);
+                const id = iframe.id.replace('player-', ''); // Gives us 'main', 'bookings', etc.
+                
+                players[id] = { instance: player, iframe: iframe };
+                
                 player.on('ended', () => {
                     resetToLoop();
                 });
             });
+        });
+
+        // Triggered instantly by a tap
+        function activateAI(videoId = 'main') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            isInteracting = true;
+            
+            // Close all accordions
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            
+            const idlePlayerIframe = document.getElementById('idle-player');
+            if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+            if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
+
+            // Pause whatever is currently playing
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].iframe.classList.remove('active');
+                players[activePlayerId].iframe.classList.add('pointer-events-none');
+                players[activePlayerId].instance.pause();
+                players[activePlayerId].instance.setCurrentTime(0);
+            }
+
+            // Play the requested pre-mounted video.
+            // Because it is unmuted and triggered INSIDE a click handler, iOS allows it.
+            if (players[videoId]) {
+                players[videoId].iframe.classList.add('active');
+                players[videoId].iframe.classList.remove('pointer-events-none');
+                players[videoId].instance.setCurrentTime(0);
+                players[videoId].instance.play();
+                activePlayerId = videoId;
+            } else {
+                console.error("Video ID not found in pre-mounted players:", videoId);
+            }
         }
 
         function resetToLoop() {
             isInteracting = false;
-            videoPlaceholder.style.display = 'flex';
-            interactionPlayerMount.innerHTML = ''; // Destroy the interaction iframe entirely
-            idlePlayerIframe.classList.add('active'); // Reveal the background loop again
+            if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
+            
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].iframe.classList.remove('active');
+                players[activePlayerId].iframe.classList.add('pointer-events-none');
+                players[activePlayerId].instance.pause();
+            }
+            
+            const idlePlayerIframe = document.getElementById('idle-player');
+            if (idlePlayerIframe) idlePlayerIframe.classList.add('active');
         }
     </script>
 
@@ -535,7 +555,8 @@
             }
         }
 
-        // Restored toggleFaq Function using the synchronous injection method
+        // To prevent iOS from freezing the first frame, we inject the FAQ videos with muted=true. 
+        // They will autoplay silently when the accordion is opened.
         function toggleFaq(button) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
@@ -552,8 +573,8 @@
                 if (vId && containerId) {
                     const container = document.getElementById(containerId);
                     if (!container.querySelector('iframe')) {
-                        // Injecting synchronously to pass the click gesture to iOS
-                        container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true&muted=false&playsinline=true" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
+                        // CRITICAL: muted=true ensures iOS doesn't freeze the video on load
+                        container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true&muted=true&playsinline=true" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
                     }
                 }
             }
@@ -562,10 +583,9 @@
         let loggedQuestions = new Set();
 
         function playVideoAnswer(type, el) { 
-            const vidId = faqVideoIds[type];
             const questionText = el.innerText.trim();
 
-            activateAI(vidId); 
+            activateAI(type); 
             expandChatWindow(false); 
 
             if (loggedQuestions.has(type)) return; 
@@ -607,7 +627,6 @@
     <script id="lead-capture">
         async function handleFormSubmit(e) {
             e.preventDefault();
-                        
             const submitBtn = document.getElementById('submit-btn');
             const originalBtnText = submitBtn.innerText;
             submitBtn.disabled = true;
@@ -642,7 +661,6 @@
             }
 
             hasSubmitted = true;
-            activateAI(faqVideoIds.thanks);
             
             const userAction = document.createElement('div');
             userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
@@ -690,19 +708,11 @@
                     const response = await fetch(n8nChatWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            chatInput: text, 
-                            message: text, 
-                            sessionId: sessionId, 
-                            timestamp: new Date().toISOString() 
-                        })
+                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
                     });
-
                     if (!response.ok) throw new Error('Network error');
-
                     const data = await response.json();
                     indicator.remove();
-
                     const getBotText = (input) => {
                         if (typeof input === 'string') return input;
                         if (!input) return null;
@@ -713,10 +723,7 @@
                         if (input.json) return getBotText(input.json);
                         return null;
                     };
-
-                    const jemimaReply = getBotText(data) || "I've received your message, but I'm having trouble phrasing my response!";
-                    addMessages([jemimaReply]);
-
+                    addMessages([getBotText(data) || "I've received your message, but I'm having trouble phrasing my response!"]);
                 } catch (error) {
                     indicator.remove();
                     addMessages(["I'm having a little trouble connecting to my brain right now. Please try again!"]);
@@ -725,15 +732,6 @@
         }
 
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
-        
-        document.addEventListener('mouseleave', (e) => {
-            if (e.clientY < 0 && !hasExited) {
-                hasExited = true;
-                if (modalOverlay.classList.contains('hidden')) {
-                    openModal(true, 'Exit Intent');
-                }
-            }
-        });
     </script>
 </body>
 </html>
