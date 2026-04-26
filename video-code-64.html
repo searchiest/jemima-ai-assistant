@@ -126,6 +126,21 @@
         .faq-item.active .faq-icon {
             transform: rotate(180deg);
         }
+
+
+/* Improve FAQ readability on mobile */
+@media screen and (max-width: 768px) {
+    .faq-content p {
+        font-size: 16px !important;    /* Matches the chat size for consistency */
+        line-height: 1.6;             /* Increases space between lines */
+        margin-bottom: 1.25rem;       /* Adds space between paragraphs */
+        color: #334155;               /* Slightly deepens the gray for better contrast */
+    }
+    
+    .faq-content button {
+        margin-top: 0.5rem;           /* Gives the "Audit" button in the FAQ more room */
+    }
+}
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -372,10 +387,10 @@
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Yes, this is designed to work with the website you already have. You’re not rebuilding anything or replacing your existing setup it simply integrates alongside it. It works with what you already have. It just makes it perform better.
 </p>
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button below. It takes less than 30 seconds to order. Our team will review your website, and show you exactly, how this would fit into your current setup.
 </p>
 <button onclick="openModal(false, 'FAQ1 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
@@ -399,11 +414,11 @@ Click the free conversion audit button below. It takes less than 30 seconds to o
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 This isn’t limited to a specific type of business. It works wherever people visit a website, have questions, and are considering taking action. That could be a local service business, a larger company, or anything in between.
 </p>
 
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website. And show you exactly how this can be adapted for your business.
 </p>
 <button onclick="openModal(false, 'FAQ2 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
@@ -427,10 +442,10 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Yes, everything will be designed around your business. That includes how it looks, the tone, the messaging, and the way that it interacts so it feels natural and aligned with your brand. And if you ever want to make adjustments, that can be done too.
 </p>
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website. And show you exactly how this can be tailored to fit your business.
 </p>
 <button onclick="openModal(false, 'FAQ3 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
@@ -454,10 +469,10 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Yes, people land on your website, they have questions, they’re interested, but they don’t always take the next step. So whether your service is simple or more complex, the goal is the same, turn more of your existing visitors, into real opportunities.
 </p>
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website and show you exactly, how this can be tailored to your business.
 </p>
 <button onclick="openModal(false, 'FAQ4 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
@@ -481,11 +496,11 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Everything can be set up to make sure that enquiries come through to you, at a level you can manage. And if you ever need to slow things down, that can be adjusted. So you're always in control of how demand is handled.
 </p>
 
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website and show you exactly how this can be set up to match your capacity.
 </p>
 <button onclick="openModal(false, 'FAQ5 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
@@ -510,10 +525,10 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Yes, it can ask the right questions up front. And guide the right people, towards taking the next step. It can also handle follow up, by email, phone, or SMS to ensure that the quality of your leads stays high.
 </p>
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website and show you exactly how we can qualify and follow up leads for your business.
 </p>
 <button onclick="openModal(false, 'FAQ6 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
@@ -538,10 +553,10 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                         <div class="faq-content px-6">
                             <div class="grid md:grid-cols-2 gap-8 items-start">
                                 <div class="space-y-4">
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Direct enquiries that come through conversations, can be clearly identified and flagged as AI conversions, so you can see clear, trackable results, and a broader improvement in how your website performs.
 </p>
-<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
 Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly how to track results and where the real gains come from.
 </p>
 <button onclick="openModal(false, 'FAQ11 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
