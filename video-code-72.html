@@ -416,9 +416,9 @@
                     <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
                 </button>
             </div>
-            <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                <div id="faq-vid-1" data-video-id="61d91a66-c2f8-4ad7-b584-f2aca6709f7c"></div>
-            </div>
+<div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+    <div id="faq-vid-1" data-video-id="61d91a66-c2f8-4ad7-b584-f2aca6709f7c" class="absolute inset-0 w-full h-full"></div>
+</div>
         </div>
     </div>
 </div>
@@ -828,26 +828,30 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-        function toggleFaq(button) {
+function toggleFaq(button) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
             const videoContainer = item.querySelector('[data-video-id]');
             const vId = videoContainer?.getAttribute('data-video-id');
             const containerId = videoContainer?.id;
 
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            // 1. Close all accordions AND destroy all iframes to stop playback
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('active');
+                const vidDiv = el.querySelector('[data-video-id]');
+                if (vidDiv) vidDiv.innerHTML = ''; // This stops the video immediately
+            });
 
             if (!wasActive) {
+                // 2. Open the clicked item
                 item.classList.add('active');
                 if (isInteracting) resetToLoop();
 
+                // 3. Inject Bunny Iframe into the freshly opened accordion
                 setTimeout(() => {
                     if (vId && containerId) {
                         const container = document.getElementById(containerId);
-                        // Inject Bunny Iframe
-                        if (!container.querySelector('iframe')) {
-                            container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
-                        }
+                        container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
                     }
                 }, 300);
             }
