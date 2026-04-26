@@ -312,10 +312,9 @@
             <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
                 
                 <div class="w-full md:w-[45%] space-y-4">
-                    <!-- Video Section -->
-                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+<div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
     <iframe id="idle-player" 
-        src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
+        src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false&api=true" 
         class="yt-player-frame" 
         allow="autoplay; fullscreen" 
         style="opacity: 0; transition: opacity 0.6s ease-in-out;"></iframe>
@@ -326,7 +325,11 @@
         allow="autoplay; fullscreen"
         style="opacity: 0; transition: opacity 0.6s ease-in-out;"></iframe>
 
-    <div id="video-placeholder" class="absolute inset-0 z-30 cursor-pointer" onclick="activateAI()"></div>
+    <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer bg-black/10 hover:bg-black/20 transition-colors" onclick="activateAI()">
+        <div class="bg-[#c2155a]/90 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl transform transition-transform hover:scale-105">
+            tap to interact
+        </div>
+    </div>
 </div>
                     
 
@@ -622,73 +625,69 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     </footer>
 
 <script id="main-logic">
-        // 1. CONFIGURATION
         const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
-        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; // Unified for testing
+        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
 
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
-        const faqVideoIds = { 
-            bookings: TEST_GUID, cost: TEST_GUID, time: TEST_GUID,
-            thanks: TEST_GUID, abandon: TEST_GUID
-        };
+        const faqVideoIds = { bookings: TEST_GUID, cost: TEST_GUID, time: TEST_GUID, thanks: TEST_GUID, abandon: TEST_GUID };
 
-        // DOM Elements
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const chatInput = document.getElementById('user-chat-input');
-        const mobileMenu = document.getElementById('mobile-menu');
         const idlePlayer = document.getElementById('idle-player');
         const interactionPlayer = document.getElementById('interaction-player');
+        const chatInput = document.getElementById('user-chat-input');
+        const modalOverlay = document.getElementById('modal-overlay');
 
-        // State Tracking
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         let isInteracting = false;
         let isChatExpanded = false;
         let hasExited = false;
         let hasSubmitted = false;
-        let isMobileMenuOpen = false;
-        let lastTriggerSource = 'Direct Click';
-        let currentSelectedPackage = null;
         let loggedQuestions = new Set();
 
-        // 2. VIDEO ENGINE
+        // 1. VIDEO ENGINE
         function activateAI(vidGuid = TEST_GUID) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
-            
-            // Swap Players
             videoPlaceholder.style.display = 'none';
             idlePlayer.style.opacity = "0";
             
-            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
-            if (interactionPlayer.src !== newSrc) {
-                interactionPlayer.src = newSrc;
-            }
+            // Critical: Add &api=true so Bunny sends messages to our script
+            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&api=true`;
+            interactionPlayer.src = newSrc;
             interactionPlayer.style.opacity = "1";
             interactionPlayer.style.zIndex = "20";
         }
 
         function resetToLoop() {
             isInteracting = false;
-            videoPlaceholder.style.display = 'block';
+            videoPlaceholder.style.display = 'flex';
             interactionPlayer.style.opacity = "0";
             interactionPlayer.style.zIndex = "10";
             interactionPlayer.src = ""; 
             idlePlayer.style.opacity = "1";
         }
 
-        window.addEventListener('message', (e) => {
-            if (e.data === 'player:ended') resetToLoop();
+        // Listen for the "ended" event from the Bunny.net Iframe
+        window.addEventListener('message', function(event) {
+            try {
+                // Bunny sends JSON strings sometimes, or objects
+                const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+                if (data.event === 'ended' || data === 'player:ended') {
+                    resetToLoop();
+                }
+            } catch (e) {
+                // Standard string check if JSON parse fails
+                if (event.data === 'player:ended') resetToLoop();
+            }
         });
 
-        // 3. UI & CHAT
+        // 2. UI & CHAT
         function toggleMobileMenu() {
-            isMobileMenuOpen = !isMobileMenuOpen;
-            mobileMenu.classList.toggle('-translate-y-full', !isMobileMenuOpen);
-            document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'auto';
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('-translate-y-full');
+            document.body.style.overflow = menu.classList.contains('-translate-y-full') ? 'auto' : 'hidden';
         }
 
         function expandChatWindow(shouldScroll = true) {
@@ -714,12 +713,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             userMsg.innerText = el.innerText.trim();
             chatFeed.appendChild(userMsg);
 
-            const messages = {
-                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
-                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
-                time: ["Most businesses can have it up and running within a week.", "We handle most of the work."]
-            };
-            addMessages(messages[type] || ["I can certainly help with that."]);
+            addMessages(["I've updated the video for you.", "Let me know if you have more questions!"]);
         }
 
         function toggleFaq(button) {
@@ -733,6 +727,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             if (!wasActive) {
                 item.classList.add('active');
                 if (isInteracting) resetToLoop();
+                // Controls enabled for FAQ section so users can scrub
                 videoContainer.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true" style="border:none;position:absolute;top:0;left:0;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
             }
         }
@@ -742,7 +737,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                 const indicator = createTypingIndicator();
                 chatFeed.appendChild(indicator);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
-                await new Promise(r => setTimeout(r, 1000));
+                await new Promise(r => setTimeout(r, 800));
                 indicator.remove();
                 
                 const msg = document.createElement('div');
@@ -760,9 +755,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             return typing;
         }
 
-        // 4. FORM & MODAL
-        function openModal(isExitIntent = false, source = 'Direct Click', pkg = null) {
-            lastTriggerSource = source; currentSelectedPackage = pkg;
+        function openModal(isExitIntent = false) {
             modalOverlay.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
@@ -798,22 +791,19 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-        // 5. INITIALIZATION
         document.getElementById('chat-input-form').onsubmit = handleChatSubmit;
         modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(true); };
         
         document.addEventListener('mouseleave', (e) => {
-            if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(true, 'Exit Intent'); }
+            if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(true); }
         });
 
         document.addEventListener('touchstart', () => {}, {once: true});
         
-        // Explicitly start the idle video on load
-        window.onload = () => {
-            idlePlayer.style.opacity = "1";
-        };
+        window.onload = () => { idlePlayer.style.opacity = "1"; };
     </script>
 </body>
+</html></body>
 </html></body>
 </html></body>
 </html>
