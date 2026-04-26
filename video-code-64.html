@@ -26,6 +26,16 @@
         display: block;      /* Helps control the line break behavior */
     }
 }
+
+/* Better readability for Chat Bubbles */
+#chat-feed div {
+    font-size: 16px !important;    /* Forces a comfortable reading size on all devices */
+    line-height: 1.6;             /* Adds breathing room between lines of text */
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.85rem !important;
+    letter-spacing: 0.01em;       /* Slightly improves character definition */
+}
+
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         
@@ -788,7 +798,8 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                 await new Promise(r => setTimeout(r, 1200));
                 indicator.remove();
                 const msg = document.createElement('div');
-                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+// Locate this line inside the addMessages function
+msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
                 msg.innerText = text;
                 chatFeed.appendChild(msg);
                 chatFeed.scrollTop = chatFeed.scrollHeight;
