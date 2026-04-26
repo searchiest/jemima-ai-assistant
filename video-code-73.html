@@ -309,11 +309,18 @@
                 <div class="w-full md:w-[45%] space-y-4">
                     <!-- Video Section -->
 <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
-                        <iframe id="idle-player-mount" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active" allow="autoplay; fullscreen; picture-in-picture"></iframe>
                         
-                        <iframe id="interaction-player-mount" src="" class="yt-player-frame" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="idle-player" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI()">
+                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        
+                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        
+                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        
+                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=false&controls=false&playsinline=true" class="yt-player-frame interaction-iframe" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
                                 <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
                                     tap to interact
@@ -728,67 +735,52 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     </script>
 
 <script id="video-engine">
-        const idlePlayer = document.getElementById('idle-player-mount');
-        const interactionPlayer = document.getElementById('interaction-player-mount');
-        let currentPlayer = null;
+        const idlePlayerIframe = document.getElementById('idle-player');
+        const interactionIframes = document.querySelectorAll('.interaction-iframe');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        
+        const players = {};
+        let activePlayerId = null;
 
-function activateAI(vidGuid = mainExplainer) {
+        // Attach Player.js to all pre-mounted iframes on page load
+        window.addEventListener('load', () => {
+            interactionIframes.forEach(iframe => {
+                const player = new playerjs.Player(iframe);
+                const id = iframe.id.replace('player-', ''); // creates keys like 'main', 'bookings', etc.
+                
+                players[id] = { instance: player, iframe: iframe };
+                
+                player.on('ended', () => {
+                    resetToLoop();
+                });
+            });
+        });
+
+        // Triggered instantly by tap
+        function activateAI(videoId = 'main') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
             
             // Close accordions
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             
-            // Hide the tap button immediately
+            // Hide the tap overlay and idle player
             videoPlaceholder.style.display = 'none';
-            
-            // CRITICAL FIX: We MUST start muted=true so mobile browsers allow it to load
-            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=true&controls=false&playsinline=true`;
-            
-            // If it's a NEW video, we need to load it and attach the listener
-            if (interactionPlayer.src !== newSrc) {
-                // Fade out the current video and show the idle loop as a bridge
-                interactionPlayer.classList.remove('active');
-                idlePlayer.classList.add('active');
-                
-                // Inject the new source
-                interactionPlayer.src = newSrc;
-                
-                // When the iframe finishes loading, attach the Bunny Player API
-                interactionPlayer.onload = () => {
-                    if (interactionPlayer.getAttribute('src')) {
-                        currentPlayer = new playerjs.Player(interactionPlayer);
-                        
-                        // Force play, then immediately unmute once the player is confirmed active
-                        currentPlayer.on('ready', () => {
-                            currentPlayer.play();
-                            setTimeout(() => {
-                                currentPlayer.unmute();
-                            }, 50); // slight delay ensures play has registered
-                        });
+            idlePlayerIframe.classList.remove('active');
 
-                        currentPlayer.on('ended', () => {
-                            resetToLoop();
-                        });
-                    }
-                };
-                
-                // Wait 800ms for the flash/UI to pass, then crossfade back
-                setTimeout(() => {
-                    idlePlayer.classList.remove('active');
-                    interactionPlayer.classList.add('active');
-                }, 800);
-                
-            } else {
-                // If it's the exact same video, ensure it's visible and restart it instantly
-                idlePlayer.classList.remove('active');
-                interactionPlayer.classList.add('active');
-                
-                if (currentPlayer) {
-                    currentPlayer.setCurrentTime(0);
-                    currentPlayer.play();
-                    currentPlayer.unmute(); // Ensure it's unmuted on replay
-                }
+            // Pause and hide the currently active interaction video (if jumping between questions)
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].iframe.classList.remove('active');
+                players[activePlayerId].instance.pause();
+                players[activePlayerId].instance.setCurrentTime(0);
+            }
+
+            // Show and play the requested video immediately
+            if (players[videoId]) {
+                players[videoId].iframe.classList.add('active');
+                players[videoId].instance.setCurrentTime(0);
+                players[videoId].instance.play();
+                activePlayerId = videoId;
             }
         }
 
@@ -796,15 +788,12 @@ function activateAI(vidGuid = mainExplainer) {
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
             
-            // Trigger the fade out
-            interactionPlayer.classList.remove('active');
-            idlePlayer.classList.add('active');
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].iframe.classList.remove('active');
+                players[activePlayerId].instance.pause();
+            }
             
-            // Wait for the fade animation to finish before clearing the iframe
-            setTimeout(() => {
-                interactionPlayer.removeAttribute('src'); 
-                currentPlayer = null; // Clear the player so it re-binds cleanly next time
-            }, 500);
+            idlePlayerIframe.classList.add('active');
         }
     </script>
 
@@ -870,12 +859,11 @@ function activateAI(vidGuid = mainExplainer) {
         // Track which questions have already been "logged" to the chat
         let loggedQuestions = new Set();
 
-        function playVideoAnswer(type, el) { 
-            const vidId = faqVideoIds[type];
+function playVideoAnswer(type, el) { 
             const questionText = el.innerText.trim();
 
-            // 1. Play the video answer (Hero section)
-            activateAI(vidId); 
+            // 1. Play the video answer by its pre-mounted ID (e.g., 'bookings')
+            activateAI(type); 
 
             // 2. Expand the chat container visually without auto-scrolling
             expandChatWindow(false); 
@@ -885,6 +873,23 @@ function activateAI(vidGuid = mainExplainer) {
                 console.log("Question already in chat, skipping duplicate log.");
                 return; 
             }
+
+            // 4. Log the question and answer to chat
+            loggedQuestions.add(type);
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = questionText;
+            chatFeed.appendChild(userMsg);
+
+            const messages = {
+                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
+                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
+                time: ["Most businesses can have it up and running within a week.", "We handle most of the work, you just need to add it to your site."]
+            };
+            
+            addMessages(messages[type] || ["I can certainly help with that."]);
+        }
 
             // 4. Log the question and answer to chat
             loggedQuestions.add(type);
