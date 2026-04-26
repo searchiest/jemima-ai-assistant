@@ -315,18 +315,18 @@
 <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
     <iframe id="idle-player" 
         src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false&api=true" 
-        class="absolute inset-0 w-full h-full" 
+        class="absolute inset-0 w-full h-full border-0" 
         allow="autoplay; fullscreen" 
-        style="opacity: 1; border: 0; z-index: 10;"></iframe>
+        style="z-index: 10;"></iframe>
 
     <iframe id="interaction-player" 
         src="" 
-        class="absolute inset-0 w-full h-full" 
+        class="absolute inset-0 w-full h-full border-0" 
         allow="autoplay; fullscreen"
-        style="opacity: 0; border: 0; z-index: 5; transition: opacity 0.6s ease-in-out;"></iframe>
+        style="opacity: 0; z-index: 5; transition: opacity 0.4s ease-in-out;"></iframe>
 
     <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 cursor-pointer" onclick="activateAI()">
-        <div class="bg-[#c2155a] px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl">
+        <div class="bg-[#c2155a] px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl transform hover:scale-105 transition-transform">
             tap to interact
         </div>
     </div>
@@ -624,82 +624,86 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
     </footer>
 
-<script id="main-logic">
-    const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
-    const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
+<<script id="main-logic">
+        const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
+        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
 
-    const idlePlayer = document.getElementById('idle-player');
-    const interactionPlayer = document.getElementById('interaction-player');
-    const videoPlaceholder = document.getElementById('video-placeholder');
+        const idlePlayer = document.getElementById('idle-player');
+        const interactionPlayer = document.getElementById('interaction-player');
+        const videoPlaceholder = document.getElementById('video-placeholder');
 
-    function activateAI(vidGuid = TEST_GUID) {
-        // 1. Setup Interaction Player
-        const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&api=true`;
-        interactionPlayer.src = newSrc;
-        
-        // 2. Visual Swap
-        interactionPlayer.style.opacity = "1";
-        interactionPlayer.style.zIndex = "20";
-        videoPlaceholder.style.display = "none";
-        
-        // 3. Fade out idle (after interaction starts)
-        setTimeout(() => { idlePlayer.style.opacity = "0"; }, 100);
-    }
-
-    function resetToLoop() {
-        // 1. Fade interaction out
-        interactionPlayer.style.opacity = "0";
-        interactionPlayer.style.zIndex = "5";
-        
-        // 2. Bring Idle back
-        idlePlayer.style.opacity = "1";
-        videoPlaceholder.style.display = "flex";
-        
-        // 3. Clear source to stop any background noise
-        setTimeout(() => { interactionPlayer.src = ""; }, 600);
-    }
-
-    // THE FIX: Robust Listener for Bunny.net API
-    window.addEventListener('message', function(event) {
-        // Only listen to messages from the Bunny Player
-        if (!event.origin.includes('mediadelivery.net')) return;
-
-        let data;
-        try {
-            data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-        } catch (e) {
-            data = event.data;
+        function activateAI(vidGuid = TEST_GUID) {
+            console.log("Activating Video:", vidGuid);
+            
+            // 1. Set source with API enabled
+            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&api=true`;
+            interactionPlayer.src = newSrc;
+            
+            // 2. Bring to front immediately
+            interactionPlayer.style.zIndex = "20";
+            interactionPlayer.style.opacity = "1";
+            videoPlaceholder.style.display = "none";
         }
 
-        // Catching Bunny.net "ended" signal in multiple possible formats
-        if (data === 'player:ended' || data.event === 'ended' || data.type === 'ended') {
-            console.log("Video Finished - Returning to Idle");
-            resetToLoop();
+        function resetToLoop() {
+            console.log("Resetting to Idle...");
+            // 1. Hide the interaction player
+            interactionPlayer.style.opacity = "0";
+            
+            // 2. Wait for fade, then move to back and clear source
+            setTimeout(() => {
+                interactionPlayer.style.zIndex = "5";
+                interactionPlayer.src = ""; // Stop video playback
+                videoPlaceholder.style.display = "flex";
+            }, 400);
         }
-    });
 
-    // FAQ & Chat Logic
-    function toggleFaq(button) {
-        const item = button.closest('.faq-item');
-        const wasActive = item.classList.contains('active');
-        const container = item.querySelector('[data-video-id]');
-        const guid = container?.getAttribute('data-video-id') || TEST_GUID;
+        // UNIVERSAL EVENT LISTENER FOR BUNNY.NET
+        window.addEventListener('message', function(event) {
+            // Check if message is from Bunny
+            if (!event.origin.includes('mediadelivery.net')) return;
 
-        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            let data;
+            try {
+                // Bunny sends events as a JSON string
+                data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+            } catch (e) {
+                return; // Not a valid JSON message
+            }
 
-        if (!wasActive) {
-            item.classList.add('active');
-            container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${guid}?autoplay=true&muted=false&controls=true" style="border:none;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
+            // Check for the "ended" event in all common Bunny API formats
+            if (data.event === 'ended' || data === 'player:ended' || (data.value && data.value.event === 'ended')) {
+                resetToLoop();
+            }
+        });
+
+        // Toggle FAQ with Bunny Player
+        function toggleFaq(button) {
+            const item = button.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+            const container = item.querySelector('[data-video-id]');
+            const guid = container?.getAttribute('data-video-id') || TEST_GUID;
+
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+
+            if (!wasActive) {
+                item.classList.add('active');
+                if (interactionPlayer.src !== "") resetToLoop();
+                container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${guid}?autoplay=true&muted=false&controls=true" style="border:none;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
+            }
         }
-    }
 
-    // ... (Keep your existing expandChatWindow and handleFormSubmit functions here) ...
+        // Audio priming for iOS
+        document.addEventListener('touchstart', () => {}, {once: true});
 
-    // Ensure audio is primed for iOS
-    document.addEventListener('touchstart', () => {
-        // No code needed, just the interaction allows audio to play
-    }, {once: true});
-</script>
+        // Ensure everything is visible on start
+        window.onload = () => {
+            idlePlayer.style.opacity = "1";
+            console.log("System Ready");
+        };
+
+        // --- (Keep your expandChatWindow and handleFormSubmit here) ---
+    </script>
 
 </body>
 </html>
