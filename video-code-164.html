@@ -639,87 +639,371 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
 <script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
 
-    <script id="main-logic">
-        const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
-        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
+<script id="config-state">
+    const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+    const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
+    const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
 
-        const idlePlayer = document.getElementById('idle-player');
-        const interactionPlayer = document.getElementById('interaction-player');
-        const videoPlaceholder = document.getElementById('video-placeholder');
-        const loadingShield = document.getElementById('loading-shield');
+    const chatFeed = document.getElementById('chat-feed');
+    const videoPlaceholder = document.getElementById('video-placeholder');
+    const interactionUI = document.getElementById('interaction-ui');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const chatInput = document.getElementById('user-chat-input');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    // Players
+    const idlePlayer = document.getElementById('idle-player');
+    const interactionPlayer = document.getElementById('interaction-player');
+    const loadingShield = document.getElementById('loading-shield');
+
+    const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+    
+    // Bunny.net GUIDs (Update these with your actual Bunny GUIDs)
+    const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
+    const faqVideoIds = { 
+        bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        time: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
+        integration: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        setup: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
+        presenter: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
+        thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
+        abandon: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
+    };
+
+    let playerInstance = null;
+    let faqPlayers = {}; 
+    let isInteracting = false;
+    let isPaused = false;
+    let isChatExpanded = false;
+    let hasExited = false;
+    let hasSubmitted = false;
+    let isMobileMenuOpen = false;
+    let lastTriggerSource = 'Direct Click';
+    let currentSelectedPackage = null;
+    let loggedQuestions = new Set();
+</script>
+
+<script id="ui-management">
+    function toggleMobileMenu() {
+        isMobileMenuOpen = !isMobileMenuOpen;
+        if (isMobileMenuOpen) {
+            mobileMenu.classList.remove('-translate-y-full');
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileMenu.classList.add('-translate-y-full');
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function openModal(isExitIntent = false, source = 'Direct Click', pkg = null) {
+        hasSubmitted = false;
+        lastTriggerSource = source; 
+        currentSelectedPackage = pkg;
+
+        const trafficSelect = document.getElementById('form-traffic');
+        const submitBtn = document.getElementById('submit-btn');
+        const cardNote = document.getElementById('modal-card-note');
+
+        if (trafficSelect) {
+            trafficSelect.value = "";
+            trafficSelect.classList.add('text-slate-300');
+            trafficSelect.classList.remove('text-slate-900');
+        }
+
+        cardNote.classList.remove('hidden');
+
+        if (isExitIntent) {
+            document.getElementById('modal-tag').innerText = "WAIT! BEFORE YOU GO...";
+            document.getElementById('modal-title').innerText = "Don't leave without your audit!";
+            document.getElementById('modal-subtitle').innerText = "See exactly where your website is losing money.";
+            submitBtn.innerText = "Submit Audit Request";
+        } else if (pkg) {
+            const titleMap = { 'starter': 'Start With Starter', 'growth': 'Choose Growth', 'pro': 'About Pro' };
+            const buttonMap = { 'starter': 'Submit Starter Audit Request', 'growth': 'Submit Growth Audit Request', 'pro': 'Submit Pro Audit Request' };
+            document.getElementById('modal-tag').innerText = "Step 1 of 1";
+            document.getElementById('modal-title').innerText = titleMap[pkg] || "Get Your Free Audit";
+            document.getElementById('modal-subtitle').innerText = `So we can ensure that the "${pkg}" package is the best choice for you, let's start with a free conversion audit.`;
+            submitBtn.innerText = buttonMap[pkg] || "Submit Audit Request";
+            cardNote.classList.add('hidden');
+        } else {
+            document.getElementById('modal-tag').innerText = "Step 1 of 1";
+            document.getElementById('modal-title').innerText = "Get Your Free Audit";
+            document.getElementById('modal-subtitle').innerText = "My team will manually review your site layout.";
+            submitBtn.innerText = "Submit Audit Request";
+        }
+
+        modalOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(isUserTriggered = false) {
+        modalOverlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        if (isUserTriggered && !hasSubmitted) {
+            activateAI(faqVideoIds.abandon);
+        }
+    }
+</script>
+
+<script id="video-engine">
+    function activateAI(vidGuid = mainExplainer) {
+        isInteracting = true;
+        isPaused = false;
+
+        // Reset FAQ players if any are playing
+        Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+
+        // Prepare interaction player
+        interactionPlayer.style.opacity = "0";
+        interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
+
+        playerInstance = new playerjs.Player(interactionPlayer);
         
-        let playerInstance = null;
-        let isInteracting = false;
-        let isPaused = false;
-
-        function activateAI(vidGuid = TEST_GUID) {
-            isInteracting = true;
-            isPaused = false;
-
-            // 1. Prepare interaction player (Hidden)
-            interactionPlayer.style.opacity = "0";
-            interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
-
-            // 2. Initialize Handshake
-            playerInstance = new playerjs.Player(interactionPlayer);
-            
-            playerInstance.on('ready', () => {
-                // Only show the video once we know it's actually playing
-                playerInstance.on('play', () => {
-                    interactionPlayer.style.opacity = "1";
-                    interactionPlayer.style.pointerEvents = "auto";
-                    videoPlaceholder.style.display = 'none';
-                });
-
-                playerInstance.on('ended', () => {
-                    resetToLoop();
-                });
+        playerInstance.on('ready', () => {
+            playerInstance.on('play', () => {
+                interactionPlayer.style.opacity = "1";
+                interactionPlayer.style.pointerEvents = "auto";
+                videoPlaceholder.style.display = 'none';
+                if(interactionUI) interactionUI.classList.remove('opacity-0');
             });
+
+            playerInstance.on('ended', () => {
+                resetToLoop();
+            });
+        });
+    }
+
+    function resetToLoop() {
+        isInteracting = false;
+        if(loadingShield) loadingShield.style.opacity = "1";
+        interactionPlayer.style.opacity = "0";
+        interactionPlayer.style.pointerEvents = "none";
+
+        setTimeout(() => {
+            interactionPlayer.src = ""; 
+            videoPlaceholder.style.display = 'flex';
+            if(loadingShield) loadingShield.style.opacity = "0";
+            playerInstance = null;
+        }, 400);
+    }
+
+    function togglePlayPause() {
+        if (!playerInstance) return;
+        if (isPaused) {
+            playerInstance.play();
+            isPaused = false;
+        } else {
+            playerInstance.pause();
+            isPaused = true;
         }
+    }
 
-        function resetToLoop() {
-            isInteracting = false;
-            
-            // 1. Show the shield and fade out the interaction player
-            loadingShield.style.opacity = "1";
-            interactionPlayer.style.opacity = "0";
-            interactionPlayer.style.pointerEvents = "none";
-
-            // 2. Wait for the interaction player to be fully hidden
-            setTimeout(() => {
-                interactionPlayer.src = ""; // Clear source while hidden
-                videoPlaceholder.style.display = 'flex';
-                loadingShield.style.opacity = "0"; // Reveal the idle player again
-                playerInstance = null;
-            }, 400);
+    // Global click handler for the video area
+    document.getElementById('video-container').addEventListener('click', (e) => {
+        if (!isInteracting) {
+            activateAI();
+        } else if (e.target.id !== 'video-placeholder') {
+            togglePlayPause();
         }
+    });
 
-        // Play/Pause Toggle
-        function togglePlayPause() {
-            if (!playerInstance) return;
-            if (isPaused) {
-                playerInstance.play();
-                isPaused = false;
-            } else {
-                playerInstance.pause();
-                isPaused = true;
+    window.onload = () => { 
+        if(idlePlayer) idlePlayer.style.opacity = "1"; 
+    };
+</script>
+
+<script id="chat-faq-logic">
+    document.addEventListener('touchstart', function() {}, {once: true});
+
+    function createTypingIndicator() {
+        const typing = document.createElement('div');
+        typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
+        typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        return typing;
+    }
+
+    async function addMessages(msgArray) {
+        for (const text of msgArray) {
+            const indicator = createTypingIndicator();
+            chatFeed.appendChild(indicator);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+            await new Promise(r => setTimeout(r, 1200));
+            indicator.remove();
+            const msg = document.createElement('div');
+            msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+            msg.innerText = text;
+            chatFeed.appendChild(msg);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+        }
+    }
+
+    function toggleFaq(button) {
+        const item = button.closest('.faq-item');
+        const wasActive = item.classList.contains('active');
+        const videoIframe = item.querySelector('iframe');
+        const vGuid = item.querySelector('[data-video-id]')?.getAttribute('data-video-id');
+
+        // Pause existing Bunny FAQ players
+        Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+
+        if (!wasActive) {
+            item.classList.add('active');
+            if (isInteracting) resetToLoop();
+
+            if (vGuid && videoIframe) {
+                if (!faqPlayers[videoIframe.id]) {
+                    videoIframe.src = `${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true`;
+                    faqPlayers[videoIframe.id] = new playerjs.Player(videoIframe);
+                } else {
+                    faqPlayers[videoIframe.id].play();
+                }
             }
         }
+    }
 
-        // Global click handler for the video area
-        document.getElementById('video-container').addEventListener('click', (e) => {
-            if (!isInteracting) {
-                activateAI();
-            } else if (e.target.id !== 'video-placeholder') {
-                togglePlayPause();
+    function playVideoAnswer(type, el) { 
+        const vidId = faqVideoIds[type];
+        const questionText = el.innerText.trim();
+        activateAI(vidId); 
+        expandChatWindow(false); 
+
+        if (loggedQuestions.has(type)) return; 
+        loggedQuestions.add(type);
+
+        const userMsg = document.createElement('div');
+        userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+        userMsg.innerText = questionText;
+        chatFeed.appendChild(userMsg);
+
+        const messages = {
+            bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
+            cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
+            time: ["Most businesses can have it up and running within a week.", "We handle most of the work, you just need to add it to your site."]
+        };
+        addMessages(messages[type] || ["I can certainly help with that."]);
+    }
+
+    function expandChatWindow(shouldScroll = true) {
+        if (!isChatExpanded) {
+            isChatExpanded = true;
+            chatFeed.classList.remove('h-[120px]');
+            chatFeed.classList.add('h-[400px]', 'md:h-1200');
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.classList.remove('md:self-start');
+            if (shouldScroll) {
+                setTimeout(() => { chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
             }
-        });
+        }
+    }
+</script>
 
-        // iPhone Zoom & Navigation resets
-        document.addEventListener('focusout', (e) => {
-            if (e.target.tagName === 'INPUT') window.scrollTo(0, window.scrollY);
-        });
+<script id="lead-capture">
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submit-btn');
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.disabled = true;
+        submitBtn.innerText = "SENDING...";
 
-        window.onload = () => { idlePlayer.style.opacity = "1"; };
-    </script></body>
+        const formData = {
+            name: document.getElementById('form-name').value,
+            website: document.getElementById('form-website').value,
+            traffic: document.getElementById('form-traffic').value,
+            email: document.getElementById('form-email').value,
+            phone: document.getElementById('form-phone').value,
+            smsOptin: document.getElementById('form-sms-optin').checked,
+            selectedPackage: currentSelectedPackage,
+            triggerButton: lastTriggerSource,
+            sessionId: sessionId,
+            timestamp: new Date().toISOString()
+        };
+
+        let leadSuccess = false;
+        if (n8nFormWebhookUrl) {
+            try {
+                const response = await fetch(n8nFormWebhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'audit_lead', ...formData })
+                });
+                if(response.ok) leadSuccess = true;
+            } catch (error) { console.error('Webhook Error:', error); }
+        }
+
+        hasSubmitted = true;
+        activateAI(faqVideoIds.thanks);
+        
+        const userAction = document.createElement('div');
+        userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
+        userAction.innerText = `Audit Requested for ${formData.website}`;
+        chatFeed.appendChild(userAction);
+
+        if (leadSuccess) {
+            addMessages([`Thanks ${formData.name.split(' ')[0]}! We're analyzing ${formData.website} now.`, "Expect your full video report via email within 24 hours."]);
+        } else {
+            addMessages([`I've noted your interest, ${formData.name.split(' ')[0]}, but I'm having trouble connecting to my team right now.`, "We'll review your request manually!"]);
+        }
+        closeModal(false);
+        submitBtn.disabled = false;
+        submitBtn.innerText = originalBtnText;
+        e.target.reset();
+    }
+
+    async function handleChatSubmit(e) {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+        chatInput.value = '';
+        expandChatWindow();
+
+        const userMsg = document.createElement('div');
+        userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+        userMsg.innerText = text;
+        chatFeed.appendChild(userMsg);
+
+        const indicator = createTypingIndicator();
+        chatFeed.appendChild(indicator);
+        chatFeed.scrollTop = chatFeed.scrollHeight;
+
+        if (n8nChatWebhookUrl) {
+            try {
+                const response = await fetch(n8nChatWebhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+                });
+                indicator.remove();
+                const data = await response.json();
+                const getBotText = (input) => {
+                    if (typeof input === 'string') return input;
+                    if (Array.isArray(input)) return getBotText(input[0]);
+                    if (!input) return null;
+                    const candidates = [input.output, input.text, input.response, input.message, input.content];
+                    return candidates.find(c => typeof c === 'string' && c.length > 0);
+                };
+                addMessages([getBotText(data) || "I've received your message!"]);
+            } catch (error) {
+                indicator.remove();
+                addMessages(["I'm having a little trouble connecting. Please try again!"]);
+            }
+        }
+    }
+
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
+    document.addEventListener('mouseleave', (e) => {
+        if (e.clientY < 0 && !hasExited) {
+            hasExited = true;
+            if (modalOverlay.classList.contains('hidden')) openModal(true, 'Exit Intent');
+        }
+    });
+
+    document.addEventListener('focusout', (e) => {
+        if (e.target.tagName === 'INPUT') window.scrollTo(0, window.scrollY);
+    });
+</script>
+
+</body>
 </html>
