@@ -779,10 +779,18 @@ function activateAI(vidGuid = mainExplainer) {
             }, 500);
         }
 
-        // Listen for Bunny.net video end
+// Listen for Bunny.net video end
         window.addEventListener('message', (e) => {
-            if (e.data === 'player:ended') {
-                resetToLoop();
+            try {
+                // Bunny.net uses the Player.js standard, which sends a JSON payload
+                const message = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+                
+                // Check if the message is from the player and if the event is 'ended'
+                if (message.context === 'player.js' && message.event === 'ended') {
+                    resetToLoop();
+                }
+            } catch (error) {
+                // Safely ignore any messages on the page that aren't JSON
             }
         });
     </script>
