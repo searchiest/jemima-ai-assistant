@@ -658,8 +658,10 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
     const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
     
-    // Bunny.net GUIDs (Update these with your actual Bunny GUIDs)
+    // Default Main Video (Replace with your actual GUID)
     const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
+    
+    // Update these with the specific Bunny.net GUIDs for each answer
     const faqVideoIds = { 
         bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
         cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
@@ -684,6 +686,88 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     let loggedQuestions = new Set();
 </script>
 
+<script id="video-engine">
+    /**
+     * MAIN VIDEO HANDLER
+     * This replaces the idle video with the interaction video
+     */
+    function activateAI(vidGuid = mainExplainer) {
+        isInteracting = true;
+        isPaused = false;
+
+        // 1. Ensure all other FAQ accordion videos are stopped
+        Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+
+        // 2. Prepare the Interaction Player
+        // We set z-index and opacity to ensure it covers the idle player completely
+        interactionPlayer.style.zIndex = "30"; 
+        interactionPlayer.style.opacity = "0";
+        interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
+
+        // 3. Initialize Bunny.net Handshake
+        playerInstance = new playerjs.Player(interactionPlayer);
+        
+        playerInstance.on('ready', () => {
+            playerInstance.on('play', () => {
+                // Once playing, fade it in and hide the placeholder/idle layers
+                interactionPlayer.style.opacity = "1";
+                interactionPlayer.style.pointerEvents = "auto";
+                if(videoPlaceholder) videoPlaceholder.style.display = 'none';
+                if(interactionUI) interactionUI.classList.remove('opacity-0');
+                
+                // Pause the background idle player to save resources
+                if(idlePlayer && typeof idlePlayer.pause === 'function') idlePlayer.pause();
+            });
+
+            playerInstance.on('ended', () => {
+                resetToLoop();
+            });
+        });
+    }
+
+    function resetToLoop() {
+        isInteracting = false;
+        if(loadingShield) loadingShield.style.opacity = "1";
+        
+        // Hide the interaction player
+        interactionPlayer.style.opacity = "0";
+        interactionPlayer.style.pointerEvents = "none";
+        interactionPlayer.style.zIndex = "10";
+
+        setTimeout(() => {
+            interactionPlayer.src = ""; // Clear the video
+            if(videoPlaceholder) videoPlaceholder.style.display = 'flex';
+            if(loadingShield) loadingShield.style.opacity = "0";
+            playerInstance = null;
+        }, 400);
+    }
+
+    function togglePlayPause() {
+        if (!playerInstance) return;
+        if (isPaused) {
+            playerInstance.play();
+            isPaused = false;
+        } else {
+            playerInstance.pause();
+            isPaused = true;
+        }
+    }
+
+    // Global click handler for the video container area
+    document.getElementById('video-container').addEventListener('click', (e) => {
+        if (!isInteracting) {
+            activateAI();
+        } else if (e.target.id !== 'video-placeholder') {
+            togglePlayPause();
+        }
+    });
+
+    window.onload = () => { 
+        if(idlePlayer) idlePlayer.style.opacity = "1"; 
+    };
+</script>
+
 <script id="ui-management">
     function toggleMobileMenu() {
         isMobileMenuOpen = !isMobileMenuOpen;
@@ -700,7 +784,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         hasSubmitted = false;
         lastTriggerSource = source; 
         currentSelectedPackage = pkg;
-
         const trafficSelect = document.getElementById('form-traffic');
         const submitBtn = document.getElementById('submit-btn');
         const cardNote = document.getElementById('modal-card-note');
@@ -710,7 +793,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             trafficSelect.classList.add('text-slate-300');
             trafficSelect.classList.remove('text-slate-900');
         }
-
         cardNote.classList.remove('hidden');
 
         if (isExitIntent) {
@@ -746,74 +828,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     }
 </script>
 
-<script id="video-engine">
-    function activateAI(vidGuid = mainExplainer) {
-        isInteracting = true;
-        isPaused = false;
-
-        // Reset FAQ players if any are playing
-        Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
-        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-
-        // Prepare interaction player
-        interactionPlayer.style.opacity = "0";
-        interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
-
-        playerInstance = new playerjs.Player(interactionPlayer);
-        
-        playerInstance.on('ready', () => {
-            playerInstance.on('play', () => {
-                interactionPlayer.style.opacity = "1";
-                interactionPlayer.style.pointerEvents = "auto";
-                videoPlaceholder.style.display = 'none';
-                if(interactionUI) interactionUI.classList.remove('opacity-0');
-            });
-
-            playerInstance.on('ended', () => {
-                resetToLoop();
-            });
-        });
-    }
-
-    function resetToLoop() {
-        isInteracting = false;
-        if(loadingShield) loadingShield.style.opacity = "1";
-        interactionPlayer.style.opacity = "0";
-        interactionPlayer.style.pointerEvents = "none";
-
-        setTimeout(() => {
-            interactionPlayer.src = ""; 
-            videoPlaceholder.style.display = 'flex';
-            if(loadingShield) loadingShield.style.opacity = "0";
-            playerInstance = null;
-        }, 400);
-    }
-
-    function togglePlayPause() {
-        if (!playerInstance) return;
-        if (isPaused) {
-            playerInstance.play();
-            isPaused = false;
-        } else {
-            playerInstance.pause();
-            isPaused = true;
-        }
-    }
-
-    // Global click handler for the video area
-    document.getElementById('video-container').addEventListener('click', (e) => {
-        if (!isInteracting) {
-            activateAI();
-        } else if (e.target.id !== 'video-placeholder') {
-            togglePlayPause();
-        }
-    });
-
-    window.onload = () => { 
-        if(idlePlayer) idlePlayer.style.opacity = "1"; 
-    };
-</script>
-
 <script id="chat-faq-logic">
     document.addEventListener('touchstart', function() {}, {once: true});
 
@@ -839,13 +853,13 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     }
 
+    // This handles the FAQ Accordion videos
     function toggleFaq(button) {
         const item = button.closest('.faq-item');
         const wasActive = item.classList.contains('active');
         const videoIframe = item.querySelector('iframe');
         const vGuid = item.querySelector('[data-video-id]')?.getAttribute('data-video-id');
 
-        // Pause existing Bunny FAQ players
         Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
         document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
@@ -864,12 +878,16 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     }
 
+    // This handles the 3 Main FAQ Buttons (Replacing Hero Video)
     function playVideoAnswer(type, el) { 
-        const vidId = faqVideoIds[type];
+        const vidGuid = faqVideoIds[type];
         const questionText = el.innerText.trim();
-        activateAI(vidId); 
+        
+        // 1. Swap the Hero Video to the Answer Video
+        activateAI(vidGuid); 
+        
+        // 2. Manage Chat Log
         expandChatWindow(false); 
-
         if (loggedQuestions.has(type)) return; 
         loggedQuestions.add(type);
 
@@ -892,7 +910,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             chatFeed.classList.remove('h-[120px]');
             chatFeed.classList.add('h-[400px]', 'md:h-1200');
             const chatContainer = document.getElementById('chat-container');
-            chatContainer.classList.remove('md:self-start');
             if (shouldScroll) {
                 setTimeout(() => { chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
             }
@@ -980,7 +997,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                 const getBotText = (input) => {
                     if (typeof input === 'string') return input;
                     if (Array.isArray(input)) return getBotText(input[0]);
-                    if (!input) return null;
                     const candidates = [input.output, input.text, input.response, input.message, input.content];
                     return candidates.find(c => typeof c === 'string' && c.length > 0);
                 };
