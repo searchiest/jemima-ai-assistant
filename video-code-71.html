@@ -731,7 +731,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         const idlePlayer = document.getElementById('idle-player-mount');
         const interactionPlayer = document.getElementById('interaction-player-mount');
 
-        function activateAI(vidGuid = mainExplainer) {
+function activateAI(vidGuid = mainExplainer) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
             
@@ -741,17 +741,28 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             // Hide the tap button immediately
             videoPlaceholder.style.display = 'none';
             
-            // Inject the source so it starts loading invisibly
             const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
-            if (interactionPlayer.src !== newSrc) {
-                interactionPlayer.src = newSrc;
-            }
             
-            // Wait 800ms for the Bunny overlay/play button to disappear, then crossfade
-            setTimeout(() => {
+            // If it's a NEW video, we need to hide it while it loads
+            if (interactionPlayer.src !== newSrc) {
+                // Fade out the current video and show the idle loop as a bridge
+                interactionPlayer.classList.remove('active');
+                idlePlayer.classList.add('active');
+                
+                // Inject the new source invisibly
+                interactionPlayer.src = newSrc;
+                
+                // Wait 800ms for the flash/UI to pass, then crossfade back
+                setTimeout(() => {
+                    idlePlayer.classList.remove('active');
+                    interactionPlayer.classList.add('active');
+                }, 800);
+                
+            } else {
+                // If it's the exact same video, just ensure it stays visible
                 idlePlayer.classList.remove('active');
                 interactionPlayer.classList.add('active');
-            }, 800);
+            }
         }
 
         function resetToLoop() {
