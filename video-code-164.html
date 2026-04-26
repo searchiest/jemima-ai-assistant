@@ -325,19 +325,21 @@
                 <div class="w-full md:w-[45%] space-y-4">
 <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
     <iframe id="idle-player" 
-        src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false&api=true" 
-        class="absolute inset-0 w-full h-full border-0" 
+        src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
+        class="absolute inset-0 w-full h-full border-0 pointer-events-none" 
         allow="autoplay; fullscreen" 
         style="z-index: 10;"></iframe>
+
+    <div id="loading-shield" class="absolute inset-0 bg-black z-15 opacity-0 transition-opacity duration-300 pointer-events-none"></div>
 
     <iframe id="interaction-player" 
         src="" 
         class="absolute inset-0 w-full h-full border-0" 
         allow="autoplay; fullscreen"
-        style="opacity: 0; z-index: 5; transition: opacity 0.4s ease-in-out;"></iframe>
+        style="opacity: 0; z-index: 20; pointer-events: none;"></iframe>
 
     <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 cursor-pointer" onclick="activateAI()">
-        <div class="bg-[#c2155a] px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl transform hover:scale-105 transition-transform">
+        <div class="bg-[#c2155a] px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl">
             tap to interact
         </div>
     </div>
@@ -638,42 +640,63 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 <script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
 
     <script id="main-logic">
-        // 1. CONFIGURATION
         const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
         const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
 
-        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
-
-        const faqVideoIds = { 
-            bookings: TEST_GUID, cost: TEST_GUID, time: TEST_GUID, 
-            thanks: TEST_GUID, abandon: TEST_GUID 
-        };
-
-        // DOM Elements
-        const chatFeed = document.getElementById('chat-feed');
-        const videoPlaceholder = document.getElementById('video-placeholder');
         const idlePlayer = document.getElementById('idle-player');
         const interactionPlayer = document.getElementById('interaction-player');
-        const chatInput = document.getElementById('user-chat-input');
-        const modalOverlay = document.getElementById('modal-overlay');
-
-        // State Tracking
-        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
-        let isInteracting = false;
-        let isChatExpanded = false;
-        let hasExited = false;
-        let hasSubmitted = false;
-        let isPaused = false;
-        let loggedQuestions = new Set();
-        let playerInstance = null;
-
-        // 2. VIDEO ENGINE (BUNNY.NET + PLAYER.JS)
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const loadingShield = document.getElementById('loading-shield');
         
-        // This function handles the "Naked" Play/Pause toggle
-        function togglePlayPause() {
-            if (!playerInstance || !isInteracting) return;
+        let playerInstance = null;
+        let isInteracting = false;
+        let isPaused = false;
+
+        function activateAI(vidGuid = TEST_GUID) {
+            isInteracting = true;
+            isPaused = false;
+
+            // 1. Prepare interaction player (Hidden)
+            interactionPlayer.style.opacity = "0";
+            interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
+
+            // 2. Initialize Handshake
+            playerInstance = new playerjs.Player(interactionPlayer);
             
+            playerInstance.on('ready', () => {
+                // Only show the video once we know it's actually playing
+                playerInstance.on('play', () => {
+                    interactionPlayer.style.opacity = "1";
+                    interactionPlayer.style.pointerEvents = "auto";
+                    videoPlaceholder.style.display = 'none';
+                });
+
+                playerInstance.on('ended', () => {
+                    resetToLoop();
+                });
+            });
+        }
+
+        function resetToLoop() {
+            isInteracting = false;
+            
+            // 1. Show the shield and fade out the interaction player
+            loadingShield.style.opacity = "1";
+            interactionPlayer.style.opacity = "0";
+            interactionPlayer.style.pointerEvents = "none";
+
+            // 2. Wait for the interaction player to be fully hidden
+            setTimeout(() => {
+                interactionPlayer.src = ""; // Clear source while hidden
+                videoPlaceholder.style.display = 'flex';
+                loadingShield.style.opacity = "0"; // Reveal the idle player again
+                playerInstance = null;
+            }, 400);
+        }
+
+        // Play/Pause Toggle
+        function togglePlayPause() {
+            if (!playerInstance) return;
             if (isPaused) {
                 playerInstance.play();
                 isPaused = false;
@@ -683,192 +706,20 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-        function activateAI(vidGuid = TEST_GUID) {
-            console.log("Activating interaction...");
-            isInteracting = true;
-            isPaused = false;
-            
-            // UI Swapping
-            videoPlaceholder.style.display = 'none';
-            idlePlayer.style.opacity = "0";
-            
-            // Set Source (controls=false ensures naked look)
-            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
-            interactionPlayer.src = newSrc;
-            
-            // Visual transition
-            setTimeout(() => {
-                interactionPlayer.style.opacity = "1";
-                interactionPlayer.style.zIndex = "20";
-                // Enable pointer events ONLY for interaction so it can be clicked to pause
-                interactionPlayer.style.pointerEvents = "auto";
-            }, 100);
-
-            // Initialize Player.js
-            playerInstance = new playerjs.Player(interactionPlayer);
-            
-            playerInstance.on('ready', () => {
-                // Video End Listener
-                playerInstance.on('ended', () => {
-                    resetToLoop();
-                });
-
-                // Add the Play/Pause click listener to the player container
-                // Note: Since pointer-events are auto, clicking the iframe works
-            });
-        }
-
-        function resetToLoop() {
-            isInteracting = false;
-            interactionPlayer.style.opacity = "0";
-            interactionPlayer.style.pointerEvents = "none"; // Disable clicks on idle
-            idlePlayer.style.opacity = "1";
-
-            // Wait for fade to finish before clearing source to avoid "Orange Flash"
-            setTimeout(() => {
-                interactionPlayer.style.zIndex = "5";
-                interactionPlayer.src = ""; 
-                videoPlaceholder.style.display = 'flex';
-                playerInstance = null;
-            }, 600);
-        }
-
-        // Handle clicks on the video container
-        // If idle: Start Interaction. If interacting: Toggle Pause.
+        // Global click handler for the video area
         document.getElementById('video-container').addEventListener('click', (e) => {
             if (!isInteracting) {
                 activateAI();
-            } else {
+            } else if (e.target.id !== 'video-placeholder') {
                 togglePlayPause();
             }
         });
 
-        // 3. UI & CHAT LOGIC
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const isOpen = menu.classList.contains('-translate-y-full');
-            menu.classList.toggle('-translate-y-full');
-            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-        }
-
-        function expandChatWindow(shouldScroll = true) {
-            if (!isChatExpanded) {
-                isChatExpanded = true;
-                chatFeed.classList.remove('h-[120px]');
-                chatFeed.classList.add('h-[400px]', 'md:h-[600px]');
-                document.getElementById('chat-container').classList.remove('md:self-start');
-                if (shouldScroll) {
-                    setTimeout(() => chatFeed.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-                }
-            }
-        }
-
-        function playVideoAnswer(type, el) { 
-            activateAI(faqVideoIds[type]); 
-            expandChatWindow(false); 
-            if (loggedQuestions.has(type)) return;
-            loggedQuestions.add(type);
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
-            userMsg.innerText = el.innerText.trim();
-            chatFeed.appendChild(userMsg);
-
-            addMessages(["I've updated the video with that answer.", "Is there anything else I can help with?"]);
-        }
-
-        function toggleFaq(button) {
-            const item = button.closest('.faq-item');
-            const wasActive = item.classList.contains('active');
-            const container = item.querySelector('[data-video-id]');
-            const guid = container?.getAttribute('data-video-id') || TEST_GUID;
-
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-
-            if (!wasActive) {
-                item.classList.add('active');
-                if (isInteracting) resetToLoop();
-                container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${guid}?autoplay=true&muted=false&controls=true" style="border:none;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
-            }
-        }
-
-        async function addMessages(msgArray) {
-            for (const text of msgArray) {
-                const indicator = createTypingIndicator();
-                chatFeed.appendChild(indicator);
-                chatFeed.scrollTop = chatFeed.scrollHeight;
-                await new Promise(r => setTimeout(r, 1000));
-                indicator.remove();
-                
-                const msg = document.createElement('div');
-                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
-                msg.innerText = text;
-                chatFeed.appendChild(msg);
-                chatFeed.scrollTop = chatFeed.scrollHeight;
-            }
-        }
-
-        function createTypingIndicator() {
-            const typing = document.createElement('div');
-            typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
-            typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
-            return typing;
-        }
-
-        // 4. MODALS & IPHONE FIXES
-        function openModal() {
-            modalOverlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(isUserTriggered = false) {
-            modalOverlay.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            if (isUserTriggered && !hasSubmitted) activateAI(faqVideoIds.abandon);
-        }
-
-        // iPhone Zoom Fix: Reset viewport on keyboard close
+        // iPhone Zoom & Navigation resets
         document.addEventListener('focusout', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
-                window.scrollTo({ top: window.scrollY, behavior: 'smooth' });
-            }
+            if (e.target.tagName === 'INPUT') window.scrollTo(0, window.scrollY);
         });
 
-        async function handleChatSubmit(e) {
-            e.preventDefault();
-            const text = chatInput.value.trim();
-            if (!text) return;
-            chatInput.value = '';
-            expandChatWindow(true);
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
-            userMsg.innerText = text;
-            chatFeed.appendChild(userMsg);
-
-            if (n8nChatWebhookUrl) {
-                try {
-                    const res = await fetch(n8nChatWebhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: text, sessionId: sessionId })
-                    });
-                    const data = await res.json();
-                    addMessages([data.output || data.text || "I've received your message!"]);
-                } catch (err) { addMessages(["Connection error. Please try again!"]); }
-            }
-        }
-
-        // 5. EVENT LISTENERS
-        document.getElementById('chat-input-form').onsubmit = handleChatSubmit;
-        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(true); };
-        
-        document.addEventListener('mouseleave', (e) => {
-            if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(); }
-        });
-
-        document.addEventListener('touchstart', () => {}, {once: true});
         window.onload = () => { idlePlayer.style.opacity = "1"; };
-    </script>
-</body>
+    </script></body>
 </html>
