@@ -308,11 +308,11 @@
                 
                 <div class="w-full md:w-[45%] space-y-4">
                     <!-- Video Section -->
-<iframe id="idle-player-mount" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active" allow="autoplay; fullscreen"></iframe>
+<div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+    <iframe id="idle-player-mount" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    <iframe id="interaction-player-mount" src="" class="yt-player-frame" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
-<iframe id="interaction-player-mount" src="" class="yt-player-frame" allow="autoplay; fullscreen"></iframe>
-
-<iframe id="interaction-player-mount" src="" class="yt-player-frame" allow="autoplay; fullscreen"></iframe>
+<iframe id="interaction-player-mount" src="" class="yt-player-frame" allow="autoplay; fullscreen" loading="lazy"></iframe>
 
                         <!-- Interaction Overlay -->
                         <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI()">
@@ -399,30 +399,30 @@
 
 
                     <!-- FAQ 1 -->
-<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
-    <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
-        <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Will this work with my current website?</span>
-        <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
-    </button>
-    <div class="faq-content px-6">
-        <div class="grid md:grid-cols-2 gap-8 items-start">
-            <div class="space-y-4">
-                <p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
-                    Yes, this is designed to work with the website you already have. You’re not rebuilding anything or replacing your existing setup it simply integrates alongside it. It works with what you already have. It just makes it perform better.
-                </p>
-                <p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
-                    Click the free conversion audit button below. It takes less than 30 seconds to order. Our team will review your website, and show you exactly, how this would fit into your current setup.
-                </p>
-                <button onclick="openModal(false, 'FAQ1 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
-                    <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
-                </button>
-            </div>
-<div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-    <iframe id="faq-vid-1" data-video-id="61d91a66-c2f8-4ad7-b584-f2aca6709f7c" src="" class="absolute inset-0 w-full h-full border-0" allow="autoplay; fullscreen"></iframe>
-</div>
-        </div>
-    </div>
-</div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Will this work with my current website?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
+Yes, this is designed to work with the website you already have. You’re not rebuilding anything or replacing your existing setup it simply integrates alongside it. It works with what you already have. It just makes it perform better.
+</p>
+<p class="text-slate-700 text-base md:text-base font-medium leading-relaxed">
+Click the free conversion audit button below. It takes less than 30 seconds to order. Our team will review your website, and show you exactly, how this would fit into your current setup.
+</p>
+<button onclick="openModal(false, 'FAQ1 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                            </button>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <div id="faq-vid-1" data-video-id="bVt5kMA5rW0"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <!-- FAQ 2 -->
@@ -744,7 +744,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             // Hide the tap button immediately
             videoPlaceholder.style.display = 'none';
             
-            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&playsinline=true`;
+const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&playsinline=true`;
             
             // If it's a NEW video, we need to load it and attach the listener
             if (interactionPlayer.src !== newSrc) {
@@ -755,10 +755,16 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                 // Inject the new source
                 interactionPlayer.src = newSrc;
                 
-                // When the iframe finishes loading, attach the Bunny Player API
+// When the iframe finishes loading, attach the Bunny Player API
                 interactionPlayer.onload = () => {
                     if (interactionPlayer.getAttribute('src')) {
                         currentPlayer = new playerjs.Player(interactionPlayer);
+                        
+                        // Force play on mobile the moment the API is ready
+                        currentPlayer.on('ready', () => {
+                            currentPlayer.play();
+                        });
+
                         currentPlayer.on('ended', () => {
                             resetToLoop();
                         });
@@ -829,31 +835,28 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-function toggleFaq(button) {
+        function toggleFaq(button) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
-            
-            // Look for the iframe directly instead of a div
-            const iframe = item.querySelector('iframe[data-video-id]');
-            const vId = iframe?.getAttribute('data-video-id');
+            const videoContainer = item.querySelector('[data-video-id]');
+            const vId = videoContainer?.getAttribute('data-video-id');
+            const containerId = videoContainer?.id;
 
-            // 1. Close all accordions AND stop playback by clearing the src
-            document.querySelectorAll('.faq-item').forEach(el => {
-                el.classList.remove('active');
-                const vidIframe = el.querySelector('iframe[data-video-id]');
-                if (vidIframe) vidIframe.src = ''; // Stops the video instantly
-            });
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
             if (!wasActive) {
-                // 2. Open the clicked item
                 item.classList.add('active');
                 if (isInteracting) resetToLoop();
 
-                // 3. Inject the source into the EXISTING iframe synchronously
-                // This passes the mobile "tap token" directly to the iframe
-                if (vId && iframe) {
-                    iframe.src = `${BUNNY_BASE_URL}${vId}?autoplay=true&playsinline=true`;
-                }
+                setTimeout(() => {
+                    if (vId && containerId) {
+                        const container = document.getElementById(containerId);
+                        // Inject Bunny Iframe
+                        if (!container.querySelector('iframe')) {
+                            container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
+                        }
+                    }
+                }, 300);
             }
         }
 
