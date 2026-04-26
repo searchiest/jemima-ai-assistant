@@ -687,37 +687,42 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 </script>
 
 <script id="video-engine">
-    /**
-     * MAIN VIDEO HANDLER
-     * This replaces the idle video with the interaction video
-     */
     function activateAI(vidGuid = mainExplainer) {
+        // Force the UI state
         isInteracting = true;
         isPaused = false;
 
-        // 1. Ensure all other FAQ accordion videos are stopped
+        // 1. Reset any accordion FAQ videos
         Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
         document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
-        // 2. Prepare the Interaction Player
-        // We set z-index and opacity to ensure it covers the idle player completely
-        interactionPlayer.style.zIndex = "30"; 
+        // 2. Prepare the Interaction Player Visually
+        // We set high z-index and hide it temporarily to prevent flickering
+        interactionPlayer.style.zIndex = "50"; 
         interactionPlayer.style.opacity = "0";
+        interactionPlayer.style.display = "block";
+        
+        // 3. Load the new source
         interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
 
-        // 3. Initialize Bunny.net Handshake
+        // 4. Initialize or re-initialize the Player JS handshake
         playerInstance = new playerjs.Player(interactionPlayer);
         
         playerInstance.on('ready', () => {
+            // Remove any previous play listeners to prevent stacking
+            playerInstance.off('play');
+            
             playerInstance.on('play', () => {
-                // Once playing, fade it in and hide the placeholder/idle layers
+                // Now that it's actually playing, make it visible
                 interactionPlayer.style.opacity = "1";
                 interactionPlayer.style.pointerEvents = "auto";
                 if(videoPlaceholder) videoPlaceholder.style.display = 'none';
                 if(interactionUI) interactionUI.classList.remove('opacity-0');
                 
-                // Pause the background idle player to save resources
-                if(idlePlayer && typeof idlePlayer.pause === 'function') idlePlayer.pause();
+                // Keep idle player quiet in the background
+                if(idlePlayer && typeof idlePlayer.pause === 'function') {
+                    try { idlePlayer.pause(); } catch(e) {}
+                }
             });
 
             playerInstance.on('ended', () => {
@@ -730,16 +735,19 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         isInteracting = false;
         if(loadingShield) loadingShield.style.opacity = "1";
         
-        // Hide the interaction player
         interactionPlayer.style.opacity = "0";
         interactionPlayer.style.pointerEvents = "none";
         interactionPlayer.style.zIndex = "10";
 
         setTimeout(() => {
-            interactionPlayer.src = ""; // Clear the video
+            interactionPlayer.src = ""; 
             if(videoPlaceholder) videoPlaceholder.style.display = 'flex';
             if(loadingShield) loadingShield.style.opacity = "0";
             playerInstance = null;
+            // Resume idle loop if possible
+            if(idlePlayer && typeof idlePlayer.play === 'function') {
+                try { idlePlayer.play(); } catch(e) {}
+            }
         }, 400);
     }
 
@@ -754,7 +762,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     }
 
-    // Global click handler for the video container area
     document.getElementById('video-container').addEventListener('click', (e) => {
         if (!isInteracting) {
             activateAI();
@@ -763,9 +770,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     });
 
-    window.onload = () => { 
-        if(idlePlayer) idlePlayer.style.opacity = "1"; 
-    };
+    window.onload = () => { if(idlePlayer) idlePlayer.style.opacity = "1"; };
 </script>
 
 <script id="ui-management">
@@ -853,7 +858,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     }
 
-    // This handles the FAQ Accordion videos
     function toggleFaq(button) {
         const item = button.closest('.faq-item');
         const wasActive = item.classList.contains('active');
@@ -878,15 +882,12 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     }
 
-    // This handles the 3 Main FAQ Buttons (Replacing Hero Video)
     function playVideoAnswer(type, el) { 
         const vidGuid = faqVideoIds[type];
         const questionText = el.innerText.trim();
         
-        // 1. Swap the Hero Video to the Answer Video
         activateAI(vidGuid); 
         
-        // 2. Manage Chat Log
         expandChatWindow(false); 
         if (loggedQuestions.has(type)) return; 
         loggedQuestions.add(type);
