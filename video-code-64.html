@@ -906,22 +906,64 @@ if (!wasActive) {
             addMessages(messages[type] || ["I can certainly help with that."]);
         }
 
-        function expandChatWindow() {
-            if (!isChatExpanded) {
-                isChatExpanded = true;
-                chatFeed.classList.remove('h-[120px]');
-                // Match mobile expansion but allow desktop to fill the stretched container naturally
-                chatFeed.classList.add('h-[400px]', 'md:h-1200');
-                
-                const chatContainer = document.getElementById('chat-container');
-                // Remove self-start to allow the parent's stretch alignment to take effect
-                chatContainer.classList.remove('md:self-start');
-                
-                setTimeout(() => {
-                    chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            }
+
+// Track which questions have already been "logged" to the chat
+let loggedQuestions = new Set();
+
+function playVideoAnswer(type, el) { 
+    const vidId = faqVideoIds[type];
+    const questionText = el.innerText.trim();
+
+    // 1. Play the video answer (Hero section)
+    activateAI(vidId); 
+
+    // 2. Expand the chat container visually without auto-scrolling
+    // We remove the scrollIntoView logic for mobile
+    expandChatWindow(false); 
+
+    // 3. Prevent duplicate logging
+    if (loggedQuestions.has(type)) {
+        console.log("Question already in chat, skipping duplicate log.");
+        return; 
+    }
+
+    // 4. Log the question and answer to chat
+    loggedQuestions.add(type);
+
+    const userMsg = document.createElement('div');
+    userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+    userMsg.innerText = questionText;
+    chatFeed.appendChild(userMsg);
+
+    const messages = {
+        bookings: ["Jemima typically increases lead conversion by 30-50% in the first month.", "She captures visitors who would usually bounce."],
+        cost: ["Starter setup is £495. It's usually worth it within the first few qualified leads.", "Compared to a full-time hire, it's a tiny fraction of the cost."],
+        time: ["It takes about 15 minutes to set up.", "Just copy a small script onto your site and you're live."]
+    };
+    
+    addMessages(messages[type] || ["I can certainly help with that."]);
+}
+
+
+function expandChatWindow(shouldScroll = true) {
+    if (!isChatExpanded) {
+        isChatExpanded = true;
+        chatFeed.classList.remove('h-[120px]');
+        chatFeed.classList.add('h-[400px]', 'md:h-1200');
+        
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.classList.remove('md:self-start');
+        
+        // Only scroll if explicitly asked (e.g., when typing manually)
+        // and if it's not a mobile device during a video play
+        if (shouldScroll) {
+            setTimeout(() => {
+                chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
+    }
+}
+
     </script>
 
     <script id="lead-capture">
