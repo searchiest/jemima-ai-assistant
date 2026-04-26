@@ -33,12 +33,12 @@
         #idle-player { z-index: 10; opacity: 1; }
         #interaction-player { z-index: 20; opacity: 0; pointer-events: none; }
 
-        /* Layer Swap Logic */
+        /* Swap Layers when interacting */
         .video-active #interaction-player { opacity: 1; pointer-events: auto; }
         .video-active #idle-player { opacity: 0; pointer-events: none; }
 
         /* --- UI & CHAT CSS --- */
-        #chat-feed div { font-size: 16px !important; line-height: 1.6; padding: 0.85rem !important; }
+        #chat-feed div { font-size: 16px !important; line-height: 1.6; padding: 0.85rem !important; letter-spacing: 0.01em; }
         .chat-scroll::-webkit-scrollbar { width: 4px; }
         .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
         
@@ -62,133 +62,146 @@
 
     <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl border border-slate-100">
-            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
             <div class="text-center mb-5">
                 <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
-                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950">Get Your Free Audit</h3>
-                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base mt-1">My team will manually review your site layout.</p>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Get Your Free Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
             </div>
             <form onsubmit="handleFormSubmit(event)" class="space-y-4">
-                <input type="text" id="form-name" required placeholder="Full Name" class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] font-semibold">
-                <input type="url" id="form-website" required placeholder="Website URL" class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] font-semibold">
-                <select id="form-traffic" required class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] font-semibold bg-transparent">
-                    <option value="" disabled selected>Traffic range...</option>
+                <input type="text" id="form-name" required placeholder="Full Name" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold">
+                <input type="url" id="form-website" required placeholder="Website URL" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold">
+                <select id="form-traffic" required class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold bg-transparent">
+                    <option value="" disabled selected>Monthly Traffic...</option>
                     <option value="0-1k">0 - 1,000</option>
                     <option value="1k-5k">1,000 - 5,000</option>
-                    <option value="5k+">5,000+</option>
+                    <option value="5k-20k">5,000 - 20,000</option>
+                    <option value="20k+">20,000+</option>
                 </select>
-                <input type="email" id="form-email" required placeholder="Work Email" class="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-[#c2155a] font-semibold">
-                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl">Submit Audit Request</button>
+                <input type="email" id="form-email" required placeholder="Work Email" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold">
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2">
+                    Submit Audit Request
+                </button>
+                <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
             </form>
         </div>
     </div>
 
-    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
-        <div class="flex items-center gap-2 font-extrabold text-xl tracking-tighter cursor-pointer" onclick="window.location.reload()">
-            <img src="jemima-logo.png" alt="Logo" class="w-7 h-7 rounded-full" onerror="this.src='https://via.placeholder.com/150'">
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="flex items-center gap-2 font-extrabold text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="window.location.reload()">
+            <img src="jemima-logo.png" alt="Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full" onerror="this.src='https://via.placeholder.com/150'">
             <span>Jemima</span>
         </div>
         <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
+            <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
             <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
             <a href="javascript:void(0)" onclick="activateAI()" class="hover:text-[#c2155a]">How it Works</a>
         </div>
+        <button onclick="openModal()" class="hidden md:block px-6 py-2.5 bg-[#c2155a] text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-[#c2155a]/20">Audit</button>
     </nav>
 
-    <main class="max-w-[1200px] mx-auto px-4 pt-8 pb-16">
-        <div class="text-center space-y-4 mb-12">
-            <h1 class="text-3xl md:text-6xl font-[800] leading-tight tracking-tight">Stop losing leads to a <span class="text-[#c2155a]">static website</span></h1>
-            <p class="text-slate-600 text-lg font-medium">Answer key decision questions with video, then capture and convert leads 24/7.</p>
-        </div>
-
-        <div class="flex flex-col md:flex-row gap-8 justify-center items-start">
-            <div class="w-full md:w-[45%] space-y-4">
-                <div id="video-container">
-                    <iframe id="idle-player" 
-                        src="https://player.mediadelivery.net/embed/646015/c05b369d-1529-4051-8773-79320393ec05?autoplay=true&loop=true&muted=true&controls=false" 
-                        allow="autoplay; fullscreen"></iframe>
-                    <iframe id="interaction-player" src="" allow="autoplay; fullscreen"></iframe>
-                    <div id="video-placeholder" class="absolute inset-0 z-30 flex items-end justify-center pb-8 cursor-pointer" onclick="activateAI()">
-                        <div class="bg-[#c2155a] px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl">tap to interact</div>
-                    </div>
-                </div>
-
-                <div class="p-6 bg-white border border-slate-200 shadow-sm space-y-4">
-                    <h2 class="text-xs font-black uppercase tracking-[0.25em] text-[#c2155a]">Quick Answers</h2>
-                    <div class="flex flex-col gap-2">
-                        <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 text-[12px] font-black border text-left px-6 uppercase tracking-widest flex justify-between items-center group hover:bg-slate-50">
-                            <span><i class="fas fa-play-circle mr-3 text-[#c2155a]"></i>Will this get me more leads?</span>
-                            <i class="fas fa-chevron-right text-xs opacity-20"></i>
-                        </button>
-                        <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 text-[12px] font-black border text-left px-6 uppercase tracking-widest flex justify-between items-center group hover:bg-slate-50">
-                            <span><i class="fas fa-play-circle mr-3 text-[#c2155a]"></i>How much does it cost?</span>
-                            <i class="fas fa-chevron-right text-xs opacity-20"></i>
-                        </button>
-                        <button onclick="playVideoAnswer('time', this)" class="w-full py-4 text-[12px] font-black border text-left px-6 uppercase tracking-widest flex justify-between items-center group hover:bg-slate-50">
-                            <span><i class="fas fa-play-circle mr-3 text-[#c2155a]"></i>Is this complicated?</span>
-                            <i class="fas fa-chevron-right text-xs opacity-20"></i>
-                        </button>
-                    </div>
-                </div>
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-8 pb-16">
+        <div class="flex flex-col items-center space-y-8 mb-12">
+            <div class="max-w-4xl text-center space-y-3">
+                <h1 class="text-3xl md:text-6xl font-[800] leading-tight text-slate-950 tracking-tight">
+                    Stop losing leads<br><span class="text-[#c2155a]">to a static website</span>
+                </h1>
+                <p class="text-slate-600 text-lg font-medium">Answer key decision questions with video, then capture and convert leads 24/7.</p>
             </div>
 
-            <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col">
-                <div class="p-6 space-y-4 flex flex-col">
-                    <div class="flex items-center gap-2 border-b pb-3">
-                        <div class="w-8 h-8 rounded-full border overflow-hidden bg-slate-100">
-                            <img src="jemima-chat-image.png" class="object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="flex flex-col md:flex-row justify-center items-start gap-8 w-full max-w-5xl">
+                <div class="w-full md:w-[45%] space-y-4">
+                    <div id="video-container" class="shadow-2xl border border-slate-200">
+                        <iframe id="idle-player" 
+                            src="https://player.mediadelivery.net/embed/646015/c05b369d-1529-4051-8773-79320393ec05?autoplay=true&loop=true&muted=true&controls=false" 
+                            allow="autoplay; fullscreen"></iframe>
+                        <iframe id="interaction-player" src="" allow="autoplay; fullscreen"></iframe>
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex items-end justify-center pb-8 cursor-pointer" onclick="activateAI()">
+                            <div class="bg-[#c2155a] px-6 py-3 rounded-full text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-2xl">tap to interact</div>
                         </div>
-                        <p class="text-sm font-black uppercase">Jemima</p>
                     </div>
-                    <div id="chat-feed" class="h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll flex flex-col gap-3">
-                        <div class="bg-[#c2155a]/5 text-slate-800 px-4 py-3 text-sm font-medium rounded-2xl rounded-tl-none">Hi I'm Jemima. Ask me anything!</div>
+                    
+                    <div class="p-6 bg-white border border-slate-200 shadow-sm space-y-5">
+                        <h2 class="text-xs font-black uppercase tracking-[0.25em] text-[#c2155a]">Quick Answers</h2>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 text-[12px] font-black border text-left px-6 uppercase tracking-widest flex justify-between items-center group hover:bg-slate-50 transition-all">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a]"></i>Will this actually get me more leads?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 text-[12px] font-black border text-left px-6 uppercase tracking-widest flex justify-between items-center group hover:bg-slate-50 transition-all">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a]"></i>How much does it cost?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('time', this)" class="w-full py-4 text-[12px] font-black border text-left px-6 uppercase tracking-widest flex justify-between items-center group hover:bg-slate-50 transition-all">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a]"></i>Is this complicated?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                        </div>
                     </div>
-                    <form onsubmit="handleChatSubmit(event)" class="flex gap-2 border-t pt-4">
-                        <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border px-4 py-3 outline-none focus:border-[#c2155a] rounded-sm">
-                        <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg"><i class="fas fa-paper-plane"></i></button>
-                    </form>
+                </div>
+
+                <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start">
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="flex items-center gap-2 border-b pb-3 mb-4">
+                            <div class="w-8 h-8 rounded-full border overflow-hidden bg-slate-100">
+                                <img src="jemima-chat-image.png" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                            </div>
+                            <p class="text-sm font-black uppercase tracking-tight">Jemima</p>
+                        </div>
+                        <div id="chat-feed" class="h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll flex flex-col gap-3">
+                            <div class="bg-[#c2155a]/5 text-slate-800 px-4 py-3 text-sm font-medium rounded-2xl rounded-tl-none">Hi I'm Jemima. Want to capture more of the leads you're currently losing? Ask me anything!</div>
+                        </div>
+                        <form onsubmit="handleChatSubmit(event)" class="flex gap-2 border-t pt-4 mt-4">
+                            <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border px-4 py-3 outline-none focus:border-[#c2155a] rounded-sm">
+                            <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <section id="faq" class="py-20 border-t mt-20">
-            <div class="max-w-4xl mx-auto space-y-8">
-                <h2 class="text-3xl md:text-5xl font-black text-center tracking-tighter">Everything you need to know.</h2>
+        <section id="faq" class="py-20 border-t border-slate-100 mt-20">
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div class="text-center space-y-4">
+                    <h2 class="text-3xl md:text-5xl font-[800] tracking-tighter text-slate-950">Everything you need to know.</h2>
+                </div>
                 
-                <div class="faq-item border border-slate-200 bg-white">
-                    <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
-                        <span class="font-black uppercase tracking-wider">Will this work with my current website?</span>
-                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
-                    </button>
-                    <div class="faq-content px-6">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="space-y-4">
-                                <p class="text-slate-700 font-medium">Yes, this integrates alongside your existing setup. You don't need to rebuild anything.</p>
-                                <button onclick="openModal()" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider shadow-md">Free Conversion Audit</button>
-                            </div>
-                            <div class="aspect-video bg-black rounded overflow-hidden shadow-lg border">
-                                <iframe id="faq-vid-1" class="w-full h-full border-0" data-video-id="61d91a66-c2f8-4ad7-b584-f2aca6709f7c" src="" allow="autoplay; fullscreen"></iframe>
+                <div class="space-y-4">
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a]">Will this work with my current website?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+                                    <p class="text-slate-700 font-medium">Yes, this integrates alongside your existing setup. You don't rebuild anything; it just makes it perform better.</p>
+                                    <button onclick="openModal()" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase shadow-md hover:bg-[#a0124a]">Free Conversion Audit</button>
+                                </div>
+                                <div class="aspect-video bg-black rounded shadow-lg overflow-hidden">
+                                    <iframe class="w-full h-full" id="faq-vid-1" data-video-id="61d91a66-c2f8-4ad7-b584-f2aca6709f7c" allow="autoplay; fullscreen"></iframe>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
+                    </div>
+            </div>
         </section>
     </main>
 
     <footer class="py-12 bg-white border-t text-center">
-        <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI.</p>
+        <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
     </footer>
 
     <script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
-
     <script>
         const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
 
-        // CONFIG GUIDS
         const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
         const faqVideoIds = { 
             bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
@@ -202,7 +215,7 @@
         const chatFeed = document.getElementById('chat-feed');
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         
-        let activeHeroPlayer = null;
+        let playerInstance = null;
         let faqPlayers = {};
         let isInteracting = false;
         let loggedQuestions = new Set();
@@ -213,14 +226,14 @@
             videoContainer.classList.add('video-active');
             document.getElementById('video-placeholder').style.display = 'none';
 
-            // Stop any FAQ accordion videos
+            // Pause any open FAQ videos
             Object.values(faqPlayers).forEach(p => { if(p) p.pause(); });
 
             const t = new Date().getTime();
             interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&t=${t}`;
 
-            activeHeroPlayer = new playerjs.Player(interactionPlayer);
-            activeHeroPlayer.on('ended', () => resetToLoop());
+            playerInstance = new playerjs.Player(interactionPlayer);
+            playerInstance.on('ended', () => resetToLoop());
         }
 
         function resetToLoop() {
@@ -229,7 +242,7 @@
             setTimeout(() => {
                 interactionPlayer.src = ""; 
                 document.getElementById('video-placeholder').style.display = 'flex';
-                activeHeroPlayer = null;
+                playerInstance = null;
             }, 400);
         }
 
@@ -244,10 +257,9 @@
             if (!loggedQuestions.has(type)) {
                 loggedQuestions.add(type);
                 addMessageToFeed(el.innerText.trim(), 'user');
-                
                 const responses = {
                     bookings: ["It typically increases conversions immediately.", "It catches people before they leave."],
-                    cost: ["Pricing is transparent.", "Most clients see ROI quickly."],
+                    cost: ["Pricing is transparent based on your traffic."],
                     time: ["Setup usually takes less than 7 days."]
                 };
                 addMessages(responses[type] || ["I can help with that!"]);
@@ -261,16 +273,14 @@
             const iframe = item.querySelector('iframe');
             const vGuid = iframe?.getAttribute('data-video-id');
 
-            // Reset all
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             Object.values(faqPlayers).forEach(p => p.pause());
 
             if (!wasActive) {
                 item.classList.add('active');
                 if (isInteracting) resetToLoop();
-
                 if (iframe && vGuid) {
-                    if (!iframe.src || iframe.src === "about:blank") {
+                    if (!iframe.src || iframe.src.includes('about:blank')) {
                         iframe.src = `${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true`;
                         faqPlayers[iframe.id] = new playerjs.Player(iframe);
                     } else {
@@ -280,7 +290,7 @@
             }
         }
 
-        // --- CHAT HELPERS ---
+        // --- UI HELPERS ---
         function expandChatWindow() {
             chatFeed.classList.remove('h-[120px]');
             chatFeed.classList.add('h-[400px]');
@@ -316,42 +326,25 @@
             input.value = '';
             expandChatWindow();
             addMessageToFeed(text, 'user');
-
             try {
-                const res = await fetch(n8nChatWebhookUrl, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: text, sessionId})
-                });
+                const res = await fetch(n8nChatWebhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: text, sessionId}) });
                 const data = await res.json();
-                addMessages([data.output || "I've received your message!"]);
-            } catch(e) { addMessages(["Connection error. Please try again."]); }
+                addMessages([data.output || "Message received!"]);
+            } catch(e) { addMessages(["Error connecting. Try again."]); }
         }
 
-        // --- FORM LOGIC ---
         function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
 
         async function handleFormSubmit(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.innerText = "SENDING...";
-            
-            const data = {
-                name: document.getElementById('form-name').value,
-                website: document.getElementById('form-website').value,
-                email: document.getElementById('form-email').value,
-                sessionId
-            };
-
-            try {
-                await fetch(n8nFormWebhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
-            } catch(e) {}
-
+            btn.disabled = true; btn.innerText = "SENDING...";
+            const data = { name: document.getElementById('form-name').value, website: document.getElementById('form-website').value, email: document.getElementById('form-email').value, sessionId };
+            try { await fetch(n8nFormWebhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}); } catch(e) {}
             activateAI(faqVideoIds.thanks);
             closeModal();
-            addMessages([`Thanks ${data.name}! We're reviewing ${data.website} now.`]);
+            addMessages([`Thanks ${data.name}! Analyzing ${data.website} now.`]);
         }
     </script>
 </body>
