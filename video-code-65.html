@@ -307,17 +307,26 @@
                 
                 <div class="w-full md:w-[45%] space-y-4">
                     <!-- Video Section -->
-<iframe id="idle-player-mount" 
-        src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
-        class="yt-player-frame active" 
-        allow="autoplay; fullscreen" 
-        loading="lazy"></iframe>
+<div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+                        <iframe id="idle-player-mount" 
+                                src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
+                                class="yt-player-frame active" 
+                                allow="autoplay; fullscreen" 
+                                loading="lazy"></iframe>
+                        <iframe id="interaction-player-mount" 
+                                src="" 
+                                class="yt-player-frame" 
+                                allow="autoplay; fullscreen" 
+                                loading="lazy"></iframe>
 
-<iframe id="interaction-player-mount" 
-        src="" 
-        class="yt-player-frame" 
-        allow="autoplay; fullscreen" 
-        loading="lazy"></iframe>
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
+                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300 opacity-0" style="transition-delay: 400ms">
+                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
+                                    tap to interact
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                         <!-- Interaction Overlay -->
                         <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
