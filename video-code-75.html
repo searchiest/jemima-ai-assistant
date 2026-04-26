@@ -566,12 +566,20 @@
 
         // To prevent iOS from freezing the first frame, we inject the FAQ videos with muted=true. 
         // They will autoplay silently when the accordion is opened.
-        function toggleFaq(button) {
+function toggleFaq(button) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
             const videoContainer = item.querySelector('[data-video-id]');
             const vId = videoContainer?.getAttribute('data-video-id');
             const containerId = videoContainer?.id;
+
+            // Pause any currently playing FAQ videos so audio doesn't overlap
+            document.querySelectorAll('.faq-content iframe').forEach(iframe => {
+                try {
+                    const player = new playerjs.Player(iframe);
+                    player.pause();
+                } catch (e) {}
+            });
 
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
@@ -581,9 +589,24 @@
 
                 if (vId && containerId) {
                     const container = document.getElementById(containerId);
+                    
                     if (!container.querySelector('iframe')) {
-                        // CRITICAL: muted=true ensures iOS doesn't freeze the video on load
+                        // 1. Inject silently so iOS allows it to autoplay without freezing
                         container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true&muted=true&playsinline=true" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen; picture-in-picture"></iframe>`;
+                        
+                        // 2. Attach API and force unmute a fraction of a second later
+                        const iframe = container.querySelector('iframe');
+                        const player = new playerjs.Player(iframe);
+                        
+                        player.on('ready', () => {
+                            setTimeout(() => { player.unmute(); }, 150);
+                        });
+                    } else {
+                        // If it's already injected from a previous click, just play and unmute
+                        const iframe = container.querySelector('iframe');
+                        const player = new playerjs.Player(iframe);
+                        player.play();
+                        setTimeout(() => { player.unmute(); }, 50);
                     }
                 }
             }
