@@ -624,60 +624,120 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
     </footer>
 
-<<script id="main-logic">
-        const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
-        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
+<script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
 
+    <script id="main-logic">
+        // 1. CONFIGURATION
+        const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
+        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; 
+
+        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
+
+        const faqVideoIds = { 
+            bookings: TEST_GUID, 
+            cost: TEST_GUID, 
+            time: TEST_GUID, 
+            thanks: TEST_GUID, 
+            abandon: TEST_GUID 
+        };
+
+        // DOM Elements
+        const chatFeed = document.getElementById('chat-feed');
+        const videoPlaceholder = document.getElementById('video-placeholder');
         const idlePlayer = document.getElementById('idle-player');
         const interactionPlayer = document.getElementById('interaction-player');
-        const videoPlaceholder = document.getElementById('video-placeholder');
+        const chatInput = document.getElementById('user-chat-input');
+        const modalOverlay = document.getElementById('modal-overlay');
 
+        // State Tracking
+        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        let isInteracting = false;
+        let isChatExpanded = false;
+        let hasExited = false;
+        let hasSubmitted = false;
+        let loggedQuestions = new Set();
+        let playerInstance = null;
+
+        // 2. VIDEO ENGINE (BUNNY.NET + PLAYER.JS)
         function activateAI(vidGuid = TEST_GUID) {
-            console.log("Activating Video:", vidGuid);
+            console.log("Switching to interaction video...");
+            isInteracting = true;
             
-            // 1. Set source with API enabled
-            const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false&api=true`;
-            interactionPlayer.src = newSrc;
+            // UI Swapping
+            videoPlaceholder.style.display = 'none';
+            idlePlayer.style.opacity = "0";
             
-            // 2. Bring to front immediately
-            interactionPlayer.style.zIndex = "20";
+            // Set Source
+            interactionPlayer.src = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
             interactionPlayer.style.opacity = "1";
-            videoPlaceholder.style.display = "none";
+            interactionPlayer.style.zIndex = "20";
+
+            // Initialize Player.js handshake
+            playerInstance = new playerjs.Player(interactionPlayer);
+            
+            playerInstance.on('ready', () => {
+                console.log("Bunny Handshake Successful");
+                // The critical listener for the end of the video
+                playerInstance.on('ended', () => {
+                    console.log("Video Finished - Returning to Idle");
+                    resetToLoop();
+                });
+            });
         }
 
         function resetToLoop() {
-            console.log("Resetting to Idle...");
-            // 1. Hide the interaction player
+            isInteracting = false;
             interactionPlayer.style.opacity = "0";
             
-            // 2. Wait for fade, then move to back and clear source
             setTimeout(() => {
                 interactionPlayer.style.zIndex = "5";
-                interactionPlayer.src = ""; // Stop video playback
-                videoPlaceholder.style.display = "flex";
+                interactionPlayer.src = ""; // Stop the video
+                idlePlayer.style.opacity = "1";
+                videoPlaceholder.style.display = 'flex';
             }, 400);
         }
 
-        // UNIVERSAL EVENT LISTENER FOR BUNNY.NET
-        window.addEventListener('message', function(event) {
-            // Check if message is from Bunny
-            if (!event.origin.includes('mediadelivery.net')) return;
+        // 3. UI, CHAT & IPHONE FIXES
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isOpen = menu.classList.contains('-translate-y-full');
+            menu.classList.toggle('-translate-y-full');
+            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+        }
 
-            let data;
-            try {
-                // Bunny sends events as a JSON string
-                data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-            } catch (e) {
-                return; // Not a valid JSON message
+        function expandChatWindow(shouldScroll = true) {
+            if (!isChatExpanded) {
+                isChatExpanded = true;
+                chatFeed.classList.remove('h-[120px]');
+                chatFeed.classList.add('h-[400px]', 'md:h-[600px]');
+                document.getElementById('chat-container').classList.remove('md:self-start');
+                if (shouldScroll) {
+                    setTimeout(() => chatFeed.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                }
             }
+        }
 
-            // Check for the "ended" event in all common Bunny API formats
-            if (data.event === 'ended' || data === 'player:ended' || (data.value && data.value.event === 'ended')) {
-                resetToLoop();
-            }
-        });
+        function playVideoAnswer(type, el) { 
+            activateAI(faqVideoIds[type]); 
+            expandChatWindow(false); // Mobile: Don't jump to chat while video plays
+            
+            if (loggedQuestions.has(type)) return;
+            loggedQuestions.add(type);
 
-        // Toggle FAQ with Bunny Player
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = el.innerText.trim();
+            chatFeed.appendChild(userMsg);
+
+            const answers = {
+                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
+                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
+                time: ["Most businesses can have it up and running within a week.", "We handle the heavy lifting."]
+            };
+            addMessages(answers[type] || ["I'm happy to help with that!"]);
+        }
+
         function toggleFaq(button) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
@@ -688,22 +748,90 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
 
             if (!wasActive) {
                 item.classList.add('active');
-                if (interactionPlayer.src !== "") resetToLoop();
+                if (isInteracting) resetToLoop();
+                // We leave controls ON for FAQ videos so users can scrub
                 container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${guid}?autoplay=true&muted=false&controls=true" style="border:none;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
             }
         }
 
-        // Audio priming for iOS
-        document.addEventListener('touchstart', () => {}, {once: true});
+        async function addMessages(msgArray) {
+            for (const text of msgArray) {
+                const indicator = createTypingIndicator();
+                chatFeed.appendChild(indicator);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+                await new Promise(r => setTimeout(r, 1000));
+                indicator.remove();
+                
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
+        }
 
-        // Ensure everything is visible on start
-        window.onload = () => {
-            idlePlayer.style.opacity = "1";
-            console.log("System Ready");
-        };
+        function createTypingIndicator() {
+            const typing = document.createElement('div');
+            typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
+            typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+            return typing;
+        }
 
-        // --- (Keep your expandChatWindow and handleFormSubmit here) ---
+        // 4. FORM & MODAL
+        function openModal(isExitIntent = false) {
+            modalOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(isUserTriggered = false) {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            if (isUserTriggered && !hasSubmitted) activateAI(faqVideoIds.abandon);
+        }
+
+        // Fix for iOS zoom/scroll offset on input focus
+        document.addEventListener('focusout', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
+                window.scrollTo({ top: window.scrollY, behavior: 'smooth' });
+            }
+        });
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            chatInput.value = '';
+            expandChatWindow(true);
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = text;
+            chatFeed.appendChild(userMsg);
+
+            if (n8nChatWebhookUrl) {
+                try {
+                    const res = await fetch(n8nChatWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: text, sessionId: sessionId })
+                    });
+                    const data = await res.json();
+                    addMessages([data.output || data.text || "Message received!"]);
+                } catch (err) { addMessages(["Connection error. Please try again!"]); }
+            }
+        }
+
+        // 5. INIT
+        document.getElementById('chat-input-form').onsubmit = handleChatSubmit;
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(true); };
+        
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(true); }
+        });
+
+        document.addEventListener('touchstart', () => {}, {once: true}); // Prime iOS Audio
+        
+        window.onload = () => { idlePlayer.style.opacity = "1"; };
     </script>
-
 </body>
 </html>
