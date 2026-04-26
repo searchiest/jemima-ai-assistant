@@ -57,23 +57,20 @@
             background-position: center;
         }
 
-        .yt-player-frame {
+       .yt-player-frame {
             width: 100% !important;
             height: 100% !important;
             position: absolute;
             top: 0;
             left: 0;
             border: 0;
-            opacity: 1; 
+            opacity: 0; /* Keeps the smooth fade effect */
             transition: opacity 0.6s ease-in-out;
             z-index: 10;
-            pointer-events: auto;
         }
-
         .yt-player-frame.active {
             opacity: 1;
             z-index: 20;
-            pointer-events: auto;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -714,27 +711,23 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
     </script>
 
-    <script id="video-engine">
+<script id="video-engine">
         const idlePlayer = document.getElementById('idle-player-mount');
         const interactionPlayer = document.getElementById('interaction-player-mount');
 
         function activateAI(vidGuid = mainExplainer) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
-            
-            // 1. Reset FAQ items visually
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             
-            // 2. Hide Overlay and Toggle Players
             videoPlaceholder.style.display = 'none';
             idlePlayer.classList.remove('active');
             
-            // 3. Load Interaction Video
+            // Set the new source for the interaction video
             const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
             if (interactionPlayer.src !== newSrc) {
                 interactionPlayer.src = newSrc;
             }
-            
             interactionPlayer.classList.add('active');
         }
 
@@ -742,15 +735,12 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             isInteracting = false;
             videoPlaceholder.style.display = 'flex';
             interactionPlayer.classList.remove('active');
-            interactionPlayer.src = ""; 
+            interactionPlayer.src = ""; // Stop video playback
             idlePlayer.classList.add('active');
         }
 
-        // Listen for Bunny 'ended' event
         window.addEventListener('message', (e) => {
-            if (e.data === 'player:ended') {
-                resetToLoop();
-            }
+            if (e.data === 'player:ended') resetToLoop();
         });
     </script>
 
@@ -786,23 +776,19 @@ function toggleFaq(button) {
     const vId = videoContainer?.getAttribute('data-video-id');
     const containerId = videoContainer?.id;
 
-    // Close all first
     document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
     if (!wasActive) {
         item.classList.add('active');
         if (isInteracting) resetToLoop();
-
         setTimeout(() => {
             if (vId && containerId) {
                 const container = document.getElementById(containerId);
-                // Minimal Fix: Ensure Bunny URL is used here
                 container.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vId}?autoplay=true" class="w-full h-full border-0" allow="autoplay; fullscreen"></iframe>`;
             }
         }, 300);
     }
 }
-
             // Visually close all FAQ items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
