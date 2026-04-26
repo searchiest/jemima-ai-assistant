@@ -783,6 +783,13 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     </script>
 
     <script id="chat-faq-logic">
+
+// Add this to your script section
+document.addEventListener('touchstart', function() {
+    // This empty function "primes" the audio context on iOS 
+    // making subsequent playVideo() calls more likely to work.
+}, {once: true});
+
         function createTypingIndicator() {
             const typing = document.createElement('div');
             typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
@@ -820,6 +827,19 @@ msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 p
                     player.seekTo(0);
                 }
             });
+
+if (!wasActive) {
+    item.classList.add('active');
+    
+    // Give the accordion 300ms to expand before firing the video
+    setTimeout(() => {
+        if (vId && containerId) {
+            if (faqPlayers[containerId]) {
+                faqPlayers[containerId].playVideo();
+            }
+        }
+    }, 300);
+}
 
             // Visually close all FAQ items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
