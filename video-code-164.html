@@ -314,22 +314,20 @@
                 <div class="w-full md:w-[45%] space-y-4">
                     <!-- Video Section -->
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
-<iframe id="idle-player" 
-    src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
-    class="yt-player-frame active" allow="autoplay; fullscreen" loading="lazy"></iframe>
+    <iframe id="idle-player" 
+        src="https://player.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=true&loop=true&muted=true&controls=false" 
+        class="yt-player-frame" 
+        allow="autoplay; fullscreen" 
+        style="opacity: 0; transition: opacity 0.6s ease-in-out;"></iframe>
 
-<iframe id="interaction-player" 
-    src="" 
-    class="yt-player-frame" allow="autoplay; fullscreen" loading="lazy"></iframe>
+    <iframe id="interaction-player" 
+        src="" 
+        class="yt-player-frame" 
+        allow="autoplay; fullscreen"
+        style="opacity: 0; transition: opacity 0.6s ease-in-out;"></iframe>
 
-                        <!-- Interaction Overlay -->
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 bg-black transition-colors duration-700 cursor-pointer" onclick="activateAI()">
-                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300 opacity-0" style="transition-delay: 400ms">
-                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
-                                    tap to interact
-                                </div>
-                            </div>
-                        </div>
+    <div id="video-placeholder" class="absolute inset-0 z-30 cursor-pointer" onclick="activateAI()"></div>
+</div>
                     </div>
 
                     <!-- Side Questions (Mini FAQ) -->
@@ -624,26 +622,21 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
     </footer>
 
 <script id="main-logic">
-        // 1. CONFIGURATION & STATE
-        // Using your Bunny.net GUID for all videos as a placeholder
+        // 1. CONFIGURATION
         const BUNNY_BASE_URL = "https://player.mediadelivery.net/embed/646015/";
-        const mainExplainer = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c";
+        const TEST_GUID = "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"; // Unified for testing
 
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
 
         const faqVideoIds = { 
-            bookings: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-            cost: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-            time: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c",
-            thanks: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c", 
-            abandon: "61d91a66-c2f8-4ad7-b584-f2aca6709f7c"
+            bookings: TEST_GUID, cost: TEST_GUID, time: TEST_GUID,
+            thanks: TEST_GUID, abandon: TEST_GUID
         };
 
         // DOM Elements
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
-        const interactionUI = document.getElementById('interaction-ui');
         const modalOverlay = document.getElementById('modal-overlay');
         const chatInput = document.getElementById('user-chat-input');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -661,35 +654,37 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         let currentSelectedPackage = null;
         let loggedQuestions = new Set();
 
-        // 2. VIDEO ENGINE (BUNNY.NET)
-        function activateAI(vidGuid = mainExplainer) {
+        // 2. VIDEO ENGINE
+        function activateAI(vidGuid = TEST_GUID) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             isInteracting = true;
-            videoPlaceholder.style.display = 'none';
-            idlePlayer.classList.remove('active');
             
-            // Set source and show player
+            // Swap Players
+            videoPlaceholder.style.display = 'none';
+            idlePlayer.style.opacity = "0";
+            
             const newSrc = `${BUNNY_BASE_URL}${vidGuid}?autoplay=true&muted=false&controls=false`;
             if (interactionPlayer.src !== newSrc) {
                 interactionPlayer.src = newSrc;
             }
-            interactionPlayer.classList.add('active');
+            interactionPlayer.style.opacity = "1";
+            interactionPlayer.style.zIndex = "20";
         }
 
         function resetToLoop() {
             isInteracting = false;
-            videoPlaceholder.style.display = 'flex';
-            interactionPlayer.classList.remove('active');
+            videoPlaceholder.style.display = 'block';
+            interactionPlayer.style.opacity = "0";
+            interactionPlayer.style.zIndex = "10";
             interactionPlayer.src = ""; 
-            idlePlayer.classList.add('active');
+            idlePlayer.style.opacity = "1";
         }
 
-        // Catch the 'ended' message from Bunny.net Iframe
         window.addEventListener('message', (e) => {
             if (e.data === 'player:ended') resetToLoop();
         });
 
-        // 3. UI & CHAT LOGIC
+        // 3. UI & CHAT
         function toggleMobileMenu() {
             isMobileMenuOpen = !isMobileMenuOpen;
             mobileMenu.classList.toggle('-translate-y-full', !isMobileMenuOpen);
@@ -709,10 +704,8 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         }
 
         function playVideoAnswer(type, el) { 
-            const vidId = faqVideoIds[type];
-            activateAI(vidId); 
+            activateAI(faqVideoIds[type]); 
             expandChatWindow(false); 
-
             if (loggedQuestions.has(type)) return;
             loggedQuestions.add(type);
 
@@ -733,17 +726,14 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
             const videoContainer = item.querySelector('[data-video-id]');
-            const vGuid = videoContainer?.getAttribute('data-video-id');
+            const vGuid = videoContainer?.getAttribute('data-video-id') || TEST_GUID;
 
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
             if (!wasActive) {
                 item.classList.add('active');
                 if (isInteracting) resetToLoop();
-                if (vGuid) {
-                    // Injecting Bunny Iframe directly
-                    videoContainer.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true" style="border:none;position:absolute;top:0;left:0;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
-                }
+                videoContainer.innerHTML = `<iframe src="${BUNNY_BASE_URL}${vGuid}?autoplay=true&muted=false&controls=true" style="border:none;position:absolute;top:0;left:0;width:100%;height:100%;" allow="autoplay;fullscreen"></iframe>`;
             }
         }
 
@@ -808,7 +798,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             }
         }
 
-        // 5. INITIALIZATION & EVENTS
+        // 5. INITIALIZATION
         document.getElementById('chat-input-form').onsubmit = handleChatSubmit;
         modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(true); };
         
@@ -816,13 +806,14 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             if (e.clientY < 0 && !hasExited) { hasExited = true; openModal(true, 'Exit Intent'); }
         });
 
-        // Prime audio for iOS
         document.addEventListener('touchstart', () => {}, {once: true});
         
+        // Explicitly start the idle video on load
         window.onload = () => {
-            if(interactionUI) interactionUI.classList.remove('opacity-0');
+            idlePlayer.style.opacity = "1";
         };
     </script>
 </body>
+</html></body>
 </html></body>
 </html>
