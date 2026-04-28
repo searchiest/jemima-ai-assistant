@@ -868,37 +868,48 @@ document.addEventListener('click', function() {
             });
         });
 
-// Safari-optimized activateAI
 function activateAI(videoId = 'main') {
-    // 1. IMMEDIATE PLAY (This satisfies Safari's User Gesture requirement)
-    if (players[videoId]) {
-        const p = players[videoId];
-        
-        // Explicitly unblocking Safari
-        p.instance.play().catch(err => console.log("Safari blocked auto-play, trying muted..."));
-        
-        // 2. UI TRANSITION (Do this AFTER the play command)
-        isInteracting = true;
-        if (videoPlaceholder) videoPlaceholder.style.display = 'none';
-        
-        // Handle Idle Player
-        const idlePlayerIframe = document.getElementById('idle-player');
-        if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
-
-        // Swap active classes
-        if (activePlayerId && players[activePlayerId]) {
-            players[activePlayerId].iframe.classList.remove('active');
-            players[activePlayerId].iframe.classList.add('pointer-events-none');
-        }
-
-        p.iframe.classList.add('active');
-        p.iframe.classList.remove('pointer-events-none');
-        activePlayerId = videoId;
-        
-        // Now do the secondary logic
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    console.log("Attempting to play video:", videoId); // Helpful for debugging
+    
+    const p = players[videoId];
+    
+    // Check if player exists
+    if (!p) {
+        console.error("Player not found for ID:", videoId);
+        return;
     }
+
+    // 1. UI TRANSITION (Prepare the stage)
+    isInteracting = true;
+    
+    // Hide placeholder and idle video
+    if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+    const idlePlayerIframe = document.getElementById('idle-player');
+    if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
+
+    // Deactivate current active video
+    if (activePlayerId && players[activePlayerId]) {
+        players[activePlayerId].iframe.classList.remove('active');
+        players[activePlayerId].iframe.classList.add('pointer-events-none');
+        players[activePlayerId].instance.pause();
+    }
+
+    // 2. ACTIVATE TARGET
+    p.iframe.classList.add('active');
+    p.iframe.classList.remove('pointer-events-none');
+    activePlayerId = videoId;
+
+    // 3. IMMEDIATE PLAY (Safari Gesture Chain)
+    // We call this last but inside the same tick to ensure the iframe is visible first
+    p.instance.setCurrentTime(0);
+    p.instance.play();
+
+    // 4. SECONDARY LOGIC
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    
+    // Close mobile menu if open
+    if (isMobileMenuOpen) toggleMobileMenu();
 }
 
 // Wakes up background videos after mobile OS dropdown menus pause them
