@@ -869,25 +869,22 @@ document.addEventListener('click', function() {
         });
 
 function activateAI(videoId = 'main') {
-    console.log("Attempting to play video:", videoId); // Helpful for debugging
+    console.log("Attempting to play video:", videoId);
     
     const p = players[videoId];
     
-    // Check if player exists
     if (!p) {
         console.error("Player not found for ID:", videoId);
         return;
     }
 
-    // 1. UI TRANSITION (Prepare the stage)
+    // 1. UI TRANSITION
     isInteracting = true;
-    
-    // Hide placeholder and idle video
     if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+    
     const idlePlayerIframe = document.getElementById('idle-player');
     if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
 
-    // Deactivate current active video
     if (activePlayerId && players[activePlayerId]) {
         players[activePlayerId].iframe.classList.remove('active');
         players[activePlayerId].iframe.classList.add('pointer-events-none');
@@ -899,16 +896,26 @@ function activateAI(videoId = 'main') {
     p.iframe.classList.remove('pointer-events-none');
     activePlayerId = videoId;
 
-    // 3. IMMEDIATE PLAY (Safari Gesture Chain)
-    // We call this last but inside the same tick to ensure the iframe is visible first
+    // 3. SAFARI SYNC PLAY (The "Mute-Play-Unmute" Trick)
+    // Safari allows any video to play if it's muted. 
+    // We start it muted, then immediately unmute it.
     p.instance.setCurrentTime(0);
-    p.instance.play();
+    p.instance.mute(); // Force mute to bypass strict autoplay blocks
+    
+    p.instance.play().then(() => {
+        // Once the video starts successfully (even muted), we unmute
+        setTimeout(() => {
+            p.instance.unmute();
+        }, 100); 
+    }).catch(err => {
+        // If it still fails, we fall back to playing muted so it's not stuck
+        console.warn("Audio block detected, playing muted.");
+        p.instance.play();
+    });
 
     // 4. SECONDARY LOGIC
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-    
-    // Close mobile menu if open
     if (isMobileMenuOpen) toggleMobileMenu();
 }
 
