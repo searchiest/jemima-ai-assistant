@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jemima AI | Double Your Conversions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://iframe.mediadelivery.net">
+    <style>
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
+        }
+        @media screen and (max-width: 640px) {
+            .faq-item button span { padding-right: 2rem; display: block; }
+        }
+        #chat-feed div {
+            font-size: 16px !important;
+            line-height: 1.6;
+            padding-top: 0.85rem !important;
+            padding-bottom: 0.85rem !important;
+            letter-spacing: 0.01em;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+
+        #video-container {
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            width: 100%;
+            background-image: url('video-fallback.png?auto=format&fit=crop&q=80&w=1000'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        .yt-player-frame {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out;
+            z-index: 10;
+        }
+        .yt-player-frame.active {
+            opacity: 1; 
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
+        .modal-content { animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #94a3b8;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingPulse 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        #mobile-menu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3c/polyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1em;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            padding-bottom: 2rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        @media screen and (max-width: 768px) {
+            #audit-form label {
+                color: #475569 !important; 
+                font-size: 11px !important; 
+                letter-spacing: 0.15em !important;
+            }
+            #audit-form input, #audit-form select {
+                font-size: 16px !important; 
+                color: #000000 !important;   
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+            #audit-form input::placeholder {
+                color: #94a3b8 !important; 
+                font-weight: 500;
+            }
+            .faq-content p {
+                font-size: 16px !important;    
+                line-height: 1.6;             
+                margin-bottom: 1.25rem;       
+                color: #334155;               
+            }
+            .faq-content button {
+                margin-top: 0.5rem;           
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
+            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Get Your Free Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
+            </div>
+            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
+                    <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+<div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Monthly Website Traffic</label>
+                    
+                    <div class="relative cursor-pointer group" id="custom-select-trigger">
+                        <input type="text" id="form-traffic" required readonly placeholder="Select traffic range..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
+                        <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
+                    </div>
+
+                    <div id="custom-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">0 - 1,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">1,000 - 5,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">5,000 - 20,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">20,000+</div>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Work Email</label>
+                    <input type="email" id="form-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Phone Number</label>
+                    <div class="flex items-center gap-4">
+                        <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-400">SMS?</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Audit Request</button>
+                <p id="modal-card-note" class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full md:hidden">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-2 font-extrabold text-xl tracking-tighter" onclick="toggleMobileMenu()">
+                <img src="jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm" onerror="this.src='https://via.placeholder.com/150'">
+                <span>Jemima</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="text-slate-600">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-lg font-black uppercase tracking-[0.2em] text-slate-900">
+            <a href="#problem" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Solution</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Process</a>
+            <a href="#about-jemima" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">About</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
+            <a href="javascript:void(0)" onclick="activateAI('main'); toggleMobileMenu();" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
+        </div>
+        <div class="mt-auto">
+            <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full bg-[#c2155a] text-white py-5 font-black uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Free Conversion Audit</button>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="flex items-center gap-2 font-extrabold text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="window.location.reload()">
+            <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm" onerror="this.src='https://via.placeholder.com/150'">
+            <span>Jemima</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
+            <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
+            <a href="#about-jemima" class="hover:text-[#c2155a]">About</a>
+            <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
+            <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a]">How it Works</a>
+        </div>
+        <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </nav>
+
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-1 lg:pt-4 pb-8 lg:pb-16">
+        <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12">
+            <div class="max-w-4xl text-center space-y-3">
+                <h1 class="text-3xl md:text-4xl lg:text-6xl font-[800] leading-tight text-slate-950 tracking-tight">
+                    Stop losing leads<br><span class="text-[#c2155a]">to a static website</span>
+                </h1>
+                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium">Answer key decision questions with video, then capture, follow up, and convert leads 24/7.</p>
+            </div>
+
+            <div class="flex flex-col items-center justify-center gap-4">
+                <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
+                    <i class="fas fa-chart-line mr-2"></i> Free Conversion Audit
+                </button>
+                <div class="text-center">
+                    <p class="text-slate-500 text-xs md:text-sm font-medium">No credit card required. We’ll find at least 3 lead leaks in your current site.</p>
+                    <button onclick="activateAI('main')" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or watch how it works</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+                <div class="w-full md:w-[45%] space-y-4">
+                    
+                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+                        <iframe id="idle-player" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+
+                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+
+                        <iframe id="player-abandon" src="https://iframe.mediadelivery.net/embed/646015/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-thanks" src="https://iframe.mediadelivery.net/embed/646015/3278d308-19cb-4d4f-a45b-268f9227b8ef?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+
+                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
+                           <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
+                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
+                                    tap to interact
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
+                        <div class="space-y-1">
+                            <h2 class="text-xs lg:text-sm font-black uppercase tracking-[0.25em] text-[#c2155a]">Quick Answers</h2>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] font-black bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>Will this actually get me more leads?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] font-black bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>How much does it cost / is this worth it?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('time', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] font-black bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>Is this complicated / will this take time?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start transition-all duration-500">
+                    <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
+                        <div class="flex items-center justify-between border-b pb-3 shrink-0">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
+                                    <img src="jemima-chat-image.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
+                                </div>
+                                <p class="text-sm font-black uppercase tracking-tight">Jemima</p>
+                            </div>
+                        </div>
+                        <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
+                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
+                                Hi I'm Jemima. Want to capture more of the leads you're currently losing? Ask me anything!
+                            </div>
+                        </div>
+                        <div class="border-t pt-4 mt-2 shrink-0 space-y-3">
+                            <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
+                                <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg shadow-[#c2155a]/20 hover:bg-[#a0124a] transition-colors">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-3.5 text-[12px] font-black bg-[#c2155a] text-white rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Free Conversion Audit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Problem/Solution Section -->
+        <section id="problem" class="py-16 lg:py-24 border-t border-slate-200">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-black px-4 py-1.5 uppercase tracking-[0.2em]">Why most websites under convert</div>
+                    <h2 class="text-3xl lg:text-4xl font-black tracking-tighter leading-tight">Most websites get attention. <br><span class="text-[#c2155a]">Very few turn it into enquiries.</span></h2>
+                    <p class="text-slate-600 leading-relaxed text-lg font-medium">Visitors arrive, skim, hesitate, and leave. They are not always ready to fill in a form or wait for a callback. Jemima helps to explain your offer clearly, build trust quickly, and guide people to take action while they are still interested.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                        <div class="p-4 bg-white border border-slate-100 shadow-sm">
+                            <p class="text-base font-black text-slate-900">Clarity</p>
+                            <p class="text-sm text-slate-500 mt-1 leading-relaxed">Explain what you do in seconds.</p>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-100 shadow-sm">
+                            <p class="text-base font-black text-slate-900">Trust</p>
+                            <p class="text-sm text-slate-500 mt-1 leading-relaxed">Make your site feel more human.</p>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-100 shadow-sm">
+                            <p class="text-base font-black text-slate-900">Action</p>
+                            <p class="text-sm text-slate-500 mt-1 leading-relaxed">Move more visitors towards enquiry.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative bg-white border border-slate-200 shadow-xl p-8 lg:p-10 space-y-6">
+                    <h3 class="text-xl font-black tracking-tight">What Jemima adds to your website</h3>
+                    <div class="space-y-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>A presenter that welcomes visitors and explains your service clearly</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Answers to common questions that reduce hesitation</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>A more guided journey from first visit to enquiry</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>A conversion asset that works even when you are offline</p></div>
+                    </div>
+                    <div class="border-t pt-6">
+                        <p class="text-sm md:text-base font-black text-slate-900">If your website gets traffic but not enough enquiries, Jemima is designed to fix that.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-slate-900 text-white -mx-4 lg:-mx-12 px-4 lg:px-12">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="text-center mb-16 space-y-4">
+                    <h2 class="text-3xl lg:text-5xl font-black tracking-tighter uppercase">Why Jemima Works</h2>
+                    <p class="text-slate-300 text-sm md:text-base tracking-widest uppercase font-bold">for service businesses that rely on enquiries to grow</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="space-y-4 group bg-white/5 border border-white/10 p-8 text-center">
+                        <div class="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#c2155a] transition-colors mx-auto"><i class="fas fa-comments text-[#c2155a]"></i></div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight">A human welcome</h3>
+                        <p class="text-slate-200 text-base md:text-lg leading-relaxed">Make your website feel more like a conversation and less like a brochure.</p>
+                    </div>
+                    <div class="space-y-4 group bg-white/5 border border-white/10 p-8 text-center">
+                        <div class="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#c2155a] transition-colors mx-auto"><i class="fas fa-circle-question text-[#c2155a]"></i></div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight">Reduce friction</h3>
+                        <p class="text-slate-200 text-base md:text-lg leading-relaxed">Handle common objections and explain your process before a visitor drops off.</p>
+                    </div>
+                    <div class="space-y-4 group bg-white/5 border border-white/10 p-8 text-center">
+                        <div class="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#c2155a] transition-colors mx-auto"><i class="fas fa-calendar-check text-[#c2155a]"></i></div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight">More enquiries</h3>
+                        <p class="text-slate-200 text-base md:text-lg leading-relaxed">Give visitors more confidence to book, call, or request a quote while intent is highest.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: How the Audit Works (Roadmap) -->
+        <section id="how-it-works" class="py-20 lg:py-32">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-black tracking-tighter uppercase mb-4">Your Roadmap to 2x Conversions</h2>
+                <p class="text-slate-500 font-medium text-base md:text-lg">What happens when you request a free conversion audit?</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-4 relative">
+                <div class="hidden md:block absolute top-12 left-0 right-0 h-px bg-slate-200 z-0"></div>
+                <!-- Step 1 -->
+                <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">1</div>
+                    <h4 class="font-black uppercase text-sm tracking-widest">Site Scan</h4>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed">We analyze your current landing page structure and friction points.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">2</div>
+                    <h4 class="font-black uppercase text-sm tracking-widest">Strategy Call</h4>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed">A 15 minute breakdown of how Jemima will plug your lead leaks.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">3</div>
+                    <h4 class="font-black uppercase text-sm tracking-widest">Custom Setup</h4>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed">We build your custom AI persona tailored to your industry voice.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative z-10 bg-[#c2155a] p-6 text-white flex flex-col items-center text-center space-y-4 shadow-xl">
+                    <div class="w-10 h-10 rounded-full bg-white text-[#c2155a] flex items-center justify-center font-black">4</div>
+                    <h4 class="font-black uppercase text-sm tracking-widest">Launch</h4>
+                    <p class="text-sm md:text-base text-white/90 leading-relaxed">Go live and watch your booking rate soar within 24 hours.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Jemima Section -->
+        <section id="about-jemima" class="py-20 lg:py-32 bg-white border-t border-slate-100 -mx-4 lg:-mx-12 px-4 lg:px-12">
+            <div class="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-black px-4 py-1.5 uppercase tracking-[0.2em] rounded-full">The Story</div>
+                        <h2 class="text-4xl lg:text-6xl font-black tracking-tighter uppercase leading-[0.9]">About <br><span class="text-[#c2155a]">Jemima</span></h2>
+                    </div>
+                    
+                    <div class="space-y-6 text-slate-600 font-medium leading-relaxed text-lg md:text-xl">
+                        <p>Jemima isn't just a chatbot she's a high performance sales asset. By combining hyper realistic video avatars with advanced AI intelligence, Jemima greets your visitors, handles objections, and schedules meetings as if your best salesperson was always online.</p>
+                        <p>Built by conversion experts, every interaction is engineered to move visitors closer to a booking. We believe that in a world of automated noise, a human style presence is the key to breaking through and building genuine trust at scale.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-8 pt-4">
+                        <div class="space-y-1">
+                            <p class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">24/7</p>
+                            <p class="text-[11px] font-black uppercase tracking-widest text-slate-400">Sales Engagement</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">50+</p>
+                            <p class="text-[11px] font-black uppercase tracking-widest text-slate-400">Languages Supported</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-8 lg:p-12 text-white space-y-8 relative overflow-hidden shadow-2xl">
+                    <div class="absolute -top-12 -right-12 w-64 h-64 bg-[#c2155a]/10 rounded-full blur-3xl"></div>
+                    <h3 class="text-xl md:text-2xl font-black tracking-tight uppercase border-b border-white/10 pb-4">Our Core Philosophy</h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs font-black">01</div>
+                            <div class="space-y-1.5">
+                                <p class="font-black uppercase text-sm tracking-widest text-[#c2155a]">Human First AI</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">We don't replace people; we amplify your personality so it can be in 1,000 places at once.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs font-black">02</div>
+                            <div class="space-y-1.5">
+                                <p class="font-black uppercase text-sm tracking-widest text-[#c2155a]">Data Over Fluff</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">Every feature in Jemima is tested for its impact on your bottom line. If it doesn't convert, it doesn't ship.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs font-black">03</div>
+                            <div class="space-y-1.5">
+                                <p class="font-black uppercase text-sm tracking-widest text-[#c2155a]">Seamless Integration</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">Jemima fits into your stack, not the other way around. Leads flow directly into your CRM of choice.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20 border-t border-slate-200">
+            <div class="text-center mb-14 space-y-4">
+                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-black px-4 py-1.5 uppercase tracking-[0.2em]">Pricing</div>
+                <h2 class="text-3xl lg:text-5xl font-black tracking-tighter">Simple pricing built around outcomes</h2>
+                <p class="text-slate-500 font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed">One time setup covers strategy, scripting, presenter creation, and implementation. Monthly pricing covers hosting, support, and keeping your presenter live on your site.</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6 items-stretch">
+                <div class="bg-white border border-slate-200 shadow-sm p-8 flex flex-col">
+                    <div class="mb-6">
+                        <p class="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Starter</p>
+                        <h3 class="text-3xl font-black tracking-tight mt-2">£495 <span class="text-base text-slate-500 font-bold">setup</span></h3>
+                        <p class="text-xl font-black tracking-tight text-slate-900 mt-1">+ £149/month</p>
+                        <p class="text-base text-slate-500 mt-3 font-medium">Best for getting a presenter live on your homepage.</p>
+                    </div>
+                    <div class="space-y-3.5 text-sm md:text-base text-slate-600 flex-grow">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>1 conversion focused presenter experience</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Custom script and setup</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Website installation support</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Hosting and ongoing availability</p></div>
+                    </div>
+<button onclick="openModal(false, 'CTA Purchase Intent Starter', 'starter')" class="mt-8 w-full py-4 border border-slate-300 text-slate-900 text-[12px] font-black uppercase tracking-[0.2em] hover:border-slate-900 transition-colors">Start with Starter</button>
+                </div>
+                <div class="bg-slate-900 text-white border border-slate-900 shadow-2xl p-8 flex flex-col relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c2155a] text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-[0.2em]">Most popular</div>
+                    <div class="mb-6">
+                        <p class="text-sm font-black uppercase tracking-[0.2em] text-slate-300">Growth</p>
+                        <h3 class="text-3xl font-black tracking-tight mt-2 text-white">£995 <span class="text-base text-slate-300 font-bold">setup</span></h3>
+                        <p class="text-xl font-black tracking-tight text-white mt-1">+ £299/month</p>
+                        <p class="text-sm text-slate-200 mt-3 font-medium">Best for lead driven businesses that want Jemima across key pages.</p>
+                    </div>
+                    <div class="space-y-3.5 text-sm md:text-base text-slate-200 flex-grow">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>3 to 5 presenter experiences across key pages</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Conversion focused scripts for homepage, service pages, and FAQs</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>A more guided visitor journey</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Priority support and rollout guidance</p></div>
+                    </div>
+<button onclick="openModal(false, 'CTA Purchase Intent Growth', 'growth')" class="mt-8 w-full py-4 bg-[#c2155a] text-white text-[12px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all">Choose Growth</button>
+                </div>
+                <div class="bg-white border border-slate-200 shadow-sm p-8 flex flex-col">
+                    <div class="mb-6">
+                        <p class="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Pro</p>
+                        <h3 class="text-3xl font-black tracking-tight mt-2">£1,995 <span class="text-base text-slate-500 font-bold">setup</span></h3>
+                        <p class="text-xl font-black tracking-tight text-slate-900 mt-1">+ £499/month</p>
+                        <p class="text-base text-slate-500 mt-3 font-medium">Best for businesses that want a broader conversion journey across the site.</p>
+                    </div>
+                    <div class="space-y-3.5 text-sm md:text-base text-slate-600 flex-grow">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>8 to 12 presenter experiences</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Landing pages, service pages, and funnel coverage</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Advanced implementation planning</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Priority rollout for scaling teams</p></div>
+                    </div>
+<button onclick="openModal(false, 'CTA Purchase Intent Pro', 'pro')" class="mt-8 w-full py-4 border border-slate-300 text-slate-900 text-[12px] font-black uppercase tracking-[0.2em] hover:border-slate-900 transition-colors">Talk to us about Pro</button>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        <section id="faq" class="py-20 border-t border-slate-100">
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div class="text-center space-y-4">
+                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black px-4 py-1.5 uppercase tracking-[0.2em] rounded-full">Learn More</div>
+                    <h2 class="text-3xl md:text-5xl font-[800] tracking-tighter text-slate-950">Questions People Usually Ask</h2>
+                </div>
+                
+                <div class="space-y-4">
+
+<!-- FAQ 1 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-1')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Will this work with my current website?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+Yes, this is designed to work with the website you already have. You’re not rebuilding anything or replacing your existing setup it simply integrates alongside it. It works with what you already have. It just makes it perform better.
+</p>
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+Click the free conversion audit button below. It takes less than 30 seconds to order. Our team will review your website, and show you exactly, how this would fit into your current setup.
+</p>
+<button onclick="openModal(false, 'FAQ1 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                            </button>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe id="faq-player-1" src="https://iframe.mediadelivery.net/embed/646015/a19678ba-3c40-4079-8f9f-5237a699987f?autoplay=false&muted=false&playsinline=true&preload=true" class="w-full h-full border-0 absolute inset-0 faq-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+<!-- FAQ 2 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-2')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">How does Jemima learn my business?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                        We train your AI assistant by crawling your website, reading your PDFs, and analyzing your previous sales conversations. Jemima becomes an expert on your product, pricing, and FAQs in minutes.
+                                    </p>
+<button onclick="openModal(false, 'FAQ2 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                            </button>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe id="faq-player-2" src="https://iframe.mediadelivery.net/embed/646015/003fef37-f5e1-4956-b34f-9eb643fdcd06?autoplay=false&muted=false&playsinline=true&preload=true" class="w-full h-full border-0 absolute inset-0 faq-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!-- FAQ 3 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-3')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Is this only for certain industries or business sizes?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+This isn’t limited to a specific type of business. It works wherever people visit a website, have questions, and are considering taking action. That could be a local service business, a larger company, or anything in between.
+</p>
+
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website. And show you exactly how this can be adapted for your business.
+</p>
+<button onclick="openModal(false, 'FAQ3 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                            </button>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe id="faq-player-3" src="https://iframe.mediadelivery.net/embed/646015/9413239b-2020-42db-95bf-68e683a5ac82?autoplay=false&muted=false&playsinline=true&preload=true" class="w-full h-full border-0 absolute inset-0 faq-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+
+<!-- FAQ 4 -->
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-4')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base font-black uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Can I customise how it looks and behaves?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="space-y-4">
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+Yes, everything will be designed around your business. That includes how it looks, the tone, the messaging, and the way that it interacts so it feels natural and aligned with your brand. And if you ever want to make adjustments, that can be done too.
+</p>
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+Click the free conversion audit button. It takes less than 30 seconds to order. Our team will review your website. And show you exactly how this can be tailored to fit your business.
+</p>
+<button onclick="openModal(false, 'FAQ4 CTA')" class="px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                            </button>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <iframe id="faq-player-4" src="https://iframe.mediadelivery.net/embed/646015/bf43a67d-cef3-45e2-aaa4-f686bcfd1651?autoplay=false&muted=false&playsinline=true&preload=true" class="w-full h-full border-0 absolute inset-0 faq-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+ 
+
+<!-- FAQs END -->
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-[#c2155a]/5 border-2 border-dashed border-[#c2155a]/20 text-center space-y-8 mb-20">
+            <div class="space-y-2">
+                <h2 class="text-4xl font-black tracking-tighter uppercase">Ready to out perform your competition?</h2>
+                <p class="text-slate-600 font-bold uppercase tracking-widest text-xs md:text-sm italic">Limited to 5 free audits per week to ensure quality.</p>
+            </div>
+            <button onclick="openModal()" class="px-12 py-6 bg-[#c2155a] text-white font-black uppercase tracking-[0.3em] text-[13px] shadow-2xl shadow-[#c2155a]/40 hover:scale-105 active:scale-95 transition-all">
+                <i class="fas fa-chart-line mr-2"></i>
+                <span>Free Conversion Audit</span>
+            </button>
+        </section>
+    </main>
+
+    <footer class="py-12 bg-white border-t text-center">
+        <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
+    
+    <script id="config-state">
+        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
+
+        const chatFeed = document.getElementById('chat-feed');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const chatInput = document.getElementById('user-chat-input');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        const libraryId = "646015"; 
+        const BUNNY_BASE_URL = `https://iframe.mediadelivery.net/embed/${libraryId}/`;
+        
+        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        let isInteracting = false;
+        let isChatExpanded = false;
+        let hasExited = false;
+        let hasSubmitted = false;
+        let isMobileMenuOpen = false;
+        let lastTriggerSource = 'Direct Click';
+        let currentSelectedPackage = null;
+    </script>
+
+    <script id="ui-management">
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('-translate-y-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('-translate-y-full');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+function openModal(isExitIntent = false, source = 'Direct Click', pkg = null) {
+    hasSubmitted = false;
+    lastTriggerSource = source; 
+    currentSelectedPackage = pkg;
+    
+    const trafficSelect = document.getElementById('form-traffic');
+    const submitBtn = document.getElementById('submit-btn');
+    const cardNote = document.getElementById('modal-card-note');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalTag = document.getElementById('modal-tag');
+
+    if (trafficSelect) {
+        trafficSelect.value = "";
+        trafficSelect.classList.add('text-slate-300');
+        trafficSelect.classList.remove('text-slate-900');
+    }
+    cardNote.classList.remove('hidden');
+
+    // Default Text
+    let title = "Get Your Free Audit";
+    let subtitle = "My team will manually review your site layout.";
+    let tagText = "Step 1 of 1";
+
+    // Custom text based on pricing package
+    if (pkg === 'starter') {
+        title = "Start with Starter";
+        subtitle = "Let's start with a conversion audit";
+    } else if (pkg === 'growth') {
+        title = "Choose Growth";
+        subtitle = "Let's start growth with a conversion audit";
+    } else if (pkg === 'pro') {
+        title = "Choose Pro";
+        subtitle = "Let's start Pro with a conversion audit";
+    }
+
+    // Handle Exit Intent override
+    if (isExitIntent) {
+        tagText = "WAIT! BEFORE YOU GO...";
+        title = "Don't leave without your audit!";
+    }
+
+    modalTag.innerText = tagText;
+    modalTitle.innerText = title;
+    modalSubtitle.innerText = subtitle;
+    submitBtn.innerText = "Submit Audit Request";
+
+    modalOverlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(isUserTriggered = false) {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            
+            // If they closed the modal manually and haven't submitted the form, play abandon video
+            if (isUserTriggered && !hasSubmitted) {
+                activateAI('abandon');
+            }
+        }
+
+// Custom Dropdown Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const trigger = document.getElementById('custom-select-trigger');
+            const optionsPanel = document.getElementById('custom-select-options');
+            const inputField = document.getElementById('form-traffic');
+            const options = document.querySelectorAll('.traffic-option');
+
+            // Toggle dropdown open/close
+            trigger.addEventListener('click', () => {
+                optionsPanel.classList.toggle('hidden');
+                optionsPanel.classList.toggle('flex');
+            });
+
+            // Handle option selection
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    inputField.value = e.target.innerText; // Sets the input value to send to n8n
+                    optionsPanel.classList.add('hidden');
+                    optionsPanel.classList.remove('flex');
+                });
+            });
+
+            // Close dropdown if user clicks anywhere outside of it
+            document.addEventListener('click', (e) => {
+                if(!document.getElementById('traffic-dropdown-wrapper').contains(e.target)) {
+                    optionsPanel.classList.add('hidden');
+                    optionsPanel.classList.remove('flex');
+                }
+            });
+        });
+    </script>
+
+    <script id="video-engine">
+        const players = {};
+        const faqPlayers = {};
+        let activePlayerId = null;
+        let activeFaqPlayerId = null;
+        let idlePlayerInstance = null; // Connects the API to the idle video
+
+// Initialize API on ALL pre-mounted iframes (Hero + FAQs) the moment the DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Idle Video
+            const idleIframe = document.getElementById('idle-player');
+            if (idleIframe) idlePlayerInstance = new playerjs.Player(idleIframe);
+
+            // Setup Hero Videos
+            const interactionIframes = document.querySelectorAll('.interaction-iframe');
+            interactionIframes.forEach(iframe => {
+                const player = new playerjs.Player(iframe);
+                const id = iframe.id.replace('player-', ''); 
+                players[id] = { instance: player, iframe: iframe };
+                player.on('ended', () => { resetToLoop(); });
+            });
+
+            // Setup FAQ Videos
+            const faqIframes = document.querySelectorAll('.faq-iframe');
+            faqIframes.forEach(iframe => {
+                const player = new playerjs.Player(iframe);
+                faqPlayers[iframe.id] = { instance: player, iframe: iframe };
+            });
+        });
+
+        // Triggered instantly by a tap in the Hero Section
+        function activateAI(videoId = 'main') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            isInteracting = true;
+            
+            // Close all accordions and pause FAQ videos
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            Object.values(faqPlayers).forEach(p => {
+                p.iframe.classList.add('pointer-events-none');
+                p.instance.pause();
+            });
+            
+            const idlePlayerIframe = document.getElementById('idle-player');
+            if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+            if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
+
+            // Pause whatever hero video is currently playing
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].iframe.classList.remove('active');
+                players[activePlayerId].iframe.classList.add('pointer-events-none');
+                players[activePlayerId].instance.pause();
+                players[activePlayerId].instance.setCurrentTime(0);
+            }
+
+            // Play the requested pre-mounted video
+            if (players[videoId]) {
+                players[videoId].iframe.classList.add('active');
+                players[videoId].iframe.classList.remove('pointer-events-none');
+                players[videoId].instance.setCurrentTime(0);
+                players[videoId].instance.play();
+                activePlayerId = videoId;
+            }
+        }
+
+        // Triggered instantly by a tap on an FAQ Accordion
+        function toggleFaq(button, playerId) {
+            const item = button.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+
+            // Pause ALL FAQ videos and close accordions
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            Object.values(faqPlayers).forEach(p => {
+                p.iframe.classList.add('pointer-events-none');
+                p.instance.pause();
+            });
+
+            if (!wasActive) {
+                item.classList.add('active');
+                
+                // Optional: If hero video is playing, send it back to idle loop so audio doesn't overlap
+                if (isInteracting) resetToLoop();
+
+                // Play the pre-mounted FAQ video synchronously
+                if (playerId && faqPlayers[playerId]) {
+                    faqPlayers[playerId].iframe.classList.remove('pointer-events-none');
+                    faqPlayers[playerId].instance.setCurrentTime(0);
+                    faqPlayers[playerId].instance.play();
+                    activeFaqPlayerId = playerId;
+                }
+            }
+        }
+
+        function resetToLoop() {
+            isInteracting = false;
+            if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
+            
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].iframe.classList.remove('active');
+                players[activePlayerId].iframe.classList.add('pointer-events-none');
+                players[activePlayerId].instance.pause();
+            }
+            
+            const idlePlayerIframe = document.getElementById('idle-player');
+            if (idlePlayerIframe) idlePlayerIframe.classList.add('active');
+        }
+
+// Wakes up background videos after mobile OS dropdown menus pause them
+        function resumeVideos() {
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].instance.play();
+            } else if (idlePlayerInstance) {
+                idlePlayerInstance.play();
+            }
+        }
+    </script>
+
+    <script id="chat-faq-logic">
+        function createTypingIndicator() {
+            const typing = document.createElement('div');
+            typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
+            typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+            return typing;
+        }
+
+        async function addMessages(msgArray) {
+            for (const text of msgArray) {
+                const indicator = createTypingIndicator();
+                chatFeed.appendChild(indicator);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+                await new Promise(r => setTimeout(r, 1200));
+                indicator.remove();
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
+        }
+
+        let loggedQuestions = new Set();
+
+        function playVideoAnswer(type, el) { 
+            const questionText = el.innerText.trim();
+
+            activateAI(type); 
+            expandChatWindow(false); 
+
+            if (loggedQuestions.has(type)) return; 
+
+            loggedQuestions.add(type);
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = questionText;
+            chatFeed.appendChild(userMsg);
+
+            const messages = {
+                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
+                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
+                time: ["Most businesses can have it up and running within a week.", "We handle most of the work, you just need to add it to your site."]
+            };
+            
+            addMessages(messages[type] || ["I can certainly help with that."]);
+        }
+
+        function expandChatWindow(shouldScroll = true) {
+            if (!isChatExpanded) {
+                isChatExpanded = true;
+                chatFeed.classList.remove('h-[120px]');
+                chatFeed.classList.add('h-[400px]', 'md:h-1200');
+                
+                const chatContainer = document.getElementById('chat-container');
+                chatContainer.classList.remove('md:self-start');
+                
+                if (shouldScroll) {
+                    setTimeout(() => {
+                        chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            }
+        }
+    </script>
+
+    <script id="lead-capture">
+
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    const originalBtnText = submitBtn.innerText;
+    submitBtn.disabled = true;
+    submitBtn.innerText = "SENDING...";
+
+    const formData = {
+        name: document.getElementById('form-name').value,
+        // Using a fallback in case website ID doesn't exist in your specific HTML snippet
+        website: document.getElementById('form-website') ? document.getElementById('form-website').value : "Not Provided",
+        traffic: document.getElementById('form-traffic').value,
+        email: document.getElementById('form-email').value,
+        phone: document.getElementById('form-phone').value,
+        smsOptin: document.getElementById('form-sms-optin').checked,
+        selectedPackage: currentSelectedPackage, // 'starter', 'growth', or 'pro'
+        triggerButton: lastTriggerSource,        // This will be "CTA Purchase Intent Starter" etc.
+        sessionId: sessionId,
+        timestamp: new Date().toISOString()
+    };
+
+    let leadSuccess = false;
+
+    if (n8nFormWebhookUrl) {
+        try {
+            const response = await fetch(n8nFormWebhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'audit_lead', ...formData })
+            });
+            if(response.ok) leadSuccess = true;
+        } catch (error) {
+            console.error('Webhook Error:', error);
+        }
+    }
+
+    hasSubmitted = true;
+    activateAI('thanks');
+    
+    // UI Updates
+    const userAction = document.createElement('div');
+    userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
+    userAction.innerText = `Interest in ${currentSelectedPackage || 'Audit'} noted`;
+    chatFeed.appendChild(userAction);
+
+    if (leadSuccess) {
+        addMessages([
+            `Thanks ${formData.name.split(' ')[0]}! I've flagged your interest in the ${currentSelectedPackage} plan.`,
+            "My team will review your site and reach out within 24 hours."
+        ]);
+    }
+
+    closeModal(false);
+    submitBtn.disabled = false;
+    submitBtn.innerText = originalBtnText;
+    e.target.reset();
+}
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            chatInput.value = '';
+
+            expandChatWindow();
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = text;
+            chatFeed.appendChild(userMsg);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            const indicator = createTypingIndicator();
+            chatFeed.appendChild(indicator);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            if (n8nChatWebhookUrl) {
+                try {
+                    const response = await fetch(n8nChatWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+                    });
+                    if (!response.ok) throw new Error('Network error');
+                    const data = await response.json();
+                    indicator.remove();
+                    const getBotText = (input) => {
+                        if (typeof input === 'string') return input;
+                        if (!input) return null;
+                        if (Array.isArray(input)) return getBotText(input[0]);
+                        const candidates = [input.output, input.text, input.response, input.message, input.fulfillmentText, input.content];
+                        const found = candidates.find(c => typeof c === 'string' && c.length > 0);
+                        if (found) return found;
+                        if (input.json) return getBotText(input.json);
+                        return null;
+                    };
+                    addMessages([getBotText(data) || "I've received your message, but I'm having trouble phrasing my response!"]);
+                } catch (error) {
+                    indicator.remove();
+                    addMessages(["I'm having a little trouble connecting to my brain right now. Please try again!"]);
+                }
+            }
+        }
+
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
+// Exit Intent Behavior
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY < 0 && !hasExited) {
+                hasExited = true;
+                if (modalOverlay.classList.contains('hidden')) {
+                    openModal(true, 'Exit Intent');
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
