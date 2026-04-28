@@ -845,67 +845,71 @@ function closeModal(isUserTriggered = false) {
             });
         });
 
-        // Triggered instantly by a tap in the Hero Section
-        function activateAI(videoId = 'main') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            isInteracting = true;
+// Safari-optimized activateAI
+function activateAI(videoId = 'main') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    isInteracting = true;
+    
+    // Close FAQ items
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    Object.values(faqPlayers).forEach(p => {
+        p.iframe.classList.add('pointer-events-none');
+        p.instance.pause();
+    });
+
+    const idlePlayerIframe = document.getElementById('idle-player');
+    if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+    if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
+
+    if (activePlayerId && players[activePlayerId]) {
+        players[activePlayerId].iframe.classList.remove('active');
+        players[activePlayerId].iframe.classList.add('pointer-events-none');
+        players[activePlayerId].instance.pause();
+    }
+
+    if (players[videoId]) {
+        const p = players[videoId];
+        p.iframe.classList.add('active');
+        p.iframe.classList.remove('pointer-events-none');
+        
+        // SAFARI FIX: Reset and Play explicitly
+        p.instance.setCurrentTime(0);
+        setTimeout(() => {
+            p.instance.play();
+        }, 50); // Small delay allows Safari to register the iframe is now visible
+        
+        activePlayerId = videoId;
+    }
+}
+
+// Safari-optimized toggleFaq
+function toggleFaq(button, playerId) {
+    const item = button.closest('.faq-item');
+    const wasActive = item.classList.contains('active');
+
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    Object.values(faqPlayers).forEach(p => {
+        p.iframe.classList.add('pointer-events-none');
+        p.instance.pause();
+    });
+
+    if (!wasActive) {
+        item.classList.add('active');
+        if (isInteracting) resetToLoop();
+
+        if (playerId && faqPlayers[playerId]) {
+            const p = faqPlayers[playerId];
+            p.iframe.classList.remove('pointer-events-none');
             
-            // Close all accordions and pause FAQ videos
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            Object.values(faqPlayers).forEach(p => {
-                p.iframe.classList.add('pointer-events-none');
-                p.instance.pause();
-            });
-            
-            const idlePlayerIframe = document.getElementById('idle-player');
-            if (videoPlaceholder) videoPlaceholder.style.display = 'none';
-            if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
-
-            // Pause whatever hero video is currently playing
-            if (activePlayerId && players[activePlayerId]) {
-                players[activePlayerId].iframe.classList.remove('active');
-                players[activePlayerId].iframe.classList.add('pointer-events-none');
-                players[activePlayerId].instance.pause();
-                players[activePlayerId].instance.setCurrentTime(0);
-            }
-
-            // Play the requested pre-mounted video
-            if (players[videoId]) {
-                players[videoId].iframe.classList.add('active');
-                players[videoId].iframe.classList.remove('pointer-events-none');
-                players[videoId].instance.setCurrentTime(0);
-                players[videoId].instance.play();
-                activePlayerId = videoId;
-            }
+            // SAFARI FIX: Explicit play trigger
+            p.instance.setCurrentTime(0);
+            setTimeout(() => {
+                p.instance.play();
+            }, 100); 
+            activeFaqPlayerId = playerId;
         }
-
-        // Triggered instantly by a tap on an FAQ Accordion
-        function toggleFaq(button, playerId) {
-            const item = button.closest('.faq-item');
-            const wasActive = item.classList.contains('active');
-
-            // Pause ALL FAQ videos and close accordions
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            Object.values(faqPlayers).forEach(p => {
-                p.iframe.classList.add('pointer-events-none');
-                p.instance.pause();
-            });
-
-            if (!wasActive) {
-                item.classList.add('active');
-                
-                // Optional: If hero video is playing, send it back to idle loop so audio doesn't overlap
-                if (isInteracting) resetToLoop();
-
-                // Play the pre-mounted FAQ video synchronously
-                if (playerId && faqPlayers[playerId]) {
-                    faqPlayers[playerId].iframe.classList.remove('pointer-events-none');
-                    faqPlayers[playerId].instance.setCurrentTime(0);
-                    faqPlayers[playerId].instance.play();
-                    activeFaqPlayerId = playerId;
-                }
-            }
-        }
+    }
+}
 
         function resetToLoop() {
             isInteracting = false;
