@@ -671,34 +671,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const trigger = document.getElementById('custom-select-trigger');
-            const optionsPanel = document.getElementById('custom-select-options');
-            const inputField = document.getElementById('form-traffic');
-            const options = document.querySelectorAll('.traffic-option');
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Setup ending loops and force the browser to see videos as clickable
+    Object.values(players).forEach(video => {
+        if(video) {
+            video.addEventListener('ended', resetToLoop);
+            video.style.cursor = 'pointer'; // Forces iOS to recognize the element as interactive
+        }
+    });
 
-            trigger.addEventListener('click', () => {
-                optionsPanel.classList.toggle('hidden');
-                optionsPanel.classList.toggle('flex');
-            });
-
-            options.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    inputField.value = e.target.innerText;
-                    inputField.classList.remove('text-slate-300');
-                    inputField.classList.add('text-slate-900');
-                    optionsPanel.classList.add('hidden');
-                    optionsPanel.classList.remove('flex');
-                });
-            });
-
-            document.addEventListener('click', (e) => {
-                if(!document.getElementById('traffic-dropdown-wrapper').contains(e.target)) {
-                    optionsPanel.classList.add('hidden');
-                    optionsPanel.classList.remove('flex');
+    // 2. The Bulletproof Click Listener (Attached to the parent container)
+    const container = document.getElementById('video-container');
+    if (container) {
+        container.style.cursor = 'pointer';
+        
+        container.addEventListener('click', (e) => {
+            // Ignore the click if they are tapping the "Tap to interact" placeholder
+            if (e.target.closest('#video-placeholder')) return;
+            
+            // Only toggle if an AI video is currently active
+            if (isInteracting && activePlayerId && players[activePlayerId]) {
+                const video = players[activePlayerId];
+                
+                // Toggle Play/Pause
+                if (video.paused) {
+                    video.play().catch(err => console.error("Play failed:", err));
+                } else {
+                    video.pause();
                 }
-            });
+            }
         });
+    }
+});
     </script>
 
     <script id="chat-engine">
