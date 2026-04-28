@@ -260,10 +260,10 @@ html {
                     <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
                         <iframe id="idle-player" src="https://iframe.mediadelivery.net/embed/646106/eedf83bd-1e80-4bb0-8fa6-906baf82f7f4?autoplay=true&loop=true&muted=true&controls=false&playsinline=true" class="yt-player-frame active pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
-                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=false&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-main" src="https://iframe.mediadelivery.net/embed/646015/61d91a66-c2f8-4ad7-b584-f2aca6709f7c?autoplay=false&muted=true&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-bookings" src="https://iframe.mediadelivery.net/embed/646015/64eedbbd-1f10-4ca9-b8e4-159817aab205?autoplay=false&muted=true&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-cost" src="https://iframe.mediadelivery.net/embed/646015/106e205a-2671-4a84-8818-5b87dff997c8?autoplay=false&muted=true&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        <iframe id="player-time" src="https://iframe.mediadelivery.net/embed/646015/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b?autoplay=false&muted=true&controls=false&playsinline=true&preload=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 
                         <iframe id="player-abandon" src="https://iframe.mediadelivery.net/embed/646015/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
                         <iframe id="player-thanks" src="https://iframe.mediadelivery.net/embed/646015/3278d308-19cb-4d4f-a45b-268f9227b8ef?autoplay=false&muted=true&controls=false&playsinline=true" class="yt-player-frame interaction-iframe pointer-events-none" allow="autoplay; fullscreen; picture-in-picture"></iframe>
@@ -897,21 +897,15 @@ function activateAI(videoId = 'main') {
     activePlayerId = videoId;
 
     // 3. SAFARI SYNC PLAY (The "Mute-Play-Unmute" Trick)
-    // Safari allows any video to play if it's muted. 
-    // We start it muted, then immediately unmute it.
     p.instance.setCurrentTime(0);
     p.instance.mute(); // Force mute to bypass strict autoplay blocks
+    p.instance.play(); // Send play command immediately
     
-    p.instance.play().then(() => {
-        // Once the video starts successfully (even muted), we unmute
-        setTimeout(() => {
-            p.instance.unmute();
-        }, 100); 
-    }).catch(err => {
-        // If it still fails, we fall back to playing muted so it's not stuck
-        console.warn("Audio block detected, playing muted.");
-        p.instance.play();
-    });
+    // Unmute slightly after the play command fires.
+    // 150ms is usually the sweet spot for Safari to register the playing state.
+    setTimeout(() => {
+        p.instance.unmute();
+    }, 150); 
 
     // 4. SECONDARY LOGIC
     window.scrollTo({ top: 0, behavior: 'smooth' });
