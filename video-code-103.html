@@ -783,6 +783,14 @@ function closeModal(isUserTriggered = false) {
             }
         }
 
+// Add this inside your window.addEventListener('DOMContentLoaded', ...) block
+document.addEventListener('click', () => {
+    // This virtually 'touches' all videos to unlock Safari's audio engine
+    Object.values(players).forEach(p => {
+        p.instance.play().then(() => p.instance.pause());
+    });
+}, { once: true });
+
 // Custom Dropdown Logic
         document.addEventListener('DOMContentLoaded', () => {
             const trigger = document.getElementById('custom-select-trigger');
@@ -862,42 +870,36 @@ document.addEventListener('click', function() {
 
 // Safari-optimized activateAI
 function activateAI(videoId = 'main') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    isInteracting = true;
-    
-    // 1. Hide/Pause others
-    if (videoPlaceholder) videoPlaceholder.style.display = 'none';
-    document.getElementById('idle-player').classList.remove('active');
-    
-    if (activePlayerId && players[activePlayerId]) {
-        players[activePlayerId].iframe.classList.remove('active');
-        players[activePlayerId].instance.pause();
-    }
-
-    // 2. Play target immediately
+    // 1. IMMEDIATE PLAY (This satisfies Safari's User Gesture requirement)
     if (players[videoId]) {
         const p = players[videoId];
+        
+        // Explicitly unblocking Safari
+        p.instance.play().catch(err => console.log("Safari blocked auto-play, trying muted..."));
+        
+        // 2. UI TRANSITION (Do this AFTER the play command)
+        isInteracting = true;
+        if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+        
+        // Handle Idle Player
+        const idlePlayerIframe = document.getElementById('idle-player');
+        if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
+
+        // Swap active classes
+        if (activePlayerId && players[activePlayerId]) {
+            players[activePlayerId].iframe.classList.remove('active');
+            players[activePlayerId].iframe.classList.add('pointer-events-none');
+        }
+
         p.iframe.classList.add('active');
         p.iframe.classList.remove('pointer-events-none');
-        
-        // No timeout - call it directly to preserve the "User Gesture" chain
-        p.instance.play(); 
         activePlayerId = videoId;
+        
+        // Now do the secondary logic
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
     }
 }
-        function resetToLoop() {
-            isInteracting = false;
-            if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
-            
-            if (activePlayerId && players[activePlayerId]) {
-                players[activePlayerId].iframe.classList.remove('active');
-                players[activePlayerId].iframe.classList.add('pointer-events-none');
-                players[activePlayerId].instance.pause();
-            }
-            
-            const idlePlayerIframe = document.getElementById('idle-player');
-            if (idlePlayerIframe) idlePlayerIframe.classList.add('active');
-        }
 
 // Wakes up background videos after mobile OS dropdown menus pause them
         function resumeVideos() {
