@@ -628,7 +628,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         <p class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
     </footer>
 
-    <script id="video-engine">
+<script id="video-engine">
         const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
         const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
@@ -648,28 +648,6 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
         const modalOverlay = document.getElementById('modal-overlay');
         const chatInput = document.getElementById('user-chat-input');
         const mobileMenu = document.getElementById('mobile-menu');
-
-document.addEventListener('DOMContentLoaded', () => {
-            // Setup ending loops and click-to-pause
-            Object.values(players).forEach(video => {
-                if(video) {
-                    // Reset to idle loop when video finishes
-                    video.addEventListener('ended', resetToLoop);
-                    
-                    // Add click-to-play/pause functionality
-                    video.addEventListener('click', () => {
-                        if (video.paused) {
-                            video.play();
-                        } else {
-                            video.pause();
-                        }
-                    });
-                    
-                    // Make it obvious it's clickable
-                    video.style.cursor = 'pointer';
-                }
-            });
-        });
 
         // MAP DIRECTLY TO NATIVE VIDEO ELEMENTS
         const players = {
@@ -693,39 +671,39 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Setup ending loops
-            Object.values(players).forEach(video => {
-                if(video) video.addEventListener('ended', resetToLoop);
-            });
-        });
-
-document.addEventListener('DOMContentLoaded', () => {
-            // Setup ending loops and click-to-pause for all videos
+            // 1. Setup ending loops and force the browser to see videos as clickable
             Object.values(players).forEach(video => {
                 if(video) {
-                    // 1. Reset to idle loop when video finishes
                     video.addEventListener('ended', resetToLoop);
-                    
-                    // 2. Add click-to-play/pause functionality
-                    video.addEventListener('click', () => {
-                        // We only want to pause/play if it's the active video
-                        if (video.classList.contains('active')) {
-                            if (video.paused) {
-                                video.play();
-                            } else {
-                                video.pause();
-                            }
-                        }
-                    });
-                    
-                    // 3. Change the mouse cursor so desktop users know they can click it
-                    video.style.cursor = 'pointer';
+                    video.style.cursor = 'pointer'; // Forces iOS to recognize the element as interactive
                 }
             });
+
+            // 2. The Bulletproof Click Listener (Attached to the parent container)
+            const container = document.getElementById('video-container');
+            if (container) {
+                container.style.cursor = 'pointer';
+                
+                container.addEventListener('click', (e) => {
+                    // Ignore the click if they are tapping the "Tap to interact" placeholder
+                    if (e.target.closest('#video-placeholder')) return;
+                    
+                    // Only toggle if an AI video is currently active
+                    if (isInteracting && activePlayerId && players[activePlayerId]) {
+                        const video = players[activePlayerId];
+                        
+                        // Toggle Play/Pause
+                        if (video.paused) {
+                            video.play().catch(err => console.error("Play failed:", err));
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }
         });
 
         // SAFARI COMPLIANT ACTIVATOR
-// SAFARI COMPLIANT ACTIVATOR
         function activateAI(videoId = 'main') {
             const videoElement = players[videoId];
             if (!videoElement) return;
@@ -764,7 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isMobileMenuOpen) toggleMobileMenu();
         }
 
-function toggleFaq(button, playerId) {
+        function toggleFaq(button, playerId) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
 
@@ -794,7 +772,6 @@ function toggleFaq(button, playerId) {
                 if (isInteracting) resetToLoop();
             } else {
                 // If it was already active, just close the accordion
-                // (The video was already paused by the loop at the top)
                 item.classList.remove('active');
             }
         }
