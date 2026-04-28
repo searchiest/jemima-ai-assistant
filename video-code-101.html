@@ -150,21 +150,22 @@
                     <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
                     <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
                 </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Website URL</label>
-                    <input type="url" id="form-website" required placeholder="https://yourwebsite.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1.5">
+<div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
                     <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Monthly Website Traffic</label>
+                    
+                    <div class="relative cursor-pointer group" id="custom-select-trigger">
+                        <input type="text" id="form-traffic" required readonly placeholder="Select traffic range..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
+                        <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
+                    </div>
 
-<select id="form-traffic" required onchange="this.classList.remove('text-slate-300'); this.classList.add('text-slate-900'); resumeVideos();" class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-300 appearance-none bg-transparent">
-                        <option value="" disabled selected>Select traffic range...</option>
-                        <option value="0-1k" class="text-slate-900">0 - 1,000</option>
-                        <option value="1k-5k" class="text-slate-900">1,000 - 5,000</option>
-                        <option value="5k-20k" class="text-slate-900">5,000 - 20,000</option>
-                        <option value="20k+" class="text-slate-900">20,000+</option>
-                    </select>
+                    <div id="custom-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">0 - 1,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">1,000 - 5,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">5,000 - 20,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">20,000+</div>
+                    </div>
                 </div>
+
                 <div class="space-y-1.5">
                     <label class="block text-xs font-black uppercase tracking-widest text-slate-400">Work Email</label>
                     <input type="email" id="form-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
@@ -534,6 +535,37 @@ function closeModal(isUserTriggered = false) {
                 activateAI('abandon');
             }
         }
+
+// Custom Dropdown Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const trigger = document.getElementById('custom-select-trigger');
+            const optionsPanel = document.getElementById('custom-select-options');
+            const inputField = document.getElementById('form-traffic');
+            const options = document.querySelectorAll('.traffic-option');
+
+            // Toggle dropdown open/close
+            trigger.addEventListener('click', () => {
+                optionsPanel.classList.toggle('hidden');
+                optionsPanel.classList.toggle('flex');
+            });
+
+            // Handle option selection
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    inputField.value = e.target.innerText; // Sets the input value to send to n8n
+                    optionsPanel.classList.add('hidden');
+                    optionsPanel.classList.remove('flex');
+                });
+            });
+
+            // Close dropdown if user clicks anywhere outside of it
+            document.addEventListener('click', (e) => {
+                if(!document.getElementById('traffic-dropdown-wrapper').contains(e.target)) {
+                    optionsPanel.classList.add('hidden');
+                    optionsPanel.classList.remove('flex');
+                }
+            });
+        });
     </script>
 
     <script id="video-engine">
