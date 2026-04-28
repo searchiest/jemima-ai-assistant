@@ -813,6 +813,21 @@ function closeModal(isUserTriggered = false) {
                 }
             });
         });
+
+// Inside your DOMContentLoaded
+const player = new playerjs.Player(iframe);
+player.on('ready', () => {
+    // Safari likes it when we "mute" via the API specifically 
+    // before trying to play a scripted video
+    player.mute(); 
+});
+
+
+document.addEventListener('click', function() {
+    // This "warms up" all players on the first click anywhere
+    Object.values(players).forEach(p => p.instance.play().then(() => p.instance.pause()));
+    Object.values(faqPlayers).forEach(p => p.instance.play().then(() => p.instance.pause()));
+}, { once: true }); // Only runs once
     </script>
 
     <script id="video-engine">
@@ -850,67 +865,26 @@ function activateAI(videoId = 'main') {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     isInteracting = true;
     
-    // Close FAQ items
-    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-    Object.values(faqPlayers).forEach(p => {
-        p.iframe.classList.add('pointer-events-none');
-        p.instance.pause();
-    });
-
-    const idlePlayerIframe = document.getElementById('idle-player');
+    // 1. Hide/Pause others
     if (videoPlaceholder) videoPlaceholder.style.display = 'none';
-    if (idlePlayerIframe) idlePlayerIframe.classList.remove('active');
-
+    document.getElementById('idle-player').classList.remove('active');
+    
     if (activePlayerId && players[activePlayerId]) {
         players[activePlayerId].iframe.classList.remove('active');
-        players[activePlayerId].iframe.classList.add('pointer-events-none');
         players[activePlayerId].instance.pause();
     }
 
+    // 2. Play target immediately
     if (players[videoId]) {
         const p = players[videoId];
         p.iframe.classList.add('active');
         p.iframe.classList.remove('pointer-events-none');
         
-        // SAFARI FIX: Reset and Play explicitly
-        p.instance.setCurrentTime(0);
-        setTimeout(() => {
-            p.instance.play();
-        }, 50); // Small delay allows Safari to register the iframe is now visible
-        
+        // No timeout - call it directly to preserve the "User Gesture" chain
+        p.instance.play(); 
         activePlayerId = videoId;
     }
 }
-
-// Safari-optimized toggleFaq
-function toggleFaq(button, playerId) {
-    const item = button.closest('.faq-item');
-    const wasActive = item.classList.contains('active');
-
-    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-    Object.values(faqPlayers).forEach(p => {
-        p.iframe.classList.add('pointer-events-none');
-        p.instance.pause();
-    });
-
-    if (!wasActive) {
-        item.classList.add('active');
-        if (isInteracting) resetToLoop();
-
-        if (playerId && faqPlayers[playerId]) {
-            const p = faqPlayers[playerId];
-            p.iframe.classList.remove('pointer-events-none');
-            
-            // SAFARI FIX: Explicit play trigger
-            p.instance.setCurrentTime(0);
-            setTimeout(() => {
-                p.instance.play();
-            }, 100); 
-            activeFaqPlayerId = playerId;
-        }
-    }
-}
-
         function resetToLoop() {
             isInteracting = false;
             if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
