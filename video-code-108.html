@@ -725,9 +725,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // SAFARI COMPLIANT ACTIVATOR
+// SAFARI COMPLIANT ACTIVATOR
         function activateAI(videoId = 'main') {
             const videoElement = players[videoId];
             if (!videoElement) return;
+
+            // FIX: Stop any FAQ videos that might be playing in the background
+            Object.values(faqPlayers).forEach(video => {
+                if (video && !video.paused) {
+                    video.pause();
+                }
+            });
 
             // 1. SAFARI: Execute PLAY immediately on click
             videoElement.currentTime = 0;
@@ -756,11 +764,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isMobileMenuOpen) toggleMobileMenu();
         }
 
-        function toggleFaq(button, playerId) {
+function toggleFaq(button, playerId) {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
 
+            // FIX: Pause ALL FAQ videos before doing anything else
+            Object.values(faqPlayers).forEach(video => {
+                if (video && !video.paused) {
+                    video.pause();
+                }
+            });
+
             if (!wasActive) {
+                // Start the new video
                 if (playerId && faqPlayers[playerId]) {
                     const videoElement = faqPlayers[playerId];
                     // SAFARI: Execute PLAY immediately on click
@@ -770,12 +786,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     activeFaqPlayerId = playerId;
                 }
 
+                // Close all other accordions and open this one
                 document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
                 item.classList.add('active');
+                
+                // If the main AI was talking, send her back to idle loop
                 if (isInteracting) resetToLoop();
             } else {
+                // If it was already active, just close the accordion
+                // (The video was already paused by the loop at the top)
                 item.classList.remove('active');
-                if (playerId && faqPlayers[playerId]) faqPlayers[playerId].pause();
             }
         }
 
