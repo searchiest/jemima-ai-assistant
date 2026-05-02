@@ -669,7 +669,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
             'faq-player-8': document.getElementById('faq-player-8')
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
             // 1. Setup ending loops and force the browser to see videos as clickable
             Object.values(players).forEach(video => {
                 if(video) {
@@ -678,7 +678,23 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                 }
             });
 
-            // 2. The Bulletproof Click Listener (Attached to the parent container)
+            // --- ADDED THIS SECTION FOR FAQ VIDEOS ---
+            // 2. Add click-to-pause/play for FAQ videos
+            Object.values(faqPlayers).forEach(video => {
+                if(video) {
+                    video.style.cursor = 'pointer'; // Forces iOS to recognize as interactive
+                    video.addEventListener('click', () => {
+                        if (video.paused) {
+                            video.play().catch(err => console.error("Play failed:", err));
+                        } else {
+                            video.pause();
+                        }
+                    });
+                }
+            });
+            // -----------------------------------------
+
+            // 3. The Bulletproof Click Listener (Attached to the parent container)
             const container = document.getElementById('video-container');
             if (container) {
                 container.style.cursor = 'pointer';
