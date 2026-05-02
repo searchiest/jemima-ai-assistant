@@ -279,9 +279,10 @@
                         <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
 
-                        <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
+
+<div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
                            <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
-                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black/40 transition-colors">
+                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] font-black uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
                                     tap to interact
                                 </div>
                             </div>
@@ -553,7 +554,7 @@
                                 <div class="flex flex-col gap-4 order-2 md:order-1">
                                     <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">Yes, this is designed to work with the website you already have. You’re not rebuilding anything or replacing your existing setup. It simply integrates alongside it.</p>
 <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
-Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website—and I’ll show you exactly, how this would fit into your current setup.</p>
+Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website and I’ll show you exactly, how this would fit into your current setup.</p>
                                     <button onclick="openModal(false, 'FAQ1 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white text-[11px] font-black uppercase tracking-wider hover:bg-[#a0124a] transition-all shadow-md shadow-[#c2155a]/20">
                                         <i class="fas fa-chart-line mr-1.5 text-amber-400"></i> Free Conversion Audit
                                     </button>
@@ -922,7 +923,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 players[activePlayerId].classList.add('pointer-events-none');
                 players[activePlayerId].pause();
             }
-            
+
+            activePlayerId = null;
+
             const idlePlayer = document.getElementById('idle-player');
             if (idlePlayer) {
                 idlePlayer.classList.add('active');
