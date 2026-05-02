@@ -3,10 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jemima AI | Double Your Conversions</title>
+
+    <title>Managed AI - Website Conversions Growth and Lead Generation | Jemima AI</title>
+    <meta name="description" content="Increase website conversions with managed AI video, chat, faqs, lead generation and lead follow-up by telephone, sms or email." />
+    <link rel="canonical" href="https://jemima.ai/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="jemima.ai" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jemima.ai/" />
+    <meta property="og:title" content="Jemima.ai | Managed AI Conversion Growth and Lead Generation" />
+    <meta property="og:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools." />
+    <meta property="og:image" content="og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://jemima.ai/" />
+    <meta name="twitter:title" content="Jemima.ai | Managed AI Conversion Growth and Lead Generation" />
+    <meta name="twitter:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools." />
+    <meta name="twitter:image" content="og-image.jpg" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#4f46e5" />
+
+    <!-- Performance & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Keep both families available; Inter is default in CSS below -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
     <style>
         @media screen and (max-width: 768px) {
             input, select, textarea { font-size: 16px !important; }
@@ -244,7 +276,7 @@
                         <video id="player-bookings" src="https://vz-1599ac93-05a.b-cdn.net/64eedbbd-1f10-4ca9-b8e4-159817aab205/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-cost" src="https://vz-1599ac93-05a.b-cdn.net/106e205a-2671-4a84-8818-5b87dff997c8/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-time" src="https://vz-1599ac93-05a.b-cdn.net/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/9f632b75-5cc9-498d-aec1-4cafac253e20/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
 
                         <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
@@ -407,7 +439,7 @@
                                 </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-1" src="https://vz-1599ac93-05a.b-cdn.net/a19678ba-3c40-4079-8f9f-5237a699987f/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-1" src="https://vz-1599ac93-05a.b-cdn.net/a19678ba-3c40-4079-8f9f-5237a699987f/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
@@ -429,7 +461,7 @@
                                     </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-2" src="https://vz-1599ac93-05a.b-cdn.net/003fef37-f5e1-4956-b34f-9eb643fdcd06/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-2" src="https://vz-1599ac93-05a.b-cdn.net/003fef37-f5e1-4956-b34f-9eb643fdcd06/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
@@ -458,7 +490,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                             </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-3" src="https://vz-1599ac93-05a.b-cdn.net/479a3824-dc6f-4349-8c83-e623a323db25/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-3" src="https://vz-1599ac93-05a.b-cdn.net/479a3824-dc6f-4349-8c83-e623a323db25/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
@@ -486,7 +518,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                             </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-4" src="https://vz-1599ac93-05a.b-cdn.net/2337bf5f-6410-4dda-8f53-dca0babe7380/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-4" src="https://vz-1599ac93-05a.b-cdn.net/2337bf5f-6410-4dda-8f53-dca0babe7380/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
@@ -546,7 +578,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                             </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-6" src="https://vz-1599ac93-05a.b-cdn.net/055ae2dc-1de7-47b2-82f9-68241e28507b/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-6" src="https://vz-1599ac93-05a.b-cdn.net/055ae2dc-1de7-47b2-82f9-68241e28507b/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
@@ -575,7 +607,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                             </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-7" src="https://vz-1599ac93-05a.b-cdn.net/dc61be79-a27f-429b-923d-522a7d3784fe/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-7" src="https://vz-1599ac93-05a.b-cdn.net/dc61be79-a27f-429b-923d-522a7d3784fe/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
@@ -604,7 +636,7 @@ Click the free conversion audit button. It takes less than 30 seconds to order. 
                             </button>
                                 </div>
                                 <div class="rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
-                                    <video id="faq-player-8" src="https://vz-1599ac93-05a.b-cdn.net/9ef8b55f-2ca2-4657-8f6c-115dc7a4ef02/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                    <video id="faq-player-8" src="https://vz-1599ac93-05a.b-cdn.net/9ef8b55f-2ca2-4657-8f6c-115dc7a4ef02/play_1080p.mp4" poster="video-fallback.png"class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
                                 </div>
                             </div>
                         </div>
