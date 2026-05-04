@@ -1323,12 +1323,15 @@ document.addEventListener('DOMContentLoaded', () => {
             userAction.innerText = `Interest in ${currentSelectedPackage || 'Audit'} noted`;
             chatFeed.appendChild(userAction);
 
-            if (leadSuccess) {
-                addMessages([
-                    `Thanks ${formData.name.split(' ')[0]}! I've flagged your interest.`,
-                    "My team will review your site and reach out within 24 hours."
-                ]);
-            }
+if (leadSuccess) {
+    // This updates the URL without reloading the page
+    window.history.pushState(null, '', '?thankyou');
+
+    addMessages([
+        `Thanks ${formData.name.split(' ')[0]}! I've flagged your interest.`,
+        "My team will reach out within 24 hours."
+    ]);
+}
 
             closeModal(false);
             submitBtn.disabled = false;
