@@ -1266,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isChatExpanded) {
                 isChatExpanded = true;
                 chatFeed.classList.remove('h-[120px]');
-                chatFeed.classList.add('h-[400px]', 'md:h-1200');
+                chatFeed.classList.add('h-[400px]', 'md:h-auto');
                 const chatContainer = document.getElementById('chat-container');
                 chatContainer.classList.remove('md:self-start');
                 if (shouldScroll) {
