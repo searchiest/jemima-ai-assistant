@@ -1182,6 +1182,8 @@ async function handleReadinessFormSubmit(event) {
 
 <script>
 (function () {
+    const n8nPartialEmailWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook-test/1aa7f382-b8a2-407d-aadd-c2cd6685d045";
+
     let lastCapturedEmail = "";
     let emailCaptureTimer = null;
 
@@ -1194,22 +1196,22 @@ async function handleReadinessFormSubmit(event) {
 
         lastCapturedEmail = email;
 
-const payload = {
-    type: "dental_ai_readiness_email_started",
-    email: email,
-    page: "AI for Dentists Playbook",
-    pageUrl: window.location.href,
-    pagePath: window.location.pathname,
-    pageTitle: document.title,
-    triggerButton: "Readiness Score Form - Email Entered",
-    sessionId: typeof sessionId !== "undefined" ? sessionId : null,
-    timestamp: new Date().toISOString(),
-    localTime: new Date().toString(),
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-};
+        const payload = {
+            type: "dental_ai_readiness_email_started",
+            email: email,
+            page: "AI for Dentists Playbook",
+            pageUrl: window.location.href,
+            pagePath: window.location.pathname,
+            pageTitle: document.title,
+            triggerButton: "Readiness Score Form - Email Entered",
+            sessionId: typeof sessionId !== "undefined" ? sessionId : null,
+            timestamp: new Date().toISOString(),
+            localTime: new Date().toString(),
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        };
 
         try {
-            await fetch(n8nFormWebhookUrl, {
+            await fetch(n8nPartialEmailWebhookUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
