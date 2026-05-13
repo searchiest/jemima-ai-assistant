@@ -256,115 +256,148 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Dental AI Readiness Score
         </h2>
 
-        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-medium pb-3">
-          Select 4 answers. It takes about 30 seconds. Estimates are fine. We’ll email you a short readiness score with one practical AI workflow idea for your practice.
+        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-medium">
+          Select 4 answers. It takes about 30 seconds. Estimates are fine.
         </p>
       </div>
 
-<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-5 pb-4">
+<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-5 pb-0">
 
 
-    <!-- Result preview image -->
-    <div class="mb-6">
-        <img
-            src="result-preview.png"
-            alt="Example Dental AI Readiness Score result preview"
-            width="921"
-            height="399"
-            class="w-full h-auto"
-        >
+<div class="-my-2 -ml-2">
+    <img
+        src="result-preview.png"
+        alt="Example Dental AI Readiness Score result preview"
+        width="921"
+        height="399"
+        class="w-full h-auto block"
+    >
+</div>
+
+ <form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-5">
+
+    <!-- Email -->
+    <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+            <i class="fa-regular fa-envelope text-slate-700 text-lg"></i>
+        </div>
+        <div class="flex-1 space-y-1">
+            <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+                Where should we send your score report?
+            </label>
+            <input
+                type="email"
+                id="form-email"
+                required
+                placeholder="name@practice.co.uk"
+                class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm placeholder:text-slate-400 bg-transparent"
+            >
+        </div>
     </div>
 
-
-    <div class="space-y-1.5 mt-6">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
-            Where should we send your score report?
-        </label>
-        <input
-            type="email"
-            id="form-email"
-            required
-            placeholder="name@practice.co.uk"
-            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400"
-        >
+    <!-- Enquiries -->
+    <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+            <i class="fa-solid fa-user-group text-slate-700 text-lg"></i>
+        </div>
+        <div class="flex-1 space-y-1">
+            <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+                Roughly how many new enquiries?
+            </label>
+            <select
+                id="score-enquiries"
+                required
+                class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+            >
+                <option value="">Choose the closest option</option>
+                <option value="0">Fewer than 10 per month</option>
+                <option value="1">10–25 per month</option>
+                <option value="2">26–75 per month</option>
+                <option value="3">75+ per month</option>
+            </select>
+        </div>
     </div>
 
-    <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
-            Roughly how many new enquiries?
-        </label>
-        <select
-            id="score-enquiries"
-            required
-            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
-        >
-            <option value="">Choose the closest option</option>
-            <option value="0">Fewer than 10 per month</option>
-            <option value="1">10–25 per month</option>
-            <option value="2">26–75 per month</option>
-            <option value="3">75+ per month</option>
-        </select>
+    <!-- Response delays -->
+    <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+            <i class="fa-regular fa-clock text-slate-700 text-lg"></i>
+        </div>
+        <div class="flex-1 space-y-1">
+            <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+                Response delays
+            </label>
+            <select
+                id="score-response-speed"
+                required
+                class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+            >
+                <option value="">Choose the closest option</option>
+                <option value="0">Rarely an issue</option>
+                <option value="1">Sometimes happens</option>
+                <option value="2">Happens often</option>
+                <option value="3">A weekly problem</option>
+            </select>
+        </div>
     </div>
 
-    <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
-            Response delays
-        </label>
-        <select
-            id="score-response-speed"
-            required
-            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
-        >
-            <option value="">Choose the closest option</option>
-            <option value="0">Rarely an issue</option>
-            <option value="1">Sometimes happens</option>
-            <option value="2">Happens often</option>
-            <option value="3">A weekly problem</option>
-        </select>
+    <!-- Follow-up -->
+    <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+            <i class="fa-regular fa-comments text-slate-700 text-lg"></i>
+        </div>
+        <div class="flex-1 space-y-1">
+            <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+                Follow-up
+            </label>
+            <select
+                id="score-followup"
+                required
+                class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+            >
+                <option value="">Choose the closest option</option>
+                <option value="0">Very consistent</option>
+                <option value="1">Mostly consistent</option>
+                <option value="2">A bit inconsistent</option>
+                <option value="3">Often gets missed</option>
+            </select>
+        </div>
     </div>
 
-    <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
-            Follow-up
-        </label>
-        <select
-            id="score-followup"
-            required
-            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
-        >
-            <option value="">Choose the closest option</option>
-            <option value="0">Very consistent</option>
-            <option value="1">Mostly consistent</option>
-            <option value="2">A bit inconsistent</option>
-            <option value="3">Often gets missed</option>
-        </select>
+    <!-- Workflow -->
+    <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+            <i class="fa-solid fa-bullseye text-slate-700 text-lg"></i>
+        </div>
+        <div class="flex-1 space-y-1">
+            <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+                What would you improve first?
+            </label>
+            <select
+                id="score-workflow"
+                required
+                class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+            >
+                <option value="">Choose one</option>
+                <option value="Missed calls">Missed calls</option>
+                <option value="New patient enquiries">New patient enquiries</option>
+                <option value="Treatment plan follow-up">Treatment plan follow-up</option>
+                <option value="Hygiene recalls">Hygiene recalls</option>
+                <option value="Reception admin">Reception admin</option>
+                <option value="Not sure yet">Not sure yet</option>
+            </select>
+        </div>
     </div>
 
-    <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
-            What would you improve first?
-        </label>
-        <select
-            id="score-workflow"
-            required
-            class="w-full border-b-2 border-slate-100 py-1.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
-        >
-            <option value="">Choose one</option>
-            <option value="Missed calls">Missed calls</option>
-            <option value="New patient enquiries">New patient enquiries</option>
-            <option value="Treatment plan follow-up">Treatment plan follow-up</option>
-            <option value="Hygiene recalls">Hygiene recalls</option>
-            <option value="Reception admin">Reception admin</option>
-            <option value="Not sure yet">Not sure yet</option>
-        </select>
-    </div>
+    <!-- Button -->
     <button
         type="submit"
         id="submit-btn"
-        class="w-full bg-[#c2155a] text-white mb-6 py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+        class="w-full bg-[#c2155a] text-white py-3 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all"
     >
         Get My Score
     </button>
+</form>
 </form>
 
     </aside>
