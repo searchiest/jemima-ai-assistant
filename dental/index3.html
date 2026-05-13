@@ -286,27 +286,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <input
             type="email"
-            id="form-email"
+            id="readiness-email"
+            name="readiness-email"
             required
             placeholder="name@practice.co.uk"
             autocomplete="email"
-            oninput="checkWorkEmailWarning(false)"
-            onblur="checkWorkEmailWarning(true)"
             class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm placeholder:text-slate-400 bg-transparent"
         >
 
-        <p id="email-error" class="hidden mt-1 text-xs text-red-600 font-semibold leading-relaxed">
+        <p id="readiness-email-error" class="hidden mt-1 text-xs text-red-600 font-semibold leading-relaxed">
             Please enter a valid email address.
         </p>
 
-        <div id="public-email-warning" class="hidden mt-2 bg-amber-50 border border-amber-200 p-3">
+        <div id="readiness-public-email-warning" class="hidden mt-2 bg-amber-50 border border-amber-200 p-3">
             <p class="text-xs text-amber-800 font-semibold leading-relaxed">
                 This looks like a personal email address. Are you sure this is the best email for your practice score report?
             </p>
         </div>
     </div>
 </div>
-
     <!-- Enquiries -->
     <div class="flex items-start gap-3 md:gap-4 mb-4">
         <div class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
@@ -984,6 +982,7 @@ async function handleHeroFormSubmit(e) {
 </script>
 
 <script>
+(function () {
     const publicEmailDomains = [
         "gmail.com",
         "googlemail.com",
@@ -1005,44 +1004,254 @@ async function handleHeroFormSubmit(e) {
     ];
 
     function getEmailDomain(email) {
-        return email.trim().toLowerCase().split("@")[1] || "";
+        const parts = email.trim().toLowerCase().split("@");
+        return parts.length === 2 ? parts[1] : "";
     }
 
     function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const value = email.trim().toLowerCase();
+        return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value);
     }
 
     function isPublicEmail(email) {
-        const domain = getEmailDomain(email);
-        return publicEmailDomains.includes(domain);
+        return publicEmailDomains.includes(getEmailDomain(email));
     }
 
-    function checkWorkEmailWarning(showError = false) {
-        const emailInput = document.getElementById("form-email");
-        const warning = document.getElementById("public-email-warning");
-        const error = document.getElementById("email-error");
+    function checkReadinessEmail(showError = false) {
+        const emailInput = document.getElementById("readiness-email");
+        const warning = document.getElementById("readiness-public-email-warning");
+        const error = document.getElementById("readiness-email-error");
 
-        if (!emailInput || !warning || !error) return;
+        if (!emailInput || !warning || !error) return true;
 
         const email = emailInput.value.trim();
 
         error.classList.add("hidden");
         warning.classList.add("hidden");
 
-        if (!email) return;
+        emailInput.classList.remove("border-red-500", "border-amber-400", "border-green-500");
+        emailInput.classList.add("border-slate-200");
+
+        if (!email) {
+            if (showError) {
+                error.textContent = "Please enter your email address.";
+                error.classList.remove("hidden");
+                emailInput.classList.remove("border-slate-200");
+                emailInput.classList.add("border-red-500");
+            }
+            return false;
+        }
 
         if (!isValidEmail(email)) {
             if (showError) {
+                error.textContent = "Please enter a valid email address, for example name@practice.co.uk.";
                 error.classList.remove("hidden");
             }
-            return;
+
+            emailInput.classList.remove("border-slate-200");
+            emailInput.classList.add("border-red-500");
+            return false;
         }
 
         if (isPublicEmail(email)) {
             warning.classList.remove("hidden");
+
+            emailInput.classList.remove("border-slate-200");
+            emailInput.classList.add("border-amber-400");
+            return true;
+        }
+
+        emailInput.classList.remove("border-slate-200");
+        emailInput.classList.add("border-green-500");
+        return true;
+    }
+
+    window.checkReadinessEmail = checkReadinessEmail;
+    window.validateReadinessEmail = function () {
+        return checkReadinessEmail(true);
+    };
+
+    function attachReadinessEmailChecker() {
+        const emailInput = document.getElementById("readiness-email");
+
+        if (!emailInput) return;
+
+        emailInput.addEventListener("input", function () {
+            checkReadinessEmail(false);
+        });
+
+        emailInput.addEventListener("blur", function () {
+            checkReadinessEmail(true);
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", attachReadinessEmailChecker);
+    } else {
+        attachReadinessEmailChecker();
+    }
+})();
+</script>
+
+
+<script>
+async function handleReadinessFormSubmit(event) {
+    event.preventDefault();
+
+    if (!validateReadinessEmail()) {
+        document.getElementById("readiness-email").focus();
+        return;
+    }
+
+    const submitBtn = document.getElementById("submit-btn");
+    const originalBtnText = submitBtn.innerText;
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "CALCULATING...";
+
+    const email = document.getElementById("readiness-email").value.trim();
+    const enquiryScore = Number(document.getElementById("score-enquiries").value);
+    const responseSpeedScore = Number(document.getElementById("score-response-speed").value);
+    const followupScore = Number(document.getElementById("score-followup").value);
+    const workflow = document.getElementById("score-workflow").value;
+
+    const totalPoints = enquiryScore + responseSpeedScore + followupScore;
+    const aiReadinessScore = Math.round((totalPoints / 9) * 100);
+
+    let readinessBand = "Early stage";
+    if (aiReadinessScore >= 80) readinessBand = "High readiness";
+    else if (aiReadinessScore >= 60) readinessBand = "Strong opportunity";
+    else if (aiReadinessScore >= 35) readinessBand = "Some opportunity";
+
+    const recommendations = {
+        "Missed calls": "Start with a missed-call recovery workflow that sends a fast approved response, captures intent, and gives reception a clean handover.",
+        "New patient enquiries": "Start with new patient enquiry triage so your practice can respond faster, ask the right questions, and prioritise booking-ready enquiries.",
+        "Treatment plan follow-up": "Start with a careful treatment plan follow-up workflow using approved wording, gentle reminders, and clear human handover rules.",
+        "Hygiene recalls": "Start with a hygiene recall workflow that sends polite reminders and captures booking intent without adding pressure to reception.",
+        "Reception admin": "Start with reception handover summaries that turn messy conversations into clear notes, next actions, and escalation flags.",
+        "Not sure yet": "Start by reviewing missed calls, new patient enquiries, and treatment follow-up to find the clearest first AI opportunity."
+    };
+
+    const recommendation = recommendations[workflow] || recommendations["Not sure yet"];
+
+    const formData = {
+        type: "dental_ai_readiness_score",
+        email: email,
+        enquiryScore: enquiryScore,
+        responseSpeedScore: responseSpeedScore,
+        followupScore: followupScore,
+        preferredWorkflow: workflow,
+        aiReadinessScore: aiReadinessScore,
+        readinessBand: readinessBand,
+        recommendation: recommendation,
+        page: "AI for Dentists Playbook",
+        triggerButton: "Readiness Score Form",
+        sessionId: sessionId,
+        timestamp: new Date().toISOString()
+    };
+
+    if (n8nFormWebhookUrl) {
+        try {
+            await fetch(n8nFormWebhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+        } catch (error) {
+            console.error("Webhook error:", error);
         }
     }
+
+    submitBtn.disabled = false;
+    submitBtn.innerText = originalBtnText;
+
+    alert(
+        "Your Dental AI Readiness Score is " +
+        aiReadinessScore +
+        "/100 — " +
+        readinessBand +
+        ". Suggested workflow: " +
+        recommendation
+    );
+
+    event.target.reset();
+}
 </script>
+
+<script>
+(function () {
+    let lastCapturedEmail = "";
+    let emailCaptureTimer = null;
+
+    function isReadinessEmailValidForCapture(email) {
+        return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(email.trim());
+    }
+
+    async function sendPartialEmailCapture(email) {
+        if (!email || email === lastCapturedEmail) return;
+
+        lastCapturedEmail = email;
+
+const payload = {
+    type: "dental_ai_readiness_email_started",
+    email: email,
+    page: "AI for Dentists Playbook",
+    pageUrl: window.location.href,
+    pagePath: window.location.pathname,
+    pageTitle: document.title,
+    triggerButton: "Readiness Score Form - Email Entered",
+    sessionId: typeof sessionId !== "undefined" ? sessionId : null,
+    timestamp: new Date().toISOString(),
+    localTime: new Date().toString(),
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+};
+
+        try {
+            await fetch(n8nFormWebhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        } catch (error) {
+            console.error("Partial email capture error:", error);
+        }
+    }
+
+    function handlePartialEmailCapture() {
+        const emailInput = document.getElementById("readiness-email");
+        if (!emailInput) return;
+
+        const email = emailInput.value.trim().toLowerCase();
+
+        clearTimeout(emailCaptureTimer);
+
+        emailCaptureTimer = setTimeout(function () {
+            if (isReadinessEmailValidForCapture(email)) {
+                sendPartialEmailCapture(email);
+            }
+        }, 800);
+    }
+
+    function attachPartialEmailCapture() {
+        const emailInput = document.getElementById("readiness-email");
+        if (!emailInput) return;
+
+        emailInput.addEventListener("input", handlePartialEmailCapture);
+        emailInput.addEventListener("blur", handlePartialEmailCapture);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", attachPartialEmailCapture);
+    } else {
+        attachPartialEmailCapture();
+    }
+})();
+</script>
+
 
 </body>
 </html>
