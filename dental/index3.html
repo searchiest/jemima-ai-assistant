@@ -834,7 +834,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </footer>
 
     <script>
-        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/2251a465-a930-4aff-8390-fd6883a757e1";
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         let isMobileMenuOpen = false;
         let hasSubmitted = false;
@@ -1133,26 +1133,50 @@ async function handleReadinessFormSubmit(event) {
 
     const recommendation = recommendations[workflow] || recommendations["Not sure yet"];
 
-    const formData = {
-        type: "dental_ai_readiness_score_completed",
-        email: email,
-        enquiryScore: enquiryScore,
-        responseSpeedScore: responseSpeedScore,
-        followupScore: followupScore,
-        preferredWorkflow: workflow,
-        aiReadinessScore: aiReadinessScore,
-        readinessBand: readinessBand,
-        recommendation: recommendation,
-        page: "AI for Dentists Playbook",
-        pageUrl: window.location.href,
-        pagePath: window.location.pathname,
-        pageTitle: document.title,
-        triggerButton: "Readiness Score Form - Completed",
-        sessionId: sessionId,
-        timestamp: new Date().toISOString(),
-        localTime: new Date().toString(),
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-    };
+const enquiriesSelect = document.getElementById("score-enquiries");
+const responseSelect = document.getElementById("score-response-speed");
+const followupSelect = document.getElementById("score-followup");
+const workflowSelect = document.getElementById("score-workflow");
+
+const formData = {
+    type: "dental_ai_readiness_score_completed",
+
+    email: email,
+
+    enquiryScore: enquiryScore,
+    enquiryAnswer: enquiriesSelect.options[enquiriesSelect.selectedIndex].text,
+
+    responseSpeedScore: responseSpeedScore,
+    responseSpeedAnswer: responseSelect.options[responseSelect.selectedIndex].text,
+
+    followupScore: followupScore,
+    followupAnswer: followupSelect.options[followupSelect.selectedIndex].text,
+
+    totalPoints: totalPoints,
+    maxPoints: 9,
+    aiReadinessScore: aiReadinessScore,
+
+    readinessBand: readinessBand,
+
+    preferredWorkflow: workflow,
+    preferredWorkflowAnswer: workflowSelect.options[workflowSelect.selectedIndex].text,
+
+    recommendation: recommendation,
+
+    page: "AI for Dentists Playbook",
+    pageUrl: window.location.href,
+    pagePath: window.location.pathname,
+    pageTitle: document.title,
+
+    triggerButton: "Readiness Score Form - Completed",
+    sessionId: sessionId,
+
+    timestamp: new Date().toISOString(),
+    localTime: new Date().toString(),
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+};
+
+console.log("Readiness form payload being sent to n8n:", formData);
 
     if (n8nFormWebhookUrl) {
         try {
