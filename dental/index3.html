@@ -290,11 +290,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             required
             placeholder="name@practice.co.uk"
             autocomplete="email"
-            oninput="checkWorkEmailWarning()"
+            oninput="checkWorkEmailWarning(false)"
+            onblur="checkWorkEmailWarning(true)"
             class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm placeholder:text-slate-400 bg-transparent"
         >
 
-        <p id="email-error" class="hidden mt-1 text-xs text-red-600 font-semibold">
+        <p id="email-error" class="hidden mt-1 text-xs text-red-600 font-semibold leading-relaxed">
             Please enter a valid email address.
         </p>
 
@@ -1016,10 +1017,12 @@ async function handleHeroFormSubmit(e) {
         return publicEmailDomains.includes(domain);
     }
 
-    function checkWorkEmailWarning() {
+    function checkWorkEmailWarning(showError = false) {
         const emailInput = document.getElementById("form-email");
         const warning = document.getElementById("public-email-warning");
         const error = document.getElementById("email-error");
+
+        if (!emailInput || !warning || !error) return;
 
         const email = emailInput.value.trim();
 
@@ -1029,7 +1032,9 @@ async function handleHeroFormSubmit(e) {
         if (!email) return;
 
         if (!isValidEmail(email)) {
-            error.classList.remove("hidden");
+            if (showError) {
+                error.classList.remove("hidden");
+            }
             return;
         }
 
