@@ -1,1363 +1,885 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic setup -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Sales & Marketing Solutions | jemima.ai</title>
-
-  <!-- SEO -->
-  <meta name="description" content="AI sales and marketing for your service business, automation for lead generation, sales, customer service, and marketing. Increase revenue and scale your business.">
-  <link rel="canonical" href="https://jemima.ai/">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="jemima.ai">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://jemima.ai/">
-  <meta property="og:title"       content="jemima.ai | AI Automation Solutions">
-  <meta property="og:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools.">
-  <meta property="og:image"       content="og-image.jpg">
-
-  <!-- Twitter -->
-  <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:url"         content="https://jemima.ai/">
-  <meta name="twitter:title"       content="jemima.ai | AI Automation Solutions">
-  <meta name="twitter:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools.">
-  <meta name="twitter:image"       content="og-image.jpg">
-
-  <!-- Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#4f46e5">
-
-  <!-- Performance: pre-connect and fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Icons and extra CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5VBX6H2N');</script>
+})(window,document,'script','dataLayer','GTM-P8CCJV29');</script>
 <!-- End Google Tag Manager -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-/* ---------- Reset and variables ---------- */
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-    --primary:#1a1a2e;
-    --accent:#4f46e5;
-    --light:#ffffff;
-    --dark:#000000;
-    --gray:#4a4a4a;
-    --light-gray:#f5f7fa;
-    --transition:all 0.3s ease;
-    --chat-bg:#f9f9ff;
-    --user-bubble:#4f46e5;
-    --ai-bubble:#f0f4ff;
-    --chat-border:#e0e0e0;
-    --chat-input-bg:#ffffff;
-}
+    <title>AI for Dentists: Practical Automation Playbook | Jemima AI</title>
+    <meta name="description" content="A practical AI automation playbook for dental practices covering missed-call recovery, new patient enquiry triage, treatment plan follow-up, hygiene recall, ROI examples and safe implementation." />
+    <link rel="canonical" href="https://jemima.ai/dental/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="jemima.ai" />
 
-/* ---------- Page ---------- */
-body{
-    font-family:"Poppins",sans-serif;
-    background:linear-gradient(to top right,#ffd6e7 10%,#d6eaff 90%);
-    color:var(--dark);
-    line-height:1.6;
-    overflow-x:hidden;
-    min-height:100vh;
-}
-.container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jemima.ai/ai-for-dentists/" />
+    <meta property="og:title" content="AI for Dentists: Practical Automation Playbook | Jemima AI" />
+    <meta property="og:description" content="Learn how dental practices can use AI to recover missed calls, triage new patient enquiries, follow up treatment plans and reduce reception pressure." />
+    <meta property="og:image" content="/og-image.jpg" />
 
-/* ---------- Header ---------- */
-header{
-    padding:25px 0;
-    position:fixed;top:0;width:100%;z-index:1000;
-    background:rgba(255,255,255,0.95);
-    backdrop-filter:blur(10px);
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
-}
-.header-container{display:flex;justify-content:space-between;align-items:center;}
-.logo{font-size:1.8rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.5px;}
-.logo span{color:var(--accent);}
-nav ul{display:flex;list-style:none;}
-nav ul li{margin-left:30px;}
-nav ul li a{color:var(--dark);text-decoration:none;font-weight:500;font-size:1rem;position:relative;transition:var(--transition);}
-nav ul li a:hover{color:var(--accent);}
-nav ul li a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);transition:var(--transition);}
-nav ul li a:hover::after{width:100%;}
-.mobile-menu-btn{display:none;background:none;border:none;color:var(--dark);font-size:1.5rem;cursor:pointer;}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://jemima.ai/ai-for-dentists/" />
+    <meta name="twitter:title" content="AI for Dentists: Practical Automation Playbook | Jemima AI" />
+    <meta name="twitter:description" content="A practical guide to AI automation workflows, ROI examples and implementation for dental practices." />
+    <meta name="twitter:image" content="/og-image.jpg" />
 
-/* ---------- Hero ---------- */
-.hero{padding:140px 0 0px;position:relative;overflow:hidden;text-align:center;}
-.hero-content{max-width:800px;margin:0 auto;position:relative;z-index:2;}
-.hero h1{font-size:3.5rem;font-weight:800;line-height:1.1;margin-bottom:30px;letter-spacing:-1px;color:var(--dark);}
-.hero h1 span{position:relative;}
-.hero h1 span::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:8px;background:rgba(159,122,234,0.3);z-index:-1;}
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#4f46e5" />
 
-/* ---------- Chat box ---------- */
-.ai-chat-box{
-    background:#fff;border-radius:25px;padding:30px;
-    box-shadow:0 25px 50px rgba(0,0,0,0.08);
-    margin:50px auto 0;max-width:650px;position:relative;overflow:hidden;
-    border:1px solid rgba(0,0,0,0.05);animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0;transform:translateY(20px);
-}
-.ai-chat-box::before{content:"";position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--accent),#818cf8);border-radius:25px 25px 0 0;}
-.chat-header{display:flex;align-items:center;margin-bottom:15px;}
-.ai-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#818cf8,var(--accent));display:flex;align-items:center;justify-content:center;margin-right:15px;overflow:hidden;border:3px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-.ai-avatar img{width:100%;height:100%;object-fit:cover;}
-.ai-info h3{font-size:1.3rem;color:var(--dark);margin-bottom:3px;font-weight:600;text-align:left;}
-.ai-info p{color:var(--gray);font-size:0.9rem;background:#f0f4ff;padding:3px 10px;border-radius:15px;display:inline-block;font-weight:500;text-align:left;}
+    <!-- Performance & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-/* ---------- Chat body ---------- */
-.chat-body{
-    background:var(--chat-bg);border-radius:20px;padding:20px;
-    max-height:350px;overflow-y:auto;margin-bottom:20px;
-    display:flex;flex-direction:column;gap:15px;
-    align-items:flex-start;
-}
+    <!-- Keep this if your site already has the compiled Tailwind/style file. The CDN below makes this page previewable as a standalone file. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-/* hide the pane until the first message arrives */
-.chat-body{
-    background:#ffffff;
-    display:none;
-}
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
+            #audit-form label { color: #475569 !important; font-size: 11px !important; letter-spacing: 0.15em !important; }
+            #audit-form input, #audit-form select { font-size: 16px !important; color: #000000 !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+            #audit-form input::placeholder { color: #94a3b8 !important; font-weight: 500; }
+            .faq-content p { font-size: 16px !important; line-height: 1.6; margin-bottom: 1.25rem; color: #334155; }
+        }
+        @media screen and (max-width: 640px) {
+            .faq-item button span { padding-right: 2rem; display: block; }
+        }
+        .fa-chart-line {
+            color: #fbbf24 !important;
+            filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4));
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
+        .modal-content { animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        #mobile-menu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease-out, padding 0.25s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 2600px;
+            padding-bottom: 2rem;
+        }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+        .playbook p { color: #475569; line-height: 1.8; font-weight: 500; }
+        .playbook h2 { scroll-margin-top: 110px; }
+        .playbook h3 { scroll-margin-top: 110px; }
+        .note-card { border-left: 4px solid #c2155a; }
+        .table-wrap::-webkit-scrollbar { height: 6px; }
+        .table-wrap::-webkit-scrollbar-track { background: #f1f5f9; }
+        .table-wrap::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+    </style>
 
-.chat-body.show{
-    display:flex;
-}
-
-.chat-bubble{
-    max-width:85%;padding:15px 20px;border-radius:20px;
-    animation:fadeIn 0.3s ease;box-shadow:0 3px 8px rgba(0,0,0,0.05);
-    display:inline-block;
-}
-
-.chat-bubble{
-    width:100%;
-    max-width:100%;
-    display:block;
-}
-
-.ai-bubble{background:var(--ai-bubble);border-radius:20px 20px 20px 5px;color:var(--dark);}
-.user-bubble{background:var(--user-bubble);border-radius:20px 20px 5px 20px;color:#fff;align-self:flex-end;}
-.chat-bubble p{font-size:1.1rem;line-height:1.5;text-align:left;}
-
-/* ---------- Chat input ---------- */
-.chat-input-form{
-    margin-top:20px;position:relative;border:1px solid var(--chat-border);
-    border-radius:16px;background:var(--chat-input-bg);
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);overflow:hidden;transition:var(--transition);
-}
-.chat-input-form:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,0.2);}
-textarea#chat-input{
-    width:100%;border:none;resize:none;padding:16px 60px 16px 20px;
-    font-family:"Poppins",sans-serif;font-size:1rem;min-height:60px;max-height:150px;
-    outline:none;background:transparent;color:var(--dark);line-height:1.5;
-}
-textarea#chat-input::placeholder{color:#a0aec0;}
-#chat-send{
-    position:absolute;right:12px;bottom:12px;width:40px;height:40px;border:none;
-    border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);
-}
-#chat-send:hover{background:#4338ca;transform:scale(1.05);}
-#chat-send i{font-size:1.1rem;}
-
-/* Solutions Section */
-.solutions {
-    padding: 100px 0;
-    background: linear-gradient(to bottom, #ffffff, #f8f9ff);
-}
-
-/* ---------- Service and solution sections ---------- */
-  
-.services
-  { background: white;
-    padding: 60px 0;
-    border-radius: 30px;
-    margin: 50px auto;
-    color: white;
-    width: calc(100% - 60px);
-    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
-
-.solutions
-  { background: white;
-    padding: 60px 0;
-    border-radius: 30px;
-    margin: 50px auto;
-    color: white;
-    width: calc(100% - 60px);
-    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */}
-
-/*.services{padding:100px 0;background:linear-gradient(to bottom,#f8f9ff,#ffffff);border-radius:50px 50px 0 0;margin-top:50px; max-width:600px;}*/
-.section-header{text-align:center;margin-bottom:70px;}
-.section-header h2{font-size:2.5rem;margin-bottom:15px;color:var(--dark);font-weight:700;}
-.section-header p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1.1rem;}
-.services-grid,
-.solutions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;}
-.service-card,
-.solution-card{
-    background:#fff;border-radius:20px;padding:40px 30px;text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;transition:var(--transition);
-}
-.service-card:hover,
-.solution-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08);}
-.service-card::before,
-.solution-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--accent);}
-.service-icon,
-.solution-icon{font-size:3.5rem;color:var(--accent);margin-bottom:20px;}
-.service-card h3,
-.solution-card h3{font-size:1.5rem;margin-bottom:15px;color:var(--dark);font-weight:600;}
-.service-card p,
-.solution-card p{color:var(--gray);font-size:1.05rem;}
-
-
-  .user-bubble {
-    white-space: pre-wrap;
-  }
-  .ai-bubble {
-    white-space: pre-wrap;
-  }
-
-/* ---------- Quick-link section ---------- */
-.quick-links-wrapper{
-    margin:20px 0;
-}
-
-.quick-links-title{
-    font-size:1rem;
-    font-weight:600;
-    color:var(--dark);
-    margin:0 0 8px 0;
-    text-align:left;
-}
-
-.quick-links-list{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.qlink{
-    padding:6px 12px;
-    border-radius:10px;
-    background:#4f46e5;
-    color:#ffffff;
-    font-size:0.85rem;
-    text-decoration:none;
-    transition:var(--transition);
-    white-space:nowrap;
-    text-align:left;
-}
-
-.qlink:hover{
-    background:#7c3aed;
-    transform:translateY(-2px);
-}
-
-/* keep buttons centred on very small screens */
-@media (max-width:480px){
-    .quick-links-list{
-        justify-content:left;
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is AI for dentists?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI for dentists usually means using artificial intelligence to support non-clinical workflows such as enquiry response, missed-call follow-up, patient triage, appointment requests, treatment plan follow-up, hygiene recalls, review requests and reception admin."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should a dental practice automate first?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For many practices, the best first workflow is missed-call recovery or new patient enquiry triage. These are close to revenue, relatively easy to measure and safer than broad clinical chat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI replace dental receptionists?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "That should not be the aim. AI is better used to support reception by handling repetitive first responses, collecting information, summarising conversations and routing enquiries."
+          }
+        }
+      ]
     }
-}
-
-
-/* ---------- Footer ---------- */
-footer{background:var(--dark);padding:70px 0 30px;color:#fff;}
-.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:50px;}
-.footer-col h3{font-size:1.3rem;margin-bottom:20px;color:#fff;font-weight:600;}
-.footer-links{list-style:none;}
-.footer-links li{margin-bottom:12px;}
-.footer-links a{color:#a0aec0;text-decoration:none;transition:var(--transition);font-weight:400;}
-.footer-links a:hover{color:#fff;}
-.social-links{display:flex;gap:15px;margin-top:20px;}
-.social-links a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;transition:var(--transition);}
-.social-links a:hover{background:var(--accent);transform:translateY(-3px);}
-footer p{margin:0;text-align:left;color:#a0aec0;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:30px;}
-/* Description Text */
-.description-text {
-    max-width: 800px;
-    margin: 40px auto 0;
-    font-size: 1.25rem;
-    color: var(--gray);
-    line-height: 1.7;
-    animation: fadeInUp 0.8s ease 0.5s forwards;
-    opacity: 0;
-    transform: translateY(20px);
-    font-weight: 400;
-}
-.highlight {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-/* ---------- Animations ---------- */
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2);opacity:0.7;}}
-
-/* ---------- Responsive ---------- */
-@media (max-width:768px){
-    .mobile-menu-btn{
-        display:block;
-        margin-left:auto;
-    }
-
-    nav ul{
-        display:none;
-        flex-direction:column;
-        position:absolute;
-        top:80px;
-        left:0;
-        width:100%;
-        background:#fff;
-        padding:20px 0;
-        box-shadow:0 10px 15px rgba(0,0,0,0.1);
-    }
-    nav ul.show{display:flex;}
-    nav ul li{
-        text-align:center;
-        margin:10px 0;
-    }
-
-    .hero{padding:140px 0 20px;}
-    .hero h1{font-size:3.7rem;}
-
-    .chat-body{max-height:300px;padding:15px;}
-    .chat-bubble{padding:12px 16px;}
-    .chat-bubble p{font-size:1rem;}
-}
-
-@media (max-width:576px){
-    .hero h1{font-size:2.4rem;}
-    .ai-chat-box{padding:20px;}
-    .chat-bubble p{font-size:0.95rem;}
-    .footer-grid{grid-template-columns:1fr;}
-}
-
-/* Services grid - force two columns on desktop */
-@media (min-width: 992px) {
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Keep the hero heading on one line at desktop width */
-@media (min-width: 992px) {
-    .hero-content {
-        max-width: 1100px;
-    }
-    .hero h1 {
-        white-space: nowrap;
-    }
-}
-
-/* ---------- Form Section ---------- */
-.form-section {
-    background: var(--accent);
-    padding: 30px 0;
-    border-radius: 30px;
-    margin: 60px auto;
-    color: white;
-    width: calc(100% - 100px);
-    max-width: calc(560px * 2 + 30px); /* 2 cards + gap */
-}
-
-.form-section .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 0 200px;
-    max-width: calc(560px * 2 + 30px);
-}
-
-.form-section h2 {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    margin-top: 40px;
-    font-weight: 600;
-}
-
-.form-section p {
-    max-width: 700px;
-    margin-bottom: 60px;
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.booking-form {
-    display: grid;
-    gap: 20px;
-    width: 100%;
-}
-
-.booking-form label {
-    font-weight: 600;
-    color: white;
-    display: block;
-    margin-bottom: 8px;
-    text-align: left;
-}
-
-.booking-form input,
-.booking-form select {
-    width: 100%;
-    padding: 14px 18px;
-    font-size: 1rem;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1);
-    color: white;
-    transition: var(--transition);
-}
-
-.booking-form input:focus,
-.booking-form select:focus {
-    outline: none;
-    border-color: white;
-    background: rgba(255,255,255,0.2);
-}
-
-.booking-form input::placeholder {
-    color: rgba(255,255,255,0.7);
-}
-
-.booking-form button {
-    background: white;
-    color: var(--accent);
-    padding: 16px 45px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: var(--transition);
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 40px;
-}
-
-.booking-form button:hover {
-    background: var(--light-gray);
-    transform: translateY(-2px);
-}
-
-
-
-/* ---------- Form Section – responsive fix ---------- */
-
-/* Reduce side padding on tablets */
-@media (max-width: 992px) {
-  .form-section .container {
-    padding: 0 40px;
-  }
-}
-
-/* Further reduce side padding on phones */
-@media (max-width: 576px) {
-  .form-section .container {
-    padding: 0 20px;
-  }
-}
-
-/* One-column layout by default */
-.booking-form {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr;
-}
-
-/* Two-column layout from 600 px upward */
-@media (min-width: 600px) {
-  .booking-form {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Keep the purple box away from the viewport edge */
-.form-section {
-  width: calc(100% - 40px);   /* 20 px gap each side */
-  margin: 60px auto;
-}
-
-/* Force one field per row on desktop */
-@media (min-width: 992px) {
-  .booking-form {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* ---------- Service cards – extra horizontal space ---------- */
-
-/* Small tablets and up */
-@media (min-width: 576px) {
-  .services .container {
-    padding-left: 40px;   /* 40 px each side */
-    padding-right: 40px;
-  }
-}
-
-/* Desktops and large laptops */
-@media (min-width: 992px) {
-  .services .container {
-    padding-left: 40px;   /* 80 px each side */
-    padding-right: 40px;
-  }
-}
-
-/* ---------- Service cards – extra horizontal space ---------- */
-
-/* Small tablets and up */
-@media (min-width: 576px) {
-  .solutions .container {
-    padding-left: 40px;   /* 40 px each side */
-    padding-right: 40px;
-  }
-}
-
-/* Desktops and large laptops */
-@media (min-width: 992px) {
-  .solutions .container {
-    padding-left: 40px;   /* 80 px each side */
-    padding-right: 40px;
-  }
-}
-
-/* ---------- Calendar icon – corrected spelling ---------- */
-
-/* Hide the native WebKit icon, keep its click area */
-.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;              /* invisible but clickable */
-  position: relative;
-}
-
-/* Draw a white calendar symbol in the same spot */
-.booking-form input[type="date"] {
-  position: relative;      /* anchor for the pseudo-element */
-}
-.booking-form input[type="date"]::after {
-  content: "";
-  position: absolute;
-  right: 14px;             /* move left or right if needed */
-  top: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translateY(-50%);
-  background:
-    url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h3V2Zm13 6H4v12h16V8Zm-5 3v5h5v-5h-5Z'/%3E%3C/svg%3E")
-    no-repeat center center / contain;
-  pointer-events: none;    /* clicks still reach the real picker */
-}
-
-
-/* Container for category pills */
-.category-pil ul {
-  list-style: none;
-  padding: 0;
-  margin: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px; /* Space between buttons */
-}
-
-/* Individual category buttons */
-.category-pil ul li {
-  background-color: #e6e6fa; /* Light purple */
-  color: #4b0082; /* Dark purple text for contrast */
-  padding: 2px 4px;
-  border-radius: 5px; /* Pill shape */
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  border: 0px solid #d8bfd8; /* Light purple border */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-/* Hover effect */
-/* .category-pil ul li:hover {*/
-/*   background-color: #d8bfd8; *//* Slightly darker purple */
-/*   transform: translateY(-1px);*/
-/*   box-shadow: 0 3px 6px rgba(0,0,0,0.1);*/
-}
-
-/* Active state */
-/*.category-pil ul li.active { */
-/*  background-color: #9370db; /* Medium purple */
-/*  color: white; */
-}
-
-/* ---------- Match section width on very small screens ---------- */
-@media (max-width: 575.98px) {
-  .services,
-  .solutions {
-    width: calc(100% - 40px);   /* 20 px gap each side, same as the rest */
-  }
-}
-
-/* ---------- Time dropdown: white field text, white arrow ---------- */
-
-/* closed field */
-/* ---------- Time field: match pale-purple background ---------- */
-#slot{
-  background-color: rgba(255,255,255,0.1);                 /* light purple */
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E"); /* arrow */
-  appearance:none;                        /* hide built-in arrow                  */
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 10px 6px;
-}
-
-/* open list */
-#slot option{
-  color:var(--dark);                      /* black items in the drop-down list    */
-}
-
-/* ── Floating form message (full-width, semi-transparent) ─────────── */
-#formMsg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 9999;
-  padding: 14px 20px;
-  text-align: center; 
-  font-weight: 600;
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,.15);
-  
-  /* Remove any max-width constraints */
-  max-width: none !important;
-  
-  /* Ensure full width */
-  margin: 0;
-  box-sizing: border-box;
-  
-  /* Override any container padding */
-  transform: translateY(-100%) translateX(-50%);
-  left: 50%;
-  width: 100vw;
-  
-  /* slide-in animation */
-  opacity: 0;
-  transition: opacity .3s ease, transform .3s ease;
-}
-
-#formMsg.show {
-  transform: translateY(0) translateX(-50%);
-  opacity: 1;
-}
-
-#formMsg.sending {
-  background: rgba(255, 152, 0, .90); /* orange */
-}
-
-#formMsg.success {
-  background: rgba(76, 175, 80, .90); /* green */
-}
-
-#formMsg.error {
-  background: rgba(229, 57, 53, .90); /* red */
-}
-
-/* Keep the custom styling but make the entire field clickable */
-.booking-form input[type="date"] {
-  position: relative;
-  cursor: pointer;
-  padding-right: 40px; /* Keep space for icon */
-}
-
-.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0; /* Keep the native picker invisible */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.booking-form input[type="date"]::after {
-  content: "";
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translateY(-50%);
-  background:
-    url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h3V2Zm13 6H4v12h16V8Zm-5 3v5h5v-5h-5Z'/%3E%3C/svg%3E")
-    no-repeat center center / contain;
-  pointer-events: none; /* Allow clicks to pass through to the input */
-}
-
-@media (max-width: 768px) {
-  .hero h1 {
-    margin-top: -10px;      /* Reduced from original value */
-    margin-bottom: -20px;   /* Reduced from original 30px */
-  }
-}
-
-
-/* Solution card styling */
-.solution-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Ensure card takes full height */
-}
-
-/* Card body should grow to fill space */
-.solution-card .card-body {
-  flex: 1; /* Makes body take available space */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Category pill container */
-.solution-card .category-pil {
-  margin-top: auto; /* Pushes pills to bottom */
-  padding-top: 15px; /* Adds spacing above pills */
-}
-
-/* Category pill list */
-.solution-card .category-pil ul {
-  margin: 0; /* Remove default margins */
-  justify-content: center; /* Center pills horizontally */
-}
-
-.card {
-  position: relative !important;
-  padding-bottom: 5rem !important;
-}
-
-.category-pil {
-  position: absolute;
-  bottom: 1rem;           /* sits 1rem above the card’s bottom edge */
-  left: 1rem;
-  right: 1rem;
-}
-
-.solution-card {
-  position: relative;
-  padding-bottom: 6rem;    /* enough room for the pills row + gap */
-}
-
-.solution-card .category-pil {
-  position: absolute;
-  bottom: 1rem;            /* distance from the bottom edge of the card */
-  left: 1rem;              /* align with your card’s inner padding */
-  right: 1rem;             /* stretch to the other side */
-  margin: 0;               /* reset any default margins */
-}
-
-</style>
-
+    </script>
 </head>
-<body>
 
+<body class="bg-slate-50 text-slate-900 antialiased">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VBX6H2N"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-
-  <!-- Header -->
-  <header>
-    <div class="container header-container">
-      <a href="#" class="logo">jemima<span>.ai</span></a>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+    <!-- Modal -->
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
+            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors" aria-label="Close modal">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Request a Dental AI Automation Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">We will map one practical workflow and estimate the likely value before anything is built.</p>
+            </div>
+            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400">Full Name</label>
+                    <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400">Practice Name</label>
+                    <input type="text" id="form-company" required placeholder="Practice name" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400">Work Email</label>
+                    <input type="email" id="form-email" required placeholder="john@practice.co.uk" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400">Phone Number</label>
+                    <div class="flex items-center gap-4">
+                        <input type="tel" id="form-phone" required placeholder="+44 7000 000000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
+                            <span class="text-xs uppercase tracking-widest text-slate-400">SMS?</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Audit Request</button>
+                <p id="modal-card-note" class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+            </form>
+        </div>
     </div>
-  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>AI <span>Sales & Marketing</span> Solutions</h1>
-                
-                <!-- AI Chat Box -->
-                <div class="ai-chat-box">
-                    <div class="chat-header">
-                        <div class="ai-avatar">
-                            <img src="jemima.png" alt="Jemima AI">
-                        </div>
-                        <div class="ai-info">
-                            <h3>Jemima</h3>
-                            <p>Business Solutions Manager</p>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-bubble">
-                        <p>Ask me about <span class="highlight">Lead Generation</span>, <span class="highlight">Sales</span>, <span class="highlight">Customer Service</span>, or <span class="highlight">Digital Marketing</span> automation or <span class="highlight">Book A Call</span></p>
-                    </div>
-                    <!-- Chat area -->
-                    <div id="chat-body" class="chat-body"></div>
-                    <!-- Chat Input Form -->
-                    <div class="chat-input-form">
-                        <form onsubmit="sendMessage(); return false;">
-                            <textarea id="chat-input" required></textarea>
-                            <button id="chat-send" type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full md:hidden">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-2 text-xl tracking-tighter" onclick="toggleMobileMenu()">
+                <img src="/jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
+                <span>Jemima</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="text-slate-600" aria-label="Close mobile menu">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-lg uppercase tracking-[0.2em] text-slate-900">
+            <a href="#leaks" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Leakage Points</a>
+            <a href="#workflows" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Workflows</a>
+            <a href="#roi" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">GBP Value</a>
+            <a href="#rollout" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">90-Day Plan</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
+        </div>
+        <div class="mt-auto">
+            <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full font-black bg-[#c2155a] text-white py-5 uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Automation Audit</button>
+        </div>
+    </div>
 
-<!-- Chat Suggestions -->
-<div class="quick-links-wrapper">
-  <h4 class="quick-links-title">Chat Suggestions</h4>
+    <!-- Navigation -->
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-2 lg:py-3 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
+        <a href="/" class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer">
+            <img src="/jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+            <span>Jemima</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#leaks" class="hover:text-[#c2155a]">Leakage Points</a>
+            <a href="#workflows" class="hover:text-[#c2155a]">Workflows</a>
+            <a href="#roi" class="hover:text-[#c2155a]">GBP Value</a>
+            <a href="#rollout" class="hover:text-[#c2155a]">90-Day Plan</a>
+            <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
+        </div>
+        <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none" aria-label="Open mobile menu">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </nav>
 
-  <div id="chat-quick-links" class="quick-links-list">
-    <a href="#" class="qlink" data-msg="I'd like to book a 25 minute discovery call">Book a call</a>
-    <a href="#" class="qlink" data-msg="What services do you offer?">Services</a>
-    <a href="#" class="qlink" data-msg="Show me your prices">Pricing</a>
-    <a href="#" class="qlink" data-msg="How can Jemima AI help my company?">AI help</a>
-  </div>
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-0 pb-8 lg:pb-16 playbook">
+
+<section class="pt-4 pb-10 lg:pt-8 lg:pb-16">
+  <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-start">
+
+    <!-- Left: Copy + Video -->
+    <div class="space-y-4 lg:space-y-5">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">
+        AI for dentists
+      </div>
+
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-[800] leading-[1] text-slate-950 tracking-tight">
+        A practical automation playbook for <span class="text-[#c2155a]">dental practices</span>
+      </h1>
+
+      <p class="text-slate-600 text-lg md:text-xl leading-relaxed font-medium max-w-3xl">
+        Learn where AI actually helps dental practices: missed-call recovery, new patient triage, treatment follow-up, recall, and reception handover.
+      </p>
+
+      <div class="bg-white border border-slate-200 shadow-xl overflow-hidden">
+        <div class="relative aspect-video bg-slate-900">
+          <video
+            class="absolute inset-0 w-full h-full object-cover"
+            src="https://vz-1599ac93-05a.b-cdn.net/e9e44bb2-73e0-4a4a-a4fe-def3670042c6/play_1080p.mp4"
+            poster="ai-for-dental-practices.png"
+            controls
+            playsinline
+            preload="metadata"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: Embedded Form -->
+    <aside class="bg-white border border-slate-200 shadow-2xl p-5 lg:p-6 lg:sticky lg:top-20">
+      <div class="mb-4 space-y-2">
+        <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[10px] px-3 py-1 uppercase tracking-[0.2em]">
+          Free audit
+        </div>
+
+        <h2 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">
+          Map one dental AI workflow
+        </h2>
+
+        <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+          Tell us about your practice. We’ll help identify one practical workflow and estimate the likely value before anything is built.
+        </p>
+      </div>
+
+      <form id="hero-audit-form" onsubmit="handleHeroFormSubmit(event)" class="space-y-4">
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Work Email</label>
+          <input type="email" id="hero-email" required placeholder="john@practice.co.uk" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Full Name</label>
+          <input type="text" id="hero-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Practice Name</label>
+          <input type="text" id="hero-company" required placeholder="Practice name" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
+        </div>
+
+<div class="space-y-1.5">
+    <label class="block text-xs uppercase tracking-widest text-slate-400">
+        Where are you in the process?
+    </label>
+
+    <select id="form-ai-readiness" required class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900">
+        <option value="">Select one</option>
+        <option value="Ready to explore AI now">Ready to explore AI now</option>
+        <option value="Researching for later">Researching for later</option>
+    </select>
 </div>
 
-                </div>
-
-
-
-
-
-
-
-
-                <!-- Description Text -->
-                <div class="description-text">
-                    Transform your service business with cutting edge AI solutions that automate workflows, enhance productivity, and drive exponential growth.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2>Sales & Marketing Automation</h2>
-                <p>AI Solutions for Lead to Revenue Operations</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Lead Generation</h3>
-                    <p>AI powered systems that identify and qualify leads day and night, increasing your conversion rates.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <h3>Sales</h3>
-                    <p>Intelligent sales pipelines that nurture prospects and close deals automatically.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Customer Service</h3>
-                    <p>Round the clock AI support agents that resolve issues instantly and improve satisfaction.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <h3>Digital Marketing</h3>
-                    <p>Automated campaigns, content creation, and analytics for digital marketing success.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Solutions Section -->
-    <section class="solutions">
-        <div class="container">
-            <div class="section-header">
-                <h2>Always On Business Solutions</h2>
-                <p>Data gathering, AI analysis, automated actions and regular review to drive efficiency and boost growth</p>
-            </div>
-            <div class="solutions-grid">
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>Intelligent Chat</h3>
-                    <p>Jemima answers questions and qualifies visitors, capturing leads 24/7 and cutting response time to zero.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li> <li>Customer Service</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email</h3>
-                    <p>Jemima organises, summarises and replies to emails, spots buying signals and sets up nurture campaigns to drive more sales.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Sales</li> <li>Customer Service</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <h3>Call Centre</h3>
-                    <p>Jemima handles incoming and outgoing voice calls plus SMS and WhatsApp to keep response times quick and free up time.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li> <li>Customer Service</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <h3>Social Media</h3>
-                    <p>Jemima creates and schedules posts and replies on social channels to keep your network growing 24/7 and free up hours of work.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Digital Marketing</li> <li>Lead Generation</li> <li>Sales</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-magnet"></i>
-                    </div>
-                    <h3>Lead Magnets</h3>
-                    <p>Jemima builds and shares helpful resources on email and social channels to attract contacts and showcase expertise on auto-pilot.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Digital Marketing</li> <li>Lead Generation</li> <li>Sales</li></ul>
-                </div>
-		    <p class="category-pil"></p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>Lead Scoring</h3>
-                    <p>Jemima finds new leads, enriches their details, scores them and sends first-contact messages to speed up outreach and free up time.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Lead Generation</li> <li>Sales</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Reputation Protection</h3>
-                    <p>Jemima scans search, social and review sites for negative mentions and crafts quick responses, continually protecting your brand.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Customer Service</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>SEO AIO Monitor</h3>
-                    <p>Jemima tracks AI and search ranking and Google updates as well as website changes, to react to shifts faster.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Digital Marketing</li></ul>
-                </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-thumbs-up"></i>
-                    </div>
-                    <h3>Overcome Objections</h3>
-                    <p>Jemima analyses internal logs and competitor reviews, to identify and overcome objections, increasing lead to sales conversion.</p>
-		    <div class="category-pil">
-                    <ul class="category-pil"><li>Sales</li></ul>
-                </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-  <!-- Form Section with Booking Form -->
-  <section class="form-section">
-    <div class="container">
-      <h2>Book A Call</h2>
-      <p>Let's meet to discuss the benefits of AI Automations for your business.</p>
-      
-      <form class="booking-form" id="bookingForm" autocomplete="on">
-        <div>
-          <label for="firstName">First name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            autocomplete="given-name"
-            placeholder="Jane"
-            required
-          />
-        </div>
-        <div>
-          <label for="lastName">Last name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            autocomplete="family-name"
-            placeholder="Doe"
-            required
-          />
-        </div>
-        <div>
-          <label for="company">Company</label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            autocomplete="organization"
-            placeholder="Your company"
-          />
-        </div>
-        <div>
-          <label for="phone">Telephone number</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            autocomplete="tel"
-            placeholder="01234567890"
-          />
-        </div>
-        <div>
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-            required
-          />
-        </div>
-        <div>
-          <label for="day">Choose a day</label>
-          <input
-            type="date"
-            id="day"
-            name="day"
-            required
-          />
-        </div>
-        <div>
-          <label for="slot">Choose a time</label>
-          <select
-            id="slot"
-            name="slot"
-            required
-          >
-            <option value="">Pick a day first</option>
-          </select>
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Phone Number</label>
+          <input type="tel" id="hero-phone" required placeholder="+44 7000 000000" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
         </div>
 
-        <input type="hidden" id="pageUrl" name="pageUrl" value=""/>
+<div class="space-y-1.5">
+    <label class="block text-xs uppercase tracking-widest text-slate-400">
+        Where are you in the process?
+    </label>
 
-        <button type="submit">Book now</button>
+        <button type="submit" id="hero-submit-btn" class="w-full bg-[#c2155a] text-white py-4 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all">
+          Request workflow audit
+        </button>
+
+        <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">
+          No credit card required
+        </p>
       </form>
-      <p id="formMsg"></p>
+    </aside>
+
+  </div>
+</section>
+
+
+        <!-- Practical opportunity -->
+        <section class="py-14 border-t border-slate-200">
+            <div class="grid md:grid-cols-2 gap-10 items-start">
+                <div class="space-y-5">
+                    <h2 class="text-3xl lg:text-4xl font-[800] tracking-tight text-slate-950">What we usually find when we map a dental workflow</h2>
+                    <p>Dental practices are busy, interruption-heavy businesses. Reception is answering calls, booking patients, dealing with cancellations, handling treatment questions, managing nervous patients, checking availability, chasing paperwork, and supporting clinicians.</p>
+                    <p>At the same time, new patient enquiries, emergency calls, hygiene bookings, and treatment plan follow-ups are arriving through phone, email, website forms, social media, and sometimes WhatsApp.</p>
+                    <p>The issue is not usually that the practice has no demand. The issue is that demand is messy.</p>
+                </div>
+                <div class="bg-slate-900 text-white p-8 lg:p-10 shadow-2xl space-y-5">
+                    <h3 class="text-2xl font-[800] tracking-tight">The implementation lesson: sort before you automate.</h3>
+                    <p class="!text-white/80">Some enquiries are urgent. Some are low-value. Some need a fast call back. Some need a finance conversation. Some are existing patients. Some are new patients shopping around. Some should be booked immediately. Some need clinical review.</p>
+                    <p class="!text-white/80">A good AI automation system helps sort, respond, route, and follow up these conversations before they disappear.</p>
+                    <p class="!text-white !font-bold">A bad one adds noise.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leakage points -->
+        <section id="leaks" class="py-16 border-t border-slate-200">
+            <div class="max-w-3xl mb-10 space-y-4">
+                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">Where value leaks</div>
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">Where dental practices lose time and revenue</h2>
+                <p>AI is most useful when it is aimed at a specific leakage point. None of these problems sound dramatic on their own. But they happen every week.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Missed calls during treatment hours, lunch breaks, short staffing, or busy reception periods.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>New patient enquiries that wait several hours before receiving a response.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Emergency enquiries that are not triaged quickly enough.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Invisalign, implant, cosmetic, or private treatment enquiries that do not get followed up consistently.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Treatment plans that are discussed but not chased after the consultation.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Hygiene recalls that rely on manual lists and staff memory.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Patients who cancel but are not rebooked.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Repetitive questions taking time away from higher-value conversations.</p></div>
+                <div class="bg-white border border-slate-200 p-5 shadow-sm"><p>Google review requests being forgotten after successful appointments.</p></div>
+            </div>
+
+            <div class="mt-8 bg-[#c2155a]/5 border border-[#c2155a]/10 p-6 note-card">
+                <p><strong class="text-slate-900">Consultant note:</strong> The boring workflows are often the valuable ones. A missed-call SMS, a clean handover summary, or a consistent treatment follow-up can be more useful than a broad chatbot.</p>
+            </div>
+        </section>
+
+        <!-- What AI can automate -->
+        <section class="py-16 border-t border-slate-200">
+            <div class="max-w-3xl mb-10 space-y-4">
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">What AI can actually automate in a dental practice</h2>
+                <p>AI automation for dentists should not start with a vague promise to transform the practice. It should start with clear workflows.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 border border-slate-200 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Enquiry response</h3><p>AI can reply quickly to new enquiries from forms, email, live chat, social media, or missed calls. Often it only needs to restart the conversation and collect enough information for the team to act.</p></div>
+                <div class="bg-white p-6 border border-slate-200 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Enquiry triage</h3><p>AI can classify enquiries such as emergency care, new patient registration, hygiene, Invisalign, implants, cosmetic dentistry, treatment questions, finance, or existing patient queries.</p></div>
+                <div class="bg-white p-6 border border-slate-200 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Booking support</h3><p>Where the practice allows it, AI can offer call-back slots, consultation slots, hygiene availability, or collect preferences for reception to confirm.</p></div>
+                <div class="bg-white p-6 border border-slate-200 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Follow-up</h3><p>AI can follow up patients who have enquired, requested pricing, attended a consultation, received a treatment plan, cancelled, or failed to respond.</p></div>
+                <div class="bg-white p-6 border border-slate-200 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Reception admin</h3><p>AI can summarise conversations, create handover notes, draft replies, update simple records, and notify the right person internally.</p></div>
+                <div class="bg-white p-6 border border-slate-200 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Review workflows</h3><p>AI can trigger review requests after suitable appointments, send polite reminders, and alert the team to unhappy feedback before it becomes public.</p></div>
+            </div>
+        </section>
+
+        <!-- Workflows overview -->
+        <section id="workflows" class="py-16 border-t border-slate-200">
+            <div class="max-w-3xl mb-10 space-y-4">
+                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">Workflow map</div>
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">The highest-value AI workflows for dentists</h2>
+                <p>When choosing the first workflow with a practice, we look for three things: it should be close to revenue, repetitive enough to automate, and safe enough to monitor with clear human handover rules.</p>
+            </div>
+            <div class="overflow-x-auto table-wrap bg-white border border-slate-200 shadow-sm">
+                <table class="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="p-5 text-sm uppercase tracking-widest">Workflow</th>
+                            <th class="p-5 text-sm uppercase tracking-widest">What we see in practice</th>
+                            <th class="p-5 text-sm uppercase tracking-widest">Implimentation approach</th>
+                            <th class="p-5 text-sm uppercase tracking-widest text-right">Example monthly value</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600 font-medium">
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">Missed-call recovery loop</td><td class="p-5">Potential patients call but do not reach reception</td><td class="p-5">Sends a quick SMS, captures intent, routes urgent or booking-ready enquiries</td><td class="p-5 text-right font-bold text-slate-900">£500–£2,500+</td></tr>
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">New patient enquiry triage</td><td class="p-5">Enquiries arrive through different channels and wait too long</td><td class="p-5">Replies quickly, asks structured questions, classifies the enquiry</td><td class="p-5 text-right font-bold text-slate-900">£500–£3,000+</td></tr>
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">Treatment plan follow-up</td><td class="p-5">Patients receive a plan but do not book the next step</td><td class="p-5">Sends polite follow-ups, answers basic process questions, flags objections</td><td class="p-5 text-right font-bold text-slate-900">£1,000–£10,000+</td></tr>
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">Hygiene recall support</td><td class="p-5">Recalls depend on manual chasing</td><td class="p-5">Sends reminders and booking prompts</td><td class="p-5 text-right font-bold text-slate-900">£300–£2,000+</td></tr>
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">Emergency enquiry routing</td><td class="p-5">Urgent cases are mixed in with routine admin</td><td class="p-5">Identifies urgency and alerts the team</td><td class="p-5 text-right font-bold text-slate-900">Operationally important</td></tr>
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">Cancellation rebooking</td><td class="p-5">Cancelled patients disappear from the diary</td><td class="p-5">Sends rebooking prompts and captures preferred times</td><td class="p-5 text-right font-bold text-slate-900">£300–£1,500+</td></tr>
+                        <tr class="border-b border-slate-100"><td class="p-5 font-bold text-slate-900">Review request workflow</td><td class="p-5">Happy patients are not asked for reviews consistently</td><td class="p-5">Sends review requests after suitable visits</td><td class="p-5 text-right font-bold text-slate-900">Long-term conversion value</td></tr>
+                        <tr><td class="p-5 font-bold text-slate-900">Reception note summaries</td><td class="p-5">Staff manually write or interpret messy notes</td><td class="p-5">Creates short structured handover notes</td><td class="p-5 text-right font-bold text-slate-900">£200–£1,000+</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-6 text-sm text-slate-500">These numbers are illustrative. The actual value depends on call volume, enquiry mix, treatment value, conversion rate, staff cost, diary capacity, and how well the workflow is implemented.</p>
+        </section>
+
+        <!-- Detailed workflows -->
+        <section class="py-16 border-t border-slate-200 space-y-10">
+            <div class="max-w-3xl space-y-4">
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">Detailed workflow examples</h2>
+                <p>Each workflow below is written as a practical implementation note, not a sales pitch.</p>
+            </div>
+
+            <article class="bg-white border border-slate-200 shadow-sm p-6 lg:p-8 space-y-5">
+                <h3 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">Workflow 1: Missed-call recovery loop</h3>
+                <p>A missed call is not always valuable. Some calls are routine. Some are suppliers. Some are existing patients asking simple questions. But some missed calls are new patient enquiries, emergency patients, Invisalign enquiries, implant enquiries, hygiene bookings, or family registrations.</p>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 border border-slate-100 p-5 space-y-3">
+                        <h4 class="font-[800] text-slate-950">How it works</h4>
+                        <ol class="list-decimal list-inside space-y-2 text-slate-600 font-medium leading-relaxed">
+                            <li>A call is missed.</li>
+                            <li>The phone system triggers an automation.</li>
+                            <li>The caller receives a short SMS within 30–60 seconds.</li>
+                            <li>The AI classifies the response.</li>
+                            <li>Urgent cases are flagged to the team.</li>
+                            <li>Booking-ready enquiries are passed to reception with a short summary.</li>
+                        </ol>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 p-5 space-y-3">
+                        <h4 class="font-[800] text-slate-950">GBP example</h4>
+                        <p>80 missed calls × 35% revenue-related = 28 useful opportunities.</p>
+                        <p>28 opportunities × 25% recovered = 7 recovered enquiries.</p>
+                        <p>7 recovered enquiries × £150 = <strong class="text-slate-950">£1,050/month</strong>.</p>
+                    </div>
+                </div>
+                <div class="note-card bg-[#c2155a]/5 border border-[#c2155a]/10 p-5"><p><strong class="text-slate-900">Implementation note:</strong> Keep this workflow narrow at first. Missed call, short reply, classify, hand over. Do not try to build a full AI receptionist before the practice trusts the first automation.</p></div>
+            </article>
+
+<div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-slate-50 border border-slate-200 p-6">
+        <p class="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-black mb-3">Before implementation</p>
+        <ul class="list-disc list-inside space-y-2 text-slate-600 font-medium leading-relaxed">
+            <li>Missed calls sit in the call log.</li>
+            <li>Reception calls back when there is time.</li>
+            <li>No clear distinction between routine and valuable enquiries.</li>
+            <li>Urgent cases can be mixed with general admin.</li>
+        </ul>
     </div>
-  </section>
 
-
-
-
-
-    <!-- Footer -->
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="#" class="logo" style="color: white;">jemima<span style="color: #818cf8;">.ai</span></a>
-          <p style="color: #a0aec0; margin-top: 20px; line-height: 1.7;">Leading business solutions for forward-thinking businesses.</p>
-          <div class="social-links">
-            <a href="https://x.com/Jemima_ai"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/jemima-ai"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://jemimacorp.slack.com/"><i class="fab fa-slack"></i></a>
-            <a href="https://www.youtube.com/channel/UCz2TRxQryEaLa9JD4blsjqQ"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h3>Solutions</h3>
-          <ul class="footer-links">
-            <li><a href="ai-lead-generation.html">Lead Generation</a></li>
-            <li><a href="ai-sales-automation.html">Sales</a></li>
-            <li><a href="ai-customer-services-automation.html">Customer Service</a></li>
-            <li><a href="ai-digital-marketing-automation.html">Digital Marketing</a></li>
-            <li><a href="ai-automation.html">AI Automation</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Company</h3>
-          <ul class="footer-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="careers.html">Careers</a></li>
-            <li><a href="faq.html">FAQs</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-            <li><a href="privacy.html">Privacy</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Resources</h3>
-          <ul class="footer-links">
-            <li><a href="ai-business-guides.html">AI Business Guides</a></li>
-            <li><a href="ai-workflows.html">Workflows</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="copyright">
-        <p>&copy; 2025 jemima.ai. All rights reserved.</p>
-      </div>
+    <div class="bg-[#c2155a]/5 border border-[#c2155a]/10 p-6 note-card">
+        <p class="text-[11px] uppercase tracking-[0.2em] text-[#c2155a] font-black mb-3">After implementation</p>
+        <ul class="list-disc list-inside space-y-2 text-slate-600 font-medium leading-relaxed">
+            <li>The caller gets a fast, approved response.</li>
+            <li>The system captures intent and urgency.</li>
+            <li>Reception receives a structured handover.</li>
+            <li>The team can prioritise the calls that matter most.</li>
+        </ul>
     </div>
-  </footer>
+</div>
+
+
+            <article class="bg-white border border-slate-200 shadow-sm p-6 lg:p-8 space-y-5">
+                <h3 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">Workflow 2: New patient enquiry triage</h3>
+                <p>New patient enquiries are time-sensitive. Someone looking for a dentist may contact several practices. The first useful reply often has an advantage.</p>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 border border-slate-100 p-5 space-y-3">
+                        <h4 class="font-[800] text-slate-950">Useful triage questions</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-600 font-medium leading-relaxed">
+                            <li>Are you a new or existing patient?</li>
+                            <li>What treatment or appointment are you looking for?</li>
+                            <li>Is this urgent or are you in pain?</li>
+                            <li>What is the best number to reach you on?</li>
+                            <li>Are there any days or times that work best for a call back?</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 p-5 space-y-3">
+                        <h4 class="font-[800] text-slate-950">GBP example</h4>
+                        <p>50 enquiries × 6% conversion improvement = 3 extra bookings.</p>
+                        <p>3 extra bookings × £120 = <strong class="text-slate-950">£360/month</strong>.</p>
+                        <p>This excludes downstream treatment value, which is often where the real upside sits.</p>
+                    </div>
+                </div>
+                <div class="note-card bg-[#c2155a]/5 border border-[#c2155a]/10 p-5"><p><strong class="text-slate-900">Consultant note:</strong> Do not make the triage flow feel like an interrogation. The first job is to make the patient feel heard. Collect only what the team needs to take the next step.</p></div>
+            </article>
+
+            <article class="bg-white border border-slate-200 shadow-sm p-6 lg:p-8 space-y-5">
+                <h3 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">Workflow 3: Treatment plan follow-up</h3>
+                <p>This is often where the largest commercial value sits. A patient may attend a consultation, discuss a treatment plan, receive pricing, and then pause. If follow-up depends entirely on manual memory, some patients drift away.</p>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 border border-slate-100 p-5 space-y-3">
+                        <h4 class="font-[800] text-slate-950">Human handover rules</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-600 font-medium leading-relaxed">
+                            <li>Clinical advice or treatment alternatives.</li>
+                            <li>Questions about risks or diagnosis.</li>
+                            <li>Complex finance questions.</li>
+                            <li>Anxious, unhappy, or uncertain patients.</li>
+                            <li>Anything requiring clinician or TCO judgement.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100 p-5 space-y-3">
+                        <h4 class="font-[800] text-slate-950">GBP example</h4>
+                        <p>20 plans × 5% uplift = 1 additional accepted plan.</p>
+                        <p>1 × £1,500 = <strong class="text-slate-950">£1,500/month</strong>.</p>
+                        <p>For higher-value treatments, the same one extra accepted plan could be worth £3,000 or more.</p>
+                    </div>
+                </div>
+                <div class="note-card bg-[#c2155a]/5 border border-[#c2155a]/10 p-5"><p><strong class="text-slate-900">Implementation note:</strong> Treatment follow-up should feel helpful, not pushy. It should also be coordinated with the clinician or treatment coordinator so messages do not conflict with previous conversations.</p></div>
+            </article>
+
+            <article class="grid lg:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 shadow-sm p-6 space-y-4">
+                    <h3 class="text-xl font-[800] tracking-tight text-slate-950">Hygiene recall support</h3>
+                    <p>Many patients intend to book but do not get around to it. A structured recall workflow can help fill gaps if the practice has capacity.</p>
+                    <p><strong class="text-slate-950">Example:</strong> 200 due patients × 10% booking rate × £75 = £1,500 gross value.</p>
+                </div>
+                <div class="bg-white border border-slate-200 shadow-sm p-6 space-y-4">
+                    <h3 class="text-xl font-[800] tracking-tight text-slate-950">Emergency enquiry routing</h3>
+                    <p>AI can look for urgency signals such as pain, swelling, bleeding, trauma, infection, or severe discomfort, then escalate quickly.</p>
+                    <p><strong class="text-slate-950">Risk note:</strong> It should not diagnose, advise on medication, or suggest clinical treatment.</p>
+                </div>
+                <div class="bg-white border border-slate-200 shadow-sm p-6 space-y-4">
+                    <h3 class="text-xl font-[800] tracking-tight text-slate-950">Cancellation rebooking</h3>
+                    <p>Cancelled patients can disappear from the diary. A polite rebooking prompt can recover some of those gaps.</p>
+                    <p><strong class="text-slate-950">Example:</strong> 3 recovered appointments × £100 = £300/month.</p>
+                </div>
+                <div class="bg-white border border-slate-200 shadow-sm p-6 space-y-4 lg:col-span-1">
+                    <h3 class="text-xl font-[800] tracking-tight text-slate-950">Google review request workflow</h3>
+                    <p>Reviews influence patient confidence, especially for private treatments, nervous patients, cosmetic dentistry, and new patient registrations.</p>
+                    <p><strong class="text-slate-950">Implementation field note:</strong> Do not automate review requests blindly. Timing and patient selection matter.</p>
+                </div>
+                <div class="bg-white border border-slate-200 shadow-sm p-6 space-y-4 lg:col-span-2">
+                    <h3 class="text-xl font-[800] tracking-tight text-slate-950">Reception handover summaries</h3>
+                    <p>AI is often most useful behind the scenes. Reception teams do not need more messages. They need cleaner information.</p>
+                    <p><strong class="text-slate-950">Example summary:</strong> New patient. Interested in implants. No pain. Wants consultation options and finance information. Prefers Thursday afternoon call-back. Asked about rough pricing. Needs TCO follow-up.</p>
+                    <p><strong class="text-slate-950">GBP example:</strong> 300 conversations × 2 minutes saved = 10 hours. At £18/hour, this is £180/month in direct time saving, before quality improvements.</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- What not to automate and failure -->
+        <section id="failure" class="py-16 border-t border-slate-200">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white border border-slate-200 shadow-sm p-6 lg:p-8 space-y-5">
+                    <h2 class="text-3xl font-[800] tracking-tight text-slate-950">What not to automate first</h2>
+                    <p>A common mistake is starting with a broad website chatbot that tries to answer every question. That can work later, but it is rarely the best first step.</p>
+                    <p>A broad chatbot is harder to control, harder to measure, and more likely to answer questions it should not answer.</p>
+                    <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-slate-50 border border-slate-100 p-4"><h3 class="font-[800] text-slate-950 mb-2">Better first workflows</h3><ul class="list-disc list-inside text-slate-600 font-medium space-y-1"><li>Missed-call recovery</li><li>New patient triage</li><li>Treatment follow-up</li><li>Hygiene recall</li><li>Handover summaries</li></ul></div>
+                        <div class="bg-slate-50 border border-slate-100 p-4"><h3 class="font-[800] text-slate-950 mb-2">Riskier first workflows</h3><ul class="list-disc list-inside text-slate-600 font-medium space-y-1"><li>Broad clinical Q&A</li><li>Treatment recommendation</li><li>Complex finance advice</li><li>Complaint handling without review</li><li>Fully automated booking without controls</li></ul></div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 text-white shadow-2xl p-6 lg:p-8 space-y-5">
+                    <h2 class="text-3xl font-[800] tracking-tight">Where AI automation fails</h2>
+                    <p class="!text-white font-bold">In implementation, AI projects usually fail for ordinary operational reasons, not because the model is not clever enough.</p>
+                    <ul class="grid sm:grid-cols-2 gap-3 text-slate-200 font-medium">
+                        <li><i class="fas fa-xmark text-[#f472b6] mr-2"></i>The workflow is too broad.</li>
+                        <li><i class="fas fa-xmark text-[#f472b6] mr-2"></i>Nobody owns the handover.</li>
+                        <li><i class="fas fa-xmark text-[#f472b6] mr-2"></i>Reception does not trust the summaries.</li>
+                        <li><i class="fas fa-xmark text-[#f472b6] mr-2"></i>The team receives too many notifications.</li>
+                        <li><i class="fas fa-xmark text-[#f472b6] mr-2"></i>The AI tone feels unnatural or pushy.</li>
+                        <li><i class="fas fa-xmark text-[#f472b6] mr-2"></i>There is no clear measurement of success.</li>
+                    </ul>
+                    <p class="!text-white font-bold">
+    The lesson from real rollouts is simple: a better model rarely fixes a poorly owned workflow. The handover, escalation rules, team feedback loop, and measurement plan matter more.
+</p>
+<p class="!text-white" font-bold">
+    In practice, the difference between a useful AI workflow and a noisy one is not the model. It is whether the system knows what to collect, what to ignore, what to escalate, and what the team needs next.
+</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI -->
+        <section id="roi" class="py-16 border-t border-slate-200">
+            <div class="max-w-3xl mb-10 space-y-4">
+                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">GBP modelling</div>
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">How to estimate the ROI of dental AI automation</h2>
+                <p>The value usually comes from three areas: recovered opportunities, improved conversion, and staff time saved.</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 p-6 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Recovered opportunities</h3><p>Missed calls, abandoned forms, slow responses, and warm enquiries that would otherwise go cold.</p></div>
+                <div class="bg-white border border-slate-200 p-6 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Improved conversion</h3><p>More enquiries become booked appointments, consultations, treatment plan discussions, or accepted plans.</p></div>
+                <div class="bg-white border border-slate-200 p-6 shadow-sm space-y-3"><h3 class="font-[800] text-xl">Staff time saved</h3><p>Less repetitive chasing, summarising, routing, and copying information between systems.</p></div>
+            </div>
+            <div class="mt-8 bg-white border border-slate-200 shadow-sm p-6 lg:p-8 space-y-4">
+                <h3 class="text-2xl font-[800] tracking-tight text-slate-950">Example conservative estimate</h3>
+                <p>A practice implements missed-call recovery and new patient enquiry triage.</p>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="text-sm uppercase tracking-widest text-slate-400 mb-1">Missed-call recovery</p><p class="text-3xl font-[800] text-slate-950">£1,050</p></div>
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="text-sm uppercase tracking-widest text-slate-400 mb-1">New patient triage uplift</p><p class="text-3xl font-[800] text-slate-950">£360</p></div>
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="text-sm uppercase tracking-widest text-slate-400 mb-1">Reception time saved</p><p class="text-3xl font-[800] text-slate-950">£180</p></div>
+                </div>
+                <p>Total estimated monthly value: <strong class="text-slate-950">£1,590</strong>. If the system costs £1,000/month, the conservative net value is approximately £590/month.</p>
+                <p>If the same system also helps one additional patient accept a £2,000 treatment plan in a month, the total estimated monthly value becomes <strong class="text-slate-950">£3,590</strong>.</p>
+            </div>
+            <div class="mt-6 note-card bg-[#c2155a]/5 border border-[#c2155a]/10 p-5"><p><strong class="text-slate-900">ROI note:</strong> Staff-time savings are easy to calculate, but they often understate the value. In dental practices, the larger upside usually comes from faster response, better follow-up, higher treatment acceptance, and fewer lost enquiries.</p></div>
+        </section>
+
+        <!-- Rollout -->
+        <section id="rollout" class="py-16 border-t border-slate-200">
+            <div class="max-w-3xl mx-auto text-center mb-12 space-y-4">
+                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">Implementation</div>
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">A sensible 90-day rollout plan</h2>
+                <p>AI automation should not be installed casually and left alone. The first 90 days should be used to design, test, launch, and improve the first workflows.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 p-6 shadow-sm space-y-4"><div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">1</div><h3 class="text-xl font-[800]">Month 1: Audit and workflow design</h3><p>Map enquiry sources, review missed-call volume, identify high-value enquiry types, define escalation rules, choose the first workflow, and set success metrics.</p></div>
+                <div class="bg-white border border-slate-200 p-6 shadow-sm space-y-4"><div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">2</div><h3 class="text-xl font-[800]">Month 2: Build, connect, and test</h3><p>Set up templates, configure classification and summaries, connect the right systems, test edge cases, train the team, and adjust tone.</p></div>
+                <div class="bg-[#c2155a] text-white p-6 shadow-xl space-y-4"><div class="w-10 h-10 rounded-full bg-white text-[#c2155a] flex items-center justify-center font-bold">3</div><h3 class="text-xl font-[800]">Month 3: Launch, monitor, and optimise</h3><p class="!text-white/90">Launch properly, monitor conversations, check classifications, improve prompts, measure outcomes, and decide what to automate next.</p></div>
+            </div>
+
+            <div class="mt-12 bg-white border border-slate-200 shadow-sm p-6 lg:p-8 space-y-6">
+                <h3 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">Example 12-month roadmap</h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="font-[800] text-slate-950 mb-2">Months 1–3</p><p>Missed-call recovery and new patient enquiry triage.</p></div>
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="font-[800] text-slate-950 mb-2">Months 4–6</p><p>Treatment plan follow-up, consultation follow-up, finance enquiry routing.</p></div>
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="font-[800] text-slate-950 mb-2">Months 7–9</p><p>Hygiene recall, cancellation rebooking, short-notice gap filling.</p></div>
+                    <div class="bg-slate-50 border border-slate-100 p-5"><p class="font-[800] text-slate-950 mb-2">Months 10–12</p><p>Review request workflow, reception note summaries, reporting dashboard.</p></div>
+                </div>
+                <p>This is not fixed. A high-volume private practice may prioritise treatment plan follow-up earlier. A smaller mixed practice may get more immediate value from missed-call recovery and diary support.</p>
+            </div>
+        </section>
+
+        <!-- Checklist -->
+        <section class="py-16 border-t border-slate-200">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start">
+                <div class="space-y-4">
+                    <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">Practical implementation checklist</h2>
+                    <p>Before building anything, a dental practice should answer these questions. They matter more than the software choice.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white border border-slate-200 p-5 shadow-sm"><h3 class="font-[800] text-slate-950 mb-3">Enquiries</h3><ul class="list-disc list-inside text-slate-600 font-medium space-y-2"><li>Where do enquiries come from?</li><li>Which channels are slowest?</li><li>How many calls are missed?</li><li>Which enquiries are most valuable?</li></ul></div>
+                    <div class="bg-white border border-slate-200 p-5 shadow-sm"><h3 class="font-[800] text-slate-950 mb-3">Workflow</h3><ul class="list-disc list-inside text-slate-600 font-medium space-y-2"><li>What should AI handle first?</li><li>What should always go to a human?</li><li>Who owns the handover?</li><li>What does reception actually need?</li></ul></div>
+                    <div class="bg-white border border-slate-200 p-5 shadow-sm"><h3 class="font-[800] text-slate-950 mb-3">Risk</h3><ul class="list-disc list-inside text-slate-600 font-medium space-y-2"><li>What should AI never say?</li><li>Which topics need clinical review?</li><li>How should complaints be handled?</li><li>Who checks early outputs?</li></ul></div>
+                    <div class="bg-white border border-slate-200 p-5 shadow-sm"><h3 class="font-[800] text-slate-950 mb-3">Measurement</h3><ul class="list-disc list-inside text-slate-600 font-medium space-y-2"><li>What counts as recovered?</li><li>What counts as booked?</li><li>How will time saved be estimated?</li><li>What makes the project worth continuing?</li></ul></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="py-16 border-t border-slate-200">
+            <div class="max-w-4xl mx-auto space-y-10">
+                <div class="text-center space-y-4">
+                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs px-4 py-1.5 uppercase tracking-[0.2em] rounded-full">FAQs</div>
+                    <h2 class="text-3xl md:text-5xl font-[800] tracking-tighter text-slate-950">Questions dental practices usually ask</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">What is AI for dentists?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>AI for dentists usually means using artificial intelligence to support non-clinical workflows such as enquiry response, missed-call follow-up, patient triage, appointment requests, treatment plan follow-up, hygiene recalls, review requests, and reception admin. The best use cases are usually operational rather than clinical.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">Can AI replace dental receptionists?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>That should not be the aim. AI is better used to support reception by handling repetitive first responses, collecting information, summarising conversations, and routing enquiries. Human staff are still needed for judgement, empathy, exceptions, clinical escalation, and relationship management.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">What should a dental practice automate first?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>For many practices, the best first workflow is missed-call recovery or new patient enquiry triage. These are close to revenue, relatively easy to measure, and safer than broad clinical chat. Treatment plan follow-up can also be highly valuable, but it needs careful tone and coordination with the clinical team or treatment coordinator.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">Is AI safe for dental patient communication?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>It can be, if the scope is controlled. AI should not diagnose, give clinical advice, or answer sensitive treatment questions without human oversight. It should be used to capture information, classify enquiries, send approved responses, and route patients to the right person.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">How much value can AI automation create?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>The value depends on enquiry volume, missed-call volume, treatment mix, diary capacity, and current follow-up quality. A modest missed-call recovery workflow might be worth £500–£1,500/month. Treatment plan follow-up can be worth more if it improves acceptance of higher-value treatments. The best approach is to model the value using the practice’s own numbers.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">Why not just install a chatbot?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>A chatbot may be useful, but it is rarely the best first step. Many practices get more value from missed-call recovery, new patient triage, treatment follow-up, recall support, and handover summaries. These workflows are easier to measure and closer to real operational problems.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">How long does implementation take?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>A sensible first rollout usually takes around 90 days: Month 1 for audit and workflow design, Month 2 for build and test, and Month 3 for launch and optimisation. Simple workflows can be launched faster, but a proper implementation needs time for testing, staff feedback, and safe handover rules.</p></div>
+                    </div>
+                    <div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-6 text-left flex justify-between items-center group"><span class="text-sm md:text-base uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors font-bold">Why does this need ongoing management?</span><i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i></button>
+                        <div class="faq-content px-6"><p>Because AI workflows need monitoring, improvement, updates, and expansion. The practice may change services, pricing, booking rules, staff responsibilities, or preferred wording. Patient questions may also reveal gaps in the system. Ongoing management keeps the automation useful rather than stale.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+<section class="py-16 border-t border-slate-200">
+    <div class="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start">
+        <div class="space-y-4">
+            <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">Audit method</div>
+            <h2 class="text-3xl lg:text-5xl font-[800] tracking-tight text-slate-950">How we map the first workflow</h2>
+            <p>Before recommending tools, we map the operational problem. This keeps the project narrow, measurable, and useful to the team.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white border border-slate-200 p-5 shadow-sm">
+                <h3 class="font-[800] text-slate-950 mb-2">1. Find the leakage point</h3>
+                <p>Missed calls, slow replies, inconsistent follow-up, cancelled appointments, or admin that depends on memory.</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 shadow-sm">
+                <h3 class="font-[800] text-slate-950 mb-2">2. Define the safe scope</h3>
+                <p>What AI can collect, classify, draft, summarise, or route — and what must always go to a human.</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 shadow-sm">
+                <h3 class="font-[800] text-slate-950 mb-2">3. Design the handover</h3>
+                <p>The exact summary reception needs: patient type, intent, urgency, next action, and any escalation flags.</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 shadow-sm">
+                <h3 class="font-[800] text-slate-950 mb-2">4. Estimate the value</h3>
+                <p>We model potential value using call volume, enquiry mix, conversion assumptions, staff time, and treatment value.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Final view and CTA -->
+        <section class="py-20 bg-[#c2155a]/5 border-2 border-dashed border-[#c2155a]/20 text-center space-y-8 mb-16 px-4">
+            <div class="max-w-4xl mx-auto space-y-5">
+                <h2 class="text-3xl lg:text-5xl font-[800] tracking-tighter text-slate-950">The useful first step is not choosing a tool. It is mapping the workflow.</h2>
+                <p class="text-slate-600 font-medium text-base md:text-lg leading-relaxed">Which enquiries are being missed? Which follow-ups are inconsistent? Which admin tasks are repeated every day? Which patient conversations should always go to a human? Which workflow would create measurable value in the first 90 days?</p>
+            </div>
+            <button onclick="openModal(false, 'Final CTA')" class="px-10 md:px-12 py-5 md:py-6 bg-[#c2155a] text-white font-black uppercase tracking-[0.25em] text-[12px] shadow-2xl shadow-[#c2155a]/40 hover:scale-105 active:scale-95 transition-all">
+                <i class="fas fa-chart-line mr-2"></i>
+                <span>Request A Free Dental Automation Audit</span>
+            </button>
+        </section>
+    </main>
+
+    <footer class="py-12 bg-white border-t border-slate-300 text-center">
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        let isMobileMenuOpen = false;
+        let hasSubmitted = false;
+        let lastTriggerSource = 'Direct Click';
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('-translate-y-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('-translate-y-full');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function openModal(isExitIntent = false, source = 'Direct Click') {
+            hasSubmitted = false;
+            lastTriggerSource = source;
+
+            const submitBtn = document.getElementById('submit-btn');
+            const modalTitle = document.getElementById('modal-title');
+            const modalSubtitle = document.getElementById('modal-subtitle');
+            const modalTag = document.getElementById('modal-tag');
+
+            let title = "Request a Dental AI Automation Audit";
+            let subtitle = "We will map one practical workflow and estimate the likely value before anything is built.";
+            let tagText = "Step 1 of 1";
+
+            if (isExitIntent) {
+                tagText = "Before you go";
+                title = "Map one workflow before choosing a tool";
+                subtitle = "A short audit can show where AI is most likely to create measurable value in a dental practice.";
+            }
+
+            modalTag.innerText = tagText;
+            modalTitle.innerText = title;
+            modalSubtitle.innerText = subtitle;
+            submitBtn.innerText = "Submit Audit Request";
+
+            modalOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = "SENDING...";
+
+            const formData = {
+                name: document.getElementById('form-name').value,
+                company: document.getElementById('form-company').value,
+                email: document.getElementById('form-email').value,
+                phone: document.getElementById('form-phone').value,
+                smsOptin: document.getElementById('form-sms-optin').checked,
+                page: 'AI for Dentists Playbook',
+                triggerButton: lastTriggerSource,
+                sessionId: sessionId,
+                timestamp: new Date().toISOString()
+            };
+
+            if (n8nFormWebhookUrl) {
+                try {
+                    await fetch(n8nFormWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type: 'dental_ai_audit_lead', ...formData })
+                    });
+                } catch (error) {
+                    console.error('Webhook Error:', error);
+                }
+            }
+
+            hasSubmitted = true;
+            window.history.pushState(null, '', '?thankyou');
+            closeModal(false);
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalBtnText;
+            e.target.reset();
+            alert('Thanks. Your request has been submitted.');
+        }
+
+        function toggleFaq(button) {
+            const item = button.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal(true);
+        });
+    </script>
 
 <script>
-/* ── 1.  hidden page address sent to n8n ───────────────────── */
-const pageUrl   = window.location.href;
+async function handleHeroFormSubmit(e) {
+  e.preventDefault();
 
-/* ── 2.  n8n endpoint & per-visitor session ID ─────────────── */
-const webhook   = 'https://jemima-ai.app.n8n.cloud/webhook/2e14141f-8c61-4ec4-9bb6-897ad8dbc5d9/chat';
-const sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36);
+  const submitBtn = document.getElementById('hero-submit-btn');
+  const originalBtnText = submitBtn.innerText;
+  submitBtn.disabled = true;
+  submitBtn.innerText = "SENDING...";
 
-/* ── 3.  DOM handles ───────────────────────────────────────── */
-const box   = document.getElementById('chat-body');
-const input = document.getElementById('chat-input');
+  const formData = {
+    name: document.getElementById('hero-name').value,
+    company: document.getElementById('hero-company').value,
+    email: document.getElementById('hero-email').value,
+    phone: document.getElementById('hero-phone').value,
+    workflow: document.getElementById('hero-workflow').value,
+    page: 'AI for Dentists Playbook',
+    triggerButton: 'Hero Embedded Form',
+    sessionId: sessionId,
+    timestamp: new Date().toISOString()
+  };
 
-/* ── 4.  helper: add a chat bubble ─────────────────────────── */
-function add (text, role = 'ai') {
-  const div       = document.createElement('div');
-  div.className   = role === 'user' ? 'chat-bubble user-bubble' : 'chat-bubble ai-bubble';
-  div.innerHTML   = `<p>${text}</p>`;
-  box.appendChild(div);
-  box.scrollTop   = box.scrollHeight;
-  box.classList.add('show');
-}
-
-/* ── 5.  helper: unwrap JSON (object OR first element of array) */
-function parse (raw, hdr) {
-  if ((hdr.get('content-type') || '').includes('application/json')) {
+  if (n8nFormWebhookUrl) {
     try {
-      let d = JSON.parse(raw);
-      if (Array.isArray(d)) d = d[0] || {};
-      return (
-        d.reply   || d.output  || d.text || d.message ||
-        d.answer  || d.content ||
-        (d.choices && d.choices[0]?.message.content) ||
-        raw
-      );
-    } catch { /* fall through to raw */ }
-  }
-  return raw;
-}
-
-/* ── 6.  send routine, called on form submit ───────────────── */
-async function sendMessage () {
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  add(msg, 'user');               // echo user text
-  input.value = '';               // clear
-  input.style.height = '60px';    // reset height
-
-  try {
-    const res = await fetch(webhook, {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({
-        sessionId,
-        route     : 'general',
-        action    : 'sendMessage',
-        chatInput : msg,
-        pageUrl                      // hidden field
-      })
-    });
-    const raw = await res.text();
-    add(parse(raw, res.headers), 'ai');
-  } catch (err) {
-    console.error(err);
-    add('Could not reach the server.', 'ai');
-  }
-}
-
-/* ── 7.  auto-grow textarea ───────────────────────────────── */
-input.addEventListener('input', () => {
-  input.style.height = 'auto';
-  input.style.height = input.scrollHeight + 'px';
-});
-
-/* ── 8.  give focus on load (desktop only) ─────────────────── */
-window.addEventListener('load', () => {
-  const isMobile =
-    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  if (!isMobile) {
-    input.focus({ preventScroll: true });
-  }
-});
-/* ── 9.  mobile-menu toggle (optional) ─────────────────────── */
-const menuBtn  = document.querySelector('.mobile-menu-btn');
-const navMenu  = document.querySelector('nav ul');
-if (menuBtn && navMenu) {
-  menuBtn.addEventListener('click', () => navMenu.classList.toggle('show'));
-  navMenu.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => navMenu.classList.remove('show'))
-  );
-}
-
-
-/* quick-link handler */
-document.getElementById('chat-quick-links')
-  .addEventListener('click', e => {
-    if(e.target.classList.contains('qlink')){
-      e.preventDefault();
-      input.value = e.target.dataset.msg;
-      sendMessage();               // reuse the same send routine
-    }
-  });
-</script>
-<script>
-/* ── Booking & floating message ─────────────────────────── */
-const BOOKING_URL = 'https://jemima-ai.app.n8n.cloud/webhook/unified-booking-endpoint';
-const TIME_ZONE   = 'Europe/London';
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* handles ------------------------------------------------ */
-  const dayInput   = document.getElementById('day');
-  const slotSelect = document.getElementById('slot');
-  const form       = document.getElementById('bookingForm');
-  const formMsg    = document.getElementById('formMsg');
-  const pageUrlIn  = document.getElementById('pageUrl');
-
-  /* helper: show / hide banner ----------------------------- */
-  function flash(type, text, keepMs = 3000){
-    formMsg.className = '';            // clear all classes
-    formMsg.textContent = text;
-    if(type) formMsg.classList.add(type);
-    formMsg.classList.add('show');     // slide-in
-    clearTimeout(flash._timer);
-    flash._timer = setTimeout(() => formMsg.classList.remove('show'), keepMs);
-  }
-
-  /* init --------------------------------------------------- */
-  pageUrlIn.value = window.location.href;
-  dayInput.addEventListener('change',  fetchTimes);
-  form    .addEventListener('submit',  submitBooking);
-
-  /* fetch available times ---------------------------------- */
-  async function fetchTimes(){
-    const day = dayInput.value;
-    if(!day){
-      slotSelect.innerHTML = '<option value="">Pick a day first</option>';
-      return;
-    }
-    slotSelect.disabled = true;
-    slotSelect.innerHTML = '<option>Loading…</option>';
-
-    try{
-      const res  = await fetch(BOOKING_URL,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({action:'check_availability', day})
-                  });
-      const data = await res.json();
-      const payload = (Array.isArray(data)?data[0]:data).data ?? data.body ?? data;
-      const free   = payload.slots ?? [];
-
-      slotSelect.innerHTML = free.length
-        ? '<option value="">Select a time</option>'
-        : '<option value="">No slots available</option>';
-
-      free.forEach(s=>{
-        if(!s.startsWith(day)) return;
-        const t = s.slice(11,16);
-        slotSelect.insertAdjacentHTML('beforeend',
-          `<option value="${s}">${t}</option>`);
+      await fetch(n8nFormWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'dental_ai_audit_lead', ...formData })
       });
-    }catch{
-      slotSelect.innerHTML = '<option value="">Error loading slots</option>';
-    }finally{
-      slotSelect.disabled = false;
+    } catch (error) {
+      console.error('Webhook Error:', error);
     }
   }
 
-  /* submit booking ---------------------------------------- */
-  async function submitBooking(e){
-    e.preventDefault();
-    flash('sending','Sending…',10_000);         // orange bar
-
-    const payload = {
-      firstName:form.firstName.value,
-      lastName :form.lastName.value,
-      company  :form.company.value,
-      phone    :form.phone.value,
-      email    :form.email.value,
-      slot     :slotSelect.value,
-      pageUrl  :pageUrlIn.value,
-      timeZone :TIME_ZONE
-    };
-
-    try{
-      const res = await fetch(BOOKING_URL,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({action:'create_booking',...payload})
-                  });
-
-      if(res.ok){
-        form.reset();
-        slotSelect.innerHTML =
-          '<option value="">Pick a day first</option>';
-        flash('success','Your meeting is confirmed. Check your inbox.');
-      }else if(res.status===409){
-        flash('error','That time has just been taken. Please choose another.');
-        fetchTimes();
-      }else{
-        flash('error','An error occurred. Please try again later.');
-      }
-    }catch{
-      flash('error','Could not reach the server. Try again later.');
-    }
-  }
-});
+  window.history.pushState(null, '', '?thankyou');
+  submitBtn.disabled = false;
+  submitBtn.innerText = originalBtnText;
+  e.target.reset();
+  alert('Thanks. Your request has been submitted.');
+}
 </script>
-
 </body>
 </html>
