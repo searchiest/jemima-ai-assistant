@@ -256,16 +256,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Dental AI Readiness Score
         </h2>
 
-        <p class="text-slate-600 text-xs md:text-base leading-relaxed font-medium mb-6">
+        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-medium pb-4">
           Select 4 answers. It takes about 30 seconds. Estimates are fine. We’ll email you a short readiness score with one practical AI workflow idea for your practice.
         </p>
       </div>
 
-<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-5">
+<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-5 pb-6">
 
-    <div class="space-y-1.5">
+    <div class="space-y-1.5 mt-6">
         <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
-            Where should we send it?
+            Where should we send your score report?
         </label>
         <input
             type="email"
@@ -345,7 +345,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <option value="Not sure yet">Not sure yet</option>
         </select>
     </div>
-
     <button
         type="submit"
         id="submit-btn"
@@ -354,23 +353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Get My Score
     </button>
 </form>
-<div id="readiness-result" class="hidden mt-6 bg-slate-900 text-white p-5 space-y-3">
-    <p class="text-[11px] uppercase tracking-[0.2em] text-[#fbbf24] font-black">
-        Your Dental AI Readiness Score
-    </p>
 
-    <p class="text-4xl font-[800]">
-        <span id="result-score">0</span>/100
-    </p>
-
-    <p id="result-band" class="!text-white font-bold"></p>
-
-    <p id="result-recommendation" class="!text-white/80 text-sm leading-relaxed"></p>
-
-    <p class="!text-white/60 text-xs leading-relaxed">
-        We’ll email this summary to you. No call is required.
-    </p>
-</div>
     </aside>
 
   </div>
