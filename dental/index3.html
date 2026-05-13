@@ -257,35 +257,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </h2>
 
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
-          Answer 4 questions and we’ll email you a short readiness score with one practical AI workflow idea for your practice.
+          Select 4 answers. Takes about 30 seconds. Estimates are fine. and we’ll email you a short readiness score with one practical AI workflow idea for your practice.
         </p>
       </div>
 
 <form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-5">
 
+    <div class="bg-slate-50 border border-slate-100 p-4">
+        <p class="text-sm text-slate-600 font-semibold leading-relaxed">
+            Takes about 30 seconds. Choose the closest option — estimates are fine.
+        </p>
+    </div>
+
     <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-800">
-            Work email
+        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+            Where should we send it?
         </label>
         <input
             type="email"
             id="form-email"
             required
             placeholder="name@practice.co.uk"
-            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-600"
+            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400"
         >
     </div>
 
     <div class="space-y-1.5">
-        <label class="block font-bold  text-xs uppercase tracking-widest text-slate-800">
-            New patient enquiry volume
+        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+            Roughly how many new enquiries?
         </label>
         <select
             id="score-enquiries"
             required
-            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
+            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
         >
-            <option value="">Select one</option>
+            <option value="">Choose the closest option</option>
             <option value="0">Fewer than 10 per month</option>
             <option value="1">10–25 per month</option>
             <option value="2">26–75 per month</option>
@@ -294,49 +300,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="space-y-1.5">
-        <label class="block font-bold  text-xs uppercase tracking-widest text-slate-800">
-            Missed calls or slow replies
+        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+            Response delays
         </label>
         <select
             id="score-response-speed"
             required
-            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
+            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
         >
-            <option value="">Select one</option>
-            <option value="0">Rarely</option>
-            <option value="1">Sometimes</option>
-            <option value="2">Often</option>
-            <option value="3">Every week</option>
+            <option value="">Choose the closest option</option>
+            <option value="0">Rarely an issue</option>
+            <option value="1">Sometimes happens</option>
+            <option value="2">Happens often</option>
+            <option value="3">A weekly problem</option>
         </select>
     </div>
 
     <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-800">
-            Follow-up consistency
+        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+            Follow-up
         </label>
         <select
             id="score-followup"
             required
-            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
+            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
         >
-            <option value="">Select one</option>
+            <option value="">Choose the closest option</option>
             <option value="0">Very consistent</option>
             <option value="1">Mostly consistent</option>
-            <option value="2">Inconsistent</option>
-            <option value="3">Often missed</option>
+            <option value="2">A bit inconsistent</option>
+            <option value="3">Often gets missed</option>
         </select>
     </div>
 
     <div class="space-y-1.5">
-        <label class="block font-bold text-xs uppercase tracking-widest text-slate-800">
-            First workflow to improve
+        <label class="block font-bold text-xs uppercase tracking-widest text-slate-700">
+            What would you improve first?
         </label>
         <select
             id="score-workflow"
             required
-            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
+            class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-600 bg-white"
         >
-            <option value="">Select one</option>
+            <option value="">Choose one</option>
             <option value="Missed calls">Missed calls</option>
             <option value="New patient enquiries">New patient enquiries</option>
             <option value="Treatment plan follow-up">Treatment plan follow-up</option>
@@ -354,11 +360,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Get My Score
     </button>
 
-    <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">
-        We’ll email your score. No sales call required.
+    <p class="text-center text-xs text-slate-500 font-semibold">
+        No call required. We’ll only email your score and suggested workflow.
     </p>
 </form>
-
 <div id="readiness-result" class="hidden mt-6 bg-slate-900 text-white p-5 space-y-3">
     <p class="text-[11px] uppercase tracking-[0.2em] text-[#fbbf24] font-black">
         Your Dental AI Readiness Score
