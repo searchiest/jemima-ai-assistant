@@ -399,14 +399,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </div>
 
-    <!-- Button -->
-    <button
-        type="submit"
-        id="submit-btn"
-        class="w-full bg-[#c2155a] text-white py-3 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all"
-    >
-        Get My Score
-    </button>
+<button
+    type="submit"
+    id="readiness-submit-btn"
+    class="w-full bg-[#c2155a] text-white py-3 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all"
+>
+    Get My Score
+</button>
 
 </form>
 
@@ -1103,13 +1102,13 @@ async function handleReadinessFormSubmit(event) {
         return;
     }
 
-    const submitBtn = document.getElementById("submit-btn");
+    const submitBtn = document.getElementById("readiness-submit-btn");
     const originalBtnText = submitBtn.innerText;
 
     submitBtn.disabled = true;
     submitBtn.innerText = "CALCULATING...";
 
-    const email = document.getElementById("readiness-email").value.trim();
+    const email = document.getElementById("readiness-email").value.trim().toLowerCase();
     const enquiryScore = Number(document.getElementById("score-enquiries").value);
     const responseSpeedScore = Number(document.getElementById("score-response-speed").value);
     const followupScore = Number(document.getElementById("score-followup").value);
@@ -1135,7 +1134,7 @@ async function handleReadinessFormSubmit(event) {
     const recommendation = recommendations[workflow] || recommendations["Not sure yet"];
 
     const formData = {
-        type: "dental_ai_readiness_score",
+        type: "dental_ai_readiness_score_completed",
         email: email,
         enquiryScore: enquiryScore,
         responseSpeedScore: responseSpeedScore,
@@ -1145,9 +1144,14 @@ async function handleReadinessFormSubmit(event) {
         readinessBand: readinessBand,
         recommendation: recommendation,
         page: "AI for Dentists Playbook",
-        triggerButton: "Readiness Score Form",
+        pageUrl: window.location.href,
+        pagePath: window.location.pathname,
+        pageTitle: document.title,
+        triggerButton: "Readiness Score Form - Completed",
         sessionId: sessionId,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        localTime: new Date().toString(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
     };
 
     if (n8nFormWebhookUrl) {
@@ -1164,6 +1168,10 @@ async function handleReadinessFormSubmit(event) {
         }
     }
 
+    localStorage.setItem("dentalAiReadinessCompleted", "true");
+    localStorage.setItem("dentalAiReadinessCompletedEmail", email);
+    localStorage.setItem("dentalAiReadinessCompletedAt", new Date().toISOString());
+
     submitBtn.disabled = false;
     submitBtn.innerText = originalBtnText;
 
@@ -1179,7 +1187,6 @@ async function handleReadinessFormSubmit(event) {
     event.target.reset();
 }
 </script>
-
 <script>
 (function () {
     const n8nPartialEmailWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/1aa7f382-b8a2-407d-aadd-c2cd6685d045";
@@ -1191,8 +1198,15 @@ async function handleReadinessFormSubmit(event) {
         return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(email.trim());
     }
 
+    function hasThisEmailAlreadyCompleted(email) {
+        const completedEmail = localStorage.getItem("dentalAiReadinessCompletedEmail");
+        return completedEmail && completedEmail.toLowerCase() === email.toLowerCase();
+    }
+
     async function sendPartialEmailCapture(email) {
         if (!email || email === lastCapturedEmail) return;
+
+        if (hasThisEmailAlreadyCompleted(email)) return;
 
         lastCapturedEmail = email;
 
@@ -1229,6 +1243,8 @@ async function handleReadinessFormSubmit(event) {
 
         const email = emailInput.value.trim().toLowerCase();
 
+        if (hasThisEmailAlreadyCompleted(email)) return;
+
         clearTimeout(emailCaptureTimer);
 
         emailCaptureTimer = setTimeout(function () {
@@ -1253,7 +1269,6 @@ async function handleReadinessFormSubmit(event) {
     }
 })();
 </script>
-
 
 </body>
 </html>
