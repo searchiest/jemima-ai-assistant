@@ -256,12 +256,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Dental AI Readiness Score
         </h2>
 
+
+      </div>
+
+<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-6 pb-0">
+<div class="mb-4 space-y-2">
         <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-medium">
           Select 4 answers. It takes about 30 seconds. Estimates are fine.
         </p>
       </div>
-
-<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-6 pb-0">
 
 <div class="-mt-2 mb-8 md:-mt-4 md:mb-6 md:-ml-8">
     <img
@@ -409,7 +412,90 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </form>
 
-    </aside>
+<!-- Readiness result card -->
+<div id="readiness-result-card" class="hidden mt-6 bg-white border border-slate-200 shadow-xl rounded-2xl p-5 md:p-6">
+    <div class="flex items-start justify-between gap-4">
+        <div>
+            <p class="text-[10px] uppercase tracking-[0.22em] text-[#c2155a] font-black mb-2">
+                Your result
+            </p>
+
+            <h3 class="text-lg md:text-xl font-[800] text-slate-950 leading-tight">
+                Dental AI Readiness Score
+            </h3>
+
+            <p class="text-xs md:text-sm text-slate-500 font-medium mt-1">
+                Based on your answers.
+            </p>
+        </div>
+
+        <div class="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#c2155a]/10 border-[8px] border-[#c2155a]/20 flex items-center justify-center">
+            <div class="text-center leading-none">
+                <span id="result-score" class="block text-2xl md:text-3xl font-[800] text-[#c2155a]">0</span>
+                <span class="block text-[10px] uppercase tracking-widest text-[#c2155a] font-black">/100</span>
+            </div>
+        </div>
+    </div>
+
+<div class="mt-5 pt-5 border-t border-slate-200 grid sm:grid-cols-2 gap-4">
+    <div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0 mt-0.5">
+<i class="fas fa-signal !text-[#c2155a] text-sm"></i>
+</div>
+
+        <div>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-1">
+                Readiness
+            </p>
+            <p id="result-band" class="text-sm font-[800] text-slate-900">
+                Strong opportunity
+            </p>
+        </div>
+    </div>
+
+    <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0 mt-0.5">
+            <i class="fa-solid fa-bolt text-[#c2155a] text-sm"></i>
+        </div>
+
+        <div>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-1">
+                Suggested workflow
+            </p>
+            <p id="result-workflow" class="text-sm font-[800] text-slate-900">
+                Missed-call recovery
+            </p>
+        </div>
+    </div>
+</div>
+
+    <div class="mt-5 flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full border border-[#c2155a] flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-check text-[#c2155a] text-xs"></i>
+        </div>
+
+        <p id="result-recommendation" class="text-sm text-slate-600 leading-relaxed font-medium">
+            Good starting point: quick to launch, easy to measure, and close to revenue.
+        </p>
+    </div>
+
+
+    <div class="mt-5 pt-4 border-t border-slate-200 bg-slate-50 rounded-xl p-4 flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0">
+            <i class="fa-regular fa-envelope text-[#c2155a] text-xs"></i>
+        </div>
+
+        <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
+            Check your email inbox for a more detailed report, including your score breakdown and suggested next step.
+        </p>
+    </div>
+
+</div>
+
+</aside>
+
+
+
 
   </div>
 </section>
@@ -1199,17 +1285,47 @@ console.log("Readiness form payload being sent to n8n:", formData);
     submitBtn.disabled = false;
     submitBtn.innerText = originalBtnText;
 
-    alert(
-        "Your Dental AI Readiness Score is " +
-        aiReadinessScore +
-        "/100 — " +
-        readinessBand +
-        ". Suggested workflow: " +
-        recommendation
-    );
+showReadinessResultCard(aiReadinessScore, readinessBand, workflow, recommendation);
+
+event.target.reset();
 
     event.target.reset();
 }
+
+function showReadinessResultCard(score, band, workflow, recommendation) {
+    const resultCard = document.getElementById("readiness-result-card");
+
+    document.getElementById("result-score").innerText = score;
+    document.getElementById("result-band").innerText = band;
+    document.getElementById("result-workflow").innerText = workflow;
+    document.getElementById("result-recommendation").innerText = recommendation;
+
+    resultCard.classList.remove("hidden");
+
+    resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+
+function showReadinessResultCard(score, band, workflow, recommendation) {
+    const resultCard = document.getElementById("readiness-result-card");
+
+    document.getElementById("result-score").innerText = score;
+    document.getElementById("result-band").innerText = band;
+    document.getElementById("result-workflow").innerText = workflow;
+    document.getElementById("result-recommendation").innerText = recommendation;
+
+    document.getElementById("readiness-form").classList.add("hidden");
+    resultCard.classList.remove("hidden");
+
+    resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+
+
 </script>
 <script>
 (function () {
