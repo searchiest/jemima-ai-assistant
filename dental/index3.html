@@ -264,45 +264,121 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </p>
       </div>
 
-      <form id="hero-audit-form" onsubmit="handleHeroFormSubmit(event)" class="space-y-4">
+<form id="readiness-form" onsubmit="handleReadinessFormSubmit(event)" class="space-y-4 md:space-y-5">
 
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Work Email</label>
-          <input type="email" id="hero-email" required placeholder="john@practice.co.uk" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
-        </div>
+    <div class="space-y-1.5">
+        <label class="block text-xs uppercase tracking-widest text-slate-400">
+            Work email
+        </label>
+        <input
+            type="email"
+            id="form-email"
+            required
+            placeholder="name@practice.co.uk"
+            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300"
+        >
+    </div>
 
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Full Name</label>
-          <input type="text" id="hero-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
-        </div>
+    <div class="space-y-1.5">
+        <label class="block text-xs uppercase tracking-widest text-slate-400">
+            New patient enquiry volume
+        </label>
+        <select
+            id="score-enquiries"
+            required
+            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-white"
+        >
+            <option value="">Select one</option>
+            <option value="0">Fewer than 10 per month</option>
+            <option value="1">10–25 per month</option>
+            <option value="2">26–75 per month</option>
+            <option value="3">75+ per month</option>
+        </select>
+    </div>
 
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Practice Name</label>
-          <input type="text" id="hero-company" required placeholder="Practice name" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
-        </div>
+    <div class="space-y-1.5">
+        <label class="block text-xs uppercase tracking-widest text-slate-400">
+            Missed calls or slow replies
+        </label>
+        <select
+            id="score-response-speed"
+            required
+            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-white"
+        >
+            <option value="">Select one</option>
+            <option value="0">Rarely</option>
+            <option value="1">Sometimes</option>
+            <option value="2">Often</option>
+            <option value="3">Every week</option>
+        </select>
+    </div>
 
-<div class="space-y-1.5">
-    <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">
-        Where are you in the process?
-    </label>
+    <div class="space-y-1.5">
+        <label class="block text-xs uppercase tracking-widest text-slate-400">
+            Follow-up consistency
+        </label>
+        <select
+            id="score-followup"
+            required
+            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-white"
+        >
+            <option value="">Select one</option>
+            <option value="0">Very consistent</option>
+            <option value="1">Mostly consistent</option>
+            <option value="2">Inconsistent</option>
+            <option value="3">Often missed</option>
+        </select>
+    </div>
 
-    <select id="form-ai-readiness" required class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base text-slate-400">
-        <option value="select">Select One</option>
-        <option value="Ready to explore AI now">Ready to explore AI now</option>
-        <option value="Researching for later">Researching for later</option>
-    </select>
+    <div class="space-y-1.5">
+        <label class="block text-xs uppercase tracking-widest text-slate-400">
+            First workflow to improve
+        </label>
+        <select
+            id="score-workflow"
+            required
+            class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-white"
+        >
+            <option value="">Select one</option>
+            <option value="Missed calls">Missed calls</option>
+            <option value="New patient enquiries">New patient enquiries</option>
+            <option value="Treatment plan follow-up">Treatment plan follow-up</option>
+            <option value="Hygiene recalls">Hygiene recalls</option>
+            <option value="Reception admin">Reception admin</option>
+            <option value="Not sure yet">Not sure yet</option>
+        </select>
+    </div>
+
+    <button
+        type="submit"
+        id="submit-btn"
+        class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+    >
+        Get My Score
+    </button>
+
+    <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">
+        We’ll email your score. No sales call required.
+    </p>
+</form>
+
+<div id="readiness-result" class="hidden mt-6 bg-slate-900 text-white p-5 space-y-3">
+    <p class="text-[11px] uppercase tracking-[0.2em] text-[#fbbf24] font-black">
+        Your Dental AI Readiness Score
+    </p>
+
+    <p class="text-4xl font-[800]">
+        <span id="result-score">0</span>/100
+    </p>
+
+    <p id="result-band" class="!text-white font-bold"></p>
+
+    <p id="result-recommendation" class="!text-white/80 text-sm leading-relaxed"></p>
+
+    <p class="!text-white/60 text-xs leading-relaxed">
+        We’ll email this summary to you. No call is required.
+    </p>
 </div>
-
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold uppercase tracking-widest text-slate-800">Phone Number</label>
-          <input type="tel" id="hero-phone" required placeholder="+44 7000 000000" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base placeholder:text-slate-400">
-        </div>
-
-        <button type="submit" id="hero-submit-btn" class="w-full bg-[#c2155a] text-white py-4 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all">
-          Email My Score
-        </button>
-
-      </form>
     </aside>
 
   </div>
