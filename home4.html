@@ -483,20 +483,91 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </h3>
 
         <p class="text-slate-600 font-medium leading-relaxed">
-            See what happens when your business misses a call. Our AI receptionist answers, captures the enquiry, and sends the structured call summary back to you by SMS and email.
+            Enter your details below. We’ll create a unique demo PIN, show you the demo number, and send your captured enquiry summary by SMS and email after the call.
         </p>
     </div>
 
-    <div class="bg-slate-50 border border-slate-100 p-4 space-y-4">
-        <div>
+    <form class="space-y-4">
+        <label class="block space-y-2">
+            <span class="text-sm font-bold text-slate-800">Full name</span>
+            <input 
+                type="text" 
+                name="name" 
+                required 
+                placeholder="Jane Smith" 
+                class="w-full border border-slate-200 p-3 rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2155a]/20 focus:border-[#c2155a]"
+            >
+        </label>
+
+        <label class="block space-y-2">
+            <span class="text-sm font-bold text-slate-800">Company name</span>
+            <input 
+                type="text" 
+                name="company" 
+                required 
+                placeholder="Smith & Co Plumbing" 
+                class="w-full border border-slate-200 p-3 rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2155a]/20 focus:border-[#c2155a]"
+            >
+        </label>
+
+        <label class="block space-y-2">
+            <span class="text-sm font-bold text-slate-800">Work email</span>
+            <input 
+                type="email" 
+                name="email" 
+                required 
+                placeholder="you@company.com" 
+                class="w-full border border-slate-200 p-3 rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2155a]/20 focus:border-[#c2155a]"
+            >
+        </label>
+
+        <label class="block space-y-2">
+            <span class="text-sm font-bold text-slate-800">Mobile number</span>
+            <input 
+                type="tel" 
+                name="mobile" 
+                required 
+                placeholder="07123 456789" 
+                class="w-full border border-slate-200 p-3 rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2155a]/20 focus:border-[#c2155a]"
+            >
+            <span class="block text-xs text-slate-500 leading-relaxed">
+                We’ll use this to send your demo PIN and call summary by SMS.
+            </span>
+        </label>
+
+        <label class="block space-y-2">
+            <span class="text-sm font-bold text-slate-800">
+                Business type <span class="text-slate-400 font-medium">(optional)</span>
+            </span>
+            <input 
+                type="text" 
+                name="business_type" 
+                placeholder="Dental clinic, estate agent, plumber..." 
+                class="w-full border border-slate-200 p-3 rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2155a]/20 focus:border-[#c2155a]"
+            >
+        </label>
+
+        <label class="block space-y-2">
+            <span class="text-sm font-bold text-slate-800">
+                What do missed calls usually involve? <span class="text-slate-400 font-medium">(optional)</span>
+            </span>
+            <input 
+                type="text" 
+                name="enquiry_type" 
+                placeholder="Bookings, quote requests, emergency jobs..." 
+                class="w-full border border-slate-200 p-3 rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2155a]/20 focus:border-[#c2155a]"
+            >
+        </label>
+
+        <div class="bg-slate-50 border border-slate-100 p-4 space-y-3">
             <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black">
-                How the demo works
+                What happens next
             </p>
 
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 font-semibold leading-relaxed">
+            <ul class="space-y-2 text-sm text-slate-600 font-semibold leading-relaxed">
                 <li class="flex gap-2">
                     <span class="text-[#c2155a] font-black">1.</span>
-                    <span>Enter your details to create a unique demo PIN.</span>
+                    <span>Submit the form to create your unique demo PIN.</span>
                 </li>
                 <li class="flex gap-2">
                     <span class="text-[#c2155a] font-black">2.</span>
@@ -504,35 +575,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </li>
                 <li class="flex gap-2">
                     <span class="text-[#c2155a] font-black">3.</span>
-                    <span>Receive the captured enquiry summary by SMS and email.</span>
+                    <span>Receive your captured enquiry summary by SMS and email.</span>
                 </li>
             </ul>
         </div>
 
-        <div class="border-t border-slate-200 pt-4 space-y-2">
-            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black">
-                What we ask for
-            </p>
+        <button 
+            type="submit" 
+            class="w-full bg-[#c2155a] text-white font-bold px-5 py-3 rounded-md hover:bg-[#a9114b] transition"
+        >
+            Create my demo PIN
+        </button>
 
-            <p class="text-sm text-slate-600 font-semibold leading-relaxed">
-                We only need your name, company, work email and mobile number so we can match your test call and send your demo results to the right place.
-            </p>
-        </div>
-    </div>
-
-    <div class="bg-[#c2155a]/5 border border-[#c2155a]/10 p-4 space-y-2">
-        <p class="text-sm font-extrabold text-slate-950">
-            After you submit the form
+        <p class="text-xs text-slate-500 leading-relaxed">
+            We only use these details to run your demo, match your test call, and send your results. Your existing phone setup is not changed.
         </p>
-
-        <p class="text-sm text-slate-600 font-medium leading-relaxed">
-            You’ll see the demo phone number and your unique PIN on screen. Keep the page open, call the number, and the AI receptionist will guide you through the demo.
-        </p>
-    </div>
-
-    <p class="text-xs text-slate-500 leading-relaxed">
-        Your existing phone setup is not changed. The demo is only used to show how missed call enquiries can be captured and returned to your team.
-    </p>
+    </form>
 </div>
 
                 <div id="sms-demo" class="bg-white border border-slate-200 shadow-sm p-6 space-y-4 scroll-mt-32">
