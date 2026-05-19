@@ -124,205 +124,291 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-0 pb-8 lg:pb-16 playbook">
 
-    <!-- Hero -->
-    <section class="pt-4 pb-10 lg:pt-8 lg:pb-16">
-        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-start">
-            <div class="space-y-4 lg:space-y-5">
-                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] px-4 py-1.5 uppercase tracking-[0.2em]">AI For Service Businesses</div>
-<h1 class="my-0 text-3xl md:text-4xl lg:text-5xl font-[800] leading-[0.9] text-slate-950 tracking-tight">
-    Ongoing AI Business Implementation <span class="text-[#c2155a]">Predictable Cost</span>
-</h1>
-                <p class="text-slate-600 text-lg md:text-xl leading-relaxed font-medium max-w-3xl">Jemima helps service businesses build AI-supported systems for enquiries, follow-up, reviews, visibility and customer experience. Choose the right first use case, then develop improve and expand AI over time with a predictable monthly investment.</p>
+ <!-- Hero -->
+<section class="pt-3 pb-6 lg:pt-4 lg:pb-8">
+    <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-6 lg:gap-8 items-start">
 
+        <!-- Left: Copy + Video -->
+        <div class="space-y-2 lg:space-y-3">
+            <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[10px] md:text-[11px] px-3 md:px-4 py-1 md:py-1.5 uppercase tracking-[0.2em]">
+                AI For Service Businesses
+            </div>
 
-                <div class="bg-white border border-slate-200 shadow-xl overflow-hidden">
-                    <div class="relative aspect-video bg-slate-900">
-                        <video class="absolute inset-0 w-full h-full object-cover" src="https://vz-1599ac93-05a.b-cdn.net/e9e44bb2-73e0-4a4a-a4fe-def3670042c6/play_1080p.mp4" poster="/home-ai-automation.png" controls playsinline preload="metadata">Your browser does not support the video tag.</video>
-                    </div>
+            <h1 class="my-0 text-3xl md:text-4xl lg:text-5xl font-[800] leading-[0.92] text-slate-950 tracking-tight">
+                Ongoing AI Business Implementation <span class="text-[#c2155a]">Predictable Cost</span>
+            </h1>
+
+            <p class="text-slate-600 text-base md:text-lg leading-snug font-medium max-w-2xl">
+                Jemima helps service businesses build AI-supported systems for enquiries, follow-up, reviews, visibility and customer experience. Choose the right first use case, then develop, improve and expand AI over time with a predictable monthly investment.
+            </p>
+
+            <div class="bg-white border border-slate-200 shadow-xl overflow-hidden max-w-2xl">
+                <div class="relative aspect-video bg-slate-900">
+                    <video
+                        class="absolute inset-0 w-full h-full object-cover"
+                        src="https://vz-1599ac93-05a.b-cdn.net/e9e44bb2-73e0-4a4a-a4fe-def3670042c6/play_1080p.mp4"
+                        poster="/home-ai-automation.png"
+                        controls
+                        playsinline
+                        preload="metadata"
+                    >
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
-            <aside class="bg-white border border-slate-200 shadow-2xl p-5 lg:p-6 lg:sticky lg:top-20 scroll-mt-32" id="readiness-score">
-<div class="mb-4 space-y-2">
-<h2 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">
-                            AI Opportunity Score
-                        </h2>
-<p class="readiness-helper-text text-slate-600 text-xs md:text-sm leading-relaxed font-medium">
-                            Select 4 answers. It takes about 30 seconds. Estimates are fine.
-                        </p>
-</div>
-<form class="space-y-4 md:space-y-6 pb-0 scroll-mt-24" id="readiness-form" onsubmit="handleReadinessFormSubmit(event)">
-<div class="-mt-2 mb-8 md:-mt-4 md:mb-6 md:-ml-8">
-<img alt="Example AI growth opportunity score result preview" class="w-full md:w-[90%] h-auto block mx-auto" height="399" src="/readiness-result-preview.png" width="921"/>
-</div>
-<!-- Email -->
-<div class="flex items-start gap-3 md:gap-4 mb-4">
-<div class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
-<i class="fa-regular fa-envelope text-slate-700 text-base md:text-lg"></i>
-</div>
-<div class="flex-1 space-y-0 min-w-0">
-<label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
-                                    Where should we send your score report?
-                                </label>
-<input autocomplete="email" class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm placeholder:text-slate-400 bg-transparent" id="readiness-email" name="readiness-email" placeholder="name@company.co.uk" required="" type="email"/>
-<p aria-live="polite" class="hidden mt-1 text-xs text-red-600 font-semibold leading-relaxed" id="readiness-email-error">
-                                    Please enter a valid email address.
-                                </p>
-<div aria-live="polite" class="hidden mt-2 bg-amber-50 border border-amber-200 p-3" id="readiness-public-email-warning">
-<p class="text-xs text-amber-800 font-semibold leading-relaxed">
-                                        This looks like a personal email address. Are you sure this is the best email for your score report?
-                                    </p>
-</div>
-</div>
-</div>
-<!-- Growth source -->
-<div class="flex items-start gap-3 md:gap-4 mb-4">
-<div class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
-<i class="fa-solid fa-inbox text-slate-700 text-base md:text-lg"></i>
-</div>
-<div class="flex-1 space-y-0 min-w-0">
-<label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
-                                    Where could AI help first?
-                                </label>
-<select class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent" id="score-enquiries" required="">
-<option value="">Choose the closest option</option>
-<option value="1">We need more visibility</option>
-<option value="2">We need more enquiries</option>
-<option value="3">We miss or lose enquiries</option>
-<option value="3">We need better follow-up</option>
-</select>
-</div>
-</div>
-<!-- Response delays -->
-<div class="flex items-start gap-3 md:gap-4 mb-4">
-<div class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
-<i class="fa-regular fa-clock text-slate-700 text-base md:text-lg"></i>
-</div>
-<div class="flex-1 space-y-0 min-w-0">
-<label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
-                                    Missed calls or slow replies
-                                </label>
-<select class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent" id="score-response-speed" required="">
-<option value="">Choose the closest option</option>
-<option value="0">Rarely an issue</option>
-<option value="1">Sometimes happens</option>
-<option value="2">Happens often</option>
-<option value="3">A weekly problem</option>
-</select>
-</div>
-</div>
-<!-- Follow-up -->
-<div class="flex items-start gap-3 md:gap-4 mb-4">
-<div class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
-<i class="fa-regular fa-comments text-slate-700 text-base md:text-lg"></i>
-</div>
-<div class="flex-1 space-y-0 min-w-0">
-<label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
-                                    Follow-up consistency
-                                </label>
-<select class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent" id="score-followup" required="">
-<option value="">Choose the closest option</option>
-<option value="0">Very consistent</option>
-<option value="1">Mostly consistent</option>
-<option value="2">A bit inconsistent</option>
-<option value="3">Often gets missed</option>
-</select>
-</div>
-</div>
-<!-- Workflow -->
-<div class="flex items-start gap-3 md:gap-4 mb-4">
-<div class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
-<i class="fa-solid fa-bullseye text-slate-700 text-base md:text-lg"></i>
-</div>
-<div class="flex-1 space-y-0 min-w-0">
-<label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
-                                    What would you like your AI team to test first?
-                                </label>
-<select class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent" id="score-workflow" required="">
-<option value="">Choose one</option>
-<option value="Dedicated lead-gen URL">Dedicated lead-gen URL</option>
-<option value="Forwarded phone number">Forwarded phone number</option>
-<option value="Routed or BCC email capture">Routed or BCC email capture</option>
-<option value="Lead scorecard or calculator">Lead scorecard or calculator</option>
-<option value="Review workflow">Review workflow</option>
-<option value="Landing page and SEO support">Landing page and SEO support</option>
-<option value="Simple follow-up workflow">Simple follow-up workflow</option>
-<option value="Not sure yet">Not sure yet</option>
-</select>
-</div>
-</div>
-<button class="w-full bg-[#c2155a] text-white py-3 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all" id="readiness-submit-btn" type="submit">
-                            Get My AI Score
-                        </button>
-</form>
-<!-- Result card -->
-<div aria-hidden="true" class="hidden mt-6 bg-white border border-slate-200 shadow-xl rounded-2xl p-5 md:p-6" id="readiness-result-card">
-<div class="flex items-start justify-between gap-4">
-<div>
-<p class="text-[10px] uppercase tracking-[0.22em] text-[#c2155a] font-black mb-2">
-                                    Your result
-                                </p>
-<h3 class="text-lg md:text-xl font-[800] text-slate-950 leading-tight">
-                                    AI Opportunity Score
-                                </h3>
-<p class="text-xs md:text-sm text-slate-500 font-medium mt-1">
-                                    Based on your answers.
-                                </p>
-</div>
-<div class="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#c2155a]/10 border-[8px] border-[#c2155a]/20 flex items-center justify-center">
-<div class="text-center leading-none">
-<span class="block text-2xl md:text-3xl font-[800] text-[#c2155a]" id="result-score">0</span>
-<span class="block text-[10px] uppercase tracking-widest text-[#c2155a] font-black">/100</span>
-</div>
-</div>
-</div>
-<div class="mt-5 pt-5 border-t border-slate-200 grid sm:grid-cols-2 gap-4">
-<div class="flex items-start gap-3">
-<div class="w-8 h-8 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0 mt-0.5">
-<i class="fas fa-signal !text-[#c2155a] text-sm"></i>
-</div>
-<div>
-<p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-1">
-                                        Opportunity
-                                    </p>
-<p class="text-sm font-[800] text-slate-900" id="result-band">
-                                        Strong opportunity
-                                    </p>
-</div>
-</div>
-<div class="flex items-start gap-3">
-<div class="w-8 h-8 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0 mt-0.5">
-<i class="fa-solid fa-bolt text-[#c2155a] text-sm"></i>
-</div>
-<div>
-<p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-1">
-                                        Suggested test
-                                    </p>
-<p class="text-sm font-[800] text-slate-900" id="result-workflow">
-                                        Live demo path
-                                    </p>
-</div>
-</div>
-</div>
-<div class="mt-5 flex items-start gap-3">
-<div class="w-7 h-7 rounded-full border border-[#c2155a] flex items-center justify-center shrink-0">
-<i class="fa-solid fa-check text-[#c2155a] text-xs"></i>
-</div>
-<p class="text-sm text-slate-600 leading-relaxed font-medium" id="result-recommendation">
-                                Start with a live demo path that proves value without disrupting your current systems.
-                            </p>
-</div>
-<div class="mt-5 pt-4 border-t border-slate-200 bg-slate-50 rounded-xl p-4 flex items-start gap-3">
-<div class="w-7 h-7 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0">
-<i class="fa-regular fa-envelope text-[#c2155a] text-xs"></i>
-</div>
-<p class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
-                                Check your email inbox for a more detailed report, including your score breakdown and suggested next step.
-                            </p>
-</div>
-</div>
-</aside>
         </div>
-    </section>
+
+        <!-- Right: Embedded Score Form -->
+        <aside class="bg-white border border-slate-200 shadow-2xl p-4 lg:p-5 lg:sticky lg:top-16 scroll-mt-32" id="readiness-score">
+            <div class="mb-3 space-y-1">
+                <h2 class="text-2xl lg:text-3xl font-[800] tracking-tight text-slate-950">
+                    AI Opportunity Score
+                </h2>
+
+                <p class="readiness-helper-text text-slate-600 text-xs md:text-sm leading-snug font-medium">
+                    Select 4 answers. It takes about 30 seconds. Estimates are fine.
+                </p>
+            </div>
+
+            <form class="space-y-3 md:space-y-4 pb-0 scroll-mt-24" id="readiness-form" onsubmit="handleReadinessFormSubmit(event)">
+                <div class="-mt-2 mb-4 md:-mt-3 md:mb-4 md:-ml-6">
+                    <img
+                        alt="Example AI growth opportunity score result preview"
+                        class="w-full md:w-[88%] h-auto block mx-auto"
+                        height="399"
+                        src="/readiness-result-preview.png"
+                        width="921"
+                    />
+                </div>
+
+                <!-- Email -->
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+                        <i class="fa-regular fa-envelope text-slate-700 text-sm md:text-base"></i>
+                    </div>
+
+                    <div class="flex-1 space-y-0 min-w-0">
+                        <label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
+                            Where should we send your score report?
+                        </label>
+
+                        <input
+                            autocomplete="email"
+                            class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm placeholder:text-slate-400 bg-transparent"
+                            id="readiness-email"
+                            name="readiness-email"
+                            placeholder="name@company.co.uk"
+                            required
+                            type="email"
+                        />
+
+                        <p aria-live="polite" class="hidden mt-1 text-xs text-red-600 font-semibold leading-relaxed" id="readiness-email-error">
+                            Please enter a valid email address.
+                        </p>
+
+                        <div aria-live="polite" class="hidden mt-2 bg-amber-50 border border-amber-200 p-3" id="readiness-public-email-warning">
+                            <p class="text-xs text-amber-800 font-semibold leading-relaxed">
+                                This looks like a personal email address. Are you sure this is the best email for your score report?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Growth source -->
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+                        <i class="fa-solid fa-inbox text-slate-700 text-sm md:text-base"></i>
+                    </div>
+
+                    <div class="flex-1 space-y-0 min-w-0">
+                        <label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
+                            Where could AI help first?
+                        </label>
+
+                        <select
+                            class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+                            id="score-enquiries"
+                            required
+                        >
+                            <option value="">Choose the closest option</option>
+                            <option value="1">We need more visibility</option>
+                            <option value="2">We need more enquiries</option>
+                            <option value="3">We miss or lose enquiries</option>
+                            <option value="3">We need better follow-up</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Response delays -->
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+                        <i class="fa-regular fa-clock text-slate-700 text-sm md:text-base"></i>
+                    </div>
+
+                    <div class="flex-1 space-y-0 min-w-0">
+                        <label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
+                            Missed calls or slow replies
+                        </label>
+
+                        <select
+                            class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+                            id="score-response-speed"
+                            required
+                        >
+                            <option value="">Choose the closest option</option>
+                            <option value="0">Rarely an issue</option>
+                            <option value="1">Sometimes happens</option>
+                            <option value="2">Happens often</option>
+                            <option value="3">A weekly problem</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Follow-up -->
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+                        <i class="fa-regular fa-comments text-slate-700 text-sm md:text-base"></i>
+                    </div>
+
+                    <div class="flex-1 space-y-0 min-w-0">
+                        <label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
+                            Follow-up consistency
+                        </label>
+
+                        <select
+                            class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+                            id="score-followup"
+                            required
+                        >
+                            <option value="">Choose the closest option</option>
+                            <option value="0">Very consistent</option>
+                            <option value="1">Mostly consistent</option>
+                            <option value="2">A bit inconsistent</option>
+                            <option value="3">Often gets missed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Workflow -->
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-1">
+                        <i class="fa-solid fa-bullseye text-slate-700 text-sm md:text-base"></i>
+                    </div>
+
+                    <div class="flex-1 space-y-0 min-w-0">
+                        <label class="block font-bold text-[10px] md:text-xs uppercase tracking-widest text-slate-700">
+                            What would you like your AI team to test first?
+                        </label>
+
+                        <select
+                            class="w-full border-b-2 border-slate-200 py-1 focus:border-[#c2155a] outline-none transition-colors text-sm text-slate-600 bg-transparent"
+                            id="score-workflow"
+                            required
+                        >
+                            <option value="">Choose one</option>
+                            <option value="Dedicated lead-gen URL">Dedicated lead-gen URL</option>
+                            <option value="Forwarded phone number">Forwarded phone number</option>
+                            <option value="Routed or BCC email capture">Routed or BCC email capture</option>
+                            <option value="Lead scorecard or calculator">Lead scorecard or calculator</option>
+                            <option value="Review workflow">Review workflow</option>
+                            <option value="Landing page and SEO support">Landing page and SEO support</option>
+                            <option value="Simple follow-up workflow">Simple follow-up workflow</option>
+                            <option value="Not sure yet">Not sure yet</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button
+                    class="w-full bg-[#c2155a] text-white py-2.5 uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all"
+                    id="readiness-submit-btn"
+                    type="submit"
+                >
+                    Get My AI Score
+                </button>
+            </form>
+
+            <!-- Result card -->
+            <div aria-hidden="true" class="hidden mt-5 bg-white border border-slate-200 shadow-xl rounded-2xl p-5 md:p-6" id="readiness-result-card">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.22em] text-[#c2155a] font-black mb-2">
+                            Your result
+                        </p>
+
+                        <h3 class="text-lg md:text-xl font-[800] text-slate-950 leading-tight">
+                            AI Opportunity Score
+                        </h3>
+
+                        <p class="text-xs md:text-sm text-slate-500 font-medium mt-1">
+                            Based on your answers.
+                        </p>
+                    </div>
+
+                    <div class="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#c2155a]/10 border-[8px] border-[#c2155a]/20 flex items-center justify-center">
+                        <div class="text-center leading-none">
+                            <span class="block text-2xl md:text-3xl font-[800] text-[#c2155a]" id="result-score">0</span>
+                            <span class="block text-[10px] uppercase tracking-widest text-[#c2155a] font-black">/100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-5 border-t border-slate-200 grid sm:grid-cols-2 gap-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fas fa-signal !text-[#c2155a] text-sm"></i>
+                        </div>
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-1">
+                                Opportunity
+                            </p>
+
+                            <p class="text-sm font-[800] text-slate-900" id="result-band">
+                                Strong opportunity
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fa-solid fa-bolt text-[#c2155a] text-sm"></i>
+                        </div>
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black mb-1">
+                                Suggested test
+                            </p>
+
+                            <p class="text-sm font-[800] text-slate-900" id="result-workflow">
+                                Live demo path
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 flex items-start gap-3">
+                    <div class="w-7 h-7 rounded-full border border-[#c2155a] flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-check text-[#c2155a] text-xs"></i>
+                    </div>
+
+                    <p class="text-sm text-slate-600 leading-relaxed font-medium" id="result-recommendation">
+                        Start with a live demo path that proves value without disrupting your current systems.
+                    </p>
+                </div>
+
+                <div class="mt-5 pt-4 border-t border-slate-200 bg-slate-50 rounded-xl p-4 flex items-start gap-3">
+                    <div class="w-7 h-7 rounded-full bg-[#c2155a]/10 flex items-center justify-center shrink-0">
+                        <i class="fa-regular fa-envelope text-[#c2155a] text-xs"></i>
+                    </div>
+
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
+                        Check your email inbox for a more detailed report, including your score breakdown and suggested next step.
+                    </p>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
 
     <!-- AI Team model -->
     <section id="ai-team" class="py-16 border-t border-slate-200 scroll-mt-32">
