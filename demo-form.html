@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Request an AI Automation Demo</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7f9;
+      color: #111827;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+
+    h1 {
+      font-size: 42px;
+      line-height: 1.1;
+      margin: 0 0 12px;
+    }
+
+    .intro {
+      color: #6b7280;
+      font-size: 18px;
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px 13px;
+      font-size: 15px;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: #111827;
+      width: fit-content;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      font-weight: 700;
+      font-size: 14px;
+      margin-left: 12px;
+    }
+
+    .success {
+      color: #047857;
+    }
+
+    .error {
+      color: #b91c1c;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .note {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <h1>Request a tailored AI automation demo</h1>
+    <p class="intro">
+      Tell us a little about your business and the revenue leak you want to fix.
+      We’ll prepare a short tailored demo showing how automation could help with enquiries,
+      quotes, appointments, reviews or local growth.
+    </p>
+
+    <section class="card">
+      <form id="demoRequestForm">
+        <div class="grid">
+          <div>
+            <label for="name">Your name *</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+
+          <div>
+            <label for="business_name">Business name *</label>
+            <input id="business_name" name="business_name" type="text" required>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="email">Work email *</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+
+          <div>
+            <label for="phone">Phone number</label>
+            <input id="phone" name="phone" type="tel">
+          </div>
+        </div>
+
+        <div>
+          <label for="sector">Sector *</label>
+          <select id="sector" name="sector" required>
+            <option value="">Select one</option>
+            <option>Dentist</option>
+            <option>Accountant</option>
+            <option>Estate agent</option>
+            <option>Law firm</option>
+            <option>Private clinic</option>
+            <option>Other service business</option>
+          </select>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="selected_category">Demo category *</label>
+            <select id="selected_category" name="selected_category" required>
+              <option value="">Select one</option>
+              <option>Capture more enquiries</option>
+              <option>Convert more quotes</option>
+              <option>Reduce diary leakage</option>
+              <option>Grow reviews and referrals</option>
+              <option>Find local growth opportunities</option>
+              <option>Personalised AI communication</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="selected_demo">Specific demo *</label>
+            <select id="selected_demo" name="selected_demo" required>
+              <option value="">Select one</option>
+              <option>Missed Call Recovery</option>
+              <option>Smart Enquiry Qualification</option>
+              <option>High-Value Lead Alert</option>
+              <option>Website Enquiry Triage</option>
+              <option>Unclosed Quote Recovery</option>
+              <option>Proposal Follow-Up</option>
+              <option>Lost Quote Insight</option>
+              <option>Appointment Reminder</option>
+              <option>No-Show Recovery</option>
+              <option>Cancellation Slot Recovery</option>
+              <option>Google Review Request</option>
+              <option>Private Feedback Routing</option>
+              <option>Referral Request</option>
+              <option>Local Search Opportunity</option>
+              <option>Service Page Gap</option>
+              <option>Competitor Gap Report</option>
+              <option>Personalised AI Video</option>
+              <option>Next-Step Explainer</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="website_url">Website URL *</label>
+          <input id="website_url" name="website_url" type="url" placeholder="https://example.com" required>
+        </div>
+
+        <div>
+          <label for="main_pain_point">What problem are you trying to fix? *</label>
+          <textarea id="main_pain_point" name="main_pain_point" required placeholder="Example: We send quotes but do not follow up consistently."></textarea>
+        </div>
+
+        <div>
+          <label for="current_process">What do you currently do?</label>
+          <textarea id="current_process" name="current_process" placeholder="Example: We send PDF quotes manually by email and occasionally chase by phone."></textarea>
+        </div>
+
+        <div>
+          <label for="urgency">How urgent is this?</label>
+          <select id="urgency" name="urgency">
+            <option value="">Select one</option>
+            <option>Just exploring</option>
+            <option>This month</option>
+            <option>As soon as possible</option>
+            <option>Urgent</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="notes">Anything else we should know?</label>
+          <textarea id="notes" name="notes"></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="submitButton" type="submit">Request tailored demo</button>
+          <span id="formMessage" class="message"></span>
+        </div>
+      </form>
+
+      <p class="note">
+        Please do not include sensitive customer, patient, client or case information.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const WEBHOOK_URL = 'https://jemima-ai.app.n8n.cloud/webhook-test/demo-request';
+
+    const form = document.getElementById('demoRequestForm');
+    const button = document.getElementById('submitButton');
+    const message = document.getElementById('formMessage');
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      message.textContent = '';
+      message.className = 'message';
+
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('Request failed');
+        }
+
+        message.textContent = 'Thanks — your demo request has been received.';
+        message.className = 'message success';
+        form.reset();
+      } catch (error) {
+        message.textContent = 'Something went wrong. Please try again.';
+        message.className = 'message error';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Request tailored demo';
+      }
+    });
+  </script>
+</body>
+</html>
