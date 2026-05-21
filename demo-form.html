@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Request an AI Automation Demo</title>
+  <meta name="description" content="Request a tailored AI automation demo for your service business.">
 
   <style>
     body {
@@ -24,17 +25,18 @@
       font-size: 42px;
       line-height: 1.1;
       margin: 0 0 12px;
+      letter-spacing: -0.03em;
     }
 
     .intro {
       color: #6b7280;
       font-size: 18px;
-      max-width: 680px;
-      margin-bottom: 28px;
+      max-width: 720px;
+      margin: 0 0 28px;
     }
 
     .card {
-      background: #fff;
+      background: #ffffff;
       border: 1px solid #e5e7eb;
       border-radius: 18px;
       padding: 28px;
@@ -69,11 +71,33 @@
       font-size: 15px;
       font-family: inherit;
       box-sizing: border-box;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid rgba(17, 24, 39, 0.16);
+      border-color: #9ca3af;
     }
 
     textarea {
       min-height: 110px;
       resize: vertical;
+    }
+
+    .help {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     button {
@@ -83,9 +107,13 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      color: #fff;
+      color: #ffffff;
       background: #111827;
       width: fit-content;
+    }
+
+    button:hover {
+      background: #000000;
     }
 
     button:disabled {
@@ -96,7 +124,6 @@
     .message {
       font-weight: 700;
       font-size: 14px;
-      margin-left: 12px;
     }
 
     .success {
@@ -105,12 +132,6 @@
 
     .error {
       color: #b91c1c;
-    }
-
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
     .note {
@@ -127,6 +148,14 @@
       h1 {
         font-size: 34px;
       }
+
+      .page {
+        padding: 32px 16px;
+      }
+
+      .card {
+        padding: 22px;
+      }
     }
   </style>
 </head>
@@ -134,6 +163,7 @@
 <body>
   <main class="page">
     <h1>Request a tailored AI automation demo</h1>
+
     <p class="intro">
       Tell us a little about your business and the revenue leak you want to fix.
       We’ll prepare a short tailored demo showing how automation could help with enquiries,
@@ -195,27 +225,8 @@
 
           <div>
             <label for="selected_demo">Specific demo *</label>
-            <select id="selected_demo" name="selected_demo" required>
-              <option value="">Select one</option>
-              <option>Missed Call Recovery</option>
-              <option>Smart Enquiry Qualification</option>
-              <option>High-Value Lead Alert</option>
-              <option>Website Enquiry Triage</option>
-              <option>Unclosed Quote Recovery</option>
-              <option>Proposal Follow-Up</option>
-              <option>Lost Quote Insight</option>
-              <option>Appointment Reminder</option>
-              <option>No-Show Recovery</option>
-              <option>Cancellation Slot Recovery</option>
-              <option>Google Review Request</option>
-              <option>Private Feedback Routing</option>
-              <option>Referral Request</option>
-              <option>Local Search Opportunity</option>
-              <option>Service Page Gap</option>
-              <option>Competitor Gap Report</option>
-              <option>Personalised AI Video</option>
-              <option>Next-Step Explainer</option>
-              <option>Not sure yet</option>
+            <select id="selected_demo" name="selected_demo" required disabled>
+              <option value="">Select a category first</option>
             </select>
           </div>
         </div>
@@ -223,6 +234,7 @@
         <div>
           <label for="website_url">Website URL *</label>
           <input id="website_url" name="website_url" type="url" placeholder="https://example.com" required>
+          <div class="help">We use this to understand your services, tone and likely demo fit.</div>
         </div>
 
         <div>
@@ -266,9 +278,85 @@
   <script>
     const WEBHOOK_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-request';
 
+    const demosByCategory = {
+      'Capture more enquiries': [
+        'Missed Call Recovery',
+        'Smart Enquiry Qualification',
+        'High-Value Lead Alert',
+        'Website Enquiry Triage',
+        'Out-of-Hours Lead Capture',
+        'Ad Lead Speed-to-Lead'
+      ],
+      'Convert more quotes': [
+        'Unclosed Quote Recovery',
+        'Proposal Follow-Up',
+        'Treatment Plan Follow-Up',
+        'Lost Quote Insight',
+        'Hot Quote Alert',
+        'Price Objection Follow-Up'
+      ],
+      'Reduce diary leakage': [
+        'Appointment Reminder',
+        'No-Show Recovery',
+        'Cancellation Slot Recovery',
+        'Reschedule Request Alert',
+        'Booking Link Follow-Up',
+        'Short-Notice Availability'
+      ],
+      'Grow reviews and referrals': [
+        'Google Review Request',
+        'Private Feedback Routing',
+        'Referral Request',
+        'Testimonial Collection',
+        'Reputation Risk Alert',
+        'Feedback Theme Summary'
+      ],
+      'Find local growth opportunities': [
+        'Local Search Opportunity',
+        'Service Page Gap',
+        'Competitor Gap Report',
+        'Local Lead Capture Page',
+        'Content Calendar',
+        'Review Theme Analysis'
+      ],
+      'Personalised AI communication': [
+        'Personalised AI Video',
+        'Next-Step Explainer',
+        'Proposal Video Follow-Up',
+        'AI Voice Message',
+        'Post-Enquiry Welcome',
+        'FAQ Response'
+      ]
+    };
+
     const form = document.getElementById('demoRequestForm');
     const button = document.getElementById('submitButton');
     const message = document.getElementById('formMessage');
+    const categorySelect = document.getElementById('selected_category');
+    const demoSelect = document.getElementById('selected_demo');
+
+    categorySelect.addEventListener('change', function () {
+      const selectedCategory = categorySelect.value;
+      const demos = demosByCategory[selectedCategory] || [];
+
+      demoSelect.innerHTML = '';
+
+      if (!selectedCategory || demos.length === 0) {
+        demoSelect.disabled = true;
+        demoSelect.innerHTML = '<option value="">Select a category first</option>';
+        return;
+      }
+
+      demoSelect.disabled = false;
+      demoSelect.innerHTML = '<option value="">Select one</option>';
+
+      demos.forEach(function (demo) {
+        const option = document.createElement('option');
+        option.value = demo;
+        option.textContent = demo;
+        demoSelect.appendChild(option);
+      });
+    });
 
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
@@ -279,26 +367,26 @@
       message.className = 'message';
 
       const formData = new FormData(form);
-      const payload = Object.fromEntries(formData.entries());
 
       try {
         const response = await fetch(WEBHOOK_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
+          body: formData
         });
 
         if (!response.ok) {
-          throw new Error('Request failed');
+          throw new Error(`HTTP ${response.status}`);
         }
 
         message.textContent = 'Thanks — your demo request has been received.';
         message.className = 'message success';
         form.reset();
+
+        demoSelect.disabled = true;
+        demoSelect.innerHTML = '<option value="">Select a category first</option>';
       } catch (error) {
-        message.textContent = 'Something went wrong. Please try again.';
+        console.error(error);
+        message.textContent = `Something went wrong: ${error.message}`;
         message.className = 'message error';
       } finally {
         button.disabled = false;
