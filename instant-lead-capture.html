@@ -503,34 +503,47 @@
         sample_enquiry: sampleEnquiry.value
       };
 
-      try {
-        const response = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
+try {
+  const response = await fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
+  const responseText = await response.text();
 
-        const data = await response.json();
+  console.log('HTTP status:', response.status);
+  console.log('Raw n8n response:', responseText);
 
-        if (!data.success) {
-          throw new Error(data.message || 'Demo failed');
-        }
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${responseText || 'empty response'}`);
+  }
 
-        renderResult(data);
-      } catch (error) {
-        console.error(error);
-        message.textContent = `Something went wrong: ${error.message}`;
-        message.className = 'message error';
-      } finally {
-        button.disabled = false;
-        button.textContent = 'Generate lead summary';
-      }
+  if (!responseText) {
+    throw new Error('Empty response from n8n');
+  }
+
+  let data;
+
+  try {
+    data = JSON.parse(responseText);
+  } catch (error) {
+    throw new Error(`Invalid JSON response from n8n: ${responseText}`);
+  }
+
+  if (!data.success) {
+    throw new Error(data.message || 'Demo failed');
+  }
+
+  renderResult(data);
+} catch (error) {
+  console.error(error);
+  message.textContent = `Something went wrong: ${error.message}`;
+  message.className = 'message error';
+}
+
     });
   </script>
 </body>
