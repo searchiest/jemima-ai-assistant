@@ -117,6 +117,16 @@
       border-color: #9ca3af;
     }
 
+    .industry-notice {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-left: 4px solid #111827;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #374151;
+    }
+
     .examples {
       display: grid;
       gap: 8px;
@@ -296,9 +306,9 @@
 <body>
   <main class="page">
     <section class="hero">
-      <div class="eyebrow">Interactive demo</div>
-      <h1>Try the instant lead capture demo</h1>
-      <p class="intro">
+      <div class="eyebrow" id="pageEyebrow">Interactive demo</div>
+      <h1 id="pageTitle">Try the instant lead capture demo</h1>
+      <p class="intro" id="pageIntro">
         Paste a sample enquiry and see how AI can classify the lead, estimate urgency and value, and recommend the next action for your team.
       </p>
     </section>
@@ -306,6 +316,8 @@
     <section class="layout">
       <div class="card">
         <form id="leadDemoForm">
+          <div id="industryNotice" class="industry-notice" style="display: none;"></div>
+
           <div>
             <label for="business_type">Business type</label>
             <select id="business_type" name="business_type" required>
@@ -321,21 +333,11 @@
 
           <div>
             <label for="sample_enquiry">Sample enquiry</label>
-            <textarea id="sample_enquiry" name="sample_enquiry" required placeholder="Example: I’m interested in dental implants but would like to understand the cost and finance options."></textarea>
+            <textarea id="sample_enquiry" name="sample_enquiry" required placeholder="Example: I’m interested in your service and would like to understand cost, availability and the next step."></textarea>
           </div>
 
-          <div class="examples">
-            <button class="example-button" type="button" data-business="Dentist" data-example="I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.">
-              Use dentist example
-            </button>
-
-            <button class="example-button" type="button" data-business="Estate agent" data-example="I’m thinking of selling my 3-bed house in Bristol. I had one valuation last month but wasn’t impressed. I’d like to know what you charge and how quickly you could get the property listed.">
-              Use estate agent example
-            </button>
-
-            <button class="example-button" type="button" data-business="Accountant" data-example="I run a small limited company and need help with bookkeeping, payroll and VAT. My current accountant is slow to reply and I want to switch before the next VAT deadline.">
-              Use accountant example
-            </button>
+          <div class="examples" id="exampleButtons">
+            <!-- Example buttons are populated by JavaScript based on industry -->
           </div>
 
           <div class="actions">
@@ -401,8 +403,8 @@
 
           <div class="cta">
             <h3>Want this tailored to your business?</h3>
-            <p>
-              Request a tailored demo using your business type, website and chosen automation category.
+            <p id="ctaText">
+              Want this connected to your website form, inbox or missed call process?
             </p>
             <a href="index.html">Request tailored demo</a>
           </div>
@@ -412,8 +414,161 @@
   </main>
 
   <script>
-
     const WEBHOOK_URL = 'https://jemima-ai.app.n8n.cloud/webhook/instant-lead-capture';
+
+    const industryProfiles = {
+      dental: {
+        businessType: 'Dentist',
+        eyebrow: 'Interactive dental demo',
+        title: 'Try the instant dental enquiry demo',
+        intro: 'Paste a sample dental enquiry and see how AI can classify treatment interest, urgency, value and the next action for the practice team.',
+        notice: 'This demo is optimised for dental enquiries such as implants, Invisalign, emergency appointments, hygiene, whitening and treatment-plan questions.',
+        placeholder: 'Example: I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available.',
+        ctaText: 'Want this connected to your dental website form, phone enquiry process or inbox?',
+        examples: [
+          {
+            label: 'Use implant enquiry example',
+            text: 'I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.'
+          },
+          {
+            label: 'Use emergency dentist example',
+            text: 'I have tooth pain and think I may need an emergency appointment. I’m not registered with the practice but would like to be seen as soon as possible.'
+          },
+          {
+            label: 'Use Invisalign enquiry example',
+            text: 'I’m interested in Invisalign but I’m not sure if I’m suitable. Could you tell me how the consultation works and what the next step would be?'
+          }
+        ]
+      },
+
+      'estate-agent': {
+        businessType: 'Estate agent',
+        eyebrow: 'Interactive estate agency demo',
+        title: 'Try the instant property enquiry demo',
+        intro: 'Paste a sample valuation, viewing or landlord enquiry and see how AI can classify intent, urgency, likely value and the next action for the team.',
+        notice: 'This demo is optimised for estate agency enquiries such as valuations, viewings, landlord services, property management and vendor instructions.',
+        placeholder: 'Example: I’m thinking of selling my 3-bed house in Bristol and would like to know how quickly you could get it listed.',
+        ctaText: 'Want this connected to your valuation form, viewing request form or enquiry inbox?',
+        examples: [
+          {
+            label: 'Use seller valuation example',
+            text: 'I’m thinking of selling my 3-bed house in Bristol. I had one valuation last month but wasn’t impressed. I’d like to know what you charge and how quickly you could get the property listed.'
+          },
+          {
+            label: 'Use landlord enquiry example',
+            text: 'I own two rental properties and I’m looking for a letting agent to handle tenant finding and ongoing management. Can someone explain your fees and process?'
+          },
+          {
+            label: 'Use viewing enquiry example',
+            text: 'I saw the two-bedroom flat on your website and would like to arrange a viewing this week. I’m a first-time buyer and have a mortgage agreement in principle.'
+          }
+        ]
+      },
+
+      accountant: {
+        businessType: 'Accountant',
+        eyebrow: 'Interactive accounting demo',
+        title: 'Try the instant accounting enquiry demo',
+        intro: 'Paste a sample accounting enquiry and see how AI can classify service need, urgency, value and the next action for the practice team.',
+        notice: 'This demo is optimised for accounting enquiries such as bookkeeping, payroll, VAT, limited company accounts, tax returns and switching accountant.',
+        placeholder: 'Example: I run a small limited company and need help with bookkeeping, payroll and VAT before the next deadline.',
+        ctaText: 'Want this connected to your accounting enquiry form or practice inbox?',
+        examples: [
+          {
+            label: 'Use limited company example',
+            text: 'I run a small limited company and need help with bookkeeping, payroll and VAT. My current accountant is slow to reply and I want to switch before the next VAT deadline.'
+          },
+          {
+            label: 'Use tax return example',
+            text: 'I need help completing my self assessment tax return. I have rental income and some freelance income and I’m not sure what records you need from me.'
+          },
+          {
+            label: 'Use payroll enquiry example',
+            text: 'We are hiring our first employees and need help setting up payroll, pensions and monthly reporting. Can someone explain your monthly packages?'
+          }
+        ]
+      },
+
+      clinic: {
+        businessType: 'Private clinic',
+        eyebrow: 'Interactive private clinic demo',
+        title: 'Try the instant private clinic enquiry demo',
+        intro: 'Paste a sample private clinic enquiry and see how AI can classify treatment interest, urgency, suitability questions and the next action for the team.',
+        notice: 'This demo is optimised for private clinic enquiries such as consultations, treatment packages, self-pay pricing, aftercare and appointment preparation.',
+        placeholder: 'Example: I’m interested in booking a private consultation and would like to understand the next steps and likely cost.',
+        ctaText: 'Want this connected to your clinic enquiry form, booking page or reception inbox?',
+        examples: [
+          {
+            label: 'Use consultation enquiry example',
+            text: 'I’m interested in booking an initial private consultation. I’d like to understand what happens at the appointment, what I need to bring and how quickly I can be seen.'
+          },
+          {
+            label: 'Use treatment package example',
+            text: 'I’m looking into private treatment options and would like to know what packages are available, likely pricing and whether I need a consultation first.'
+          },
+          {
+            label: 'Use follow-up question example',
+            text: 'I had a consultation recently and I’m still unsure about the next step. Could someone explain what happens if I decide to go ahead?'
+          }
+        ]
+      },
+
+      law: {
+        businessType: 'Law firm',
+        eyebrow: 'Interactive law firm demo',
+        title: 'Try the instant legal enquiry demo',
+        intro: 'Paste a sample legal enquiry and see how AI can classify matter type, urgency, commercial value and the next action for the team.',
+        notice: 'This demo is optimised for law firm enquiries such as conveyancing, employment matters, family law, fee estimates and consultation requests.',
+        placeholder: 'Example: I need advice on a settlement agreement and have been asked to respond by Friday.',
+        ctaText: 'Want this connected to your legal enquiry form, quote form or intake inbox?',
+        examples: [
+          {
+            label: 'Use employment law example',
+            text: 'I have been given a settlement agreement by my employer and they have asked me to respond by Friday. I need someone to review it and explain the process and likely cost.'
+          },
+          {
+            label: 'Use conveyancing quote example',
+            text: 'I’m buying a house and would like a conveyancing quote. The offer has been accepted and the estate agent is asking for solicitor details.'
+          },
+          {
+            label: 'Use family law enquiry example',
+            text: 'I need advice about child arrangements after separation. I’m not sure what the process is and would like an initial consultation.'
+          }
+        ]
+      },
+
+      default: {
+        businessType: '',
+        eyebrow: 'Interactive demo',
+        title: 'Try the instant lead capture demo',
+        intro: 'Paste a sample enquiry and see how AI can classify the lead, estimate urgency and value, and recommend the next action for your team.',
+        notice: '',
+        placeholder: 'Example: I’m interested in your service and would like to understand cost, availability and the next step.',
+        ctaText: 'Want this connected to your website form, inbox or missed call process?',
+        examples: [
+          {
+            label: 'Use dentist example',
+            businessType: 'Dentist',
+            text: 'I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.'
+          },
+          {
+            label: 'Use estate agent example',
+            businessType: 'Estate agent',
+            text: 'I’m thinking of selling my 3-bed house in Bristol. I had one valuation last month but wasn’t impressed. I’d like to know what you charge and how quickly you could get the property listed.'
+          },
+          {
+            label: 'Use accountant example',
+            businessType: 'Accountant',
+            text: 'I run a small limited company and need help with bookkeeping, payroll and VAT. My current accountant is slow to reply and I want to switch before the next VAT deadline.'
+          }
+        ]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const industryParam = (params.get('industry') || '').toLowerCase();
+    const profile = industryProfiles[industryParam] || industryProfiles.default;
+
     const form = document.getElementById('leadDemoForm');
     const button = document.getElementById('submitButton');
     const message = document.getElementById('formMessage');
@@ -432,6 +587,52 @@
     const recommendedAction = document.getElementById('recommendedAction');
     const missingInformation = document.getElementById('missingInformation');
     const confidence = document.getElementById('confidence');
+
+    const pageEyebrow = document.getElementById('pageEyebrow');
+    const pageTitle = document.getElementById('pageTitle');
+    const pageIntro = document.getElementById('pageIntro');
+    const industryNotice = document.getElementById('industryNotice');
+    const exampleButtons = document.getElementById('exampleButtons');
+    const ctaText = document.getElementById('ctaText');
+
+    function applyIndustryProfile() {
+      pageEyebrow.textContent = profile.eyebrow;
+      pageTitle.textContent = profile.title;
+      pageIntro.textContent = profile.intro;
+
+      sampleEnquiry.placeholder = profile.placeholder;
+
+      if (profile.businessType) {
+        businessType.value = profile.businessType;
+      }
+
+      if (profile.notice) {
+        industryNotice.textContent = profile.notice;
+        industryNotice.style.display = 'block';
+      } else {
+        industryNotice.style.display = 'none';
+      }
+
+      if (ctaText) {
+        ctaText.textContent = profile.ctaText;
+      }
+
+      exampleButtons.innerHTML = '';
+
+      profile.examples.forEach(function (example) {
+        const exampleButton = document.createElement('button');
+        exampleButton.className = 'example-button';
+        exampleButton.type = 'button';
+        exampleButton.textContent = example.label;
+
+        exampleButton.addEventListener('click', function () {
+          businessType.value = example.businessType || profile.businessType || '';
+          sampleEnquiry.value = example.text;
+        });
+
+        exampleButtons.appendChild(exampleButton);
+      });
+    }
 
     function setMetricClass(element, value) {
       element.classList.remove('quality-high', 'quality-medium', 'quality-low');
@@ -483,13 +684,6 @@
       }
     }
 
-    document.querySelectorAll('.example-button').forEach(function (button) {
-      button.addEventListener('click', function () {
-        businessType.value = button.dataset.business;
-        sampleEnquiry.value = button.dataset.example;
-      });
-    });
-
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
 
@@ -499,52 +693,57 @@
       message.className = 'message';
 
       const payload = {
+        industry: industryParam || 'general',
         business_type: businessType.value,
         sample_enquiry: sampleEnquiry.value
       };
 
-try {
-  const response = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  });
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
 
-  const responseText = await response.text();
+        const responseText = await response.text();
 
-  console.log('HTTP status:', response.status);
-  console.log('Raw n8n response:', responseText);
+        console.log('HTTP status:', response.status);
+        console.log('Raw n8n response:', responseText);
 
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: ${responseText || 'empty response'}`);
-  }
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${responseText || 'empty response'}`);
+        }
 
-  if (!responseText) {
-    throw new Error('Empty response from n8n');
-  }
+        if (!responseText) {
+          throw new Error('Empty response from n8n');
+        }
 
-  let data;
+        let data;
 
-  try {
-    data = JSON.parse(responseText);
-  } catch (error) {
-    throw new Error(`Invalid JSON response from n8n: ${responseText}`);
-  }
+        try {
+          data = JSON.parse(responseText);
+        } catch (error) {
+          throw new Error(`Invalid JSON response from n8n: ${responseText}`);
+        }
 
-  if (!data.success) {
-    throw new Error(data.message || 'Demo failed');
-  }
+        if (!data.success) {
+          throw new Error(data.message || 'Demo failed');
+        }
 
-  renderResult(data);
-} catch (error) {
-  console.error(error);
-  message.textContent = `Something went wrong: ${error.message}`;
-  message.className = 'message error';
-}
-
+        renderResult(data);
+      } catch (error) {
+        console.error(error);
+        message.textContent = `Something went wrong: ${error.message}`;
+        message.className = 'message error';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Generate lead summary';
+      }
     });
+
+    applyIndustryProfile();
   </script>
 </body>
 </html>
