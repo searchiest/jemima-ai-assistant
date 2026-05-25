@@ -1,21 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instant Lead Revenue Triage Demo | Jemima AI</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instant Lead Revenue Triage Demo</title>
+  <meta name="description" content="Try an instant AI lead revenue triage demo for service businesses.">
 
   <style>
     :root {
-      --bg: #f6f7fb;
+      --bg: #f6f7f9;
       --card: #ffffff;
       --text: #111827;
       --muted: #6b7280;
       --border: #e5e7eb;
       --primary: #111827;
-      --primary-soft: #f3f4f6;
-      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-      --radius: 18px;
+      --soft: #f3f4f6;
+      --success: #047857;
+      --error: #b91c1c;
+      --warning: #92400e;
+      --blue: #1d4ed8;
     }
 
     * {
@@ -24,121 +27,71 @@
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top left, #eef2ff 0, #f6f7fb 34%, #ffffff 100%);
+      font-family: Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.5;
     }
 
     .page {
-      max-width: 1180px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 36px 20px 56px;
+      padding: 48px 20px;
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 28px;
-      align-items: stretch;
+      max-width: 850px;
       margin-bottom: 28px;
     }
 
-    .hero-card,
-    .form-card,
-    .result-card {
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 34px;
-    }
-
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--primary-soft);
-      color: #374151;
-      font-size: 13px;
+      color: var(--muted);
+      font-size: 14px;
       font-weight: 700;
-      margin-bottom: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
     }
 
     h1 {
+      font-size: 46px;
+      line-height: 1.06;
       margin: 0 0 14px;
-      font-size: clamp(34px, 5vw, 56px);
-      line-height: 1.02;
       letter-spacing: -0.04em;
     }
 
     .intro {
-      margin: 0;
-      color: var(--muted);
       font-size: 18px;
-      max-width: 680px;
-    }
-
-    .hero-side {
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .mini-stat {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      background: #fff;
-    }
-
-    .mini-stat strong {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 4px;
-    }
-
-    .mini-stat span {
       color: var(--muted);
-      font-size: 14px;
+      margin: 0;
+      max-width: 790px;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
-      gap: 28px;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
       align-items: start;
     }
 
-    .form-card,
-    .result-card {
-      padding: 26px;
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.05);
     }
 
-    .section-title {
-      margin: 0 0 8px;
-      font-size: 23px;
-      letter-spacing: -0.02em;
-    }
-
-    .section-help {
-      margin: 0 0 22px;
-      color: var(--muted);
-      font-size: 15px;
+    form {
+      display: grid;
+      gap: 18px;
     }
 
     label {
-      display: block;
-      margin: 18px 0 7px;
-      font-weight: 700;
       font-size: 14px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 7px;
     }
 
     select,
@@ -146,211 +99,313 @@
     input {
       width: 100%;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 13px 14px;
+      border-radius: 12px;
+      padding: 12px 13px;
       font-size: 15px;
+      font-family: inherit;
       background: #fff;
       color: var(--text);
-      outline: none;
+    }
+
+    textarea {
+      min-height: 190px;
+      resize: vertical;
     }
 
     select:focus,
     textarea:focus,
     input:focus {
+      outline: 2px solid rgba(17, 24, 39, 0.16);
       border-color: #9ca3af;
-      box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.06);
     }
 
-    textarea {
-      min-height: 220px;
-      resize: vertical;
+    .industry-notice {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-left: 4px solid #111827;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #374151;
     }
 
-    .helper {
+    .examples {
+      display: grid;
+      gap: 8px;
+    }
+
+    .example-button {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .example-button:hover {
+      background: var(--soft);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button.primary {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    button.primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .message.error {
+      color: var(--error);
+    }
+
+    .help {
       color: var(--muted);
       font-size: 13px;
       margin-top: 6px;
     }
 
-    .button-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-top: 22px;
-      flex-wrap: wrap;
-    }
-
-    button {
-      appearance: none;
-      border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .primary-button {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-
-    .loading {
-      display: none;
-      margin-top: 18px;
-      padding: 14px;
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      color: #374151;
-      font-size: 14px;
-    }
-
-    .error {
-      display: none;
-      margin-top: 18px;
-      padding: 14px;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 14px;
-      color: #991b1b;
-      font-size: 14px;
-      white-space: pre-wrap;
-    }
-
-    .result-placeholder {
-      border: 1px dashed #d1d5db;
-      border-radius: 16px;
-      padding: 24px;
-      background: #fafafa;
+    .result-empty {
       color: var(--muted);
-    }
-
-    .result-content {
-      display: none;
-    }
-
-    .priority-banner {
-      border-radius: 16px;
+      background: var(--soft);
+      border-radius: 14px;
       padding: 18px;
-      margin-bottom: 18px;
-      background: #f3f4f6;
-      border: 1px solid var(--border);
     }
 
-    .priority-banner.high {
-      background: #fef2f2;
-      border-color: #fecaca;
+    .result {
+      display: none;
     }
 
-    .priority-banner.medium {
-      background: #fffbeb;
-      border-color: #fde68a;
+    .result.active {
+      display: block;
     }
 
-    .priority-banner.low {
-      background: #ecfdf5;
-      border-color: #bbf7d0;
-    }
-
-    .priority-label {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .priority-value {
-      margin-top: 5px;
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      text-transform: capitalize;
-    }
-
-    .grid-two {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .result-block {
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: 16px;
-      padding: 16px;
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
       margin-bottom: 14px;
     }
 
-    .result-block h3 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #374151;
-    }
-
-    .result-block p {
+    .result-header h2 {
       margin: 0;
-      color: #111827;
-      white-space: pre-wrap;
+      font-size: 28px;
+      letter-spacing: -0.03em;
     }
 
-    .result-block ul {
-      margin: 8px 0 0;
-      padding-left: 20px;
-    }
-
-    .result-block li {
-      margin-bottom: 7px;
-    }
-
-    .small-pill {
+    .badge {
       display: inline-flex;
-      padding: 6px 9px;
+      align-items: center;
       border-radius: 999px;
-      background: #eef2ff;
-      color: #3730a3;
+      padding: 7px 11px;
       font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--soft);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .badge-high,
+    .badge-urgent {
+      background: #ecfdf5;
+      color: var(--success);
+    }
+
+    .badge-medium {
+      background: #fffbeb;
+      color: var(--warning);
+    }
+
+    .badge-low {
+      background: #f3f4f6;
+      color: var(--muted);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .metric {
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 20px;
       font-weight: 800;
       text-transform: capitalize;
     }
 
-    .email-note {
-      margin-top: 16px;
-      padding: 13px 14px;
-      border-radius: 14px;
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
-      color: #065f46;
-      font-size: 14px;
-      display: none;
+    .quality-high,
+    .quality-urgent {
+      color: var(--success);
     }
 
-    .commercial-note {
-      margin-top: 14px;
-      padding: 16px;
+    .quality-medium {
+      color: var(--warning);
+    }
+
+    .quality-low {
+      color: var(--muted);
+    }
+
+    .commercial-focus {
+      background: #111827;
+      color: #ffffff;
       border-radius: 16px;
-      background: #f9fafb;
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .commercial-focus h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .commercial-focus p {
+      margin: 0;
+      color: #e5e7eb;
+      white-space: pre-line;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .box {
+      background: #f7f7f7;
+      border-left: 4px solid #ddd;
+      padding: 12px;
+      border-radius: 10px;
+      white-space: pre-line;
+    }
+
+    .box.action {
+      border-left-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .box.angle {
+      border-left-color: var(--blue);
+      background: #eff6ff;
+    }
+
+    .questions-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .implementation-note {
+      margin-top: 22px;
+      background: #ffffff;
       border: 1px solid var(--border);
-      color: #374151;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .implementation-note h3 {
+      margin: 0 0 8px;
+    }
+
+    .implementation-note ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .cta {
+      margin-top: 22px;
+      background: #111827;
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .cta h3 {
+      margin: 0 0 8px;
+    }
+
+    .cta p {
+      margin: 0 0 14px;
+      color: #d1d5db;
+    }
+
+    .cta a {
+      display: inline-block;
+      background: #ffffff;
+      color: #111827;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 700;
       font-size: 14px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
     }
 
     @media (max-width: 900px) {
-      .hero,
-      .layout,
-      .grid-two {
+      .layout {
         grid-template-columns: 1fr;
       }
 
-      .hero-card {
-        padding: 26px;
+      h1 {
+        font-size: 36px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-header {
+        display: block;
+      }
+
+      .badge {
+        margin-top: 10px;
       }
     }
   </style>
@@ -359,140 +414,157 @@
 <body>
   <main class="page">
     <section class="hero">
-      <div class="hero-card">
-        <div class="eyebrow">Jemima AI Demo · Instant Lead Revenue Triage</div>
-        <h1 id="headline">Turn enquiries into revenue-ready actions.</h1>
-        <p class="intro" id="intro">
-          Paste or choose a realistic local business enquiry and see how AI can classify the lead, identify commercial value, recommend the next action, and prepare a reply.
-        </p>
-      </div>
-
-      <div class="hero-card hero-side">
-        <div class="mini-stat">
-          <strong>1 enquiry in</strong>
-          <span>Website form, email, ad lead, missed call summary, chat transcript or landing page request.</span>
-        </div>
-        <div class="mini-stat">
-          <strong>Structured triage out</strong>
-          <span>Priority, urgency, revenue opportunity, next action, suggested reply and questions for the team.</span>
-        </div>
-        <div class="mini-stat">
-          <strong>Optional email report</strong>
-          <span>Enter an email address and the workflow can send the same internal-style report automatically.</span>
-        </div>
-      </div>
+      <div class="eyebrow" id="pageEyebrow">Interactive demo</div>
+      <h1 id="pageTitle">Try the instant lead revenue triage demo</h1>
+      <p class="intro" id="pageIntro">
+        Choose an enquiry source, generate realistic enquiry text, and see how AI identifies the commercial opportunity and next action.
+      </p>
     </section>
 
     <section class="layout">
-      <div class="form-card">
-        <h2 class="section-title">Try the demo</h2>
-        <p class="section-help">Choose a business type and enquiry source, then run the AI triage workflow.</p>
+      <div class="card">
+        <form id="leadDemoForm">
+          <div id="industryNotice" class="industry-notice" style="display: none;"></div>
 
-        <label for="business_type">Business type</label>
-        <select id="business_type"></select>
+          <div>
+            <label for="business_type">Business type</label>
+            <select id="business_type" name="business_type" required>
+              <option value="">Select one</option>
+              <option>Dentist</option>
+              <option>Accountant</option>
+              <option>Estate agent</option>
+              <option>Law firm</option>
+              <option>Private clinic</option>
+              <option>Other service business</option>
+            </select>
+          </div>
 
-        <label for="enquiry_source">Enquiry source</label>
-        <select id="enquiry_source">
-          <option value="Website form">Website form</option>
-          <option value="Email enquiry">Email enquiry</option>
-          <option value="Missed call summary">Missed call summary</option>
-          <option value="Ad lead form">Ad lead form</option>
-          <option value="Landing page form">Landing page form</option>
-          <option value="Chat transcript">Chat transcript</option>
-        </select>
+          <div>
+            <label for="enquiry_source">Where did this enquiry come from?</label>
+            <select id="enquiry_source" name="enquiry_source" required>
+              <option value="Website form">Website form</option>
+              <option value="Email enquiry">Email enquiry</option>
+              <option value="Missed call summary">Missed call summary</option>
+              <option value="Ad lead">Ad lead</option>
+              <option value="Chat message">Chat message</option>
+            </select>
+            <div class="help">Choose the source to see a realistic example in that format.</div>
+          </div>
 
-        <label for="sample_enquiry">Sample enquiry</label>
-        <textarea id="sample_enquiry"></textarea>
+          <div>
+            <label for="sample_enquiry">Sample enquiry, email or message</label>
+            <textarea id="sample_enquiry" name="sample_enquiry" required></textarea>
+          </div>
 
-        <label for="demo_user_email">Send me the AI triage report</label>
-        <input id="demo_user_email" type="email" placeholder="you@example.com" />
-        <div class="helper">
-          Optional. If provided, n8n will send a formatted internal-style report by email.
-        </div>
+          <div class="examples" id="exampleButtons">
+            <!-- Example buttons are populated by JavaScript based on industry + scenario + source -->
+          </div>
 
-        <div class="button-row">
-          <button class="primary-button" id="run_demo_button" type="button">Run lead triage</button>
-        </div>
+          <div>
+            <label for="demo_user_email">Where should we send the demo report?</label>
+            <input id="demo_user_email" name="demo_user_email" type="email" placeholder="you@example.com">
+            <div class="help">Optional for testing. Later, n8n can email this lead report to you automatically.</div>
+          </div>
 
-        <div class="loading" id="loading_box">
-          Running the AI triage workflow...
-        </div>
+          <div class="actions">
+            <button id="submitButton" class="primary" type="submit">Generate revenue triage</button>
+            <span id="formMessage" class="message"></span>
+          </div>
+        </form>
 
-        <div class="error" id="error_box"></div>
+        <p class="note">
+          Please do not enter real customer, patient, client or case information. Use a sample enquiry only.
+        </p>
       </div>
 
-      <div class="result-card">
-        <h2 class="section-title">Revenue triage result</h2>
-        <p class="section-help">The result below is returned by your n8n workflow.</p>
-
-        <div class="result-placeholder" id="result_placeholder">
-          Run the demo to see the lead priority, revenue opportunity, next action, suggested reply and follow-up questions.
+      <div class="card">
+        <div id="emptyState" class="result-empty">
+          Your lead revenue triage result will appear here after you submit a sample enquiry.
         </div>
 
-        <div class="result-content" id="result_content">
-          <div class="priority-banner" id="priority_banner">
-            <div class="priority-label">Lead priority</div>
-            <div class="priority-value" id="lead_priority">—</div>
+        <div id="result" class="result">
+          <div class="result-header">
+            <div>
+              <h2>Revenue triage result</h2>
+            </div>
+            <div id="priorityBadge" class="badge">Priority</div>
           </div>
 
-          <div class="grid-two">
-            <div class="result-block">
-              <h3>Urgency</h3>
-              <p><span class="small-pill" id="urgency">—</span></p>
+          <div class="result-grid">
+            <div class="metric">
+              <div class="metric-label">Lead priority</div>
+              <div id="leadPriority" class="metric-value">—</div>
             </div>
 
-            <div class="result-block">
-              <h3>Confidence</h3>
-              <p><span class="small-pill" id="confidence">—</span></p>
+            <div class="metric">
+              <div class="metric-label">Revenue opportunity</div>
+              <div id="revenueOpportunity" class="metric-value">—</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Urgency</div>
+              <div id="urgency" class="metric-value">—</div>
             </div>
           </div>
 
-          <div class="result-block">
-            <h3>Revenue opportunity</h3>
-            <p id="revenue_opportunity">—</p>
-          </div>
-
-          <div class="result-block">
+          <div class="commercial-focus">
             <h3>Recommended next action</h3>
-            <p id="recommended_next_action">—</p>
+            <p id="recommendedAction"></p>
           </div>
 
-          <div class="result-block">
+          <div class="section">
             <h3>Why this matters commercially</h3>
-            <p id="why_this_matters_commercially">—</p>
+            <div id="whyThisMatters" class="box action"></div>
           </div>
 
-          <div class="result-block">
+          <div class="section">
             <h3>Best conversion angle</h3>
-            <p id="best_conversion_angle">—</p>
+            <div id="conversionAngle" class="box angle"></div>
           </div>
 
-          <div class="result-block">
+          <div class="section">
             <h3>Suggested reply</h3>
-            <p id="suggested_reply">—</p>
+            <div id="suggestedReply" class="box"></div>
           </div>
 
-          <div class="result-block">
+          <div class="section">
             <h3>Service interest</h3>
-            <p id="service_interest">—</p>
+            <div id="serviceInterest" class="box"></div>
           </div>
 
-          <div class="result-block">
+          <div class="section">
             <h3>Questions the team should ask</h3>
-            <ul id="questions_team_should_ask"></ul>
+            <ul id="questionsToAsk" class="questions-list"></ul>
           </div>
 
-          <div class="result-block">
+          <div class="section">
             <h3>Short summary</h3>
-            <p id="short_summary">—</p>
+            <div id="summary" class="box"></div>
           </div>
 
-          <div class="email-note" id="email_note">
-            Email report requested. The workflow will send the internal-style lead triage report if the Gmail step is connected.
+          <div class="section">
+            <h3>Confidence</h3>
+            <div id="confidence" class="box"></div>
           </div>
 
-          <div class="commercial-note">
-            In a live setup, this could run from your website enquiry form, missed call summaries, ad lead forms, shared inbox enquiries, landing page forms or chat transcripts.
+          <div class="implementation-note">
+            <h3>In a live setup, this could run from:</h3>
+            <ul>
+              <li>your website enquiry form</li>
+              <li>missed call summaries</li>
+              <li>ad lead forms</li>
+              <li>shared inbox enquiries</li>
+              <li>landing page forms</li>
+              <li>chat transcripts</li>
+            </ul>
+          </div>
+
+          <div class="cta">
+            <h3>Want this tailored to your business?</h3>
+            <p id="ctaText">
+              Want this connected to your website form, inbox, missed call process or ad leads?
+            </p>
+            <a href="index.html">Request tailored demo</a>
           </div>
         </div>
       </div>
@@ -500,316 +572,521 @@
   </main>
 
   <script>
-    const N8N_WEBHOOK_URL = "https://jemima-ai.app.n8n.cloud/webhook/instant-lead-capture";
+    const WEBHOOK_URL = 'https://jemima-ai.app.n8n.cloud/webhook-test/instant-lead-capture';
 
-    const industryConfig = {
+    const industryProfiles = {
       dental: {
-        headline: "Instant AI lead triage for dental practices.",
-        intro: "See how a dental enquiry can be turned into a commercial follow-up plan with urgency, revenue context, suggested reply and booking questions.",
-        businessTypes: ["Dentist", "Private dental clinic", "Orthodontist", "Cosmetic dentist"],
-        examples: {
-          "Website form": "Name: Sarah Mitchell\nEmail: sarah.mitchell@example.com\nPhone: 07700 900123\nService: Dental implants\nPreferred contact: Phone or email\nMessage: I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.",
-
-          "Email enquiry": "From: Mark Reynolds <mark.reynolds@example.com>\nSubject: Emergency dental appointment availability\n\nHi,\n\nI have tooth pain and think I may need an emergency appointment. I’m not currently registered with the practice. Do you have any availability today or tomorrow?\n\nMy mobile is 07700 900124.\n\nThanks,\nMark",
-
-          "Missed call summary": "Caller name: Anita Patel\nCaller phone: 07700 900125\nCall source: Missed call to reception\nSummary: Anita left a voicemail saying she has chipped a front tooth and wants to know if composite bonding or an emergency repair is possible this week. She said she is available after 3pm today or tomorrow morning.",
-
-          "Ad lead form": "Name: Chloe Evans\nEmail: chloe.evans@example.com\nPhone: 07700 900126\nCampaign: Invisalign consultation\nService: Invisalign / clear aligners\nMessage: I’m interested in Invisalign and would like to know the approximate cost, whether finance is available and if I can book a consultation. I’m hoping to start treatment in the next couple of months.",
-
-          "Landing page form": "Name: Daniel Brooks\nEmail: daniel.brooks@example.com\nPhone: 07700 900127\nLanding page: Composite bonding smile makeover\nService: Composite bonding\nMessage: I’m getting married in 4 months and want to improve the appearance of my front teeth. I’d like to know if bonding is suitable, how long it takes and whether you have consultation availability soon.",
-
-          "Chat transcript": "Visitor name: Rebecca Hall\nEmail captured in chat: rebecca.hall@example.com\nPhone captured in chat: 07700 900128\nTranscript:\nVisitor: Hi, I chipped a front tooth and want to know if bonding can fix it.\nBot: When would you like to be seen?\nVisitor: Ideally this week. I’m free Thursday afternoon or Friday morning.\nBot: Would you like the team to contact you?\nVisitor: Yes, please. My number is 07700 900128."
-        }
-      },
-
-      "estate-agent": {
-        headline: "Instant AI lead triage for estate agents.",
-        intro: "Classify valuation, viewing and landlord enquiries by intent, urgency and likely commercial value.",
-        businessTypes: ["Estate agent", "Letting agent", "Property valuer", "Property management company"],
-        examples: {
-          "Website form": "Name: James Carter\nEmail: james.carter@example.com\nPhone: 07700 900221\nProperty address: 14 Oak Avenue, Headingley, Leeds\nProperty type: 3-bedroom semi-detached house\nService: Sales valuation\nMessage: I’m thinking of selling and would like a valuation. We’ve seen a property we want to offer on, so we need to understand our selling position quickly. Ideally we’d like an appointment this week.",
-
-          "Email enquiry": "From: Rebecca Miles <rebecca.miles@example.com>\nSubject: Property valuation request\n\nHi,\n\nWe are considering selling our 4-bedroom detached house in Moortown and would like a valuation. We may need to move quickly if the right property becomes available.\n\nYou can reach me on 07700 900222.\n\nThanks,\nRebecca",
-
-          "Missed call summary": "Caller name: Paul Bennett\nCaller phone: 07700 900223\nCall source: Missed call to sales office\nSummary: Paul owns a 2-bedroom flat in Chapel Allerton and wants to know current market value and likely selling fees. He said he may list within 6–8 weeks and asked for a callback after 5pm.",
-
-          "Ad lead form": "Name: Michael Harris\nEmail: michael.harris@example.com\nPhone: 07700 900224\nCampaign: Free home valuation\nProperty: 3-bedroom semi-detached house in Roundhay\nMessage: I’m thinking of selling within the next 3 months and would like a valuation. I’d also like to understand recent sold prices nearby and what the best listing strategy might be.",
-
-          "Landing page form": "Name: Laura Jenkins\nEmail: laura.jenkins@example.com\nPhone: 07700 900225\nLanding page: Landlord property management quote\nProperty: 2 rental houses in Leeds\nMessage: I’m looking for a letting agent to manage two rental properties. One tenant is moving out next month, so I need help finding a new tenant and understanding your management fees.",
-
-          "Chat transcript": "Visitor name: Tom Wilkinson\nEmail captured in chat: tom.wilkinson@example.com\nPhone captured in chat: 07700 900226\nTranscript:\nVisitor: Hi, I need to book a valuation.\nBot: Are you selling or letting?\nVisitor: Selling. We want to sell this spring and would like advice on asking price and timing.\nBot: What type of property is it?\nVisitor: 4-bed detached in Alwoodley."
-        }
+        businessType: 'Dentist',
+        industryLabel: 'Dental practice',
+        defaultScenario: 'new-patient-enquiry',
+        eyebrow: 'Interactive dental demo',
+        title: 'Try the instant dental revenue triage demo',
+        intro: 'Choose a dental demo scenario and enquiry source, then see how AI turns the enquiry into a commercial next action.',
+        notice: 'This demo is optimised for dental enquiries, calls, forms, ad leads and chat messages.',
+        ctaText: 'Want this connected to your dental website form, phone enquiry process or inbox?'
       },
 
       accountant: {
-        headline: "Instant AI lead triage for accountants.",
-        intro: "Turn tax, bookkeeping and advisory enquiries into structured actions for the team.",
-        businessTypes: ["Accountant", "Bookkeeper", "Tax adviser", "Small business accountant"],
-        examples: {
-          "Website form": "Name: Priya Shah\nEmail: priya.shah@example.com\nPhone: 07700 900331\nBusiness: Online retail business\nTurnover: Around £180,000\nService: Bookkeeping and VAT support\nMessage: I’m behind on bookkeeping and need help with VAT returns. I’m worried I may have missed some deadlines and would like to speak to someone this week.",
+        businessType: 'Accountant',
+        industryLabel: 'Accounting practice',
+        defaultScenario: 'general-enquiry',
+        eyebrow: 'Interactive accounting demo',
+        title: 'Try the instant accounting enquiry triage demo',
+        intro: 'Choose an enquiry source and see how AI identifies service need, urgency and the next action for the practice team.',
+        notice: 'This demo is optimised for accounting enquiries such as bookkeeping, payroll, VAT, limited company accounts, tax returns and switching accountant.',
+        ctaText: 'Want this connected to your accounting enquiry form or practice inbox?'
+      },
 
-          "Email enquiry": "From: Martin Cooper <martin.cooper@example.com>\nSubject: Limited company accounts deadline\n\nHi,\n\nI run a small consultancy through a limited company and my accounts filing deadline is coming up soon. My bookkeeping is partly complete but I need help getting everything filed correctly.\n\nMy mobile is 07700 900332.\n\nThanks,\nMartin",
-
-          "Missed call summary": "Caller name: Helen Morris\nCaller phone: 07700 900333\nCall source: Missed call to office\nSummary: Helen left a voicemail saying she is a company director with a corporation tax question and needs advice before making a dividend payment. She asked for a callback today if possible.",
-
-          "Ad lead form": "Name: Alex Turner\nEmail: alex.turner@example.com\nPhone: 07700 900334\nCampaign: Self assessment help for sole traders\nBusiness type: New sole trader\nService: Self assessment and allowable expenses advice\nMessage: I recently started working as a self-employed graphic designer and need help with self assessment. I’m unsure what expenses I can claim for software, home office costs, travel and equipment. I’d like to understand what records I need to keep and whether I should book an initial consultation.",
-
-          "Landing page form": "Name: Nadia Williams\nEmail: nadia.williams@example.com\nPhone: 07700 900335\nLanding page: Monthly bookkeeping and payroll support\nBusiness: Café with 8 staff\nMessage: We need monthly bookkeeping, payroll and VAT support. We currently use spreadsheets and want to move to Xero or QuickBooks. I’d like a quote and advice on what package would suit us.",
-
-          "Chat transcript": "Visitor name: Chris Morgan\nEmail captured in chat: chris.morgan@example.com\nPhone captured in chat: 07700 900336\nTranscript:\nVisitor: I’ve just started a limited company and need advice.\nBot: What do you need help with?\nVisitor: Salary, dividends and bookkeeping software.\nBot: Would you like someone to contact you?\nVisitor: Yes, please. I’m free tomorrow afternoon."
-        }
+      'estate-agent': {
+        businessType: 'Estate agent',
+        industryLabel: 'Estate agency',
+        defaultScenario: 'general-enquiry',
+        eyebrow: 'Interactive estate agency demo',
+        title: 'Try the instant property enquiry triage demo',
+        intro: 'Choose an enquiry source and see how AI spots valuation intent, landlord opportunities, viewing urgency and the next action for the team.',
+        notice: 'This demo is optimised for estate agency enquiries such as valuations, viewings, landlord services and property management.',
+        ctaText: 'Want this connected to your valuation form, viewing request form or enquiry inbox?'
       },
 
       clinic: {
-        headline: "Instant AI lead triage for private clinics.",
-        intro: "Prioritise appointment requests, treatment enquiries and patient follow-ups based on urgency and value.",
-        businessTypes: ["Private clinic", "Physiotherapy clinic", "Aesthetic clinic", "Chiropractor"],
-        examples: {
-          "Website form": "Name: Emma Lewis\nEmail: emma.lewis@example.com\nPhone: 07700 900441\nService: Physiotherapy appointment\nPreferred contact: Phone\nMessage: I have ongoing back pain and would like to book a physiotherapy appointment. I’m training for a half marathon and need help quickly. I’m available after work this week.",
-
-          "Email enquiry": "From: Tom Edwards <tom.edwards@example.com>\nSubject: Shoulder pain appointment request\n\nHi,\n\nI’m looking for an appointment for recurring shoulder pain. It is affecting work and exercise, and I’d like to be seen this week if possible.\n\nMy number is 07700 900442.\n\nThanks,\nTom",
-
-          "Missed call summary": "Caller name: Sophie Grant\nCaller phone: 07700 900443\nCall source: Missed call to clinic reception\nSummary: Sophie left a message asking for same-week availability for a sports injury assessment. She twisted her ankle during football and wants to know if she should book physio or a scan referral.",
-
-          "Ad lead form": "Name: Olivia Bennett\nEmail: olivia.bennett@example.com\nPhone: 07700 900444\nCampaign: Skin consultation\nService: Acne scarring treatment options\nMessage: I’m interested in treatment options for acne scarring and would like to know what treatments might be suitable, likely pricing and appointment availability. I’m happy to book a consultation if that is the best first step.",
-
-          "Landing page form": "Name: Andrew Clarke\nEmail: andrew.clarke@example.com\nPhone: 07700 900445\nLanding page: Private GP health check\nService: Private GP appointment and blood tests\nMessage: I’d like to book a private health check and blood tests. I’m feeling more tired than usual and would like to understand what checks are included and how quickly results come back.",
-
-          "Chat transcript": "Visitor name: Melissa Green\nEmail captured in chat: melissa.green@example.com\nPhone captured in chat: 07700 900446\nTranscript:\nVisitor: Do you have any appointments for lower back pain this week?\nBot: How long have you had the pain?\nVisitor: About 3 weeks and painkillers aren’t helping.\nBot: Would you like the clinic to contact you?\nVisitor: Yes, please. I can do Friday morning."
-        }
+        businessType: 'Private clinic',
+        industryLabel: 'Private clinic',
+        defaultScenario: 'general-enquiry',
+        eyebrow: 'Interactive private clinic demo',
+        title: 'Try the instant private clinic enquiry triage demo',
+        intro: 'Choose an enquiry source and see how AI identifies treatment interest, urgency and the next action for the team.',
+        notice: 'This demo is optimised for private clinic enquiries such as consultations, treatment packages, self-pay pricing and appointment preparation.',
+        ctaText: 'Want this connected to your clinic enquiry form, booking page or reception inbox?'
       },
 
       law: {
-        headline: "Instant AI lead triage for law firms.",
-        intro: "Assess legal enquiries by urgency, matter type, potential value and required next step.",
-        businessTypes: ["Law firm", "Solicitor", "Family law solicitor", "Employment solicitor"],
-        examples: {
-          "Website form": "Name: Daniel Brooks\nEmail: daniel.brooks@example.com\nPhone: 07700 900551\nMatter: Employment law\nService: Settlement agreement review\nMessage: I’ve been told my role is at risk of redundancy and I’ve been offered a settlement agreement. I need someone to review it quickly before I sign. My employer wants this completed within the next few days.",
+        businessType: 'Law firm',
+        industryLabel: 'Law firm',
+        defaultScenario: 'general-enquiry',
+        eyebrow: 'Interactive law firm demo',
+        title: 'Try the instant legal enquiry triage demo',
+        intro: 'Choose an enquiry source and see how AI identifies matter type, urgency, commercial value and the next action for the team.',
+        notice: 'This demo is optimised for law firm enquiries such as conveyancing, employment matters, family law and fee estimates.',
+        ctaText: 'Want this connected to your legal enquiry form, quote form or intake inbox?'
+      },
 
-          "Email enquiry": "From: Amanda Foster <amanda.foster@example.com>\nSubject: Settlement agreement review\n\nHi,\n\nMy employer has given me a settlement agreement and asked me to get independent legal advice. I need this reviewed within the next few days.\n\nMy phone number is 07700 900552.\n\nThanks,\nAmanda",
+      default: {
+        businessType: '',
+        industryLabel: 'Service business',
+        defaultScenario: 'general-enquiry',
+        eyebrow: 'Interactive demo',
+        title: 'Try the instant lead revenue triage demo',
+        intro: 'Choose an enquiry source, generate realistic enquiry text, and see how AI identifies the commercial opportunity and next action.',
+        notice: '',
+        ctaText: 'Want this connected to your website form, inbox, missed call process or ad leads?'
+      }
+    };
 
-          "Missed call summary": "Caller name: James O'Neill\nCaller phone: 07700 900553\nCall source: Missed call to family law team\nSummary: James left a voicemail asking for urgent advice about child contact arrangements after separation. He said there is a disagreement about weekend contact and he wants to speak to a solicitor this week.",
+    const scenarioPresets = {
+      'dental:new-patient-enquiry': {
+        pageTitle: 'Try the instant new patient enquiry triage demo',
+        pageIntro: 'See how AI turns a new patient enquiry into treatment interest, urgency, priority, suggested reply and team action.',
+        notice: 'This scenario is focused on new dental patient enquiries from forms, emails, calls, ads and chat.',
+        ctaText: 'Want this connected to your new patient enquiry form, reception inbox or phone process?',
+        outputFocus: 'Treatment interest, patient status, urgency, routing, suggested reply and team questions.',
+        examplesBySource: {
+          'Website form': [
+            {
+              label: 'Generate new patient website form example',
+              text: 'Name: Sophie Carter\nEmail: sophie@example.com\nPhone: 07700 900101\nNew or existing patient: New patient\nMessage: I’m looking for a new dentist and would like to book a check-up. I’m also interested in hygiene appointments and possibly whitening in future.'
+            }
+          ],
+          'Email enquiry': [
+            {
+              label: 'Generate new patient email example',
+              text: 'Subject: New patient appointment\n\nHi,\n\nI’m looking for a new dentist and would like to book a check-up. I haven’t been to a dentist for over a year and would also like to know if you offer hygiene appointments.\n\nThanks,\nSophie'
+            }
+          ],
+          'Missed call summary': [
+            {
+              label: 'Generate new patient missed call summary',
+              text: 'Caller is a new patient looking to register with the practice and book a check-up. They also asked about hygiene appointments and availability over the next two weeks.'
+            }
+          ],
+          'Ad lead': [
+            {
+              label: 'Generate new patient ad lead example',
+              text: 'Campaign: New patient dental check-up\nName: Sophie Carter\nPhone: 07700 900101\nQuestion: I’m looking for a new dentist and would like to book a check-up and hygiene appointment.'
+            }
+          ],
+          'Chat message': [
+            {
+              label: 'Generate new patient chat example',
+              text: 'Visitor: Hi, are you accepting new patients?\nPractice: Yes, would you like to book a check-up?\nVisitor: Yes, I haven’t been for over a year and would also like a hygiene appointment if possible.'
+            }
+          ]
+        }
+      },
 
-          "Ad lead form": "Name: Rachel Morgan\nEmail: rachel.morgan@example.com\nPhone: 07700 900554\nCampaign: Conveyancing quote\nMatter: Residential property purchase\nProperty value: £425,000\nMessage: I’m buying a property and have a mortgage agreement in principle. I’d like a conveyancing quote, an idea of timescales and confirmation of what is included in your fee.",
+      'dental:emergency-call': {
+        pageTitle: 'Try the instant emergency dental enquiry demo',
+        pageIntro: 'See how AI flags urgent symptoms, captures key details and recommends the next action for the practice team.',
+        notice: 'This scenario is focused on emergency dental enquiries, including pain, swelling, trauma, broken teeth and urgent callbacks.',
+        ctaText: 'Want this connected to your emergency dental calls, forms, chat or inbox?',
+        outputFocus: 'Urgency, symptoms, escalation indicators, fast callback, missing safety details and appointment need.',
+        examplesBySource: {
+          'Website form': [
+            {
+              label: 'Generate emergency website form example',
+              text: 'Name: Mark Evans\nEmail: mark@example.com\nPhone: 07700 900201\nService: Emergency dentist\nMessage: I have severe tooth pain on the lower right side and my face feels slightly swollen. I’m not registered with the practice but need to be seen as soon as possible.'
+            }
+          ],
+          'Email enquiry': [
+            {
+              label: 'Generate emergency email example',
+              text: 'Subject: Emergency dental appointment\n\nHi,\n\nI have severe tooth pain and some swelling around my jaw. I’m not registered with your practice but wondered if you have emergency appointments today or tomorrow.\n\nThanks,\nMark'
+            }
+          ],
+          'Missed call summary': [
+            {
+              label: 'Generate emergency missed call summary',
+              text: 'Caller reported severe tooth pain on the lower right side and slight facial swelling. They are not registered with the practice and asked for the earliest emergency appointment available.'
+            }
+          ],
+          'Ad lead': [
+            {
+              label: 'Generate emergency ad lead example',
+              text: 'Campaign: Emergency dentist\nName: Mark Evans\nPhone: 07700 900201\nQuestion: I have severe tooth pain and swelling and need an urgent dental appointment.'
+            }
+          ],
+          'Chat message': [
+            {
+              label: 'Generate emergency chat example',
+              text: 'Visitor: Hi, do you have emergency appointments?\nPractice: What seems to be the problem?\nVisitor: I have really bad tooth pain and my cheek looks swollen.\nPractice: Are you a registered patient?\nVisitor: No, but I need to be seen as soon as possible.'
+            }
+          ]
+        }
+      },
 
-          "Landing page form": "Name: Ben Wallace\nEmail: ben.wallace@example.com\nPhone: 07700 900555\nLanding page: Debt recovery for businesses\nMatter: Unpaid invoice\nMessage: My business is owed £8,400 by a client who has ignored several reminders. I’d like advice on recovering the debt and what the first legal step would cost.",
+      'dental:implant-enquiry': {
+        pageTitle: 'Try the instant implant enquiry triage demo',
+        pageIntro: 'See how AI flags implant interest, finance questions, suitability gaps and the next action for the treatment coordinator.',
+        notice: 'This scenario is focused on implant enquiries from forms, calls, ads, emails and chat.',
+        ctaText: 'Want this connected to your implant enquiry form, calls or campaign leads?',
+        outputFocus: 'Implant readiness, missing tooth details, finance concerns, suitability questions and consultation next step.',
+        examplesBySource: {
+          'Website form': [
+            {
+              label: 'Generate implant website form example',
+              text: 'Name: Sarah Mitchell\nEmail: sarah@example.com\nPhone: 07700 900123\nService: Dental implants\nMessage: I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.'
+            }
+          ],
+          'Email enquiry': [
+            {
+              label: 'Generate implant email example',
+              text: 'Subject: Dental implant options\n\nHi,\n\nI have a missing tooth and I’m interested in dental implants. Could you tell me about the process, likely cost and whether finance is available?\n\nI’d like to understand the next step and whether I need a consultation first.\n\nThanks,\nSarah'
+            }
+          ],
+          'Missed call summary': [
+            {
+              label: 'Generate implant missed call summary',
+              text: 'Caller asked about dental implant options for a missing tooth. They mentioned cost concerns and asked whether finance is available. They would like a callback this week and are interested in understanding the consultation process.'
+            }
+          ],
+          'Ad lead': [
+            {
+              label: 'Generate implant ad lead example',
+              text: 'Campaign: Dental implants\nName: Sarah Mitchell\nPhone: 07700 900123\nQuestion: I’d like to know if I’m suitable for implants and what the finance options are.\nPreferred contact time: Afternoons'
+            }
+          ],
+          'Chat message': [
+            {
+              label: 'Generate implant chat example',
+              text: 'Visitor: Hi, do you offer dental implants?\nBot: Yes, would you like information about the consultation?\nVisitor: Yes, I have a missing tooth and want to know the cost and if finance is available.\nBot: Would you like the team to contact you?\nVisitor: Yes, a call this week would be good.'
+            }
+          ]
+        }
+      },
 
-          "Chat transcript": "Visitor name: Claire Hudson\nEmail captured in chat: claire.hudson@example.com\nPhone captured in chat: 07700 900556\nTranscript:\nVisitor: I need advice about a settlement agreement.\nBot: Has your employer given you a deadline?\nVisitor: Yes, they want it signed by Friday.\nBot: Would you like the employment team to contact you?\nVisitor: Yes, please. I’m free today after 2pm."
+      default: {
+        pageTitle: 'Try the instant lead revenue triage demo',
+        pageIntro: 'Choose an enquiry source, generate realistic enquiry text, and see how AI identifies the commercial opportunity and next action.',
+        notice: '',
+        ctaText: 'Want this connected to your website form, inbox, missed call process or ad leads?',
+        outputFocus: 'Lead priority, urgency, revenue opportunity, recommended action, suggested reply and team questions.',
+        examplesBySource: {
+          'Website form': [
+            {
+              label: 'Generate website form example',
+              text: 'Name: Sarah Mitchell\nEmail: sarah@example.com\nPhone: 07700 900123\nMessage: I’m interested in your service and would like to understand cost, availability and the next step.'
+            }
+          ],
+          'Email enquiry': [
+            {
+              label: 'Generate email enquiry example',
+              text: 'Subject: Service enquiry\n\nHi,\n\nI’m interested in your service and would like to understand the process, cost and next step.\n\nCould someone contact me this week?\n\nThanks,\nSarah'
+            }
+          ],
+          'Missed call summary': [
+            {
+              label: 'Generate missed call summary example',
+              text: 'Caller asked about service availability, likely cost and the next step. They would like a callback this week and seemed interested in moving forward.'
+            }
+          ],
+          'Ad lead': [
+            {
+              label: 'Generate ad lead example',
+              text: 'Campaign: Service enquiry\nName: Sarah Mitchell\nPhone: 07700 900123\nQuestion: I’m interested in your service and would like to understand the cost and next step.'
+            }
+          ],
+          'Chat message': [
+            {
+              label: 'Generate chat message example',
+              text: 'Visitor: Hi, do you offer this service?\nTeam: Yes, would you like information about the process?\nVisitor: Yes, I’d like to understand cost, availability and the next step.'
+            }
+          ]
         }
       }
     };
 
-    function getIndustryFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("industry") || "dental";
+    const params = new URLSearchParams(window.location.search);
+    const industryParam = (params.get('industry') || '').toLowerCase();
+    const scenarioParam = (params.get('scenario') || '').toLowerCase();
+
+    const industryProfile = industryProfiles[industryParam] || industryProfiles.default;
+
+    const activeScenarioId =
+      scenarioParam ||
+      industryProfile.defaultScenario ||
+      'general-enquiry';
+
+    const scenarioKey = `${industryParam || 'default'}:${activeScenarioId}`;
+
+    const scenario =
+      scenarioPresets[scenarioKey] ||
+      scenarioPresets.default;
+
+    const profile = {
+      ...industryProfile,
+      ...scenario,
+      businessType: industryProfile.businessType || scenario.businessType || ''
+    };
+
+    const form = document.getElementById('leadDemoForm');
+    const button = document.getElementById('submitButton');
+    const message = document.getElementById('formMessage');
+
+    const businessType = document.getElementById('business_type');
+    const enquirySource = document.getElementById('enquiry_source');
+    const sampleEnquiry = document.getElementById('sample_enquiry');
+    const demoUserEmail = document.getElementById('demo_user_email');
+
+    const emptyState = document.getElementById('emptyState');
+    const result = document.getElementById('result');
+
+    const leadPriority = document.getElementById('leadPriority');
+    const priorityBadge = document.getElementById('priorityBadge');
+    const revenueOpportunity = document.getElementById('revenueOpportunity');
+    const urgency = document.getElementById('urgency');
+    const serviceInterest = document.getElementById('serviceInterest');
+    const summary = document.getElementById('summary');
+    const recommendedAction = document.getElementById('recommendedAction');
+    const conversionAngle = document.getElementById('conversionAngle');
+    const whyThisMatters = document.getElementById('whyThisMatters');
+    const suggestedReply = document.getElementById('suggestedReply');
+    const questionsToAsk = document.getElementById('questionsToAsk');
+    const confidence = document.getElementById('confidence');
+
+    const pageEyebrow = document.getElementById('pageEyebrow');
+    const pageTitle = document.getElementById('pageTitle');
+    const pageIntro = document.getElementById('pageIntro');
+    const industryNotice = document.getElementById('industryNotice');
+    const exampleButtons = document.getElementById('exampleButtons');
+    const ctaText = document.getElementById('ctaText');
+
+    function getCurrentExamples() {
+      const source = enquirySource.value || 'Website form';
+
+      const examplesBySource =
+        profile.examplesBySource ||
+        scenario.examplesBySource ||
+        scenarioPresets.default.examplesBySource;
+
+      return examplesBySource[source] || examplesBySource['Website form'] || [];
     }
 
-    function normaliseIndustry(industry) {
-      return industryConfig[industry] ? industry : "dental";
-    }
+    function updatePlaceholder() {
+      const examples = getCurrentExamples();
 
-    const currentIndustry = normaliseIndustry(getIndustryFromUrl());
-
-    const businessTypeEl = document.getElementById("business_type");
-    const enquirySourceEl = document.getElementById("enquiry_source");
-    const sampleEnquiryEl = document.getElementById("sample_enquiry");
-    const emailEl = document.getElementById("demo_user_email");
-    const runButton = document.getElementById("run_demo_button");
-    const loadingBox = document.getElementById("loading_box");
-    const errorBox = document.getElementById("error_box");
-
-    const resultPlaceholder = document.getElementById("result_placeholder");
-    const resultContent = document.getElementById("result_content");
-    const emailNote = document.getElementById("email_note");
-
-    function setText(id, value, fallback = "Not provided") {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.textContent = value && String(value).trim() ? value : fallback;
-    }
-
-    function setPriorityBanner(priority) {
-      const banner = document.getElementById("priority_banner");
-      const value = String(priority || "").toLowerCase();
-
-      banner.classList.remove("high", "medium", "low");
-
-      if (value.includes("high")) {
-        banner.classList.add("high");
-      } else if (value.includes("medium")) {
-        banner.classList.add("medium");
-      } else if (value.includes("low")) {
-        banner.classList.add("low");
+      if (examples.length > 0) {
+        sampleEnquiry.placeholder = examples[0].text;
+      } else {
+        sampleEnquiry.placeholder = 'Paste a sample enquiry, email, missed call summary, ad lead or chat transcript here.';
       }
     }
 
-    function renderQuestions(questions) {
-      const list = document.getElementById("questions_team_should_ask");
-      list.innerHTML = "";
+    function renderExampleButtons() {
+      const examples = getCurrentExamples();
+      exampleButtons.innerHTML = '';
 
-      let items = [];
+      examples.forEach(function (example) {
+        const exampleButton = document.createElement('button');
+        exampleButton.className = 'example-button';
+        exampleButton.type = 'button';
+        exampleButton.textContent = example.label;
 
-      if (Array.isArray(questions)) {
-        items = questions;
-      } else if (typeof questions === "string" && questions.trim()) {
-        items = questions
-          .split("\n")
-          .map(item => item.replace(/^[-•]\s*/, "").trim())
-          .filter(Boolean);
-      }
+        exampleButton.addEventListener('click', function () {
+          sampleEnquiry.value = example.text;
+        });
 
-      if (!items.length) {
-        const li = document.createElement("li");
-        li.textContent = "No follow-up questions returned.";
-        list.appendChild(li);
-        return;
-      }
-
-      items.forEach(question => {
-        const li = document.createElement("li");
-        li.textContent = question;
-        list.appendChild(li);
+        exampleButtons.appendChild(exampleButton);
       });
     }
 
-    function initialisePage() {
-      const config = industryConfig[currentIndustry];
+    function applyIndustryProfile() {
+      pageEyebrow.textContent = profile.eyebrow || industryProfile.eyebrow || 'Interactive demo';
+      pageTitle.textContent = profile.pageTitle || profile.title || industryProfile.title || 'Try the instant lead revenue triage demo';
+      pageIntro.textContent = profile.pageIntro || profile.intro || industryProfile.intro || '';
 
-      document.getElementById("headline").textContent = config.headline;
-      document.getElementById("intro").textContent = config.intro;
-
-      businessTypeEl.innerHTML = "";
-      config.businessTypes.forEach(type => {
-        const option = document.createElement("option");
-        option.value = type;
-        option.textContent = type;
-        businessTypeEl.appendChild(option);
-      });
-
-      setExampleText();
-    }
-
-    function setExampleText() {
-      const config = industryConfig[currentIndustry];
-      const source = enquirySourceEl.value;
-      sampleEnquiryEl.value = config.examples[source] || "";
-    }
-
-    function showLoading(isLoading) {
-      loadingBox.style.display = isLoading ? "block" : "none";
-      runButton.disabled = isLoading;
-    }
-
-    function showError(message) {
-      errorBox.style.display = "block";
-      errorBox.textContent = message;
-    }
-
-    function clearError() {
-      errorBox.style.display = "none";
-      errorBox.textContent = "";
-    }
-
-    function parseN8nResponse(responseText) {
-      const cleanedText = String(responseText || "").trim().replace(/^=/, "");
-
-      if (!cleanedText) {
-        throw new Error("Empty response from n8n.");
+      if (profile.businessType) {
+        businessType.value = profile.businessType;
       }
 
-      let result;
+      const noticeText = profile.notice || industryProfile.notice || '';
 
-      try {
-        result = JSON.parse(cleanedText);
-      } catch (error) {
-        throw new Error("Invalid JSON response from n8n: " + cleanedText);
+      if (noticeText) {
+        industryNotice.textContent = noticeText;
+        industryNotice.style.display = 'block';
+      } else {
+        industryNotice.style.display = 'none';
       }
 
-      if (Array.isArray(result)) {
-        result = result[0];
+      if (ctaText) {
+        ctaText.textContent = profile.ctaText || industryProfile.ctaText || '';
       }
 
-      if (result && result.json) {
-        result = result.json;
-      }
-
-      if (!result || typeof result !== "object") {
-        throw new Error("No valid result object returned from n8n.");
-      }
-
-      return result;
+      updatePlaceholder();
+      renderExampleButtons();
     }
 
-    function renderResult(result) {
-      resultPlaceholder.style.display = "none";
-      resultContent.style.display = "block";
+    function setMetricClass(element, value) {
+      element.classList.remove('quality-high', 'quality-medium', 'quality-low', 'quality-urgent');
 
-      const priority = result.lead_priority || result.lead_quality || result.priority;
+      const lower = String(value || '').toLowerCase();
 
-      setPriorityBanner(priority);
-      setText("lead_priority", priority);
-      setText("urgency", result.urgency);
-      setText("confidence", result.confidence);
-
-      setText("revenue_opportunity", result.revenue_opportunity || result.estimated_value || result.revenue);
-      setText("recommended_next_action", result.recommended_next_action || result.recommended_action || result.next_action);
-      setText("why_this_matters_commercially", result.why_this_matters_commercially || result.commercial_impact);
-      setText("best_conversion_angle", result.best_conversion_angle || result.conversion_angle);
-      setText("suggested_reply", result.suggested_reply || result.reply);
-      setText("service_interest", result.service_interest || result.service);
-      setText("short_summary", result.short_summary || result.summary);
-
-      renderQuestions(result.questions_team_should_ask || result.questions_to_ask);
-
-      emailNote.style.display = emailEl.value.trim() ? "block" : "none";
+      if (lower === 'urgent') {
+        element.classList.add('quality-urgent');
+      } else if (lower === 'high') {
+        element.classList.add('quality-high');
+      } else if (lower === 'medium') {
+        element.classList.add('quality-medium');
+      } else {
+        element.classList.add('quality-low');
+      }
     }
 
-    async function runDemo() {
-      clearError();
-      showLoading(true);
+    function setBadgeClass(element, value) {
+      element.classList.remove('badge-high', 'badge-medium', 'badge-low', 'badge-urgent');
+
+      const lower = String(value || '').toLowerCase();
+
+      if (lower === 'urgent') {
+        element.classList.add('badge-urgent');
+      } else if (lower === 'high') {
+        element.classList.add('badge-high');
+      } else if (lower === 'medium') {
+        element.classList.add('badge-medium');
+      } else {
+        element.classList.add('badge-low');
+      }
+    }
+
+    function normaliseQuestions(data) {
+      if (Array.isArray(data.questions_to_ask)) {
+        return data.questions_to_ask;
+      }
+
+      if (Array.isArray(data.missing_information)) {
+        return data.missing_information;
+      }
+
+      const raw = data.questions_to_ask || data.missing_information || '';
+
+      return String(raw)
+        .split('\n')
+        .map(item => item.replace(/^[-•]\s*/, '').trim())
+        .filter(Boolean);
+    }
+
+    function renderResult(data) {
+      emptyState.style.display = 'none';
+      result.classList.add('active');
+
+      const priority = data.lead_priority || data.lead_quality || 'medium';
+      const priorityLabel = data.priority_label || `${priority} priority`;
+
+      leadPriority.textContent = priority;
+      priorityBadge.textContent = priorityLabel;
+      revenueOpportunity.textContent = data.revenue_opportunity || data.estimated_value || 'medium';
+      urgency.textContent = data.urgency || 'medium';
+
+      setMetricClass(leadPriority, priority);
+      setMetricClass(revenueOpportunity, data.revenue_opportunity || data.estimated_value);
+      setMetricClass(urgency, data.urgency);
+      setBadgeClass(priorityBadge, priority);
+
+      recommendedAction.textContent = data.recommended_action || 'Review the enquiry and contact the prospect.';
+      whyThisMatters.textContent = data.why_this_matters || 'This enquiry may represent a commercial opportunity because the prospect has expressed interest in a service and may need a clear next step.';
+      conversionAngle.textContent = data.conversion_angle || 'Respond quickly, clarify the prospect’s needs, and offer the most relevant next step.';
+      suggestedReply.textContent = data.suggested_reply || 'Thanks for getting in touch. The team can help with this and explain the next step. What would be the best way to contact you?';
+
+      serviceInterest.textContent = data.service_interest || 'Not provided';
+      summary.textContent = data.summary || 'Not provided';
+      confidence.textContent = data.confidence || 'Not provided';
+
+      questionsToAsk.innerHTML = '';
+
+      const questions = normaliseQuestions(data);
+
+      if (questions.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No obvious questions identified.';
+        questionsToAsk.appendChild(li);
+      } else {
+        questions.forEach(function (item) {
+          const li = document.createElement('li');
+          li.textContent = item;
+          questionsToAsk.appendChild(li);
+        });
+      }
+    }
+
+    enquirySource.addEventListener('change', function () {
+      updatePlaceholder();
+      renderExampleButtons();
+      sampleEnquiry.value = '';
+    });
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      button.disabled = true;
+      button.textContent = 'Generating...';
+      message.textContent = '';
+      message.className = 'message';
 
       const payload = {
-        industry: currentIndustry,
-        business_type: businessTypeEl.value,
-        enquiry_source: enquirySourceEl.value,
-        sample_enquiry: sampleEnquiryEl.value,
-        demo_user_email: emailEl.value.trim()
+        industry: industryParam || 'general',
+        scenario: activeScenarioId,
+        scenario_name: profile.pageTitle || profile.title || '',
+        output_focus: profile.outputFocus || '',
+        business_type: businessType.value,
+        enquiry_source: enquirySource.value,
+        sample_enquiry: sampleEnquiry.value,
+        demo_user_email: demoUserEmail.value
       };
 
       try {
-        if (!N8N_WEBHOOK_URL || N8N_WEBHOOK_URL === "PASTE_YOUR_N8N_WEBHOOK_URL_HERE") {
-          throw new Error("Webhook URL is missing. Replace PASTE_YOUR_N8N_WEBHOOK_URL_HERE with your n8n webhook URL.");
-        }
-
-        const response = await fetch(N8N_WEBHOOK_URL, {
-          method: "POST",
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(payload)
         });
 
         const responseText = await response.text();
 
+        console.log('HTTP status:', response.status);
+        console.log('Raw n8n response:', responseText);
+
         if (!response.ok) {
-          throw new Error("n8n returned HTTP " + response.status + ": " + responseText);
+          throw new Error(`HTTP ${response.status}: ${responseText || 'empty response'}`);
         }
 
-        const result = parseN8nResponse(responseText);
-        renderResult(result);
+        if (!responseText) {
+          throw new Error('Empty response from n8n');
+        }
+
+        let data;
+
+        try {
+          data = JSON.parse(responseText);
+        } catch (error) {
+          throw new Error(`Invalid JSON response from n8n: ${responseText}`);
+        }
+
+        if (!data.success) {
+          throw new Error(data.message || 'Demo failed');
+        }
+
+        renderResult(data);
       } catch (error) {
         console.error(error);
-        showError("Something went wrong: " + error.message);
+        message.textContent = `Something went wrong: ${error.message}`;
+        message.className = 'message error';
       } finally {
-        showLoading(false);
+        button.disabled = false;
+        button.textContent = 'Generate revenue triage';
       }
-    }
+    });
 
-    enquirySourceEl.addEventListener("change", setExampleText);
-    runButton.addEventListener("click", runDemo);
-
-    initialisePage();
+    applyIndustryProfile();
   </script>
 </body>
 </html>
-   
