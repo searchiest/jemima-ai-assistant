@@ -1071,11 +1071,11 @@
           throw new Error(`Invalid JSON response from n8n: ${responseText}`);
         }
 
-        if (!data.success) {
-          throw new Error(data.message || 'Demo failed');
-        }
+	if (data.success === false) {
+  	throw new Error(data.message || 'Demo failed');
+	}
 
-        renderResult(data);
+	renderResult(data);
       } catch (error) {
         console.error(error);
         message.textContent = `Something went wrong: ${error.message}`;
