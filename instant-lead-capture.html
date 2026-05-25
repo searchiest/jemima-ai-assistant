@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instant Lead Capture Demo</title>
+  <meta name="description" content="Try an instant AI lead capture and enquiry qualification demo.">
+
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #111827;
+      --soft: #f3f4f6;
+      --success: #047857;
+      --error: #b91c1c;
+      --warning: #92400e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+
+    .hero {
+      max-width: 780px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 44px;
+      line-height: 1.08;
+      margin: 0 0 14px;
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.05);
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    select,
+    textarea,
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 13px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 170px;
+      resize: vertical;
+    }
+
+    select:focus,
+    textarea:focus,
+    input:focus {
+      outline: 2px solid rgba(17, 24, 39, 0.16);
+      border-color: #9ca3af;
+    }
+
+    .examples {
+      display: grid;
+      gap: 8px;
+    }
+
+    .example-button {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .example-button:hover {
+      background: var(--soft);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button.primary {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    button.primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .message.error {
+      color: var(--error);
+    }
+
+    .result-empty {
+      color: var(--muted);
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .result {
+      display: none;
+    }
+
+    .result.active {
+      display: block;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .metric {
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: capitalize;
+    }
+
+    .quality-high {
+      color: var(--success);
+    }
+
+    .quality-medium {
+      color: var(--warning);
+    }
+
+    .quality-low {
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .box {
+      background: #f7f7f7;
+      border-left: 4px solid #ddd;
+      padding: 12px;
+      border-radius: 10px;
+      white-space: pre-line;
+    }
+
+    .missing-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .cta {
+      margin-top: 22px;
+      background: #111827;
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .cta h3 {
+      margin: 0 0 8px;
+    }
+
+    .cta p {
+      margin: 0 0 14px;
+      color: #d1d5db;
+    }
+
+    .cta a {
+      display: inline-block;
+      background: #ffffff;
+      color: #111827;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Interactive demo</div>
+      <h1>Try the instant lead capture demo</h1>
+      <p class="intro">
+        Paste a sample enquiry and see how AI can classify the lead, estimate urgency and value, and recommend the next action for your team.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="card">
+        <form id="leadDemoForm">
+          <div>
+            <label for="business_type">Business type</label>
+            <select id="business_type" name="business_type" required>
+              <option value="">Select one</option>
+              <option>Dentist</option>
+              <option>Accountant</option>
+              <option>Estate agent</option>
+              <option>Law firm</option>
+              <option>Private clinic</option>
+              <option>Other service business</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="sample_enquiry">Sample enquiry</label>
+            <textarea id="sample_enquiry" name="sample_enquiry" required placeholder="Example: I’m interested in dental implants but would like to understand the cost and finance options."></textarea>
+          </div>
+
+          <div class="examples">
+            <button class="example-button" type="button" data-business="Dentist" data-example="I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.">
+              Use dentist example
+            </button>
+
+            <button class="example-button" type="button" data-business="Estate agent" data-example="I’m thinking of selling my 3-bed house in Bristol. I had one valuation last month but wasn’t impressed. I’d like to know what you charge and how quickly you could get the property listed.">
+              Use estate agent example
+            </button>
+
+            <button class="example-button" type="button" data-business="Accountant" data-example="I run a small limited company and need help with bookkeeping, payroll and VAT. My current accountant is slow to reply and I want to switch before the next VAT deadline.">
+              Use accountant example
+            </button>
+          </div>
+
+          <div class="actions">
+            <button id="submitButton" class="primary" type="submit">Generate lead summary</button>
+            <span id="formMessage" class="message"></span>
+          </div>
+        </form>
+
+        <p class="note">
+          Please do not enter real customer, patient, client or case information. Use a sample enquiry only.
+        </p>
+      </div>
+
+      <div class="card">
+        <div id="emptyState" class="result-empty">
+          Your AI lead summary will appear here after you submit a sample enquiry.
+        </div>
+
+        <div id="result" class="result">
+          <h2>AI lead summary</h2>
+
+          <div class="result-grid">
+            <div class="metric">
+              <div class="metric-label">Lead quality</div>
+              <div id="leadQuality" class="metric-value">—</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Urgency</div>
+              <div id="urgency" class="metric-value">—</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Estimated value</div>
+              <div id="estimatedValue" class="metric-value">—</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Service interest</h3>
+            <div id="serviceInterest" class="box"></div>
+          </div>
+
+          <div class="section">
+            <h3>Summary</h3>
+            <div id="summary" class="box"></div>
+          </div>
+
+          <div class="section">
+            <h3>Recommended action</h3>
+            <div id="recommendedAction" class="box"></div>
+          </div>
+
+          <div class="section">
+            <h3>Missing information to ask for</h3>
+            <ul id="missingInformation" class="missing-list"></ul>
+          </div>
+
+          <div class="section">
+            <h3>Confidence</h3>
+            <div id="confidence" class="box"></div>
+          </div>
+
+          <div class="cta">
+            <h3>Want this tailored to your business?</h3>
+            <p>
+              Request a tailored demo using your business type, website and chosen automation category.
+            </p>
+            <a href="index.html">Request tailored demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+
+    const WEBHOOK_URL = 'https://jemima-ai.app.n8n.cloud/webhook/instant-lead-capture';
+    const form = document.getElementById('leadDemoForm');
+    const button = document.getElementById('submitButton');
+    const message = document.getElementById('formMessage');
+
+    const businessType = document.getElementById('business_type');
+    const sampleEnquiry = document.getElementById('sample_enquiry');
+
+    const emptyState = document.getElementById('emptyState');
+    const result = document.getElementById('result');
+
+    const leadQuality = document.getElementById('leadQuality');
+    const urgency = document.getElementById('urgency');
+    const estimatedValue = document.getElementById('estimatedValue');
+    const serviceInterest = document.getElementById('serviceInterest');
+    const summary = document.getElementById('summary');
+    const recommendedAction = document.getElementById('recommendedAction');
+    const missingInformation = document.getElementById('missingInformation');
+    const confidence = document.getElementById('confidence');
+
+    function setMetricClass(element, value) {
+      element.classList.remove('quality-high', 'quality-medium', 'quality-low');
+
+      const lower = String(value || '').toLowerCase();
+
+      if (lower === 'high') {
+        element.classList.add('quality-high');
+      } else if (lower === 'medium') {
+        element.classList.add('quality-medium');
+      } else {
+        element.classList.add('quality-low');
+      }
+    }
+
+    function renderResult(data) {
+      emptyState.style.display = 'none';
+      result.classList.add('active');
+
+      leadQuality.textContent = data.lead_quality || '—';
+      urgency.textContent = data.urgency || '—';
+      estimatedValue.textContent = data.estimated_value || '—';
+
+      setMetricClass(leadQuality, data.lead_quality);
+      setMetricClass(urgency, data.urgency);
+      setMetricClass(estimatedValue, data.estimated_value);
+
+      serviceInterest.textContent = data.service_interest || 'Not provided';
+      summary.textContent = data.summary || 'Not provided';
+      recommendedAction.textContent = data.recommended_action || 'Not provided';
+      confidence.textContent = data.confidence || 'Not provided';
+
+      missingInformation.innerHTML = '';
+
+      const missing = Array.isArray(data.missing_information)
+        ? data.missing_information
+        : [];
+
+      if (missing.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No obvious missing information identified.';
+        missingInformation.appendChild(li);
+      } else {
+        missing.forEach(function (item) {
+          const li = document.createElement('li');
+          li.textContent = item;
+          missingInformation.appendChild(li);
+        });
+      }
+    }
+
+    document.querySelectorAll('.example-button').forEach(function (button) {
+      button.addEventListener('click', function () {
+        businessType.value = button.dataset.business;
+        sampleEnquiry.value = button.dataset.example;
+      });
+    });
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      button.disabled = true;
+      button.textContent = 'Generating...';
+      message.textContent = '';
+      message.className = 'message';
+
+      const payload = {
+        business_type: businessType.value,
+        sample_enquiry: sampleEnquiry.value
+      };
+
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.message || 'Demo failed');
+        }
+
+        renderResult(data);
+      } catch (error) {
+        console.error(error);
+        message.textContent = `Something went wrong: ${error.message}`;
+        message.className = 'message error';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Generate lead summary';
+      }
+    });
+  </script>
+</body>
+</html>
