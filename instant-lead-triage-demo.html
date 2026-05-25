@@ -508,12 +508,17 @@
         intro: "See how a dental enquiry can be turned into a commercial follow-up plan with urgency, revenue context, suggested reply and booking questions.",
         businessTypes: ["Dentist", "Private dental clinic", "Orthodontist", "Cosmetic dentist"],
         examples: {
-          "Website form": "Name: Sarah Mitchell\nEmail: sarah@example.com\nPhone: 07700 900123\nService: Dental implants\nMessage: I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.",
-          "Email enquiry": "Subject: Dental implant options\n\nHi,\n\nI have a missing tooth and I’m interested in dental implants. Could you tell me about the process, likely cost and whether finance is available?\n\nI’d like to understand the next step and whether I need a consultation first.\n\nThanks,\nSarah",
-          "Missed call summary": "Missed call from Mark. Caller said he has tooth pain and may need an emergency appointment today or tomorrow. He is not currently registered with the practice.",
-          "Ad lead form": "Ad lead: Interested in Invisalign. Name: Chloe. Wants to know approximate cost, finance options and whether she can book a free consultation.",
-          "Landing page form": "Landing page enquiry: Patient interested in composite bonding before a wedding in 3 months. Wants prices, availability and whether a consultation is needed.",
-          "Chat transcript": "Visitor: Hi, I chipped a front tooth and want to know if bonding can fix it. I’m free this week and would like to know the cost before booking."
+          "Website form": "Name: Sarah Mitchell\nEmail: sarah.mitchell@example.com\nPhone: 07700 900123\nService: Dental implants\nPreferred contact: Phone or email\nMessage: I have a missing tooth and I’m interested in dental implants. I’m not sure about the cost and would like to know if finance is available. I’d like to be seen in the next few weeks.",
+
+          "Email enquiry": "From: Mark Reynolds <mark.reynolds@example.com>\nSubject: Emergency dental appointment availability\n\nHi,\n\nI have tooth pain and think I may need an emergency appointment. I’m not currently registered with the practice. Do you have any availability today or tomorrow?\n\nMy mobile is 07700 900124.\n\nThanks,\nMark",
+
+          "Missed call summary": "Caller name: Anita Patel\nCaller phone: 07700 900125\nCall source: Missed call to reception\nSummary: Anita left a voicemail saying she has chipped a front tooth and wants to know if composite bonding or an emergency repair is possible this week. She said she is available after 3pm today or tomorrow morning.",
+
+          "Ad lead form": "Name: Chloe Evans\nEmail: chloe.evans@example.com\nPhone: 07700 900126\nCampaign: Invisalign consultation\nService: Invisalign / clear aligners\nMessage: I’m interested in Invisalign and would like to know the approximate cost, whether finance is available and if I can book a consultation. I’m hoping to start treatment in the next couple of months.",
+
+          "Landing page form": "Name: Daniel Brooks\nEmail: daniel.brooks@example.com\nPhone: 07700 900127\nLanding page: Composite bonding smile makeover\nService: Composite bonding\nMessage: I’m getting married in 4 months and want to improve the appearance of my front teeth. I’d like to know if bonding is suitable, how long it takes and whether you have consultation availability soon.",
+
+          "Chat transcript": "Visitor name: Rebecca Hall\nEmail captured in chat: rebecca.hall@example.com\nPhone captured in chat: 07700 900128\nTranscript:\nVisitor: Hi, I chipped a front tooth and want to know if bonding can fix it.\nBot: When would you like to be seen?\nVisitor: Ideally this week. I’m free Thursday afternoon or Friday morning.\nBot: Would you like the team to contact you?\nVisitor: Yes, please. My number is 07700 900128."
         }
       },
 
@@ -522,12 +527,17 @@
         intro: "Classify valuation, viewing and landlord enquiries by intent, urgency and likely commercial value.",
         businessTypes: ["Estate agent", "Letting agent", "Property valuer", "Property management company"],
         examples: {
-          "Website form": "Name: James Carter\nEmail: james@example.com\nPhone: 07700 900456\nMessage: I’m thinking of selling my 3-bed semi in Headingley and would like a valuation. We’ve seen a property we want to offer on, so we need to understand our selling position quickly.",
-          "Email enquiry": "Subject: Property valuation request\n\nHi,\n\nWe are considering selling our 4-bedroom detached house and would like a valuation. We may need to move quickly if the right property becomes available.\n\nThanks,\nRebecca",
-          "Missed call summary": "Missed call from landlord with two rental properties. Wants to know management fees and whether the agency can find tenants quickly.",
-          "Ad lead form": "Ad lead: Homeowner considering selling in the next 3 months. Wants a free valuation and recent sold prices nearby.",
-          "Landing page form": "Landing page enquiry: Looking for a valuation for a 2-bed flat. Wants to compare agents before listing.",
-          "Chat transcript": "Visitor: Hi, I need to book a valuation. We want to sell this spring and would like advice on asking price and timing."
+          "Website form": "Name: James Carter\nEmail: james.carter@example.com\nPhone: 07700 900221\nProperty address: 14 Oak Avenue, Headingley, Leeds\nProperty type: 3-bedroom semi-detached house\nService: Sales valuation\nMessage: I’m thinking of selling and would like a valuation. We’ve seen a property we want to offer on, so we need to understand our selling position quickly. Ideally we’d like an appointment this week.",
+
+          "Email enquiry": "From: Rebecca Miles <rebecca.miles@example.com>\nSubject: Property valuation request\n\nHi,\n\nWe are considering selling our 4-bedroom detached house in Moortown and would like a valuation. We may need to move quickly if the right property becomes available.\n\nYou can reach me on 07700 900222.\n\nThanks,\nRebecca",
+
+          "Missed call summary": "Caller name: Paul Bennett\nCaller phone: 07700 900223\nCall source: Missed call to sales office\nSummary: Paul owns a 2-bedroom flat in Chapel Allerton and wants to know current market value and likely selling fees. He said he may list within 6–8 weeks and asked for a callback after 5pm.",
+
+          "Ad lead form": "Name: Michael Harris\nEmail: michael.harris@example.com\nPhone: 07700 900224\nCampaign: Free home valuation\nProperty: 3-bedroom semi-detached house in Roundhay\nMessage: I’m thinking of selling within the next 3 months and would like a valuation. I’d also like to understand recent sold prices nearby and what the best listing strategy might be.",
+
+          "Landing page form": "Name: Laura Jenkins\nEmail: laura.jenkins@example.com\nPhone: 07700 900225\nLanding page: Landlord property management quote\nProperty: 2 rental houses in Leeds\nMessage: I’m looking for a letting agent to manage two rental properties. One tenant is moving out next month, so I need help finding a new tenant and understanding your management fees.",
+
+          "Chat transcript": "Visitor name: Tom Wilkinson\nEmail captured in chat: tom.wilkinson@example.com\nPhone captured in chat: 07700 900226\nTranscript:\nVisitor: Hi, I need to book a valuation.\nBot: Are you selling or letting?\nVisitor: Selling. We want to sell this spring and would like advice on asking price and timing.\nBot: What type of property is it?\nVisitor: 4-bed detached in Alwoodley."
         }
       },
 
@@ -536,12 +546,17 @@
         intro: "Turn tax, bookkeeping and advisory enquiries into structured actions for the team.",
         businessTypes: ["Accountant", "Bookkeeper", "Tax adviser", "Small business accountant"],
         examples: {
-          "Website form": "Name: Priya Shah\nEmail: priya@example.com\nBusiness: Online retail\nMessage: I’m behind on bookkeeping and need help with VAT returns. Turnover is around £180k and I’m worried I may have missed some deadlines.",
-          "Email enquiry": "Subject: VAT and bookkeeping help\n\nHi,\n\nI run a small e-commerce business and need help catching up with bookkeeping and VAT returns. I’m not sure if everything has been filed correctly.\n\nThanks,\nPriya",
-          "Missed call summary": "Missed call from a limited company director asking for urgent help with accounts filing deadline next week.",
-          "Ad lead form": "Ad lead: New sole trader looking for self assessment help and advice on allowable expenses.",
-          "Landing page form": "Landing page enquiry: Business owner wants monthly bookkeeping, payroll and VAT support.",
-          "Chat transcript": "Visitor: I’ve just started a company and need advice on salary, dividends and bookkeeping software."
+          "Website form": "Name: Priya Shah\nEmail: priya.shah@example.com\nPhone: 07700 900331\nBusiness: Online retail business\nTurnover: Around £180,000\nService: Bookkeeping and VAT support\nMessage: I’m behind on bookkeeping and need help with VAT returns. I’m worried I may have missed some deadlines and would like to speak to someone this week.",
+
+          "Email enquiry": "From: Martin Cooper <martin.cooper@example.com>\nSubject: Limited company accounts deadline\n\nHi,\n\nI run a small consultancy through a limited company and my accounts filing deadline is coming up soon. My bookkeeping is partly complete but I need help getting everything filed correctly.\n\nMy mobile is 07700 900332.\n\nThanks,\nMartin",
+
+          "Missed call summary": "Caller name: Helen Morris\nCaller phone: 07700 900333\nCall source: Missed call to office\nSummary: Helen left a voicemail saying she is a company director with a corporation tax question and needs advice before making a dividend payment. She asked for a callback today if possible.",
+
+          "Ad lead form": "Name: Alex Turner\nEmail: alex.turner@example.com\nPhone: 07700 900334\nCampaign: Self assessment help for sole traders\nBusiness type: New sole trader\nService: Self assessment and allowable expenses advice\nMessage: I recently started working as a self-employed graphic designer and need help with self assessment. I’m unsure what expenses I can claim for software, home office costs, travel and equipment. I’d like to understand what records I need to keep and whether I should book an initial consultation.",
+
+          "Landing page form": "Name: Nadia Williams\nEmail: nadia.williams@example.com\nPhone: 07700 900335\nLanding page: Monthly bookkeeping and payroll support\nBusiness: Café with 8 staff\nMessage: We need monthly bookkeeping, payroll and VAT support. We currently use spreadsheets and want to move to Xero or QuickBooks. I’d like a quote and advice on what package would suit us.",
+
+          "Chat transcript": "Visitor name: Chris Morgan\nEmail captured in chat: chris.morgan@example.com\nPhone captured in chat: 07700 900336\nTranscript:\nVisitor: I’ve just started a limited company and need advice.\nBot: What do you need help with?\nVisitor: Salary, dividends and bookkeeping software.\nBot: Would you like someone to contact you?\nVisitor: Yes, please. I’m free tomorrow afternoon."
         }
       },
 
@@ -550,12 +565,17 @@
         intro: "Prioritise appointment requests, treatment enquiries and patient follow-ups based on urgency and value.",
         businessTypes: ["Private clinic", "Physiotherapy clinic", "Aesthetic clinic", "Chiropractor"],
         examples: {
-          "Website form": "Name: Emma Lewis\nEmail: emma@example.com\nPhone: 07700 900789\nMessage: I have ongoing back pain and would like to book a physiotherapy appointment. I’m training for a half marathon and need help quickly.",
-          "Email enquiry": "Subject: Appointment request\n\nHi,\n\nI’m looking for an appointment for recurring shoulder pain. It is affecting work and exercise, and I’d like to be seen this week if possible.\n\nThanks,\nTom",
-          "Missed call summary": "Missed call from patient asking for same-week availability for sports injury assessment.",
-          "Ad lead form": "Ad lead: Interested in skin consultation and treatment options for acne scarring. Wants prices and availability.",
-          "Landing page form": "Landing page enquiry: Wants private GP appointment for health check and blood tests.",
-          "Chat transcript": "Visitor: Do you have any appointments for lower back pain this week? I’ve had it for 3 weeks and painkillers aren’t helping."
+          "Website form": "Name: Emma Lewis\nEmail: emma.lewis@example.com\nPhone: 07700 900441\nService: Physiotherapy appointment\nPreferred contact: Phone\nMessage: I have ongoing back pain and would like to book a physiotherapy appointment. I’m training for a half marathon and need help quickly. I’m available after work this week.",
+
+          "Email enquiry": "From: Tom Edwards <tom.edwards@example.com>\nSubject: Shoulder pain appointment request\n\nHi,\n\nI’m looking for an appointment for recurring shoulder pain. It is affecting work and exercise, and I’d like to be seen this week if possible.\n\nMy number is 07700 900442.\n\nThanks,\nTom",
+
+          "Missed call summary": "Caller name: Sophie Grant\nCaller phone: 07700 900443\nCall source: Missed call to clinic reception\nSummary: Sophie left a message asking for same-week availability for a sports injury assessment. She twisted her ankle during football and wants to know if she should book physio or a scan referral.",
+
+          "Ad lead form": "Name: Olivia Bennett\nEmail: olivia.bennett@example.com\nPhone: 07700 900444\nCampaign: Skin consultation\nService: Acne scarring treatment options\nMessage: I’m interested in treatment options for acne scarring and would like to know what treatments might be suitable, likely pricing and appointment availability. I’m happy to book a consultation if that is the best first step.",
+
+          "Landing page form": "Name: Andrew Clarke\nEmail: andrew.clarke@example.com\nPhone: 07700 900445\nLanding page: Private GP health check\nService: Private GP appointment and blood tests\nMessage: I’d like to book a private health check and blood tests. I’m feeling more tired than usual and would like to understand what checks are included and how quickly results come back.",
+
+          "Chat transcript": "Visitor name: Melissa Green\nEmail captured in chat: melissa.green@example.com\nPhone captured in chat: 07700 900446\nTranscript:\nVisitor: Do you have any appointments for lower back pain this week?\nBot: How long have you had the pain?\nVisitor: About 3 weeks and painkillers aren’t helping.\nBot: Would you like the clinic to contact you?\nVisitor: Yes, please. I can do Friday morning."
         }
       },
 
@@ -564,12 +584,17 @@
         intro: "Assess legal enquiries by urgency, matter type, potential value and required next step.",
         businessTypes: ["Law firm", "Solicitor", "Family law solicitor", "Employment solicitor"],
         examples: {
-          "Website form": "Name: Daniel Brooks\nEmail: daniel@example.com\nPhone: 07700 900321\nMatter: Employment law\nMessage: I’ve been told my role is at risk of redundancy and I’ve been offered a settlement agreement. I need someone to review it quickly before I sign.",
-          "Email enquiry": "Subject: Settlement agreement review\n\nHi,\n\nMy employer has given me a settlement agreement and asked me to get independent legal advice. I need this reviewed within the next few days.\n\nThanks,\nDaniel",
-          "Missed call summary": "Missed call from potential client asking about urgent advice for child contact arrangements after separation.",
-          "Ad lead form": "Ad lead: Interested in conveyancing quote for buying a £425,000 property. Mortgage agreed in principle.",
-          "Landing page form": "Landing page enquiry: Business owner needs help with unpaid invoice and potential debt recovery.",
-          "Chat transcript": "Visitor: I need advice about a settlement agreement. How quickly can you review it and what does it cost?"
+          "Website form": "Name: Daniel Brooks\nEmail: daniel.brooks@example.com\nPhone: 07700 900551\nMatter: Employment law\nService: Settlement agreement review\nMessage: I’ve been told my role is at risk of redundancy and I’ve been offered a settlement agreement. I need someone to review it quickly before I sign. My employer wants this completed within the next few days.",
+
+          "Email enquiry": "From: Amanda Foster <amanda.foster@example.com>\nSubject: Settlement agreement review\n\nHi,\n\nMy employer has given me a settlement agreement and asked me to get independent legal advice. I need this reviewed within the next few days.\n\nMy phone number is 07700 900552.\n\nThanks,\nAmanda",
+
+          "Missed call summary": "Caller name: James O'Neill\nCaller phone: 07700 900553\nCall source: Missed call to family law team\nSummary: James left a voicemail asking for urgent advice about child contact arrangements after separation. He said there is a disagreement about weekend contact and he wants to speak to a solicitor this week.",
+
+          "Ad lead form": "Name: Rachel Morgan\nEmail: rachel.morgan@example.com\nPhone: 07700 900554\nCampaign: Conveyancing quote\nMatter: Residential property purchase\nProperty value: £425,000\nMessage: I’m buying a property and have a mortgage agreement in principle. I’d like a conveyancing quote, an idea of timescales and confirmation of what is included in your fee.",
+
+          "Landing page form": "Name: Ben Wallace\nEmail: ben.wallace@example.com\nPhone: 07700 900555\nLanding page: Debt recovery for businesses\nMatter: Unpaid invoice\nMessage: My business is owed £8,400 by a client who has ignored several reminders. I’d like advice on recovering the debt and what the first legal step would cost.",
+
+          "Chat transcript": "Visitor name: Claire Hudson\nEmail captured in chat: claire.hudson@example.com\nPhone captured in chat: 07700 900556\nTranscript:\nVisitor: I need advice about a settlement agreement.\nBot: Has your employer given you a deadline?\nVisitor: Yes, they want it signed by Friday.\nBot: Would you like the employment team to contact you?\nVisitor: Yes, please. I’m free today after 2pm."
         }
       }
     };
@@ -787,6 +812,4 @@
   </script>
 </body>
 </html>
-
-
    
