@@ -453,12 +453,6 @@
           </div>
 
           <div>
-            <label for="demo_user_email">Enter your email to receive the demo report</label>
-            <input id="demo_user_email" name="demo_user_email" type="email" placeholder="you@example.com" required>
-            <div class="help">Required. The result will show on screen and the report will also be emailed to this address.</div>
-          </div>
-
-          <div>
             <label for="enquiry_source">Input source</label>
             <select id="enquiry_source" name="enquiry_source" required></select>
             <div class="help">Changing this will automatically load the matching example from the scenario library.</div>
@@ -467,6 +461,12 @@
           <div>
             <label for="sample_enquiry">Sample input</label>
             <textarea id="sample_enquiry" name="sample_enquiry" required></textarea>
+          </div>
+
+          <div>
+            <label for="demo_user_email">Where should we send the demo report?</label>
+            <input id="demo_user_email" name="demo_user_email" type="email" placeholder="you@example.com">
+            <div class="help">Optional. Later this can send the demo report by email.</div>
           </div>
 
           <div class="actions">
@@ -904,10 +904,10 @@
         renderGenericResult(data);
       }
 
-      if (demoUserEmail.value) {
-        message.textContent = 'Demo generated. The report will also be sent by email.';
-        message.className = 'message success';
-      }
+if (demoUserEmail.value) {
+  message.textContent = 'Demo generated. Email report sent.';
+  message.className = 'message success';
+}
     }
 
     enquirySource.addEventListener('change', function () {
