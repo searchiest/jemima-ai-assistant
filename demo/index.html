@@ -154,25 +154,6 @@
       color: var(--text);
     }
 
-    .examples {
-      display: grid;
-      gap: 8px;
-    }
-
-    .example-button {
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px 12px;
-      text-align: left;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    .example-button:hover {
-      background: var(--soft);
-    }
 
     .actions {
       display: flex;
@@ -474,15 +455,13 @@
           <div>
             <label for="enquiry_source">Input source</label>
             <select id="enquiry_source" name="enquiry_source" required></select>
-            <div class="help">Choose the source to load the matching example from the scenario library.</div>
+            <div class="help">Changing this will automatically load the matching example from the scenario library.</div>
           </div>
 
           <div>
             <label for="sample_enquiry">Sample input</label>
             <textarea id="sample_enquiry" name="sample_enquiry" required></textarea>
           </div>
-
-          <div class="examples" id="exampleButtons"></div>
 
           <div>
             <label for="demo_user_email">Where should we send the demo report?</label>
@@ -635,7 +614,6 @@
     const enquirySource = document.getElementById('enquiry_source');
     const sampleEnquiry = document.getElementById('sample_enquiry');
     const demoUserEmail = document.getElementById('demo_user_email');
-    const exampleButtons = document.getElementById('exampleButtons');
 
     const emptyState = document.getElementById('emptyState');
     const result = document.getElementById('result');
@@ -695,34 +673,14 @@
       });
     }
 
-    function renderExampleButtons() {
-      exampleButtons.innerHTML = '';
-
-      const currentSource = enquirySource.value;
-      const example = getCurrentExample();
-
-      if (!example) {
-        return;
-      }
-
-      const useButton = document.createElement('button');
-      useButton.className = 'example-button';
-      useButton.type = 'button';
-      useButton.textContent = `Use ${cleanSourceLabel(currentSource)} example`;
-
-      useButton.addEventListener('click', function () {
-        sampleEnquiry.value = example;
-      });
-
-      exampleButtons.appendChild(useButton);
-    }
-
-    function updateTextareaPlaceholder() {
+    function loadCurrentExampleIntoTextarea() {
       const example = getCurrentExample();
 
       if (example) {
+        sampleEnquiry.value = example;
         sampleEnquiry.placeholder = example;
       } else {
+        sampleEnquiry.value = '';
         sampleEnquiry.placeholder = 'Paste a sample enquiry, email, call summary, ad lead, chat transcript or workflow input here.';
       }
     }
@@ -744,8 +702,7 @@
       ctaText.textContent = data.cta_text || 'Want this connected to your process?';
 
       populateSourceOptions();
-      updateTextareaPlaceholder();
-      renderExampleButtons();
+      loadCurrentExampleIntoTextarea();
 
       loadingState.classList.add('hidden');
       errorState.classList.add('hidden');
@@ -954,9 +911,7 @@
     }
 
     enquirySource.addEventListener('change', function () {
-      sampleEnquiry.value = '';
-      updateTextareaPlaceholder();
-      renderExampleButtons();
+      loadCurrentExampleIntoTextarea();
     });
 
     form.addEventListener('submit', async function (event) {
