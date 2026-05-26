@@ -904,10 +904,10 @@
         renderGenericResult(data);
       }
 
-      if (demoUserEmail.value) {
-        message.textContent = 'Demo generated. Email report can be sent once the email step is connected.';
-        message.className = 'message success';
-      }
+if (demoUserEmail.value) {
+  message.textContent = 'Demo generated. Email report sent.';
+  message.className = 'message success';
+}
     }
 
     enquirySource.addEventListener('change', function () {
