@@ -552,6 +552,60 @@
             </div>
           </div>
 
+          <div id="quoteFollowUpResult" class="hidden">
+            <div class="result-grid">
+              <div class="metric">
+                <div class="metric-label">Follow-up priority</div>
+                <div id="quoteFollowUpPriority" class="metric-value">—</div>
+              </div>
+
+              <div class="metric">
+                <div class="metric-label">Conversion opportunity</div>
+                <div id="quoteConversionOpportunity" class="metric-value">—</div>
+              </div>
+
+              <div class="metric">
+                <div class="metric-label">Confidence</div>
+                <div id="quoteConfidenceMetric" class="metric-value">—</div>
+              </div>
+            </div>
+
+            <div class="commercial-focus">
+              <h3>Recommended next action</h3>
+              <p id="quoteRecommendedAction"></p>
+            </div>
+
+            <div class="section">
+              <h3>Quote status</h3>
+              <div id="quoteStatus" class="box"></div>
+            </div>
+
+            <div class="section">
+              <h3>Likely objection</h3>
+              <div id="quoteLikelyObjection" class="box action"></div>
+            </div>
+
+            <div class="section">
+              <h3>Best follow-up angle</h3>
+              <div id="quoteFollowUpAngle" class="box angle"></div>
+            </div>
+
+            <div class="section">
+              <h3>Suggested reply</h3>
+              <div id="quoteSuggestedReply" class="box"></div>
+            </div>
+
+            <div class="section">
+              <h3>Internal summary</h3>
+              <div id="quoteInternalSummary" class="box"></div>
+            </div>
+
+            <div class="section">
+              <h3>Questions the team should ask</h3>
+              <ul id="quoteQuestionsToAsk" class="questions-list"></ul>
+            </div>
+          </div>
+
           <div id="genericResult" class="dynamic-output hidden"></div>
 
           <div class="implementation-note">
@@ -620,6 +674,7 @@
     const resultTitle = document.getElementById('resultTitle');
 
     const leadTriageResult = document.getElementById('leadTriageResult');
+    const quoteFollowUpResult = document.getElementById('quoteFollowUpResult');
     const genericResult = document.getElementById('genericResult');
 
     const leadPriority = document.getElementById('leadPriority');
@@ -635,6 +690,17 @@
     const questionsToAsk = document.getElementById('questionsToAsk');
     const confidence = document.getElementById('confidence');
     const ctaText = document.getElementById('ctaText');
+
+    const quoteFollowUpPriority = document.getElementById('quoteFollowUpPriority');
+    const quoteConversionOpportunity = document.getElementById('quoteConversionOpportunity');
+    const quoteConfidenceMetric = document.getElementById('quoteConfidenceMetric');
+    const quoteRecommendedAction = document.getElementById('quoteRecommendedAction');
+    const quoteStatus = document.getElementById('quoteStatus');
+    const quoteLikelyObjection = document.getElementById('quoteLikelyObjection');
+    const quoteFollowUpAngle = document.getElementById('quoteFollowUpAngle');
+    const quoteSuggestedReply = document.getElementById('quoteSuggestedReply');
+    const quoteInternalSummary = document.getElementById('quoteInternalSummary');
+    const quoteQuestionsToAsk = document.getElementById('quoteQuestionsToAsk');
 
     function getSlugFromHash() {
       return window.location.hash.replace(/^#\/?/, '').trim();
@@ -807,6 +873,7 @@
 
     function renderLeadTriageResult(data) {
       leadTriageResult.classList.remove('hidden');
+      quoteFollowUpResult.classList.add('hidden');
       genericResult.classList.add('hidden');
 
       resultTitle.textContent = 'Revenue triage result';
@@ -849,8 +916,55 @@
       }
     }
 
+    function renderQuoteFollowUpResult(data) {
+      leadTriageResult.classList.add('hidden');
+      quoteFollowUpResult.classList.remove('hidden');
+      genericResult.classList.add('hidden');
+
+      resultTitle.textContent = 'Quote follow-up result';
+
+      const priority = data.follow_up_priority || data.priority || 'medium';
+      const priorityLabel = data.priority_label || `${priority} follow-up`;
+      const opportunity = data.conversion_opportunity || data.revenue_opportunity || 'medium';
+      const confidenceValue = data.confidence || 'medium';
+
+      quoteFollowUpPriority.textContent = priority;
+      quoteConversionOpportunity.textContent = opportunity;
+      quoteConfidenceMetric.textContent = confidenceValue;
+      priorityBadge.textContent = priorityLabel;
+
+      setMetricClass(quoteFollowUpPriority, priority);
+      setMetricClass(quoteConversionOpportunity, opportunity);
+      setMetricClass(quoteConfidenceMetric, confidenceValue);
+      setBadgeClass(priorityBadge, priority);
+
+      quoteRecommendedAction.textContent = data.recommended_action || data.next_action || 'Not provided';
+      quoteStatus.textContent = data.quote_status || data.status || 'Not provided';
+      quoteLikelyObjection.textContent = data.likely_objection || data.objection || data.barrier || 'Not provided';
+      quoteFollowUpAngle.textContent = data.follow_up_angle || data.conversion_angle || 'Not provided';
+      quoteSuggestedReply.textContent = data.suggested_reply || data.reply || 'Not provided';
+      quoteInternalSummary.textContent = data.internal_summary || data.summary || 'Not provided';
+
+      quoteQuestionsToAsk.innerHTML = '';
+
+      const questions = normaliseQuestions(data);
+
+      if (questions.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No questions returned.';
+        quoteQuestionsToAsk.appendChild(li);
+      } else {
+        questions.forEach(function (item) {
+          const li = document.createElement('li');
+          li.textContent = item;
+          quoteQuestionsToAsk.appendChild(li);
+        });
+      }
+    }
+
     function renderGenericResult(data) {
       leadTriageResult.classList.add('hidden');
+      quoteFollowUpResult.classList.add('hidden');
       genericResult.classList.remove('hidden');
 
       resultTitle.textContent = `${activeScenario.engine || 'Demo'} result`;
@@ -900,6 +1014,8 @@
 
       if (engine === 'Lead Revenue Triage') {
         renderLeadTriageResult(data);
+      } else if (engine === 'Quote Follow-Up') {
+        renderQuoteFollowUpResult(data);
       } else {
         renderGenericResult(data);
       }
