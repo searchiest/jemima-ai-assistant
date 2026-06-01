@@ -1016,12 +1016,7 @@
 
       scenarioDescriptionBlock.appendChild(scenarioDescriptionText);
 
-      const formElement = document.getElementById('demoForm');
-      if (formElement) {
-        leftDemoCard.insertBefore(scenarioDescriptionBlock, formElement);
-      } else {
-        leftDemoCard.appendChild(scenarioDescriptionBlock);
-      }
+      leftDemoCard.appendChild(scenarioDescriptionBlock);
 
       return true;
     }
@@ -1034,7 +1029,7 @@
       const description = String(data.scenario_description || '').trim();
 
       if (!description) {
-        if (scenarioDescriptionBlock) scenarioDescriptionBlock.classList.add('hidden');
+        scenarioDescriptionBlock.classList.add('hidden');
         scenarioDescriptionText.textContent = '';
         return;
       }
