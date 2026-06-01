@@ -589,7 +589,6 @@
       <div class="card">
         <div id="inputPanel">
           <form id="demoForm">
-          <div id="scenarioNotice" class="scenario-notice"></div>
 <div>
             <label for="demo_user_email">Enter your email to receive the demo report</label>
             <input id="demo_user_email" name="demo_user_email" type="email" placeholder="you@example.com" required>
@@ -799,7 +798,6 @@
     const button = document.getElementById('submitButton');
     const message = document.getElementById('formMessage');
 
-    const scenarioNotice = document.getElementById('scenarioNotice');
 
     const enquirySource = document.getElementById('enquiry_source');
     const sampleEnquiry = document.getElementById('sample_enquiry');
@@ -945,9 +943,8 @@
         .replace(/\s+demo\s*$/i, '')
         .trim();
     }
-
     function renderScenarioNotice(data) {
-      scenarioNotice.textContent = data.scenario_description || 'This demo uses scenario data from the Demo Scenario Library.';
+      // Scenario description is displayed in the left column under the video.
     }
 
 
