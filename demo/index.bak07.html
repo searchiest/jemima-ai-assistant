@@ -64,33 +64,8 @@
       font-size: 18px;
       color: var(--muted);
       margin: 0;
-      max-width: 860px;
+      max-width: 800px;
     }
-
-    .intro-value {
-      display: grid;
-      gap: 14px;
-      max-width: 860px;
-    }
-
-    .intro-value-block {
-      background: transparent;
-    }
-
-    .intro-value-block strong {
-      display: block;
-      color: var(--text);
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
-
-    .intro-value-block p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
 
     .layout {
       display: grid;
@@ -539,9 +514,9 @@
     <section class="hero">
       <div class="eyebrow" id="pageEyebrow">Interactive demo</div>
       <h1 id="pageTitle">Loading demo...</h1>
-      <div class="intro" id="pageIntro">
+      <p class="intro" id="pageIntro">
         Loading demo configuration.
-      </div>
+      </p>
     </section>
 
     <div id="loadingState" class="loading-card">
@@ -925,6 +900,34 @@
     }
 
     function renderScenarioNotice(data) {
+      const problemText = String(data.problem_solved || '').trim();
+      const customerText = String(data.customer_benefit || '').trim();
+
+      if (problemText || customerText) {
+        const blocks = [];
+
+        if (problemText) {
+          blocks.push(`
+            <div class="notice-block">
+              <strong>What problem this solves</strong>
+              <p>${escapeHtml(problemText)}</p>
+            </div>
+          `);
+        }
+
+        if (customerText) {
+          blocks.push(`
+            <div class="notice-block">
+              <strong>How this helps customers</strong>
+              <p>${escapeHtml(customerText)}</p>
+            </div>
+          `);
+        }
+
+        scenarioNotice.innerHTML = blocks.join('');
+        return;
+      }
+
       scenarioNotice.textContent = data.scenario_description || 'This demo uses scenario data from the Demo Scenario Library.';
     }
 
@@ -935,16 +938,9 @@
 
       document.title = displayTitle || 'Jemima AI Demo';
 
-      // Keep the original concise scenario copy in the page meta description.
-      // This is the text from page_intro, for example:
-      // "See how AI turns a new patient enquiry into treatment interest, urgency, priority, suggested reply and team action."
-      setMetaDescription(data.page_intro || data.scenario_description || '');
-
       pageEyebrow.textContent = data.category || data.engine || 'Interactive demo';
       pageTitle.textContent = displayTitle || 'Jemima AI demo';
-
-      // Show business-value content on the page instead of the short scenario intro.
-      renderHeroIntro(data);
+      pageIntro.textContent = data.page_intro || data.scenario_description || '';
 
       renderScenarioNotice(data);
       scenarioName.textContent = data.demo_name || data.scenario_id || '—';
