@@ -912,6 +912,209 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       border-radius: 0;
     }
 
+
+    .tailored-demo-section {
+      margin: 56px auto 0;
+      padding: 48px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .tailored-demo-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .tailored-demo-kicker {
+      display: inline-block;
+      background: rgba(194, 21, 90, 0.1);
+      color: #c2155a;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 7px 12px;
+      margin-bottom: 16px;
+    }
+
+    .tailored-demo-section h2 {
+      margin: 0;
+      color: #020617;
+      font-size: 38px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+
+    .tailored-demo-section p {
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1.65;
+      margin: 16px 0 0;
+      font-weight: 500;
+    }
+
+    .tailored-demo-points {
+      margin: 26px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .tailored-demo-points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .tailored-demo-points i {
+      color: #c2155a;
+      margin-top: 4px;
+    }
+
+    .tailored-demo-form {
+      display: grid;
+      gap: 22px;
+    }
+
+    .tailored-form-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .tailored-form-row label {
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .tailored-demo-form input,
+    .tailored-demo-form select {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid #e2e8f0;
+      border-radius: 0;
+      padding: 12px 2px;
+      background: transparent;
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .tailored-demo-form input:focus,
+    .tailored-demo-form select:focus {
+      border-color: #c2155a;
+      outline: none;
+    }
+
+    .tailored-phone-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+    }
+
+    .tailored-sms-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding-bottom: 12px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tailored-sms-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: #c2155a;
+    }
+
+    .tailored-submit {
+      width: 100%;
+      border: 0;
+      background: #c2155a;
+      color: #ffffff;
+      padding: 18px 22px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 16px 30px rgba(194, 21, 90, 0.22);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .tailored-submit:hover {
+      background: #a0124a;
+      transform: translateY(-1px);
+    }
+
+    .tailored-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .tailored-note {
+      text-align: center;
+      color: #94a3b8 !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 !important;
+    }
+
+    .tailored-form-message {
+      min-height: 20px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #047857;
+    }
+
+    .tailored-form-message.error {
+      color: #b91c1c;
+    }
+
+    @media (max-width: 900px) {
+      .tailored-demo-section {
+        padding: 28px 20px;
+      }
+
+      .tailored-demo-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .tailored-demo-section h2 {
+        font-size: 32px;
+      }
+
+      .tailored-phone-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .tailored-sms-label {
+        padding-bottom: 0;
+      }
+    }
+
     .site-footer {
       padding: 48px 24px;
       background: #ffffff;
@@ -984,7 +1187,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </button>
       </div>
       <div class="mobile-menu-links">
-<a href="/index.html" onclick="toggleMobileMenu()">Request tailored demo</a>
+<a href="#tailored-demo-form" onclick="toggleMobileMenu()">Request tailored demo</a>
       </div>
     </div>
 
@@ -993,7 +1196,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="/jemima-logo.png" alt="Jemima Logo">
         <span>Jemima</span>
       </a>
-<a class="site-cta" href="/index.html">
+<a class="site-cta" href="#tailored-demo-form">
         <i class="fas fa-chart-line"></i>
         <span>Request tailored demo</span>
       </a>
@@ -1196,12 +1399,67 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="cta">
             <h3>Want this tailored to your business?</h3>
             <p id="ctaText">Want this connected to your process?</p>
-            <a href="/index.html">Request tailored demo</a>
+            <a href="#tailored-demo-form">Request tailored demo</a>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+
+    <section id="tailored-demo-form" class="tailored-demo-section">
+      <div class="tailored-demo-grid">
+        <div>
+          <div class="tailored-demo-kicker">Step 1 of 1</div>
+          <h2>Request a tailored demo</h2>
+          <p>Share a few details and we’ll review where this kind of AI workflow could fit into your enquiry, follow-up or conversion process.</p>
+          <ul class="tailored-demo-points">
+            <li><i class="fas fa-check"></i><span>We’ll look for practical automation opportunities, not generic AI ideas.</span></li>
+            <li><i class="fas fa-check"></i><span>You can ask about website forms, inboxes, calls, SMS, email or CRM follow-up.</span></li>
+            <li><i class="fas fa-check"></i><span>No credit card required.</span></li>
+          </ul>
+        </div>
+
+        <form id="tailoredDemoForm" class="tailored-demo-form">
+          <div class="tailored-form-row">
+            <label for="tailored-name">Full Name</label>
+            <input type="text" id="tailored-name" name="name" required placeholder="John Doe">
+          </div>
+
+          <div class="tailored-form-row">
+            <label for="tailored-traffic">Monthly Website Traffic</label>
+            <select id="tailored-traffic" name="traffic" required>
+              <option value="">Select traffic range...</option>
+              <option value="0 - 1,000">0 - 1,000</option>
+              <option value="1,000 - 5,000">1,000 - 5,000</option>
+              <option value="5,000 - 20,000">5,000 - 20,000</option>
+              <option value="20,000+">20,000+</option>
+            </select>
+          </div>
+
+          <div class="tailored-form-row">
+            <label for="tailored-email">Work Email</label>
+            <input type="email" id="tailored-email" name="email" required placeholder="john@company.com">
+          </div>
+
+          <div class="tailored-form-row">
+            <label for="tailored-phone">Phone Number</label>
+            <div class="tailored-phone-row">
+              <input type="tel" id="tailored-phone" name="phone" required placeholder="+1 (555) 000-0000">
+              <label class="tailored-sms-label">
+                <input type="checkbox" id="tailored-sms-optin" name="smsOptin">
+                <span>SMS?</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
+          <div id="tailored-form-message" class="tailored-form-message"></div>
+          <p class="tailored-note">No credit card required</p>
+        </form>
+      </div>
+    </section>
+
 
     <footer class="site-footer">
       <p>&copy; 2026 Jemima AI. All rights reserved.</p>
@@ -1209,6 +1467,65 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
   <script>
+
+
+    const tailoredDemoWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+
+    function setupTailoredDemoForm() {
+      const form = document.getElementById('tailoredDemoForm');
+      if (!form) return;
+
+      const submitButton = document.getElementById('tailored-submit');
+      const message = document.getElementById('tailored-form-message');
+
+      form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        submitButton.disabled = true;
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
+        message.textContent = '';
+        message.className = 'tailored-form-message';
+
+        const formData = {
+          type: 'tailored_demo_request',
+          name: document.getElementById('tailored-name').value,
+          traffic: document.getElementById('tailored-traffic').value,
+          email: document.getElementById('tailored-email').value,
+          phone: document.getElementById('tailored-phone').value,
+          smsOptin: document.getElementById('tailored-sms-optin').checked,
+          source: 'demo_page_footer_form',
+          currentDemoSlug: window.location.hash.replace(/^#\/?/, '').trim(),
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString()
+        };
+
+        try {
+          const response = await fetch(tailoredDemoWebhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          message.textContent = 'Thanks — your tailored demo request has been submitted.';
+          form.reset();
+        } catch (error) {
+          console.error(error);
+          message.textContent = 'Sorry, something went wrong. Please try again.';
+          message.className = 'tailored-form-message error';
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', setupTailoredDemoForm);
+
 
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileMenu');
