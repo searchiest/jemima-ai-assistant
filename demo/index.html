@@ -1771,6 +1771,7 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
 
       videoFrame.innerHTML = '';
       videoFrame.className = 'video-frame';
+      videoFrame.onclick = null;
 
       if (!videoUrl) {
         videoBlock.classList.add('hidden');
@@ -1806,14 +1807,12 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         const video = document.createElement('video');
 
         video.src = videoUrl;
-
-        // Show the first frame, but do not start silent autoplay.
+        video.controls = true;
+        video.preload = 'metadata';
         video.autoplay = false;
         video.loop = false;
         video.muted = false;
         video.defaultMuted = false;
-        video.controls = true;
-        video.preload = 'auto';
 
         // Required for inline playback on iPhone/iPad Safari.
         video.playsInline = true;
@@ -1835,29 +1834,12 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         videoFrame.appendChild(video);
         videoBlock.classList.remove('hidden');
 
-        // Ask Safari to load enough data to render a visible first frame.
-        video.load();
-
-        video.addEventListener('loadedmetadata', function () {
-          try {
-            if (!posterUrl && video.duration > 0) {
-              video.currentTime = 0.001;
-            }
-          } catch (error) {
-            // Some browsers do not allow early seeking. Controls still work.
-          }
-        }, { once: true });
-
-        video.addEventListener('loadeddata', function () {
-          video.pause();
-        }, { once: true });
-
-        // Make the whole video area start playback from a user gesture.
+        // On iPhone, playing from a user gesture allows sound and inline playback.
         videoFrame.onclick = async function () {
           try {
-            video.controls = true;
             video.muted = false;
             video.defaultMuted = false;
+            video.controls = true;
             await video.play();
           } catch (error) {
             // Native controls remain available if the browser blocks programmatic play.
@@ -2321,6 +2303,7 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         problem_solved: activeScenario.problem_solved,
         customer_benefit: activeScenario.customer_benefit,
         explainer_video: activeScenario.explainer_video,
+        explainer_video_poster: activeScenario.explainer_video_poster,
         scenario_description: activeScenario.scenario_description,
         output_focus: activeScenario.output_focus,
         recommended_sources: activeScenario.recommended_sources,
