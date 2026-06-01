@@ -139,22 +139,6 @@
       color: #374151;
     }
 
-    .scenario-notice strong {
-      display: block;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .scenario-notice p {
-      margin: 0;
-    }
-
-    .scenario-notice .notice-block + .notice-block {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #e5e7eb;
-    }
-
     .scenario-meta {
       display: grid;
       gap: 8px;
@@ -733,8 +717,8 @@
       'Local Growth': 'https://jemima-ai.app.n8n.cloud/webhook/demo-local-growth'
     };
 
-    // console.log('Scenario lookup URL:', SCENARIO_LOOKUP_URL);
-    // console.log('Engine webhook map:', ENGINE_WEBHOOKS);
+    console.log('Scenario lookup URL:', SCENARIO_LOOKUP_URL);
+    console.log('Engine webhook map:', ENGINE_WEBHOOKS);
 
     let activeScenario = null;
 
@@ -882,67 +866,16 @@
       videoBlock.classList.remove('hidden');
     }
 
-
-    function escapeHtml(value) {
-      return String(value || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function cleanDisplayTitle(value) {
-      return String(value || '')
-        .replace(/^\s*try\s+the\s+instant\s+/i, '')
-        .replace(/\s+demo\s*$/i, '')
-        .trim();
-    }
-
-    function renderScenarioNotice(data) {
-      const problemText = String(data.problem_solved || '').trim();
-      const customerText = String(data.customer_benefit || '').trim();
-
-      if (problemText || customerText) {
-        const blocks = [];
-
-        if (problemText) {
-          blocks.push(`
-            <div class="notice-block">
-              <strong>What problem this solves</strong>
-              <p>${escapeHtml(problemText)}</p>
-            </div>
-          `);
-        }
-
-        if (customerText) {
-          blocks.push(`
-            <div class="notice-block">
-              <strong>How this helps customers</strong>
-              <p>${escapeHtml(customerText)}</p>
-            </div>
-          `);
-        }
-
-        scenarioNotice.innerHTML = blocks.join('');
-        return;
-      }
-
-      scenarioNotice.textContent = data.scenario_description || 'This demo uses scenario data from the Demo Scenario Library.';
-    }
-
     function renderScenario(data) {
       activeScenario = data;
 
-      const displayTitle = cleanDisplayTitle(data.page_title || data.demo_name || 'Jemima AI Demo');
-
-      document.title = displayTitle || 'Jemima AI Demo';
+      document.title = data.page_title || data.demo_name || 'Jemima AI Demo';
 
       pageEyebrow.textContent = data.category || data.engine || 'Interactive demo';
-      pageTitle.textContent = displayTitle || 'Jemima AI demo';
+      pageTitle.textContent = data.page_title || data.demo_name || 'Jemima AI demo';
       pageIntro.textContent = data.page_intro || data.scenario_description || '';
 
-      renderScenarioNotice(data);
+      scenarioNotice.textContent = data.scenario_description || 'This demo uses scenario data from the Demo Scenario Library.';
       scenarioName.textContent = data.demo_name || data.scenario_id || '—';
       scenarioIndustry.textContent = data.industry || '—';
       scenarioEngine.textContent = data.engine || '—';
@@ -972,8 +905,8 @@
         const response = await fetch(url);
         const responseText = await response.text();
 
-        // console.log('Scenario lookup status:', response.status);
-        // console.log('Scenario lookup response:', responseText);
+        console.log('Scenario lookup status:', response.status);
+        console.log('Scenario lookup response:', responseText);
 
         if (!response.ok) {
           throw new Error(`Scenario lookup HTTP ${response.status}: ${responseText || 'empty response'}`);
@@ -1243,9 +1176,6 @@
         engine: activeScenario.engine,
         demo_name: activeScenario.demo_name,
         category: activeScenario.category,
-        problem_solved: activeScenario.problem_solved,
-        customer_benefit: activeScenario.customer_benefit,
-        explainer_video: activeScenario.explainer_video,
         scenario_description: activeScenario.scenario_description,
         output_focus: activeScenario.output_focus,
         recommended_sources: activeScenario.recommended_sources,
@@ -1267,10 +1197,10 @@
 
         const responseText = await response.text();
 
-        // console.log('Engine:', activeScenario.engine);
-        // console.log('Engine webhook URL:', engineWebhookUrl);
-        // console.log('Demo status:', response.status);
-        // console.log('Demo response:', responseText);
+        console.log('Engine:', activeScenario.engine);
+        console.log('Engine webhook URL:', engineWebhookUrl);
+        console.log('Demo status:', response.status);
+        console.log('Demo response:', responseText);
 
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${responseText || 'empty response'}`);
