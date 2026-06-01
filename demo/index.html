@@ -1,12 +1,46 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P8CCJV29');</script>
+<!-- End Google Tag Manager -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jemima AI Demo</title>
   <meta name="description" content="Interactive AI automation demo powered by Jemima AI.">
+  <link rel="canonical" href="https://jemima.ai/demo/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="jemima.ai">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jemima.ai/demo/">
+  <meta property="og:title" content="Jemima AI Demo">
+  <meta property="og:description" content="Interactive AI automation demo powered by Jemima AI.">
+  <meta property="og:image" content="/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jemima AI Demo">
+  <meta name="twitter:description" content="Interactive AI automation demo powered by Jemima AI.">
+  <meta name="twitter:image" content="/og-image.jpg">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#c2155a">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
+
     :root {
       --bg: #f6f7f9;
       --card: #ffffff;
@@ -557,11 +591,366 @@
         margin-top: 10px;
       }
     }
+  
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 48px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .site-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #0f172a;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .site-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.15);
+    }
+
+    .site-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .site-links a {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .site-links a:hover {
+      color: #c2155a;
+    }
+
+    .site-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      background: #c2155a;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 18px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      box-shadow: 0 12px 24px rgba(194,21,90,0.2);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .site-cta:hover {
+      background: #a0124a;
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-button {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: #475569;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      background: #ffffff;
+      padding: 30px;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+
+    .mobile-menu-links {
+      display: grid;
+      gap: 22px;
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .mobile-menu-links a {
+      color: #0f172a;
+      text-decoration: none;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .page {
+      max-width: 1200px;
+      padding: 36px 24px 72px;
+    }
+
+    .hero {
+      max-width: 980px;
+      margin: 0 auto 30px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: #c2155a;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+    }
+
+    h1 {
+      color: #020617;
+      font-weight: 800;
+      font-size: 52px;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      text-transform: none;
+    }
+
+    .intro {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .intro-value {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      text-align: left;
+    }
+
+    .intro-value-block {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 18px;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.04);
+    }
+
+    .intro-value-block strong {
+      color: #0f172a;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .intro-value-block p {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .card,
+    .loading-card {
+      border-radius: 0;
+      border-color: #e2e8f0;
+      box-shadow: 0 16px 35px rgba(15,23,42,0.08);
+    }
+
+    .video-card,
+    .scenario-description-block {
+      border-radius: 0;
+      background: #ffffff;
+    }
+
+    .scenario-description-block {
+      border-left-color: #c2155a;
+    }
+
+    .scenario-description-block p {
+      color: #475569;
+    }
+
+    button.primary {
+      border-radius: 0;
+      background: #c2155a;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 15px 20px;
+      box-shadow: 0 12px 24px rgba(194,21,90,0.2);
+    }
+
+    button.primary:hover {
+      background: #a0124a;
+    }
+
+    select,
+    textarea,
+    input {
+      border-radius: 0;
+      border-color: #e2e8f0;
+    }
+
+    select:focus,
+    textarea:focus,
+    input:focus {
+      border-color: #c2155a;
+      outline: 2px solid rgba(194,21,90,0.12);
+    }
+
+    .commercial-focus,
+    .cta {
+      border-radius: 0;
+      background: #0f172a;
+    }
+
+    .box,
+    .metric,
+    .implementation-note,
+    .result-empty {
+      border-radius: 0;
+    }
+
+    .box.action {
+      border-left-color: #047857;
+      background: #f0fdf4;
+    }
+
+    .box.angle {
+      border-left-color: #c2155a;
+      background: #fdf2f8;
+    }
+
+    .cta a {
+      border-radius: 0;
+    }
+
+    .site-footer {
+      padding: 48px 24px;
+      background: #ffffff;
+      border-top: 1px solid #cbd5e1;
+      text-align: center;
+    }
+
+    .site-footer p {
+      margin: 0;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .site-nav {
+        padding: 14px 18px;
+      }
+
+      .site-links,
+      .site-cta {
+        display: none;
+      }
+
+      .mobile-menu-button {
+        display: block;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .intro-value {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding: 30px 16px 56px;
+      }
+    }
+
   </style>
 </head>
-
 <body>
-  <main class="page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <div class="mobile-menu-header">
+        <a class="site-brand" href="/">
+          <img src="/jemima-logo.png" alt="Jemima Logo">
+          <span>Jemima</span>
+        </a>
+        <button class="mobile-menu-button" type="button" onclick="toggleMobileMenu()" aria-label="Close menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="mobile-menu-links">
+        <a href="/" onclick="toggleMobileMenu()">Home</a>
+        <a href="/#problem" onclick="toggleMobileMenu()">Solution</a>
+        <a href="/#how-it-works" onclick="toggleMobileMenu()">Process</a>
+        <a href="/#pricing" onclick="toggleMobileMenu()">Pricing</a>
+        <a href="/#faq" onclick="toggleMobileMenu()">FAQs</a>
+        <a href="/index.html" onclick="toggleMobileMenu()">Request tailored demo</a>
+      </div>
+    </div>
+
+    <nav class="site-nav">
+      <a class="site-brand" href="/">
+        <img src="/jemima-logo.png" alt="Jemima Logo">
+        <span>Jemima</span>
+      </a>
+
+      <div class="site-links">
+        <a href="/">Home</a>
+        <a href="/#problem">Solution</a>
+        <a href="/#how-it-works">Process</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQs</a>
+      </div>
+
+      <a class="site-cta" href="/index.html">
+        <i class="fas fa-chart-line"></i>
+        <span>Request tailored demo</span>
+      </a>
+
+      <button class="mobile-menu-button" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+
+<main class="page">
     <section class="hero">
       <div class="eyebrow" id="pageEyebrow">Interactive demo</div>
       <h1 id="pageTitle">Loading demo...</h1>
@@ -761,8 +1150,23 @@
     </section>
   </main>
 
+    <footer class="site-footer">
+      <p>&copy; 2026 Jemima AI. All rights reserved.</p>
+    </footer>
+
+
   <script>
-    const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenario';
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      if (!menu) return;
+
+      const isOpen = menu.classList.toggle('active');
+      menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenario';
 
     const ENGINE_WEBHOOKS = {
       'Lead Revenue Triage': 'https://jemima-ai.app.n8n.cloud/webhook/instant-lead-capture-sheet',
