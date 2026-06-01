@@ -914,6 +914,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
     .tailored-demo-section {
+      scroll-margin-top: 96px;
       margin: 56px auto 0;
       padding: 48px;
       background: #ffffff;
@@ -1093,6 +1094,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     @media (max-width: 900px) {
       .tailored-demo-section {
+      scroll-margin-top: 96px;
         padding: 28px 20px;
       }
 
@@ -1187,7 +1189,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </button>
       </div>
       <div class="mobile-menu-links">
-<a href="#tailored-demo-form" onclick="toggleMobileMenu()">Request tailored demo</a>
+<a href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event); toggleMobileMenu();" >Request tailored demo</a>
       </div>
     </div>
 
@@ -1196,7 +1198,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="/jemima-logo.png" alt="Jemima Logo">
         <span>Jemima</span>
       </a>
-<a class="site-cta" href="#tailored-demo-form">
+<a class="site-cta" href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event)">
         <i class="fas fa-chart-line"></i>
         <span>Request tailored demo</span>
       </a>
@@ -1399,7 +1401,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="cta">
             <h3>Want this tailored to your business?</h3>
             <p id="ctaText">Want this connected to your process?</p>
-            <a href="#tailored-demo-form">Request tailored demo</a>
+            <a href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event)">Request tailored demo</a>
           </div>
         </div>
       </div>
@@ -1470,6 +1472,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     const tailoredDemoWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+
+
+    function scrollToTailoredDemoForm(event) {
+      if (event) {
+        event.preventDefault();
+      }
+
+      const formSection = document.getElementById('tailored-demo-form');
+      if (!formSection) return;
+
+      formSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
 
     function setupTailoredDemoForm() {
       const form = document.getElementById('tailoredDemoForm');
@@ -1611,7 +1628,13 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
     const quoteQuestionsToAsk = document.getElementById('quoteQuestionsToAsk');
 
     function getSlugFromHash() {
-      return window.location.hash.replace(/^#\/?/, '').trim();
+      const hash = window.location.hash.replace(/^#\/?/, '').trim();
+
+      if (!hash || hash === 'tailored-demo-form') {
+        return sessionStorage.getItem('jemimaDemoSlug') || 'dentists/new-patient-enquiry';
+      }
+
+      return hash;
     }
 
     function showError(text) {
@@ -1850,6 +1873,10 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
 
     async function loadScenario() {
       const slug = getSlugFromHash();
+
+      if (slug && slug !== 'tailored-demo-form') {
+        sessionStorage.setItem('jemimaDemoSlug', slug);
+      }
 
       if (!slug) {
         showError('Missing demo slug. Example: /demo/#/dentists/implant-enquiry');
@@ -2193,6 +2220,13 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
     });
 
     window.addEventListener('hashchange', function () {
+      const hash = window.location.hash.replace(/^#\/?/, '').trim();
+
+      if (hash === 'tailored-demo-form') {
+        scrollToTailoredDemoForm();
+        return;
+      }
+
       window.location.reload();
     });
 
