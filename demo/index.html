@@ -725,8 +725,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
 
     .hero {
-      max-width: 980px;
-      margin: 0 auto 30px;
+      max-width: none;
+      width: 100%;
+      margin: 0 0 30px;
       text-align: center;
     }
 
@@ -747,15 +748,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
 
     .intro {
-      max-width: 920px;
-      margin: 0 auto;
+      max-width: none;
+      width: 100%;
+      margin: 0;
     }
 
     .intro-value {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      gap: 22px;
       text-align: left;
+      width: 100%;
     }
 
     .intro-value-block {
