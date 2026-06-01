@@ -590,7 +590,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       width: 100%;
       overflow: hidden;
       border-radius: 12px;
-      background: #111827;
+      background-color: #000;
+      background-image: url('/video-fallback.png?auto=format&fit=crop&q=80&w=1000');
+      background-size: cover;
+      background-position: center;
       border: 1px solid var(--border);
     }
 
@@ -609,54 +612,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       border: 0;
       background: #111827;
       object-fit: cover;
-    }
-
-
-    .video-placeholder-cover {
-      position: absolute;
-      inset: 0;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 22px;
-      background:
-        radial-gradient(circle at top left, rgba(194, 21, 90, 0.18), transparent 42%),
-        linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #ffffff;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .video-placeholder-cover button {
-      width: 58px;
-      height: 58px;
-      border: 0;
-      border-radius: 999px;
-      background: #c2155a;
-      color: #ffffff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 14px 28px rgba(194, 21, 90, 0.35);
-      cursor: pointer;
-    }
-
-    .video-placeholder-cover strong {
-      display: block;
-      font-size: 15px;
-      letter-spacing: 0.02em;
-    }
-
-    .video-placeholder-cover span {
-      display: block;
-      max-width: 260px;
-      color: rgba(255,255,255,0.76);
-      font-size: 13px;
-      line-height: 1.45;
     }
 
     .video-link-fallback {
@@ -1850,9 +1805,17 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         const video = document.createElement('video');
 
         video.src = videoUrl;
-        video.controls = true;
-        video.preload = 'metadata';
 
+        // Same pattern as the working homepage video setup:
+        // a native video element that is muted, autoplaying, looping, preloaded, and inline.
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.controls = true;
+        video.preload = 'auto';
+
+        // Required for inline playback on iPhone/iPad Safari.
         video.playsInline = true;
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
@@ -1866,34 +1829,21 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         video.style.width = '100%';
         video.style.height = '100%';
         video.style.objectFit = 'cover';
+        video.style.display = 'block';
 
         videoFrame.appendChild(video);
+        videoBlock.classList.remove('hidden');
 
-        if (!posterUrl) {
-          const placeholder = document.createElement('div');
-          placeholder.className = 'video-placeholder-cover';
-          placeholder.innerHTML = `
-            <button type="button" aria-label="Play video">
-              <i class="fas fa-play"></i>
-            </button>
-            <strong>Watch the demo walkthrough</strong>
-            <span>Tap to play the explainer video inline.</span>
-          `;
-
-          placeholder.addEventListener('click', async function () {
-            placeholder.remove();
-
-            try {
-              await video.play();
-            } catch (error) {
-              video.controls = true;
-            }
+        // Muted autoplay generally works on iPhone Safari and prevents the black box
+        // by forcing the first scene to render in-page.
+        video.load();
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function () {
+            // Controls remain available if autoplay is blocked.
           });
-
-          videoFrame.appendChild(placeholder);
         }
 
-        videoBlock.classList.remove('hidden');
         return;
       }
 
