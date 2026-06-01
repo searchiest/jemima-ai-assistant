@@ -452,22 +452,6 @@
       font-size: 14px;
     }
 
-    .scenario-description-block {
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-left: 4px solid #111827;
-      border-radius: 14px;
-      padding: 14px;
-      margin: 0;
-    }
-
-    .scenario-description-block p {
-      margin: 0;
-      color: #374151;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
     .video-card {
       background: #f9fafb;
       border: 1px solid var(--border);
@@ -792,8 +776,6 @@
     const videoFrame = document.getElementById('videoFrame');
     const videoIntro = document.getElementById('videoIntro');
     const leftDemoCard = document.getElementById('leftDemoCard');
-    const scenarioDescriptionBlock = document.getElementById('scenarioDescriptionBlock');
-    const scenarioDescriptionText = document.getElementById('scenarioDescriptionText');
 
     const form = document.getElementById('demoForm');
     const button = document.getElementById('submitButton');
@@ -901,6 +883,8 @@
 
       if (!videoUrl) {
         videoBlock.classList.add('hidden');
+        if (leftDemoCard) leftDemoCard.classList.add('hidden');
+        demoLayout.classList.add('no-left-card');
         return;
       }
 
@@ -998,26 +982,6 @@
       pageIntro.textContent = data.page_intro || data.scenario_description || '';
     }
 
-
-    function renderScenarioDescription(data) {
-      const description = String(data.scenario_description || '').trim();
-
-      if (!description) {
-        scenarioDescriptionBlock.classList.add('hidden');
-        scenarioDescriptionText.textContent = '';
-        return;
-      }
-
-      scenarioDescriptionText.textContent = description;
-      scenarioDescriptionBlock.classList.remove('hidden');
-
-      if (leftDemoCard) {
-        leftDemoCard.classList.remove('hidden');
-      }
-
-      demoLayout.classList.remove('no-left-card');
-    }
-
     function renderScenario(data) {
       activeScenario = data;
 
@@ -1041,7 +1005,6 @@
       ctaText.textContent = data.cta_text || 'Want this connected to your process?';
 
       renderExplainerVideo(data);
-      renderScenarioDescription(data);
 
       populateSourceOptions();
       loadCurrentExampleIntoTextarea();
