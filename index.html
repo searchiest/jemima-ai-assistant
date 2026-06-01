@@ -1303,7 +1303,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = {
                 name: document.getElementById('form-name').value,
-                website: document.getElementById('form-email').value, // Using email as proxy since URL field was removed
+                email: document.getElementById('form-email').value,
+                pageUrl: window.location.href,
                 traffic: document.getElementById('form-traffic').value,
                 phone: document.getElementById('form-phone').value,
                 smsOptin: document.getElementById('form-sms-optin').checked,
@@ -1320,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const response = await fetch(n8nFormWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
+                        // n8n will receive these as json.body.email and json.body.pageUrl
                         body: JSON.stringify({ type: 'audit_lead', ...formData })
                     });
                     if(response.ok) leadSuccess = true;
@@ -1341,7 +1343,7 @@ if (leadSuccess) {
     window.history.pushState(null, '', '?thankyou');
 
     addMessages([
-        `Thanks ${formData.name.split(' ')[0]}! I've flagged your interest.`,
+        `Thanks ${String(formData.name || 'there').split(' ')[0]}! I've flagged your interest.`,
         "My team will reach out within 24 hours."
     ]);
 }
