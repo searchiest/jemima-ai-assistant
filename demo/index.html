@@ -189,9 +189,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin-top: 0;
     }
 
+    @media (max-width: 640px) {
+      .form-step {
+        padding-left: 66px;
+      }
+
+      .form-step::before {
+        width: 46px;
+        height: 46px;
+        font-size: 22px;
+      }
+    }
+
     .actions.form-step {
-      padding-top: 0;
+      display: flex;
       align-items: flex-start;
+      padding-left: 94px;
+      min-height: 58px;
+      position: relative;
     }
 
     .actions.form-step::before {
@@ -203,14 +218,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
 
     @media (max-width: 640px) {
-      .form-step {
+      .actions.form-step {
         padding-left: 66px;
-      }
-
-      .form-step::before {
-        width: 46px;
-        height: 46px;
-        font-size: 22px;
       }
     }
 
@@ -1058,7 +1067,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="card">
         <div id="inputPanel">
           <form id="demoForm">
-<div>
+<div class="form-step" data-step="1">
             <label for="demo_user_email">Enter your email to receive the demo report</label>
             <input id="demo_user_email" name="demo_user_email" type="email" placeholder="you@example.com" required>
             <div class="help">Required. The result will show on screen and the report will also be emailed to this address.</div>
@@ -1070,12 +1079,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="help">Changing this will automatically load the matching example from the scenario library.</div>
           </div>
 
-          <div class="form-step" data-step="3">
+          <div>
             <label for="sample_enquiry">Sample input</label>
             <textarea id="sample_enquiry" name="sample_enquiry" required></textarea>
           </div>
 
-          <div class="actions">
+          <div class="actions form-step action-step" data-step="3">
             <button id="submitButton" class="primary" type="submit">Generate demo result</button>
             <span id="formMessage" class="message"></span>
           </div>
