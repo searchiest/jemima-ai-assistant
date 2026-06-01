@@ -401,32 +401,34 @@
       font-size: 14px;
     }
 
+
     .video-card {
-      background: #f9fafb;
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      margin: 0 0 18px;
-      box-shadow: none;
+      border-radius: 18px;
+      padding: 20px;
+      margin: 0 auto 22px;
+      max-width: 760px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.05);
     }
 
     .video-card h2 {
-      margin: 0 0 5px;
-      font-size: 16px;
-      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
     }
 
     .video-card p {
-      margin: 0 0 10px;
+      margin: 0 0 14px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .video-frame {
       position: relative;
       width: 100%;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 14px;
       background: #111827;
       border: 1px solid var(--border);
     }
@@ -449,14 +451,13 @@
 
     .video-link-fallback {
       display: block;
-      padding: 14px;
+      padding: 18px;
       background: #f3f4f6;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       color: var(--text);
       text-decoration: none;
       font-weight: 700;
-      font-size: 14px;
     }
 
     .video-link-fallback span {
@@ -465,9 +466,7 @@
       color: var(--muted);
       font-weight: 400;
       word-break: break-all;
-      font-size: 12px;
     }
-
 
     @media (max-width: 900px) {
       .layout {
@@ -489,6 +488,12 @@
       .badge {
         margin-top: 10px;
       }
+
+
+      .video-card {
+        max-width: none;
+        padding: 18px;
+      }
     }
   </style>
 </head>
@@ -509,14 +514,14 @@
 
     <div id="errorState" class="loading-card hidden"></div>
 
-    <section id="demoLayout" class="layout hidden">
-      <div class="card">
-        <section id="videoBlock" class="video-card hidden">
+    <section id="videoBlock" class="video-card hidden">
       <h2>Watch the demo walkthrough</h2>
       <p id="videoIntro">This short video explains what this automation does and why it matters.</p>
       <div id="videoFrame" class="video-frame"></div>
     </section>
 
+    <section id="demoLayout" class="layout hidden">
+      <div class="card">
         <form id="demoForm">
           <div id="scenarioNotice" class="scenario-notice"></div>
 
