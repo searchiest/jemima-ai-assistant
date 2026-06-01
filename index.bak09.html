@@ -92,12 +92,6 @@
     }
 
 
-    .layout.no-left-card {
-      grid-template-columns: 1fr;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
     .layout {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
@@ -121,10 +115,6 @@
 
     .hidden {
       display: none !important;
-    }
-
-    #inputPanel {
-      display: block;
     }
 
     form {
@@ -561,18 +551,14 @@
     <div id="errorState" class="loading-card hidden"></div>
 
     <section id="demoLayout" class="layout hidden">
-      <div id="leftDemoCard" class="card">
+      <div class="card">
         <section id="videoBlock" class="video-card hidden">
       <h2>Watch the demo walkthrough</h2>
       <p id="videoIntro">This short video explains what this automation does and why it matters.</p>
       <div id="videoFrame" class="video-frame"></div>
     </section>
 
-      </div>
-
-      <div class="card">
-        <div id="inputPanel">
-          <form id="demoForm">
+        <form id="demoForm">
           <div id="scenarioNotice" class="scenario-notice"></div>
 <div>
             <label for="demo_user_email">Enter your email to receive the demo report</label>
@@ -600,6 +586,11 @@
         <p class="note">
           Please do not enter real customer, patient, client or case information. Use sample data only.
         </p>
+      </div>
+
+      <div class="card">
+        <div id="emptyState" class="result-empty">
+          Your demo result will appear here after you submit the sample input.
         </div>
 
         <div id="result" class="result">
@@ -775,7 +766,6 @@
     const videoBlock = document.getElementById('videoBlock');
     const videoFrame = document.getElementById('videoFrame');
     const videoIntro = document.getElementById('videoIntro');
-    const leftDemoCard = document.getElementById('leftDemoCard');
 
     const form = document.getElementById('demoForm');
     const button = document.getElementById('submitButton');
@@ -787,7 +777,7 @@
     const sampleEnquiry = document.getElementById('sample_enquiry');
     const demoUserEmail = document.getElementById('demo_user_email');
 
-    const inputPanel = document.getElementById('inputPanel');
+    const emptyState = document.getElementById('emptyState');
     const result = document.getElementById('result');
     const resultTitle = document.getElementById('resultTitle');
 
@@ -828,7 +818,6 @@
       loadingState.classList.add('hidden');
       demoLayout.classList.add('hidden');
       videoBlock.classList.add('hidden');
-      if (leftDemoCard) leftDemoCard.classList.add('hidden');
       errorState.classList.remove('hidden');
       errorState.textContent = text;
     }
@@ -883,13 +872,8 @@
 
       if (!videoUrl) {
         videoBlock.classList.add('hidden');
-        if (leftDemoCard) leftDemoCard.classList.add('hidden');
-        demoLayout.classList.add('no-left-card');
         return;
       }
-
-      if (leftDemoCard) leftDemoCard.classList.remove('hidden');
-      demoLayout.classList.remove('no-left-card');
 
       videoIntro.textContent = data.video_intro || 'This short video explains what this automation does and why it matters.';
 
@@ -1246,7 +1230,7 @@
     }
 
     function renderResult(data) {
-      inputPanel.style.display = 'none';
+      emptyState.style.display = 'none';
       result.classList.add('active');
 
       const engine = activeScenario?.engine || data.engine || '';
