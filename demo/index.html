@@ -586,6 +586,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
 
     .video-frame {
+      cursor: pointer;
       position: relative;
       width: 100%;
       overflow: hidden;
@@ -1794,7 +1795,7 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         iframe.src = embedUrl;
         iframe.title = `${data.demo_name || 'Jemima AI demo'} explainer video`;
         iframe.loading = 'lazy';
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
         videoFrame.appendChild(iframe);
         videoBlock.classList.remove('hidden');
@@ -1806,12 +1807,11 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
 
         video.src = videoUrl;
 
-        // Same pattern as the working homepage video setup:
-        // a native video element that is muted, autoplaying, looping, preloaded, and inline.
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = true;
-        video.defaultMuted = true;
+        // Show the first frame, but do not start silent autoplay.
+        video.autoplay = false;
+        video.loop = false;
+        video.muted = false;
+        video.defaultMuted = false;
         video.controls = true;
         video.preload = 'auto';
 
@@ -1830,19 +1830,39 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
         video.style.height = '100%';
         video.style.objectFit = 'cover';
         video.style.display = 'block';
+        video.style.cursor = 'pointer';
 
         videoFrame.appendChild(video);
         videoBlock.classList.remove('hidden');
 
-        // Muted autoplay generally works on iPhone Safari and prevents the black box
-        // by forcing the first scene to render in-page.
+        // Ask Safari to load enough data to render a visible first frame.
         video.load();
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-          playPromise.catch(function () {
-            // Controls remain available if autoplay is blocked.
-          });
-        }
+
+        video.addEventListener('loadedmetadata', function () {
+          try {
+            if (!posterUrl && video.duration > 0) {
+              video.currentTime = 0.001;
+            }
+          } catch (error) {
+            // Some browsers do not allow early seeking. Controls still work.
+          }
+        }, { once: true });
+
+        video.addEventListener('loadeddata', function () {
+          video.pause();
+        }, { once: true });
+
+        // Make the whole video area start playback from a user gesture.
+        videoFrame.onclick = async function () {
+          try {
+            video.controls = true;
+            video.muted = false;
+            video.defaultMuted = false;
+            await video.play();
+          } catch (error) {
+            // Native controls remain available if the browser blocks programmatic play.
+          }
+        };
 
         return;
       }
