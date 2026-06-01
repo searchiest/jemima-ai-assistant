@@ -608,6 +608,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       height: 100%;
       border: 0;
       background: #111827;
+      object-fit: cover;
     }
 
     .video-link-fallback {
@@ -1688,55 +1689,157 @@ const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenar
       return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
     }
 
-const video = document.createElement('video');
+    function getYouTubeEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
 
-video.src = videoUrl;
-video.controls = true;
-video.preload = 'metadata';
-video.playsInline = true;
-video.setAttribute('playsinline', '');
-video.setAttribute('webkit-playsinline', '');
-video.setAttribute('x5-playsinline', '');
-video.setAttribute('x-webkit-airplay', 'allow');
+        if (host === 'youtube.com' || host === 'm.youtube.com') {
+          if (parsed.pathname === '/watch') {
+            const id = parsed.searchParams.get('v');
+            return id ? `https://www.youtube.com/embed/${id}` : '';
+          }
 
-// Optional but helps iPhone show an inline preview instead of a blank black box
-video.muted = true;
+          if (parsed.pathname.startsWith('/shorts/')) {
+            const id = parsed.pathname.split('/')[2];
+            return id ? `https://www.youtube.com/embed/${id}` : '';
+          }
 
-// If you have a poster image in the sheet later, use it here.
-// For now this keeps the video inline-friendly.
-video.style.width = '100%';
-video.style.height = '100%';
-video.style.objectFit = 'cover';
+          if (parsed.pathname.startsWith('/embed/')) {
+            return url;
+          }
+        }
 
-videoFrame.appendChild(video);
-videoBlock.classList.remove('hidden');
-return;
+        if (host === 'youtu.be') {
+          const id = parsed.pathname.replace('/', '');
+          return id ? `https://www.youtube.com/embed/${id}` : '';
+        }
+      } catch (error) {
+        return '';
+      }
 
-      if (leftDemoCard) leftDemoCard.classList.remove('hidden');
+      return '';
+    }
+
+    function getVimeoEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
+
+        if (host === 'vimeo.com') {
+          const id = parsed.pathname.split('/').filter(Boolean)[0];
+          return id ? `https://player.vimeo.com/video/${id}` : '';
+        }
+
+        if (host === 'player.vimeo.com') {
+          return url;
+        }
+      } catch (error) {
+        return '';
+      }
+
+      return '';
+    }
+
+    function getLoomEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
+
+        if (host === 'loom.com' && parsed.pathname.startsWith('/share/')) {
+          const id = parsed.pathname.split('/').filter(Boolean)[1];
+          return id ? `https://www.loom.com/embed/${id}` : '';
+        }
+
+        if (host === 'loom.com' && parsed.pathname.startsWith('/embed/')) {
+          return url;
+        }
+      } catch (error) {
+        return '';
+      }
+
+      return '';
+    }
+
+    function renderExplainerVideo(data) {
+      const videoUrl = String(data.explainer_video || '').trim();
+      const posterUrl = String(data.explainer_video_poster || '').trim();
+
+      videoFrame.innerHTML = '';
+      videoFrame.className = 'video-frame';
+
+      if (!videoUrl) {
+        videoBlock.classList.add('hidden');
+        return;
+      }
+
+      if (leftDemoCard) {
+        leftDemoCard.classList.remove('hidden');
+      }
+
       demoLayout.classList.remove('no-left-card');
 
       videoIntro.textContent = data.video_intro || 'This short video explains what this automation does and why it matters.';
 
+      const youtubeEmbed = getYouTubeEmbedUrl(videoUrl);
+      const vimeoEmbed = getVimeoEmbedUrl(videoUrl);
+      const loomEmbed = getLoomEmbedUrl(videoUrl);
+      const embedUrl = youtubeEmbed || vimeoEmbed || loomEmbed;
+
+      if (embedUrl) {
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.title = `${data.demo_name || 'Jemima AI demo'} explainer video`;
+        iframe.loading = 'lazy';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        videoFrame.appendChild(iframe);
+        videoBlock.classList.remove('hidden');
+        return;
+      }
+
       if (isLikelyVideoFile(videoUrl)) {
         const video = document.createElement('video');
+
         video.src = videoUrl;
         video.controls = true;
         video.preload = 'metadata';
+
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('x5-playsinline', '');
+        video.setAttribute('x-webkit-airplay', 'allow');
+
+        if (posterUrl) {
+          video.poster = posterUrl;
+        }
+
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.objectFit = 'cover';
+
         videoFrame.appendChild(video);
         videoBlock.classList.remove('hidden');
         return;
       }
 
-      const iframe = document.createElement('iframe');
-      iframe.src = videoUrl;
-      iframe.title = `${data.demo_name || 'Jemima AI demo'} explainer video`;
-      iframe.loading = 'lazy';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      iframe.allowFullscreen = true;
-      videoFrame.appendChild(iframe);
+      videoFrame.classList.remove('video-frame');
+
+      const link = document.createElement('a');
+      link.href = videoUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'video-link-fallback';
+      link.textContent = 'Open explainer video';
+
+      const span = document.createElement('span');
+      span.textContent = videoUrl;
+      link.appendChild(span);
+
+      videoFrame.appendChild(link);
       videoBlock.classList.remove('hidden');
     }
-
 
     function escapeHtml(value) {
       return String(value || '')
