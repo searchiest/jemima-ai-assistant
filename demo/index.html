@@ -161,6 +161,59 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       display: block;
     }
 
+    .form-step {
+      position: relative;
+      padding-left: 94px;
+      min-height: 72px;
+    }
+
+    .form-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 4px;
+      top: 0;
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      background: rgba(194, 21, 90, 0.16);
+      color: #c2155a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .form-step label {
+      margin-top: 0;
+    }
+
+    .actions.form-step {
+      padding-top: 0;
+      align-items: flex-start;
+    }
+
+    .actions.form-step::before {
+      top: 0;
+    }
+
+    .actions.form-step .primary {
+      margin-top: 0;
+    }
+
+    @media (max-width: 640px) {
+      .form-step {
+        padding-left: 66px;
+      }
+
+      .form-step::before {
+        width: 46px;
+        height: 46px;
+        font-size: 22px;
+      }
+    }
+
     form {
       display: grid;
       gap: 18px;
@@ -1011,13 +1064,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="help">Required. The result will show on screen and the report will also be emailed to this address.</div>
           </div>
 
-          <div>
+          <div class="form-step" data-step="2">
             <label for="enquiry_source">Input source</label>
             <select id="enquiry_source" name="enquiry_source" required></select>
             <div class="help">Changing this will automatically load the matching example from the scenario library.</div>
           </div>
 
-          <div>
+          <div class="form-step" data-step="3">
             <label for="sample_enquiry">Sample input</label>
             <textarea id="sample_enquiry" name="sample_enquiry" required></textarea>
           </div>
