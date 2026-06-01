@@ -401,34 +401,31 @@
       font-size: 14px;
     }
 
-
     .video-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 20px;
-      margin: 0 auto 22px;
-      max-width: 760px;
+      padding: 24px;
+      margin-bottom: 22px;
       box-shadow: 0 10px 30px rgba(17, 24, 39, 0.05);
     }
 
     .video-card h2 {
-      margin: 0 0 6px;
-      font-size: 22px;
+      margin: 0 0 8px;
+      font-size: 24px;
       letter-spacing: -0.03em;
     }
 
     .video-card p {
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       color: var(--muted);
-      font-size: 14px;
     }
 
     .video-frame {
       position: relative;
       width: 100%;
       overflow: hidden;
-      border-radius: 14px;
+      border-radius: 16px;
       background: #111827;
       border: 1px solid var(--border);
     }
@@ -468,8 +465,34 @@
       word-break: break-all;
     }
 
+    .value-context {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .value-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.04);
+    }
+
+    .value-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .value-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
     @media (max-width: 900px) {
-      .layout {
+      .layout,
+      .value-context {
         grid-template-columns: 1fr;
       }
 
@@ -487,12 +510,6 @@
 
       .badge {
         margin-top: 10px;
-      }
-
-
-      .video-card {
-        max-width: none;
-        padding: 18px;
       }
     }
   </style>
@@ -518,6 +535,17 @@
       <h2>Watch the demo walkthrough</h2>
       <p id="videoIntro">This short video explains what this automation does and why it matters.</p>
       <div id="videoFrame" class="video-frame"></div>
+    </section>
+
+    <section id="valueContext" class="value-context hidden">
+      <div id="problemCard" class="value-card hidden">
+        <h3>What problem this solves</h3>
+        <p id="problemSolved"></p>
+      </div>
+      <div id="customerBenefitCard" class="value-card hidden">
+        <h3>How this helps customers</h3>
+        <p id="customerBenefit"></p>
+      </div>
     </section>
 
     <section id="demoLayout" class="layout hidden">
@@ -722,7 +750,7 @@
       'Local Growth': 'https://jemima-ai.app.n8n.cloud/webhook/demo-local-growth'
     };
 
-    console.log('Scenario lookup URL:', SCENARIO_LOOKUP_URL);
+    // console.log('Scenario lookup URL:', SCENARIO_LOOKUP_URL);
     console.log('Engine webhook map:', ENGINE_WEBHOOKS);
 
     let activeScenario = null;
@@ -737,6 +765,11 @@
     const videoBlock = document.getElementById('videoBlock');
     const videoFrame = document.getElementById('videoFrame');
     const videoIntro = document.getElementById('videoIntro');
+    const valueContext = document.getElementById('valueContext');
+    const problemCard = document.getElementById('problemCard');
+    const customerBenefitCard = document.getElementById('customerBenefitCard');
+    const problemSolved = document.getElementById('problemSolved');
+    const customerBenefit = document.getElementById('customerBenefit');
 
     const form = document.getElementById('demoForm');
     const button = document.getElementById('submitButton');
@@ -792,6 +825,7 @@
       loadingState.classList.add('hidden');
       demoLayout.classList.add('hidden');
       videoBlock.classList.add('hidden');
+      valueContext.classList.add('hidden');
       errorState.classList.remove('hidden');
       errorState.textContent = text;
     }
@@ -838,6 +872,78 @@
       return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
     }
 
+    function getYouTubeEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
+
+        if (host === 'youtube.com' || host === 'm.youtube.com') {
+          if (parsed.pathname === '/watch') {
+            const id = parsed.searchParams.get('v');
+            return id ? `https://www.youtube.com/embed/${id}` : '';
+          }
+
+          if (parsed.pathname.startsWith('/shorts/')) {
+            const id = parsed.pathname.split('/')[2];
+            return id ? `https://www.youtube.com/embed/${id}` : '';
+          }
+
+          if (parsed.pathname.startsWith('/embed/')) {
+            return url;
+          }
+        }
+
+        if (host === 'youtu.be') {
+          const id = parsed.pathname.replace('/', '');
+          return id ? `https://www.youtube.com/embed/${id}` : '';
+        }
+      } catch (error) {
+        return '';
+      }
+
+      return '';
+    }
+
+    function getVimeoEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
+
+        if (host === 'vimeo.com') {
+          const id = parsed.pathname.split('/').filter(Boolean)[0];
+          return id ? `https://player.vimeo.com/video/${id}` : '';
+        }
+
+        if (host === 'player.vimeo.com') {
+          return url;
+        }
+      } catch (error) {
+        return '';
+      }
+
+      return '';
+    }
+
+    function getLoomEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
+
+        if (host === 'loom.com' && parsed.pathname.startsWith('/share/')) {
+          const id = parsed.pathname.split('/').filter(Boolean)[1];
+          return id ? `https://www.loom.com/embed/${id}` : '';
+        }
+
+        if (host === 'loom.com' && parsed.pathname.startsWith('/embed/')) {
+          return url;
+        }
+      } catch (error) {
+        return '';
+      }
+
+      return '';
+    }
+
     function renderExplainerVideo(data) {
       const videoUrl = String(data.explainer_video || '').trim();
 
@@ -851,6 +957,23 @@
 
       videoIntro.textContent = data.video_intro || 'This short video explains what this automation does and why it matters.';
 
+      const youtubeEmbed = getYouTubeEmbedUrl(videoUrl);
+      const vimeoEmbed = getVimeoEmbedUrl(videoUrl);
+      const loomEmbed = getLoomEmbedUrl(videoUrl);
+      const embedUrl = youtubeEmbed || vimeoEmbed || loomEmbed;
+
+      if (embedUrl) {
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.title = `${data.demo_name || 'Jemima AI demo'} explainer video`;
+        iframe.loading = 'lazy';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        videoFrame.appendChild(iframe);
+        videoBlock.classList.remove('hidden');
+        return;
+      }
+
       if (isLikelyVideoFile(videoUrl)) {
         const video = document.createElement('video');
         video.src = videoUrl;
@@ -861,14 +984,33 @@
         return;
       }
 
-      const iframe = document.createElement('iframe');
-      iframe.src = videoUrl;
-      iframe.title = `${data.demo_name || 'Jemima AI demo'} explainer video`;
-      iframe.loading = 'lazy';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      iframe.allowFullscreen = true;
-      videoFrame.appendChild(iframe);
+      videoFrame.className = '';
+
+      const link = document.createElement('a');
+      link.href = videoUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'video-link-fallback';
+      link.textContent = 'Open explainer video';
+
+      const span = document.createElement('span');
+      span.textContent = videoUrl;
+      link.appendChild(span);
+
+      videoFrame.appendChild(link);
       videoBlock.classList.remove('hidden');
+    }
+
+    function renderValueContext(data) {
+      const problemText = String(data.problem_solved || '').trim();
+      const customerText = String(data.customer_benefit || '').trim();
+
+      problemSolved.textContent = problemText;
+      customerBenefit.textContent = customerText;
+
+      problemCard.classList.toggle('hidden', !problemText);
+      customerBenefitCard.classList.toggle('hidden', !customerText);
+      valueContext.classList.toggle('hidden', !problemText && !customerText);
     }
 
     function renderScenario(data) {
@@ -888,6 +1030,7 @@
       ctaText.textContent = data.cta_text || 'Want this connected to your process?';
 
       renderExplainerVideo(data);
+      renderValueContext(data);
 
       populateSourceOptions();
       loadCurrentExampleIntoTextarea();
@@ -1181,6 +1324,9 @@
         engine: activeScenario.engine,
         demo_name: activeScenario.demo_name,
         category: activeScenario.category,
+        problem_solved: activeScenario.problem_solved,
+        customer_benefit: activeScenario.customer_benefit,
+        explainer_video: activeScenario.explainer_video,
         scenario_description: activeScenario.scenario_description,
         output_focus: activeScenario.output_focus,
         recommended_sources: activeScenario.recommended_sources,
