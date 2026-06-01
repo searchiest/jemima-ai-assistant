@@ -1294,6 +1294,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+
+        function handleSuccessfulAuditSubmission(formData) {
+            hasSubmitted = true;
+
+            // Always trigger the thank-you video feedback.
+            activateAI('thanks');
+
+            // Always expand and update the chat feedback.
+            expandChatWindow(false);
+
+            const userAction = document.createElement('div');
+            userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
+            userAction.innerText = `Interest in ${formData.selectedPackage || 'Audit'} noted`;
+            chatFeed.appendChild(userAction);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            const firstName = String(formData.name || 'there').split(' ')[0];
+
+            addMessages([
+                `Thanks ${firstName}! I've flagged your interest.`,
+                "My team will reach out within 24 hours."
+            ]);
+
+            // Update the URL without reloading the page.
+            window.history.pushState(null, '', '?thankyou');
+        }
+
+
         async function handleFormSubmit(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
@@ -1321,7 +1349,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const response = await fetch(n8nFormWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        // n8n will receive these as json.body.email and json.body.pageUrl
                         body: JSON.stringify({ type: 'audit_lead', ...formData })
                     });
                     if(response.ok) leadSuccess = true;
@@ -1339,14 +1366,8 @@ document.addEventListener('DOMContentLoaded', () => {
             chatFeed.appendChild(userAction);
 
 if (leadSuccess) {
-    // This updates the URL without reloading the page
-    window.history.pushState(null, '', '?thankyou');
-
-    addMessages([
-        `Thanks ${String(formData.name || 'there').split(' ')[0]}! I've flagged your interest.`,
-        "My team will reach out within 24 hours."
-    ]);
-}
+                handleSuccessfulAuditSubmission(formData);
+            }
 
             closeModal(false);
             submitBtn.disabled = false;
