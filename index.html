@@ -1,6 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -8,2329 +9,1404 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-P8CCJV29');</script>
 <!-- End Google Tag Manager -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jemima AI Demo</title>
-  <meta name="description" content="Interactive AI automation demo powered by Jemima AI.">
-  <link rel="canonical" href="https://jemima.ai/demo/">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="jemima.ai">
 
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://jemima.ai/demo/">
-  <meta property="og:title" content="Jemima AI Demo">
-  <meta property="og:description" content="Interactive AI automation demo powered by Jemima AI.">
-  <meta property="og:image" content="/og-image.jpg">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Jemima AI Demo">
-  <meta name="twitter:description" content="Interactive AI automation demo powered by Jemima AI.">
-  <meta name="twitter:image" content="/og-image.jpg">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#c2155a">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-  <style>
-
-    :root {
-      --bg: #f6f7f9;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --primary: #111827;
-      --soft: #f3f4f6;
-      --success: #047857;
-      --error: #b91c1c;
-      --warning: #92400e;
-      --blue: #1d4ed8;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    .page {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 48px 20px;
-    }
-
-    .hero {
-      max-width: 880px;
-      margin-bottom: 28px;
-    }
-
-    .eyebrow {
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: 46px;
-      line-height: 1.06;
-      margin: 0 0 28px;
-      letter-spacing: -0.04em;
-    }
-
-#pageTitle {
-  text-transform: capitalize;
-}
-
-    .intro {
-      font-size: 18px;
-      color: var(--muted);
-      margin: 0;
-      max-width: 860px;
-    }
-
-    .intro-value {
-      display: grid;
-      gap: 14px;
-      max-width: 860px;
-    }
-
-    .intro-value-block {
-      background: transparent;
-    }
-
-    .intro-value-block strong {
-      display: block;
-      color: var(--text);
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
-
-    .intro-value-block p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
-
-    .layout.no-left-card {
-      grid-template-columns: 1fr;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .card,
-    .loading-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.05);
-    }
-
-    .loading-card {
-      margin-bottom: 22px;
-      color: var(--muted);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    #inputPanel {
-      display: block;
-    }
-
-    .form-step {
-      position: relative;
-      padding-left: 94px;
-      min-height: 72px;
-    }
-
-    .form-step::before {
-      content: attr(data-step);
-      position: absolute;
-      left: 4px;
-      top: 0;
-      width: 58px;
-      height: 58px;
-      border-radius: 999px;
-      background: rgba(194, 21, 90, 0.16);
-      color: #c2155a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .form-step label {
-      margin-top: 0;
-    }
-
-    @media (max-width: 640px) {
-      .form-step {
-        padding-left: 66px;
-      }
-
-      .form-step::before {
-        width: 46px;
-        height: 46px;
-        font-size: 22px;
-      }
-    }
-
-    .actions.form-step {
-      display: flex;
-      align-items: flex-start;
-      padding-left: 94px;
-      min-height: 58px;
-      position: relative;
-    }
-
-    .actions.form-step::before {
-      top: 0;
-    }
-
-    .actions.form-step .primary {
-      margin-top: 0;
-    }
-
-    @media (max-width: 640px) {
-      .actions.form-step {
-        padding-left: 66px;
-      }
-    }
-
-    form {
-      display: grid;
-      gap: 18px;
-    }
-
-    label {
-      font-size: 14px;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 7px;
-    }
-
-    select,
-    textarea,
-    input {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 13px;
-      font-size: 15px;
-      font-family: inherit;
-      background: #fff;
-      color: var(--text);
-    }
-
-    textarea {
-      min-height: 210px;
-      resize: vertical;
-    }
-
-    select:focus,
-    textarea:focus,
-    input:focus {
-      outline: 2px solid rgba(17, 24, 39, 0.16);
-      border-color: #9ca3af;
-    }
-
-    .scenario-notice {
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      border-left: 4px solid #111827;
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 14px;
-      color: #374151;
-    }
-
-    .scenario-notice strong {
-      display: block;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .scenario-notice p {
-      margin: 0;
-    }
-
-    .scenario-notice .notice-block + .notice-block {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .scenario-meta {
-      display: grid;
-      gap: 8px;
-      background: #fafafa;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .scenario-meta strong {
-      color: var(--text);
-    }
-
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    button.primary {
-      border: 0;
-      border-radius: 999px;
-      padding: 13px 20px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      color: #fff;
-      background: var(--primary);
-    }
-
-    button.primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .message {
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .message.error {
-      color: var(--error);
-    }
-
-    .message.success {
-      color: var(--success);
-    }
-
-    .help,
-    .note {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .note {
-      margin-top: 14px;
-    }
-
-    .result-empty {
-      color: var(--muted);
-      background: var(--soft);
-      border-radius: 14px;
-      padding: 18px;
-    }
-
-    .result {
-      display: none;
-    }
-
-    .result.active {
-      display: block;
-    }
-
-    .result-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 14px;
-    }
-
-    .result-header h2 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: -0.03em;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      padding: 7px 11px;
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background: var(--soft);
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .badge-high,
-    .badge-urgent {
-      background: #ecfdf5;
-      color: var(--success);
-    }
-
-    .badge-medium {
-      background: #fffbeb;
-      color: var(--warning);
-    }
-
-    .badge-low {
-      background: #f3f4f6;
-      color: var(--muted);
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    .metric {
-      background: var(--soft);
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .metric-label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .metric-value {
-      font-size: 20px;
-      font-weight: 800;
-      text-transform: capitalize;
-    }
-
-    .quality-high,
-    .quality-urgent {
-      color: var(--success);
-    }
-
-    .quality-medium {
-      color: var(--warning);
-    }
-
-    .quality-low {
-      color: var(--muted);
-    }
-
-    .commercial-focus {
-      background: #111827;
-      color: #ffffff;
-      border-radius: 16px;
-      padding: 18px;
-      margin-top: 18px;
-    }
-
-    .commercial-focus h3 {
-      margin: 0 0 8px;
-      font-size: 17px;
-    }
-
-    .commercial-focus p {
-      margin: 0;
-      color: #e5e7eb;
-      white-space: pre-line;
-    }
-
-    .section {
-      margin-top: 18px;
-    }
-
-    .section h3 {
-      margin: 0 0 8px;
-      font-size: 17px;
-    }
-
-    .box {
-      background: #f7f7f7;
-      border-left: 4px solid #ddd;
-      padding: 12px;
-      border-radius: 10px;
-      white-space: pre-line;
-    }
-
-    .box.action {
-      border-left-color: var(--success);
-      background: #f0fdf4;
-    }
-
-    .box.angle {
-      border-left-color: var(--blue);
-      background: #eff6ff;
-    }
-
-    .questions-list {
-      margin: 0;
-      padding-left: 20px;
-    }
-
-    .dynamic-output {
-      display: grid;
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .implementation-note {
-      margin-top: 22px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-    }
-
-    .implementation-note h3 {
-      margin: 0 0 8px;
-    }
-
-    .implementation-note ul {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--muted);
-    }
-
-    .cta {
-      margin-top: 22px;
-      background: #111827;
-      color: #ffffff;
-      border-radius: 16px;
-      padding: 18px;
-    }
-
-    .cta h3 {
-      margin: 0 0 8px;
-    }
-
-    .cta p {
-      margin: 0 0 14px;
-      color: #d1d5db;
-    }
-
-    .cta a {
-      display: inline-block;
-      background: #ffffff;
-      color: #111827;
-      text-decoration: none;
-      border-radius: 999px;
-      padding: 11px 16px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .scenario-description-block {
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-left: 4px solid #111827;
-      border-radius: 14px;
-      padding: 14px;
-      margin: 0;
-    }
-
-    .scenario-description-block p {
-      margin: 0;
-      color: #374151;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .video-card {
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      margin: 0 0 18px;
-      box-shadow: none;
-    }
-
-    .video-card h2 {
-      margin: 0 0 5px;
-      font-size: 16px;
-      letter-spacing: -0.02em;
-    }
-
-    .video-card p {
-      margin: 0 0 10px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .video-frame {
-      cursor: pointer;
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 12px;
-      background-color: #000;
-      background-image: url('/video-fallback.png?auto=format&fit=crop&q=80&w=1000');
-      background-size: cover;
-      background-position: center;
-      border: 1px solid var(--border);
-    }
-
-    .video-frame::before {
-      content: "";
-      display: block;
-      padding-top: 56.25%;
-    }
-
-    .video-frame iframe,
-    .video-frame video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      background: #111827;
-      object-fit: cover;
-    }
-
-    .video-link-fallback {
-      display: block;
-      padding: 14px;
-      background: #f3f4f6;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .video-link-fallback span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-weight: 400;
-      word-break: break-all;
-      font-size: 12px;
-    }
-
-
-
-    .page > .hero,
-    .page > .hero .intro,
-    .page > .hero .intro-value {
-      width: 100%;
-    }
-
-    .page > .hero .intro-value {
-      box-sizing: border-box;
-    }
-
-    @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 36px;
-      }
-
-      .result-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .result-header {
-        display: block;
-      }
-
-      .badge {
-        margin-top: 10px;
-      }
-    }
-  
-
-    body {
-      font-family: 'Plus Jakarta Sans', 'Inter', Arial, sans-serif;
-      background: #f8fafc;
-      color: #0f172a;
-    }
-
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 16px 48px;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid #cbd5e1;
-    }
-
-    .site-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: #0f172a;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-    }
-
-    .site-brand img {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      box-shadow: 0 1px 3px rgba(15,23,42,0.15);
-    }
-.site-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 0;
-      background: #c2155a;
-      color: #ffffff;
-      text-decoration: none;
-      padding: 12px 18px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      box-shadow: 0 12px 24px rgba(194,21,90,0.2);
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .site-cta:hover {
-      background: #a0124a;
-      transform: translateY(-1px);
-    }
-
-    .mobile-menu-button {
-      display: none;
-      border: 0;
-      background: transparent;
-      color: #475569;
-      font-size: 22px;
-      cursor: pointer;
-    }
-
-    .page {
-      max-width: 1200px;
-      padding: 36px 24px 72px;
-    }
-
-    .hero {
-      max-width: none;
-      width: 100%;
-      margin: 0 0 30px;
-      text-align: center;
-    }
-
-    .eyebrow {
-      color: #c2155a;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-    }
-
-    h1 {
-      color: #020617;
-      font-weight: 800;
-      font-size: 52px;
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-      text-transform: none;
-    }
-
-    .intro {
-      max-width: none;
-      width: 100%;
-      margin: 0;
-    }
-
-    .intro-value {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 22px;
-      text-align: left;
-      width: 100%;
-      max-width: none;
-      margin: 0;
-    }
-
-    .intro-value-block {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      padding: 18px;
-      box-shadow: 0 10px 25px rgba(15,23,42,0.04);
-    }
-
-    .intro-value-block strong {
-      color: #0f172a;
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .intro-value-block p {
-      color: #475569;
-      font-size: 15px;
-      line-height: 1.65;
-    }
-
-    .card,
-    .loading-card {
-      border-radius: 0;
-      border-color: #e2e8f0;
-      box-shadow: 0 16px 35px rgba(15,23,42,0.08);
-    }
-
-    .video-card,
-    .scenario-description-block {
-      border-radius: 0;
-      background: #ffffff;
-    }
-
-    .scenario-description-block {
-      border-left-color: #c2155a;
-    }
-
-    .scenario-description-block p {
-      color: #475569;
-    }
-
-    button.primary {
-      border-radius: 0;
-      background: #c2155a;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-size: 12px;
-      padding: 15px 20px;
-      box-shadow: 0 12px 24px rgba(194,21,90,0.2);
-    }
-
-    button.primary:hover {
-      background: #a0124a;
-    }
-
-    select,
-    textarea,
-    input {
-      border-radius: 0;
-      border-color: #e2e8f0;
-    }
-
-    select:focus,
-    textarea:focus,
-    input:focus {
-      border-color: #c2155a;
-      outline: 2px solid rgba(194,21,90,0.12);
-    }
-
-    .commercial-focus,
-    .cta {
-      border-radius: 0;
-      background: #0f172a;
-    }
-
-    .box,
-    .metric,
-    .implementation-note,
-    .result-empty {
-      border-radius: 0;
-    }
-
-    .box.action {
-      border-left-color: #047857;
-      background: #f0fdf4;
-    }
-
-    .box.angle {
-      border-left-color: #c2155a;
-      background: #fdf2f8;
-    }
-
-    .cta a {
-      border-radius: 0;
-    }
-
-
-    .tailored-demo-section {
-      scroll-margin-top: 96px;
-      margin: 56px auto 0;
-      padding: 48px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-    }
-
-    .tailored-demo-grid {
-      display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 42px;
-      align-items: start;
-    }
-
-    .tailored-demo-kicker {
-      display: inline-block;
-      background: rgba(194, 21, 90, 0.1);
-      color: #c2155a;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 7px 12px;
-      margin-bottom: 16px;
-    }
-
-    .tailored-demo-section h2 {
-      margin: 0;
-      color: #020617;
-      font-size: 38px;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      font-weight: 800;
-    }
-
-    .tailored-demo-section p {
-      color: #64748b;
-      font-size: 16px;
-      line-height: 1.65;
-      margin: 16px 0 0;
-      font-weight: 500;
-    }
-
-    .tailored-demo-points {
-      margin: 26px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      color: #475569;
-      font-weight: 600;
-    }
-
-    .tailored-demo-points li {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .tailored-demo-points i {
-      color: #c2155a;
-      margin-top: 4px;
-    }
-
-    .tailored-demo-form {
-      display: grid;
-      gap: 22px;
-    }
-
-    .tailored-form-row {
-      display: grid;
-      gap: 7px;
-    }
-
-    .tailored-form-row label {
-      color: #64748b;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      margin: 0;
-    }
-
-    .tailored-demo-form input,
-    .tailored-demo-form select {
-      width: 100%;
-      border: 0;
-      border-bottom: 2px solid #e2e8f0;
-      border-radius: 0;
-      padding: 12px 2px;
-      background: transparent;
-      color: #0f172a;
-      font-size: 16px;
-      font-weight: 700;
-      outline: none;
-    }
-
-    .tailored-demo-form input:focus,
-    .tailored-demo-form select:focus {
-      border-color: #c2155a;
-      outline: none;
-    }
-
-    .tailored-phone-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 18px;
-      align-items: end;
-    }
-
-    .tailored-sms-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      padding-bottom: 12px;
-      color: #64748b;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .tailored-sms-label input {
-      width: 16px;
-      height: 16px;
-      accent-color: #c2155a;
-    }
-
-    .tailored-submit {
-      width: 100%;
-      border: 0;
-      background: #c2155a;
-      color: #ffffff;
-      padding: 18px 22px;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 16px 30px rgba(194, 21, 90, 0.22);
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .tailored-submit:hover {
-      background: #a0124a;
-      transform: translateY(-1px);
-    }
-
-    .tailored-submit:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .tailored-note {
-      text-align: center;
-      color: #94a3b8 !important;
-      font-size: 12px !important;
-      font-weight: 800 !important;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin: 0 !important;
-    }
-
-    .tailored-form-message {
-      min-height: 20px;
-      font-size: 14px;
-      font-weight: 800;
-      color: #047857;
-    }
-
-    .tailored-form-message.error {
-      color: #b91c1c;
-    }
-
-    @media (max-width: 900px) {
-      .tailored-demo-section {
-      scroll-margin-top: 96px;
-        padding: 28px 20px;
-      }
-
-      .tailored-demo-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-
-      .tailored-demo-section h2 {
-        font-size: 32px;
-      }
-
-      .tailored-phone-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .tailored-sms-label {
-        padding-bottom: 0;
-      }
-    }
-
-    .site-footer {
-      padding: 48px 24px;
-      background: #ffffff;
-      border-top: 1px solid #cbd5e1;
-      text-align: center;
-    }
-
-    .site-footer p {
-      margin: 0;
-      color: #94a3b8;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-    }
-
-
-    .page > .hero,
-    .page > .hero .intro,
-    .page > .hero .intro-value {
-      width: 100%;
-    }
-
-    .page > .hero .intro-value {
-      box-sizing: border-box;
-    }
-
-    @media (max-width: 900px) {
-      .site-nav {
-        padding: 12px 14px;
-        gap: 12px;
-      }
-
-      .site-brand {
-        font-size: 18px;
-      }
-
-      .site-brand img {
-        width: 24px;
-        height: 24px;
-      }
-
-      .site-cta {
-        display: inline-flex;
-        padding: 10px 12px;
-        font-size: 10px;
-        letter-spacing: 0.12em;
-        white-space: nowrap;
-      }
-
-      .mobile-menu-button {
-        display: none;
-      }
-
-      h1 {
-        font-size: 38px;
-      }
-
-      .intro-value {
-        grid-template-columns: 1fr;
-      }
-
-      .page {
-        padding: 30px 16px 56px;
-      }
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Managed AI - Website Conversions Growth and Lead Generation | Jemima AI</title>
+    <meta name="description" content="Increase website conversions with managed AI video, chat, faqs, lead generation and lead follow-up by telephone, sms or email." />
+    <link rel="canonical" href="https://jemima.ai/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="jemima.ai" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jemima.ai/" />
+    <meta property="og:title" content="Jemima.ai | Managed AI Conversion Growth and Lead Generation" />
+    <meta property="og:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools." />
+    <meta property="og:image" content="og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://jemima.ai/" />
+    <meta name="twitter:title" content="Jemima.ai | Managed AI Conversion Growth and Lead Generation" />
+    <meta name="twitter:description" content="Automate lead generation, sales, support and marketing with AI chat and workflow tools." />
+    <meta name="twitter:image" content="og-image.jpg" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#4f46e5" />
+
+    <!-- Performance & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Keep both families available; Inter is default in CSS below -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+    <style>
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
+        }
+        @media screen and (max-width: 640px) {
+            .faq-item button span { padding-right: 2rem; display: block; }
+        }
+        #chat-feed div {
+            font-size: 16px !important;
+            line-height: 1.6;
+            padding-top: 0.85rem !important;
+            padding-bottom: 0.85rem !important;
+            letter-spacing: 0.01em;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        html { scroll-behavior: smooth; }
+        
+        /* Gold icons for Free Conversion Audit buttons */
+        .fa-chart-line {
+            color: #fbbf24 !important; /* Tailwind's amber-400 gold */
+            filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4));
+        }
+        
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+
+        #video-container {
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            width: 100%;
+            background-image: url('video-fallback.png?auto=format&fit=crop&q=80&w=1000'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Video element styling */
+        .yt-player-frame {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out;
+            z-index: 10;
+            object-fit: cover; /* Ensures video fills the space nicely */
+        }
+        .yt-player-frame.active {
+            opacity: 1; 
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
+        .modal-content { animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #94a3b8;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingPulse 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        #mobile-menu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3c/polyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1em;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            padding-bottom: 2rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        @media screen and (max-width: 768px) {
+            #audit-form label { color: #475569 !important; font-size: 11px !important; letter-spacing: 0.15em !important; }
+            #audit-form input, #audit-form select { font-size: 16px !important; color: #000000 !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+            #audit-form input::placeholder { color: #94a3b8 !important; font-weight: 500; }
+            .faq-content p { font-size: 16px !important; line-height: 1.6; margin-bottom: 1.25rem; color: #334155; }
+            .faq-content button { margin-top: 0.5rem; }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 antialiased">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-    <nav class="site-nav">
-      <a class="site-brand" href="/">
-        <img src="/jemima-logo.png" alt="Jemima Logo">
-        <span>Jemima</span>
-      </a>
-<a class="site-cta" href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event)">
-        <span>Request tailored demo</span>
-      </a>
-</nav>
-
-<main class="page">
-    <section class="hero">
-      <div class="eyebrow" id="pageEyebrow">Interactive demo</div>
-      <h1 id="pageTitle">Loading demo...</h1>
-      <div class="intro" id="pageIntro">
-        Loading demo configuration.
-      </div>
-    </section>
-
-    <div id="loadingState" class="loading-card">
-      Loading scenario from Demo Scenario Library...
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
+            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs  px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Get Your Free Audit</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">My team will manually review your site layout.</p>
+            </div>
+            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
+                <div class="space-y-1.5">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Full Name</label>
+                    <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Monthly Website Traffic</label>
+                    <div class="relative cursor-pointer group" id="custom-select-trigger">
+                        <input type="text" id="form-traffic" required readonly placeholder="Select traffic range..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
+                        <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
+                    </div>
+                    <div id="custom-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">0 - 1,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">1,000 - 5,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">5,000 - 20,000</div>
+                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">20,000+</div>
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Work Email</label>
+                    <input type="email" id="form-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Phone Number</label>
+                    <div class="flex items-center gap-4">
+                        <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
+                            <span class="text-xs  uppercase tracking-widest text-slate-400">SMS?</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5  uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Audit Request</button>
+                <p id="modal-card-note" class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+            </form>
+        </div>
     </div>
 
-    <div id="errorState" class="loading-card hidden"></div>
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full md:hidden">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-2 text-xl tracking-tighter" onclick="toggleMobileMenu()">
+                <img src="jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
+                <span>Jemima</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="text-slate-600">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-lg  uppercase tracking-[0.2em] text-slate-900">
+            <a href="#problem" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Solution</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Process</a>
+            <a href="#about-jemima" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">About</a>
+            <a href="#pricing" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Pricing</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
+            <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
+        </div>
+        <div class="mt-auto">
+            <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full font-black bg-[#c2155a] text-white py-5  uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Free Conversion Audit</button>
+        </div>
+    </div>
 
-    <section id="demoLayout" class="layout hidden">
-      <div id="leftDemoCard" class="card">
-        <section id="videoBlock" class="video-card hidden">
-      <h2>Watch the demo walkthrough</h2>
-      <p id="videoIntro">This short video explains what this automation does and why it matters.</p>
-      <div id="videoFrame" class="video-frame"></div>
-    </section>
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
+        <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="window.location.reload()">
+            <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+            <span>Jemima</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
+            <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
+            <a href="#about-jemima" class="hover:text-[#c2155a]">About</a>
+            <a href="#pricing" class="hover:text-[#c2155a]">Pricing</a>
+            <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
+            <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a]">How it Works</a>
+        </div>
+        <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </nav>
 
-      </div>
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-1 lg:pt-4 pb-8 lg:pb-16">
+        <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12">
+            <div class="max-w-4xl text-center space-y-3">
+                <h1 class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight">
+                    Stop losing qualified leads<br><span class="text-[#c2155a]">to a static website</span>
+                </h1>
+                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium">Answer key decision makers questions with video, then capture, follow up, and convert leads 24/7.</p>
+            </div>
 
-      <div class="card">
-        <div id="inputPanel">
-          <form id="demoForm">
-<div class="form-step" data-step="1">
-            <label for="demo_user_email">Enter your work email to receive the demo report</label>
-            <input id="demo_user_email" name="demo_user_email" type="email" placeholder="yourname@company.com" required>
-            <div class="help">Required. The result will show on screen and the report will also be emailed to this address.</div>
-          </div>
+            <div class="flex flex-col items-center justify-center gap-4">
+                <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
+                    <i class="fas fa-chart-line mr-2"></i> Free Conversion Audit
+                </button>
+                <div class="text-center">
+                    <p class="text-slate-500 text-xs md:text-sm font-medium">No credit card required. We’ll find at least 3 lead leaks in your current site.</p>
+                    <button onclick="activateAI('main')" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or watch how it works</button>
+                </div>
+            </div>
 
-          <div class="form-step" data-step="2">
-            <label for="enquiry_source">Select an input source</label>
-            <select id="enquiry_source" name="enquiry_source" required></select>
-            <div class="help">Changing this will load realistic example data based on your chosen source.</div>
-          </div>
+            <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+                <div class="w-full md:w-[45%] space-y-4">
+                    
+                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+                        <video id="idle-player" src="https://vz-1599ac93-05a.b-cdn.net/c05b369d-1529-4051-8773-79320393ec05/play_1080p.mp4" class="yt-player-frame active pointer-events-none" autoplay loop muted playsinline></video>
+                        
+                        <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/b4994c40-cf02-4455-a125-31838b2d5933/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-bookings" src="https://vz-1599ac93-05a.b-cdn.net/bc337fdc-3969-4725-a012-7eee930aa556/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-cost" src="https://vz-1599ac93-05a.b-cdn.net/faf3ccb2-a631-4053-bf64-3eaded291bac/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-time" src="https://vz-1599ac93-05a.b-cdn.net/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
 
-          <div>
-            <label for="sample_enquiry">Sample input</label>
-            <textarea id="sample_enquiry" name="sample_enquiry" required></textarea>
-          </div>
 
-          <div class="actions form-step action-step" data-step="3">
-            <button id="submitButton" class="primary" type="submit">Generate demo result</button>
-            <span id="formMessage" class="message"></span>
-          </div>
-        </form>
+<div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
+                           <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
+                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px]  uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
+                                    tap to interact
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <p class="note">
-          Please do not enter real customer, patient, client or case information. Use sample data only.
-        </p>
+                    <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
+                        <div class="space-y-1">
+                            <h2 class="text-xs lg:text-sm  font-[700] uppercase tracking-[0.25em] text-[#c2155a]">Frequently Asked Questions</h2>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>Will this actually get me more qualified leads?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>How much does it cost / is this worth it?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('time', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>Is this complicated / will this take time?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start transition-all duration-500">
+                    <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
+                        <div class="flex items-center justify-between border-b border-slate-300 pb-3 shrink-0">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
+                                    <img src="jemima-chat-image.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
+                                </div>
+                                <p class="text-sm  uppercase tracking-tight">Jemima</p>
+                            </div>
+                        </div>
+                        <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
+                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
+                                Hi I'm Jemima. Want to capture more of the leads you're currently losing? Ask me anything!
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
+                            <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
+                                <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg shadow-[#c2155a]/20 hover:bg-[#a0124a] transition-colors">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-3.5 text-[12px]  bg-[#c2155a] text-white font-black rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Free Conversion Audit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="result" class="result">
-          <div class="result-header">
-            <div>
-              <h2 id="resultTitle">Demo result</h2>
+        <section id="problem" class="py-16 lg:py-24 border-t border-slate-200">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px]  px-4 py-1.5 uppercase tracking-[0.2em]">Why most websites under convert</div>
+                    <h2 class="text-3xl lg:text-4xl  tracking-tighter leading-tight">Most websites get attention. <br><span class="text-[#c2155a]">Very few turn it into enquiries.</span></h2>
+                    <p class="text-slate-600 leading-relaxed text-lg font-medium">Visitors arrive, skim, hesitate, and leave. They are not always ready to fill in a form or wait for a callback. Jemima helps to explain your offer clearly, build trust quickly, and guide people to take action while they are still interested.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                        <div class="p-4 bg-white border border-slate-100 shadow-sm">
+                            <p class="text-base  text-slate-900">Clarity</p>
+                            <p class="text-sm text-slate-500 mt-1 leading-relaxed">Explain what you do in seconds.</p>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-100 shadow-sm">
+                            <p class="text-base  text-slate-900">Trust</p>
+                            <p class="text-sm text-slate-500 mt-1 leading-relaxed">Make your site feel more human.</p>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-100 shadow-sm">
+                            <p class="text-base  text-slate-900">Action</p>
+                            <p class="text-sm text-slate-500 mt-1 leading-relaxed">Move more visitors towards enquiry.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative bg-white border border-slate-200 shadow-xl p-8 lg:p-10 space-y-6">
+                    <h3 class="text-xl  tracking-tight">What Jemima adds to your website</h3>
+                    <div class="space-y-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>A presenter that welcomes visitors and explains your service clearly</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Answers to common questions that reduce hesitation</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>A more guided journey from first visit to enquiry</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>A conversion asset that works even when you are offline</p></div>
+                    </div>
+                    <div class="border-t pt-6">
+                        <p class="text-sm md:text-base  text-slate-900">If your website gets traffic but not enough enquiries, Jemima is designed to fix that.</p>
+                    </div>
+                </div>
             </div>
-            <div id="priorityBadge" class="badge">Result</div>
-          </div>
+        </section>
 
-          <div id="leadTriageResult">
-            <div class="result-grid">
-              <div class="metric">
-                <div class="metric-label">Lead priority</div>
-                <div id="leadPriority" class="metric-value">—</div>
-              </div>
-
-              <div class="metric">
-                <div class="metric-label">Revenue opportunity</div>
-                <div id="revenueOpportunity" class="metric-value">—</div>
-              </div>
-
-              <div class="metric">
-                <div class="metric-label">Urgency</div>
-                <div id="urgency" class="metric-value">—</div>
-              </div>
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-slate-900 text-white -mx-4 lg:-mx-12 px-4 lg:px-12">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="text-center mb-16 space-y-4">
+                    <h2 class="text-3xl lg:text-5xl  tracking-tighter uppercase">Why Jemima Works</h2>
+                    <p class="text-slate-300 text-sm md:text-base tracking-widest uppercase font-bold">for businesses that rely on enquiries to grow</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="space-y-4 group bg-white/5 border border-white/10 p-8 text-center">
+                        <div class="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#c2155a] transition-colors mx-auto"><i class="fas fa-comments text-[#c2155a]"></i></div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight">A human welcome</h3>
+                        <p class="text-slate-200 text-base md:text-lg leading-relaxed">Make your website feel more like a conversation and less like a brochure.</p>
+                    </div>
+                    <div class="space-y-4 group bg-white/5 border border-white/10 p-8 text-center">
+                        <div class="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#c2155a] transition-colors mx-auto"><i class="fas fa-circle-question text-[#c2155a]"></i></div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight">Reduce friction</h3>
+                        <p class="text-slate-200 text-base md:text-lg leading-relaxed">Handle common objections and explain your process before a visitor drops off.</p>
+                    </div>
+                    <div class="space-y-4 group bg-white/5 border border-white/10 p-8 text-center">
+                        <div class="w-12 h-12 flex items-center justify-center border border-white/20 group-hover:border-[#c2155a] transition-colors mx-auto"><i class="fas fa-calendar-check text-[#c2155a]"></i></div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight">More enquiries</h3>
+                        <p class="text-slate-200 text-base md:text-lg leading-relaxed">Give visitors more confidence to convert into a lead while intent is highest.</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="commercial-focus">
-              <h3>Recommended next action</h3>
-              <p id="recommendedAction"></p>
+        <!-- Section: How the Audit Works (Roadmap) -->
+        <section id="how-it-works" class="py-20 lg:py-32">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl  tracking-tighter uppercase mb-4">Your Roadmap to Increased Conversions</h2>
+                <p class="text-slate-500 font-black font-medium text-base md:text-lg">What happens when you request a free conversion audit?</p>
             </div>
-
-            <div class="section">
-              <h3>Why this matters commercially</h3>
-              <div id="whyThisMatters" class="box action"></div>
+            <div class="grid md:grid-cols-4 gap-4 relative">
+                <div class="hidden md:block absolute top-12 left-0 right-0 h-px bg-slate-200 z-0"></div>
+                <!-- Step 1 -->
+                <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center ">1</div>
+                    <h4 class=" uppercase text-sm tracking-widest">Site Review</h4>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed">We analyze your current landing page structure and friction points.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center ">2</div>
+                    <h4 class=" uppercase text-sm tracking-widest">Strategy Call</h4>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed">A 15 minute breakdown of how Jemima will plug your lead leaks.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative z-10 bg-white p-6 border border-slate-100 flex flex-col items-center text-center space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center ">3</div>
+                    <h4 class=" uppercase text-sm tracking-widest">Custom Setup</h4>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed">We build your custom AI persona tailored to your industry voice.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative z-10 bg-[#c2155a] p-6 text-white flex flex-col items-center text-center space-y-4 shadow-xl">
+                    <div class="w-10 h-10 rounded-full bg-white text-[#c2155a] flex items-center justify-center ">4</div>
+                    <h4 class=" uppercase text-sm tracking-widest">Launch</h4>
+                    <p class="text-sm md:text-base text-white/90 leading-relaxed">Go live and watch your booking rate soar within 24 hours.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="section">
-              <h3>Best conversion angle</h3>
-              <div id="conversionAngle" class="box angle"></div>
+        <!-- About Jemima Section -->
+        <section id="about-jemima" class="py-20 lg:py-32 bg-white border-t border-slate-100 -mx-4 lg:-mx-12 px-4 lg:px-12">
+            <div class="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px]  px-4 py-1.5 uppercase tracking-[0.2em] rounded-full">The Story</div>
+                        <h2 class="text-4xl lg:text-6xl  tracking-tighter uppercase leading-[0.9]">About <br><span class="text-[#c2155a]">Jemima</span></h2>
+                    </div>
+                    
+                    <div class="space-y-6 text-slate-600 font-medium leading-relaxed text-lg md:text-xl">
+                        <p>Jemima is part of an AI conversion system that is customisd for each new client. By combining hyper realistic video avatars with advanced AI intelligence, Jemima greets your visitors, handles objections, and converts website visitors into qualifid leads. It's as if your best salesperson was always online.</p>
+                        <p>Built by conversion experts, every interaction is engineered to move visitors closer to a conversion. We believe that in a world of automated noise, a human style presence is the key to breaking through and building genuine trust at scale.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-8 pt-4">
+                        <div class="space-y-1">
+                            <p class="text-3xl md:text-4xl  text-slate-900 tracking-tighter">24/7</p>
+                            <p class="text-[11px]  uppercase tracking-widest text-slate-400">Sales Engagement</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-3xl md:text-4xl  text-slate-900 tracking-tighter">50+</p>
+                            <p class="text-[11px]  uppercase tracking-widest text-slate-400">Languages Supported</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-8 lg:p-12 text-white space-y-8 relative overflow-hidden shadow-2xl">
+                    <div class="absolute -top-12 -right-12 w-64 h-64 bg-[#c2155a]/10 rounded-full blur-3xl"></div>
+                    <h3 class="text-xl md:text-2xl  tracking-tight uppercase border-b border-white/10 pb-4">Our Core Philosophy</h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs ">01</div>
+                            <div class="space-y-1.5">
+                                <p class=" uppercase text-sm tracking-widest text-[#c2155a]">Human First AI</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">We don't replace people; we amplify your business personality so it can be in 1,000 places at once.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs ">02</div>
+                            <div class="space-y-1.5">
+                                <p class=" uppercase text-sm tracking-widest text-[#c2155a]">Data Over Fluff</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">Every detail in your custom managed solution will be tested for its impact on your bottom line.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs ">03</div>
+                            <div class="space-y-1.5">
+                                <p class=" uppercase text-sm tracking-widest text-[#c2155a]">Seamless Integration</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">Jemima fits into your business, not the other way around. Qualified leads can flow directly into your CRM of choice.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="section">
-              <h3>Suggested reply</h3>
-              <div id="suggestedReply" class="box"></div>
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20 border-t border-slate-200">
+            <div class="text-center mb-14 space-y-4">
+                <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px]  px-4 py-1.5 uppercase tracking-[0.2em]">Pricing</div>
+                <h2 class="text-3xl lg:text-5xl  tracking-tighter">Simple pricing built around outcomes</h2>
+                <p class="text-slate-500 font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed">One time setup covers strategy, scripting, presenter creation, and implementation. Monthly pricing covers hosting, support, and keeping your presenter live on your site.</p>
             </div>
+            <div class="grid lg:grid-cols-3 gap-6 items-stretch">
+                <div class="bg-white border border-slate-200 shadow-sm p-8 flex flex-col">
+                    <div class="mb-6">
+                        <p class="text-sm  uppercase tracking-[0.2em] text-slate-400">Starter</p>
+                        <h3 class="text-3xl  tracking-tight mt-2">£495 <span class="text-base text-slate-500 font-bold">setup</span></h3>
+                        <p class="text-xl  tracking-tight text-slate-900 mt-1">+ £149/month</p>
+                        <p class="text-base text-slate-500 mt-3 font-medium">Best for getting a presenter live on your homepage.</p>
+                        <p class="text-base text-slate-500 mt-3 font-medium">A simple way to introduce Jemima to your website and start engaging visitors with a professional, conversion focused presenter.</p>
+                    </div>
+                    <div class="space-y-3.5 text-sm md:text-base text-slate-600 flex-grow">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>1 conversion focused presenter experience</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Custom script and setup</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Website installation support</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Hosting and ongoing availability</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Basic performance guidance</p></div>
+                    </div>
+                    <button onclick="openModal(false, 'Starter Pricing', 'starter')" class="mt-8 w-full py-4 border border-slate-300 text-slate-900 text-[12px] font-black uppercase tracking-[0.2em] hover:border-slate-900 transition-colors">Start with Starter</button>
+                </div>
 
-            <div class="section">
-              <h3>Service interest</h3>
-              <div id="serviceInterest" class="box"></div>
+
+
+<div class="bg-slate-900 text-white border border-slate-900 shadow-2xl p-8 flex flex-col relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c2155a] text-white text-[10px]  px-4 py-1.5 uppercase tracking-[0.2em]">Most popular</div>
+                    <div class="mb-6">
+                        <p class="text-sm  uppercase tracking-[0.2em] text-slate-300">Growth</p>
+                        <h3 class="text-3xl  tracking-tight mt-2 text-white">£995 <span class="text-base text-slate-300 font-bold">setup</span></h3>
+                        <p class="text-xl  tracking-tight text-white mt-1">+ £299/month</p>
+                        <p class="text-base text-slate-200 mt-3 font-medium">Best for lead driven businesses that want Jemima working across key pages.</p>
+                        <p class="text-base text-slate-200 mt-3 font-medium">Turn your website into a complete AI conversion system, combining presenters, chat, and automated follow-up to capture, qualify, and move visitors towards enquiry.</p>
+                    </div>
+                    <div class="space-y-3.5 text-sm md:text-base text-slate-200 flex-grow">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>3 to 5 presenter experiences across key pages</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Up to 5 AI video FAQs to answer key customer questions</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Conversion focused scripts for homepage, service pages, and FAQs</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>AI chat for real-time visitor engagement</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Lead capture and qualification flows</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>AI email and SMS follow-up</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>A guided visitor journey designed to increase enquiries</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Priority support and rollout guidance</p></div>
+                    </div>
+                    <button onclick="openModal(false, 'Growth Pricing', 'growth')" class="mt-8 w-full py-4 bg-[#c2155a] text-white text-[12px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all">Choose Growth</button>
+                </div>
+                <div class="bg-white border border-slate-200 shadow-sm p-8 flex flex-col">
+                    <div class="mb-6">
+                        <p class="text-sm  uppercase tracking-[0.2em] text-slate-400">Pro</p>
+                        <h3 class="text-3xl  tracking-tight mt-2">£1,995 <span class="text-base text-slate-500 font-bold">setup</span></h3>
+                        <p class="text-xl  tracking-tight text-slate-900 mt-1">+ £499/month</p>
+                        <p class="text-base text-slate-500 mt-3 font-medium">Best for businesses that want a broader conversion journey across the site.</p>
+                        <p class="text-base text-slate-500 mt-3 font-medium">Expand Jemima across your full customer journey with deeper coverage, more touchpoints, and advanced automation designed to scale lead generation and conversion.</p>
+                    </div>
+                    <div class="space-y-3.5 text-sm md:text-base text-slate-600 flex-grow">
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>8 to 12 presenter experiences</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Up to 20 AI video FAQs covering full customer journey</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Landing pages, service pages, and funnel coverage</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Advanced lead qualification and segmentation</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>AI phone call handling for high-intent leads</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Ongoing optimisation and iteration</p></div>
+                        <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Priority implementation and rollout support</p></div>
+                    </div>
+                    <button onclick="openModal(false, 'Pro Pricing', 'pro')" class="mt-8 w-full py-4 border border-slate-300 text-slate-900 text-[12px] font-black uppercase tracking-[0.2em] hover:border-slate-900 transition-colors">Talk to us about Pro</button>
+                </div>
             </div>
+        </section>
 
-            <div class="section">
-              <h3>Questions the team should ask</h3>
-              <ul id="questionsToAsk" class="questions-list"></ul>
+
+
+<section class="py-12 lg:py-20 bg-white">
+            <div class="max-w-5xl mx-auto px-4 lg:px-6">
+                <div class="text-center mb-10 lg:mb-14 space-y-4">
+                    <h2 class="text-2xl lg:text-4xl  tracking-tighter text-slate-950">Compare all features</h2>
+                </div>
+                
+                <div class="overflow-x-auto pt-5 pb-4 custom-scrollbar">
+                    <table class="w-full text-left border-collapse min-w-[500px] md:min-w-[800px]">
+                        <thead>
+                            <tr>
+                                <th class="pl-0 pr-2 py-4 md:p-5 border-b-2 border-slate-200 bg-white w-1/3"></th>
+                                <th class="px-2 py-4 md:p-5 border-b-2 border-slate-200 bg-white text-center w-1/5">
+                                    <p class=" text-lg md:text-xl text-slate-900 tracking-tight">Starter</p>
+                                </th>
+                                <th class="px-2 py-4 md:p-5 border-b-2 border-[#000000] bg-slate-50 text-white text-center w-1/5 relative shadow-lg">
+                                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c2155a] text-white text-[9px] md:text-[10px]  px-2 md:px-3 py-1 uppercase tracking-widest whitespace-nowrap rounded-sm shadow-md">Most Popular</div>
+                                    <p class=" text-black text-lg md:text-xl tracking-tight">Growth</p>
+                                </th>
+                                <th class="px-2 py-4 md:p-5 border-b-2 border-slate-200 bg-white text-center w-1/5">
+                                    <p class=" text-lg md:text-xl text-slate-900 tracking-tight">Pro</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs md:text-base text-slate-600 font-medium">
+                            
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors text-slate-900 font-bold">AI Presenter Experiences</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900">1</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900 bg-slate-50/50">3–5</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900">8–12</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors text-slate-900 font-bold">AI Video FAQs</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900 bg-slate-50/50">Up to 5</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900">Up to 20</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Conversion Scripts</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center text-slate-500">1 page</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900 bg-slate-50/50">Key pages</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900">Full funnel</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Website Installation Support</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Hosting & Maintenance</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Basic Performance Guidance</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="pl-0 pr-2 pt-6 pb-2 md:px-4 md:pt-8 md:pb-3 bg-white  text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400">On-Site Engagement</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">AI Chat</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Lead Capture Forms</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center text-slate-500">Basic</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900 bg-slate-50/50">Advanced</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center font-bold text-slate-900">Advanced</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Lead Qualification Flows</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="pl-0 pr-2 pt-6 pb-2 md:px-4 md:pt-8 md:pb-3 bg-white  text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400">Automated Follow-up</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">AI Email Follow-up</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">AI SMS Follow-up</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">AI Phone Call Handling</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="pl-0 pr-2 pt-6 pb-2 md:px-4 md:pt-8 md:pb-3 bg-white  text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400">Support & Strategy</td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Priority Support</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><i class="fas fa-check text-[#888888]"></i></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Ongoing Optimisation</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+                            <tr class="group hover:bg-slate-50 transition-colors">
+                                <td class="pl-0 pr-2 py-3 md:p-4 border-b border-slate-100 bg-white group-hover:bg-slate-50 transition-colors">Priority Implementation</td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center bg-slate-50/50"><span class="text-slate-300 font-bold">—</span></td>
+                                <td class="px-2 py-3 md:p-4 border-b border-slate-100 text-center"><i class="fas fa-check text-[#888888]"></i></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </section>
 
-            <div class="section">
-              <h3>Short summary</h3>
-              <div id="summary" class="box"></div>
+
+
+
+<section id="faq" class="py-20 border-t border-slate-100">
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div class="text-center space-y-4">
+                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs  px-4 py-1.5 uppercase tracking-[0.2em] rounded-full">Learn More</div>
+                    <h2 class="text-3xl md:text-5xl font-[700] tracking-tighter text-slate-950">Questions People Usually Ask</h2>
+                </div>
+                
+                <div class="space-y-4">
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-1')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Will this work with my current website?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">Yes, this is designed to work with the website you already have. You’re not rebuilding anything or replacing your existing setup. It simply integrates alongside it.</p>
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website and I’ll show you exactly, how this would fit into your current setup.</p>
+                                    <button onclick="openModal(false, 'FAQ1 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white font-black  text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5 text-amber-400"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-1" src="https://vz-1599ac93-05a.b-cdn.net/a19678ba-3c40-4079-8f9f-5237a699987f/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-2')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">How does Jemima learn my business?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">Yes, but in a controlled and purposeful way. It improves based on real interactions. What visitors ask, how they respond, and what leads to enquiries and bookings. But everything stays aligned with your business, and any improvements are based on what is proven to work.</p>
+<p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And I’ll show you exactly how I can be tailored and improved over time to get better results for your business.</p>
+                                    <button onclick="openModal(false, 'FAQ2 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white font-black text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5 text-amber-400"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-2" src="https://vz-1599ac93-05a.b-cdn.net/003fef37-f5e1-4956-b34f-9eb643fdcd06/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-3')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Can I track how many leads it generates?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Direct enquiries that come through conversations, can be clearly identified and flagged as AI conversions, so you can see clear, trackable results, and a broader improvement in how your website performs.
+                                    </p>
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly how to track results and where the real gains come from.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ3 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white font-black text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-3" src="https://vz-1599ac93-05a.b-cdn.net/479a3824-dc6f-4349-8c83-e623a323db25/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-4')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Can I see what conversations it’s having?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Yes, you stay fully in control, while also gaining a clearer understanding of your visitors. You start to see what your customers care about, what questions they ask, and where there may be gaps or opportunities in how your website communicates.
+                                    </p>
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly how you can monitor and learn from your conversations.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ4 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white font-black text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-4" src="https://vz-1599ac93-05a.b-cdn.net/2337bf5f-6410-4dda-8f53-dca0babe7380/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-5')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Can I control what is said to my visitors?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                        Yes. It only communicate using information that’s been approved and set up around your business. And it stays within that context. So it's not going off-script or saying things that don’t align with your business. And you can review conversations at any time, if anything needs adjusting, it can be updated. 
+                                    </p>
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                        Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly how I can be tailored to reflect your business and communicate the way you want.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ5 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white font-black text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-5" src="https://vz-1599ac93-05a.b-cdn.net/dacad3e1-f8f6-427b-a653-934e5c76b2e9/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline webkit-playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-6')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Will this sound natural or like a chatbot?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    What matters most is how it feels. It's not trying to pretend to be human. It's designed to communicate clearly, naturally, and in a way people are already comfortable interacting with. In most cases, visitors don’t stop and think about what it is, they just get the information they need and move forward.
+                                    </p>
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly how I could sound and behave for your visitors.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ6 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white font-black text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-6" src="https://vz-1599ac93-05a.b-cdn.net/055ae2dc-1de7-47b2-82f9-68241e28507b/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-7')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">Do I need any technical skills to use this?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    You don’t need to code, install anything complicated, or manage any technical setup. We handle the research, setup, and optimisation for you, so everything is ready to go. You focus on running your business! We handle the rest.
+                                    </p>
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly how this can work for you, without any technical effort on your side.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ7 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white  font-black  text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-7" src="https://vz-1599ac93-05a.b-cdn.net/dc61be79-a27f-429b-923d-522a7d3784fe/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<div class="faq-item border border-slate-200 bg-white shadow-sm transition-all hover:border-[#c2155a]/20">
+                        <button onclick="toggleFaq(this, 'faq-player-8')" class="w-full px-6 py-6 text-left flex justify-between items-center group">
+                            <span class="text-sm md:text-base  uppercase tracking-wider text-slate-900 group-hover:text-[#c2155a] transition-colors">How long does it take to get this live on my website?</span>
+                            <i class="fas fa-chevron-down faq-icon transition-transform text-slate-300"></i>
+                        </button>
+                        <div class="faq-content px-6">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div class="flex flex-col gap-4 order-2 md:order-1">
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    It’s actually a two part process. The technical setup itself can be done in minutes. But before that, we take the time to understand your business, your customers, and how your website works, so it’s set up properly to convert. We handle the research, setup, and optimisation for you. So when it goes live, it’s ready to start engaging visitors and turning them into leads immediately.
+                                    </p>
+                                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                    Click the free conversion audit button. It takes less than 30 seconds to order. My team will review your website. And show you exactly what the setup would involve and how quickly this could be live for you.
+                                    </p>
+                                    <button onclick="openModal(false, 'FAQ8 CTA')" class="order-first md:order-last self-start px-5 py-2.5 bg-[#c2155a] text-white  font-black  text-[11px]  uppercase tracking-wider hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-md shadow-[#c2155a]/20">
+                                        <i class="fas fa-chart-line mr-1.5"></i> Free Conversion Audit
+                                    </button>
+                                </div>
+                                <div class="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg border border-slate-100 aspect-video bg-black relative">
+                                    <video poster="video-fallback.png" id="faq-player-8" src="https://vz-1599ac93-05a.b-cdn.net/9ef8b55f-2ca2-4657-8f6c-115dc7a4ef02/play_1080p.mp4" class="w-full h-full border-0 absolute inset-0 pointer-events-none object-cover" playsinline></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+</div>
             </div>
+        </section>
 
-            <div class="section">
-              <h3>Confidence</h3>
-              <div id="confidence" class="box"></div>
+        <!-- Final CTA Banner -->
+        <section class="py-20 bg-[#c2155a]/5 border-2 border-dashed border-[#c2155a]/20 text-center space-y-8 mb-20">
+            <div class="space-y-2">
+                <h2 class="text-4xl font-700 tracking-tighter uppercase">Ready to out perform your competition?</h2>
+                <p class="text-slate-600 font-bold uppercase tracking-widest text-xs md:text-sm italic">Limited to 5 free audits per week to ensure quality.</p>
             </div>
-          </div>
-
-          <div id="quoteFollowUpResult" class="hidden">
-            <div class="result-grid">
-              <div class="metric">
-                <div class="metric-label">Follow-up priority</div>
-                <div id="quoteFollowUpPriority" class="metric-value">—</div>
-              </div>
-
-              <div class="metric">
-                <div class="metric-label">Conversion opportunity</div>
-                <div id="quoteConversionOpportunity" class="metric-value">—</div>
-              </div>
-
-              <div class="metric">
-                <div class="metric-label">Confidence</div>
-                <div id="quoteConfidenceMetric" class="metric-value">—</div>
-              </div>
-            </div>
-
-            <div class="commercial-focus">
-              <h3>Recommended next action</h3>
-              <p id="quoteRecommendedAction"></p>
-            </div>
-
-            <div class="section">
-              <h3>Quote status</h3>
-              <div id="quoteStatus" class="box"></div>
-            </div>
-
-            <div class="section">
-              <h3>Likely objection</h3>
-              <div id="quoteLikelyObjection" class="box action"></div>
-            </div>
-
-            <div class="section">
-              <h3>Best follow-up angle</h3>
-              <div id="quoteFollowUpAngle" class="box angle"></div>
-            </div>
-
-            <div class="section">
-              <h3>Suggested reply</h3>
-              <div id="quoteSuggestedReply" class="box"></div>
-            </div>
-
-            <div class="section">
-              <h3>Internal summary</h3>
-              <div id="quoteInternalSummary" class="box"></div>
-            </div>
-
-            <div class="section">
-              <h3>Questions the team should ask</h3>
-              <ul id="quoteQuestionsToAsk" class="questions-list"></ul>
-            </div>
-          </div>
-
-          <div id="genericResult" class="dynamic-output hidden"></div>
-
-          <div class="implementation-note">
-            <h3>In a live setup, this could connect to:</h3>
-            <ul id="liveSetupList">
-              <li>website forms</li>
-              <li>shared inboxes</li>
-              <li>Google Sheets</li>
-              <li>ad lead forms</li>
-              <li>internal team alerts</li>
-            </ul>
-          </div>
-
-          <div class="cta">
-            <h3>Want this tailored to your business?</h3>
-            <p id="ctaText">Want this connected to your process?</p>
-            <a href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event)">Request tailored demo</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+            <button onclick="openModal()" class="px-12 py-6 bg-[#c2155a] text-white font-black uppercase tracking-[0.3em] text-[13px] shadow-2xl shadow-[#c2155a]/40 hover:scale-105 active:scale-95 transition-all">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                <span>Free Conversion Audit</span>
+            </button>
+        </section>
 
 
-    <section id="tailored-demo-form" class="tailored-demo-section">
-      <div class="tailored-demo-grid">
-        <div>
-          <div class="tailored-demo-kicker">Step 1 of 1</div>
-          <h2>Request a tailored demo</h2>
-          <p>Share a few details and we’ll review where this kind of AI workflow could fit into your enquiry, follow-up or conversion process.</p>
-          <ul class="tailored-demo-points">
-            <li><i class="fas fa-check"></i><span>We’ll look for practical automation opportunities, not generic AI ideas.</span></li>
-            <li><i class="fas fa-check"></i><span>You can ask about website forms, inboxes, calls, SMS, email or CRM follow-up.</span></li>
-            <li><i class="fas fa-check"></i><span>No credit card required.</span></li>
-          </ul>
-        </div>
+    </main>
 
-        <form id="tailoredDemoForm" class="tailored-demo-form">
-          <div class="tailored-form-row">
-            <label for="tailored-name">Full Name</label>
-            <input type="text" id="tailored-name" name="name" required placeholder="John Doe">
-          </div>
-
-
-          <div class="tailored-form-row">
-            <label for="tailored-website-url">Website URL</label>
-            <input type="url" id="tailored-website-url" name="website_url" required placeholder="https://www.company.com">
-          </div>
-
-          <div class="tailored-form-row">
-            <label for="tailored-traffic">Monthly Website Traffic</label>
-            <select id="tailored-traffic" name="traffic" required>
-              <option value="">Select traffic range...</option>
-              <option value="0 - 1,000">0 - 1,000</option>
-              <option value="1,000 - 5,000">1,000 - 5,000</option>
-              <option value="5,000 - 20,000">5,000 - 20,000</option>
-              <option value="20,000+">20,000+</option>
-            </select>
-          </div>
-
-          <div class="tailored-form-row">
-            <label for="tailored-email">Work Email</label>
-            <input type="email" id="tailored-email" name="email" required placeholder="john@company.com">
-          </div>
-
-          <div class="tailored-form-row">
-            <label for="tailored-phone">Phone Number</label>
-            <div class="tailored-phone-row">
-              <input type="tel" id="tailored-phone" name="phone" required placeholder="+1 (555) 000-0000">
-              <label class="tailored-sms-label">
-                <input type="checkbox" id="tailored-sms-optin" name="smsOptin">
-                <span>SMS?</span>
-              </label>
-            </div>
-          </div>
-
-          <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
-          <div id="tailored-form-message" class="tailored-form-message"></div>
-          <p class="tailored-note">No credit card required</p>
-        </form>
-      </div>
-    </section>
-
-
-    <footer class="site-footer">
-      <p>&copy; 2026 Jemima AI. All rights reserved.</p>
+    <footer class="py-12 bg-white border-t border-slate-300 text-center">
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
     </footer>
 
+<script id="video-engine">
+        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
+        const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
+        
+        let isInteracting = false;
+        let isChatExpanded = false;
+        let hasExited = false;
+        let hasSubmitted = false;
+        let isMobileMenuOpen = false;
+        let lastTriggerSource = 'Direct Click';
+        let currentSelectedPackage = null;
+        let activePlayerId = null;
+        let activeFaqPlayerId = null;
 
-  <script>
+        const chatFeed = document.getElementById('chat-feed');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const chatInput = document.getElementById('user-chat-input');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-
-    const tailoredDemoWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
-
-
-    function scrollToTailoredDemoForm(event) {
-      if (event) {
-        event.preventDefault();
-      }
-
-      const formSection = document.getElementById('tailored-demo-form');
-      if (!formSection) return;
-
-      formSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-
-    function setupTailoredDemoForm() {
-      const form = document.getElementById('tailoredDemoForm');
-      if (!form) return;
-
-      const submitButton = document.getElementById('tailored-submit');
-      const message = document.getElementById('tailored-form-message');
-
-      form.addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        submitButton.disabled = true;
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Sending...';
-        message.textContent = '';
-        message.className = 'tailored-form-message';
-
-        const formData = {
-          type: 'tailored_demo_request',
-          name: document.getElementById('tailored-name').value,
-          website_url: document.getElementById('tailored-website-url').value,
-          traffic: document.getElementById('tailored-traffic').value,
-          email: document.getElementById('tailored-email').value,
-          phone: document.getElementById('tailored-phone').value,
-          smsOptin: document.getElementById('tailored-sms-optin').checked,
-          source: 'demo_page_footer_form',
-          currentDemoSlug: window.location.hash.replace(/^#\/?/, '').trim(),
-          demo_page_url: window.location.href,
-          pageUrl: window.location.href,
-          timestamp: new Date().toISOString()
+        // MAP DIRECTLY TO NATIVE VIDEO ELEMENTS
+        const players = {
+            'main': document.getElementById('player-main'),
+            'bookings': document.getElementById('player-bookings'),
+            'cost': document.getElementById('player-cost'),
+            'time': document.getElementById('player-time'),
+            'abandon': document.getElementById('player-abandon'),
+            'thanks': document.getElementById('player-thanks')
         };
 
-        try {
-          const response = await fetch(tailoredDemoWebhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-
-          message.textContent = 'Thanks — your tailored demo request has been submitted.';
-          form.reset();
-        } catch (error) {
-          console.error(error);
-          message.textContent = 'Sorry, something went wrong. Please try again.';
-          message.className = 'tailored-form-message error';
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
-        }
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', setupTailoredDemoForm);
-const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenario';
-
-    const ENGINE_WEBHOOKS = {
-      'Lead Revenue Triage': 'https://jemima-ai.app.n8n.cloud/webhook/instant-lead-capture-sheet',
-
-      // Add these when the other sheet-driven engine workflows are built:
-      'Quote Follow-Up': 'https://jemima-ai.app.n8n.cloud/webhook/demo-quote-follow-up',
-      'Appointment Recovery': 'https://jemima-ai.app.n8n.cloud/webhook/demo-appointment-recovery',
-      'Review & Reputation': 'https://jemima-ai.app.n8n.cloud/webhook/demo-review-reputation',
-      'Personalised Communication': 'https://jemima-ai.app.n8n.cloud/webhook/demo-personalised-communication',
-      'Local Growth': 'https://jemima-ai.app.n8n.cloud/webhook/demo-local-growth'
-    };
-
-    // console.log('Scenario lookup URL:', SCENARIO_LOOKUP_URL);
-    // console.log('Engine webhook map:', ENGINE_WEBHOOKS);
-
-    let activeScenario = null;
-
-    const pageEyebrow = document.getElementById('pageEyebrow');
-    const pageTitle = document.getElementById('pageTitle');
-    const pageIntro = document.getElementById('pageIntro');
-
-    const loadingState = document.getElementById('loadingState');
-    const errorState = document.getElementById('errorState');
-    const demoLayout = document.getElementById('demoLayout');
-    const videoBlock = document.getElementById('videoBlock');
-    const videoFrame = document.getElementById('videoFrame');
-    const videoIntro = document.getElementById('videoIntro');
-    const leftDemoCard = document.getElementById('leftDemoCard');
-    let scenarioDescriptionBlock = document.getElementById('scenarioDescriptionBlock');
-    let scenarioDescriptionText = document.getElementById('scenarioDescriptionText');
-
-    const form = document.getElementById('demoForm');
-    const button = document.getElementById('submitButton');
-    const message = document.getElementById('formMessage');
-
-
-    const enquirySource = document.getElementById('enquiry_source');
-    const sampleEnquiry = document.getElementById('sample_enquiry');
-    const demoUserEmail = document.getElementById('demo_user_email');
-
-    const inputPanel = document.getElementById('inputPanel');
-    const result = document.getElementById('result');
-    const resultTitle = document.getElementById('resultTitle');
-
-    const leadTriageResult = document.getElementById('leadTriageResult');
-    const quoteFollowUpResult = document.getElementById('quoteFollowUpResult');
-    const genericResult = document.getElementById('genericResult');
-
-    const leadPriority = document.getElementById('leadPriority');
-    const priorityBadge = document.getElementById('priorityBadge');
-    const revenueOpportunity = document.getElementById('revenueOpportunity');
-    const urgency = document.getElementById('urgency');
-    const serviceInterest = document.getElementById('serviceInterest');
-    const summary = document.getElementById('summary');
-    const recommendedAction = document.getElementById('recommendedAction');
-    const conversionAngle = document.getElementById('conversionAngle');
-    const whyThisMatters = document.getElementById('whyThisMatters');
-    const suggestedReply = document.getElementById('suggestedReply');
-    const questionsToAsk = document.getElementById('questionsToAsk');
-    const confidence = document.getElementById('confidence');
-    const ctaText = document.getElementById('ctaText');
-
-    const quoteFollowUpPriority = document.getElementById('quoteFollowUpPriority');
-    const quoteConversionOpportunity = document.getElementById('quoteConversionOpportunity');
-    const quoteConfidenceMetric = document.getElementById('quoteConfidenceMetric');
-    const quoteRecommendedAction = document.getElementById('quoteRecommendedAction');
-    const quoteStatus = document.getElementById('quoteStatus');
-    const quoteLikelyObjection = document.getElementById('quoteLikelyObjection');
-    const quoteFollowUpAngle = document.getElementById('quoteFollowUpAngle');
-    const quoteSuggestedReply = document.getElementById('quoteSuggestedReply');
-    const quoteInternalSummary = document.getElementById('quoteInternalSummary');
-    const quoteQuestionsToAsk = document.getElementById('quoteQuestionsToAsk');
-
-    function getSlugFromHash() {
-      const hash = window.location.hash.replace(/^#\/?/, '').trim();
-
-      if (!hash || hash === 'tailored-demo-form') {
-        return sessionStorage.getItem('jemimaDemoSlug') || 'dentists/new-patient-enquiry';
-      }
-
-      return hash;
-    }
-
-    function showError(text) {
-      loadingState.classList.add('hidden');
-      demoLayout.classList.add('hidden');
-      videoBlock.classList.add('hidden');
-      if (leftDemoCard) leftDemoCard.classList.add('hidden');
-      errorState.classList.remove('hidden');
-      errorState.textContent = text;
-    }
-
-    function cleanSourceLabel(source) {
-      return String(source || '').trim();
-    }
-
-    function getCurrentExample() {
-      if (!activeScenario || !activeScenario.examples) return '';
-
-      const source = enquirySource.value;
-      return activeScenario.examples[source] || '';
-    }
-
-    function populateSourceOptions() {
-      enquirySource.innerHTML = '';
-
-      const sources = Array.isArray(activeScenario.available_sources)
-        ? activeScenario.available_sources
-        : Object.keys(activeScenario.examples || {}).filter(key => activeScenario.examples[key]);
-
-      sources.forEach(function (source) {
-        const option = document.createElement('option');
-        option.value = source;
-        option.textContent = source;
-        enquirySource.appendChild(option);
-      });
-    }
-
-    function loadCurrentExampleIntoTextarea() {
-      const example = getCurrentExample();
-
-      if (example) {
-        sampleEnquiry.value = example;
-        sampleEnquiry.placeholder = example;
-      } else {
-        sampleEnquiry.value = '';
-        sampleEnquiry.placeholder = 'Paste a sample enquiry, email, call summary, ad lead, chat transcript or workflow input here.';
-      }
-    }
-
-    function isLikelyVideoFile(url) {
-      return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
-    }
-
-    function getYouTubeEmbedUrl(url) {
-      try {
-        const parsed = new URL(url);
-        const host = parsed.hostname.replace(/^www\./, '');
-
-        if (host === 'youtube.com' || host === 'm.youtube.com') {
-          if (parsed.pathname === '/watch') {
-            const id = parsed.searchParams.get('v');
-            return id ? `https://www.youtube.com/embed/${id}` : '';
-          }
-
-          if (parsed.pathname.startsWith('/shorts/')) {
-            const id = parsed.pathname.split('/')[2];
-            return id ? `https://www.youtube.com/embed/${id}` : '';
-          }
-
-          if (parsed.pathname.startsWith('/embed/')) {
-            return url;
-          }
-        }
-
-        if (host === 'youtu.be') {
-          const id = parsed.pathname.replace('/', '');
-          return id ? `https://www.youtube.com/embed/${id}` : '';
-        }
-      } catch (error) {
-        return '';
-      }
-
-      return '';
-    }
-
-    function getVimeoEmbedUrl(url) {
-      try {
-        const parsed = new URL(url);
-        const host = parsed.hostname.replace(/^www\./, '');
-
-        if (host === 'vimeo.com') {
-          const id = parsed.pathname.split('/').filter(Boolean)[0];
-          return id ? `https://player.vimeo.com/video/${id}` : '';
-        }
-
-        if (host === 'player.vimeo.com') {
-          return url;
-        }
-      } catch (error) {
-        return '';
-      }
-
-      return '';
-    }
-
-    function getLoomEmbedUrl(url) {
-      try {
-        const parsed = new URL(url);
-        const host = parsed.hostname.replace(/^www\./, '');
-
-        if (host === 'loom.com' && parsed.pathname.startsWith('/share/')) {
-          const id = parsed.pathname.split('/').filter(Boolean)[1];
-          return id ? `https://www.loom.com/embed/${id}` : '';
-        }
-
-        if (host === 'loom.com' && parsed.pathname.startsWith('/embed/')) {
-          return url;
-        }
-      } catch (error) {
-        return '';
-      }
-
-      return '';
-    }
-
-    function renderExplainerVideo(data) {
-      const videoUrl = String(data.explainer_video || '').trim();
-      const posterUrl = String(data.explainer_video_poster || '').trim();
-
-      videoFrame.innerHTML = '';
-      videoFrame.className = 'video-frame';
-      videoFrame.onclick = null;
-
-      if (!videoUrl) {
-        videoBlock.classList.add('hidden');
-        return;
-      }
-
-      if (leftDemoCard) {
-        leftDemoCard.classList.remove('hidden');
-      }
-
-      demoLayout.classList.remove('no-left-card');
-
-      videoIntro.textContent = data.video_intro || 'This short video explains what this automation does and why it matters.';
-
-      const youtubeEmbed = getYouTubeEmbedUrl(videoUrl);
-      const vimeoEmbed = getVimeoEmbedUrl(videoUrl);
-      const loomEmbed = getLoomEmbedUrl(videoUrl);
-      const embedUrl = youtubeEmbed || vimeoEmbed || loomEmbed;
-
-      if (embedUrl) {
-        const iframe = document.createElement('iframe');
-        iframe.src = embedUrl;
-        iframe.title = `${data.demo_name || 'Jemima AI demo'} explainer video`;
-        iframe.loading = 'lazy';
-        iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.allowFullscreen = true;
-        videoFrame.appendChild(iframe);
-        videoBlock.classList.remove('hidden');
-        return;
-      }
-
-      if (isLikelyVideoFile(videoUrl)) {
-        const video = document.createElement('video');
-
-        video.src = videoUrl;
-        video.controls = true;
-        video.preload = 'metadata';
-        video.autoplay = false;
-        video.loop = false;
-        video.muted = false;
-        video.defaultMuted = false;
-
-        // Required for inline playback on iPhone/iPad Safari.
-        video.playsInline = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        video.setAttribute('x5-playsinline', '');
-        video.setAttribute('x-webkit-airplay', 'allow');
-
-        if (posterUrl) {
-          video.poster = posterUrl;
-        }
-
-        video.style.width = '100%';
-        video.style.height = '100%';
-        video.style.objectFit = 'cover';
-        video.style.display = 'block';
-        video.style.cursor = 'pointer';
-
-        videoFrame.appendChild(video);
-        videoBlock.classList.remove('hidden');
-
-        // On iPhone, playing from a user gesture allows sound and inline playback.
-        videoFrame.onclick = async function () {
-          try {
-            video.muted = false;
-            video.defaultMuted = false;
-            video.controls = true;
-            await video.play();
-          } catch (error) {
-            // Native controls remain available if the browser blocks programmatic play.
-          }
+        const faqPlayers = {
+            'faq-player-1': document.getElementById('faq-player-1'),
+            'faq-player-2': document.getElementById('faq-player-2'),
+            'faq-player-3': document.getElementById('faq-player-3'),
+            'faq-player-4': document.getElementById('faq-player-4'),
+            'faq-player-5': document.getElementById('faq-player-5'),
+            'faq-player-6': document.getElementById('faq-player-6'),
+            'faq-player-7': document.getElementById('faq-player-7'),
+            'faq-player-8': document.getElementById('faq-player-8')
         };
 
-        return;
-      }
-
-      videoFrame.classList.remove('video-frame');
-
-      const link = document.createElement('a');
-      link.href = videoUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.className = 'video-link-fallback';
-      link.textContent = 'Open explainer video';
-
-      const span = document.createElement('span');
-      span.textContent = videoUrl;
-      link.appendChild(span);
-
-      videoFrame.appendChild(link);
-      videoBlock.classList.remove('hidden');
-    }
-
-    function escapeHtml(value) {
-      return String(value || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function cleanDisplayTitle(value) {
-      return String(value || '')
-        .replace(/^\s*try\s+the\s+instant\s+/i, '')
-        .replace(/\s+demo\s*$/i, '')
-        .trim();
-    }
-    function renderScenarioNotice(data) {
-      // Scenario description is displayed in the left column under the video.
-    }
-
-
-    function setMetaDescription(value) {
-      const text = String(value || '').trim();
-      if (!text) return;
-
-      let meta = document.querySelector('meta[name="description"]');
-
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('name', 'description');
-        document.head.appendChild(meta);
-      }
-
-      meta.setAttribute('content', text);
-    }
-
-    function renderHeroIntro(data) {
-      const problemText = String(data.problem_solved || '').trim();
-      const customerText = String(data.customer_benefit || '').trim();
-
-      if (problemText || customerText) {
-        const blocks = [];
-
-        if (problemText) {
-          blocks.push(`
-            <div class="intro-value-block">
-              <strong>What problem this solves</strong>
-              <p>${escapeHtml(problemText)}</p>
-            </div>
-          `);
-        }
-
-        if (customerText) {
-          blocks.push(`
-            <div class="intro-value-block">
-              <strong>How this helps customers</strong>
-              <p>${escapeHtml(customerText)}</p>
-            </div>
-          `);
-        }
-
-        pageIntro.innerHTML = `<div class="intro-value">${blocks.join('')}</div>`;
-        return;
-      }
-
-      pageIntro.textContent = data.page_intro || data.scenario_description || '';
-    }
-
-    function ensureScenarioDescriptionElements() {
-      if (scenarioDescriptionBlock && scenarioDescriptionText) {
-        return true;
-      }
-
-      if (!leftDemoCard) {
-        return false;
-      }
-
-      scenarioDescriptionBlock = document.createElement('section');
-      scenarioDescriptionBlock.id = 'scenarioDescriptionBlock';
-      scenarioDescriptionBlock.className = 'scenario-description-block hidden';
-
-      scenarioDescriptionText = document.createElement('p');
-      scenarioDescriptionText.id = 'scenarioDescriptionText';
-
-      scenarioDescriptionBlock.appendChild(scenarioDescriptionText);
-
-      leftDemoCard.appendChild(scenarioDescriptionBlock);
-
-      return true;
-    }
-
-    function renderScenarioDescription(data) {
-      if (!ensureScenarioDescriptionElements()) {
-        return;
-      }
-
-      const description = String(data.scenario_description || '').trim();
-
-      if (!description) {
-        scenarioDescriptionBlock.classList.add('hidden');
-        scenarioDescriptionText.textContent = '';
-        return;
-      }
-
-      scenarioDescriptionText.textContent = description;
-      scenarioDescriptionBlock.classList.remove('hidden');
-
-      if (leftDemoCard) {
-        leftDemoCard.classList.remove('hidden');
-      }
-
-      demoLayout.classList.remove('no-left-card');
-    }
-
-    function renderScenario(data) {
-      activeScenario = data;
-
-      const displayTitle = cleanDisplayTitle(data.page_title || data.demo_name || 'Jemima AI Demo');
-
-      document.title = displayTitle || 'Jemima AI Demo';
-
-      // Keep the original concise scenario copy in the page meta description.
-      // This is the text from page_intro, for example:
-      // "See how AI turns a new patient enquiry into treatment interest, urgency, priority, suggested reply and team action."
-      setMetaDescription(data.page_intro || data.scenario_description || '');
-
-      pageEyebrow.textContent = data.category || data.engine || 'Interactive demo';
-      pageTitle.textContent = displayTitle || 'Jemima AI demo';
-
-      // Show business-value content on the page instead of the short scenario intro.
-      renderHeroIntro(data);
-
-      renderScenarioNotice(data);
-
-      ctaText.textContent = data.cta_text || 'Want this connected to your process?';
-
-      renderExplainerVideo(data);
-      renderScenarioDescription(data);
-
-      populateSourceOptions();
-      loadCurrentExampleIntoTextarea();
-
-      loadingState.classList.add('hidden');
-      errorState.classList.add('hidden');
-      demoLayout.classList.remove('hidden');
-    }
-
-    async function loadScenario() {
-      const slug = getSlugFromHash();
-
-      if (slug && slug !== 'tailored-demo-form') {
-        sessionStorage.setItem('jemimaDemoSlug', slug);
-      }
-
-      if (!slug) {
-        showError('Missing demo slug. Example: /demo/#/dentists/implant-enquiry');
-        return;
-      }
-
-      try {
-        const url = `${SCENARIO_LOOKUP_URL}?slug=${encodeURIComponent(slug)}`;
-        const response = await fetch(url);
-        const responseText = await response.text();
-
-        // console.log('Scenario lookup status:', response.status);
-        // console.log('Scenario lookup response:', responseText);
-
-        if (!response.ok) {
-          throw new Error(`Scenario lookup HTTP ${response.status}: ${responseText || 'empty response'}`);
-        }
-
-        if (!responseText) {
-          throw new Error('Scenario lookup returned an empty response.');
-        }
-
-        let data;
-
-        try {
-          data = JSON.parse(responseText);
-        } catch (error) {
-          throw new Error(`Scenario lookup returned invalid JSON: ${responseText}`);
-        }
-
-        if (!data.success) {
-          throw new Error(data.message || 'Scenario lookup failed.');
-        }
-
-        renderScenario(data);
-      } catch (error) {
-        console.error(error);
-        showError(`Could not load demo scenario: ${error.message}`);
-      }
-    }
-
-    function setMetricClass(element, value) {
-      element.classList.remove('quality-high', 'quality-medium', 'quality-low', 'quality-urgent');
-
-      const lower = String(value || '').toLowerCase();
-
-      if (lower === 'urgent') {
-        element.classList.add('quality-urgent');
-      } else if (lower === 'high') {
-        element.classList.add('quality-high');
-      } else if (lower === 'medium') {
-        element.classList.add('quality-medium');
-      } else {
-        element.classList.add('quality-low');
-      }
-    }
-
-    function setBadgeClass(element, value) {
-      element.classList.remove('badge-high', 'badge-medium', 'badge-low', 'badge-urgent');
-
-      const lower = String(value || '').toLowerCase();
-
-      if (lower === 'urgent') {
-        element.classList.add('badge-urgent');
-      } else if (lower === 'high') {
-        element.classList.add('badge-high');
-      } else if (lower === 'medium') {
-        element.classList.add('badge-medium');
-      } else {
-        element.classList.add('badge-low');
-      }
-    }
-
-    function normaliseQuestions(data) {
-      if (Array.isArray(data.questions_to_ask)) {
-        return data.questions_to_ask;
-      }
-
-      if (Array.isArray(data.questions_team_should_ask)) {
-        return data.questions_team_should_ask;
-      }
-
-      if (Array.isArray(data.missing_information)) {
-        return data.missing_information;
-      }
-
-      const raw = data.questions_to_ask || data.questions_team_should_ask || data.missing_information || '';
-
-      return String(raw)
-        .split('\n')
-        .map(item => item.replace(/^[-•]\s*/, '').trim())
-        .filter(Boolean);
-    }
-
-    function renderLeadTriageResult(data) {
-      leadTriageResult.classList.remove('hidden');
-      quoteFollowUpResult.classList.add('hidden');
-      genericResult.classList.add('hidden');
-
-      resultTitle.textContent = 'Revenue triage result';
-
-      const priority = data.lead_priority || data.lead_quality || 'medium';
-      const priorityLabel = data.priority_label || `${priority} priority`;
-
-      leadPriority.textContent = priority;
-      priorityBadge.textContent = priorityLabel;
-      revenueOpportunity.textContent = data.revenue_opportunity || data.estimated_value || 'medium';
-      urgency.textContent = data.urgency || 'medium';
-
-      setMetricClass(leadPriority, priority);
-      setMetricClass(revenueOpportunity, data.revenue_opportunity || data.estimated_value);
-      setMetricClass(urgency, data.urgency);
-      setBadgeClass(priorityBadge, priority);
-
-      serviceInterest.textContent = data.service_interest || 'Not provided';
-      recommendedAction.textContent = data.recommended_action || data.recommended_next_action || 'Not provided';
-      whyThisMatters.textContent = data.why_this_matters || data.why_this_matters_commercially || 'Not provided';
-      conversionAngle.textContent = data.conversion_angle || data.best_conversion_angle || 'Not provided';
-      suggestedReply.textContent = data.suggested_reply || 'Not provided';
-      summary.textContent = data.summary || data.short_summary || 'Not provided';
-      confidence.textContent = data.confidence || 'Not provided';
-
-      questionsToAsk.innerHTML = '';
-
-      const questions = normaliseQuestions(data);
-
-      if (questions.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'No questions returned.';
-        questionsToAsk.appendChild(li);
-      } else {
-        questions.forEach(function (item) {
-          const li = document.createElement('li');
-          li.textContent = item;
-          questionsToAsk.appendChild(li);
-        });
-      }
-    }
-
-    function renderQuoteFollowUpResult(data) {
-      leadTriageResult.classList.add('hidden');
-      quoteFollowUpResult.classList.remove('hidden');
-      genericResult.classList.add('hidden');
-
-      resultTitle.textContent = 'Quote follow-up result';
-
-      const priority = data.follow_up_priority || data.priority || 'medium';
-      const priorityLabel = data.priority_label || `${priority} follow-up`;
-      const opportunity = data.conversion_opportunity || data.revenue_opportunity || 'medium';
-      const confidenceValue = data.confidence || 'medium';
-
-      quoteFollowUpPriority.textContent = priority;
-      quoteConversionOpportunity.textContent = opportunity;
-      quoteConfidenceMetric.textContent = confidenceValue;
-      priorityBadge.textContent = priorityLabel;
-
-      setMetricClass(quoteFollowUpPriority, priority);
-      setMetricClass(quoteConversionOpportunity, opportunity);
-      setMetricClass(quoteConfidenceMetric, confidenceValue);
-      setBadgeClass(priorityBadge, priority);
-
-      quoteRecommendedAction.textContent = data.recommended_action || data.next_action || 'Not provided';
-      quoteStatus.textContent = data.quote_status || data.status || 'Not provided';
-      quoteLikelyObjection.textContent = data.likely_objection || data.objection || data.barrier || 'Not provided';
-      quoteFollowUpAngle.textContent = data.follow_up_angle || data.conversion_angle || 'Not provided';
-      quoteSuggestedReply.textContent = data.suggested_reply || data.reply || 'Not provided';
-      quoteInternalSummary.textContent = data.internal_summary || data.summary || 'Not provided';
-
-      quoteQuestionsToAsk.innerHTML = '';
-
-      const questions = normaliseQuestions(data);
-
-      if (questions.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'No questions returned.';
-        quoteQuestionsToAsk.appendChild(li);
-      } else {
-        questions.forEach(function (item) {
-          const li = document.createElement('li');
-          li.textContent = item;
-          quoteQuestionsToAsk.appendChild(li);
-        });
-      }
-    }
-
-    function renderGenericResult(data) {
-      leadTriageResult.classList.add('hidden');
-      quoteFollowUpResult.classList.add('hidden');
-      genericResult.classList.remove('hidden');
-
-      resultTitle.textContent = `${activeScenario.engine || 'Demo'} result`;
-      priorityBadge.textContent = 'Complete';
-      priorityBadge.className = 'badge badge-high';
-
-      genericResult.innerHTML = '';
-
-      const hiddenKeys = new Set([
-        'success',
-        'response_version',
-        'debug_parsed_keys',
-        'debug_raw_ai_output'
-      ]);
-
-      Object.entries(data).forEach(function ([key, value]) {
-        if (hiddenKeys.has(key)) return;
-
-        const section = document.createElement('div');
-        section.className = 'section';
-
-        const title = document.createElement('h3');
-        title.textContent = key.replace(/_/g, ' ');
-
-        const box = document.createElement('div');
-        box.className = 'box';
-
-        if (Array.isArray(value)) {
-          box.textContent = value.join('\n');
-        } else if (typeof value === 'object' && value !== null) {
-          box.textContent = JSON.stringify(value, null, 2);
-        } else {
-          box.textContent = String(value || '');
-        }
-
-        section.appendChild(title);
-        section.appendChild(box);
-        genericResult.appendChild(section);
-      });
-    }
-
-    function renderResult(data) {
-      inputPanel.style.display = 'none';
-      result.classList.add('active');
-
-      const engine = activeScenario?.engine || data.engine || '';
-
-      if (engine === 'Lead Revenue Triage') {
-        renderLeadTriageResult(data);
-      } else if (engine === 'Quote Follow-Up') {
-        renderQuoteFollowUpResult(data);
-      } else {
-        renderGenericResult(data);
-      }
-
-      if (demoUserEmail.value) {
-        message.textContent = 'Demo generated. The report will also be sent by email.';
-        message.className = 'message success';
-      }
-    }
-
-    enquirySource.addEventListener('change', function () {
-      loadCurrentExampleIntoTextarea();
-    });
-
-    form.addEventListener('submit', async function (event) {
-      event.preventDefault();
-
-      if (!activeScenario) {
-        message.textContent = 'Scenario has not loaded yet.';
-        message.className = 'message error';
-        return;
-      }
-
-      const engineWebhookUrl = ENGINE_WEBHOOKS[activeScenario.engine];
-
-      if (!engineWebhookUrl) {
-        message.textContent = `No webhook configured for engine: ${activeScenario.engine}`;
-        message.className = 'message error';
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = 'Generating...';
-      message.textContent = '';
-      message.className = 'message';
-
-      const payload = {
-        scenario_id: activeScenario.scenario_id,
-        slug: activeScenario.slug,
-        industry: activeScenario.industry,
-        engine: activeScenario.engine,
-        demo_name: activeScenario.demo_name,
-        category: activeScenario.category,
-        problem_solved: activeScenario.problem_solved,
-        customer_benefit: activeScenario.customer_benefit,
-        explainer_video: activeScenario.explainer_video,
-        explainer_video_poster: activeScenario.explainer_video_poster,
-        scenario_description: activeScenario.scenario_description,
-        output_focus: activeScenario.output_focus,
-        recommended_sources: activeScenario.recommended_sources,
-
-        business_type: activeScenario.industry,
-        enquiry_source: enquirySource.value,
-        sample_enquiry: sampleEnquiry.value,
-        demo_user_email: demoUserEmail.value
-      };
-
-      try {
-        const response = await fetch(engineWebhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
+document.addEventListener('DOMContentLoaded', () => {
+            // 1. Setup ending loops and force the browser to see videos as clickable
+            Object.values(players).forEach(video => {
+                if(video) {
+                    video.addEventListener('ended', resetToLoop);
+                    video.style.cursor = 'pointer'; // Forces iOS to recognize the element as interactive
+                }
+            });
+
+            // --- ADDED THIS SECTION FOR FAQ VIDEOS ---
+            // 2. Add click-to-pause/play for FAQ videos
+            Object.values(faqPlayers).forEach(video => {
+                if(video) {
+                    video.style.cursor = 'pointer'; // Forces iOS to recognize as interactive
+                    video.addEventListener('click', () => {
+                        if (video.paused) {
+                            video.play().catch(err => console.error("Play failed:", err));
+                        } else {
+                            video.pause();
+                        }
+                    });
+                }
+            });
+            // -----------------------------------------
+
+            // 3. The Bulletproof Click Listener (Attached to the parent container)
+            const container = document.getElementById('video-container');
+            if (container) {
+                container.style.cursor = 'pointer';
+                
+                container.addEventListener('click', (e) => {
+                    // Ignore the click if they are tapping the "Tap to interact" placeholder
+                    if (e.target.closest('#video-placeholder')) return;
+                    
+                    // Only toggle if an AI video is currently active
+                    if (isInteracting && activePlayerId && players[activePlayerId]) {
+                        const video = players[activePlayerId];
+                        
+                        // Toggle Play/Pause
+                        if (video.paused) {
+                            video.play().catch(err => console.error("Play failed:", err));
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }
         });
 
-        const responseText = await response.text();
+        // SAFARI COMPLIANT ACTIVATOR
+        function activateAI(videoId = 'main') {
+            const videoElement = players[videoId];
+            if (!videoElement) return;
 
-        // console.log('Engine:', activeScenario.engine);
-        // console.log('Engine webhook URL:', engineWebhookUrl);
-        // console.log('Demo status:', response.status);
-        // console.log('Demo response:', responseText);
+            // FIX: Stop any FAQ videos that might be playing in the background
+            Object.values(faqPlayers).forEach(video => {
+                if (video && !video.paused) {
+                    video.pause();
+                }
+            });
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${responseText || 'empty response'}`);
+            // 1. SAFARI: Execute PLAY immediately on click
+            videoElement.currentTime = 0;
+            videoElement.play();
+
+            // 2. UI Transitions
+            isInteracting = true;
+            if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+
+            const idlePlayer = document.getElementById('idle-player');
+            if (idlePlayer) idlePlayer.classList.remove('active');
+
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].classList.remove('active');
+                players[activePlayerId].classList.add('pointer-events-none');
+                players[activePlayerId].pause();
+            }
+
+            videoElement.classList.add('active');
+            videoElement.classList.remove('pointer-events-none');
+            activePlayerId = videoId;
+
+            // 3. Cleanup
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            if (isMobileMenuOpen) toggleMobileMenu();
         }
 
-        if (!responseText) {
-          throw new Error('Demo workflow returned an empty response.');
+        function toggleFaq(button, playerId) {
+            const item = button.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+
+            // FIX: Pause ALL FAQ videos before doing anything else
+            Object.values(faqPlayers).forEach(video => {
+                if (video && !video.paused) {
+                    video.pause();
+                }
+            });
+
+            if (!wasActive) {
+                // Start the new video
+                if (playerId && faqPlayers[playerId]) {
+                    const videoElement = faqPlayers[playerId];
+                    // SAFARI: Execute PLAY immediately on click
+                    videoElement.currentTime = 0;
+                    videoElement.play();
+                    videoElement.classList.remove('pointer-events-none');
+                    activeFaqPlayerId = playerId;
+                }
+
+                // Close all other accordions and open this one
+                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                item.classList.add('active');
+                
+                // If the main AI was talking, send her back to idle loop
+                if (isInteracting) resetToLoop();
+            } else {
+                // If it was already active, just close the accordion
+                item.classList.remove('active');
+            }
         }
 
-        let data;
+        function resetToLoop() {
+            isInteracting = false;
+            if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
+            
+            if (activePlayerId && players[activePlayerId]) {
+                players[activePlayerId].classList.remove('active');
+                players[activePlayerId].classList.add('pointer-events-none');
+                players[activePlayerId].pause();
+            }
 
-        try {
-          data = JSON.parse(responseText);
-        } catch (error) {
-          throw new Error(`Demo workflow returned invalid JSON: ${responseText}`);
+            activePlayerId = null;
+
+            const idlePlayer = document.getElementById('idle-player');
+            if (idlePlayer) {
+                idlePlayer.classList.add('active');
+                idlePlayer.play();
+            }
+        }
+    </script>
+
+    <script id="ui-management">
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('-translate-y-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('-translate-y-full');
+                document.body.style.overflow = 'auto';
+            }
         }
 
-        if (data.success === false) {
-          throw new Error(data.message || 'Demo failed.');
+        function openModal(isExitIntent = false, source = 'Direct Click', pkg = null) {
+            hasSubmitted = false;
+            lastTriggerSource = source; 
+            currentSelectedPackage = pkg;
+            
+            const trafficSelect = document.getElementById('form-traffic');
+            const submitBtn = document.getElementById('submit-btn');
+            const cardNote = document.getElementById('modal-card-note');
+            const modalTitle = document.getElementById('modal-title');
+            const modalSubtitle = document.getElementById('modal-subtitle');
+            const modalTag = document.getElementById('modal-tag');
+
+            if (trafficSelect) {
+                trafficSelect.value = "";
+                trafficSelect.classList.add('text-slate-300');
+                trafficSelect.classList.remove('text-slate-900');
+            }
+            cardNote.classList.remove('hidden');
+
+            let title = "Get Your Free Audit";
+            let subtitle = "My team will manually review your site layout.";
+            let tagText = "Step 1 of 1";
+
+            if (pkg === 'starter') {
+                title = "Start with Starter";
+                subtitle = "Let's start with a free conversion audit";
+            } else if (pkg === 'growth') {
+                title = "Choose Growth";
+                subtitle = "Let's start Growth with a free conversion audit";
+            } else if (pkg === 'pro') {
+                title = "Choose Pro";
+                subtitle = "Let's start Pro with a free conversion audit";
+            }
+
+            if (isExitIntent) {
+                tagText = "WAIT! BEFORE YOU GO...";
+                title = "Don't leave without your audit!";
+            }
+
+            modalTag.innerText = tagText;
+            modalTitle.innerText = title;
+            modalSubtitle.innerText = subtitle;
+            submitBtn.innerText = "Submit Audit Request";
+
+            modalOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
-        renderResult(data);
-      } catch (error) {
-        console.error(error);
-        message.textContent = `Something went wrong: ${error.message}`;
-        message.className = 'message error';
-      } finally {
-        button.disabled = false;
-        button.textContent = 'Generate demo result';
-      }
-    });
+        function closeModal(isUserTriggered = false) {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            if (isUserTriggered && !hasSubmitted) {
+                activateAI('abandon');
+            }
+        }
 
-    window.addEventListener('hashchange', function () {
-      const hash = window.location.hash.replace(/^#\/?/, '').trim();
+        // TRAFFIC DROPDOWN LOGIC
+        document.addEventListener('DOMContentLoaded', () => {
+            const trigger = document.getElementById('custom-select-trigger');
+            const optionsPanel = document.getElementById('custom-select-options');
+            const inputField = document.getElementById('form-traffic');
+            const options = document.querySelectorAll('.traffic-option');
+            const wrapper = document.getElementById('traffic-dropdown-wrapper');
 
-      if (hash === 'tailored-demo-form') {
-        scrollToTailoredDemoForm();
-        return;
-      }
+            if (trigger && optionsPanel && inputField) {
+                
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                    optionsPanel.classList.toggle('hidden');
+                    optionsPanel.classList.toggle('flex');
+                });
 
-      window.location.reload();
-    });
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        inputField.value = e.target.innerText;
+                        inputField.classList.remove('text-slate-300');
+                        inputField.classList.add('text-slate-900');
+                        optionsPanel.classList.add('hidden');
+                        optionsPanel.classList.remove('flex');
+                    });
+                });
 
-    loadScenario();
-  </script>
+                document.addEventListener('click', (e) => {
+                    if (wrapper && !wrapper.contains(e.target)) {
+                        optionsPanel.classList.add('hidden');
+                        optionsPanel.classList.remove('flex');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script id="chat-engine">
+        function createTypingIndicator() {
+            const typing = document.createElement('div');
+            typing.className = 'bg-[#c2155a]/5 p-4 w-fit mb-3 message-anim flex gap-1.5 items-center rounded-2xl rounded-tl-none border border-[#c2155a]/10';
+            typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+            return typing;
+        }
+
+        async function addMessages(msgArray) {
+            for (const text of msgArray) {
+                const indicator = createTypingIndicator();
+                chatFeed.appendChild(indicator);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+                await new Promise(r => setTimeout(r, 1200));
+                indicator.remove();
+                const msg = document.createElement('div');
+                msg.className = 'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-5 py-4 text-[16px] font-medium leading-relaxed message-anim shadow-sm mb-3 rounded-2xl rounded-tl-none';
+                msg.innerText = text;
+                chatFeed.appendChild(msg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
+        }
+
+        let loggedQuestions = new Set();
+
+        function playVideoAnswer(type, el) { 
+            const questionText = el.innerText.trim();
+            activateAI(type); 
+            expandChatWindow(false); 
+
+            if (loggedQuestions.has(type)) return; 
+            loggedQuestions.add(type);
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = questionText;
+            chatFeed.appendChild(userMsg);
+
+            const messages = {
+                bookings: ["It typically increases conversions as soon as it goes live.", "It captures visitors who would usually bounce."],
+                cost: ["There is transparent pricing on this page.", "It's usually worth it within the first few qualified leads."],
+                time: ["Most businesses can have it up and running within a week.", "We handle most of the work, you just need to add it to your site."]
+            };
+            addMessages(messages[type] || ["I can certainly help with that."]);
+        }
+
+        function expandChatWindow(shouldScroll = true) {
+            if (!isChatExpanded) {
+                isChatExpanded = true;
+                chatFeed.classList.remove('h-[120px]');
+                chatFeed.classList.add('h-[400px]', 'md:h-auto');
+                const chatContainer = document.getElementById('chat-container');
+                chatContainer.classList.remove('md:self-start');
+                if (shouldScroll) {
+                    setTimeout(() => {
+                        chatContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            }
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = "SENDING...";
+
+            const formData = {
+                name: document.getElementById('form-name').value,
+                website: document.getElementById('form-email').value, // Using email as proxy since URL field was removed
+                traffic: document.getElementById('form-traffic').value,
+                phone: document.getElementById('form-phone').value,
+                smsOptin: document.getElementById('form-sms-optin').checked,
+                selectedPackage: currentSelectedPackage,
+                triggerButton: lastTriggerSource,
+                sessionId: sessionId,
+                timestamp: new Date().toISOString()
+            };
+
+            let leadSuccess = false;
+
+            if (n8nFormWebhookUrl) {
+                try {
+                    const response = await fetch(n8nFormWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type: 'audit_lead', ...formData })
+                    });
+                    if(response.ok) leadSuccess = true;
+                } catch (error) {
+                    console.error('Webhook Error:', error);
+                }
+            }
+
+            hasSubmitted = true;
+            activateAI('thanks');
+            
+            const userAction = document.createElement('div');
+            userAction.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
+            userAction.innerText = `Interest in ${currentSelectedPackage || 'Audit'} noted`;
+            chatFeed.appendChild(userAction);
+
+if (leadSuccess) {
+    // This updates the URL without reloading the page
+    window.history.pushState(null, '', '?thankyou');
+
+    addMessages([
+        `Thanks ${formData.name.split(' ')[0]}! I've flagged your interest.`,
+        "My team will reach out within 24 hours."
+    ]);
+}
+
+            closeModal(false);
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalBtnText;
+            e.target.reset();
+        }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            chatInput.value = '';
+
+            expandChatWindow();
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+            userMsg.innerText = text;
+            chatFeed.appendChild(userMsg);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            const indicator = createTypingIndicator();
+            chatFeed.appendChild(indicator);
+            chatFeed.scrollTop = chatFeed.scrollHeight;
+
+            if (n8nChatWebhookUrl) {
+                try {
+                    const response = await fetch(n8nChatWebhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+                    });
+                    if (!response.ok) throw new Error('Network error');
+                    const data = await response.json();
+                    indicator.remove();
+                    const getBotText = (input) => {
+                        if (typeof input === 'string') return input;
+                        if (!input) return null;
+                        if (Array.isArray(input)) return getBotText(input[0]);
+                        const candidates = [input.output, input.text, input.response, input.message, input.fulfillmentText, input.content];
+                        const found = candidates.find(c => typeof c === 'string' && c.length > 0);
+                        if (found) return found;
+                        if (input.json) return getBotText(input.json);
+                        return null;
+                    };
+                    addMessages([getBotText(data) || "I've received your message!"]);
+                } catch (error) {
+                    indicator.remove();
+                    addMessages(["I'm having a little trouble connecting right now."]);
+                }
+            }
+        }
+
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY < 0 && !hasExited) {
+                hasExited = true;
+                if (modalOverlay.classList.contains('hidden')) {
+                    openModal(true, 'Exit Intent');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
