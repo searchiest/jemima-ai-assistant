@@ -792,8 +792,8 @@
     const videoFrame = document.getElementById('videoFrame');
     const videoIntro = document.getElementById('videoIntro');
     const leftDemoCard = document.getElementById('leftDemoCard');
-    const scenarioDescriptionBlock = document.getElementById('scenarioDescriptionBlock');
-    const scenarioDescriptionText = document.getElementById('scenarioDescriptionText');
+    let scenarioDescriptionBlock = document.getElementById('scenarioDescriptionBlock');
+    let scenarioDescriptionText = document.getElementById('scenarioDescriptionText');
 
     const form = document.getElementById('demoForm');
     const button = document.getElementById('submitButton');
@@ -998,12 +998,43 @@
       pageIntro.textContent = data.page_intro || data.scenario_description || '';
     }
 
+    function ensureScenarioDescriptionElements() {
+      if (scenarioDescriptionBlock && scenarioDescriptionText) {
+        return true;
+      }
+
+      if (!leftDemoCard) {
+        return false;
+      }
+
+      scenarioDescriptionBlock = document.createElement('section');
+      scenarioDescriptionBlock.id = 'scenarioDescriptionBlock';
+      scenarioDescriptionBlock.className = 'scenario-description-block hidden';
+
+      scenarioDescriptionText = document.createElement('p');
+      scenarioDescriptionText.id = 'scenarioDescriptionText';
+
+      scenarioDescriptionBlock.appendChild(scenarioDescriptionText);
+
+      const formElement = document.getElementById('demoForm');
+      if (formElement) {
+        leftDemoCard.insertBefore(scenarioDescriptionBlock, formElement);
+      } else {
+        leftDemoCard.appendChild(scenarioDescriptionBlock);
+      }
+
+      return true;
+    }
 
     function renderScenarioDescription(data) {
+      if (!ensureScenarioDescriptionElements()) {
+        return;
+      }
+
       const description = String(data.scenario_description || '').trim();
 
       if (!description) {
-        scenarioDescriptionBlock.classList.add('hidden');
+        if (scenarioDescriptionBlock) scenarioDescriptionBlock.classList.add('hidden');
         scenarioDescriptionText.textContent = '';
         return;
       }
