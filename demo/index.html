@@ -928,6 +928,54 @@
       scenarioNotice.textContent = data.scenario_description || 'This demo uses scenario data from the Demo Scenario Library.';
     }
 
+
+    function setMetaDescription(value) {
+      const text = String(value || '').trim();
+      if (!text) return;
+
+      let meta = document.querySelector('meta[name="description"]');
+
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'description');
+        document.head.appendChild(meta);
+      }
+
+      meta.setAttribute('content', text);
+    }
+
+    function renderHeroIntro(data) {
+      const problemText = String(data.problem_solved || '').trim();
+      const customerText = String(data.customer_benefit || '').trim();
+
+      if (problemText || customerText) {
+        const blocks = [];
+
+        if (problemText) {
+          blocks.push(`
+            <div class="intro-value-block">
+              <strong>What problem this solves</strong>
+              <p>${escapeHtml(problemText)}</p>
+            </div>
+          `);
+        }
+
+        if (customerText) {
+          blocks.push(`
+            <div class="intro-value-block">
+              <strong>How this helps customers</strong>
+              <p>${escapeHtml(customerText)}</p>
+            </div>
+          `);
+        }
+
+        pageIntro.innerHTML = `<div class="intro-value">${blocks.join('')}</div>`;
+        return;
+      }
+
+      pageIntro.textContent = data.page_intro || data.scenario_description || '';
+    }
+
     function renderScenario(data) {
       activeScenario = data;
 
