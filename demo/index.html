@@ -743,43 +743,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       cursor: pointer;
     }
 
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 70;
-      background: #ffffff;
-      padding: 30px;
-    }
-
-    .mobile-menu.active {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .mobile-menu-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 42px;
-    }
-
-    .mobile-menu-links {
-      display: grid;
-      gap: 22px;
-      font-size: 18px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .mobile-menu-links a {
-      color: #0f172a;
-      text-decoration: none;
-      padding-bottom: 14px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
     .page {
       max-width: 1200px;
       padding: 36px 24px 72px;
@@ -1155,15 +1118,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     @media (max-width: 900px) {
       .site-nav {
-        padding: 14px 18px;
+        padding: 12px 14px;
+        gap: 12px;
+      }
+
+      .site-brand {
+        font-size: 18px;
+      }
+
+      .site-brand img {
+        width: 24px;
+        height: 24px;
       }
 
       .site-cta {
-        display: none;
+        display: inline-flex;
+        padding: 10px 12px;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        white-space: nowrap;
       }
 
       .mobile-menu-button {
-        display: block;
+        display: none;
       }
 
       h1 {
@@ -1187,21 +1164,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
-      <div class="mobile-menu-header">
-        <a class="site-brand" href="/">
-          <img src="/jemima-logo.png" alt="Jemima Logo">
-          <span>Jemima</span>
-        </a>
-        <button class="mobile-menu-button" type="button" onclick="toggleMobileMenu()" aria-label="Close menu">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="mobile-menu-links">
-<a href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event); toggleMobileMenu();" >Request tailored demo</a>
-      </div>
-    </div>
-
     <nav class="site-nav">
       <a class="site-brand" href="/">
         <img src="/jemima-logo.png" alt="Jemima Logo">
@@ -1210,11 +1172,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="site-cta" href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event)">
         <span>Request tailored demo</span>
       </a>
-
-      <button class="mobile-menu-button" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
-        <i class="fas fa-bars"></i>
-      </button>
-    </nav>
+</nav>
 
 <main class="page">
     <section class="hero">
@@ -1550,17 +1508,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     document.addEventListener('DOMContentLoaded', setupTailoredDemoForm);
-
-
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      if (!menu) return;
-
-      const isOpen = menu.classList.toggle('active');
-      menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-
 const SCENARIO_LOOKUP_URL = 'https://jemima-ai.app.n8n.cloud/webhook/demo-scenario';
 
     const ENGINE_WEBHOOKS = {
