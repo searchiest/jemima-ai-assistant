@@ -560,7 +560,14 @@
 
         <form id="demoForm">
           <div id="scenarioNotice" class="scenario-notice"></div>
-<div>
+
+          <div class="scenario-meta">
+            <div><strong>Scenario:</strong> <span id="scenarioName">—</span></div>
+            <div><strong>Industry:</strong> <span id="scenarioIndustry">—</span></div>
+            <div><strong>Engine:</strong> <span id="scenarioEngine">—</span></div>
+          </div>
+
+          <div>
             <label for="demo_user_email">Enter your email to receive the demo report</label>
             <input id="demo_user_email" name="demo_user_email" type="email" placeholder="you@example.com" required>
             <div class="help">Required. The result will show on screen and the report will also be emailed to this address.</div>
@@ -772,6 +779,9 @@
     const message = document.getElementById('formMessage');
 
     const scenarioNotice = document.getElementById('scenarioNotice');
+    const scenarioName = document.getElementById('scenarioName');
+    const scenarioIndustry = document.getElementById('scenarioIndustry');
+    const scenarioEngine = document.getElementById('scenarioEngine');
 
     const enquirySource = document.getElementById('enquiry_source');
     const sampleEnquiry = document.getElementById('sample_enquiry');
@@ -985,6 +995,9 @@
       renderHeroIntro(data);
 
       renderScenarioNotice(data);
+      scenarioName.textContent = data.demo_name || data.scenario_id || '—';
+      scenarioIndustry.textContent = data.industry || '—';
+      scenarioEngine.textContent = data.engine || '—';
 
       ctaText.textContent = data.cta_text || 'Want this connected to your process?';
 
