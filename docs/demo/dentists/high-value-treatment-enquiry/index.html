@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>High-value treatment enquiry | Jemima AI Demo</title>
+  <meta name="description" content="See how AI flags high-value dental treatment interest, contact details, priority and the right next action for the practice team.">
+  <link rel="canonical" href="https://jemima.ai/demo/dentists/high-value-treatment-enquiry/">
+
+  <meta property="og:title" content="High-value treatment enquiry | Jemima AI Demo">
+  <meta property="og:description" content="See how AI flags high-value dental treatment interest, contact details, priority and the right next action for the practice team.">
+  <meta property="og:url" content="https://jemima.ai/demo/dentists/high-value-treatment-enquiry/">
+  <meta property="og:type" content="website">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #111827;
+      background: #f8fafc;
+    }
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+    .brand {
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background: #111827;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: 44px;
+      line-height: 1.06;
+      margin: 0 0 22px;
+      letter-spacing: -0.04em;
+      text-transform: capitalize;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    }
+    .top-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 28px 0;
+    }
+    .demo-video {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 20px;
+      display: block;
+      background: #000;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #d1d5db;
+      border-radius: 14px;
+      padding: 12px;
+      font: inherit;
+    }
+    textarea {
+      min-height: 220px;
+      white-space: pre-wrap;
+    }
+    .result {
+      margin-top: 18px;
+      white-space: pre-wrap;
+      background: #f3f4f6;
+      border-radius: 16px;
+      padding: 16px;
+      display: none;
+    }
+    .note {
+      color: #6b7280;
+      font-size: 14px;
+    }
+    @media (max-width: 800px) {
+      .grid, .top-cards {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="header">
+      <div class="brand">Jemima AI</div>
+      <a class="btn" href="#tailored-demo-form">Request tailored demo</a>
+    </header>
+
+    <section class="hero">
+      <h1>High-value treatment enquiry</h1>
+
+      <div class="top-cards">
+        <div class="card">
+          <h2>What problem this solves</h2>
+          <p>High-value treatment enquiries can be missed among routine messages, causing the practice to lose opportunities for implants, Invisalign, bonding, veneers, whitening or smile makeovers.</p>
+        </div>
+        <div class="card">
+          <h2>How this helps customers</h2>
+          <p>The patient gets a faster, more relevant response that recognises their treatment interest and helps them understand the right consultation or next step.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="card">
+          
+    <div class="demo-video-wrap">
+      <video
+        class="demo-video"
+        controls
+        playsinline
+        preload="metadata"
+        poster="https://jemima.ai/video-fallback.png"
+      >
+        <source src="https://vz-1599ac93-05a.b-cdn.net/628509d3-ac12-460a-9557-3e81c477b4c4/play_1080p.mp4" type="video/mp4">
+      </video>
+    </div>
+  
+          <h2>Scenario</h2>
+          <p>Identify high-value dental enquiries including implants, Invisalign, bonding, veneers, whitening or smile makeovers, then flag priority, treatment interest, urgency and the best next action.</p>
+        </section>
+
+        <section class="card">
+          <form id="demoForm">
+            <label for="email">1. Enter your work email to receive the demo report</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+            <label for="source">2. Select an input source</label>
+            <select id="source" name="source">
+              <option value="Website form" data-example="Name: Oliver Grant  Email: oliver@example.com  Phone: 07700 900129  Service: Smile makeover  Message: I&#39;m interested in improving my smile. I have gaps and worn edges and would like to know whether bonding, veneers or Invisalign would be better. I&#39;d like to book a consultation." selected>Website form</option>
+<option value="Email enquiry" data-example="Subject: Smile makeover consultation    Name: Oliver Grant  Email: oliver@example.com  Phone: 07700 900129    Hi,    I&#39;m interested in improving my smile. I have gaps and worn edges and would like to know whether bonding, veneers or Invisalign would be better.    Could I book a consultation to understand my options?    Thanks,  Oliver" >Email enquiry</option>
+<option value="Missed call summary" data-example="Caller name: Oliver Grant  Phone: 07700 900129  Email captured: oliver@example.com  Summary: Caller asked about a smile makeover and mentioned gaps, worn edges and possible bonding, veneers or Invisalign. They want a consultation and asked about next availability. Preferred contact time is weekday afternoons." >Missed call summary</option>
+<option value="Ad lead" data-example="Campaign: High-value cosmetic treatment  Name: Oliver Grant  Email: oliver@example.com  Phone: 07700 900129  Question: I&#39;m interested in a smile makeover and want to know whether bonding, veneers or Invisalign would be best.  Preferred contact time: Weekday afternoons" >Ad lead</option>
+<option value="Chat message" data-example="Visitor: Hi, I&#39;m interested in improving my smile.  Practice: Of course. Can I take your name, email and phone number so the treatment coordinator can follow up?  Visitor: Yes, it&#39;s Oliver Grant, oliver@example.com, 07700 900129.  Practice: Are you thinking about any specific treatment?  Visitor: Maybe bonding, veneers or Invisalign. I have gaps and worn edges and want a consultation." >Chat message</option>
+            </select>
+            <p class="note">Changing this will load realistic example data based on your chosen source.</p>
+
+            <label for="sample">Sample input</label>
+            <textarea id="sample" name="sample">Name: Oliver Grant
+ Email: oliver@example.com
+ Phone: 07700 900129
+ Service: Smile makeover
+ Message: I&#39;m interested in improving my smile. I have gaps and worn edges and would like to know whether bonding, veneers or Invisalign would be better. I&#39;d like to book a consultation.</textarea>
+
+            <button class="btn" type="submit">3. Generate demo result</button>
+            <p class="note">Please do not enter real customer, patient, client or case information. Use sample data only.</p>
+          </form>
+
+          <div id="result" class="result"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="tailored-demo-form" class="card" style="margin-top: 32px;">
+      <h2>Request a tailored demo</h2>
+      <p>Want this connected to your high-value treatment enquiries, website forms, inbox or campaign leads?</p>
+      <form id="tailoredForm">
+        <label for="tailoredName">Full name</label>
+        <input id="tailoredName" name="name" placeholder="John Doe">
+
+        <label for="tailoredEmail">Work email</label>
+        <input id="tailoredEmail" name="email" type="email" placeholder="john@company.com">
+
+        <label for="tailoredPhone">Phone number</label>
+        <input id="tailoredPhone" name="phone" placeholder="+44">
+
+        <button class="btn" type="submit">Request tailored demo</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    window.DEMO_SCENARIO = {
+      scenario_id: "DENTAL-LEAD-011",
+      slug: "dentists/high-value-treatment-enquiry",
+      industry: "Dentist",
+      engine: "Lead Revenue Triage",
+      demo_name: "High-value treatment enquiry",
+      category: "Capture more enquiries",
+      pageUrl: "https://jemima.ai/demo/dentists/high-value-treatment-enquiry/"
+    };
+
+    const sourceSelect = document.getElementById('source');
+    const sampleBox = document.getElementById('sample');
+
+    sourceSelect.addEventListener('change', () => {
+      const selected = sourceSelect.options[sourceSelect.selectedIndex];
+      sampleBox.value = selected.dataset.example || '';
+    });
+
+    document.getElementById('demoForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const resultBox = document.getElementById('result');
+      resultBox.style.display = 'block';
+      resultBox.textContent = 'Generating demo result...';
+
+      const payload = {
+        ...window.DEMO_SCENARIO,
+        email: document.getElementById('email').value,
+        pageUrl: window.location.href,
+        enquiry_source: sourceSelect.value,
+        sample_enquiry: sampleBox.value
+      };
+
+      try {
+        const response = await fetch("https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultBox.textContent = 'Could not generate demo result. Please try again.';
+      }
+    });
+
+    document.getElementById('tailoredForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      alert('Thanks. The team will follow up.');
+    });
+  </script>
+</body>
+</html>
