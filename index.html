@@ -163,6 +163,214 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .faq-content p { font-size: 16px !important; line-height: 1.6; margin-bottom: 1.25rem; color: #334155; }
             .faq-content button { margin-top: 0.5rem; }
         }
+    
+        /* Live demo library */
+        .live-demo-library {
+            scroll-margin-top: 96px;
+            padding: 5rem 0;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
+        }
+
+        .live-demo-library-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .live-demo-header {
+            max-width: 820px;
+            margin: 0 auto 2.25rem;
+            text-align: center;
+        }
+
+        .live-demo-kicker {
+            display: inline-block;
+            background: rgba(194, 21, 90, 0.1);
+            color: #c2155a;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            margin-bottom: 16px;
+        }
+
+        .live-demo-header h2 {
+            margin: 0;
+            color: #020617;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            font-weight: 800;
+        }
+
+        .live-demo-header p {
+            max-width: 760px;
+            margin: 1rem auto 0;
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+        .live-demo-jump {
+            max-width: 520px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .live-demo-jump label {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin: 0 0 10px;
+        }
+
+        .live-demo-jump select {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 15px 16px;
+            font-size: 15px;
+            font-weight: 800;
+            outline: none;
+            border-radius: 0;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+            cursor: pointer;
+        }
+
+        .live-demo-jump select:focus {
+            border-color: #c2155a;
+            outline: 2px solid rgba(194, 21, 90, 0.12);
+        }
+
+        .live-demo-industry-list {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .live-demo-industry {
+            scroll-margin-top: 104px;
+            padding: 2rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .live-demo-industry-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .live-demo-industry-heading h3 {
+            margin: 0;
+            color: #020617;
+            font-size: clamp(1.45rem, 2.5vw, 2.25rem);
+            line-height: 1;
+            letter-spacing: -0.045em;
+            font-weight: 800;
+        }
+
+        .live-demo-back-link {
+            color: #c2155a;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .live-demo-back-link:hover {
+            text-decoration: underline;
+        }
+
+        .live-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .live-demo-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 132px;
+            padding: 1.1rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .live-demo-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(194, 21, 90, 0.35);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        .live-demo-card-title {
+            display: block;
+            color: #0f172a;
+            font-size: 15px;
+            line-height: 1.35;
+            font-weight: 850;
+            letter-spacing: -0.02em;
+        }
+
+        .live-demo-card-meta {
+            display: block;
+            margin-top: 1rem;
+            color: #c2155a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .live-demo-library {
+                padding: 3.5rem 0;
+            }
+
+            .live-demo-industry {
+                padding: 1.25rem;
+            }
+
+            .live-demo-industry-heading {
+                display: block;
+            }
+
+            .live-demo-back-link {
+                display: inline-block;
+                margin-top: 0.75rem;
+            }
+
+            .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .live-demo-card {
+                min-height: 112px;
+            }
+        }
+
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
@@ -355,6 +563,655 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </div>
         </div>
+
+
+        <!-- Live Demo Library -->
+        <section id="live-demo-library" class="live-demo-library">
+            <div class="live-demo-library-inner">
+                <div class="live-demo-header">
+                    <div class="live-demo-kicker">Live AI demos</div>
+                    <h2>Explore demos by industry</h2>
+                    <p>Choose an industry to see practical AI lead triage and quote follow-up demos. Each example opens a static demo page with industry-specific sample data, metadata and live workflow output.</p>
+                </div>
+
+                <div class="live-demo-jump">
+                    <label for="industry-demo-jump">Select an industry</label>
+                    <select id="industry-demo-jump" aria-label="Select an industry to view live demos">
+                        <option value="">Select an industry...</option><option value="demo-industry-dentist">Dentist</option><option value="demo-industry-accountant">Accountant</option><option value="demo-industry-estate-agent">Estate Agent</option><option value="demo-industry-solicitor">Solicitor</option><option value="demo-industry-mortgage-broker">Mortgage Broker</option><option value="demo-industry-insurance-broker">Insurance Broker</option><option value="demo-industry-private-healthcare-clinic">Private Healthcare Clinic</option><option value="demo-industry-veterinary-practice">Veterinary Practice</option><option value="demo-industry-kitchen-company">Kitchen Company</option><option value="demo-industry-bathroom-company">Bathroom Company</option><option value="demo-industry-roofer">Roofer</option><option value="demo-industry-plumber">Plumber</option><option value="demo-industry-electrician">Electrician</option><option value="demo-industry-builder">Builder</option><option value="demo-industry-window-and-door-company">Window and Door Company</option><option value="demo-industry-landscaper">Landscaper</option><option value="demo-industry-driveway-company">Driveway Company</option><option value="demo-industry-solar-installer">Solar Installer</option><option value="demo-industry-pest-control-company">Pest Control Company</option><option value="demo-industry-locksmith">Locksmith</option><option value="demo-industry-removal-company">Removal Company</option><option value="demo-industry-cleaning-company">Cleaning Company</option><option value="demo-industry-care-home">Care Home</option><option value="demo-industry-nursery-and-childcare-provider">Nursery and Childcare Provider</option><option value="demo-industry-car-dealership">Car Dealership</option>
+                    </select>
+                </div>
+
+                <div class="live-demo-industry-list">
+
+                <section id="demo-industry-dentist" class="live-demo-industry" data-industry-name="Dentist">
+                    <div class="live-demo-industry-heading">
+                        <h3>Dentist Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/dentists/emergency-dental-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Emergency Dental Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/dentists/high-value-treatment-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">High-Value Dental Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/dentists/implant-treatment-plan-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Implant Treatment Plan Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/dentists/treatment-plan-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Treatment Plan Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-accountant" class="live-demo-industry" data-industry-name="Accountant">
+                    <div class="live-demo-industry-heading">
+                        <h3>Accountant Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/accountants/bookkeeping-catch-up-vat-cleanup/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bookkeeping Catch-Up Triage</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/accountants/new-limited-company-startup/" class="live-demo-card">
+                            <span class="live-demo-card-title">New Company Accounting Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/accountants/monthly-accounting-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Monthly Accounting Proposal Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/accountants/tax-return-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Tax Return Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-estate-agent" class="live-demo-industry" data-industry-name="Estate Agent">
+                    <div class="live-demo-industry-heading">
+                        <h3>Estate Agent Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/estate-agents/landlord-letting-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Landlord Letting Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/estate-agents/property-valuation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Property Valuation Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/estate-agents/landlord-management-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Landlord Management Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/estate-agents/property-valuation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Property Valuation Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-solicitor" class="live-demo-industry" data-industry-name="Solicitor">
+                    <div class="live-demo-industry-heading">
+                        <h3>Solicitor Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/solicitors/conveyancing-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Conveyancing Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/solicitors/family-law-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Family Law Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/solicitors/conveyancing-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Conveyancing Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/solicitors/consultation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Legal Consultation Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-mortgage-broker" class="live-demo-industry" data-industry-name="Mortgage Broker">
+                    <div class="live-demo-industry-heading">
+                        <h3>Mortgage Broker Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/mortgage-brokers/first-time-buyer-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">First-Time Buyer Mortgage Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/mortgage-brokers/remortgage-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Remortgage Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/mortgage-brokers/mortgage-recommendation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Mortgage Recommendation Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/mortgage-brokers/protection-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Protection Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-insurance-broker" class="live-demo-industry" data-industry-name="Insurance Broker">
+                    <div class="live-demo-industry-heading">
+                        <h3>Insurance Broker Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/insurance-brokers/business-insurance-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Business Insurance Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/insurance-brokers/fleet-insurance-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Fleet Insurance Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/insurance-brokers/commercial-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial Insurance Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/insurance-brokers/fleet-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Fleet Insurance Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-private-healthcare-clinic" class="live-demo-industry" data-industry-name="Private Healthcare Clinic">
+                    <div class="live-demo-industry-heading">
+                        <h3>Private Healthcare Clinic Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/private-healthcare/diagnostic-scan-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Diagnostic Scan Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/private-healthcare/private-consultation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Private Consultation Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/private-healthcare/consultation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Consultation Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/private-healthcare/treatment-price-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Treatment Price Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-veterinary-practice" class="live-demo-industry" data-industry-name="Veterinary Practice">
+                    <div class="live-demo-industry-heading">
+                        <h3>Veterinary Practice Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/vets/new-pet-registration/" class="live-demo-card">
+                            <span class="live-demo-card-title">New Pet Registration</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/vets/urgent-pet-symptom-triage/" class="live-demo-card">
+                            <span class="live-demo-card-title">Urgent Pet Symptom Triage</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/vets/dental-treatment-estimate-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pet Dental Estimate Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/vets/surgery-estimate-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Surgery Estimate Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-kitchen-company" class="live-demo-industry" data-industry-name="Kitchen Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Kitchen Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/kitchen-companies/kitchen-design-visit-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen Design Visit Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/kitchen-companies/kitchen-renovation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen Renovation Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/kitchen-companies/kitchen-design-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen Design Proposal Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/kitchen-companies/kitchen-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-bathroom-company" class="live-demo-industry" data-industry-name="Bathroom Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Bathroom Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/bathroom-companies/bathroom-renovation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bathroom Renovation Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/bathroom-companies/ensuite-shower-room-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Ensuite Shower Room Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/bathroom-companies/bathroom-design-consultation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bathroom Design Consultation Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/bathroom-companies/bathroom-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bathroom Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-roofer" class="live-demo-industry" data-industry-name="Roofer">
+                    <div class="live-demo-industry-heading">
+                        <h3>Roofer Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/roofers/new-roof-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">New Roof Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/roofers/roof-repair-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Roof Repair Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/roofers/new-roof-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">New Roof Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/roofers/roof-repair-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Roof Repair Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-plumber" class="live-demo-industry" data-industry-name="Plumber">
+                    <div class="live-demo-industry-heading">
+                        <h3>Plumber Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/plumbers/boiler-heating-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Boiler Heating Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/plumbers/emergency-leak-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Emergency Leak Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/plumbers/boiler-installation-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Boiler Installation Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/plumbers/plumbing-repair-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Plumbing Repair Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-electrician" class="live-demo-industry" data-industry-name="Electrician">
+                    <div class="live-demo-industry-heading">
+                        <h3>Electrician Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/electricians/electrical-fault-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Electrical Fault Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/electricians/fuse-box-rewiring-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Fuse Box or Rewiring Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/electricians/electrical-work-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Electrical Work Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/electricians/rewiring-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Rewiring Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-builder" class="live-demo-industry" data-industry-name="Builder">
+                    <div class="live-demo-industry-heading">
+                        <h3>Builder Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/builders/extension-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Home Extension Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/builders/loft-conversion-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Loft Conversion Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/builders/building-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Building Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/builders/extension-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Extension Proposal Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-window-and-door-company" class="live-demo-industry" data-industry-name="Window and Door Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Window and Door Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/window-door-companies/composite-door-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Composite Door Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/window-door-companies/replacement-window-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Replacement Window Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/window-door-companies/door-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Door Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/window-door-companies/window-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Window Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-landscaper" class="live-demo-industry" data-industry-name="Landscaper">
+                    <div class="live-demo-industry-heading">
+                        <h3>Landscaper Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/landscapers/garden-redesign-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Garden Redesign Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/landscapers/patio-fencing-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Patio or Fencing Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/landscapers/garden-design-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Garden Design Proposal Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/landscapers/landscaping-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Landscaping Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-driveway-company" class="live-demo-industry" data-industry-name="Driveway Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Driveway Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/driveway-companies/driveway-repair-resurfacing-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Driveway Repair Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/driveway-companies/new-driveway-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">New Driveway Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/driveway-companies/driveway-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Driveway Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/driveway-companies/driveway-survey-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Driveway Survey Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-solar-installer" class="live-demo-industry" data-industry-name="Solar Installer">
+                    <div class="live-demo-industry-heading">
+                        <h3>Solar Installer Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/solar-installers/battery-storage-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Battery Storage Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/solar-installers/solar-panel-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar Panel Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/solar-installers/solar-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/solar-installers/solar-survey-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar Survey Proposal Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-pest-control-company" class="live-demo-industry" data-industry-name="Pest Control Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Pest Control Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/pest-control/commercial-pest-control-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial Pest Control Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/pest-control/pest-infestation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pest Infestation Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/pest-control/commercial-contract-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial Pest Contract Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/pest-control/pest-treatment-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pest Treatment Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-locksmith" class="live-demo-industry" data-industry-name="Locksmith">
+                    <div class="live-demo-industry-heading">
+                        <h3>Locksmith Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/locksmiths/emergency-lockout-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Emergency Lockout Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/locksmiths/lock-replacement-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Lock Replacement Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/locksmiths/lock-replacement-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Lock Replacement Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/locksmiths/security-upgrade-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Security Upgrade Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-removal-company" class="live-demo-industry" data-industry-name="Removal Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Removal Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/removal-companies/house-move-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">House Move Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/removal-companies/office-move-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Office Move Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/removal-companies/packing-service-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Packing Service Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/removal-companies/removal-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Removal Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-cleaning-company" class="live-demo-industry" data-industry-name="Cleaning Company">
+                    <div class="live-demo-industry-heading">
+                        <h3>Cleaning Company Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/cleaning-companies/commercial-cleaning-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial Cleaning Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/cleaning-companies/end-of-tenancy-cleaning-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">End-of-Tenancy Cleaning Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/cleaning-companies/commercial-cleaning-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial Cleaning Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/cleaning-companies/deep-clean-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Deep Clean Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-care-home" class="live-demo-industry" data-industry-name="Care Home">
+                    <div class="live-demo-industry-heading">
+                        <h3>Care Home Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/care-homes/care-home-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Care Home Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/care-homes/respite-care-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Respite Care Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/care-homes/care-assessment-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Care Assessment Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/care-homes/respite-care-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Respite Care Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-nursery-and-childcare-provider" class="live-demo-industry" data-industry-name="Nursery and Childcare Provider">
+                    <div class="live-demo-industry-heading">
+                        <h3>Nursery and Childcare Provider Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/nurseries/childcare-availability-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Childcare Availability Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/nurseries/nursery-place-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Nursery Place Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/nurseries/childcare-fees-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Childcare Fees Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/nurseries/nursery-visit-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Nursery Visit Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                <section id="demo-industry-car-dealership" class="live-demo-industry" data-industry-name="Car Dealership">
+                    <div class="live-demo-industry-heading">
+                        <h3>Car Dealership Demos</h3>
+                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
+                    </div>
+                    <div class="live-demo-grid">
+
+                        <a href="/demo/car-dealerships/finance-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Car Finance Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/car-dealerships/vehicle-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Vehicle Enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
+                        </a>
+                        <a href="/demo/car-dealerships/part-exchange-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Part-Exchange Valuation Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                        <a href="/demo/car-dealerships/vehicle-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Vehicle Quote Follow-Up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                        </a>
+                    </div>
+                </section>
+                </div>
+            </div>
+        </section>
+
 
         <section id="problem" class="py-16 lg:py-24 border-t border-slate-200">
             <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -1431,5 +2288,53 @@ if (leadSuccess) {
             }
         });
     </script>
+
+    <script id="live-demo-library-navigation">
+        function scrollToDemoIndustry(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+
+            section.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            if (history.pushState) {
+                history.pushState(null, '', '#' + sectionId);
+            }
+        }
+
+        function scrollToDemoIndustryByName(industryName) {
+            const normalised = String(industryName || '').trim().toLowerCase();
+            if (!normalised) return;
+
+            const section = Array.from(document.querySelectorAll('.live-demo-industry'))
+                .find(item => String(item.dataset.industryName || '').trim().toLowerCase() === normalised);
+
+            if (section) {
+                scrollToDemoIndustry(section.id);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const industrySelect = document.getElementById('industry-demo-jump');
+
+            if (industrySelect) {
+                industrySelect.addEventListener('change', function () {
+                    if (this.value) {
+                        scrollToDemoIndustry(this.value);
+                    }
+                });
+            }
+
+            if (window.location.hash && window.location.hash.startsWith('#demo-industry-')) {
+                const targetId = window.location.hash.slice(1);
+                setTimeout(function () {
+                    scrollToDemoIndustry(targetId);
+                }, 150);
+            }
+        });
+    </script>
+
 </body>
 </html>
