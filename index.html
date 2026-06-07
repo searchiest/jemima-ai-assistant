@@ -2138,8 +2138,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
     </footer>
 
 <script id="video-engine">
-	const ChatWebhookUrl = "https://jemima-api-proxy.jemima-f5e.workers.dev"; 
-	const FormWebhookUrl = "https://jemima-api-proxy.jemima-f5e.workers.dev";
+	const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         
         let isInteracting = false;
@@ -2536,18 +2535,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let leadSuccess = false;
 
-            if (FormWebhookUrl) {
-                try {
-                    const response = await fetch(FormWebhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ type: 'ai_workflow_review_lead', ...formData })
-                    });
-                    if(response.ok) leadSuccess = true;
-                } catch (error) {
-                    console.error('Webhook Error:', error);
-                }
-            }
+if (PROXY_URL) {
+    try {
+        const response = await fetch(PROXY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ webhookAlias: 'chat', chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+        });
 
             hasSubmitted = true;
             activateAI('thanks');
@@ -2585,13 +2579,13 @@ if (leadSuccess) {
             chatFeed.appendChild(indicator);
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
-            if (ChatWebhookUrl) {
-                try {
-                    const response = await fetch(ChatWebhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ type: 'chat', chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
-                    });
+if (PROXY_URL) {
+    try {
+        const response = await fetch(PROXY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ webhookAlias: 'chat', chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+        });
                     if (!response.ok) throw new Error('Network error');
                     const data = await response.json();
                     indicator.remove();
