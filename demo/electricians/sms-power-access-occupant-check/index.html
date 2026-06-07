@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-P8CCJV29');</script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Electrician Power Access And Occupant Check SMS Demo | Jemima AI</title>
+  <meta name="description" content="See how Jemima AI helps electricians confirm property access and occupant availability before a visit.">
+  <link rel="canonical" href="https://jemima.ai/demo/electricians/sms-power-access-occupant-check/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="jemima.ai">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jemima.ai/demo/electricians/sms-power-access-occupant-check/">
+  <meta property="og:title" content="Electrician Power Access And Occupant Check SMS Demo | Jemima AI">
+  <meta property="og:description" content="See how Jemima AI helps electricians confirm property access and occupant availability before a visit.">
+  <meta property="og:image" content="/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Electrician Power Access And Occupant Check SMS Demo | Jemima AI">
+  <meta name="twitter:description" content="See how Jemima AI helps electricians confirm property access and occupant availability before a visit.">
+  <meta name="twitter:image" content="/og-image.jpg">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#c2155a">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 48px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .site-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #0f172a;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .site-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.15);
+    }
+
+    .site-cta {
+      display: inline-flex;
+      align-items: center;
+      border: 0;
+      background: #c2155a;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 18px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      box-shadow: 0 12px 24px rgba(194,21,90,0.2);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .site-cta:hover {
+      background: #a0124a;
+      transform: translateY(-1px);
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 42px 24px 72px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .industry-demo-switcher {
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+
+    .industry-demo-switcher label {
+      display: block;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .industry-demo-switcher select {
+      width: 100%;
+      border: 1px solid #e2e8f0;
+      border-radius: 0;
+      padding: 13px 14px;
+      background: #ffffff;
+      color: #0f172a;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .industry-demo-switcher select:focus {
+      border-color: #c2155a;
+      outline: 2px solid rgba(194,21,90,0.12);
+    }
+
+    h1 {
+      margin: 0 auto 20px;
+      max-width: 920px;
+      color: #020617;
+      font-size: 52px;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 800;
+    }
+
+    .intro {
+      max-width: 860px;
+      margin: 0 auto;
+      color: #475569;
+      font-size: 18px;
+      line-height: 1.65;
+      font-weight: 500;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .value-card,
+    .main-card,
+    .video-card,
+    .boundary-card,
+    .outcome-card,
+    .unique-section {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 35px rgba(15,23,42,0.08);
+    }
+
+    .value-card {
+      padding: 20px;
+    }
+
+    .value-card strong {
+      display: block;
+      color: #0f172a;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .value-card p {
+      margin: 0;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .video-card,
+    .main-card,
+    .boundary-card,
+    .outcome-card {
+      padding: 24px;
+    }
+
+    .video-card h2,
+    .main-card h2,
+    .boundary-card h2,
+    .outcome-card h2,
+    .unique-section h2 {
+      margin: 0 0 10px;
+      color: #020617;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .video-card p,
+    .boundary-card p,
+    .outcome-card p,
+    .unique-section p {
+      margin: 0;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .video-frame {
+      margin-top: 14px;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-frame::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%;
+    }
+
+    .video-frame video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sms-panel {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .sms-panel .label {
+      color: #f9a8d4;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .sms-code {
+      font-size: 54px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      margin-bottom: 10px;
+    }
+
+    .sms-number {
+      color: #e2e8f0;
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+
+    .mobile-sms-help {
+      display: none;
+      color: #e2e8f0;
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 0 0 18px;
+      font-weight: 700;
+    }
+
+    .sms-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #c2155a;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 15px 20px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      box-shadow: 0 16px 30px rgba(194,21,90,0.28);
+    }
+
+    .desktop-note {
+      margin-top: 12px;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      background: rgba(194,21,90,0.12);
+      color: #c2155a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .step strong {
+      display: block;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .step p {
+      margin: 0;
+      color: #475569;
+    }
+
+    .reply-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .reply-option {
+      background: #fdf2f8;
+      color: #9d174d;
+      border: 1px solid #fbcfe8;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .boundary-card {
+      margin-top: 22px;
+      border-left: 4px solid #c2155a;
+    }
+
+    .outcome-card {
+      margin-top: 22px;
+      border-left: 4px solid #047857;
+    }
+
+    .unique-content-wrap {
+      max-width: 1200px;
+      margin: 28px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .unique-section {
+      padding: 24px;
+    }
+
+    .unique-section .unique-lead {
+      margin-bottom: 14px;
+    }
+
+    .unique-list {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .unique-list li {
+      margin-bottom: 8px;
+    }
+
+    .conversation-card {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .conversation-line {
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .conversation-line.inbound {
+      border-left: 4px solid #64748b;
+    }
+
+    .conversation-line.outbound {
+      border-left: 4px solid #c2155a;
+      background: #fdf2f8;
+    }
+
+    .handover-card {
+      margin-top: 14px;
+      background: #f0fdf4;
+      border-left: 4px solid #047857;
+      padding: 16px;
+    }
+
+    .handover-title {
+      display: block;
+      color: #065f46;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .handover-heading {
+      padding: 12px 0 14px;
+      border-bottom: 1px solid rgba(4, 120, 87, 0.18);
+      margin-bottom: 10px;
+    }
+
+    .handover-heading span {
+      display: block;
+      color: #047857;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .handover-heading strong {
+      display: block;
+      color: #064e3b;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .handover-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .handover-list li {
+      display: grid;
+      gap: 3px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(4, 120, 87, 0.12);
+    }
+
+    .handover-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .handover-list span {
+      color: #047857;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .handover-list strong {
+      color: #064e3b;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .handover-fallback {
+      color: #064e3b !important;
+      white-space: pre-line;
+    }
+
+    .tailored-demo-section {
+      scroll-margin-top: 96px;
+      max-width: 1100px;
+      margin: 56px auto 0;
+      padding: 48px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .tailored-demo-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .tailored-demo-kicker {
+      display: inline-block;
+      background: rgba(194, 21, 90, 0.1);
+      color: #c2155a;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 7px 12px;
+      margin-bottom: 16px;
+    }
+
+    .tailored-demo-section h2 {
+      margin: 0;
+      color: #020617;
+      font-size: 38px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+
+    .tailored-demo-section p {
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1.65;
+      margin: 16px 0 0;
+      font-weight: 500;
+    }
+
+    .tailored-demo-points {
+      margin: 26px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .tailored-demo-points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .tailored-demo-points i {
+      color: #c2155a;
+      margin-top: 4px;
+    }
+
+    .tailored-demo-form {
+      display: grid;
+      gap: 22px;
+    }
+
+    .tailored-form-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .tailored-form-row label {
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .tailored-demo-form input,
+    .tailored-demo-form select {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid #e2e8f0;
+      border-radius: 0;
+      padding: 12px 2px;
+      background: transparent;
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .tailored-demo-form input:focus,
+    .tailored-demo-form select:focus {
+      border-color: #c2155a;
+    }
+
+    .tailored-phone-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+    }
+
+    .tailored-sms-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding-bottom: 12px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tailored-sms-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: #c2155a;
+    }
+
+    .tailored-submit {
+      width: 100%;
+      border: 0;
+      background: #c2155a;
+      color: #ffffff;
+      padding: 18px 22px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 16px 30px rgba(194, 21, 90, 0.22);
+    }
+
+    .tailored-submit:hover {
+      background: #a0124a;
+    }
+
+    .tailored-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .tailored-note {
+      text-align: center;
+      color: #94a3b8 !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 !important;
+    }
+
+    .tailored-form-message {
+      min-height: 20px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #047857;
+    }
+
+    .tailored-form-message.error {
+      color: #b91c1c;
+    }
+
+    .related {
+      padding: 42px 24px;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    .related .inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .related h2 {
+      margin: 0 0 18px;
+      color: #020617;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .related-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+    }
+
+    .related-links a {
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .related-links a:hover {
+      text-decoration: underline;
+    }
+
+    .site-footer {
+      padding: 48px 24px;
+      background: #ffffff;
+      border-top: 1px solid #cbd5e1;
+      text-align: center;
+    }
+
+    .site-footer p {
+      margin: 0;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .site-nav {
+        padding: 12px 14px;
+      }
+
+      .site-brand {
+        font-size: 18px;
+      }
+
+      .site-brand img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .site-cta {
+        padding: 10px 12px;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        white-space: nowrap;
+      }
+
+      .page {
+        padding: 30px 16px 56px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .value-grid,
+      .layout,
+      .tailored-demo-grid,
+      .unique-content-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .desktop-sms-number,
+      .desktop-note {
+        display: none;
+      }
+
+      .mobile-sms-help {
+        display: block;
+      }
+
+      .sms-button {
+        width: 100%;
+      }
+
+      .tailored-demo-section {
+        padding: 28px 20px;
+      }
+
+      .tailored-phone-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .tailored-sms-label {
+        padding-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <nav class="site-nav">
+    <a class="site-brand" href="/">
+      <img src="/jemima-logo.png" alt="Jemima Logo">
+      <span>Jemima</span>
+    </a>
+    <a class="site-cta" href="#tailored-demo-form">Request tailored demo</a>
+  </nav>
+
+  <main class="page">
+    <section class="hero">
+      
+    <div class="industry-demo-switcher">
+      <label for="industryDemoSelect">More Electrician Demos</label>
+      <select id="industryDemoSelect">
+        <option value="https://jemima.ai/demo/electricians/electrical-fault-enquiry/">Electrical fault enquiry</option><option value="https://jemima.ai/demo/electricians/fuse-box-rewiring-enquiry/">Fuse box or rewiring enquiry</option><option value="https://jemima.ai/demo/electricians/electrical-work-quote-follow-up/">Electrical work quote follow-up</option><option value="https://jemima.ai/demo/electricians/rewiring-quote-follow-up/">Rewiring quote follow-up</option><option value="https://jemima.ai/demo/electricians/sms-power-access-occupant-check/" selected>SMS Power access and occupant check</option><option value="https://jemima.ai/demo/electricians/sms-certificate-ready-notification/">SMS Certificate ready notification</option>
+      </select>
+    </div>
+  
+      <h1>Electrician Power Access And Occupant Check SMS Demo</h1>
+      <p class="intro">Text the demo code, reply HOME, KEY or CALL, and see how Jemima AI captures access arrangements for the electrical team.</p>
+
+      <div class="value-grid">
+        <div class="value-card">
+          <strong>What problem this solves</strong>
+          <p>Electrical visits can be delayed or missed when nobody is available, access is unclear, or practical visit notes are not captured before the electrician arrives.</p>
+        </div>
+        <div class="value-card">
+          <strong>How this helps customers</strong>
+          <p>Customers get a simple way to confirm access arrangements, while the electrician receives a clear visit-preparation summary.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside>
+        
+    <div class="video-card">
+      <h2>Watch how the SMS demo works</h2>
+      <p>This short walkthrough explains how to use the Jemima AI SMS demo, how to text a demo code, how to reply to the prompts, and how the workflow captures the business outcome.</p>
+      <div class="video-frame">
+        <video
+          src="https://vz-1599ac93-05a.b-cdn.net/7242faec-1fe4-48df-90c6-42c23765a433/play_1080p.mp4"
+          controls
+          preload="metadata"
+          playsinline
+          webkit-playsinline
+          x5-playsinline
+          x-webkit-airplay="allow"
+          poster="https://jemima.ai/video-fallback.png"
+        ></video>
+      </div>
+    </div>
+  
+      </aside>
+
+      <section class="main-card">
+        <div class="sms-panel">
+          <div class="label">Try this SMS demo</div>
+          <div class="sms-code">3421</div>
+          <div class="sms-number desktop-sms-number">To +44 (0)742 966 9381</div>
+          <div class="mobile-sms-help">Tap the button below to open a text message with the demo code ready to send.</div>
+          <a class="sms-button" href="sms:+447429669381?body=3421">Text 3421 now</a>
+          <div class="desktop-note">Open the text message app on your phone and text the demo code to the number above.</div>
+        </div>
+
+        <h2>How to try it</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div>
+              <strong>Text the demo code</strong>
+              <p>3421</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div>
+              <strong>Reply with an option</strong>
+              <p>HOME, KEY or CALL</p>
+              <div class="reply-options">
+                <span class="reply-option">HOME</span><span class="reply-option">KEY</span><span class="reply-option">CALL</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div>
+              <strong>Review the captured outcome</strong>
+              <p>Access status and recommended team action</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="outcome-card">
+          <h2>What this demonstrates</h2>
+          <p>SMS visit preparation, access confirmation, occupant availability capture, callback request handling and practical job coordination.</p>
+        </div>
+
+        <div class="outcome-card">
+          <h2>What happens next</h2>
+          <p>The workflow creates a session, sends the access-check SMS, captures the customer reply, records the access arrangement and produces a staff-ready summary.</p>
+        </div>
+
+        
+        <div class="boundary-card">
+          <h2>Demo boundaries</h2>
+          <p>This is a demo. No real appointment is booked, changed or guaranteed. No electrical diagnosis, repair instructions, compliance advice, safety advice or certification decision is provided. Do not send alarm codes, lockbox codes or sensitive access details by SMS.</p>
+        </div>
+        
+      </section>
+    </section>
+
+    
+    <section class="unique-content-wrap">
+      
+    <section class="unique-section">
+      <h2>Why this SMS workflow matters</h2>
+      <p class="unique-lead">This SMS demo shows how an electrician can confirm safe, practical access before attending a job. It helps the business understand whether someone will be home, whether access is arranged, or whether a call is needed before the visit.</p>
+      
+        <ul class="unique-list">
+          <li>Electricians can lose time when they arrive and cannot access the property.</li><li>Customers may forget to mention whether someone will be home or how access is arranged.</li><li>Office teams often chase basic access information manually.</li><li>Access details can be sensitive and should not be collected as full security credentials by SMS.</li><li>The workflow should capture visit readiness without diagnosing faults or giving electrical advice.</li>
+        </ul>
+      
+    </section>
+  
+    <section class="unique-section">
+      <h2>Example SMS conversation</h2>
+      <div class="conversation-card">
+        <div class="conversation-line inbound">Customer texts: 3421</div><div class="conversation-line outbound">Jemima replies: This electrician demo checks visit access. Reply HOME if someone will be there, KEY if access is arranged, or CALL if the office should ring you.</div><div class="conversation-line inbound">Customer replies: HOME</div><div class="conversation-line outbound">Jemima replies: Thanks. Your home-access status has been captured for the electrical team. In a live workflow, the office would review this before the visit.</div>
+      </div>
+    </section>
+  
+    <section class="unique-section">
+      <h2>What the business receives</h2>
+      <p class="unique-lead">The workflow turns access checking into a structured job-preparation step. It reduces failed visits, gives the electrician better context before travelling, and keeps electrical decisions or safety guidance with qualified staff.</p>
+      
+    <div class="handover-card">
+      <strong class="handover-title">Example handover summary</strong>
+      
+      <div class="handover-heading">
+        <span>SMS workflow</span>
+        <strong>Electrician power access and occupant check</strong>
+      </div>
+    
+      <ul class="handover-list">
+    <li>
+      <span>Customer action</span>
+      <strong>Someone will be home</strong>
+    </li>
+  
+    <li>
+      <span>Access status</span>
+      <strong>Occupant present</strong>
+    </li>
+  
+    <li>
+      <span>Recommended staff action</span>
+      <strong>Add access note to the job and contact customer if timing needs confirming</strong>
+    </li>
+  
+    <li>
+      <span>Boundary note</span>
+      <strong>No electrical diagnosis, repair guidance, compliance advice or safety advice provided by SMS</strong>
+    </li>
+  
+    <li>
+      <span>Admin value</span>
+      <strong>Reduces failed visits and last-minute access calls</strong>
+    </li>
+  
+    <li>
+      <span>Confidence</span>
+      <strong>High</strong>
+    </li>
+  </ul>
+    </div>
+  
+    </section>
+  
+    <section class="unique-section">
+      <h2>How this could be implemented</h2>
+      <p class="unique-lead">This can connect to job reminders, field-service scheduling, CRM notes or electrician job sheets. In a live setup, HOME should record occupant availability, KEY should mean access is arranged, and CALL should route a callback request without collecting alarm codes or lockbox details.</p>
+    </section>
+  
+    </section>
+  
+
+    <section id="tailored-demo-form" class="tailored-demo-section">
+      <div class="tailored-demo-grid">
+        <div>
+          <div class="tailored-demo-kicker">Step 1 of 1</div>
+          <h2>Request a tailored demo</h2>
+          <p>Want this connected to your electrical job preparation process?</p>
+          <ul class="tailored-demo-points">
+            <li><i class="fas fa-check"></i><span>We will look for practical automation opportunities, not generic AI ideas.</span></li>
+            <li><i class="fas fa-check"></i><span>You can ask about SMS, calls, forms, inboxes, CRM updates or follow-up workflows.</span></li>
+            <li><i class="fas fa-check"></i><span>No credit card required.</span></li>
+          </ul>
+        </div>
+
+        <form id="tailoredDemoForm" class="tailored-demo-form">
+          <div class="tailored-form-row">
+            <label for="tailored-name">Full Name</label>
+            <input type="text" id="tailored-name" name="name" required placeholder="John Doe">
+          </div>
+
+          <div class="tailored-form-row">
+            <label for="tailored-email">Work Email</label>
+            <input type="email" id="tailored-email" name="email" required placeholder="john@company.com">
+          </div>
+
+          <div class="tailored-form-row">
+            <label for="tailored-phone">Phone Number</label>
+            <div class="tailored-phone-row">
+              <input type="tel" id="tailored-phone" name="phone" required placeholder="+44 7700 000000">
+              <label class="tailored-sms-label">
+                <input type="checkbox" id="tailored-sms-optin" name="smsOptin">
+                <span>SMS?</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
+          <div id="tailored-form-message" class="tailored-form-message"></div>
+          <p class="tailored-note">No credit card required</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  
+    <section class="related">
+      <div class="inner">
+        <h2>More Electrician demos</h2>
+        <div class="related-links">
+          <a href="https://jemima.ai/demo/electricians/electrical-fault-enquiry/">Electrical fault enquiry</a><a href="https://jemima.ai/demo/electricians/fuse-box-rewiring-enquiry/">Fuse box or rewiring enquiry</a><a href="https://jemima.ai/demo/electricians/electrical-work-quote-follow-up/">Electrical work quote follow-up</a><a href="https://jemima.ai/demo/electricians/rewiring-quote-follow-up/">Rewiring quote follow-up</a><a href="https://jemima.ai/demo/electricians/sms-certificate-ready-notification/">SMS Certificate ready notification</a>
+        </div>
+      </div>
+    </section>
+  
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Jemima AI. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const industryDemoSelect = document.getElementById('industryDemoSelect');
+
+    if (industryDemoSelect) {
+      industryDemoSelect.addEventListener('change', function () {
+        if (this.value && this.value !== window.location.href) {
+          window.location.href = this.value;
+        }
+      });
+    }
+
+    const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
+
+    function setupTailoredDemoForm() {
+      const form = document.getElementById('tailoredDemoForm');
+      if (!form) return;
+
+      const submitButton = document.getElementById('tailored-submit');
+      const message = document.getElementById('tailored-form-message');
+
+      form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        submitButton.disabled = true;
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
+        message.textContent = '';
+        message.className = 'tailored-form-message';
+
+        const formData = {
+          type: 'tailored_demo_request',
+          name: document.getElementById('tailored-name').value,
+          traffic: "",
+          email: document.getElementById('tailored-email').value,
+          phone: document.getElementById('tailored-phone').value,
+          smsOptin: document.getElementById('tailored-sms-optin').checked,
+          source: 'sms_demo_page_footer_form',
+          currentDemoSlug: 'electricians/sms-power-access-occupant-check',
+          pageUrl: window.location.href,
+          timestamp: new Date().toISOString()
+        };
+
+        try {
+          const response = await fetch(PROXY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ webhookAlias: 'tailored-demo', ...formData })
+          });
+
+          if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+          }
+
+          message.textContent = 'Thanks — your tailored demo request has been submitted.';
+          form.reset();
+        } catch (error) {
+          console.error(error);
+          message.textContent = 'Sorry, something went wrong. Please try again.';
+          message.className = 'tailored-form-message error';
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', setupTailoredDemoForm);
+  </script>
+</body>
+</html>
