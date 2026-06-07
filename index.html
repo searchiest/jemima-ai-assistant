@@ -2533,18 +2533,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 timestamp: new Date().toISOString()
             };
 
-            let leadSuccess = false;
+let leadSuccess = false;
 
-if (PROXY_URL) {
-    try {
-        const response = await fetch(PROXY_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ webhookAlias: 'chat', chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
-        });
+            if (PROXY_URL) {
+                try {
+                    const response = await fetch(PROXY_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ webhookAlias: 'form-main', type: 'ai_workflow_review_lead', ...formData })
+                    });
+                    if(response.ok) leadSuccess = true;
+                } catch (error) {
+                    console.error('Webhook Error:', error);
+                }
+            }
 
-            hasSubmitted = true;
-            activateAI('thanks');
+            hasSubmitted = true;            
+            activateAI('thanks');                        
+            const userProgress = document.createElement('div');
             
             const userProgress = document.createElement('div');
             userProgress.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
