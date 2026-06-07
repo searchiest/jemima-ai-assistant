@@ -2138,7 +2138,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
     </footer>
 
 <script id="video-engine">
-	const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
+        const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         
         let isInteracting = false;
@@ -2178,20 +2178,17 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             'faq-player-8': document.getElementById('faq-player-8')
         };
 
-document.addEventListener('DOMContentLoaded', () => {
-            // 1. Setup ending loops and force the browser to see videos as clickable
+        document.addEventListener('DOMContentLoaded', () => {
             Object.values(players).forEach(video => {
                 if(video) {
                     video.addEventListener('ended', resetToLoop);
-                    video.style.cursor = 'pointer'; // Forces iOS to recognize the element as interactive
+                    video.style.cursor = 'pointer'; 
                 }
             });
 
-            // --- ADDED THIS SECTION FOR FAQ VIDEOS ---
-            // 2. Add click-to-pause/play for FAQ videos
             Object.values(faqPlayers).forEach(video => {
                 if(video) {
-                    video.style.cursor = 'pointer'; // Forces iOS to recognize as interactive
+                    video.style.cursor = 'pointer'; 
                     video.addEventListener('click', () => {
                         if (video.paused) {
                             video.play().catch(err => console.error("Play failed:", err));
@@ -2201,22 +2198,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-            // -----------------------------------------
 
-            // 3. The Bulletproof Click Listener (Attached to the parent container)
             const container = document.getElementById('video-container');
             if (container) {
                 container.style.cursor = 'pointer';
-                
                 container.addEventListener('click', (e) => {
-                    // Ignore the click if they are tapping the "Tap to interact" placeholder
                     if (e.target.closest('#video-placeholder')) return;
-                    
-                    // Only toggle if an AI video is currently active
                     if (isInteracting && activePlayerId && players[activePlayerId]) {
                         const video = players[activePlayerId];
-                        
-                        // Toggle Play/Pause
                         if (video.paused) {
                             video.play().catch(err => console.error("Play failed:", err));
                         } else {
@@ -2227,23 +2216,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // SAFARI COMPLIANT ACTIVATOR
         function activateAI(videoId = 'main') {
             const videoElement = players[videoId];
             if (!videoElement) return;
 
-            // FIX: Stop any FAQ videos that might be playing in the background
             Object.values(faqPlayers).forEach(video => {
                 if (video && !video.paused) {
                     video.pause();
                 }
             });
 
-            // 1. SAFARI: Execute PLAY immediately on click
             videoElement.currentTime = 0;
             videoElement.play();
 
-            // 2. UI Transitions
             isInteracting = true;
             if (videoPlaceholder) videoPlaceholder.style.display = 'none';
 
@@ -2260,7 +2245,6 @@ document.addEventListener('DOMContentLoaded', () => {
             videoElement.classList.remove('pointer-events-none');
             activePlayerId = videoId;
 
-            // 3. Cleanup
             window.scrollTo({ top: 0, behavior: 'smooth' });
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             if (isMobileMenuOpen) toggleMobileMenu();
@@ -2270,7 +2254,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
 
-            // FIX: Pause ALL FAQ videos before doing anything else
             Object.values(faqPlayers).forEach(video => {
                 if (video && !video.paused) {
                     video.pause();
@@ -2278,24 +2261,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!wasActive) {
-                // Start the new video
                 if (playerId && faqPlayers[playerId]) {
                     const videoElement = faqPlayers[playerId];
-                    // SAFARI: Execute PLAY immediately on click
                     videoElement.currentTime = 0;
                     videoElement.play();
                     videoElement.classList.remove('pointer-events-none');
                     activeFaqPlayerId = playerId;
                 }
 
-                // Close all other accordions and open this one
                 document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
                 item.classList.add('active');
                 
-                // If the main AI was talking, send her back to idle loop
                 if (isInteracting) resetToLoop();
             } else {
-                // If it was already active, just close the accordion
                 item.classList.remove('active');
             }
         }
@@ -2319,7 +2297,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     </script>
-
+    
     <script id="ui-management">
         function toggleMobileMenu() {
             isMobileMenuOpen = !isMobileMenuOpen;
@@ -2357,7 +2335,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (pkg === 'starter') {
                 title = "Start with AI Support";
-                subtitle = "Let\'s start with a free workflow review";
+                subtitle = "Let's start with a free workflow review";
             } else if (pkg === 'growth') {
                 title = "Choose AI Development Team";
                 subtitle = "Let's start AI Development Team with a free workflow review";
@@ -2388,7 +2366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // TRAFFIC DROPDOWN LOGIC
         document.addEventListener('DOMContentLoaded', () => {
             const trigger = document.getElementById('Pro-select-trigger');
             const optionsPanel = document.getElementById('Pro-select-options');
@@ -2397,7 +2374,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const wrapper = document.getElementById('traffic-dropdown-wrapper');
 
             if (trigger && optionsPanel && inputField) {
-                
                 trigger.addEventListener('click', (e) => {
                     e.stopPropagation(); 
                     optionsPanel.classList.toggle('hidden');
@@ -2448,8 +2424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let loggedQuestions = new Set();
-
-        function playVideoAnswer(type, el) { 
+        function playVideoAnswer(type, el) {
             const questionText = el.innerText.trim();
             activateAI(type); 
             expandChatWindow(false); 
@@ -2485,14 +2460,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-
         function handleSuccessfulAuditSubmission(formData) {
             hasSubmitted = true;
-
-            // Always trigger the thank-you video feedback.
             activateAI('thanks');
-
-            // Always expand and update the chat feedback.
             expandChatWindow(false);
 
             const userProgress = document.createElement('div');
@@ -2502,16 +2472,13 @@ document.addEventListener('DOMContentLoaded', () => {
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
             const firstName = String(formData.name || 'there').split(' ')[0];
-
             addMessages([
                 `Thanks ${firstName}! I've flagged your interest.`,
                 "My team will reach out within 24 hours."
             ]);
 
-            // Update the URL without reloading the page.
             window.history.pushState(null, '', '?thankyou');
         }
-
 
         async function handleFormSubmit(e) {
             e.preventDefault();
@@ -2533,14 +2500,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 timestamp: new Date().toISOString()
             };
 
-let leadSuccess = false;
+            let leadSuccess = false;
 
-            if (PROXY_URL) {
+            if (typeof PROXY_URL !== 'undefined') {
                 try {
                     const response = await fetch(PROXY_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ webhookAlias: 'form-main', type: 'ai_workflow_review_lead', ...formData })
+                        body: JSON.stringify({ 
+                            webhookAlias: 'form-main', 
+                            type: 'ai_workflow_review_lead', 
+                            ...formData 
+                        })
                     });
                     if(response.ok) leadSuccess = true;
                 } catch (error) {
@@ -2548,16 +2519,15 @@ let leadSuccess = false;
                 }
             }
 
-            hasSubmitted = true;            
-            activateAI('thanks');                        
-            const userProgress = document.createElement('div');
+            hasSubmitted = true;
+            activateAI('thanks');
             
             const userProgress = document.createElement('div');
             userProgress.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
             userProgress.innerText = `Interest in ${currentSelectedPackage || 'Audit'} noted`;
             chatFeed.appendChild(userProgress);
 
-if (leadSuccess) {
+            if (leadSuccess) {
                 handleSuccessfulAuditSubmission(formData);
             }
 
@@ -2585,16 +2555,25 @@ if (leadSuccess) {
             chatFeed.appendChild(indicator);
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
-if (PROXY_URL) {
-    try {
-        const response = await fetch(PROXY_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ webhookAlias: 'chat', chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
-        });
+            if (typeof PROXY_URL !== 'undefined') {
+                try {
+                    const response = await fetch(PROXY_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            webhookAlias: 'chat', 
+                            chatInput: text, 
+                            message: text, 
+                            sessionId: sessionId, 
+                            timestamp: new Date().toISOString() 
+                        })
+                    });
+                    
                     if (!response.ok) throw new Error('Network error');
                     const data = await response.json();
+                    
                     indicator.remove();
+                    
                     const getBotText = (input) => {
                         if (typeof input === 'string') return input;
                         if (!input) return null;
@@ -2616,7 +2595,6 @@ if (PROXY_URL) {
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
 
         // Mobile exit intent: back-button intent + scroll-depth/up-scroll + inactivity.
-        // Test manually from the console with: window.testMobileExitPopup()
         const mobileExitConfig = {
             minSecondsOnPage: 12,
             scrollDepth: 0.65,
@@ -2722,7 +2700,6 @@ if (PROXY_URL) {
                 } else if (mobileExitLastScrollY > 350 && upwardScroll >= mobileExitConfig.upwardScrollPixels) {
                     showMobileExitPopup('Mobile Upward Scroll Intent');
                 }
-
                 mobileExitLastScrollY = currentY;
             }, { passive: true });
 
@@ -2780,7 +2757,6 @@ if (PROXY_URL) {
             const explicitIndustry = params.get('industry');
             if (explicitIndustry) return explicitIndustry;
 
-            // Supports URLs like https://jemima.ai?roofers and https://jemima.ai?dentists
             return queryWithoutQuestionMark.split('&')[0].split('=')[0];
         }
 
@@ -2898,6 +2874,5 @@ if (PROXY_URL) {
             }
         });
     </script>
-
 </body>
 </html>
