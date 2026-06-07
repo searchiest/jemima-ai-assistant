@@ -715,7 +715,6 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </select>
                 </div>
 
-                <p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
 
                 <div class="live-demo-industry-list">
 
@@ -2826,7 +2825,7 @@ if (leadSuccess) {
                 section.classList.toggle('is-visible', featuredDemoIndustryIds.includes(section.id));
             });
 
-            setDemoIntroMessage('Popular demo examples. Select your industry to view the full matching demo library.', false);
+            setDemoIntroMessage('', true);
 
             if (industrySelect) {
                 industrySelect.value = '';
