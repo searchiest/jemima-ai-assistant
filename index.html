@@ -261,6 +261,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border: 1px solid #e2e8f0;
         }
 
+        /* Keep all demo links in the page source, but hide them visually until an industry is selected. */
+        .live-demo-industry {
+            display: none;
+        }
+
+        .live-demo-industry.is-visible {
+            display: block;
+        }
+
+        .live-demo-empty-state {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 1.25rem;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            color: #64748b;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 650;
+        }
+
+        .live-demo-empty-state.is-hidden {
+            display: none;
+        }
+
         .live-demo-industry-heading {
             display: flex;
             justify-content: space-between;
@@ -688,6 +714,8 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                         <option value="">Select an industry...</option><option value="demo-industry-accountants">Accountant</option><option value="demo-industry-bathroom-companies">Bathroom Company</option><option value="demo-industry-builders">Builder</option><option value="demo-industry-car-dealerships">Car Dealership</option><option value="demo-industry-care-homes">Care Home</option><option value="demo-industry-cleaning-companies">Cleaning Company</option><option value="demo-industry-dentists">Dentist</option><option value="demo-industry-driveway-companies">Driveway Company</option><option value="demo-industry-electricians">Electrician</option><option value="demo-industry-estate-agents">Estate Agent</option><option value="demo-industry-insurance-brokers">Insurance Broker</option><option value="demo-industry-kitchen-companies">Kitchen Company</option><option value="demo-industry-landscapers">Landscaper</option><option value="demo-industry-locksmiths">Locksmith</option><option value="demo-industry-mortgage-brokers">Mortgage Broker</option><option value="demo-industry-nurseries">Nursery and Childcare Provider</option><option value="demo-industry-pest-control">Pest Control Company</option><option value="demo-industry-plumbers">Plumber</option><option value="demo-industry-private-healthcare">Private Healthcare Clinic</option><option value="demo-industry-removal-companies">Removal Company</option><option value="demo-industry-roofers">Roofer</option><option value="demo-industry-solar-installers">Solar Installer</option><option value="demo-industry-solicitors">Solicitor</option><option value="demo-industry-vets">Veterinary Practice</option><option value="demo-industry-window-door-companies">Window and Door Company</option>
                     </select>
                 </div>
+
+                <p id="live-demo-empty-state" class="live-demo-empty-state">Select an industry to reveal its live demo links.</p>
 
                 <div class="live-demo-industry-list">
 
@@ -2724,48 +2752,125 @@ if (leadSuccess) {
     </script>
 
     <script id="live-demo-library-navigation">
-        function scrollToDemoIndustry(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (!section) return;
+        function normaliseDemoIndustryValue(value) {
+            return String(value || '')
+                .trim()
+                .toLowerCase()
+                .replace(/^\?+/, '')
+                .replace(/^#/, '')
+                .replace(/^demo-industry-/, '')
+                .replace(/^industry=/, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
 
-            section.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        function getDemoIndustryFromQuery() {
+            const rawQuery = window.location.search || '';
+            if (!rawQuery || rawQuery === '?') return '';
+
+            const queryWithoutQuestionMark = decodeURIComponent(rawQuery.slice(1)).trim();
+            if (!queryWithoutQuestionMark) return '';
+
+            const params = new URLSearchParams(rawQuery);
+            const explicitIndustry = params.get('industry');
+            if (explicitIndustry) return explicitIndustry;
+
+            // Supports URLs like https://jemima.ai?roofers and https://jemima.ai?dentists
+            return queryWithoutQuestionMark.split('&')[0].split('=')[0];
+        }
+
+        function findDemoIndustryId(industryValue) {
+            const normalisedValue = normaliseDemoIndustryValue(industryValue);
+            if (!normalisedValue) return '';
+
+            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
+            const matchingSection = sections.find(section => {
+                const sectionId = normaliseDemoIndustryValue(section.id);
+                const sectionName = normaliseDemoIndustryValue(section.dataset.industryName);
+                return sectionId === normalisedValue || sectionName === normalisedValue;
             });
 
-            if (history.pushState) {
-                history.pushState(null, '', '#' + sectionId);
+            if (matchingSection) return matchingSection.id;
+
+            const industrySelect = document.getElementById('industry-demo-jump');
+            if (!industrySelect) return '';
+
+            const matchingOption = Array.from(industrySelect.options).find(option => {
+                const optionId = normaliseDemoIndustryValue(option.value);
+                const optionText = normaliseDemoIndustryValue(option.textContent);
+                return optionId === normalisedValue || optionText === normalisedValue;
+            });
+
+            return matchingOption ? matchingOption.value : '';
+        }
+
+        function setVisibleDemoIndustry(sectionId, shouldScroll = true, shouldUpdateUrl = true) {
+            const targetId = findDemoIndustryId(sectionId);
+            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
+            const emptyState = document.getElementById('live-demo-empty-state');
+            const industrySelect = document.getElementById('industry-demo-jump');
+
+            sections.forEach(section => {
+                section.classList.toggle('is-visible', section.id === targetId);
+            });
+
+            if (emptyState) {
+                emptyState.classList.toggle('is-hidden', Boolean(targetId));
+            }
+
+            if (industrySelect) {
+                industrySelect.value = targetId || '';
+            }
+
+            if (!targetId) {
+                if (shouldUpdateUrl && history.pushState) {
+                    history.pushState(null, '', window.location.pathname || '/');
+                }
+                return;
+            }
+
+            const targetSection = document.getElementById(targetId);
+
+            if (shouldUpdateUrl && history.pushState) {
+                const industrySlug = targetId.replace(/^demo-industry-/, '');
+                history.pushState(null, '', '?' + industrySlug);
+            }
+
+            if (shouldScroll && targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
+        function scrollToDemoIndustry(sectionId) {
+            setVisibleDemoIndustry(sectionId, true, true);
+        }
+
         function scrollToDemoIndustryByName(industryName) {
-            const normalised = String(industryName || '').trim().toLowerCase();
-            if (!normalised) return;
-
-            const section = Array.from(document.querySelectorAll('.live-demo-industry'))
-                .find(item => String(item.dataset.industryName || '').trim().toLowerCase() === normalised);
-
-            if (section) {
-                scrollToDemoIndustry(section.id);
-            }
+            setVisibleDemoIndustry(industryName, true, true);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             const industrySelect = document.getElementById('industry-demo-jump');
 
+            // Default state for https://jemima.ai: demo links are hidden visually but remain in the page source.
+            setVisibleDemoIndustry('', false, false);
+
             if (industrySelect) {
                 industrySelect.addEventListener('change', function () {
-                    if (this.value) {
-                        scrollToDemoIndustry(this.value);
-                    }
+                    setVisibleDemoIndustry(this.value, true, true);
                 });
             }
 
-            if (window.location.hash && window.location.hash.startsWith('#demo-industry-')) {
-                const targetId = window.location.hash.slice(1);
+            const queryIndustry = getDemoIndustryFromQuery();
+            const hashIndustry = window.location.hash && window.location.hash.startsWith('#demo-industry-')
+                ? window.location.hash.slice(1)
+                : '';
+            const initialIndustry = queryIndustry || hashIndustry;
+
+            if (initialIndustry) {
                 setTimeout(function () {
-                    scrollToDemoIndustry(targetId);
-                }, 150);
+                    setVisibleDemoIndustry(initialIndustry, false, false);
+                }, 50);
             }
         });
     </script>
