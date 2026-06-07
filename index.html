@@ -272,7 +272,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         .live-demo-empty-state {
             max-width: 760px;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
             padding: 1.25rem;
             background: #f8fafc;
             border: 1px dashed #cbd5e1;
@@ -715,7 +715,7 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </select>
                 </div>
 
-                <p id="live-demo-empty-state" class="live-demo-empty-state">Select an industry to reveal its live demo links.</p>
+                <p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
 
                 <div class="live-demo-industry-list">
 
@@ -2752,6 +2752,12 @@ if (leadSuccess) {
     </script>
 
     <script id="live-demo-library-navigation">
+        const featuredDemoIndustryIds = [
+            'demo-industry-dentists',
+            'demo-industry-roofers',
+            'demo-industry-estate-agents'
+        ];
+
         function normaliseDemoIndustryValue(value) {
             return String(value || '')
                 .trim()
@@ -2804,29 +2810,51 @@ if (leadSuccess) {
             return matchingOption ? matchingOption.value : '';
         }
 
+        function setDemoIntroMessage(message, isHidden = false) {
+            const introMessage = document.getElementById('live-demo-empty-state');
+            if (!introMessage) return;
+
+            introMessage.textContent = message;
+            introMessage.classList.toggle('is-hidden', Boolean(isHidden));
+        }
+
+        function showFeaturedDemoIndustries(shouldUpdateUrl = false) {
+            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
+            const industrySelect = document.getElementById('industry-demo-jump');
+
+            sections.forEach(section => {
+                section.classList.toggle('is-visible', featuredDemoIndustryIds.includes(section.id));
+            });
+
+            setDemoIntroMessage('Popular demo examples. Select your industry to view the full matching demo library.', false);
+
+            if (industrySelect) {
+                industrySelect.value = '';
+            }
+
+            if (shouldUpdateUrl && history.pushState) {
+                history.pushState(null, '', window.location.pathname || '/');
+            }
+        }
+
         function setVisibleDemoIndustry(sectionId, shouldScroll = true, shouldUpdateUrl = true) {
             const targetId = findDemoIndustryId(sectionId);
             const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
-            const emptyState = document.getElementById('live-demo-empty-state');
             const industrySelect = document.getElementById('industry-demo-jump');
+
+            if (!targetId) {
+                showFeaturedDemoIndustries(shouldUpdateUrl);
+                return;
+            }
 
             sections.forEach(section => {
                 section.classList.toggle('is-visible', section.id === targetId);
             });
 
-            if (emptyState) {
-                emptyState.classList.toggle('is-hidden', Boolean(targetId));
-            }
+            setDemoIntroMessage('', true);
 
             if (industrySelect) {
                 industrySelect.value = targetId || '';
-            }
-
-            if (!targetId) {
-                if (shouldUpdateUrl && history.pushState) {
-                    history.pushState(null, '', window.location.pathname || '/');
-                }
-                return;
             }
 
             const targetSection = document.getElementById(targetId);
@@ -2852,9 +2880,6 @@ if (leadSuccess) {
         document.addEventListener('DOMContentLoaded', function () {
             const industrySelect = document.getElementById('industry-demo-jump');
 
-            // Default state for https://jemima.ai: demo links are hidden visually but remain in the page source.
-            setVisibleDemoIndustry('', false, false);
-
             if (industrySelect) {
                 industrySelect.addEventListener('change', function () {
                     setVisibleDemoIndustry(this.value, true, true);
@@ -2868,9 +2893,9 @@ if (leadSuccess) {
             const initialIndustry = queryIndustry || hashIndustry;
 
             if (initialIndustry) {
-                setTimeout(function () {
-                    setVisibleDemoIndustry(initialIndustry, false, false);
-                }, 50);
+                setVisibleDemoIndustry(initialIndustry, false, false);
+            } else {
+                showFeaturedDemoIndustries(false);
             }
         });
     </script>
