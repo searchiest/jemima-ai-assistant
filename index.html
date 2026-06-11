@@ -2319,8 +2319,8 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                             </div>
                         </div>
                         <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
-                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi, I'm Jemima. Tell me what your business does (e.g., 'I run a roofing company'), and I'll tell you the first process you should automate.
+                            <div id="chat-opening-message" class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
+                                Hi, I'm Jemima. Tell me a little bit about your business — for example, how long you've been trading, team size, your most common work, and where admin or follow-up slows you down. I'll suggest the first process you should automate.
                             </div>
                         </div>
                         <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
@@ -3789,6 +3789,148 @@ if (leadSuccess) {
 })();
 </script>
 <!-- End Jemima hero industry H1 updater -->
+
+
+<!-- Jemima industry-aware chat opening message -->
+<script>
+(function () {
+    const defaultChatOpeningMessage = 'Hi, I\'m Jemima. Tell me a little bit about your business — for example, how long you\'ve been trading, team size, your most common work, and where admin or follow-up slows you down. I\'ll suggest the first process you should automate.';
+
+    const industryChatContexts = {
+        'Accountant': 'accounting firm',
+        'Bathroom Company': 'bathroom business',
+        'Builder': 'building business',
+        'Car Dealership': 'car dealership',
+        'Care Home': 'care home',
+        'Cleaning Company': 'cleaning business',
+        'Dentist': 'dental practice',
+        'Driveway Company': 'driveway business',
+        'Electrician': 'electrical business',
+        'Estate Agent': 'estate agency',
+        'Insurance Broker': 'insurance business',
+        'Kitchen Company': 'kitchen business',
+        'Landscaper': 'landscaping business',
+        'Locksmith': 'locksmith business',
+        'Mortgage Broker': 'mortgage business',
+        'Nursery and Childcare Provider': 'nursery',
+        'Pest Control Company': 'pest control business',
+        'Plumber': 'plumbing business',
+        'Private Healthcare Clinic': 'healthcare clinic',
+        'Removal Company': 'removals business',
+        'Roofer': 'roofing business',
+        'Solar Installer': 'solar business',
+        'Solicitor': 'solicitor firm',
+        'Veterinary Practice': 'veterinary practice',
+        'Window and Door Company': 'window and door business'
+    };
+
+    function normaliseChatIndustryValue(value) {
+        return String(value || '')
+            .trim()
+            .replace(/^\?+/, '')
+            .replace(/^industry=/i, '')
+            .replace(/^demo-industry-/i, '')
+            .replace(/\/+$/g, '')
+            .toLowerCase();
+    }
+
+    function getChatIndustryFromUrl() {
+        const rawSearch = window.location.search || '';
+
+        if (!rawSearch || rawSearch === '?') {
+            return '';
+        }
+
+        const params = new URLSearchParams(rawSearch);
+
+        if (params.has('industry')) {
+            return normaliseChatIndustryValue(params.get('industry'));
+        }
+
+        return normaliseChatIndustryValue(rawSearch.slice(1).split('&')[0].split('=')[0]);
+    }
+
+    function getChatIndustryNameFromSection(industrySlug) {
+        const slug = normaliseChatIndustryValue(industrySlug);
+
+        if (!slug) {
+            return '';
+        }
+
+        const section = document.getElementById('demo-industry-' + slug);
+
+        if (!section) {
+            return '';
+        }
+
+        return String(section.getAttribute('data-industry-name') || '').trim();
+    }
+
+    function getChatIndustryNameFromSelect(select) {
+        if (!select || !select.value) {
+            return '';
+        }
+
+        const option = select.options[select.selectedIndex];
+
+        if (!option) {
+            return '';
+        }
+
+        return String(option.textContent || '').trim();
+    }
+
+    function buildIndustryChatMessage(industryName) {
+        const industryContext = industryChatContexts[industryName] || String(industryName || '').toLowerCase() + ' business';
+
+        if (!industryName) {
+            return defaultChatOpeningMessage;
+        }
+
+        return `Hi, I'm Jemima. Tell me a little bit about your {industryContext} — for example, how long you've been trading, team size, your most common work, and where admin or follow-up slows you down. I'll suggest the first process you should automate.`.replace('{industryContext}', industryContext);
+    }
+
+    function setChatOpeningMessage() {
+        const openingMessage = document.getElementById('chat-opening-message');
+
+        if (!openingMessage) {
+            return;
+        }
+
+        const select = document.getElementById('industry-demo-jump');
+        let industryName = getChatIndustryNameFromSelect(select);
+
+        if (!industryName) {
+            industryName = getChatIndustryNameFromSection(getChatIndustryFromUrl());
+        }
+
+        openingMessage.textContent = buildIndustryChatMessage(industryName);
+    }
+
+    function initialiseIndustryChatOpeningMessage() {
+        const select = document.getElementById('industry-demo-jump');
+
+        if (select) {
+            select.addEventListener('change', function () {
+                setTimeout(setChatOpeningMessage, 0);
+            });
+        }
+
+        window.addEventListener('popstate', function () {
+            setTimeout(setChatOpeningMessage, 0);
+        });
+
+        setTimeout(setChatOpeningMessage, 0);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialiseIndustryChatOpeningMessage);
+    } else {
+        initialiseIndustryChatOpeningMessage();
+    }
+})();
+</script>
+<!-- End Jemima industry-aware chat opening message -->
 
 </body>
 </html>
