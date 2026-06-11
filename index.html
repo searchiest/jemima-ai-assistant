@@ -2272,7 +2272,7 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                         <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/9210bbec-7339-4849-a52b-3fd446ec12a8/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-whatworkflows" src="https://vz-1599ac93-05a.b-cdn.net/06abab3e-411f-489e-ab22-aa76464b95f1/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-peoplecontrol" src="https://vz-1599ac93-05a.b-cdn.net/e7915089-4c01-43cb-82e7-c4fb432bdfae/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-time" src="https://vz-1599ac93-05a.b-cdn.net/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-freereview" src="https://vz-1599ac93-05a.b-cdn.net/df21f96a-cba5-44db-b59e-f3d0cb24cf93/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/71181d32-ec5f-4759-a667-e21332a643a3/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
                         <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
 
@@ -2299,7 +2299,7 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                                 <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>How do you keep AI safe and under human control?</span>
                                 <i class="fas fa-chevron-right text-xs opacity-20"></i>
                             </button>
-                            <button onclick="playVideoAnswer('time', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                            <button onclick="playVideoAnswer('freereview', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
                                 <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>What happens in the Free Workflow Review?</span>
                                 <i class="fas fa-chevron-right text-xs opacity-20"></i>
                             </button>
@@ -2955,7 +2955,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             'main': document.getElementById('player-main'),
             'whatworkflows': document.getElementById('player-whatworkflows'),
             'peoplecontrol': document.getElementById('player-peoplecontrol'),
-            'time': document.getElementById('player-time'),
+            'freereview': document.getElementById('player-freereview'),
             'abandon': document.getElementById('player-abandon'),
             'thanks': document.getElementById('player-thanks')
         };
@@ -3261,10 +3261,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
             const messages = {
                 whatworkflows: ["Jemima identifies repetitive workflows where revenue, reputation, or customer experience are being affected.", "Then we build practical AI automation to help you respond faster, follow up better, and reduce missed opportunities."],
                 peoplecontrol: ["We build AI around clear rules, controlled workflows, and human oversight, so it only acts within agreed limits.", "Important decisions, sensitive messages, and unusual cases can stay under human review while AI improves speed and consistency."],
-                time: ["Most businesses can have it up and running within a week.", "We handle most of the work, you just need to add it to your site."]
+                freereview: ["The free workflow review is simple: tell us a little about your business and where opportunities may be slipping through.", "Based on your feedback, we’ll identify one practical AI workflow and explain how it could improve revenue, reputation, or customer experience."]
             };
             addMessages(messages[type] || ["I can certainly help with that."]);
         }
