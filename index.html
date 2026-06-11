@@ -165,6 +165,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .faq-content button { margin-top: 0.5rem; }
         }
     
+
+        /* Hero placement for the demo library when industry is selected or loaded by URL */
+        .max-w-4xl #live-demo-library {
+            padding: 2rem 0 1rem;
+            border-top: 0;
+            background: transparent;
+            width: min(100%, 1200px);
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header h2 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header p {
+            font-size: 0.95rem;
+        }
+
         /* Live demo library */
         .live-demo-library {
             scroll-margin-top: 96px;
@@ -657,99 +678,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h1 id="hero-industry-h1" class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight" data-default-h1="Build an AI-enabled businesswithout hiring a full AI team">
                     Build an AI-enabled business<br><span class="text-[#c2155a]">without hiring a full AI team</span>
                 </h1>
-                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium"><strong>Not another AI tool:</strong> We provide ongoing AI development and support. Helping service businesses eliminate manual admin and run faster.</p>
-            </div>
 
-            <div class="flex flex-col items-center justify-center gap-4">
-                <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
-                    <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
-                </button>
-                <div class="text-center">
-                    <p class="text-slate-500 text-xs md:text-sm font-medium">No commitment. No system access required. No credit card.
-Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
-                    <button onclick="activateAI('main')" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or see how AI support works</button>
-                </div>
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
-                <div class="w-full md:w-[45%] space-y-4">
-                    
-                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
-                        <video id="idle-player" src="https://vz-1599ac93-05a.b-cdn.net/c05b369d-1529-4051-8773-79320393ec05/play_1080p.mp4" class="yt-player-frame active pointer-events-none" autoplay loop muted playsinline></video>
-                        
-                        <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/b4994c40-cf02-4455-a125-31838b2d5933/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-bookings" src="https://vz-1599ac93-05a.b-cdn.net/bc337fdc-3969-4725-a012-7eee930aa556/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-cost" src="https://vz-1599ac93-05a.b-cdn.net/faf3ccb2-a631-4053-bf64-3eaded291bac/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-time" src="https://vz-1599ac93-05a.b-cdn.net/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-                        <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
-
-
-<div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
-                           <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
-                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px]  uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
-                                    tap to interact
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
-                        <div class="space-y-1">
-                            <h2 class="text-xs lg:text-sm  font-[700] uppercase tracking-[0.25em] text-[#c2155a]">Frequently Asked Questions</h2>
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
-                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>What kind of workflow could Jemima build for my business?</span>
-                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
-                            </button>
-                            <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
-                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>How do you keep AI safe and under human control?</span>
-                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
-                            </button>
-                            <button onclick="playVideoAnswer('time', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
-                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>What happens in the Free Workflow Review?</span>
-                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start transition-all duration-500">
-                    <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
-                        <div class="flex items-center justify-between border-b border-slate-300 pb-3 shrink-0">
-                            <div class="flex items-center gap-2">
-                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
-                                    <img src="jemima-chat-image.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
-                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
-                                </div>
-                                <p class="text-sm  uppercase tracking-tight">Jemima</p>
-                            </div>
-                        </div>
-                        <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
-                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi, I'm Jemima. Tell me what your business does (e.g., 'I run a roofing company'), and I'll tell you the first process you should automate.
-                            </div>
-                        </div>
-                        <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
-                            <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
-                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
-                                <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg shadow-[#c2155a]/20 hover:bg-[#a0124a] transition-colors">
-                                    <i class="fas fa-paper-plane"></i>
-                                </button>
-                            </form>
-                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-3.5 text-[12px]  bg-[#c2155a] text-white font-black rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
-                                <i class="fas fa-lightbulb"></i>
-                                <span>Free Workflow Review</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Live Demo Library -->
+                <!-- Live Demo Library -->
         <section id="live-demo-library" class="live-demo-library">
             <div class="live-demo-library-inner">
                 <div class="live-demo-header">
@@ -2242,6 +2172,96 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
             </div>
         </section>
 
+                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium"><strong>Not another AI tool:</strong> We provide ongoing AI development and support. Helping service businesses eliminate manual admin and run faster.</p>
+            </div>
+
+            <div class="flex flex-col items-center justify-center gap-4">
+                <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
+                    <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
+                </button>
+                <div class="text-center">
+                    <p class="text-slate-500 text-xs md:text-sm font-medium">No commitment. No system access required. No credit card.
+Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
+                    <button onclick="activateAI('main')" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or see how AI support works</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+                <div class="w-full md:w-[45%] space-y-4">
+                    
+                    <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+                        <video id="idle-player" src="https://vz-1599ac93-05a.b-cdn.net/c05b369d-1529-4051-8773-79320393ec05/play_1080p.mp4" class="yt-player-frame active pointer-events-none" autoplay loop muted playsinline></video>
+                        
+                        <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/b4994c40-cf02-4455-a125-31838b2d5933/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-bookings" src="https://vz-1599ac93-05a.b-cdn.net/bc337fdc-3969-4725-a012-7eee930aa556/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-cost" src="https://vz-1599ac93-05a.b-cdn.net/faf3ccb2-a631-4053-bf64-3eaded291bac/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-time" src="https://vz-1599ac93-05a.b-cdn.net/52c27e3c-ad67-4ed6-ad55-21be85f6cf4b/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-abandon" src="https://vz-1599ac93-05a.b-cdn.net/e83d020b-9fcf-44f2-bb81-7aad1c8c0b21/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+                        <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+
+
+<div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
+                           <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
+                                <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px]  uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
+                                    tap to interact
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 md:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
+                        <div class="space-y-1">
+                            <h2 class="text-xs lg:text-sm  font-[700] uppercase tracking-[0.25em] text-[#c2155a]">Frequently Asked Questions</h2>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="playVideoAnswer('bookings', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>What kind of workflow could Jemima build for my business?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('cost', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>How do you keep AI safe and under human control?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                            <button onclick="playVideoAnswer('time', this)" class="w-full py-4 md:py-5 text-[12px] md:text-[14px] bg-white border border-slate-100 text-slate-800 hover:border-[#c2155a]/30 hover:bg-slate-50 transition-all uppercase tracking-widest text-left px-6 shadow-sm active:scale-[0.98] flex items-center justify-between group">
+                                <span><i class="fas fa-play-circle mr-3 text-[#c2155a] opacity-60 group-hover:opacity-100"></i>What happens in the Free Workflow Review?</span>
+                                <i class="fas fa-chevron-right text-xs opacity-20"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start transition-all duration-500">
+                    <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
+                        <div class="flex items-center justify-between border-b border-slate-300 pb-3 shrink-0">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
+                                    <img src="jemima-chat-image.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
+                                </div>
+                                <p class="text-sm  uppercase tracking-tight">Jemima</p>
+                            </div>
+                        </div>
+                        <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
+                            <div class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
+                                Hi, I'm Jemima. Tell me what your business does (e.g., 'I run a roofing company'), and I'll tell you the first process you should automate.
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
+                            <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
+                                <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg shadow-[#c2155a]/20 hover:bg-[#a0124a] transition-colors">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-3.5 text-[12px]  bg-[#c2155a] text-white font-black rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Free Workflow Review</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <section id="problem" class="py-16 lg:py-24 border-t border-slate-200">
             <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -3668,7 +3688,7 @@ if (leadSuccess) {
             return;
         }
 
-        h1.innerHTML = 'AI workflow demos for<br><span class="text-[#c2155a]">' + industryName + '</span>';
+        h1.innerHTML = 'Build an AI-enabled ' + industryName.toLowerCase() + ' business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
     }
 
     function updateHeroIndustryH1FromCurrentState() {
