@@ -261,9 +261,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border: 1px solid #e2e8f0;
         }
 
-        /* Keep all demo links in the page source, but hide them visually until an industry is selected. */
+        /* Show the full demo library by default so every industry set is visible on the page. */
         .live-demo-industry {
-            display: none;
+            display: block;
         }
 
         .live-demo-industry.is-visible {
@@ -356,13 +356,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .live-demo-card-meta {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
             margin-top: 1rem;
             color: #c2155a;
             font-size: 10px;
             font-weight: 900;
             letter-spacing: 0.16em;
             text-transform: uppercase;
+        }
+
+        .live-demo-card-channel-icon {
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            border: 1px solid rgba(194, 21, 90, 0.22);
+            background: rgba(194, 21, 90, 0.08);
+            color: #c2155a;
+            font-size: 11px;
+            line-height: 1;
+        }
+
+        .live-demo-card-channel-icon.is-sms {
+            width: auto;
+            min-width: 34px;
+            padding: 0 6px;
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            font-weight: 900;
         }
 
         @media screen and (max-width: 1024px) {
@@ -727,27 +752,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/accountants/bookkeeping-catch-up-vat-cleanup/" class="live-demo-card">
                             <span class="live-demo-card-title">Bookkeeping catch-up and VAT cleanup enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/accountants/new-limited-company-startup/" class="live-demo-card">
                             <span class="live-demo-card-title">New limited company startup enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/accountants/monthly-accounting-proposal-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Monthly accounting proposal follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/accountants/tax-return-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Tax return quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/accountants/sms-secure-document-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Secure document request follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/accountants/sms-bookkeeping-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Monthly bookkeeping reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -760,27 +785,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/bathroom-companies/bathroom-renovation-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Bathroom renovation enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/bathroom-companies/ensuite-shower-room-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Ensuite or shower room enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/bathroom-companies/bathroom-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Bathroom quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/bathroom-companies/bathroom-design-consultation-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Bathroom design consultation follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/bathroom-companies/sms-pre-visit-photo-checklist/" class="live-demo-card">
                             <span class="live-demo-card-title">Pre-visit photo checklist</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/bathroom-companies/sms-installation-disruption-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Installation disruption check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -793,27 +818,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/builders/extension-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Home extension enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/builders/loft-conversion-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Loft conversion enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/builders/building-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Building quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/builders/extension-proposal-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Extension proposal follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/builders/sms-site-access-parking-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Site access and parking check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/builders/sms-material-delivery-coordination/" class="live-demo-card">
                             <span class="live-demo-card-title">Material delivery coordination</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -826,27 +851,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/car-dealerships/vehicle-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Vehicle enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/car-dealerships/finance-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Car finance enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/car-dealerships/vehicle-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Vehicle quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/car-dealerships/part-exchange-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Part-exchange valuation follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/car-dealerships/sms-test-drive-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Test drive confirmation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/car-dealerships/sms-documents-before-visit-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Documents before visit reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -859,27 +884,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/care-homes/care-home-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Care home enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/care-homes/respite-care-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Respite care enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/care-homes/care-assessment-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Care assessment follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/care-homes/respite-care-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Respite care availability follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/care-homes/sms-family-visit-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Family visit confirmation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/care-homes/sms-information-pack-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Information pack follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -892,27 +917,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/cleaning-companies/commercial-cleaning-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Commercial cleaning enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/cleaning-companies/end-of-tenancy-cleaning-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">End-of-tenancy cleaning enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/cleaning-companies/commercial-cleaning-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Commercial cleaning quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/cleaning-companies/deep-clean-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Deep clean quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/cleaning-companies/sms-cleaning-access-instructions/" class="live-demo-card">
                             <span class="live-demo-card-title">Cleaning access instructions</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/cleaning-companies/sms-after-clean-feedback-check/" class="live-demo-card">
                             <span class="live-demo-card-title">After-clean feedback check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -925,27 +950,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/dentists/high-value-treatment-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">High-value treatment enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/dentists/emergency-dental-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Emergency dental enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/dentists/treatment-plan-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Treatment plan follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/dentists/implant-treatment-plan-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Implant treatment plan follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/dentists/sms-appointment-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Appointment confirmation and change request</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/dentists/sms-recall-reactivation/" class="live-demo-card">
                             <span class="live-demo-card-title">Overdue check-up recall and reactivation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -958,27 +983,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/driveway-companies/new-driveway-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">New driveway enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/driveway-companies/driveway-repair-resurfacing-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Driveway repair or resurfacing enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/driveway-companies/driveway-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Driveway quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/driveway-companies/driveway-survey-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Driveway survey follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/driveway-companies/sms-weather-reschedule-update/" class="live-demo-card">
                             <span class="live-demo-card-title">Weather reschedule update</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/driveway-companies/sms-clear-drive-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Clear the drive reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -991,27 +1016,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/electricians/electrical-fault-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Electrical fault enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/electricians/fuse-box-rewiring-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Fuse box or rewiring enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/electricians/electrical-work-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Electrical work quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/electricians/rewiring-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Rewiring quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/electricians/sms-power-access-occupant-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Power access and occupant check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/electricians/sms-certificate-ready-notification/" class="live-demo-card">
                             <span class="live-demo-card-title">Certificate ready notification</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1024,27 +1049,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/estate-agents/property-valuation-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Property valuation enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/estate-agents/landlord-letting-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Landlord letting enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/estate-agents/property-valuation-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Property valuation follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/estate-agents/landlord-management-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Landlord management proposal follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/estate-agents/sms-viewing-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Viewing confirmation and change request</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/estate-agents/sms-valuation-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Valuation follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1057,27 +1082,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/insurance-brokers/business-insurance-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Business insurance enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/insurance-brokers/fleet-insurance-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Fleet insurance enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/insurance-brokers/commercial-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Commercial insurance quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/insurance-brokers/fleet-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Fleet insurance quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/insurance-brokers/sms-renewal-review-prompt/" class="live-demo-card">
                             <span class="live-demo-card-title">Renewal review prompt</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/insurance-brokers/sms-missing-document-chase/" class="live-demo-card">
                             <span class="live-demo-card-title">Missing document chase</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1090,27 +1115,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/kitchen-companies/kitchen-renovation-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Kitchen renovation enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/kitchen-companies/kitchen-design-visit-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Kitchen design visit enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/kitchen-companies/kitchen-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Kitchen quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/kitchen-companies/kitchen-design-proposal-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Kitchen design proposal follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/kitchen-companies/sms-design-appointment-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Design appointment reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/kitchen-companies/sms-appliance-choice-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Appliance choice follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1123,27 +1148,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/landscapers/garden-redesign-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Garden redesign enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/landscapers/patio-fencing-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Patio or fencing enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/landscapers/landscaping-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Landscaping quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/landscapers/garden-design-proposal-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Garden design proposal follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/landscapers/sms-garden-access-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Garden access check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/landscapers/sms-weather-start-update/" class="live-demo-card">
                             <span class="live-demo-card-title">Weather start update</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1156,27 +1181,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/locksmiths/emergency-lockout-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Emergency lockout enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/locksmiths/lock-replacement-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Lock replacement enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/locksmiths/lock-replacement-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Lock replacement quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/locksmiths/security-upgrade-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Security upgrade quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/locksmiths/sms-eta-update/" class="live-demo-card">
                             <span class="live-demo-card-title">Locksmith ETA update</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/locksmiths/sms-key-collection-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Key collection reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1189,27 +1214,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/mortgage-brokers/first-time-buyer-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">First-time buyer mortgage enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/mortgage-brokers/remortgage-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Remortgage enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/mortgage-brokers/mortgage-recommendation-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Mortgage recommendation follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/mortgage-brokers/protection-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Protection quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/mortgage-brokers/sms-document-chase/" class="live-demo-card">
                             <span class="live-demo-card-title">Mortgage document chase</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/mortgage-brokers/sms-review-check-in/" class="live-demo-card">
                             <span class="live-demo-card-title">Mortgage review check-in</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1222,27 +1247,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/nurseries/nursery-place-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Nursery place enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/nurseries/childcare-availability-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Childcare availability enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/nurseries/nursery-visit-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Nursery visit follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/nurseries/childcare-fees-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Childcare fees follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/nurseries/sms-visit-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Nursery visit confirmation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/nurseries/sms-registration-forms-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Registration forms reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1255,27 +1280,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/pest-control/pest-infestation-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Pest infestation enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/pest-control/commercial-pest-control-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Commercial pest control enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/pest-control/pest-treatment-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Pest treatment quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/pest-control/commercial-contract-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Commercial pest contract follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/pest-control/sms-visit-preparation-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Pest visit preparation check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/pest-control/sms-post-treatment-activity-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Post-treatment activity check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1288,27 +1313,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/plumbers/emergency-leak-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Emergency leak enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/plumbers/boiler-heating-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Boiler or heating enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/plumbers/plumbing-repair-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Plumbing repair quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/plumbers/boiler-installation-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Boiler installation quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/plumbers/sms-eta-access-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Plumber ETA and access check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/plumbers/sms-parts-arrival-update/" class="live-demo-card">
                             <span class="live-demo-card-title">Parts arrival update</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1321,27 +1346,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/private-healthcare/private-consultation-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Private consultation enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/private-healthcare/diagnostic-scan-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Diagnostic scan enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/private-healthcare/treatment-price-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Treatment price follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/private-healthcare/consultation-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Consultation follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/private-healthcare/sms-appointment-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Appointment confirmation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/private-healthcare/sms-pre-appointment-forms-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Pre-appointment forms reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1354,27 +1379,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/removal-companies/house-move-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">House move enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/removal-companies/office-move-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Office move enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/removal-companies/removal-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Removal quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/removal-companies/packing-service-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Packing service quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/removal-companies/sms-move-inventory-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Move inventory check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/removal-companies/sms-moving-day-access-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Moving day access check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1387,27 +1412,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/roofers/roof-repair-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Roof repair enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/roofers/new-roof-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">New roof enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/roofers/roof-repair-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Roof repair quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/roofers/new-roof-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">New roof quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/roofers/sms-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Roofing quote follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/roofers/sms-storm-damage-missed-call/" class="live-demo-card">
                             <span class="live-demo-card-title">Storm damage missed call response</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1420,27 +1445,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/solar-installers/solar-panel-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Solar panel enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/solar-installers/battery-storage-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Battery storage enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/solar-installers/solar-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Solar quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/solar-installers/solar-survey-proposal-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Solar survey proposal follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/solar-installers/sms-survey-access-check/" class="live-demo-card">
                             <span class="live-demo-card-title">Solar survey access check</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/solar-installers/sms-installation-prep-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Installation preparation reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1453,27 +1478,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/solicitors/conveyancing-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Conveyancing enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/solicitors/family-law-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Family law enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/solicitors/conveyancing-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Conveyancing quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/solicitors/consultation-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Legal consultation follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/solicitors/sms-consultation-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Consultation confirmation and change request</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/solicitors/sms-client-information-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Client information status follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1486,27 +1511,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/vets/new-pet-registration/" class="live-demo-card">
                             <span class="live-demo-card-title">New pet registration enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/vets/urgent-pet-symptom-triage/" class="live-demo-card">
                             <span class="live-demo-card-title">Urgent pet symptom triage</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/vets/dental-treatment-estimate-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Dental treatment estimate follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/vets/surgery-estimate-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Surgery estimate follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/vets/sms-appointment-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Vet appointment confirmation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/vets/sms-medication-collection-reminder/" class="live-demo-card">
                             <span class="live-demo-card-title">Medication collection reminder</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -1519,27 +1544,27 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
 
                         <a href="/demo/window-door-companies/replacement-window-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Replacement window enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/window-door-companies/composite-door-enquiry/" class="live-demo-card">
                             <span class="live-demo-card-title">Composite door enquiry</span>
-                            <span class="live-demo-card-meta">Lead Triage</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Lead Triage</span></span>
                         </a>
                         <a href="/demo/window-door-companies/window-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Window quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/window-door-companies/door-quote-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Door quote follow-up</span>
-                            <span class="live-demo-card-meta">Quote Follow-Up</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-text"><span class="live-demo-card-channel-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span><span>Quote Follow-Up</span></span>
                         </a>
                         <a href="/demo/window-door-companies/sms-survey-confirmation/" class="live-demo-card">
                             <span class="live-demo-card-title">Survey confirmation</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                         <a href="/demo/window-door-companies/sms-colour-style-choice-follow-up/" class="live-demo-card">
                             <span class="live-demo-card-title">Colour and style choice follow-up</span>
-                            <span class="live-demo-card-meta">SMS Workflow</span>
+                            <span class="live-demo-card-meta live-demo-card-meta-sms"><span class="live-demo-card-channel-icon is-sms" aria-hidden="true">SMS</span><span>SMS Workflow</span></span>
                         </a>
                     </div>
                 </section>
@@ -2728,12 +2753,6 @@ Click the free workflow review button. It takes less than 30 seconds to request.
     </script>
 
     <script id="live-demo-library-navigation">
-        const featuredDemoIndustryIds = [
-            'demo-industry-dentists',
-            'demo-industry-roofers',
-            'demo-industry-estate-agents'
-        ];
-
         function normaliseDemoIndustryValue(value) {
             return String(value || '')
                 .trim()
@@ -2785,48 +2804,11 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             return matchingOption ? matchingOption.value : '';
         }
 
-        function setDemoIntroMessage(message, isHidden = false) {
-            const introMessage = document.getElementById('live-demo-empty-state');
-            if (!introMessage) return;
-
-            introMessage.textContent = message;
-            introMessage.classList.toggle('is-hidden', Boolean(isHidden));
-        }
-
-        function showFeaturedDemoIndustries(shouldUpdateUrl = false) {
-            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
-            const industrySelect = document.getElementById('industry-demo-jump');
-
-            sections.forEach(section => {
-                section.classList.toggle('is-visible', featuredDemoIndustryIds.includes(section.id));
-            });
-
-            setDemoIntroMessage('', true);
-
-            if (industrySelect) {
-                industrySelect.value = '';
-            }
-
-            if (shouldUpdateUrl && history.pushState) {
-                history.pushState(null, '', window.location.pathname || '/');
-            }
-        }
-
-        function setVisibleDemoIndustry(sectionId, shouldScroll = true, shouldUpdateUrl = true) {
+        function scrollToDemoIndustry(sectionId, shouldUpdateUrl = true) {
             const targetId = findDemoIndustryId(sectionId);
-            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
             const industrySelect = document.getElementById('industry-demo-jump');
 
-            if (!targetId) {
-                showFeaturedDemoIndustries(shouldUpdateUrl);
-                return;
-            }
-
-            sections.forEach(section => {
-                section.classList.toggle('is-visible', section.id === targetId);
-            });
-
-            setDemoIntroMessage('', true);
+            if (!targetId) return;
 
             if (industrySelect) {
                 industrySelect.value = targetId || '';
@@ -2839,17 +2821,13 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                 history.pushState(null, '', '?' + industrySlug);
             }
 
-            if (shouldScroll && targetSection) {
+            if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
-        function scrollToDemoIndustry(sectionId) {
-            setVisibleDemoIndustry(sectionId, true, true);
-        }
-
         function scrollToDemoIndustryByName(industryName) {
-            setVisibleDemoIndustry(industryName, true, true);
+            scrollToDemoIndustry(industryName, true);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -2857,7 +2835,9 @@ Click the free workflow review button. It takes less than 30 seconds to request.
 
             if (industrySelect) {
                 industrySelect.addEventListener('change', function () {
-                    setVisibleDemoIndustry(this.value, true, true);
+                    if (this.value) {
+                        scrollToDemoIndustry(this.value, true);
+                    }
                 });
             }
 
@@ -2868,9 +2848,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             const initialIndustry = queryIndustry || hashIndustry;
 
             if (initialIndustry) {
-                setVisibleDemoIndustry(initialIndustry, false, false);
-            } else {
-                showFeaturedDemoIndustries(false);
+                scrollToDemoIndustry(initialIndustry, false);
             }
         });
     </script>
