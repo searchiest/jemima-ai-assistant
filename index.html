@@ -164,26 +164,59 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .faq-content p { font-size: 16px !important; line-height: 1.6; margin-bottom: 1.25rem; color: #334155; }
             .faq-content button { margin-top: 0.5rem; }
         }
-    
 
-        /* Hero placement for the demo library when industry is selected or loaded by URL */
+
+
+        /* Hero-selected industry demo layout */
         .max-w-4xl #live-demo-library {
-            padding: 2rem 0 1rem;
+            padding: 1.75rem 0 0;
             border-top: 0;
             background: transparent;
             width: min(100%, 1200px);
         }
 
+        .max-w-4xl #live-demo-library .live-demo-library-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         .max-w-4xl #live-demo-library .live-demo-header {
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.75rem;
+            text-align: center;
         }
 
-        .max-w-4xl #live-demo-library .live-demo-header h2 {
-            font-size: clamp(1.6rem, 3vw, 2.4rem);
+        .max-w-4xl #live-demo-library .live-demo-industry {
+            padding: 2rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
         }
 
-        .max-w-4xl #live-demo-library .live-demo-header p {
-            font-size: 0.95rem;
+        .max-w-4xl #live-demo-library .live-demo-industry-heading {
+            display: block;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry-heading h3 {
+            text-align: left;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 1024px) {
+            .max-w-4xl #live-demo-library .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .max-w-4xl #live-demo-library .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Live demo library */
@@ -684,8 +717,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="live-demo-library-inner">
                 <div class="live-demo-header">
                     <div class="live-demo-kicker">Live Workflow Examples</div>
-                    <h2>Explore Live AI workflow demos by industry</h2>
-                    <p>Choose an industry to see practical lead triage, quote follow-up, SMS and voice workflow examples. Each demo shows how AI can support service businesses with faster handling, cleaner follow-up and better operational visibility.</p>
                 </div>
 <p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
 
@@ -696,7 +727,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-accountants" class="live-demo-industry" data-industry-name="Accountant">
                     <div class="live-demo-industry-heading">
                         <h3>Accountant Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -755,7 +785,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-bathroom-companies" class="live-demo-industry" data-industry-name="Bathroom Company">
                     <div class="live-demo-industry-heading">
                         <h3>Bathroom Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -814,7 +843,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-builders" class="live-demo-industry" data-industry-name="Builder">
                     <div class="live-demo-industry-heading">
                         <h3>Builder Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -873,7 +901,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-car-dealerships" class="live-demo-industry" data-industry-name="Car Dealership">
                     <div class="live-demo-industry-heading">
                         <h3>Car Dealership Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -932,7 +959,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-care-homes" class="live-demo-industry" data-industry-name="Care Home">
                     <div class="live-demo-industry-heading">
                         <h3>Care Home Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -991,7 +1017,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-cleaning-companies" class="live-demo-industry" data-industry-name="Cleaning Company">
                     <div class="live-demo-industry-heading">
                         <h3>Cleaning Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1050,7 +1075,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-dentists" class="live-demo-industry" data-industry-name="Dentist">
                     <div class="live-demo-industry-heading">
                         <h3>Dentist Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1109,7 +1133,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-driveway-companies" class="live-demo-industry" data-industry-name="Driveway Company">
                     <div class="live-demo-industry-heading">
                         <h3>Driveway Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1168,7 +1191,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-electricians" class="live-demo-industry" data-industry-name="Electrician">
                     <div class="live-demo-industry-heading">
                         <h3>Electrician Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1227,7 +1249,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-estate-agents" class="live-demo-industry" data-industry-name="Estate Agent">
                     <div class="live-demo-industry-heading">
                         <h3>Estate Agent Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1286,7 +1307,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-insurance-brokers" class="live-demo-industry" data-industry-name="Insurance Broker">
                     <div class="live-demo-industry-heading">
                         <h3>Insurance Broker Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1345,7 +1365,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-kitchen-companies" class="live-demo-industry" data-industry-name="Kitchen Company">
                     <div class="live-demo-industry-heading">
                         <h3>Kitchen Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1404,7 +1423,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-landscapers" class="live-demo-industry" data-industry-name="Landscaper">
                     <div class="live-demo-industry-heading">
                         <h3>Landscaper Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1463,7 +1481,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-locksmiths" class="live-demo-industry" data-industry-name="Locksmith">
                     <div class="live-demo-industry-heading">
                         <h3>Locksmith Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1522,7 +1539,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-mortgage-brokers" class="live-demo-industry" data-industry-name="Mortgage Broker">
                     <div class="live-demo-industry-heading">
                         <h3>Mortgage Broker Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1581,7 +1597,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-nurseries" class="live-demo-industry" data-industry-name="Nursery and Childcare Provider">
                     <div class="live-demo-industry-heading">
                         <h3>Nursery and Childcare Provider Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1640,7 +1655,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-pest-control" class="live-demo-industry" data-industry-name="Pest Control Company">
                     <div class="live-demo-industry-heading">
                         <h3>Pest Control Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1699,7 +1713,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-plumbers" class="live-demo-industry" data-industry-name="Plumber">
                     <div class="live-demo-industry-heading">
                         <h3>Plumber Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1758,7 +1771,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-private-healthcare" class="live-demo-industry" data-industry-name="Private Healthcare Clinic">
                     <div class="live-demo-industry-heading">
                         <h3>Private Healthcare Clinic Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1817,7 +1829,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-removal-companies" class="live-demo-industry" data-industry-name="Removal Company">
                     <div class="live-demo-industry-heading">
                         <h3>Removal Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1876,7 +1887,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-roofers" class="live-demo-industry" data-industry-name="Roofer">
                     <div class="live-demo-industry-heading">
                         <h3>Roofer Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1935,7 +1945,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-solar-installers" class="live-demo-industry" data-industry-name="Solar Installer">
                     <div class="live-demo-industry-heading">
                         <h3>Solar Installer Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -1994,7 +2003,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-solicitors" class="live-demo-industry" data-industry-name="Solicitor">
                     <div class="live-demo-industry-heading">
                         <h3>Solicitor Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -2053,7 +2061,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-vets" class="live-demo-industry" data-industry-name="Veterinary Practice">
                     <div class="live-demo-industry-heading">
                         <h3>Veterinary Practice Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -2112,7 +2119,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <section id="demo-industry-window-door-companies" class="live-demo-industry" data-industry-name="Window and Door Company">
                     <div class="live-demo-industry-heading">
                         <h3>Window and Door Company Demos</h3>
-                        <a href="#live-demo-library" class="live-demo-back-link">Back to industry selector</a>
                     </div>
                     <div class="live-demo-grid">
 
@@ -3478,140 +3484,82 @@ if (leadSuccess) {
                 .toLowerCase()
                 .replace(/^\?+/, '')
                 .replace(/^#/, '')
+                .replace(/^industry=/i, '')
                 .replace(/^demo-industry-/, '')
-                .replace(/^industry=/, '')
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '');
+                .replace(/\/+$/g, '');
         }
 
         function getDemoIndustryFromQuery() {
-            const rawQuery = window.location.search || '';
-            if (!rawQuery || rawQuery === '?') return '';
+            const rawSearch = window.location.search || '';
 
-            const queryWithoutQuestionMark = decodeURIComponent(rawQuery.slice(1)).trim();
-            if (!queryWithoutQuestionMark) return '';
+            if (!rawSearch || rawSearch === '?') {
+                return '';
+            }
 
-            const params = new URLSearchParams(rawQuery);
-            const explicitIndustry = params.get('industry');
-            if (explicitIndustry) return explicitIndustry;
+            const params = new URLSearchParams(rawSearch);
 
-            // Supports URLs like https://jemima.ai?roofers and https://jemima.ai?dentists
-            return queryWithoutQuestionMark.split('&')[0].split('=')[0];
+            if (params.has('industry')) {
+                return normaliseDemoIndustryValue(params.get('industry'));
+            }
+
+            return normaliseDemoIndustryValue(rawSearch.slice(1).split('&')[0].split('=')[0]);
         }
 
-        function findDemoIndustryId(industryValue) {
-            const normalisedValue = normaliseDemoIndustryValue(industryValue);
-            if (!normalisedValue) return '';
+        function showDemoIndustries(sectionId, shouldUpdateUrl = false) {
+            const industryDemoJump = document.getElementById('industry-demo-jump');
+            const demoIndustries = Array.from(document.querySelectorAll('.live-demo-industry'));
+            const demoEmptyState = document.querySelector('.live-demo-empty-state');
+            const selectedSection = sectionId ? document.getElementById(sectionId) : null;
 
-            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
-            const matchingSection = sections.find(section => {
-                const sectionId = normaliseDemoIndustryValue(section.id);
-                const sectionName = normaliseDemoIndustryValue(section.dataset.industryName);
-                return sectionId === normalisedValue || sectionName === normalisedValue;
+            demoIndustries.forEach(section => {
+                section.classList.remove('is-visible');
+
+                if (selectedSection) {
+                    if (section === selectedSection) {
+                        section.classList.add('is-visible');
+                    }
+                } else if (featuredDemoIndustryIds.includes(section.id)) {
+                    section.classList.add('is-visible');
+                }
             });
 
-            if (matchingSection) return matchingSection.id;
-
-            const industrySelect = document.getElementById('industry-demo-jump');
-            if (!industrySelect) return '';
-
-            const matchingOption = Array.from(industrySelect.options).find(option => {
-                const optionId = normaliseDemoIndustryValue(option.value);
-                const optionText = normaliseDemoIndustryValue(option.textContent);
-                return optionId === normalisedValue || optionText === normalisedValue;
-            });
-
-            return matchingOption ? matchingOption.value : '';
-        }
-
-        function setDemoIntroMessage(message, isHidden = false) {
-            const introMessage = document.getElementById('live-demo-empty-state');
-            if (!introMessage) return;
-
-            introMessage.textContent = message;
-            introMessage.classList.toggle('is-hidden', Boolean(isHidden));
-        }
-
-        function showFeaturedDemoIndustries(shouldUpdateUrl = false) {
-            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
-            const industrySelect = document.getElementById('industry-demo-jump');
-
-            sections.forEach(section => {
-                section.classList.toggle('is-visible', featuredDemoIndustryIds.includes(section.id));
-            });
-
-            setDemoIntroMessage('Popular demo examples. Select your industry to view the full matching demo library.', false);
-
-            if (industrySelect) {
-                industrySelect.value = '';
+            if (demoEmptyState) {
+                if (selectedSection) {
+                    demoEmptyState.classList.add('is-hidden');
+                } else {
+                    demoEmptyState.classList.remove('is-hidden');
+                }
             }
 
-            if (shouldUpdateUrl && history.pushState) {
-                history.pushState(null, '', window.location.pathname || '/');
+            if (industryDemoJump) {
+                industryDemoJump.value = selectedSection ? selectedSection.id : '';
+            }
+
+            if (shouldUpdateUrl) {
+                const slug = selectedSection ? normaliseDemoIndustryValue(selectedSection.id) : '';
+                const newUrl = slug ? `${window.location.pathname}?${slug}` : window.location.pathname;
+                window.history.pushState({ industrySlug: slug }, '', newUrl);
             }
         }
 
-        function setVisibleDemoIndustry(sectionId, shouldScroll = true, shouldUpdateUrl = true) {
-            const targetId = findDemoIndustryId(sectionId);
-            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
-            const industrySelect = document.getElementById('industry-demo-jump');
-
-            if (!targetId) {
-                showFeaturedDemoIndustries(shouldUpdateUrl);
-                return;
-            }
-
-            sections.forEach(section => {
-                section.classList.toggle('is-visible', section.id === targetId);
-            });
-
-            setDemoIntroMessage('', true);
-
-            if (industrySelect) {
-                industrySelect.value = targetId || '';
-            }
-
-            const targetSection = document.getElementById(targetId);
-
-            if (shouldUpdateUrl && history.pushState) {
-                const industrySlug = targetId.replace(/^demo-industry-/, '');
-                history.pushState(null, '', '?' + industrySlug);
-            }
-
-            if (shouldScroll && targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function scrollToDemoIndustry(sectionId) {
-            setVisibleDemoIndustry(sectionId, true, true);
-        }
-
-        function scrollToDemoIndustryByName(industryName) {
-            setVisibleDemoIndustry(industryName, true, true);
+        function applyDemoIndustryFromUrl() {
+            const slug = getDemoIndustryFromQuery();
+            showDemoIndustries(slug ? `demo-industry-${slug}` : '', false);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            const industrySelect = document.getElementById('industry-demo-jump');
+            const industryDemoJump = document.getElementById('industry-demo-jump');
 
-            if (industrySelect) {
-                industrySelect.addEventListener('change', function () {
-                    setVisibleDemoIndustry(this.value, true, true);
+            if (industryDemoJump) {
+                industryDemoJump.addEventListener('change', function () {
+                    showDemoIndustries(this.value, true);
                 });
             }
 
-            const queryIndustry = getDemoIndustryFromQuery();
-            const hashIndustry = window.location.hash && window.location.hash.startsWith('#demo-industry-')
-                ? window.location.hash.slice(1)
-                : '';
-            const initialIndustry = queryIndustry || hashIndustry;
-
-            if (initialIndustry) {
-                setVisibleDemoIndustry(initialIndustry, false, false);
-            } else {
-                showFeaturedDemoIndustries(false);
-            }
+            applyDemoIndustryFromUrl();
         });
+
+        window.addEventListener('popstate', applyDemoIndustryFromUrl);
     </script>
 
 
