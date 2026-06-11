@@ -214,6 +214,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             font-weight: 600;
         }
 
+
+        .hero-industry-jump {
+            margin: 0 auto 1.25rem;
+        }
+
+        .hero-industry-jump label {
+            color: #64748b;
+        }
+
         .live-demo-jump {
             max-width: 520px;
             margin: 0 auto 3rem;
@@ -638,7 +647,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-1 lg:pt-4 pb-8 lg:pb-16">
         <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12">
             <div class="max-w-4xl text-center space-y-3">
-                <h1 class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight">
+                <div class="live-demo-jump hero-industry-jump">
+                    <label for="industry-demo-jump">Select an industry</label>
+                    <select id="industry-demo-jump" aria-label="Select an industry to view live demos">
+                        <option value="">Select an industry...</option><option value="demo-industry-accountants">Accountant</option><option value="demo-industry-bathroom-companies">Bathroom Company</option><option value="demo-industry-builders">Builder</option><option value="demo-industry-car-dealerships">Car Dealership</option><option value="demo-industry-care-homes">Care Home</option><option value="demo-industry-cleaning-companies">Cleaning Company</option><option value="demo-industry-dentists">Dentist</option><option value="demo-industry-driveway-companies">Driveway Company</option><option value="demo-industry-electricians">Electrician</option><option value="demo-industry-estate-agents">Estate Agent</option><option value="demo-industry-insurance-brokers">Insurance Broker</option><option value="demo-industry-kitchen-companies">Kitchen Company</option><option value="demo-industry-landscapers">Landscaper</option><option value="demo-industry-locksmiths">Locksmith</option><option value="demo-industry-mortgage-brokers">Mortgage Broker</option><option value="demo-industry-nurseries">Nursery and Childcare Provider</option><option value="demo-industry-pest-control">Pest Control Company</option><option value="demo-industry-plumbers">Plumber</option><option value="demo-industry-private-healthcare">Private Healthcare Clinic</option><option value="demo-industry-removal-companies">Removal Company</option><option value="demo-industry-roofers">Roofer</option><option value="demo-industry-solar-installers">Solar Installer</option><option value="demo-industry-solicitors">Solicitor</option><option value="demo-industry-vets">Veterinary Practice</option><option value="demo-industry-window-door-companies">Window and Door Company</option>
+                    </select>
+                </div>
+
+                <h1 id="hero-industry-h1" class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight" data-default-h1="Build an AI-enabled businesswithout hiring a full AI team">
                     Build an AI-enabled business<br><span class="text-[#c2155a]">without hiring a full AI team</span>
                 </h1>
                 <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium"><strong>Not another AI tool:</strong> We provide ongoing AI development and support. Helping service businesses eliminate manual admin and run faster.</p>
@@ -741,15 +757,7 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     <h2>Explore Live AI workflow demos by industry</h2>
                     <p>Choose an industry to see practical lead triage, quote follow-up, SMS and voice workflow examples. Each demo shows how AI can support service businesses with faster handling, cleaner follow-up and better operational visibility.</p>
                 </div>
-
-                <div class="live-demo-jump">
-                    <label for="industry-demo-jump">Select an industry</label>
-                    <select id="industry-demo-jump" aria-label="Select an industry to view live demos">
-                        <option value="">Select an industry...</option><option value="demo-industry-accountants">Accountant</option><option value="demo-industry-bathroom-companies">Bathroom Company</option><option value="demo-industry-builders">Builder</option><option value="demo-industry-car-dealerships">Car Dealership</option><option value="demo-industry-care-homes">Care Home</option><option value="demo-industry-cleaning-companies">Cleaning Company</option><option value="demo-industry-dentists">Dentist</option><option value="demo-industry-driveway-companies">Driveway Company</option><option value="demo-industry-electricians">Electrician</option><option value="demo-industry-estate-agents">Estate Agent</option><option value="demo-industry-insurance-brokers">Insurance Broker</option><option value="demo-industry-kitchen-companies">Kitchen Company</option><option value="demo-industry-landscapers">Landscaper</option><option value="demo-industry-locksmiths">Locksmith</option><option value="demo-industry-mortgage-brokers">Mortgage Broker</option><option value="demo-industry-nurseries">Nursery and Childcare Provider</option><option value="demo-industry-pest-control">Pest Control Company</option><option value="demo-industry-plumbers">Plumber</option><option value="demo-industry-private-healthcare">Private Healthcare Clinic</option><option value="demo-industry-removal-companies">Removal Company</option><option value="demo-industry-roofers">Roofer</option><option value="demo-industry-solar-installers">Solar Installer</option><option value="demo-industry-solicitors">Solicitor</option><option value="demo-industry-vets">Veterinary Practice</option><option value="demo-industry-window-door-companies">Window and Door Company</option>
-                    </select>
-                </div>
-
-                <p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
+<p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
 
                 <div class="live-demo-industry-list">
 
@@ -3585,6 +3593,119 @@ if (leadSuccess) {
             }
         });
     </script>
+
+
+<!-- Jemima hero industry H1 updater -->
+<script>
+(function () {
+    function cleanIndustryName(value) {
+        return String(value || '')
+            .replace(/\s+Demos$/i, '')
+            .trim();
+    }
+
+    function normaliseIndustryValue(value) {
+        return String(value || '')
+            .trim()
+            .replace(/^\?+/, '')
+            .replace(/^industry=/i, '')
+            .replace(/^demo-industry-/i, '')
+            .replace(/\/+$/g, '')
+            .toLowerCase();
+    }
+
+    function getIndustryFromUrl() {
+        var rawSearch = window.location.search || '';
+
+        if (!rawSearch || rawSearch === '?') {
+            return '';
+        }
+
+        var params = new URLSearchParams(rawSearch);
+
+        if (params.has('industry')) {
+            return normaliseIndustryValue(params.get('industry'));
+        }
+
+        return normaliseIndustryValue(rawSearch.slice(1).split('&')[0].split('=')[0]);
+    }
+
+    function getIndustryNameFromSection(industrySlug) {
+        var section = document.getElementById('demo-industry-' + normaliseIndustryValue(industrySlug));
+
+        if (!section) {
+            return '';
+        }
+
+        return cleanIndustryName(section.getAttribute('data-industry-name') || '');
+    }
+
+    function getIndustryNameFromSelect(select) {
+        if (!select || !select.value) {
+            return '';
+        }
+
+        var option = select.options[select.selectedIndex];
+
+        if (!option) {
+            return '';
+        }
+
+        return cleanIndustryName(option.textContent || '');
+    }
+
+    function setHeroIndustryH1(industryName) {
+        var h1 = document.getElementById('hero-industry-h1');
+
+        if (!h1) {
+            return;
+        }
+
+        var defaultText = h1.getAttribute('data-default-h1') || 'Build an AI-enabled business without hiring a full AI team';
+
+        if (!industryName) {
+            h1.innerHTML = 'Build an AI-enabled business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
+            return;
+        }
+
+        h1.innerHTML = 'AI workflow demos for<br><span class="text-[#c2155a]">' + industryName + '</span>';
+    }
+
+    function updateHeroIndustryH1FromCurrentState() {
+        var select = document.getElementById('industry-demo-jump');
+        var industryName = getIndustryNameFromSelect(select);
+
+        if (!industryName) {
+            industryName = getIndustryNameFromSection(getIndustryFromUrl());
+        }
+
+        setHeroIndustryH1(industryName);
+    }
+
+    function initialiseHeroIndustryH1() {
+        var select = document.getElementById('industry-demo-jump');
+
+        if (select) {
+            select.addEventListener('change', function () {
+                setTimeout(updateHeroIndustryH1FromCurrentState, 0);
+            });
+        }
+
+        window.addEventListener('popstate', function () {
+            setTimeout(updateHeroIndustryH1FromCurrentState, 0);
+        });
+
+        setTimeout(updateHeroIndustryH1FromCurrentState, 0);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialiseHeroIndustryH1);
+    } else {
+        initialiseHeroIndustryH1();
+    }
+})();
+</script>
+<!-- End Jemima hero industry H1 updater -->
 
 </body>
 </html>
