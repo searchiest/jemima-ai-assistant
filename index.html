@@ -261,9 +261,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border: 1px solid #e2e8f0;
         }
 
-        /* Show the full demo library by default so every industry set is visible on the page. */
+        /* Keep all demo links in the page source, but hide them visually until an industry is selected. */
         .live-demo-industry {
-            display: block;
+            display: none;
         }
 
         .live-demo-industry.is-visible {
@@ -346,42 +346,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
         }
 
-
-        .live-demo-card-top {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .live-demo-channel-icon,
-        .live-demo-channel-badge {
-            width: 30px;
-            height: 30px;
-            flex: 0 0 30px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            color: #c2155a;
-            font-size: 13px;
-            line-height: 1;
-            margin-top: 1px;
-        }
-
-        .live-demo-channel-sms {
-            font-size: 9px;
-            font-weight: 950;
-            letter-spacing: 0.08em;
-        }
-
-        .live-demo-channel-voice {
-            font-size: 12px;
-        }
-
         .live-demo-card-title {
             display: block;
-            flex: 1;
             color: #0f172a;
             font-size: 15px;
             line-height: 1.35;
@@ -390,38 +356,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .live-demo-card-meta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
+            display: block;
             margin-top: 1rem;
             color: #c2155a;
             font-size: 10px;
             font-weight: 900;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-        }
-
-        .live-demo-card-channel-icon {
-            width: 22px;
-            height: 22px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 auto;
-            border: 1px solid rgba(194, 21, 90, 0.22);
-            background: rgba(194, 21, 90, 0.08);
-            color: #c2155a;
-            font-size: 11px;
-            line-height: 1;
-        }
-
-        .live-demo-card-channel-icon.is-sms {
-            width: auto;
-            min-width: 34px;
-            padding: 0 6px;
-            font-size: 9px;
-            letter-spacing: 0.08em;
-            font-weight: 900;
         }
 
         @media screen and (max-width: 1024px) {
@@ -623,7 +564,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="flex justify-between items-center mb-12">
             <div class="flex items-center gap-2 text-xl tracking-tighter" onclick="toggleMobileMenu()">
                 <img src="jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
-                <span style="font-weight: 700;">Jemima</span>
+                <span>Jemima</span>
             </div>
             <button onclick="toggleMobileMenu()" class="text-slate-600">
                 <i class="fas fa-times text-2xl"></i>
@@ -645,7 +586,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
         <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="window.location.reload()">
             <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
-            <span style="font-weight: 700;">Jemima</span>
+            <span>Jemima</span>
         </div>
         <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
             <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
@@ -764,23 +705,19 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                 <div class="live-demo-header">
                     <div class="live-demo-kicker">Live Workflow Examples</div>
                     <h2>Explore Live AI workflow demos by industry</h2>
-                    <p>Choose an industry to see practical lead triage, quote follow-up, SMS and voice workflow examples. Each demo shows how AI can support service businesses with faster handling, cleaner follow-up and better operational visibility.</p>
+                    <p>Choose an industry to see practical lead triage, quote follow-up and SMS workflow examples. Each demo shows how AI can support service businesses with faster handling, cleaner follow-up and better operational visibility.</p>
                 </div>
 
                 <div class="live-demo-jump">
                     <label for="industry-demo-jump">Select an industry</label>
                     <select id="industry-demo-jump" aria-label="Select an industry to view live demos">
-                        
                         <option value="">Select an industry...</option><option value="demo-industry-accountants">Accountant</option><option value="demo-industry-bathroom-companies">Bathroom Company</option><option value="demo-industry-builders">Builder</option><option value="demo-industry-car-dealerships">Car Dealership</option><option value="demo-industry-care-homes">Care Home</option><option value="demo-industry-cleaning-companies">Cleaning Company</option><option value="demo-industry-dentists">Dentist</option><option value="demo-industry-driveway-companies">Driveway Company</option><option value="demo-industry-electricians">Electrician</option><option value="demo-industry-estate-agents">Estate Agent</option><option value="demo-industry-insurance-brokers">Insurance Broker</option><option value="demo-industry-kitchen-companies">Kitchen Company</option><option value="demo-industry-landscapers">Landscaper</option><option value="demo-industry-locksmiths">Locksmith</option><option value="demo-industry-mortgage-brokers">Mortgage Broker</option><option value="demo-industry-nurseries">Nursery and Childcare Provider</option><option value="demo-industry-pest-control">Pest Control Company</option><option value="demo-industry-plumbers">Plumber</option><option value="demo-industry-private-healthcare">Private Healthcare Clinic</option><option value="demo-industry-removal-companies">Removal Company</option><option value="demo-industry-roofers">Roofer</option><option value="demo-industry-solar-installers">Solar Installer</option><option value="demo-industry-solicitors">Solicitor</option><option value="demo-industry-vets">Veterinary Practice</option><option value="demo-industry-window-door-companies">Window and Door Company</option>
-                    
                     </select>
                 </div>
 
                 <p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
 
                 <div class="live-demo-industry-list">
-
-                
 
                 <section id="demo-industry-accountants" class="live-demo-industry" data-industry-name="Accountant">
                     <div class="live-demo-industry-heading">
@@ -789,58 +726,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/accountants/bookkeeping-catch-up-vat-cleanup/" class="live-demo-card live-demo-card-text is-sample-card" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Bookkeeping catch-up and VAT cleanup enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/accountants/bookkeeping-catch-up-vat-cleanup/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bookkeeping catch-up and VAT cleanup enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/accountants/new-limited-company-startup/" class="live-demo-card live-demo-card-text is-sample-card" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">New limited company startup enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/accountants/new-limited-company-startup/" class="live-demo-card">
+                            <span class="live-demo-card-title">New limited company startup enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/accountants/monthly-accounting-proposal-follow-up/" class="live-demo-card live-demo-card-text is-sample-card" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Monthly accounting proposal follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/accountants/monthly-accounting-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Monthly accounting proposal follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/accountants/tax-return-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Tax return quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/accountants/tax-return-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Tax return quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/accountants/sms-secure-document-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Secure document request follow-up</span>
-                            </span>
+                        <a href="/demo/accountants/sms-secure-document-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Secure document request follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/accountants/sms-bookkeeping-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Monthly bookkeeping reminder</span>
-                            </span>
+                        <a href="/demo/accountants/sms-bookkeeping-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Monthly bookkeeping reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/accountants/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Out-of-hours tax and payroll enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-bathroom-companies" class="live-demo-industry" data-industry-name="Bathroom Company">
                     <div class="live-demo-industry-heading">
                         <h3>Bathroom Company Demos</h3>
@@ -848,58 +759,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/bathroom-companies/bathroom-renovation-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Bathroom renovation enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/bathroom-companies/bathroom-renovation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bathroom renovation enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/bathroom-companies/ensuite-shower-room-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Ensuite or shower room enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/bathroom-companies/ensuite-shower-room-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Ensuite or shower room enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/bathroom-companies/bathroom-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Bathroom quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/bathroom-companies/bathroom-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bathroom quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/bathroom-companies/bathroom-design-consultation-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Bathroom design consultation follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/bathroom-companies/bathroom-design-consultation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Bathroom design consultation follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/bathroom-companies/sms-pre-visit-photo-checklist/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Pre-visit photo checklist</span>
-                            </span>
+                        <a href="/demo/bathroom-companies/sms-pre-visit-photo-checklist/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pre-visit photo checklist</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/bathroom-companies/sms-installation-disruption-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Installation disruption check</span>
-                            </span>
+                        <a href="/demo/bathroom-companies/sms-installation-disruption-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Installation disruption check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/bathroom-companies/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Renovation and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-builders" class="live-demo-industry" data-industry-name="Builder">
                     <div class="live-demo-industry-heading">
                         <h3>Builder Demos</h3>
@@ -907,58 +792,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/builders/extension-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Home extension enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/builders/extension-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Home extension enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/builders/loft-conversion-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Loft conversion enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/builders/loft-conversion-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Loft conversion enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/builders/building-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Building quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/builders/building-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Building quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/builders/extension-proposal-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Extension proposal follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/builders/extension-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Extension proposal follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/builders/sms-site-access-parking-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Site access and parking check</span>
-                            </span>
+                        <a href="/demo/builders/sms-site-access-parking-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Site access and parking check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/builders/sms-material-delivery-coordination/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Material delivery coordination</span>
-                            </span>
+                        <a href="/demo/builders/sms-material-delivery-coordination/" class="live-demo-card">
+                            <span class="live-demo-card-title">Material delivery coordination</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/builders/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Extension renovation and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-car-dealerships" class="live-demo-industry" data-industry-name="Car Dealership">
                     <div class="live-demo-industry-heading">
                         <h3>Car Dealership Demos</h3>
@@ -966,58 +825,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/car-dealerships/vehicle-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Vehicle enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/car-dealerships/vehicle-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Vehicle enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/car-dealerships/finance-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Car finance enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/car-dealerships/finance-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Car finance enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/car-dealerships/vehicle-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Vehicle quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/car-dealerships/vehicle-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Vehicle quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/car-dealerships/part-exchange-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Part-exchange valuation follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/car-dealerships/part-exchange-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Part-exchange valuation follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/car-dealerships/sms-test-drive-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Test drive confirmation</span>
-                            </span>
+                        <a href="/demo/car-dealerships/sms-test-drive-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Test drive confirmation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/car-dealerships/sms-documents-before-visit-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Documents before visit reminder</span>
-                            </span>
+                        <a href="/demo/car-dealerships/sms-documents-before-visit-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Documents before visit reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/car-dealerships/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Vehicle enquiry and test drive capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-care-homes" class="live-demo-industry" data-industry-name="Care Home">
                     <div class="live-demo-industry-heading">
                         <h3>Care Home Demos</h3>
@@ -1025,58 +858,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/care-homes/care-home-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Care home enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/care-homes/care-home-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Care home enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/care-homes/respite-care-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Respite care enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/care-homes/respite-care-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Respite care enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/care-homes/care-assessment-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Care assessment follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/care-homes/care-assessment-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Care assessment follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/care-homes/respite-care-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Respite care availability follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/care-homes/respite-care-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Respite care availability follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/care-homes/sms-family-visit-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Family visit confirmation</span>
-                            </span>
+                        <a href="/demo/care-homes/sms-family-visit-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Family visit confirmation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/care-homes/sms-information-pack-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Information pack follow-up</span>
-                            </span>
+                        <a href="/demo/care-homes/sms-information-pack-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Information pack follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/care-homes/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Family enquiry and callback capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-cleaning-companies" class="live-demo-industry" data-industry-name="Cleaning Company">
                     <div class="live-demo-industry-heading">
                         <h3>Cleaning Company Demos</h3>
@@ -1084,58 +891,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/cleaning-companies/commercial-cleaning-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Commercial cleaning enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/cleaning-companies/commercial-cleaning-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial cleaning enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/cleaning-companies/end-of-tenancy-cleaning-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">End-of-tenancy cleaning enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/cleaning-companies/end-of-tenancy-cleaning-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">End-of-tenancy cleaning enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/cleaning-companies/commercial-cleaning-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Commercial cleaning quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/cleaning-companies/commercial-cleaning-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial cleaning quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/cleaning-companies/deep-clean-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Deep clean quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/cleaning-companies/deep-clean-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Deep clean quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/cleaning-companies/sms-cleaning-access-instructions/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Cleaning access instructions</span>
-                            </span>
+                        <a href="/demo/cleaning-companies/sms-cleaning-access-instructions/" class="live-demo-card">
+                            <span class="live-demo-card-title">Cleaning access instructions</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/cleaning-companies/sms-after-clean-feedback-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">After-clean feedback check</span>
-                            </span>
+                        <a href="/demo/cleaning-companies/sms-after-clean-feedback-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">After-clean feedback check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/cleaning-companies/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Quote and booking enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-dentists" class="live-demo-industry" data-industry-name="Dentist">
                     <div class="live-demo-industry-heading">
                         <h3>Dentist Demos</h3>
@@ -1143,58 +924,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/dentists/high-value-treatment-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">High-value treatment enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/dentists/high-value-treatment-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">High-value treatment enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/dentists/emergency-dental-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Emergency dental enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/dentists/emergency-dental-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Emergency dental enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/dentists/treatment-plan-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Treatment plan follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/dentists/treatment-plan-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Treatment plan follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/dentists/implant-treatment-plan-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Implant treatment plan follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/dentists/implant-treatment-plan-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Implant treatment plan follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/dentists/sms-appointment-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Appointment confirmation and change request</span>
-                            </span>
+                        <a href="/demo/dentists/sms-appointment-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Appointment confirmation and change request</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/dentists/sms-recall-reactivation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Overdue check-up recall and reactivation</span>
-                            </span>
+                        <a href="/demo/dentists/sms-recall-reactivation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Overdue check-up recall and reactivation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/dentists/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Out-of-hours voice message capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-driveway-companies" class="live-demo-industry" data-industry-name="Driveway Company">
                     <div class="live-demo-industry-heading">
                         <h3>Driveway Company Demos</h3>
@@ -1202,58 +957,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/driveway-companies/new-driveway-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">New driveway enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/driveway-companies/new-driveway-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">New driveway enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/driveway-companies/driveway-repair-resurfacing-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Driveway repair or resurfacing enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/driveway-companies/driveway-repair-resurfacing-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Driveway repair or resurfacing enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/driveway-companies/driveway-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Driveway quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/driveway-companies/driveway-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Driveway quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/driveway-companies/driveway-survey-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Driveway survey follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/driveway-companies/driveway-survey-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Driveway survey follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/driveway-companies/sms-weather-reschedule-update/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Weather reschedule update</span>
-                            </span>
+                        <a href="/demo/driveway-companies/sms-weather-reschedule-update/" class="live-demo-card">
+                            <span class="live-demo-card-title">Weather reschedule update</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/driveway-companies/sms-clear-drive-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Clear the drive reminder</span>
-                            </span>
+                        <a href="/demo/driveway-companies/sms-clear-drive-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Clear the drive reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/driveway-companies/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Quote and survey enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-electricians" class="live-demo-industry" data-industry-name="Electrician">
                     <div class="live-demo-industry-heading">
                         <h3>Electrician Demos</h3>
@@ -1261,58 +990,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/electricians/electrical-fault-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Electrical fault enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/electricians/electrical-fault-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Electrical fault enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/electricians/fuse-box-rewiring-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Fuse box or rewiring enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/electricians/fuse-box-rewiring-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Fuse box or rewiring enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/electricians/electrical-work-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Electrical work quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/electricians/electrical-work-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Electrical work quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/electricians/rewiring-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Rewiring quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/electricians/rewiring-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Rewiring quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/electricians/sms-power-access-occupant-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Power access and occupant check</span>
-                            </span>
+                        <a href="/demo/electricians/sms-power-access-occupant-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Power access and occupant check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/electricians/sms-certificate-ready-notification/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Certificate ready notification</span>
-                            </span>
+                        <a href="/demo/electricians/sms-certificate-ready-notification/" class="live-demo-card">
+                            <span class="live-demo-card-title">Certificate ready notification</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/electricians/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Fault and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-estate-agents" class="live-demo-industry" data-industry-name="Estate Agent">
                     <div class="live-demo-industry-heading">
                         <h3>Estate Agent Demos</h3>
@@ -1320,58 +1023,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/estate-agents/property-valuation-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Property valuation enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/estate-agents/property-valuation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Property valuation enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/estate-agents/landlord-letting-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Landlord letting enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/estate-agents/landlord-letting-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Landlord letting enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/estate-agents/property-valuation-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Property valuation follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/estate-agents/property-valuation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Property valuation follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/estate-agents/landlord-management-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Landlord management proposal follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/estate-agents/landlord-management-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Landlord management proposal follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/estate-agents/sms-viewing-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Viewing confirmation and change request</span>
-                            </span>
+                        <a href="/demo/estate-agents/sms-viewing-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Viewing confirmation and change request</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/estate-agents/sms-valuation-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Valuation follow-up</span>
-                            </span>
+                        <a href="/demo/estate-agents/sms-valuation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Valuation follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/estate-agents/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Viewing and valuation enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-insurance-brokers" class="live-demo-industry" data-industry-name="Insurance Broker">
                     <div class="live-demo-industry-heading">
                         <h3>Insurance Broker Demos</h3>
@@ -1379,58 +1056,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/insurance-brokers/business-insurance-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Business insurance enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/insurance-brokers/business-insurance-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Business insurance enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/insurance-brokers/fleet-insurance-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Fleet insurance enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/insurance-brokers/fleet-insurance-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Fleet insurance enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/insurance-brokers/commercial-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Commercial insurance quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/insurance-brokers/commercial-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial insurance quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/insurance-brokers/fleet-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Fleet insurance quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/insurance-brokers/fleet-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Fleet insurance quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/insurance-brokers/sms-renewal-review-prompt/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Renewal review prompt</span>
-                            </span>
+                        <a href="/demo/insurance-brokers/sms-renewal-review-prompt/" class="live-demo-card">
+                            <span class="live-demo-card-title">Renewal review prompt</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/insurance-brokers/sms-missing-document-chase/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Missing document chase</span>
-                            </span>
+                        <a href="/demo/insurance-brokers/sms-missing-document-chase/" class="live-demo-card">
+                            <span class="live-demo-card-title">Missing document chase</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/insurance-brokers/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Policy and callback enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-kitchen-companies" class="live-demo-industry" data-industry-name="Kitchen Company">
                     <div class="live-demo-industry-heading">
                         <h3>Kitchen Company Demos</h3>
@@ -1438,58 +1089,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/kitchen-companies/kitchen-renovation-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Kitchen renovation enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/kitchen-companies/kitchen-renovation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen renovation enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/kitchen-companies/kitchen-design-visit-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Kitchen design visit enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/kitchen-companies/kitchen-design-visit-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen design visit enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/kitchen-companies/kitchen-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Kitchen quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/kitchen-companies/kitchen-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/kitchen-companies/kitchen-design-proposal-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Kitchen design proposal follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/kitchen-companies/kitchen-design-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Kitchen design proposal follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/kitchen-companies/sms-design-appointment-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Design appointment reminder</span>
-                            </span>
+                        <a href="/demo/kitchen-companies/sms-design-appointment-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Design appointment reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/kitchen-companies/sms-appliance-choice-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Appliance choice follow-up</span>
-                            </span>
+                        <a href="/demo/kitchen-companies/sms-appliance-choice-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Appliance choice follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/kitchen-companies/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Design and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-landscapers" class="live-demo-industry" data-industry-name="Landscaper">
                     <div class="live-demo-industry-heading">
                         <h3>Landscaper Demos</h3>
@@ -1497,58 +1122,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/landscapers/garden-redesign-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Garden redesign enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/landscapers/garden-redesign-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Garden redesign enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/landscapers/patio-fencing-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Patio or fencing enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/landscapers/patio-fencing-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Patio or fencing enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/landscapers/landscaping-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Landscaping quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/landscapers/landscaping-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Landscaping quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/landscapers/garden-design-proposal-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Garden design proposal follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/landscapers/garden-design-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Garden design proposal follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/landscapers/sms-garden-access-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Garden access check</span>
-                            </span>
+                        <a href="/demo/landscapers/sms-garden-access-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Garden access check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/landscapers/sms-weather-start-update/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Weather start update</span>
-                            </span>
+                        <a href="/demo/landscapers/sms-weather-start-update/" class="live-demo-card">
+                            <span class="live-demo-card-title">Weather start update</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/landscapers/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Garden design and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-locksmiths" class="live-demo-industry" data-industry-name="Locksmith">
                     <div class="live-demo-industry-heading">
                         <h3>Locksmith Demos</h3>
@@ -1556,58 +1155,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/locksmiths/emergency-lockout-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Emergency lockout enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/locksmiths/emergency-lockout-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Emergency lockout enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/locksmiths/lock-replacement-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Lock replacement enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/locksmiths/lock-replacement-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Lock replacement enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/locksmiths/lock-replacement-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Lock replacement quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/locksmiths/lock-replacement-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Lock replacement quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/locksmiths/security-upgrade-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Security upgrade quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/locksmiths/security-upgrade-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Security upgrade quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/locksmiths/sms-eta-update/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Locksmith ETA update</span>
-                            </span>
+                        <a href="/demo/locksmiths/sms-eta-update/" class="live-demo-card">
+                            <span class="live-demo-card-title">Locksmith ETA update</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/locksmiths/sms-key-collection-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Key collection reminder</span>
-                            </span>
+                        <a href="/demo/locksmiths/sms-key-collection-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Key collection reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/locksmiths/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Lockout and repair enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-mortgage-brokers" class="live-demo-industry" data-industry-name="Mortgage Broker">
                     <div class="live-demo-industry-heading">
                         <h3>Mortgage Broker Demos</h3>
@@ -1615,58 +1188,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/mortgage-brokers/first-time-buyer-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">First-time buyer mortgage enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/mortgage-brokers/first-time-buyer-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">First-time buyer mortgage enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/mortgage-brokers/remortgage-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Remortgage enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/mortgage-brokers/remortgage-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Remortgage enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/mortgage-brokers/mortgage-recommendation-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Mortgage recommendation follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/mortgage-brokers/mortgage-recommendation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Mortgage recommendation follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/mortgage-brokers/protection-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Protection quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/mortgage-brokers/protection-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Protection quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/mortgage-brokers/sms-document-chase/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Mortgage document chase</span>
-                            </span>
+                        <a href="/demo/mortgage-brokers/sms-document-chase/" class="live-demo-card">
+                            <span class="live-demo-card-title">Mortgage document chase</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/mortgage-brokers/sms-review-check-in/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Mortgage review check-in</span>
-                            </span>
+                        <a href="/demo/mortgage-brokers/sms-review-check-in/" class="live-demo-card">
+                            <span class="live-demo-card-title">Mortgage review check-in</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/mortgage-brokers/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Enquiry and callback capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-nurseries" class="live-demo-industry" data-industry-name="Nursery and Childcare Provider">
                     <div class="live-demo-industry-heading">
                         <h3>Nursery and Childcare Provider Demos</h3>
@@ -1674,58 +1221,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/nurseries/nursery-place-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Nursery place enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/nurseries/nursery-place-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Nursery place enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/nurseries/childcare-availability-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Childcare availability enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/nurseries/childcare-availability-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Childcare availability enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/nurseries/nursery-visit-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Nursery visit follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/nurseries/nursery-visit-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Nursery visit follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/nurseries/childcare-fees-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Childcare fees follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/nurseries/childcare-fees-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Childcare fees follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/nurseries/sms-visit-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Nursery visit confirmation</span>
-                            </span>
+                        <a href="/demo/nurseries/sms-visit-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Nursery visit confirmation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/nurseries/sms-registration-forms-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Registration forms reminder</span>
-                            </span>
+                        <a href="/demo/nurseries/sms-registration-forms-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Registration forms reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/nurseries/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Parent enquiry and callback capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-pest-control" class="live-demo-industry" data-industry-name="Pest Control Company">
                     <div class="live-demo-industry-heading">
                         <h3>Pest Control Company Demos</h3>
@@ -1733,58 +1254,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/pest-control/pest-infestation-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Pest infestation enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/pest-control/pest-infestation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pest infestation enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/pest-control/commercial-pest-control-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Commercial pest control enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/pest-control/commercial-pest-control-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial pest control enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/pest-control/pest-treatment-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Pest treatment quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/pest-control/pest-treatment-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pest treatment quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/pest-control/commercial-contract-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Commercial pest contract follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/pest-control/commercial-contract-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Commercial pest contract follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/pest-control/sms-visit-preparation-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Pest visit preparation check</span>
-                            </span>
+                        <a href="/demo/pest-control/sms-visit-preparation-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pest visit preparation check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/pest-control/sms-post-treatment-activity-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Post-treatment activity check</span>
-                            </span>
+                        <a href="/demo/pest-control/sms-post-treatment-activity-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Post-treatment activity check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/pest-control/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Infestation and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-plumbers" class="live-demo-industry" data-industry-name="Plumber">
                     <div class="live-demo-industry-heading">
                         <h3>Plumber Demos</h3>
@@ -1792,58 +1287,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/plumbers/emergency-leak-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Emergency leak enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/plumbers/emergency-leak-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Emergency leak enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/plumbers/boiler-heating-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Boiler or heating enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/plumbers/boiler-heating-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Boiler or heating enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/plumbers/plumbing-repair-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Plumbing repair quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/plumbers/plumbing-repair-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Plumbing repair quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/plumbers/boiler-installation-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Boiler installation quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/plumbers/boiler-installation-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Boiler installation quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/plumbers/sms-eta-access-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Plumber ETA and access check</span>
-                            </span>
+                        <a href="/demo/plumbers/sms-eta-access-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Plumber ETA and access check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/plumbers/sms-parts-arrival-update/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Parts arrival update</span>
-                            </span>
+                        <a href="/demo/plumbers/sms-parts-arrival-update/" class="live-demo-card">
+                            <span class="live-demo-card-title">Parts arrival update</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/plumbers/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Leak boiler and callback enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-private-healthcare" class="live-demo-industry" data-industry-name="Private Healthcare Clinic">
                     <div class="live-demo-industry-heading">
                         <h3>Private Healthcare Clinic Demos</h3>
@@ -1851,58 +1320,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/private-healthcare/private-consultation-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Private consultation enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/private-healthcare/private-consultation-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Private consultation enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/private-healthcare/diagnostic-scan-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Diagnostic scan enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/private-healthcare/diagnostic-scan-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Diagnostic scan enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/private-healthcare/treatment-price-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Treatment price follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/private-healthcare/treatment-price-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Treatment price follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/private-healthcare/consultation-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Consultation follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/private-healthcare/consultation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Consultation follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/private-healthcare/sms-appointment-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Appointment confirmation</span>
-                            </span>
+                        <a href="/demo/private-healthcare/sms-appointment-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Appointment confirmation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/private-healthcare/sms-pre-appointment-forms-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Pre-appointment forms reminder</span>
-                            </span>
+                        <a href="/demo/private-healthcare/sms-pre-appointment-forms-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Pre-appointment forms reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/private-healthcare/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Patient enquiry and callback capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-removal-companies" class="live-demo-industry" data-industry-name="Removal Company">
                     <div class="live-demo-industry-heading">
                         <h3>Removal Company Demos</h3>
@@ -1910,58 +1353,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/removal-companies/house-move-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">House move enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/removal-companies/house-move-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">House move enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/removal-companies/office-move-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Office move enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/removal-companies/office-move-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Office move enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/removal-companies/removal-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Removal quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/removal-companies/removal-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Removal quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/removal-companies/packing-service-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Packing service quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/removal-companies/packing-service-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Packing service quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/removal-companies/sms-move-inventory-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Move inventory check</span>
-                            </span>
+                        <a href="/demo/removal-companies/sms-move-inventory-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Move inventory check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/removal-companies/sms-moving-day-access-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Moving day access check</span>
-                            </span>
+                        <a href="/demo/removal-companies/sms-moving-day-access-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Moving day access check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/removal-companies/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Quote and booking enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-roofers" class="live-demo-industry" data-industry-name="Roofer">
                     <div class="live-demo-industry-heading">
                         <h3>Roofer Demos</h3>
@@ -1969,58 +1386,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/roofers/roof-repair-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Roof repair enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/roofers/roof-repair-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Roof repair enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/roofers/new-roof-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">New roof enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/roofers/new-roof-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">New roof enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/roofers/roof-repair-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Roof repair quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/roofers/roof-repair-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Roof repair quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/roofers/new-roof-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">New roof quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/roofers/new-roof-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">New roof quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/roofers/sms-quote-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Roofing quote follow-up</span>
-                            </span>
+                        <a href="/demo/roofers/sms-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Roofing quote follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/roofers/sms-storm-damage-missed-call/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Storm damage missed call response</span>
-                            </span>
+                        <a href="/demo/roofers/sms-storm-damage-missed-call/" class="live-demo-card">
+                            <span class="live-demo-card-title">Storm damage missed call response</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/roofers/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Leak and quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-solar-installers" class="live-demo-industry" data-industry-name="Solar Installer">
                     <div class="live-demo-industry-heading">
                         <h3>Solar Installer Demos</h3>
@@ -2028,58 +1419,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/solar-installers/solar-panel-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Solar panel enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solar-installers/solar-panel-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar panel enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solar-installers/battery-storage-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Battery storage enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solar-installers/battery-storage-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Battery storage enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solar-installers/solar-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Solar quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solar-installers/solar-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solar-installers/solar-survey-proposal-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Solar survey proposal follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solar-installers/solar-survey-proposal-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar survey proposal follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solar-installers/sms-survey-access-check/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Solar survey access check</span>
-                            </span>
+                        <a href="/demo/solar-installers/sms-survey-access-check/" class="live-demo-card">
+                            <span class="live-demo-card-title">Solar survey access check</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solar-installers/sms-installation-prep-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Installation preparation reminder</span>
-                            </span>
+                        <a href="/demo/solar-installers/sms-installation-prep-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Installation preparation reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/solar-installers/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Quote and survey enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-solicitors" class="live-demo-industry" data-industry-name="Solicitor">
                     <div class="live-demo-industry-heading">
                         <h3>Solicitor Demos</h3>
@@ -2087,58 +1452,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/solicitors/conveyancing-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Conveyancing enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solicitors/conveyancing-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Conveyancing enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solicitors/family-law-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Family law enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solicitors/family-law-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Family law enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solicitors/conveyancing-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Conveyancing quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solicitors/conveyancing-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Conveyancing quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solicitors/consultation-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Legal consultation follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/solicitors/consultation-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Legal consultation follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solicitors/sms-consultation-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Consultation confirmation and change request</span>
-                            </span>
+                        <a href="/demo/solicitors/sms-consultation-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Consultation confirmation and change request</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/solicitors/sms-client-information-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Client information status follow-up</span>
-                            </span>
+                        <a href="/demo/solicitors/sms-client-information-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Client information status follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/solicitors/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">New matter and callback enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-vets" class="live-demo-industry" data-industry-name="Veterinary Practice">
                     <div class="live-demo-industry-heading">
                         <h3>Veterinary Practice Demos</h3>
@@ -2146,58 +1485,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/vets/new-pet-registration/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">New pet registration enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/vets/new-pet-registration/" class="live-demo-card">
+                            <span class="live-demo-card-title">New pet registration enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/vets/urgent-pet-symptom-triage/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Urgent pet symptom triage</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/vets/urgent-pet-symptom-triage/" class="live-demo-card">
+                            <span class="live-demo-card-title">Urgent pet symptom triage</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/vets/dental-treatment-estimate-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Dental treatment estimate follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/vets/dental-treatment-estimate-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Dental treatment estimate follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/vets/surgery-estimate-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Surgery estimate follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/vets/surgery-estimate-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Surgery estimate follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/vets/sms-appointment-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Vet appointment confirmation</span>
-                            </span>
+                        <a href="/demo/vets/sms-appointment-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Vet appointment confirmation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/vets/sms-medication-collection-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Medication collection reminder</span>
-                            </span>
+                        <a href="/demo/vets/sms-medication-collection-reminder/" class="live-demo-card">
+                            <span class="live-demo-card-title">Medication collection reminder</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/vets/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Pet concern and callback enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-
                 <section id="demo-industry-window-door-companies" class="live-demo-industry" data-industry-name="Window and Door Company">
                     <div class="live-demo-industry-heading">
                         <h3>Window and Door Company Demos</h3>
@@ -2205,58 +1518,32 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                     </div>
                     <div class="live-demo-grid">
 
-                        <a href="https://jemima.ai/demo/window-door-companies/replacement-window-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Replacement window enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/window-door-companies/replacement-window-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Replacement window enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/window-door-companies/composite-door-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Composite door enquiry</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/window-door-companies/composite-door-enquiry/" class="live-demo-card">
+                            <span class="live-demo-card-title">Composite door enquiry</span>
+                            <span class="live-demo-card-meta">Lead Triage</span>
                         </a>
-                        <a href="https://jemima.ai/demo/window-door-companies/window-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Window quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/window-door-companies/window-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Window quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/window-door-companies/door-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span>
-                                <span class="live-demo-card-title">Door quote follow-up</span>
-                            </span>
-                            <span class="live-demo-card-meta">Text Demo</span>
+                        <a href="/demo/window-door-companies/door-quote-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Door quote follow-up</span>
+                            <span class="live-demo-card-meta">Quote Follow-Up</span>
                         </a>
-                        <a href="https://jemima.ai/demo/window-door-companies/sms-survey-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Survey confirmation</span>
-                            </span>
+                        <a href="/demo/window-door-companies/sms-survey-confirmation/" class="live-demo-card">
+                            <span class="live-demo-card-title">Survey confirmation</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
                         </a>
-                        <a href="https://jemima.ai/demo/window-door-companies/sms-colour-style-choice-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span>
-                                <span class="live-demo-card-title">Colour and style choice follow-up</span>
-                            </span>
+                        <a href="/demo/window-door-companies/sms-colour-style-choice-follow-up/" class="live-demo-card">
+                            <span class="live-demo-card-title">Colour and style choice follow-up</span>
                             <span class="live-demo-card-meta">SMS Workflow</span>
-                        </a>
-                        <a href="https://jemima.ai/demo/window-door-companies/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice">
-                            <span class="live-demo-card-top">
-                                <span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span class="live-demo-card-title">Quote enquiry capture</span>
-                            </span>
-                            <span class="live-demo-card-meta">Voice Workflow</span>
                         </a>
                     </div>
                 </section>
-                
                 </div>
             </div>
         </section>
@@ -2852,7 +2139,8 @@ Click the free workflow review button. It takes less than 30 seconds to request.
     </footer>
 
 <script id="video-engine">
-        const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
+        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
+        const n8nFormWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad"; 
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         
         let isInteracting = false;
@@ -2892,17 +2180,20 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             'faq-player-8': document.getElementById('faq-player-8')
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
+            // 1. Setup ending loops and force the browser to see videos as clickable
             Object.values(players).forEach(video => {
                 if(video) {
                     video.addEventListener('ended', resetToLoop);
-                    video.style.cursor = 'pointer'; 
+                    video.style.cursor = 'pointer'; // Forces iOS to recognize the element as interactive
                 }
             });
 
+            // --- ADDED THIS SECTION FOR FAQ VIDEOS ---
+            // 2. Add click-to-pause/play for FAQ videos
             Object.values(faqPlayers).forEach(video => {
                 if(video) {
-                    video.style.cursor = 'pointer'; 
+                    video.style.cursor = 'pointer'; // Forces iOS to recognize as interactive
                     video.addEventListener('click', () => {
                         if (video.paused) {
                             video.play().catch(err => console.error("Play failed:", err));
@@ -2912,14 +2203,22 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                     });
                 }
             });
+            // -----------------------------------------
 
+            // 3. The Bulletproof Click Listener (Attached to the parent container)
             const container = document.getElementById('video-container');
             if (container) {
                 container.style.cursor = 'pointer';
+                
                 container.addEventListener('click', (e) => {
+                    // Ignore the click if they are tapping the "Tap to interact" placeholder
                     if (e.target.closest('#video-placeholder')) return;
+                    
+                    // Only toggle if an AI video is currently active
                     if (isInteracting && activePlayerId && players[activePlayerId]) {
                         const video = players[activePlayerId];
+                        
+                        // Toggle Play/Pause
                         if (video.paused) {
                             video.play().catch(err => console.error("Play failed:", err));
                         } else {
@@ -2930,19 +2229,23 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             }
         });
 
+        // SAFARI COMPLIANT ACTIVATOR
         function activateAI(videoId = 'main') {
             const videoElement = players[videoId];
             if (!videoElement) return;
 
+            // FIX: Stop any FAQ videos that might be playing in the background
             Object.values(faqPlayers).forEach(video => {
                 if (video && !video.paused) {
                     video.pause();
                 }
             });
 
+            // 1. SAFARI: Execute PLAY immediately on click
             videoElement.currentTime = 0;
             videoElement.play();
 
+            // 2. UI Transitions
             isInteracting = true;
             if (videoPlaceholder) videoPlaceholder.style.display = 'none';
 
@@ -2959,6 +2262,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             videoElement.classList.remove('pointer-events-none');
             activePlayerId = videoId;
 
+            // 3. Cleanup
             window.scrollTo({ top: 0, behavior: 'smooth' });
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             if (isMobileMenuOpen) toggleMobileMenu();
@@ -2968,6 +2272,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             const item = button.closest('.faq-item');
             const wasActive = item.classList.contains('active');
 
+            // FIX: Pause ALL FAQ videos before doing anything else
             Object.values(faqPlayers).forEach(video => {
                 if (video && !video.paused) {
                     video.pause();
@@ -2975,19 +2280,24 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             });
 
             if (!wasActive) {
+                // Start the new video
                 if (playerId && faqPlayers[playerId]) {
                     const videoElement = faqPlayers[playerId];
+                    // SAFARI: Execute PLAY immediately on click
                     videoElement.currentTime = 0;
                     videoElement.play();
                     videoElement.classList.remove('pointer-events-none');
                     activeFaqPlayerId = playerId;
                 }
 
+                // Close all other accordions and open this one
                 document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
                 item.classList.add('active');
                 
+                // If the main AI was talking, send her back to idle loop
                 if (isInteracting) resetToLoop();
             } else {
+                // If it was already active, just close the accordion
                 item.classList.remove('active');
             }
         }
@@ -3011,7 +2321,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             }
         }
     </script>
-    
+
     <script id="ui-management">
         function toggleMobileMenu() {
             isMobileMenuOpen = !isMobileMenuOpen;
@@ -3049,7 +2359,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
 
             if (pkg === 'starter') {
                 title = "Start with AI Support";
-                subtitle = "Let's start with a free workflow review";
+                subtitle = "Let\'s start with a free workflow review";
             } else if (pkg === 'growth') {
                 title = "Choose AI Development Team";
                 subtitle = "Let's start AI Development Team with a free workflow review";
@@ -3080,6 +2390,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             }
         }
 
+        // TRAFFIC DROPDOWN LOGIC
         document.addEventListener('DOMContentLoaded', () => {
             const trigger = document.getElementById('Pro-select-trigger');
             const optionsPanel = document.getElementById('Pro-select-options');
@@ -3088,6 +2399,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             const wrapper = document.getElementById('traffic-dropdown-wrapper');
 
             if (trigger && optionsPanel && inputField) {
+                
                 trigger.addEventListener('click', (e) => {
                     e.stopPropagation(); 
                     optionsPanel.classList.toggle('hidden');
@@ -3138,7 +2450,8 @@ Click the free workflow review button. It takes less than 30 seconds to request.
         }
 
         let loggedQuestions = new Set();
-        function playVideoAnswer(type, el) {
+
+        function playVideoAnswer(type, el) { 
             const questionText = el.innerText.trim();
             activateAI(type); 
             expandChatWindow(false); 
@@ -3174,9 +2487,14 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             }
         }
 
+
         function handleSuccessfulAuditSubmission(formData) {
             hasSubmitted = true;
+
+            // Always trigger the thank-you video feedback.
             activateAI('thanks');
+
+            // Always expand and update the chat feedback.
             expandChatWindow(false);
 
             const userProgress = document.createElement('div');
@@ -3186,13 +2504,16 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
             const firstName = String(formData.name || 'there').split(' ')[0];
+
             addMessages([
                 `Thanks ${firstName}! I've flagged your interest.`,
                 "My team will reach out within 24 hours."
             ]);
 
+            // Update the URL without reloading the page.
             window.history.pushState(null, '', '?thankyou');
         }
+
 
         async function handleFormSubmit(e) {
             e.preventDefault();
@@ -3216,16 +2537,12 @@ Click the free workflow review button. It takes less than 30 seconds to request.
 
             let leadSuccess = false;
 
-            if (typeof PROXY_URL !== 'undefined') {
+            if (n8nFormWebhookUrl) {
                 try {
-                    const response = await fetch(PROXY_URL, {
+                    const response = await fetch(n8nFormWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            webhookAlias: 'form-main', 
-                            type: 'ai_workflow_review_lead', 
-                            ...formData 
-                        })
+                        body: JSON.stringify({ type: 'ai_workflow_review_lead', ...formData })
                     });
                     if(response.ok) leadSuccess = true;
                 } catch (error) {
@@ -3241,7 +2558,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             userProgress.innerText = `Interest in ${currentSelectedPackage || 'Audit'} noted`;
             chatFeed.appendChild(userProgress);
 
-            if (leadSuccess) {
+if (leadSuccess) {
                 handleSuccessfulAuditSubmission(formData);
             }
 
@@ -3269,25 +2586,16 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             chatFeed.appendChild(indicator);
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
-            if (typeof PROXY_URL !== 'undefined') {
+            if (n8nChatWebhookUrl) {
                 try {
-                    const response = await fetch(PROXY_URL, {
+                    const response = await fetch(n8nChatWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            webhookAlias: 'chat', 
-                            chatInput: text, 
-                            message: text, 
-                            sessionId: sessionId, 
-                            timestamp: new Date().toISOString() 
-                        })
+                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
                     });
-                    
                     if (!response.ok) throw new Error('Network error');
                     const data = await response.json();
-                    
                     indicator.remove();
-                    
                     const getBotText = (input) => {
                         if (typeof input === 'string') return input;
                         if (!input) return null;
@@ -3309,6 +2617,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
 
         // Mobile exit intent: back-button intent + scroll-depth/up-scroll + inactivity.
+        // Test manually from the console with: window.testMobileExitPopup()
         const mobileExitConfig = {
             minSecondsOnPage: 12,
             scrollDepth: 0.65,
@@ -3414,6 +2723,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                 } else if (mobileExitLastScrollY > 350 && upwardScroll >= mobileExitConfig.upwardScrollPixels) {
                     showMobileExitPopup('Mobile Upward Scroll Intent');
                 }
+
                 mobileExitLastScrollY = currentY;
             }, { passive: true });
 
@@ -3442,6 +2752,12 @@ Click the free workflow review button. It takes less than 30 seconds to request.
     </script>
 
     <script id="live-demo-library-navigation">
+        const featuredDemoIndustryIds = [
+            'demo-industry-dentists',
+            'demo-industry-accountants',
+            'demo-industry-roofers'
+        ];
+
         function normaliseDemoIndustryValue(value) {
             return String(value || '')
                 .trim()
@@ -3465,6 +2781,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             const explicitIndustry = params.get('industry');
             if (explicitIndustry) return explicitIndustry;
 
+            // Supports URLs like https://jemima.ai?roofers and https://jemima.ai?dentists
             return queryWithoutQuestionMark.split('&')[0].split('=')[0];
         }
 
@@ -3493,11 +2810,48 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             return matchingOption ? matchingOption.value : '';
         }
 
-        function scrollToDemoIndustry(sectionId, shouldUpdateUrl = true) {
-            const targetId = findDemoIndustryId(sectionId);
+        function setDemoIntroMessage(message, isHidden = false) {
+            const introMessage = document.getElementById('live-demo-empty-state');
+            if (!introMessage) return;
+
+            introMessage.textContent = message;
+            introMessage.classList.toggle('is-hidden', Boolean(isHidden));
+        }
+
+        function showFeaturedDemoIndustries(shouldUpdateUrl = false) {
+            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
             const industrySelect = document.getElementById('industry-demo-jump');
 
-            if (!targetId) return;
+            sections.forEach(section => {
+                section.classList.toggle('is-visible', featuredDemoIndustryIds.includes(section.id));
+            });
+
+            setDemoIntroMessage('Popular demo examples. Select your industry to view the full matching demo library.', false);
+
+            if (industrySelect) {
+                industrySelect.value = '';
+            }
+
+            if (shouldUpdateUrl && history.pushState) {
+                history.pushState(null, '', window.location.pathname || '/');
+            }
+        }
+
+        function setVisibleDemoIndustry(sectionId, shouldScroll = true, shouldUpdateUrl = true) {
+            const targetId = findDemoIndustryId(sectionId);
+            const sections = Array.from(document.querySelectorAll('.live-demo-industry'));
+            const industrySelect = document.getElementById('industry-demo-jump');
+
+            if (!targetId) {
+                showFeaturedDemoIndustries(shouldUpdateUrl);
+                return;
+            }
+
+            sections.forEach(section => {
+                section.classList.toggle('is-visible', section.id === targetId);
+            });
+
+            setDemoIntroMessage('', true);
 
             if (industrySelect) {
                 industrySelect.value = targetId || '';
@@ -3510,13 +2864,17 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                 history.pushState(null, '', '?' + industrySlug);
             }
 
-            if (targetSection) {
+            if (shouldScroll && targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
+        function scrollToDemoIndustry(sectionId) {
+            setVisibleDemoIndustry(sectionId, true, true);
+        }
+
         function scrollToDemoIndustryByName(industryName) {
-            scrollToDemoIndustry(industryName, true);
+            setVisibleDemoIndustry(industryName, true, true);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -3524,9 +2882,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
 
             if (industrySelect) {
                 industrySelect.addEventListener('change', function () {
-                    if (this.value) {
-                        scrollToDemoIndustry(this.value, true);
-                    }
+                    setVisibleDemoIndustry(this.value, true, true);
                 });
             }
 
@@ -3537,346 +2893,12 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             const initialIndustry = queryIndustry || hashIndustry;
 
             if (initialIndustry) {
-                scrollToDemoIndustry(initialIndustry, false);
-            }
-        });
-            const industryDemoJump = document.getElementById('industry-demo-jump');
-        const demoIndustries = Array.from(document.querySelectorAll('.live-demo-industry'));
-        const demoEmptyState = document.getElementById('live-demo-empty-state');
-
-        function normaliseDemoIndustryValue(value) {
-            return String(value || '')
-                .trim()
-                .replace(/^\?+/, '')
-                .replace(/^industry=/i, '')
-                .replace(/^demo-industry-/i, '')
-                .replace(/\/+$/g, '')
-                .toLowerCase();
-        }
-
-        function getSelectedIndustryFromUrl() {
-            const rawSearch = window.location.search || '';
-
-            if (!rawSearch || rawSearch === '?') {
-                return '';
-            }
-
-            const params = new URLSearchParams(rawSearch);
-
-            if (params.has('industry')) {
-                return normaliseDemoIndustryValue(params.get('industry'));
-            }
-
-            const firstQueryKey = rawSearch.slice(1).split('&')[0].split('=')[0];
-            return normaliseDemoIndustryValue(firstQueryKey);
-        }
-
-        function getIndustrySectionBySlug(industrySlug) {
-            const normalisedSlug = normaliseDemoIndustryValue(industrySlug);
-            if (!normalisedSlug) return null;
-
-            return document.getElementById('demo-industry-' + normalisedSlug);
-        }
-
-        function setIndustryDemoUrl(industrySlug) {
-            const normalisedSlug = normaliseDemoIndustryValue(industrySlug);
-            const newUrl = normalisedSlug
-                ? window.location.pathname + '?' + normalisedSlug
-                : window.location.pathname;
-
-            window.history.pushState({ industrySlug: normalisedSlug }, '', newUrl);
-        }
-
-        function showDefaultDemoSamples() {
-            demoIndustries.forEach(section => {
-                section.classList.remove('is-visible');
-                section.classList.remove('is-sample');
-            });
-
-            const sampleCards = Array.from(document.querySelectorAll('.live-demo-card.is-sample-card'));
-            const sampleIndustryIds = new Set(
-                sampleCards
-                    .map(card => card.closest('.live-demo-industry'))
-                    .filter(Boolean)
-                    .map(section => section.id)
-            );
-
-            sampleIndustryIds.forEach(id => {
-                const section = document.getElementById(id);
-                if (section) {
-                    section.classList.add('is-sample');
-                }
-            });
-
-            if (demoEmptyState) {
-                demoEmptyState.classList.remove('is-hidden');
-                demoEmptyState.textContent = 'Popular demo examples. Select your industry to view the full matching demo library.';
-            }
-
-            if (industryDemoJump) {
-                industryDemoJump.value = '';
-            }
-        }
-
-        function showIndustryDemos(industrySlug, options = {}) {
-            const section = getIndustrySectionBySlug(industrySlug);
-
-            if (!section) {
-                showDefaultDemoSamples();
-                return;
-            }
-
-            demoIndustries.forEach(item => {
-                item.classList.remove('is-sample');
-                item.classList.toggle('is-visible', item === section);
-            });
-
-            if (demoEmptyState) {
-                demoEmptyState.classList.add('is-hidden');
-            }
-
-            if (industryDemoJump) {
-                industryDemoJump.value = section.id;
-            }
-
-            if (options.updateUrl) {
-                setIndustryDemoUrl(industrySlug);
-            }
-
-            if (options.scrollToLibrary) {
-                const library = document.getElementById('live-demo-library');
-                if (library) {
-                    library.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-        }
-
-        function applyIndustryDemoFilterFromUrl() {
-            const industrySlug = getSelectedIndustryFromUrl();
-
-            if (industrySlug) {
-                showIndustryDemos(industrySlug);
+                setVisibleDemoIndustry(initialIndustry, false, false);
             } else {
-                showDefaultDemoSamples();
-            }
-        }
-
-        if (industryDemoJump) {
-            industryDemoJump.addEventListener('change', function () {
-                const industrySlug = normaliseDemoIndustryValue(this.value);
-
-                if (!industrySlug) {
-                    showDefaultDemoSamples();
-                    setIndustryDemoUrl('');
-                    return;
-                }
-
-                showIndustryDemos(industrySlug, {
-                    updateUrl: true,
-                    scrollToLibrary: true
-                });
-            });
-        }
-
-        window.addEventListener('popstate', applyIndustryDemoFilterFromUrl);
-        applyIndustryDemoFilterFromUrl();
-
-            });
-        }
-  </script>
-
-<!-- Jemima demo library restored industry filter override -->
-<style>
-    /* Final override: industry library is filtered by JavaScript. */
-    #live-demo-library .live-demo-industry {
-        display: none !important;
-    }
-
-    #live-demo-library .live-demo-industry.is-visible,
-    #live-demo-library .live-demo-industry.is-sample {
-        display: block !important;
-    }
-
-    #live-demo-library .live-demo-industry.is-sample .live-demo-card {
-        display: none !important;
-    }
-
-    #live-demo-library .live-demo-industry.is-sample .live-demo-card.is-sample-card {
-        display: flex !important;
-    }
-
-    #live-demo-library .live-demo-empty-state.is-hidden {
-        display: none !important;
-    }
-</style>
-<script>
-(function () {
-    function normaliseDemoIndustryValue(value) {
-        return String(value || '')
-            .trim()
-            .replace(/^\?+/, '')
-            .replace(/^industry=/i, '')
-            .replace(/^demo-industry-/i, '')
-            .replace(/\/+$/g, '')
-            .toLowerCase();
-    }
-
-    function getSelectedIndustryFromUrl() {
-        var rawSearch = window.location.search || '';
-
-        if (!rawSearch || rawSearch === '?') {
-            return '';
-        }
-
-        var params = new URLSearchParams(rawSearch);
-
-        if (params.has('industry')) {
-            return normaliseDemoIndustryValue(params.get('industry'));
-        }
-
-        return normaliseDemoIndustryValue(rawSearch.slice(1).split('&')[0].split('=')[0]);
-    }
-
-    function getIndustrySectionBySlug(industrySlug) {
-        var normalisedSlug = normaliseDemoIndustryValue(industrySlug);
-        if (!normalisedSlug) return null;
-
-        return document.getElementById('demo-industry-' + normalisedSlug);
-    }
-
-    function setIndustryDemoUrl(industrySlug) {
-        var normalisedSlug = normaliseDemoIndustryValue(industrySlug);
-        var nextUrl = normalisedSlug
-            ? window.location.pathname + '?' + normalisedSlug
-            : window.location.pathname;
-
-        window.history.pushState({ industrySlug: normalisedSlug }, '', nextUrl);
-    }
-
-    function getDemoLibraryElements() {
-        return {
-            select: document.getElementById('industry-demo-jump'),
-            sections: Array.prototype.slice.call(document.querySelectorAll('#live-demo-library .live-demo-industry')),
-            emptyState: document.getElementById('live-demo-empty-state')
-        };
-    }
-
-    function clearIndustryClasses(sections) {
-        sections.forEach(function (section) {
-            section.classList.remove('is-visible');
-            section.classList.remove('is-sample');
-        });
-    }
-
-    function showDefaultDemoSamples() {
-        var elements = getDemoLibraryElements();
-        clearIndustryClasses(elements.sections);
-
-        var sampleCards = Array.prototype.slice.call(
-            document.querySelectorAll('#live-demo-library .live-demo-card.is-sample-card')
-        );
-
-        var sampleSections = [];
-        sampleCards.forEach(function (card) {
-            var section = card.closest('.live-demo-industry');
-            if (section && sampleSections.indexOf(section) === -1) {
-                sampleSections.push(section);
+                showFeaturedDemoIndustries(false);
             }
         });
-
-        sampleSections.forEach(function (section) {
-            section.classList.add('is-sample');
-        });
-
-        if (elements.emptyState) {
-            elements.emptyState.classList.remove('is-hidden');
-            elements.emptyState.textContent = 'Popular demo examples. Select your industry to view the full matching demo library.';
-        }
-
-        if (elements.select) {
-            elements.select.value = '';
-        }
-    }
-
-    function showIndustryDemos(industrySlug, options) {
-        options = options || {};
-
-        var elements = getDemoLibraryElements();
-        var section = getIndustrySectionBySlug(industrySlug);
-
-        if (!section) {
-            showDefaultDemoSamples();
-            return;
-        }
-
-        clearIndustryClasses(elements.sections);
-
-        section.classList.add('is-visible');
-
-        if (elements.emptyState) {
-            elements.emptyState.classList.add('is-hidden');
-        }
-
-        if (elements.select) {
-            elements.select.value = section.id;
-        }
-
-        if (options.updateUrl) {
-            setIndustryDemoUrl(industrySlug);
-        }
-
-        if (options.scrollToLibrary) {
-            var library = document.getElementById('live-demo-library');
-            if (library) {
-                library.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-    }
-
-    function applyIndustryDemoFilterFromUrl() {
-        var industrySlug = getSelectedIndustryFromUrl();
-
-        if (industrySlug) {
-            showIndustryDemos(industrySlug);
-        } else {
-            showDefaultDemoSamples();
-        }
-    }
-
-    function initialiseIndustryDemoFilter() {
-        var elements = getDemoLibraryElements();
-
-        if (!elements.select || !elements.sections.length) {
-            return;
-        }
-
-        elements.select.onchange = function () {
-            var industrySlug = normaliseDemoIndustryValue(this.value);
-
-            if (!industrySlug) {
-                showDefaultDemoSamples();
-                setIndustryDemoUrl('');
-                return;
-            }
-
-            showIndustryDemos(industrySlug, {
-                updateUrl: true,
-                scrollToLibrary: true
-            });
-        };
-
-        window.onpopstate = applyIndustryDemoFilterFromUrl;
-        applyIndustryDemoFilterFromUrl();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialiseIndustryDemoFilter);
-    } else {
-        initialiseIndustryDemoFilter();
-    }
-})();
-</script>
-<!-- End Jemima demo library restored industry filter override -->
+    </script>
 
 </body>
 </html>
