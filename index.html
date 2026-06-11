@@ -183,6 +183,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 0.45rem !important;
         }
 
+        .hero-industry-title span {
+            display: inline-block;
+            text-align: center !important;
+            width: 100%;
+        }
+
         .hero-industry-subtitle {
             margin-top: 0 !important;
             margin-bottom: 0.85rem !important;
@@ -267,6 +273,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             line-height: 1.04 !important;
             letter-spacing: -0.065em !important;
             margin-bottom: 0.75rem !important;
+            text-align: center !important;
             white-space: nowrap !important;
         }
 
@@ -3649,21 +3656,21 @@ if (leadSuccess) {
             'Driveway Company': 'driveway',
             'Electrician': 'electrical',
             'Estate Agent': 'estate agency',
-            'Insurance Broker': 'insurance broker',
+            'Insurance Broker': 'insurance',
             'Kitchen Company': 'kitchen',
             'Landscaper': 'landscaping',
             'Locksmith': 'locksmith',
-            'Mortgage Broker': 'mortgage broker',
+            'Mortgage Broker': 'mortgage',
             'Nursery and Childcare Provider': 'nursery',
             'Pest Control Company': 'pest control',
             'Plumber': 'plumbing',
-            'Private Healthcare Clinic': 'private healthcare',
+            'Private Healthcare Clinic': 'healthcare',
             'Removal Company': 'removals',
             'Roofer': 'roofing',
-            'Solar Installer': 'solar installation',
+            'Solar Installer': 'solar',
             'Solicitor': 'solicitor',
             'Veterinary Practice': 'veterinary',
-            'Window and Door Company': 'window and door'
+            'Window and Door Company': 'window/door'
         };
 
         if (shortIndustryNames[industryName]) {
@@ -3742,7 +3749,9 @@ if (leadSuccess) {
             return;
         }
 
-        h1.innerHTML = 'Build an AI-enabled ' + formatIndustryForHeroH1(industryName) + ' business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
+                const heroIndustryName = formatIndustryForHeroH1(industryName);
+        const heroBusinessSuffix = heroIndustryName === 'car dealership' ? '' : ' business';
+        h1.innerHTML = 'Build an AI-enabled ' + heroIndustryName + heroBusinessSuffix + '<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
     }
 
     function updateHeroIndustryH1FromCurrentState() {
