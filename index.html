@@ -3684,5 +3684,199 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             });
         }
   </script>
+
+<!-- Jemima demo library restored industry filter override -->
+<style>
+    /* Final override: industry library is filtered by JavaScript. */
+    #live-demo-library .live-demo-industry {
+        display: none !important;
+    }
+
+    #live-demo-library .live-demo-industry.is-visible,
+    #live-demo-library .live-demo-industry.is-sample {
+        display: block !important;
+    }
+
+    #live-demo-library .live-demo-industry.is-sample .live-demo-card {
+        display: none !important;
+    }
+
+    #live-demo-library .live-demo-industry.is-sample .live-demo-card.is-sample-card {
+        display: flex !important;
+    }
+
+    #live-demo-library .live-demo-empty-state.is-hidden {
+        display: none !important;
+    }
+</style>
+<script>
+(function () {
+    function normaliseDemoIndustryValue(value) {
+        return String(value || '')
+            .trim()
+            .replace(/^\?+/, '')
+            .replace(/^industry=/i, '')
+            .replace(/^demo-industry-/i, '')
+            .replace(/\/+$/g, '')
+            .toLowerCase();
+    }
+
+    function getSelectedIndustryFromUrl() {
+        var rawSearch = window.location.search || '';
+
+        if (!rawSearch || rawSearch === '?') {
+            return '';
+        }
+
+        var params = new URLSearchParams(rawSearch);
+
+        if (params.has('industry')) {
+            return normaliseDemoIndustryValue(params.get('industry'));
+        }
+
+        return normaliseDemoIndustryValue(rawSearch.slice(1).split('&')[0].split('=')[0]);
+    }
+
+    function getIndustrySectionBySlug(industrySlug) {
+        var normalisedSlug = normaliseDemoIndustryValue(industrySlug);
+        if (!normalisedSlug) return null;
+
+        return document.getElementById('demo-industry-' + normalisedSlug);
+    }
+
+    function setIndustryDemoUrl(industrySlug) {
+        var normalisedSlug = normaliseDemoIndustryValue(industrySlug);
+        var nextUrl = normalisedSlug
+            ? window.location.pathname + '?' + normalisedSlug
+            : window.location.pathname;
+
+        window.history.pushState({ industrySlug: normalisedSlug }, '', nextUrl);
+    }
+
+    function getDemoLibraryElements() {
+        return {
+            select: document.getElementById('industry-demo-jump'),
+            sections: Array.prototype.slice.call(document.querySelectorAll('#live-demo-library .live-demo-industry')),
+            emptyState: document.getElementById('live-demo-empty-state')
+        };
+    }
+
+    function clearIndustryClasses(sections) {
+        sections.forEach(function (section) {
+            section.classList.remove('is-visible');
+            section.classList.remove('is-sample');
+        });
+    }
+
+    function showDefaultDemoSamples() {
+        var elements = getDemoLibraryElements();
+        clearIndustryClasses(elements.sections);
+
+        var sampleCards = Array.prototype.slice.call(
+            document.querySelectorAll('#live-demo-library .live-demo-card.is-sample-card')
+        );
+
+        var sampleSections = [];
+        sampleCards.forEach(function (card) {
+            var section = card.closest('.live-demo-industry');
+            if (section && sampleSections.indexOf(section) === -1) {
+                sampleSections.push(section);
+            }
+        });
+
+        sampleSections.forEach(function (section) {
+            section.classList.add('is-sample');
+        });
+
+        if (elements.emptyState) {
+            elements.emptyState.classList.remove('is-hidden');
+            elements.emptyState.textContent = 'Popular demo examples. Select your industry to view the full matching demo library.';
+        }
+
+        if (elements.select) {
+            elements.select.value = '';
+        }
+    }
+
+    function showIndustryDemos(industrySlug, options) {
+        options = options || {};
+
+        var elements = getDemoLibraryElements();
+        var section = getIndustrySectionBySlug(industrySlug);
+
+        if (!section) {
+            showDefaultDemoSamples();
+            return;
+        }
+
+        clearIndustryClasses(elements.sections);
+
+        section.classList.add('is-visible');
+
+        if (elements.emptyState) {
+            elements.emptyState.classList.add('is-hidden');
+        }
+
+        if (elements.select) {
+            elements.select.value = section.id;
+        }
+
+        if (options.updateUrl) {
+            setIndustryDemoUrl(industrySlug);
+        }
+
+        if (options.scrollToLibrary) {
+            var library = document.getElementById('live-demo-library');
+            if (library) {
+                library.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }
+
+    function applyIndustryDemoFilterFromUrl() {
+        var industrySlug = getSelectedIndustryFromUrl();
+
+        if (industrySlug) {
+            showIndustryDemos(industrySlug);
+        } else {
+            showDefaultDemoSamples();
+        }
+    }
+
+    function initialiseIndustryDemoFilter() {
+        var elements = getDemoLibraryElements();
+
+        if (!elements.select || !elements.sections.length) {
+            return;
+        }
+
+        elements.select.onchange = function () {
+            var industrySlug = normaliseDemoIndustryValue(this.value);
+
+            if (!industrySlug) {
+                showDefaultDemoSamples();
+                setIndustryDemoUrl('');
+                return;
+            }
+
+            showIndustryDemos(industrySlug, {
+                updateUrl: true,
+                scrollToLibrary: true
+            });
+        };
+
+        window.onpopstate = applyIndustryDemoFilterFromUrl;
+        applyIndustryDemoFilterFromUrl();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialiseIndustryDemoFilter);
+    } else {
+        initialiseIndustryDemoFilter();
+    }
+})();
+</script>
+<!-- End Jemima demo library restored industry filter override -->
+
 </body>
 </html>
