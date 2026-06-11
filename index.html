@@ -219,6 +219,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
+
+        .hero-industry-title {
+            font-size: clamp(2.05rem, 4.2vw, 3.65rem) !important;
+            line-height: 1.04 !important;
+            letter-spacing: -0.065em !important;
+            margin-bottom: 0.75rem !important;
+            white-space: nowrap !important;
+        }
+
+        .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .hero-industry-title {
+                font-size: clamp(1.85rem, 8.5vw, 2.8rem) !important;
+                line-height: 1.08 !important;
+                white-space: normal !important;
+            }
+        }
+
         /* Live demo library */
         .live-demo-library {
             scroll-margin-top: 96px;
@@ -708,9 +730,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </select>
                 </div>
 
-                <h1 id="hero-industry-h1" class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight" data-default-h1="Build an AI-enabled businesswithout hiring a full AI team">
+                <h1 id="hero-industry-h1" class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight hero-industry-title" data-default-h1="Build an AI-enabled businesswithout hiring a full AI team">
                     Build an AI-enabled business<br><span class="text-[#c2155a]">without hiring a full AI team</span>
                 </h1>
+                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium hero-industry-subtitle"><strong>Not another AI tool:</strong> We provide ongoing AI development and support. Helping service businesses eliminate manual admin and run faster.</p>
 
                 <!-- Live Demo Library -->
         <section id="live-demo-library" class="live-demo-library">
@@ -2178,7 +2201,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </section>
 
-                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium"><strong>Not another AI tool:</strong> We provide ongoing AI development and support. Helping service businesses eliminate manual admin and run faster.</p>
+                
             </div>
 
             <div class="flex flex-col items-center justify-center gap-4">
@@ -3572,6 +3595,12 @@ if (leadSuccess) {
             .trim();
     }
 
+    function formatIndustryForHeroH1(value) {
+        return cleanIndustryName(value)
+            .replace(/\s+Company$/i, '')
+            .trim();
+    }
+
     function normaliseIndustryValue(value) {
         return String(value || '')
             .trim()
@@ -3636,7 +3665,7 @@ if (leadSuccess) {
             return;
         }
 
-        h1.innerHTML = 'Build an AI-enabled ' + industryName.toLowerCase() + ' business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
+        h1.innerHTML = 'Build an AI-enabled ' + formatIndustryForHeroH1(industryName).toLowerCase() + ' business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
     }
 
     function updateHeroIndustryH1FromCurrentState() {
