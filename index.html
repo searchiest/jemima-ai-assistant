@@ -2320,7 +2320,7 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                         </div>
                         <div id="chat-feed" class="space-y-4 h-[120px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
                             <div id="chat-opening-message" class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi, I'm Jemima. Tell me a little bit about your business — for example, how long you've been trading, team size, your most common work, and where admin or follow-up slows you down. I'll suggest the first process you should automate.
+                                Hi, I'm Jemima. Tell me about your business — team size, typical jobs, and where admin or follow-up slows you down. And I'll suggest the first process to automate.
                             </div>
                         </div>
                         <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
@@ -3794,7 +3794,7 @@ if (leadSuccess) {
 <!-- Jemima industry-aware chat opening message -->
 <script>
 (function () {
-    const defaultChatOpeningMessage = 'Hi, I\'m Jemima. Tell me a little bit about your business — for example, how long you\'ve been trading, team size, your most common work, and where admin or follow-up slows you down. I\'ll suggest the first process you should automate.';
+    const defaultChatOpeningMessage = 'Hi, I\'m Jemima. Tell me about your business — team size, typical jobs, and where admin or follow-up slows you down. And I\'ll suggest the first process to automate.';
 
     const industryChatContexts = {
         'Accountant': 'accounting firm',
@@ -3887,7 +3887,7 @@ if (leadSuccess) {
             return defaultChatOpeningMessage;
         }
 
-        return `Hi, I'm Jemima. Tell me a little bit about your {industryContext} — for example, how long you've been trading, team size, your most common work, and where admin or follow-up slows you down. I'll suggest the first process you should automate.`.replace('{industryContext}', industryContext);
+        return `Hi, I'm Jemima. Tell me about your {industryContext} — team size, typical jobs, and where admin or follow-up slows you down. And I'll suggest the first process to automate.`.replace('{industryContext}', industryContext);
     }
 
     function setChatOpeningMessage() {
