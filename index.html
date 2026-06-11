@@ -3637,9 +3637,45 @@ if (leadSuccess) {
     }
 
     function formatIndustryForHeroH1(value) {
-        return cleanIndustryName(value)
+        const industryName = cleanIndustryName(value);
+        const shortIndustryNames = {
+            'Accountant': 'accounting',
+            'Bathroom Company': 'bathroom',
+            'Builder': 'building',
+            'Car Dealership': 'car dealership',
+            'Care Home': 'care home',
+            'Cleaning Company': 'cleaning',
+            'Dentist': 'dentist',
+            'Driveway Company': 'driveway',
+            'Electrician': 'electrical',
+            'Estate Agent': 'estate agency',
+            'Insurance Broker': 'insurance broker',
+            'Kitchen Company': 'kitchen',
+            'Landscaper': 'landscaping',
+            'Locksmith': 'locksmith',
+            'Mortgage Broker': 'mortgage broker',
+            'Nursery and Childcare Provider': 'nursery',
+            'Pest Control Company': 'pest control',
+            'Plumber': 'plumbing',
+            'Private Healthcare Clinic': 'private healthcare',
+            'Removal Company': 'removals',
+            'Roofer': 'roofing',
+            'Solar Installer': 'solar installation',
+            'Solicitor': 'solicitor',
+            'Veterinary Practice': 'veterinary',
+            'Window and Door Company': 'window and door'
+        };
+
+        if (shortIndustryNames[industryName]) {
+            return shortIndustryNames[industryName];
+        }
+
+        return industryName
             .replace(/\s+Company$/i, '')
-            .trim();
+            .replace(/\s+Provider$/i, '')
+            .replace(/\s+Clinic$/i, '')
+            .trim()
+            .toLowerCase();
     }
 
     function normaliseIndustryValue(value) {
@@ -3706,7 +3742,7 @@ if (leadSuccess) {
             return;
         }
 
-        h1.innerHTML = 'Build an AI-enabled ' + formatIndustryForHeroH1(industryName).toLowerCase() + ' business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
+        h1.innerHTML = 'Build an AI-enabled ' + formatIndustryForHeroH1(industryName) + ' business<br><span class="text-[#c2155a]">without hiring a full AI team</span>';
     }
 
     function updateHeroIndustryH1FromCurrentState() {
