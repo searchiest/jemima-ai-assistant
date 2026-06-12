@@ -157,6 +157,75 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             transform: rotate(180deg);
         }
 
+
+        /* Default homepage demo layout
+           When no industry is selected, keep the hero CTA/video/chat first and place the
+           featured workflow examples underneath, matching the default homepage mockup.
+           When an industry is selected, the existing industry-specific layout remains intact. */
+        body.default-demo-page #live-demo-library {
+            width: 100%;
+            margin-top: 1.75rem;
+            padding: 1.75rem 0 0;
+            border-top: 1px solid #e2e8f0;
+            background: transparent;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-library-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-header {
+            margin-bottom: 0.9rem;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-empty-state {
+            margin-bottom: 1.75rem;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry {
+            padding: 2rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry-heading {
+            display: block;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry-heading h3 {
+            text-align: left;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 1024px) {
+            body.default-demo-page #live-demo-library .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            body.default-demo-page #live-demo-library {
+                margin-top: 1.25rem;
+                padding-top: 1.5rem;
+            }
+
+            body.default-demo-page #live-demo-library .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body.default-demo-page #live-demo-library .live-demo-industry {
+                padding: 1.25rem;
+            }
+        }
+
         @media screen and (max-width: 768px) {
             #audit-form label { color: #475569 !important; font-size: 11px !important; letter-spacing: 0.15em !important; }
             #audit-form input, #audit-form select { font-size: 16px !important; color: #000000 !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
@@ -3639,6 +3708,51 @@ if (leadSuccess) {
         });
 
         window.addEventListener('popstate', applyDemoIndustryFromUrl);
+
+        function layoutDemoLibraryForCurrentIndustryState() {
+            const library = document.getElementById('live-demo-library');
+            const problemSection = document.getElementById('problem');
+            const heroCopy = document.querySelector('.max-w-4xl.text-center');
+            const heroSubtitle = document.querySelector('.hero-industry-subtitle');
+            const industryDemoJump = document.getElementById('industry-demo-jump');
+            const hasIndustrySelected = Boolean(industryDemoJump && industryDemoJump.value);
+
+            if (!library || !problemSection || !heroCopy || !heroSubtitle) {
+                return;
+            }
+
+            document.body.classList.toggle('default-demo-page', !hasIndustrySelected);
+
+            if (hasIndustrySelected) {
+                // Preserve the existing selected-industry experience: selected demo cards sit
+                // directly under the industry-specific headline and subtitle.
+                if (library.parentElement !== heroCopy) {
+                    heroSubtitle.insertAdjacentElement('afterend', library);
+                }
+            } else {
+                // Default homepage experience: show the CTA, video/FAQ panel, and chat first,
+                // then render the featured Accountant, Dentist, and Roofer demo examples.
+                if (library.nextElementSibling !== problemSection) {
+                    problemSection.insertAdjacentElement('beforebegin', library);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const industryDemoJump = document.getElementById('industry-demo-jump');
+
+            if (industryDemoJump) {
+                industryDemoJump.addEventListener('change', function () {
+                    setTimeout(layoutDemoLibraryForCurrentIndustryState, 0);
+                });
+            }
+
+            setTimeout(layoutDemoLibraryForCurrentIndustryState, 0);
+        });
+
+        window.addEventListener('popstate', function () {
+            setTimeout(layoutDemoLibraryForCurrentIndustryState, 0);
+        });
     </script>
 
 
