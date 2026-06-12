@@ -749,9 +749,49 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
+
+        /* Robust default-page hero CTA spacing fix.
+           The demo library is moved dynamically after load, and Tailwind's space-y utility
+           applies margin-top to sibling blocks. Override the actual generated sibling margins
+           on the default page instead of only changing paragraph margin-bottom. */
+        body.default-demo-page .hero-page-stack {
+            row-gap: 0 !important;
+            gap: 0 !important;
+        }
+
+        body.default-demo-page .hero-page-stack > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-copy-block {
+            margin-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-copy-block > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0.45rem !important;
+        }
+
+        body.default-demo-page .hero-industry-subtitle {
+            margin-top: 0.35rem !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-primary-cta {
+            margin-top: 0.7rem !important;
+            gap: 0.7rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            body.default-demo-page .hero-primary-cta {
+                margin-top: 0.55rem !important;
+            }
+        }
+
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased">
+<body class="bg-slate-50 text-slate-900 antialiased default-demo-page">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -864,8 +904,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </nav>
 
     <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-1 lg:pt-4 pb-8 lg:pb-16">
-        <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12">
-            <div class="max-w-4xl text-center space-y-3">
+        <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12 hero-page-stack">
+            <div class="max-w-4xl text-center space-y-3 hero-copy-block">
                 <div class="live-demo-jump hero-industry-jump">
                     <select id="industry-demo-jump" aria-label="Select an industry to view live demos">
                         <option value="">Select an industry...</option><option value="demo-industry-accountants">Accountant</option><option value="demo-industry-bathroom-companies">Bathroom Company</option><option value="demo-industry-builders">Builder</option><option value="demo-industry-car-dealerships">Car Dealership</option><option value="demo-industry-care-homes">Care Home</option><option value="demo-industry-cleaning-companies">Cleaning Company</option><option value="demo-industry-dentists">Dentist</option><option value="demo-industry-driveway-companies">Driveway Company</option><option value="demo-industry-electricians">Electrician</option><option value="demo-industry-estate-agents">Estate Agent</option><option value="demo-industry-insurance-brokers">Insurance Broker</option><option value="demo-industry-kitchen-companies">Kitchen Company</option><option value="demo-industry-landscapers">Landscaper</option><option value="demo-industry-locksmiths">Locksmith</option><option value="demo-industry-mortgage-brokers">Mortgage Broker</option><option value="demo-industry-nurseries">Nursery and Childcare Provider</option><option value="demo-industry-pest-control">Pest Control Company</option><option value="demo-industry-plumbers">Plumber</option><option value="demo-industry-private-healthcare">Private Healthcare Clinic</option><option value="demo-industry-removal-companies">Removal Company</option><option value="demo-industry-roofers">Roofer</option><option value="demo-industry-solar-installers">Solar Installer</option><option value="demo-industry-solicitors">Solicitor</option><option value="demo-industry-vets">Veterinary Practice</option><option value="demo-industry-window-door-companies">Window and Door Company</option>
