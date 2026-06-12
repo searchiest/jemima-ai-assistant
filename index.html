@@ -339,18 +339,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             text-align: center !important;
             white-space: normal !important;
             width: 100%;
+            overflow: visible !important;
         }
 
+        /*
+           The dynamic industry line can be wider than the max-w-4xl hero wrapper.
+           A normal 100%-wide block span will still make nowrap text overflow from the
+           left edge of that wrapper, which makes it look off-centre.
+           This centres the actual visual text line, not just the span box.
+        */
         .hero-industry-title .hero-h1-line {
             display: block;
-            width: 100%;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: none;
             text-align: center !important;
-        }
-
-        @media screen and (min-width: 769px) {
-            .hero-industry-title .hero-h1-line {
-                white-space: nowrap;
-            }
+            white-space: nowrap;
         }
 
         .hero-industry-subtitle {
@@ -365,6 +371,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
 
             .hero-industry-title .hero-h1-line {
+                left: auto;
+                transform: none;
+                width: 100%;
+                max-width: 100%;
                 white-space: normal;
             }
         }
