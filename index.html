@@ -727,22 +727,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         /* Tighten the default hero spacing between the subtitle and primary CTA.
            This only applies before an industry is selected, so the selected-industry
-           demo layout remains unchanged. */
+           demo layout remains unchanged. The parent uses Tailwind space-y utilities,
+           so we also override the CTA wrapper's generated margin-top. */
         body.default-demo-page .hero-industry-subtitle {
-            margin-bottom: 0.35rem !important;
+            margin-bottom: 0 !important;
         }
 
-        body.default-demo-page main > div.flex.flex-col.items-center > div.flex.flex-col.items-center.justify-center {
-            margin-top: 0.35rem !important;
+        body.default-demo-page .hero-primary-cta {
+            margin-top: 0.5rem !important;
         }
 
         @media screen and (max-width: 768px) {
-            body.default-demo-page .hero-industry-subtitle {
-                margin-bottom: 0.25rem !important;
-            }
-
-            body.default-demo-page main > div.flex.flex-col.items-center > div.flex.flex-col.items-center.justify-center {
-                margin-top: 0.25rem !important;
+            body.default-demo-page .hero-primary-cta {
+                margin-top: 0.35rem !important;
             }
         }
 
@@ -2343,7 +2340,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 
             </div>
 
-            <div class="flex flex-col items-center justify-center gap-4">
+            <div class="flex flex-col items-center justify-center gap-4 hero-primary-cta">
                 <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
                     <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
                 </button>
