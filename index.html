@@ -724,6 +724,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             #mobile-exit-overlay { display: none !important; }
         }
 
+
+        /* Tighten the default hero spacing between the subtitle and primary CTA.
+           This only applies before an industry is selected, so the selected-industry
+           demo layout remains unchanged. */
+        body.default-demo-page .hero-industry-subtitle {
+            margin-bottom: 0.35rem !important;
+        }
+
+        body.default-demo-page main > div.flex.flex-col.items-center > div.flex.flex-col.items-center.justify-center {
+            margin-top: 0.35rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            body.default-demo-page .hero-industry-subtitle {
+                margin-bottom: 0.25rem !important;
+            }
+
+            body.default-demo-page main > div.flex.flex-col.items-center > div.flex.flex-col.items-center.justify-center {
+                margin-top: 0.25rem !important;
+            }
+        }
+
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased">
