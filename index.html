@@ -823,7 +823,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="text-center mb-5">
                 <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs  px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
                 <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Request Your Free Workflow Review</h3>
-                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">My team will review where AI can save time, reduce admin and improve your workflows.</p>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
             </div>
             <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
                 <div class="space-y-1.5">
@@ -831,16 +831,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
                 </div>
                 <div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Monthly Website Traffic</label>
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Which part of your business would you most like to improve?</label>
                     <div class="relative cursor-pointer group" id="Pro-select-trigger">
-                        <input type="text" id="form-traffic" required readonly placeholder="Select traffic range..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
+                        <input type="text" id="form-traffic" required readonly placeholder="Select workflow area..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
                         <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
                     </div>
                     <div id="Pro-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
-                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">0 - 1,000</div>
-                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">1,000 - 5,000</div>
-                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">5,000 - 20,000</div>
-                        <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">20,000+</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Enquiries and intake</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Follow-up and communication</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Admin and document processing</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Job, case or project handovers</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Reporting and visibility</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">Not sure yet</div>
                     </div>
                 </div>
                 <div class="space-y-1.5">
@@ -871,8 +873,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <i class="fas fa-times text-lg"></i>
             </button>
             <div class="mobile-exit-pill">Before you go</div>
-            <h3 class="text-2xl font-[800] tracking-tighter text-slate-950 leading-tight pr-10">Want one practical AI workflow idea?</h3>
-            <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">Request a free workflow review and we’ll suggest where AI could save your team time, reduce admin or improve follow-up.</p>
+            <h3 class="text-2xl font-[800] tracking-tighter text-slate-950 leading-tight pr-10">Want one practical workflow opportunity?</h3>
+            <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">Request a free workflow review and we’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
             <button type="button" class="mobile-exit-primary mt-5" onclick="acceptMobileExitPopup()">
                 <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
             </button>
@@ -934,15 +936,76 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <span class="hero-h1-line">Build an AI-enabled business</span>
                     <span class="hero-h1-line text-[#c2155a]">without hiring a full AI team</span>
                 </h1>
-                <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium hero-industry-subtitle"><strong>Not another AI tool:</strong> We provide ongoing AI development and support. Helping service businesses eliminate manual admin and run faster.</p>
+<p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium hero-industry-subtitle"><strong>Not another AI tool.</strong> Your AI consultancy and development team for smoother operations, stronger delivery and more scalable growth.</p>
+
+
+<section id="what-we-build" class="py-10 md:py-12">
+    <div class="max-w-5xl mx-auto text-center mb-8">
+        <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-black uppercase tracking-[0.2em] px-4 py-2 mb-4">
+            What We Build
+        </div>
+        <h2 class="text-3xl md:text-5xl font-[800] tracking-tighter text-slate-950 leading-tight">
+            Practical AI workflows that improve how your business runs
+        </h2>
+        <p class="mt-4 text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-3xl mx-auto">
+            Jemima identifies, builds and improves practical AI workflows across enquiries, follow-up, admin, handovers, reporting and customer communication.
+        </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
+        <div class="bg-white border border-slate-200 p-6 shadow-sm">
+            <h3 class="text-lg font-[800] tracking-tight text-slate-950 mb-2">Enquiries and intake</h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-medium">Capture the right information, qualify requests and route work to the right person or process.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 p-6 shadow-sm">
+            <h3 class="text-lg font-[800] tracking-tight text-slate-950 mb-2">Follow-up and communication</h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-medium">Keep prospects, customers and internal teams updated with timely, consistent and professional communication.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 p-6 shadow-sm">
+            <h3 class="text-lg font-[800] tracking-tight text-slate-950 mb-2">Admin and document processing</h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-medium">Improve repeated manual steps around forms, documents, internal updates and routine processing.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 p-6 shadow-sm">
+            <h3 class="text-lg font-[800] tracking-tight text-slate-950 mb-2">Job, case or project handovers</h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-medium">Summarise key details, next actions and customer context so work moves cleanly between people.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 p-6 shadow-sm">
+            <h3 class="text-lg font-[800] tracking-tight text-slate-950 mb-2">Reporting and visibility</h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-medium">Turn scattered updates from inboxes, spreadsheets and systems into clearer operational visibility.</p>
+        </div>
+
+        <div class="bg-[#c2155a]/5 border border-[#c2155a]/20 p-6 shadow-sm">
+            <h3 class="text-lg font-[800] tracking-tight text-slate-950 mb-2">Not sure where to start?</h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-medium mb-4">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
+            <button onclick="openModal(false, 'What We Build CTA')" class="px-5 py-3 bg-[#c2155a] text-white font-black text-[11px] uppercase tracking-wider hover:bg-[#a0124a] transition-all">
+                <i class="fas fa-lightbulb mr-1.5"></i> Free Workflow Review
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
 
                 <!-- Live Demo Library -->
         <section id="live-demo-library" class="live-demo-library">
             <div class="live-demo-library-inner">
                 <div class="live-demo-header">
                     <div class="live-demo-kicker">Live Workflow Examples</div>
+<p class="mt-4 text-slate-600 text-base md:text-lg leading-relaxed font-semibold max-w-3xl mx-auto">
+    See examples of practical AI workflows across enquiries, follow-up, admin, handovers, reporting and communication.
+</p>
                 </div>
-<p id="live-demo-empty-state" class="live-demo-empty-state">Popular demo examples. Select your industry to view the full matching demo library.</p>
+
 
                 <div class="live-demo-industry-list">
 
@@ -2410,8 +2473,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
                 </button>
                 <div class="text-center">
-                    <p class="text-slate-500 text-xs md:text-sm font-medium">No commitment. No system access required. No credit card.
-Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
+<p class="text-slate-500 text-xs md:text-sm font-medium">No commitment. No system access required. No credit card. We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
                     <button onclick="activateAI('main')" class="mt-2 text-slate-400 hover:text-slate-600 text-[11px] uppercase tracking-widest font-bold transition-colors underline underline-offset-4">Or see how AI support works</button>
                 </div>
             </div>
@@ -2625,7 +2687,7 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
                             <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full border border-[#c2155a] flex items-center justify-center text-[11px] md:text-xs ">01</div>
                             <div class="space-y-1.5">
                                 <p class=" uppercase text-sm tracking-widest text-[#c2155a]">Service-Business First</p>
-                                <p class="text-sm text-slate-200 leading-relaxed">We use AI to support your team, reduce wasted time and make everyday processes easier to run.</p>
+                                <p class="text-sm text-slate-200 leading-relaxed">We use AI to support your team, improve workflow consistency and make everyday processes more professional and scalable.</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
@@ -2651,8 +2713,8 @@ Just tell us what you do. And we’ll recommend one practical AI workflow.</p>
         <section id="pricing" class="py-20 border-t border-slate-200">
             <div class="text-center mb-14 space-y-4">
                 <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px]  px-4 py-1.5 uppercase tracking-[0.2em]">Pricing</div>
-                <h2 class="text-3xl lg:text-5xl  tracking-tighter">Monthly AI support built around practical progress</h2>
-                <p class="text-slate-500 font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed">Choose the level of ongoing AI consultancy and development support your service business needs. We help you plan, build, maintain and improve workflows month by month.</p>
+                <h2 class="text-3xl lg:text-5xl  tracking-tighter">AI consultancy and development support built around your business</h2>
+                <p class="text-slate-500 font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed">Choose the level of AI consultancy and development support your service business needs. Jemima helps you identify, build and improve practical workflows across your operations.</p>
             </div>
             <div class="grid lg:grid-cols-3 gap-6 items-stretch">
                 <div class="bg-white border border-slate-200 shadow-sm p-8 flex flex-col">
@@ -3066,8 +3128,10 @@ Click the free workflow review button. It takes less than 30 seconds to request.
         <!-- Final CTA Banner -->
         <section class="py-20 bg-[#c2155a]/5 border-2 border-dashed border-[#c2155a]/20 text-center space-y-8 mb-20">
             <div class="space-y-2">
-                <h2 class="text-4xl font-700 tracking-tighter uppercase">Ready to stop falling behind on AI?</h2>
-                <p class="text-slate-600 font-bold uppercase tracking-widest text-xs md:text-sm italic">Limited availability each month so ongoing clients get proper support.</p>
+                <h2 class="text-4xl font-700 tracking-tighter uppercase">Ready to make your business more consistent, professional and scalable?</h2>
+                <p class="text-slate-600 font-bold uppercase tracking-widest text-xs md:text-sm italic"><p class="text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto mt-4">
+    Request a free workflow review and we’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.
+</p>
             </div>
             <button onclick="openModal()" class="px-12 py-6 bg-[#c2155a] text-white font-black uppercase tracking-[0.3em] text-[13px] shadow-2xl shadow-[#c2155a]/40 hover:scale-105 active:scale-95 transition-all">
                                 <i class="fas fa-lightbulb mr-2"></i>
@@ -3298,23 +3362,23 @@ document.addEventListener('DOMContentLoaded', () => {
             cardNote.classList.remove('hidden');
 
             let title = "Request Your Free Workflow Review";
-            let subtitle = "My team will review where AI can save time, reduce admin and improve your workflows.";
+            let subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
             let tagText = "Step 1 of 1";
 
             if (pkg === 'starter') {
                 title = "Start with AI Support";
-                subtitle = "Let\'s start with a free workflow review";
+                subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
             } else if (pkg === 'growth') {
                 title = "Choose AI Development Team";
-                subtitle = "Let's start AI Development Team with a free workflow review";
+                subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
             } else if (pkg === 'pro') {
                 title = "Choose Pro";
-                subtitle = "Let's start Pro with a free workflow review";
+                subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
             }
 
             if (isExitIntent) {
                 tagText = "WAIT! BEFORE YOU GO...";
-                title = "Don't leave without your audit!";
+                title = "Don't leave without your free workflow review.";
             }
 
             modalTag.innerText = tagText;
@@ -3416,10 +3480,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-            const messages = {
-                whatworkflows: ["Jemima identifies repetitive workflows where revenue, reputation, or customer experience are being affected.", "Then we build practical AI automation to help you respond faster, follow up better, and reduce missed opportunities."],
-                peoplecontrol: ["We build AI around clear rules, controlled workflows, and human oversight, so it only acts within agreed limits.", "Important decisions, sensitive messages, and unusual cases can stay under human review while AI improves speed and consistency."],
-                freereview: ["The free workflow review is simple: tell us a little about your business and where opportunities may be slipping through.", "Based on your feedback, we’ll identify one practical AI workflow and explain how it could improve revenue, reputation, or customer experience."]
+                const messages = {
+    whatworkflows: ["Jemima gives service businesses access to an AI consultancy and development team.", "We identify, build and improve practical workflows across enquiries, follow-up, admin, handovers, reporting and communication."],
+    peoplecontrol: ["We build AI around clear rules, controlled workflows and human oversight, so it only acts within agreed limits.", "Important decisions, sensitive messages and unusual cases can stay under human review while workflows become more consistent and professional."],
+    freereview: ["The free workflow review is simple: tell us a little about your business and the area you want to improve.", "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable."]
+};
             };
             addMessages(messages[type] || ["I can certainly help with that."]);
         }
@@ -3451,7 +3516,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const userProgress = document.createElement('div');
             userProgress.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
-            userProgress.innerText = `Interest in ${formData.selectedPackage || 'Audit'} noted`;
+            userProgress.innerText = "Workflow review request received";
             chatFeed.appendChild(userProgress);
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
