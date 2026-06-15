@@ -3583,7 +3583,7 @@ if (leadSuccess) {
                     const response = await fetch(n8nChatWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, timestamp: new Date().toISOString() })
+                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, industry: (typeof window.getJemimaChatIndustry === 'function' ? window.getJemimaChatIndustry() : ''), pageUrl: window.location.href, timestamp: new Date().toISOString() })
                     });
                     if (!response.ok) throw new Error('Network error');
                     const data = await response.json();
@@ -4155,6 +4155,15 @@ if (leadSuccess) {
 
         openingMessage.textContent = buildIndustryChatMessage(industryName);
     }
+
+    window.getJemimaChatIndustry = function () {
+        const select = document.getElementById('industry-demo-jump');
+        let industryName = getChatIndustryNameFromSelect(select);
+        if (!industryName) {
+            industryName = getChatIndustryNameFromSection(getChatIndustryFromUrl());
+        }
+        return industryName || '';
+    };
 
     function initialiseIndustryChatOpeningMessage() {
         const select = document.getElementById('industry-demo-jump');
