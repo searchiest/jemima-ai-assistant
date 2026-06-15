@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P8CCJV29');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Workflows for Car Dealerships | Jemima AI</title>
+<meta name="description" content="Practical AI workflows for car dealerships: reply to vehicle and finance enquiries faster, book and confirm test drives, and follow up quotes and part-exchanges that turn into forecourt visits.">
+<link rel="canonical" href="https://jemima.ai/uk/car-dealerships/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="jemima.ai">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jemima.ai/car-dealerships/">
+<meta property="og:title" content="AI Workflows for Car Dealerships | Jemima AI">
+<meta property="og:description" content="Practical AI workflows for car dealerships: reply to vehicle and finance enquiries faster, book and confirm test drives, and follow up quotes and part-exchanges that turn into forecourt visits.">
+<meta property="og:image" content="https://jemima.ai/og-image.jpg">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://jemima.ai/car-dealerships/">
+<meta name="twitter:title" content="AI Workflows for Car Dealerships | Jemima AI">
+<meta name="twitter:description" content="Practical AI workflows for car dealerships: reply to vehicle and finance enquiries faster, book and confirm test drives, and follow up quotes and part-exchanges that turn into forecourt visits.">
+<meta name="twitter:image" content="https://jemima.ai/og-image.jpg">
+<!-- Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://jemima.ai/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://jemima.ai/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://jemima.ai/favicon-16x16.png">
+<link rel="manifest" href="https://jemima.ai/site.webmanifest">
+<meta name="theme-color" content="#c2155a">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://jemima.ai/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={corePlugins:{preflight:false}}</script>
+    <style>
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
+        }
+        @media screen and (max-width: 640px) {
+            .faq-item button span { padding-right: 2rem; display: block; }
+        }
+        #chat-feed div {
+            font-size: 16px !important;
+            line-height: 1.6;
+            padding-top: 0.85rem !important;
+            padding-bottom: 0.85rem !important;
+            letter-spacing: 0.01em;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        html { scroll-behavior: smooth; }
+        
+
+        /* Gold icons for Free Workflow Review buttons */
+        .fa-lightbulb {
+            color: #fbbf24 !important; /* Tailwind's amber-400 gold */
+            filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4));
+        }
+        
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+
+        #video-container {
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            width: 100%;
+            background-image: url('https://jemima.ai/video-fallback.png'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Video element styling */
+        .yt-player-frame {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out;
+            z-index: 10;
+            object-fit: cover; /* Ensures video fills the space nicely */
+        }
+        .yt-player-frame.active {
+            opacity: 1; 
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
+        .modal-content { animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #94a3b8;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingPulse 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        #mobile-menu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3c/polyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1em;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            padding-bottom: 2rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+
+        /* Default homepage demo layout
+           When no industry is selected, keep the hero CTA/video/chat first and place the
+           featured workflow examples underneath, matching the default homepage mockup.
+           When an industry is selected, the existing industry-specific layout remains intact. */
+        body.default-demo-page #live-demo-library {
+            width: 100%;
+            margin-top: 1.75rem;
+            padding: 1.75rem 0 0;
+            border-top: 1px solid #e2e8f0;
+            background: transparent;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-library-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-header {
+            margin-bottom: 0.9rem;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-empty-state {
+            margin-bottom: 1.75rem;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry {
+            padding: 2rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry-heading {
+            display: block;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry-heading h3 {
+            text-align: left;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 1024px) {
+            body.default-demo-page #live-demo-library .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            body.default-demo-page #live-demo-library {
+                margin-top: 1.25rem;
+                padding-top: 1.5rem;
+            }
+
+            body.default-demo-page #live-demo-library .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body.default-demo-page #live-demo-library .live-demo-industry {
+                padding: 1.25rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            #audit-form label { color: #475569 !important; font-size: 11px !important; letter-spacing: 0.15em !important; }
+            #audit-form input, #audit-form select { font-size: 16px !important; color: #000000 !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+            #audit-form input::placeholder { color: #94a3b8 !important; font-weight: 500; }
+            .faq-content p { font-size: 16px !important; line-height: 1.6; margin-bottom: 1.25rem; color: #334155; }
+            .faq-content button { margin-top: 0.5rem; }
+        }
+
+
+
+
+        /* Compact hero spacing with top industry selector */
+        .hero-industry-jump {
+            margin: 0 auto 0.75rem !important;
+        }
+
+        .hero-industry-jump select {
+            padding-top: 13px !important;
+            padding-bottom: 13px !important;
+        }
+
+        .hero-industry-title {
+            margin-top: 0 !important;
+            margin-bottom: 0.45rem !important;
+        }
+
+        .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 0.85rem !important;
+            line-height: 1.45 !important;
+        }
+
+        .max-w-4xl #live-demo-library {
+            padding-top: 0.65rem !important;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header {
+            margin-bottom: 0.9rem !important;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-kicker {
+            margin-bottom: 0 !important;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry {
+            padding-top: 1.35rem !important;
+        }
+
+        main > div.flex.flex-col.items-center {
+            row-gap: 1rem !important;
+        }
+
+        /* Hero-selected industry demo layout */
+        .max-w-4xl #live-demo-library {
+            padding: 1.75rem 0 0;
+            border-top: 0;
+            background: transparent;
+            width: min(100%, 1200px);
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-library-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header {
+            margin: 0 auto 1.75rem;
+            text-align: center;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry {
+            padding: 2rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry-heading {
+            display: block;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry-heading h3 {
+            text-align: left;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 1024px) {
+            .max-w-4xl #live-demo-library .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .max-w-4xl #live-demo-library .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        .hero-industry-title {
+            font-size: clamp(2.05rem, 4.2vw, 3.65rem) !important;
+            line-height: 1.04 !important;
+            letter-spacing: -0.065em !important;
+            margin-bottom: 0.75rem !important;
+            text-align: center !important;
+            white-space: normal !important;
+            width: 100%;
+            overflow: visible !important;
+        }
+
+        /*
+           The dynamic industry line can be wider than the max-w-4xl hero wrapper.
+           A normal 100%-wide block span will still make nowrap text overflow from the
+           left edge of that wrapper, which makes it look off-centre.
+           This centres the actual visual text line, not just the span box.
+        */
+        .hero-industry-title .hero-h1-line {
+            display: block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: none;
+            text-align: center !important;
+            white-space: nowrap;
+        }
+
+        .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .hero-industry-title {
+                font-size: clamp(1.85rem, 8.5vw, 2.8rem) !important;
+                line-height: 1.08 !important;
+            }
+
+            .hero-industry-title .hero-h1-line {
+                left: auto;
+                transform: none;
+                width: 100%;
+                max-width: 100%;
+                white-space: normal;
+            }
+        }
+
+        /* Live demo library */
+        .live-demo-library {
+            scroll-margin-top: 96px;
+            padding: 5rem 0;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
+        }
+
+        .live-demo-library-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .live-demo-header {
+            max-width: 820px;
+            margin: 0 auto 2.25rem;
+            text-align: center;
+        }
+
+        .live-demo-kicker {
+            display: inline-block;
+            background: rgba(194, 21, 90, 0.1);
+            color: #c2155a;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            margin-bottom: 16px;
+        }
+
+        .live-demo-header h2 {
+            margin: 0;
+            color: #020617;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            font-weight: 800;
+        }
+
+        .live-demo-header p {
+            max-width: 760px;
+            margin: 1rem auto 0;
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+
+        .hero-industry-jump {
+            margin: 0 auto 1.25rem;
+        }
+
+        .hero-industry-jump label {
+            color: #64748b;
+        }
+
+        .live-demo-jump {
+            max-width: 520px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .live-demo-jump label {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin: 0 0 10px;
+        }
+
+        .live-demo-jump select {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 15px 16px;
+            font-size: 15px;
+            font-weight: 800;
+            outline: none;
+            border-radius: 0;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+            cursor: pointer;
+        }
+
+        .live-demo-jump select:focus {
+            border-color: #c2155a;
+            outline: 2px solid rgba(194, 21, 90, 0.12);
+        }
+
+        .live-demo-industry-list {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .live-demo-industry {
+            scroll-margin-top: 104px;
+            padding: 2rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Keep all demo links in the page source, but hide them visually until an industry is selected. */
+        .live-demo-industry {
+            display: none;
+        }
+
+        .live-demo-industry.is-visible {
+            display: block;
+        }
+
+        .live-demo-empty-state {
+            max-width: 760px;
+            margin: 0 auto 2rem;
+            padding: 1.25rem;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            color: #64748b;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 650;
+        }
+
+        .live-demo-empty-state.is-hidden {
+            display: none;
+        }
+
+        .live-demo-industry-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .live-demo-industry-heading h3 {
+            margin: 0;
+            color: #020617;
+            font-size: clamp(1.45rem, 2.5vw, 2.25rem);
+            line-height: 1;
+            letter-spacing: -0.045em;
+            font-weight: 800;
+        }
+
+        .live-demo-back-link {
+            color: #c2155a;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .live-demo-back-link:hover {
+            text-decoration: underline;
+        }
+
+        .live-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .live-demo-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 132px;
+            padding: 1.1rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .live-demo-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(194, 21, 90, 0.35);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+        }
+
+
+        .live-demo-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .live-demo-channel-icon,
+        .live-demo-channel-badge {
+            width: 30px;
+            height: 30px;
+            flex: 0 0 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #c2155a;
+            font-size: 13px;
+            line-height: 1;
+            margin-top: 1px;
+        }
+
+        .live-demo-channel-sms {
+            font-size: 9px;
+            font-weight: 950;
+            letter-spacing: 0.08em;
+        }
+
+        .live-demo-channel-voice {
+            font-size: 12px;
+        }
+
+        .live-demo-card-title {
+            display: block;
+            flex: 1;
+            color: #0f172a;
+            font-size: 15px;
+            line-height: 1.35;
+            font-weight: 850;
+            letter-spacing: -0.02em;
+        }
+
+        .live-demo-card-meta {
+            display: block;
+            margin-top: 1rem;
+            color: #c2155a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .live-demo-library {
+                padding: 3.5rem 0;
+            }
+
+            .live-demo-industry {
+                padding: 1.25rem;
+            }
+
+            .live-demo-industry-heading {
+                display: block;
+            }
+
+            .live-demo-back-link {
+                display: inline-block;
+                margin-top: 0.75rem;
+            }
+
+            .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .live-demo-card {
+                min-height: 112px;
+            }
+        }
+
+
+
+        /* Balanced default-page hero spacing.
+           The demo library is moved dynamically after load, so the spacing must
+           target the real wrapper and Tailwind space-y sibling margins. These
+           values keep the default page compact without making the CTA feel
+           cramped under the subtitle. */
+        body.default-demo-page .hero-page-stack {
+            row-gap: 0 !important;
+            gap: 0 !important;
+        }
+
+        body.default-demo-page .hero-page-stack > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-copy-block {
+            margin-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-copy-block > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0.65rem !important;
+        }
+
+        body.default-demo-page .hero-industry-title {
+            margin-bottom: 0.8rem !important;
+        }
+
+        body.default-demo-page .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Main adjustment: give the CTA a deliberate, moderate gap below the subtitle. */
+        body.default-demo-page .hero-primary-cta {
+            margin-top: 1.35rem !important;
+            gap: 0.95rem !important;
+        }
+
+        body.default-demo-page .hero-primary-cta .text-center {
+            margin-top: 0 !important;
+        }
+
+        body.default-demo-page .hero-primary-cta + .flex {
+            margin-top: 1.7rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            body.default-demo-page .hero-copy-block > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 0.55rem !important;
+            }
+
+            body.default-demo-page .hero-primary-cta {
+                margin-top: 1.15rem !important;
+                gap: 0.85rem !important;
+            }
+
+            body.default-demo-page .hero-primary-cta + .flex {
+                margin-top: 1.35rem !important;
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased default-demo-page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full md:hidden">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-2 text-xl tracking-tighter" onclick="toggleMobileMenu()">
+                <img src="https://jemima.ai/jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
+                <span>Jemima</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="text-slate-600">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-lg  uppercase tracking-[0.2em] text-slate-900">
+            <a href="#live-demos" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Live demos</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
+        </div>
+        <div class="mt-auto">
+            <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full font-black bg-[#c2155a] text-white py-5  uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Free Workflow Review</button>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
+        <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="location.href='/'">
+            <img src="https://jemima.ai/jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+            <span>Jemima</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="#live-demos" class="hover:text-[#c2155a]">Live demos</a>
+            <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
+        </div>
+        <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </nav>
+
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-1 lg:pt-4 pb-0">
+      <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12 hero-page-stack">
+        <div class="max-w-4xl text-center space-y-3 hero-copy-block">
+          <h1 class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight hero-industry-title">
+            <span class="hero-h1-line">AI for car dealerships</span>
+            <span class="hero-h1-line text-[#c2155a]">that books the test drives, not the deals</span>
+          </h1>
+          <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium hero-industry-subtitle"><strong>Not another AI tool.</strong> Your AI consultancy and development team for faster replies to vehicle and finance enquiries, test drives booked without the phone tag, and follow-up that turns enquiries into forecourt visits.</p>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-4 hero-primary-cta">
+          <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
+            <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
+          </button>
+          <div class="text-center">
+            <p class="text-slate-500 text-xs md:text-sm font-medium">Start with one practical AI workflow opportunity. No system access or credit card required.</p>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+          <div class="w-full md:w-[45%] space-y-4">
+            <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+              <video id="idle-player" src="https://vz-1599ac93-05a.b-cdn.net/c05b369d-1529-4051-8773-79320393ec05/play_1080p.mp4" class="yt-player-frame active pointer-events-none" autoplay loop muted playsinline></video>
+              <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/9210bbec-7339-4849-a52b-3fd446ec12a8/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+              <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
+                <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
+                  <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
+                    tap to interact
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                          <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start transition-all duration-500">
+                    <div class="p-4 md:p-6 flex flex-col h-full">
+                        <div class="flex items-center justify-between border-b border-slate-300 pb-3 shrink-0">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
+                                    <img src="https://jemima.ai/jemima-chat-image.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
+                                </div>
+                                <p class="text-sm  uppercase tracking-tight">Jemima</p>
+                            </div>
+                        </div>
+                        <div id="chat-feed" class="space-y-4 h-[170px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-1">
+                            <div id="chat-opening-message" class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
+                                Hi, I’m Jemima. Tell me about your dealership — team size, the stock and finance mix, and where enquiries or follow-up could be faster and more consistent. I’ll suggest the first process to automate.
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
+                            <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
+                                <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg shadow-[#c2155a]/20 hover:bg-[#a0124a] transition-colors">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-3.5 text-[12px]  bg-[#c2155a] text-white font-black rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Free Workflow Review</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+      </div>
+<a id="workflows"></a><section id="live-demos" class="scroll-mt-24 py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Live workflow examples</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Practical AI workflows for car dealerships</h2><p class="mt-4 text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto">Live, interactive demos built for car dealerships. Try them with sample data.</p>
+    </div><div class="live-demo-industry-list"><section class="live-demo-industry is-visible" data-industry-name="Car Dealership">                    <div class="live-demo-grid"><a href="https://jemima.ai/demo/car-dealerships/vehicle-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Vehicle enquiry</span></span><span class="live-demo-card-meta">Lead Triage</span></a>
+<a href="https://jemima.ai/demo/car-dealerships/finance-enquiry/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Car finance enquiry</span></span><span class="live-demo-card-meta">Lead Triage</span></a>
+<a href="https://jemima.ai/demo/car-dealerships/vehicle-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Vehicle quote follow-up</span></span><span class="live-demo-card-meta">Quote Follow-Up</span></a>
+<a href="https://jemima.ai/demo/car-dealerships/part-exchange-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Part-exchange valuation follow-up</span></span><span class="live-demo-card-meta">Quote Follow-Up</span></a>
+<a href="https://jemima.ai/demo/car-dealerships/sms-test-drive-confirmation/" class="live-demo-card live-demo-card-sms" data-demo-type="sms"><span class="live-demo-card-top"><span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span><span class="live-demo-card-title">Test drive confirmation</span></span><span class="live-demo-card-meta">SMS Workflow</span></a>
+<a href="https://jemima.ai/demo/car-dealerships/sms-documents-before-visit-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms"><span class="live-demo-card-top"><span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span><span class="live-demo-card-title">Documents before visit reminder</span></span><span class="live-demo-card-meta">SMS Workflow</span></a>
+<a href="https://jemima.ai/demo/car-dealerships/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span><span class="live-demo-card-title">Vehicle enquiry and test drive capture</span></span><span class="live-demo-card-meta">Voice Workflow</span></a></div>
+                </section></section></div></section><section class="py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Why it matters</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Where a faster-responding dealership wins the sale</h2>
+    </div><div class="grid md:grid-cols-3 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg mb-1.5">Slow replies lose buyers</h3><p class="text-base text-slate-600 leading-relaxed">Vehicle and finance enquiries go to several dealers, and the one who replies first and books the test drive usually gets the sale.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg mb-1.5">Finance enquiries left waiting</h3><p class="text-base text-slate-600 leading-relaxed">Finance enquiries are high-intent, but a slow or inconsistent reply sends the buyer straight to a competitor.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg mb-1.5">Test-drive phone tag</h3><p class="text-base text-slate-600 leading-relaxed">Booking, confirming and rearranging test drives by phone ties up the sales floor.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg mb-1.5">Part-exchange follow-up forgotten</h3><p class="text-base text-slate-600 leading-relaxed">Valuation and quote follow-ups slip the moment the next customer walks onto the forecourt.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg mb-1.5">No-shows and missing documents</h3><p class="text-base text-slate-600 leading-relaxed">Buyers arrive without ID, licence or finance documents, costing the appointment and the slot.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg mb-1.5">Triaging serious buyers</h3><p class="text-base text-slate-600 leading-relaxed">Working out which enquiries are ready to buy versus browsers eats salesperson time.</p></div></div></section><section class="py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Worked example</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">See how one enquiry is handled</h2>
+    </div><div class="bg-white border border-slate-200 shadow-sm p-7 md:p-10 max-w-4xl mx-auto">
+  <div class="grid md:grid-cols-2 gap-8">
+    <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-3">An enquiry comes in</p><div class="bg-[#c2155a]/5 border border-[#c2155a]/10 rounded-2xl rounded-tl-none p-4 md:p-5 text-base text-slate-800 leading-relaxed shadow-sm">I’m interested in the black Audi A4 you’ve got listed, and I’d want to part-exchange my current car and look at finance. Can I come and test drive it this weekend?</div></div>
+    <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-3">Jemima hands your team</p><div class="bg-[#047857]/5 border-l-4 border-[#047857] px-5 md:px-6 py-2"><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Triage</p><p class="text-base font-[700] text-slate-900 mt-1">high-intent buyer, part-exchange and finance</p></div><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Services</p><p class="text-base font-[700] text-slate-900 mt-1">test drive, part-exchange valuation, finance enquiry</p></div><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Next action</p><p class="text-base font-[700] text-slate-900 mt-1">book a test drive this weekend</p></div><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Plus</p><p class="text-base font-[700] text-slate-900 mt-1">a drafted reply and the documents to bring</p></div></div></div>
+  </div>
+  <p class="text-xs text-slate-400 font-medium mt-6 pt-5 border-t border-slate-100">The salesperson handles the deal and the negotiation — Jemima books and organises the enquiry, it doesn’t price the car or the part-exchange.</p>
+</div></section><section class="py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Your stack</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Built around the tools you already use</h2>
+    </div><div class="flex flex-wrap gap-2.5 justify-center"><span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Auto Trader</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Pinewood</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Keyloop</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Click Dealer</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">iVendi</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Email &amp; inboxes</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">SMS</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Google Sheets</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Calendars</span></div></section><section id="how-it-works" class="scroll-mt-24 py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">How it works</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Four simple steps for your dealership</h2>
+    </div><div class="grid md:grid-cols-4 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">1</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Review</h3><p class="text-base text-slate-600 leading-relaxed">We look at your enquiry, follow-up and admin processes.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">2</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Roadmap</h3><p class="text-base text-slate-600 leading-relaxed">We pick the one workflow that makes the biggest difference first.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">3</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Build</h3><p class="text-base text-slate-600 leading-relaxed">We build and test it around your real tools, with review points for your team.</p></div>
+<div class="bg-[#c2155a] border border-[#c2155a] shadow-lg shadow-[#c2155a]/25 p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-white text-[#c2155a] flex items-center justify-center font-[800] text-lg mb-4">4</div><h3 class="font-[800] text-white uppercase tracking-[0.12em] text-sm mb-2">Launch</h3><p class="text-base text-white/90 leading-relaxed">It goes live, then we maintain and improve it over time.</p></div></div></section><section id="faq" class="scroll-mt-24 py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">FAQ</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Questions dealerships ask</h2>
+    </div><div class="max-w-3xl mx-auto"><div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Can it reply to vehicle and finance enquiries before a competitor?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Yes. When an enquiry comes in, Jemima can reply straight away, capture the vehicle of interest, any part-exchange and whether finance is needed, and offer a test drive — so you win more from the leads you already get instead of losing them to a faster dealer. Your sales team still handles every deal.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Can it book and confirm test drives without the phone tag?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Yes. Workflows can send test-drive confirmations and reminders by SMS, and prompt buyers to bring ID, licence and finance documents, which cuts no-shows and the wasted slots they cause. You stay in control of the diary.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Can it chase quote and part-exchange follow-ups?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Yes. Jemima can follow up vehicle quotes and part-exchange valuations consistently, so deals don’t go cold once the next customer walks in. You decide who gets followed up and how often.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Can it tell a ready buyer from a browser?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">It can triage. Jemima flags ready-to-buy and finance-ready enquiries against casual browsers and routes them accordingly, so salesperson time goes to the best opportunities. You always make the final call.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Will it ever price a car, value a part-exchange or sell finance?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">No. Jemima captures the enquiry and books the visit, but pricing, the part-exchange valuation, the deal and any regulated finance conversation all stay with your team. It removes the admin around the enquiry, not the sale.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Does it work with Auto Trader, our DMS and lead tools?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">In most cases, yes. We aim to fit around the tools you already use, such as Auto Trader, your DMS (for example Pinewood or Keyloop) and lead and finance tools, along with your inbox and SMS, rather than asking you to change systems. We confirm what’s possible during the review.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Is customer data secure, and do we stay in control?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Yes. Information is handled with controlled access and clear limits, and every workflow has approval points, activity logs and human handovers, so your team can see exactly what it has done and pause or adjust it at any time. We design around your confidentiality and GDPR obligations.</p></div></div></div></section></main>
+    <section id="workflow-review" class="scroll-mt-24 bg-slate-50 border-t border-slate-200 py-12 lg:py-16">
+      <div class="max-w-5xl mx-auto px-4 lg:px-6">
+        <div class="bg-white border border-slate-200 shadow-sm p-7 md:p-10">
+          <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+            <div>
+              <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-[700] px-4 py-1 uppercase tracking-[0.2em] mb-4">Step 1 of 1</div>
+              <h2 class="text-2xl md:text-3xl font-[800] tracking-tighter text-slate-950 leading-tight">Request your free workflow review</h2>
+              <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">We’ll find the one AI workflow that would make the biggest difference to your business.</p>
+              <ul class="mt-6 space-y-3 text-base text-slate-700">
+                <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>We’ll pinpoint one practical AI workflow opportunity for your business.</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>No system access or technical setup needed to get started.</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>No credit card required.</span></li>
+              </ul>
+            </div>
+            <form id="wfr-form" onsubmit="handleReviewFormSubmit(event)" class="space-y-5">
+              <div class="space-y-1.5">
+                <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Full Name</label>
+                <input type="text" id="wfr-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+              </div>
+              <div class="space-y-1.5">
+                <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Which part of your business would you most like to improve?</label>
+                <select id="wfr-traffic" required class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-transparent">
+                  <option value="" disabled selected>Select workflow area...</option>
+                  <option>Enquiries and intake</option>
+                  <option>Follow-up and communication</option>
+                  <option>Admin and document processing</option>
+                  <option>Job, case or project handovers</option>
+                  <option>Reporting and visibility</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="space-y-1.5">
+                <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Work Email</label>
+                <input type="email" id="wfr-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+              </div>
+              <div class="space-y-1.5">
+                <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Phone Number</label>
+                <div class="flex items-center gap-4">
+                  <input type="tel" id="wfr-phone" required placeholder="+44 7700 000000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                  <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                    <input type="checkbox" id="wfr-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
+                    <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">SMS?</span>
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
+              <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+              <p class="text-center text-[11px] text-slate-400 font-medium mt-2">By submitting, you agree to our <a href="/privacy.html" class="underline hover:text-[#c2155a]">Privacy Policy</a>.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="py-12 bg-white border-t border-slate-300 text-center">
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
+    </footer>
+<script>
+  const INDUSTRY='Car Dealership';
+  const n8nChatWebhookUrl='https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat';
+  const sessionId='preview_'+Math.random().toString(36).slice(2,11);
+  window.getJemimaChatIndustry=()=>INDUSTRY;
+  function toggleMobileMenu(){ document.getElementById('mobile-menu').classList.toggle('-translate-y-full'); }
+
+  /* --- Hero video engine: idle loop + tap-to-play main (ported from homepage) --- */
+  let isInteracting = false;
+  let activePlayerId = null;
+  const players = { 'main': document.getElementById('player-main') };
+  const videoPlaceholder = document.getElementById('video-placeholder');
+
+  function activateAI(videoId = 'main') {
+    const videoElement = players[videoId];
+    if (!videoElement) return;
+    videoElement.currentTime = 0;
+    videoElement.play();
+    isInteracting = true;
+    if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+    const idlePlayer = document.getElementById('idle-player');
+    if (idlePlayer) idlePlayer.classList.remove('active');
+    if (activePlayerId && players[activePlayerId]) {
+      players[activePlayerId].classList.remove('active');
+      players[activePlayerId].classList.add('pointer-events-none');
+      players[activePlayerId].pause();
+    }
+    videoElement.classList.add('active');
+    videoElement.classList.remove('pointer-events-none');
+    activePlayerId = videoId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetToLoop() {
+    isInteracting = false;
+    if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
+    if (activePlayerId && players[activePlayerId]) {
+      players[activePlayerId].classList.remove('active');
+      players[activePlayerId].classList.add('pointer-events-none');
+      players[activePlayerId].pause();
+    }
+    activePlayerId = null;
+    const idlePlayer = document.getElementById('idle-player');
+    if (idlePlayer) { idlePlayer.classList.add('active'); idlePlayer.play(); }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    Object.values(players).forEach(video => {
+      if (video) {
+        video.addEventListener('ended', resetToLoop);
+        video.style.cursor = 'pointer';
+      }
+    });
+    const container = document.getElementById('video-container');
+    if (container) {
+      container.style.cursor = 'pointer';
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('#video-placeholder')) return;
+        if (isInteracting && activePlayerId && players[activePlayerId]) {
+          const v = players[activePlayerId];
+          if (v.paused) { v.play().catch(() => {}); } else { v.pause(); }
+        }
+      });
+    }
+  });
+  function openModal(){ const el=document.getElementById('workflow-review'); if(el) el.scrollIntoView({behavior:'smooth'}); }
+  function toggleFaq(b){ const i=b.closest('.faq-item'); if(i) i.classList.toggle('active'); }
+  async function handleReviewFormSubmit(e){e.preventDefault();const f=e.target,b=f.querySelector('button[type=submit]');const val=id=>{const el=document.getElementById(id);return el?(el.value||'').trim():'';};if(b){b.disabled=true;b.innerText='Sending…';}const payload={type:'Workflow Review',name:val('wfr-name'),traffic:val('wfr-traffic'),email:val('wfr-email'),phone:val('wfr-phone'),sms:!!(document.getElementById('wfr-sms-optin')||{}).checked,triggerButton:'Industry Page Inline Form',pageUrl:location.href,industry:INDUSTRY,timestamp:new Date().toISOString()};try{const r=await fetch('https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error('status '+r.status);f.reset();if(b){b.innerText='Thank you — we will be in touch';}}catch(err){if(b){b.disabled=false;b.innerText='Something went wrong — try again';}}}
+  function chatBubble(t,me){const d=document.createElement('div');d.className=me?'bg-white text-slate-700 border border-slate-100 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit rounded-2xl rounded-tr-none shadow-sm':'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed shadow-sm rounded-2xl rounded-tl-none';d.innerText=t;return d;}
+  async function handleChatSubmit(e){e.preventDefault();const i=document.getElementById('user-chat-input'),t=i.value.trim();if(!t)return;i.value='';const feed=document.getElementById('chat-feed');feed.appendChild(chatBubble(t,true));const w=document.createElement('div');w.className='text-slate-400 text-sm px-2';w.innerText='Jemima is typing…';feed.appendChild(w);feed.scrollTop=feed.scrollHeight;try{const r=await fetch(n8nChatWebhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chatInput:t,message:t,sessionId,industry:INDUSTRY,pageUrl:location.href,timestamp:new Date().toISOString()})});if(!r.ok)throw new Error('Network error');const d=await r.json();w.remove();const getBotText=(input)=>{if(typeof input==='string')return input;if(!input)return null;if(Array.isArray(input))return getBotText(input[0]);const candidates=[input.output,input.text,input.response,input.message,input.fulfillmentText,input.content];const found=candidates.find(c=>typeof c==='string'&&c.length>0);if(found)return found;if(input.json)return getBotText(input.json);return null;};feed.appendChild(chatBubble(getBotText(d)||"I've received your message!",false));}catch(err){w.remove();feed.appendChild(chatBubble("I'm having trouble connecting right now.",false));}feed.scrollTop=feed.scrollHeight;}
+</script>
+</body>
+</html>
