@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Workflows for Accountancy Firms | Jemima AI</title>
+<meta name="description" content="Practical AI workflows for accountancy firms - triage enquiries, chase records and quotes, capture out-of-hours calls. Built around Xero, QuickBooks, Companies House and HMRC MTD.">
+<link rel="canonical" href="https://jemima.ai/accountants/">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://jemima.ai/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={corePlugins:{preflight:false}}</script>
+    <style>
+        @media screen and (max-width: 768px) {
+            input, select, textarea { font-size: 16px !important; }
+        }
+        @media screen and (max-width: 640px) {
+            .faq-item button span { padding-right: 2rem; display: block; }
+        }
+        #chat-feed div {
+            font-size: 16px !important;
+            line-height: 1.6;
+            padding-top: 0.85rem !important;
+            padding-bottom: 0.85rem !important;
+            letter-spacing: 0.01em;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        html { scroll-behavior: smooth; }
+        
+
+        /* Gold icons for Free Workflow Review buttons */
+        .fa-lightbulb {
+            color: #fbbf24 !important; /* Tailwind's amber-400 gold */
+            filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4));
+        }
+        
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message-anim { animation: slideIn 0.3s ease forwards; }
+
+        #video-container {
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            width: 100%;
+            background-image: url('video-fallback.png?auto=format&fit=crop&q=80&w=1000'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Video element styling */
+        .yt-player-frame {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+            opacity: 0; 
+            transition: opacity 0.5s ease-in-out;
+            z-index: 10;
+            object-fit: cover; /* Ensures video fills the space nicely */
+        }
+        .yt-player-frame.active {
+            opacity: 1; 
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-bg { animation: fadeIn 0.2s ease-out forwards; }
+        .modal-content { animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #94a3b8;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingPulse 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        #mobile-menu { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3c/polyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1em;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            padding-bottom: 2rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+
+        /* Default homepage demo layout
+           When no industry is selected, keep the hero CTA/video/chat first and place the
+           featured workflow examples underneath, matching the default homepage mockup.
+           When an industry is selected, the existing industry-specific layout remains intact. */
+        body.default-demo-page #live-demo-library {
+            width: 100%;
+            margin-top: 1.75rem;
+            padding: 1.75rem 0 0;
+            border-top: 1px solid #e2e8f0;
+            background: transparent;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-library-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-header {
+            margin-bottom: 0.9rem;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-empty-state {
+            margin-bottom: 1.75rem;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry {
+            padding: 2rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry-heading {
+            display: block;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-industry-heading h3 {
+            text-align: left;
+        }
+
+        body.default-demo-page #live-demo-library .live-demo-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 1024px) {
+            body.default-demo-page #live-demo-library .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            body.default-demo-page #live-demo-library {
+                margin-top: 1.25rem;
+                padding-top: 1.5rem;
+            }
+
+            body.default-demo-page #live-demo-library .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body.default-demo-page #live-demo-library .live-demo-industry {
+                padding: 1.25rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            #audit-form label { color: #475569 !important; font-size: 11px !important; letter-spacing: 0.15em !important; }
+            #audit-form input, #audit-form select { font-size: 16px !important; color: #000000 !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+            #audit-form input::placeholder { color: #94a3b8 !important; font-weight: 500; }
+            .faq-content p { font-size: 16px !important; line-height: 1.6; margin-bottom: 1.25rem; color: #334155; }
+            .faq-content button { margin-top: 0.5rem; }
+        }
+
+
+
+
+        /* Compact hero spacing with top industry selector */
+        .hero-industry-jump {
+            margin: 0 auto 0.75rem !important;
+        }
+
+        .hero-industry-jump select {
+            padding-top: 13px !important;
+            padding-bottom: 13px !important;
+        }
+
+        .hero-industry-title {
+            margin-top: 0 !important;
+            margin-bottom: 0.45rem !important;
+        }
+
+        .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 0.85rem !important;
+            line-height: 1.45 !important;
+        }
+
+        .max-w-4xl #live-demo-library {
+            padding-top: 0.65rem !important;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header {
+            margin-bottom: 0.9rem !important;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-kicker {
+            margin-bottom: 0 !important;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry {
+            padding-top: 1.35rem !important;
+        }
+
+        main > div.flex.flex-col.items-center {
+            row-gap: 1rem !important;
+        }
+
+        /* Hero-selected industry demo layout */
+        .max-w-4xl #live-demo-library {
+            padding: 1.75rem 0 0;
+            border-top: 0;
+            background: transparent;
+            width: min(100%, 1200px);
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-library-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-header {
+            margin: 0 auto 1.75rem;
+            text-align: center;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry {
+            padding: 2rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry-heading {
+            display: block;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-industry-heading h3 {
+            text-align: left;
+        }
+
+        .max-w-4xl #live-demo-library .live-demo-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 1024px) {
+            .max-w-4xl #live-demo-library .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .max-w-4xl #live-demo-library .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        .hero-industry-title {
+            font-size: clamp(2.05rem, 4.2vw, 3.65rem) !important;
+            line-height: 1.04 !important;
+            letter-spacing: -0.065em !important;
+            margin-bottom: 0.75rem !important;
+            text-align: center !important;
+            white-space: normal !important;
+            width: 100%;
+            overflow: visible !important;
+        }
+
+        /*
+           The dynamic industry line can be wider than the max-w-4xl hero wrapper.
+           A normal 100%-wide block span will still make nowrap text overflow from the
+           left edge of that wrapper, which makes it look off-centre.
+           This centres the actual visual text line, not just the span box.
+        */
+        .hero-industry-title .hero-h1-line {
+            display: block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: none;
+            text-align: center !important;
+            white-space: nowrap;
+        }
+
+        .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .hero-industry-title {
+                font-size: clamp(1.85rem, 8.5vw, 2.8rem) !important;
+                line-height: 1.08 !important;
+            }
+
+            .hero-industry-title .hero-h1-line {
+                left: auto;
+                transform: none;
+                width: 100%;
+                max-width: 100%;
+                white-space: normal;
+            }
+        }
+
+        /* Live demo library */
+        .live-demo-library {
+            scroll-margin-top: 96px;
+            padding: 5rem 0;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
+        }
+
+        .live-demo-library-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .live-demo-header {
+            max-width: 820px;
+            margin: 0 auto 2.25rem;
+            text-align: center;
+        }
+
+        .live-demo-kicker {
+            display: inline-block;
+            background: rgba(194, 21, 90, 0.1);
+            color: #c2155a;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            margin-bottom: 16px;
+        }
+
+        .live-demo-header h2 {
+            margin: 0;
+            color: #020617;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            font-weight: 800;
+        }
+
+        .live-demo-header p {
+            max-width: 760px;
+            margin: 1rem auto 0;
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+
+        .hero-industry-jump {
+            margin: 0 auto 1.25rem;
+        }
+
+        .hero-industry-jump label {
+            color: #64748b;
+        }
+
+        .live-demo-jump {
+            max-width: 520px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .live-demo-jump label {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin: 0 0 10px;
+        }
+
+        .live-demo-jump select {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 15px 16px;
+            font-size: 15px;
+            font-weight: 800;
+            outline: none;
+            border-radius: 0;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+            cursor: pointer;
+        }
+
+        .live-demo-jump select:focus {
+            border-color: #c2155a;
+            outline: 2px solid rgba(194, 21, 90, 0.12);
+        }
+
+        .live-demo-industry-list {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .live-demo-industry {
+            scroll-margin-top: 104px;
+            padding: 2rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Keep all demo links in the page source, but hide them visually until an industry is selected. */
+        .live-demo-industry {
+            display: none;
+        }
+
+        .live-demo-industry.is-visible {
+            display: block;
+        }
+
+        .live-demo-empty-state {
+            max-width: 760px;
+            margin: 0 auto 2rem;
+            padding: 1.25rem;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            color: #64748b;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 650;
+        }
+
+        .live-demo-empty-state.is-hidden {
+            display: none;
+        }
+
+        .live-demo-industry-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .live-demo-industry-heading h3 {
+            margin: 0;
+            color: #020617;
+            font-size: clamp(1.45rem, 2.5vw, 2.25rem);
+            line-height: 1;
+            letter-spacing: -0.045em;
+            font-weight: 800;
+        }
+
+        .live-demo-back-link {
+            color: #c2155a;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .live-demo-back-link:hover {
+            text-decoration: underline;
+        }
+
+        .live-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .live-demo-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 132px;
+            padding: 1.1rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            text-decoration: none;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .live-demo-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(194, 21, 90, 0.35);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+        }
+
+
+        .live-demo-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .live-demo-channel-icon,
+        .live-demo-channel-badge {
+            width: 30px;
+            height: 30px;
+            flex: 0 0 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #c2155a;
+            font-size: 13px;
+            line-height: 1;
+            margin-top: 1px;
+        }
+
+        .live-demo-channel-sms {
+            font-size: 9px;
+            font-weight: 950;
+            letter-spacing: 0.08em;
+        }
+
+        .live-demo-channel-voice {
+            font-size: 12px;
+        }
+
+        .live-demo-card-title {
+            display: block;
+            flex: 1;
+            color: #0f172a;
+            font-size: 15px;
+            line-height: 1.35;
+            font-weight: 850;
+            letter-spacing: -0.02em;
+        }
+
+        .live-demo-card-meta {
+            display: block;
+            margin-top: 1rem;
+            color: #c2155a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .live-demo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .live-demo-library {
+                padding: 3.5rem 0;
+            }
+
+            .live-demo-industry {
+                padding: 1.25rem;
+            }
+
+            .live-demo-industry-heading {
+                display: block;
+            }
+
+            .live-demo-back-link {
+                display: inline-block;
+                margin-top: 0.75rem;
+            }
+
+            .live-demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .live-demo-card {
+                min-height: 112px;
+            }
+        }
+
+
+
+        /* Mobile exit-intent bottom sheet */
+        #mobile-exit-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 95;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+            padding: 0 12px 12px;
+        }
+
+        #mobile-exit-overlay.active {
+            display: flex;
+        }
+
+        #mobile-exit-sheet {
+            width: min(100%, 520px);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 -20px 50px rgba(15, 23, 42, 0.25);
+            padding: 1.25rem;
+            transform: translateY(16px);
+            opacity: 0;
+            animation: mobileExitSlideUp 0.24s ease-out forwards;
+        }
+
+        @keyframes mobileExitSlideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .mobile-exit-pill {
+            display: inline-block;
+            background: rgba(194, 21, 90, 0.1);
+            color: #c2155a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 6px 10px;
+            margin-bottom: 10px;
+        }
+
+        .mobile-exit-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .mobile-exit-primary {
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+            background: #c2155a;
+            color: #ffffff;
+            padding: 16px 18px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            box-shadow: 0 18px 35px rgba(194, 21, 90, 0.25);
+        }
+
+        .mobile-exit-secondary {
+            width: 100%;
+            margin-top: 12px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+        }
+
+        @media screen and (min-width: 769px) {
+            #mobile-exit-overlay { display: none !important; }
+        }
+
+
+        /* Balanced default-page hero spacing.
+           The demo library is moved dynamically after load, so the spacing must
+           target the real wrapper and Tailwind space-y sibling margins. These
+           values keep the default page compact without making the CTA feel
+           cramped under the subtitle. */
+        body.default-demo-page .hero-page-stack {
+            row-gap: 0 !important;
+            gap: 0 !important;
+        }
+
+        body.default-demo-page .hero-page-stack > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-copy-block {
+            margin-bottom: 0 !important;
+        }
+
+        body.default-demo-page .hero-copy-block > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0.65rem !important;
+        }
+
+        body.default-demo-page .hero-industry-title {
+            margin-bottom: 0.8rem !important;
+        }
+
+        body.default-demo-page .hero-industry-subtitle {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Main adjustment: give the CTA a deliberate, moderate gap below the subtitle. */
+        body.default-demo-page .hero-primary-cta {
+            margin-top: 1.35rem !important;
+            gap: 0.95rem !important;
+        }
+
+        body.default-demo-page .hero-primary-cta .text-center {
+            margin-top: 0 !important;
+        }
+
+        body.default-demo-page .hero-primary-cta + .flex {
+            margin-top: 1.7rem !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            body.default-demo-page .hero-copy-block > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 0.55rem !important;
+            }
+
+            body.default-demo-page .hero-primary-cta {
+                margin-top: 1.15rem !important;
+                gap: 0.85rem !important;
+            }
+
+            body.default-demo-page .hero-primary-cta + .flex {
+                margin-top: 1.35rem !important;
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased default-demo-page">
+
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
+            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs  px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
+                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Request Your Free Workflow Review</h3>
+                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
+            </div>
+            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
+                <div class="space-y-1.5">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Full Name</label>
+                    <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Which part of your business would you most like to improve?</label>
+                    <div class="relative cursor-pointer group" id="Pro-select-trigger">
+                        <input type="text" id="form-traffic" required readonly placeholder="Select workflow area..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
+                        <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
+                    </div>
+                    <div id="Pro-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Enquiries and intake</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Follow-up and communication</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Admin and document processing</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Job, case or project handovers</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Reporting and visibility</div>
+<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">Not sure yet</div>
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Work Email</label>
+                    <input type="email" id="form-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Phone Number</label>
+                    <div class="flex items-center gap-4">
+                        <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
+                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
+                            <span class="text-xs  uppercase tracking-widest text-slate-400">SMS?</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5  uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
+                <p id="modal-card-note" class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div id="mobile-exit-overlay" aria-hidden="true">
+        <div id="mobile-exit-sheet" class="relative">
+            <button type="button" class="mobile-exit-close" aria-label="Close mobile exit offer" onclick="closeMobileExitPopup(true)">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <div class="mobile-exit-pill">Before you go</div>
+            <h3 class="text-2xl font-[800] tracking-tighter text-slate-950 leading-tight pr-10">Want one practical workflow opportunity?</h3>
+            <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">Request a free workflow review and we’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
+            <button type="button" class="mobile-exit-primary mt-5" onclick="acceptMobileExitPopup()">
+                <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
+            </button>
+            <button type="button" class="mobile-exit-secondary" onclick="closeMobileExitPopup(true)">No thanks</button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full md:hidden">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-2 text-xl tracking-tighter" onclick="toggleMobileMenu()">
+                <img src="jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
+                <span>Jemima</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="text-slate-600">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-lg  uppercase tracking-[0.2em] text-slate-900">
+            <a href="#problem" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Solution</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Process</a>
+            <a href="#about-jemima" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">About</a>
+            <a href="#pricing" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Pricing</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
+            <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
+        </div>
+        <div class="mt-auto">
+            <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full font-black bg-[#c2155a] text-white py-5  uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Free Workflow Review</button>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
+        <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="location.href='/'">
+            <img src="https://jemima.ai/jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+            <span>Jemima</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            <a href="/#problem" class="hover:text-[#c2155a]">Solution</a>
+            <a href="/#how-it-works" class="hover:text-[#c2155a]">Process</a>
+            <a href="/#about-jemima" class="hover:text-[#c2155a]">About</a>
+            <a href="/#pricing" class="hover:text-[#c2155a]">Pricing</a>
+            <a href="/#faq" class="hover:text-[#c2155a]">FAQs</a>
+            <a href="/#how-it-works" class="hover:text-[#c2155a]">How it Works</a>
+        </div>
+        <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </nav>
+
+    <main class="max-w-[1200px] mx-auto px-4 lg:px-6 pt-1 lg:pt-4 pb-8 lg:pb-16">
+      <div class="flex flex-col items-center space-y-4 lg:space-y-8 mb-6 lg:mb-12 hero-page-stack">
+        <div class="max-w-4xl text-center space-y-3 hero-copy-block">
+          <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em] mb-1">For accountancy firms</div>
+          <h1 class="text-3xl md:text-4xl lg:text-6xl font-[700] leading-tight text-slate-950 tracking-tight hero-industry-title">
+            <span class="hero-h1-line">AI workflows for accountancy firms</span>
+            <span class="hero-h1-line text-[#c2155a]">without hiring a full AI team</span>
+          </h1>
+          <p class="max-w-5xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed font-medium hero-industry-subtitle"><strong>Not another AI tool.</strong> Practical automation for the work that quietly eats your week: chasing records before deadlines, following up enquiries and quotes, onboarding new limited companies, and catching out-of-hours calls.</p>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-4 hero-primary-cta">
+          <button onclick="openModal(false, 'Hero CTA')" class="px-10 py-4 bg-[#c2155a] text-white text-[13px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all transform hover:scale-105 shadow-lg shadow-[#c2155a]/20">
+            <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
+          </button>
+          <div class="text-center">
+            <p class="text-slate-500 text-xs md:text-sm font-medium">Start with one practical AI workflow opportunity. No system access or credit card required.</p>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-center items-start md:items-stretch gap-6 lg:gap-8 w-full max-w-5xl">
+          <div class="w-full md:w-[45%] space-y-4">
+            <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
+              <video id="idle-player" src="https://vz-1599ac93-05a.b-cdn.net/c05b369d-1529-4051-8773-79320393ec05/play_1080p.mp4" class="yt-player-frame active pointer-events-none" autoplay loop muted playsinline></video>
+              <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/9210bbec-7339-4849-a52b-3fd446ec12a8/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+              <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
+                <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
+                  <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
+                    tap to interact
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                          <div id="chat-container" class="w-full md:w-[45%] bg-white border border-slate-200 shadow-xl flex flex-col md:self-start transition-all duration-500">
+                    <div class="p-4 md:p-6 space-y-4 flex flex-col h-full">
+                        <div class="flex items-center justify-between border-b border-slate-300 pb-3 shrink-0">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-white flex items-center justify-center border relative overflow-hidden rounded-full">
+                                    <img src="https://jemima.ai/jemima-chat-image.png" alt="Jemima Avatar" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                                    <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border border-white rounded-full"></div>
+                                </div>
+                                <p class="text-sm  uppercase tracking-tight">Jemima</p>
+                            </div>
+                        </div>
+                        <div id="chat-feed" class="space-y-4 h-[170px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-2">
+                            <div id="chat-opening-message" class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
+                                Hi, I&#39;m Jemima. Tell me about your accountancy firm — team size, typical jobs, and where admin or follow-up slows you down. And I&#39;ll suggest the first process to automate.
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
+                            <form id="chat-input-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                                <input type="text" id="user-chat-input" placeholder="Type a question..." class="flex-grow bg-slate-50 border border-slate-200 text-sm md:text-base font-semibold px-4 py-3 outline-none focus:border-[#c2155a] transition-colors rounded-sm">
+                                <button type="submit" class="bg-[#c2155a] text-white w-12 flex items-center justify-center shadow-lg shadow-[#c2155a]/20 hover:bg-[#a0124a] transition-colors">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                            <button onclick="openModal(false, 'Chat Feed CTA')" class="w-full py-3.5 text-[12px]  bg-[#c2155a] text-white font-black rounded-none shadow-lg shadow-[#c2155a]/20 uppercase tracking-widest hover:bg-[#a0124a] transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Free Workflow Review</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+      </div>
+<section class="py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Where time goes</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Where accountancy firms lose time</h2>
+    </div><div class="grid md:grid-cols-3 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 mb-1.5">Chasing records at deadline time</h3><p class="text-sm text-slate-600 leading-relaxed">VAT, year-end and self-assessment all need documents from clients who go quiet. Manual chasing is repetitive and easy to drop.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 mb-1.5">Slow follow-up on enquiries</h3><p class="text-sm text-slate-600 leading-relaxed">New-client and quote enquiries arrive mixed and unstructured. A slow reply loses good monthly clients before onboarding starts.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 mb-1.5">Onboarding new companies</h3><p class="text-sm text-slate-600 leading-relaxed">New limited company owners ask about bookkeeping, corporation tax, VAT, payroll and director salary all at once — and need ordering.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 mb-1.5">Repetitive client reminders</h3><p class="text-sm text-slate-600 leading-relaxed">Bookkeeping nudges, VAT deadlines and document requests are sent by hand, again and again, every cycle.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 mb-1.5">Out-of-hours and overflow calls</h3><p class="text-sm text-slate-600 leading-relaxed">Calls during busy periods or after hours go to voicemail, then someone has to listen back and create a task.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 mb-1.5">Triaging mixed enquiries</h3><p class="text-sm text-slate-600 leading-relaxed">Spotting which enquiries are recurring-fee opportunities vs one-off questions takes partner time that could be billable.</p></div></div></section><a id="workflows"></a><section class="py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Live workflow examples</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Practical AI workflows for accountants</h2><p class="mt-4 text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto">Live, interactive demos built for accountancy practices. Try them with sample data.</p>
+    </div><div class="live-demo-industry-list"><section class="live-demo-industry is-visible" data-industry-name="Accountant">                    <div class="live-demo-grid"><a href="https://jemima.ai/demo/accountants/bookkeeping-catch-up-vat-cleanup/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Bookkeeping catch-up and VAT cleanup enquiry</span></span><span class="live-demo-card-meta">Workflow</span></a>
+<a href="https://jemima.ai/demo/accountants/new-limited-company-startup/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">New limited company startup enquiry</span></span><span class="live-demo-card-meta">Workflow</span></a>
+<a href="https://jemima.ai/demo/accountants/monthly-accounting-proposal-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Monthly accounting proposal follow-up</span></span><span class="live-demo-card-meta">Workflow</span></a>
+<a href="https://jemima.ai/demo/accountants/tax-return-quote-follow-up/" class="live-demo-card live-demo-card-text" data-demo-type="text"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-text" aria-hidden="true"><i class="fas fa-envelope"></i></span><span class="live-demo-card-title">Tax return quote follow-up</span></span><span class="live-demo-card-meta">Workflow</span></a>
+<a href="https://jemima.ai/demo/accountants/sms-secure-document-follow-up/" class="live-demo-card live-demo-card-sms" data-demo-type="sms"><span class="live-demo-card-top"><span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span><span class="live-demo-card-title">SMS Secure document request follow-up</span></span><span class="live-demo-card-meta">SMS Workflow</span></a>
+<a href="https://jemima.ai/demo/accountants/sms-bookkeeping-reminder/" class="live-demo-card live-demo-card-sms" data-demo-type="sms"><span class="live-demo-card-top"><span class="live-demo-channel-badge live-demo-channel-sms" aria-hidden="true">SMS</span><span class="live-demo-card-title">SMS Monthly bookkeeping reminder</span></span><span class="live-demo-card-meta">SMS Workflow</span></a>
+<a href="https://jemima.ai/demo/accountants/out-of-hours-voice-message-capture/" class="live-demo-card live-demo-card-voice" data-demo-type="voice"><span class="live-demo-card-top"><span class="live-demo-channel-icon live-demo-channel-voice" aria-hidden="true"><i class="fas fa-phone"></i></span><span class="live-demo-card-title">Out-of-hours tax and payroll enquiry capture</span></span><span class="live-demo-card-meta">Voice Workflow</span></a></div>
+                </section></section></div></section><section class="py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Worked example</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">See how one enquiry is handled</h2>
+    </div><div class="bg-white border border-slate-200 shadow-sm p-7 md:p-10 max-w-4xl mx-auto">
+  <div class="grid md:grid-cols-2 gap-8">
+    <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-2">A client writes</p><p class="text-slate-700 bg-slate-50 border border-slate-100 p-4 text-sm leading-relaxed">&quot;I incorporated last month and need help with bookkeeping, corporation tax, a sensible director&#39;s salary, and I&#39;m not sure if I need to register for VAT yet. Do you offer a monthly package?&quot;</p></div>
+    <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-2">Jemima hands your team</p><ul class="text-sm text-slate-700 space-y-2.5"><li><span class="text-[#c2155a] font-[700]">Triage:</span> high-value, recurring-fee opportunity</li><li><span class="text-[#c2155a] font-[700]">Services:</span> bookkeeping, corp tax, director salary, VAT advice, payroll</li><li><span class="text-[#c2155a] font-[700]">Next action:</span> offer a 15-minute onboarding call</li><li><span class="text-[#c2155a] font-[700]">Plus:</span> a drafted reply and the questions to ask first</li></ul></div>
+  </div>
+  <p class="text-xs text-slate-400 font-medium mt-6 pt-5 border-t border-slate-100">The accountant always reviews and gives the actual advice — Jemima organises the enquiry, it doesn&#39;t make tax decisions.</p>
+</div></section><section class="py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Your stack</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Built around the tools you already use</h2>
+    </div><div class="flex flex-wrap gap-2.5 justify-center"><span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Xero</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">QuickBooks</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">FreeAgent</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Sage</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Companies House</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">HMRC / MTD</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">IRIS / TaxCalc</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Email &amp; inboxes</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Google Sheets</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Calendars</span></div></section><section class="py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">How it works</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Four simple steps for your firm</h2>
+    </div><div class="grid md:grid-cols-4 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-5"><div class="text-[#c2155a] text-2xl font-[800]">1</div><h3 class="font-[700] text-slate-900 mt-1">Review</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">We look at your enquiry, follow-up and admin processes.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><div class="text-[#c2155a] text-2xl font-[800]">2</div><h3 class="font-[700] text-slate-900 mt-1">Roadmap</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">We pick the one workflow that saves your business the most time first.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><div class="text-[#c2155a] text-2xl font-[800]">3</div><h3 class="font-[700] text-slate-900 mt-1">Build</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">We build and test it around your real tools, with review points for your team.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><div class="text-[#c2155a] text-2xl font-[800]">4</div><h3 class="font-[700] text-slate-900 mt-1">Launch</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">It goes live, then we maintain and improve it over time.</p></div></div></section><section class="py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">FAQ</div>
+      <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Questions accountancy firms ask</h2>
+    </div><div class="grid md:grid-cols-2 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900">Is client data kept secure and confidential?</h3><p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Workflows are built with controlled access, secure document links and clear limits, and sensitive cases can stay under human review. We design around your confidentiality and GDPR obligations.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900">Does it work with Xero and QuickBooks?</h3><p class="text-sm text-slate-600 mt-1.5 leading-relaxed">We aim to fit around your existing software where possible, including Xero, QuickBooks, FreeAgent and Sage, plus your inboxes, sheets and practice tools.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900">Will it give clients tax advice?</h3><p class="text-sm text-slate-600 mt-1.5 leading-relaxed">No. Jemima captures, organises and follows up — the accountant always provides the actual advice and approvals.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900">Does it handle MTD and deadline cycles?</h3><p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Reminder and document-chasing workflows can be scheduled around VAT, MTD, year-end and self-assessment cycles.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900">How long until something is live?</h3><p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Simple workflows can be built quickly; we start with a practical review, then build and test in stages.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900">Do we stay in control?</h3><p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Always. We build in approvals, logs and human handover points so your team oversees what the workflow does.</p></div></div></section></main>
+    <section class="bg-[#c2155a] text-white">
+      <div class="max-w-3xl mx-auto px-5 py-16 text-center">
+        <h2 class="text-3xl md:text-4xl font-[800] tracking-tighter">Get one practical workflow for your practice</h2>
+        <p class="mt-3 text-white/90 font-medium">Request a free workflow review and we&#39;ll identify the first automation that would save your firm the most time. Plans from £500/month — <a class="underline" href="/#pricing">see plans</a>.</p>
+        <button onclick="openModal(false,'Accountant CTA')" class="mt-7 bg-white text-[#a0124a] font-[700] uppercase tracking-[0.15em] text-[11px] px-8 py-4 hover:bg-slate-100 transition-all">Free Workflow Review</button>
+      </div>
+    </section>
+    <footer class="py-12 bg-white border-t border-slate-300 text-center">
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI. All rights reserved.</p>
+    </footer>
+<script>
+  const INDUSTRY='Accountant';
+  const n8nChatWebhookUrl='https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat';
+  const sessionId='preview_'+Math.random().toString(36).slice(2,11);
+  window.getJemimaChatIndustry=()=>INDUSTRY;
+  function toggleMobileMenu(){ openModal(); }
+
+  /* --- Hero video engine: idle loop + tap-to-play main (ported from homepage) --- */
+  let isInteracting = false;
+  let activePlayerId = null;
+  const players = { 'main': document.getElementById('player-main') };
+  const videoPlaceholder = document.getElementById('video-placeholder');
+
+  function activateAI(videoId = 'main') {
+    const videoElement = players[videoId];
+    if (!videoElement) return;
+    videoElement.currentTime = 0;
+    videoElement.play();
+    isInteracting = true;
+    if (videoPlaceholder) videoPlaceholder.style.display = 'none';
+    const idlePlayer = document.getElementById('idle-player');
+    if (idlePlayer) idlePlayer.classList.remove('active');
+    if (activePlayerId && players[activePlayerId]) {
+      players[activePlayerId].classList.remove('active');
+      players[activePlayerId].classList.add('pointer-events-none');
+      players[activePlayerId].pause();
+    }
+    videoElement.classList.add('active');
+    videoElement.classList.remove('pointer-events-none');
+    activePlayerId = videoId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetToLoop() {
+    isInteracting = false;
+    if (videoPlaceholder) videoPlaceholder.style.display = 'flex';
+    if (activePlayerId && players[activePlayerId]) {
+      players[activePlayerId].classList.remove('active');
+      players[activePlayerId].classList.add('pointer-events-none');
+      players[activePlayerId].pause();
+    }
+    activePlayerId = null;
+    const idlePlayer = document.getElementById('idle-player');
+    if (idlePlayer) { idlePlayer.classList.add('active'); idlePlayer.play(); }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    Object.values(players).forEach(video => {
+      if (video) {
+        video.addEventListener('ended', resetToLoop);
+        video.style.cursor = 'pointer';
+      }
+    });
+    const container = document.getElementById('video-container');
+    if (container) {
+      container.style.cursor = 'pointer';
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('#video-placeholder')) return;
+        if (isInteracting && activePlayerId && players[activePlayerId]) {
+          const v = players[activePlayerId];
+          if (v.paused) { v.play().catch(() => {}); } else { v.pause(); }
+        }
+      });
+    }
+  });
+  function openModal(){ document.getElementById('modal-overlay').classList.remove('hidden'); }
+  function closeModal(){ document.getElementById('modal-overlay').classList.add('hidden'); }
+  document.addEventListener('click',e=>{const wrap=document.getElementById('traffic-dropdown-wrapper'),opts=document.getElementById('Pro-select-options'),trig=document.getElementById('Pro-select-trigger');if(trig&&trig.contains(e.target)){opts.classList.toggle('hidden');opts.classList.toggle('flex');return;}if(e.target.classList&&e.target.classList.contains('traffic-option')){document.getElementById('form-traffic').value=e.target.textContent.trim();opts.classList.add('hidden');opts.classList.remove('flex');return;}if(wrap&&!wrap.contains(e.target)){opts&&opts.classList.add('hidden');opts&&opts.classList.remove('flex');}});
+  function handleFormSubmit(e){e.preventDefault();const b=document.getElementById('submit-btn');b.innerText='Received — thank you (preview)';b.disabled=true;setTimeout(closeModal,1200);}
+  function chatBubble(t,me){const d=document.createElement('div');d.className=me?'bg-white text-slate-700 border border-slate-100 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit rounded-2xl rounded-tr-none shadow-sm':'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed shadow-sm rounded-2xl rounded-tl-none';d.innerText=t;return d;}
+  async function handleChatSubmit(e){e.preventDefault();const i=document.getElementById('user-chat-input'),t=i.value.trim();if(!t)return;i.value='';const feed=document.getElementById('chat-feed');feed.appendChild(chatBubble(t,true));const w=document.createElement('div');w.className='text-slate-400 text-sm px-2';w.innerText='Jemima is typing…';feed.appendChild(w);feed.scrollTop=feed.scrollHeight;try{const r=await fetch(n8nChatWebhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chatInput:t,message:t,sessionId,industry:INDUSTRY,pageUrl:location.href,timestamp:new Date().toISOString()})});if(!r.ok)throw new Error('Network error');const d=await r.json();w.remove();const getBotText=(input)=>{if(typeof input==='string')return input;if(!input)return null;if(Array.isArray(input))return getBotText(input[0]);const candidates=[input.output,input.text,input.response,input.message,input.fulfillmentText,input.content];const found=candidates.find(c=>typeof c==='string'&&c.length>0);if(found)return found;if(input.json)return getBotText(input.json);return null;};feed.appendChild(chatBubble(getBotText(d)||"I've received your message!",false));}catch(err){w.remove();feed.appendChild(chatBubble("I'm having trouble connecting right now.",false));}feed.scrollTop=feed.scrollHeight;}
+</script>
+</body>
+</html>
