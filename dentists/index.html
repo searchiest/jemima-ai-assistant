@@ -805,58 +805,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
-        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
-            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="text-center mb-5">
-                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs  px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
-                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Request Your Free Workflow Review</h3>
-                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
-            </div>
-            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
-                <div class="space-y-1.5">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Full Name</label>
-                    <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Which part of your business would you most like to improve?</label>
-                    <div class="relative cursor-pointer group" id="Pro-select-trigger">
-                        <input type="text" id="form-traffic" required readonly placeholder="Select workflow area..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
-                        <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
-                    </div>
-                    <div id="Pro-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Enquiries and intake</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Follow-up and communication</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Admin and document processing</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Job, case or project handovers</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Reporting and visibility</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">Not sure yet</div>
-                    </div>
-                </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Work Email</label>
-                    <input type="email" id="form-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Phone Number</label>
-                    <div class="flex items-center gap-4">
-                        <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
-                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
-                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
-                            <span class="text-xs  uppercase tracking-widest text-slate-400">SMS?</span>
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5  uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
-                <p id="modal-card-note" class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
-            </form>
-        </div>
-    </div>
-
-
-
     <div id="mobile-exit-overlay" aria-hidden="true">
         <div id="mobile-exit-sheet" class="relative">
             <button type="button" class="mobile-exit-close" aria-label="Close mobile exit offer" onclick="closeMobileExitPopup(true)">
@@ -884,10 +832,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
         <div class="flex flex-col gap-8 text-lg  uppercase tracking-[0.2em] text-slate-900">
             <a href="#live-demos" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Live demos</a>
-            <a href="#problem" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Solution</a>
-            <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Process</a>
-            <a href="#about-jemima" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">About</a>
-            <a href="#pricing" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Pricing</a>
             <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
             <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
         </div>
@@ -903,10 +847,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
         <div class="hidden md:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
             <a href="#live-demos" class="hover:text-[#c2155a]">Live demos</a>
-            <a href="/#problem" class="hover:text-[#c2155a]">Solution</a>
-            <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
-            <a href="/#about-jemima" class="hover:text-[#c2155a]">About</a>
-            <a href="/#pricing" class="hover:text-[#c2155a]">Pricing</a>
             <a href="#faq" class="hover:text-[#c2155a]">FAQs</a>
             <a href="#how-it-works" class="hover:text-[#c2155a]">How it Works</a>
         </div>
@@ -1024,14 +964,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="bg-[#c2155a] border border-[#c2155a] shadow-lg shadow-[#c2155a]/25 p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-white text-[#c2155a] flex items-center justify-center font-[800] text-lg mb-4">4</div><h3 class="font-[800] text-white uppercase tracking-[0.12em] text-sm mb-2">Launch</h3><p class="text-base text-white/90 leading-relaxed">It goes live, then we maintain and improve it over time.</p></div></div></section><section id="faq" class="scroll-mt-24 py-14 lg:py-20 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
       <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">FAQ</div>
       <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Questions dental practices ask</h2>
-    </div><div class="grid md:grid-cols-2 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg">Is patient data kept secure and confidential?</h3><p class="text-base text-slate-600 mt-1.5 leading-relaxed">Workflows are built with controlled access and clear limits, and sensitive cases stay under human review. We design around your confidentiality and GDPR obligations.</p></div>
-<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg">Does it work with our practice management software?</h3><p class="text-base text-slate-600 mt-1.5 leading-relaxed">We aim to fit around your existing tools where possible, including Dentally, SOE/Exact and iSmile, plus your inboxes and reminders.</p></div>
-<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg">Will it give patients clinical advice?</h3><p class="text-base text-slate-600 mt-1.5 leading-relaxed">No. Jemima captures, organises and follows up — the dentist always provides the actual clinical advice.</p></div>
-<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg">Can it handle recalls and reminders?</h3><p class="text-base text-slate-600 mt-1.5 leading-relaxed">Yes. Reminder and recall workflows can be scheduled around your hygiene and check-up cycles.</p></div>
-<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg">How long until something is live?</h3><p class="text-base text-slate-600 mt-1.5 leading-relaxed">Simple workflows can be built quickly; we start with a practical review, then build and test in stages.</p></div>
-<div class="bg-white border border-slate-200 shadow-sm p-5"><h3 class="font-[700] text-slate-900 text-lg">Do we stay in control?</h3><p class="text-base text-slate-600 mt-1.5 leading-relaxed">Always. We build in approvals, logs and human handover points so your team oversees what the workflow does.</p></div></div></section></main>
-    <section class="bg-slate-50 border-t border-slate-200 py-16 lg:py-24">
-      <div class="max-w-4xl mx-auto px-4 lg:px-6">
+    </div><div class="max-w-3xl mx-auto"><div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Is patient data kept secure and confidential?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Workflows are built with controlled access and clear limits, and sensitive cases stay under human review. We design around your confidentiality and GDPR obligations.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Does it work with our practice management software?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">We aim to fit around your existing tools where possible, including Dentally, SOE/Exact and iSmile, plus your inboxes and reminders.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Will it give patients clinical advice?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">No. Jemima captures, organises and follows up — the dentist always provides the actual clinical advice.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Can it handle recalls and reminders?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Yes. Reminder and recall workflows can be scheduled around your hygiene and check-up cycles.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">How long until something is live?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Simple workflows can be built quickly; we start with a practical review, then build and test in stages.</p></div></div>
+<div class="faq-item border-b border-slate-200"><button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between gap-4 text-left py-5"><span class="font-[700] text-slate-900 text-lg">Do we stay in control?</span><i class="fas fa-chevron-down faq-icon text-[#c2155a] transition-transform shrink-0"></i></button><div class="faq-content"><p class="text-base text-slate-600 leading-relaxed pr-8">Always. We build in approvals, logs and human handover points so your team oversees what the workflow does.</p></div></div></div></section></main>
+    <section id="workflow-review" class="scroll-mt-24 bg-slate-50 border-t border-slate-200 py-16 lg:py-24">
+      <div class="max-w-5xl mx-auto px-4 lg:px-6">
         <div class="bg-white border border-slate-200 shadow-sm p-7 md:p-10">
           <div class="grid md:grid-cols-2 gap-8 md:gap-12">
             <div>
@@ -1090,7 +1030,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   const n8nChatWebhookUrl='https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat';
   const sessionId='preview_'+Math.random().toString(36).slice(2,11);
   window.getJemimaChatIndustry=()=>INDUSTRY;
-  function toggleMobileMenu(){ openModal(); }
+  function toggleMobileMenu(){ document.getElementById('mobile-menu').classList.toggle('-translate-y-full'); }
 
   /* --- Hero video engine: idle loop + tap-to-play main (ported from homepage) --- */
   let isInteracting = false;
@@ -1150,10 +1090,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       });
     }
   });
-  function openModal(){ document.getElementById('modal-overlay').classList.remove('hidden'); }
-  function closeModal(){ document.getElementById('modal-overlay').classList.add('hidden'); }
-  document.addEventListener('click',e=>{const wrap=document.getElementById('traffic-dropdown-wrapper'),opts=document.getElementById('Pro-select-options'),trig=document.getElementById('Pro-select-trigger');if(trig&&trig.contains(e.target)){opts.classList.toggle('hidden');opts.classList.toggle('flex');return;}if(e.target.classList&&e.target.classList.contains('traffic-option')){document.getElementById('form-traffic').value=e.target.textContent.trim();opts.classList.add('hidden');opts.classList.remove('flex');return;}if(wrap&&!wrap.contains(e.target)){opts&&opts.classList.add('hidden');opts&&opts.classList.remove('flex');}});
-  function handleFormSubmit(e){e.preventDefault();const b=document.getElementById('submit-btn');b.innerText='Received — thank you (preview)';b.disabled=true;setTimeout(closeModal,1200);}
+  function openModal(){ const el=document.getElementById('workflow-review'); if(el) el.scrollIntoView({behavior:'smooth'}); }
+  function toggleFaq(b){ const i=b.closest('.faq-item'); if(i) i.classList.toggle('active'); }
   function handleReviewFormSubmit(e){e.preventDefault();const b=e.target.querySelector('button[type=submit]');if(b){b.innerText='Received — thank you (preview)';b.disabled=true;}}
   function chatBubble(t,me){const d=document.createElement('div');d.className=me?'bg-white text-slate-700 border border-slate-100 px-4 py-3 text-sm md:text-base font-semibold self-end w-fit rounded-2xl rounded-tr-none shadow-sm':'bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed shadow-sm rounded-2xl rounded-tl-none';d.innerText=t;return d;}
   async function handleChatSubmit(e){e.preventDefault();const i=document.getElementById('user-chat-input'),t=i.value.trim();if(!t)return;i.value='';const feed=document.getElementById('chat-feed');feed.appendChild(chatBubble(t,true));const w=document.createElement('div');w.className='text-slate-400 text-sm px-2';w.innerText='Jemima is typing…';feed.appendChild(w);feed.scrollTop=feed.scrollHeight;try{const r=await fetch(n8nChatWebhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chatInput:t,message:t,sessionId,industry:INDUSTRY,pageUrl:location.href,timestamp:new Date().toISOString()})});if(!r.ok)throw new Error('Network error');const d=await r.json();w.remove();const getBotText=(input)=>{if(typeof input==='string')return input;if(!input)return null;if(Array.isArray(input))return getBotText(input[0]);const candidates=[input.output,input.text,input.response,input.message,input.fulfillmentText,input.content];const found=candidates.find(c=>typeof c==='string'&&c.length>0);if(found)return found;if(input.json)return getBotText(input.json);return null;};feed.appendChild(chatBubble(getBotText(d)||"I've received your message!",false));}catch(err){w.remove();feed.appendChild(chatBubble("I'm having trouble connecting right now.",false));}feed.scrollTop=feed.scrollHeight;}
