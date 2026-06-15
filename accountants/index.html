@@ -32,7 +32,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="icon" type="image/png" sizes="32x32" href="https://jemima.ai/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="https://jemima.ai/favicon-16x16.png">
 <link rel="manifest" href="https://jemima.ai/site.webmanifest">
-<meta name="theme-color" content="#4f46e5">
+<meta name="theme-color" content="#c2155a">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://jemima.ai/style.css">
@@ -81,7 +81,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             overflow: hidden;
             border-radius: 4px;
             width: 100%;
-            background-image: url('video-fallback.png?auto=format&fit=crop&q=80&w=1000'); 
+            background-image: url('https://jemima.ai/video-fallback.png'); 
             background-size: cover;
             background-position: center;
         }
@@ -648,94 +648,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-        /* Mobile exit-intent bottom sheet */
-        #mobile-exit-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 95;
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(4px);
-            padding: 0 12px 12px;
-        }
-
-        #mobile-exit-overlay.active {
-            display: flex;
-        }
-
-        #mobile-exit-sheet {
-            width: min(100%, 520px);
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 -20px 50px rgba(15, 23, 42, 0.25);
-            padding: 1.25rem;
-            transform: translateY(16px);
-            opacity: 0;
-            animation: mobileExitSlideUp 0.24s ease-out forwards;
-        }
-
-        @keyframes mobileExitSlideUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .mobile-exit-pill {
-            display: inline-block;
-            background: rgba(194, 21, 90, 0.1);
-            color: #c2155a;
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            padding: 6px 10px;
-            margin-bottom: 10px;
-        }
-
-        .mobile-exit-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            background: transparent;
-            border: 0;
-            cursor: pointer;
-        }
-
-        .mobile-exit-primary {
-            display: block;
-            width: 100%;
-            margin-top: 1.5rem;
-            background: #c2155a;
-            color: #ffffff;
-            padding: 16px 18px;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            box-shadow: 0 18px 35px rgba(194, 21, 90, 0.25);
-        }
-
-        .mobile-exit-secondary {
-            width: 100%;
-            margin-top: 12px;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-        }
-
-        @media screen and (min-width: 769px) {
-            #mobile-exit-overlay { display: none !important; }
-        }
-
-
         /* Balanced default-page hero spacing.
            The demo library is moved dynamically after load, so the spacing must
            target the real wrapper and Tailwind space-y sibling margins. These
@@ -805,25 +717,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8CCJV29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-    <div id="mobile-exit-overlay" aria-hidden="true">
-        <div id="mobile-exit-sheet" class="relative">
-            <button type="button" class="mobile-exit-close" aria-label="Close mobile exit offer" onclick="closeMobileExitPopup(true)">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-            <div class="mobile-exit-pill">Before you go</div>
-            <h3 class="text-2xl font-[800] tracking-tighter text-slate-950 leading-tight pr-10">Want one practical workflow opportunity?</h3>
-            <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">Request a free workflow review and we’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
-            <button type="button" class="mobile-exit-primary mt-5" onclick="acceptMobileExitPopup()">
-                <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
-            </button>
-            <button type="button" class="mobile-exit-secondary" onclick="closeMobileExitPopup(true)">No thanks</button>
-        </div>
-    </div>
-
     <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full md:hidden">
         <div class="flex justify-between items-center mb-12">
             <div class="flex items-center gap-2 text-xl tracking-tighter" onclick="toggleMobileMenu()">
-                <img src="jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
+                <img src="https://jemima.ai/jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm">
                 <span>Jemima</span>
             </div>
             <button onclick="toggleMobileMenu()" class="text-slate-600">
@@ -833,7 +730,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="flex flex-col gap-8 text-lg  uppercase tracking-[0.2em] text-slate-900">
             <a href="#live-demos" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">Live demos</a>
             <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-[#c2155a] py-2 border-b border-slate-50">FAQs</a>
-            <a href="javascript:void(0)" onclick="activateAI('main')" class="hover:text-[#c2155a] py-2 border-b border-slate-50">How it Works</a>
         </div>
         <div class="mt-auto">
             <button onclick="openModal(false, 'Mobile Menu CTA'); toggleMobileMenu();" class="w-full font-black bg-[#c2155a] text-white py-5  uppercase tracking-[0.2em] text-[13px] shadow-xl shadow-[#c2155a]/30">Free Workflow Review</button>
@@ -898,7 +794,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         </div>
                         <div id="chat-feed" class="space-y-4 h-[170px] transition-[height] duration-500 overflow-y-auto chat-scroll pr-1 flex flex-col flex-grow pt-1">
                             <div id="chat-opening-message" class="bg-[#c2155a]/5 text-slate-800 border border-[#c2155a]/10 px-4 py-3 text-sm md:text-base font-medium leading-relaxed message-anim shadow-sm mb-1 rounded-2xl rounded-tl-none">
-                                Hi, I&#39;m Jemima. Tell me about your accountancy firm — team size, typical jobs, and where admin or follow-up slows you down. And I&#39;ll suggest the first process to automate.
+                                Hi, I’m Jemima. Tell me about your accountancy firm — team size, typical jobs, and where enquiries or follow-up could be faster and more consistent. I’ll suggest the first process to automate.
                             </div>
                         </div>
                         <div class="border-t border-slate-300 pt-4 mt-2 shrink-0 space-y-3">
@@ -940,7 +836,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">See how one enquiry is handled</h2>
     </div><div class="bg-white border border-slate-200 shadow-sm p-7 md:p-10 max-w-4xl mx-auto">
   <div class="grid md:grid-cols-2 gap-8">
-    <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-3">A client writes</p><div class="bg-[#c2155a]/5 border border-[#c2155a]/10 rounded-2xl rounded-tl-none p-4 md:p-5 text-base text-slate-800 leading-relaxed shadow-sm">I incorporated last month and need help with bookkeeping, corporation tax, a sensible director&#39;s salary, and I&#39;m not sure if I need to register for VAT yet. Do you offer a monthly package?</div></div>
+    <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-3">An enquiry comes in</p><div class="bg-[#c2155a]/5 border border-[#c2155a]/10 rounded-2xl rounded-tl-none p-4 md:p-5 text-base text-slate-800 leading-relaxed shadow-sm">I incorporated last month and need help with bookkeeping, corporation tax, a sensible director&#39;s salary, and I&#39;m not sure if I need to register for VAT yet. Do you offer a monthly package?</div></div>
     <div><p class="text-xs font-[700] uppercase tracking-widest text-slate-400 mb-3">Jemima hands your team</p><div class="bg-[#047857]/5 border-l-4 border-[#047857] px-5 md:px-6 py-2"><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Triage</p><p class="text-base font-[700] text-slate-900 mt-1">high-value, recurring-fee opportunity</p></div><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Services</p><p class="text-base font-[700] text-slate-900 mt-1">bookkeeping, corp tax, director salary, VAT advice, payroll</p></div><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Next action</p><p class="text-base font-[700] text-slate-900 mt-1">offer a 15-minute onboarding call</p></div><div class="py-3 border-t border-[#047857]/10 first:border-t-0 first:pt-0"><p class="text-[11px] font-[800] uppercase tracking-[0.14em] text-[#047857]">Plus</p><p class="text-base font-[700] text-slate-900 mt-1">a drafted reply and the questions to ask first</p></div></div></div>
   </div>
   <p class="text-xs text-slate-400 font-medium mt-6 pt-5 border-t border-slate-100">The accountant always reviews and gives the actual advice — Jemima organises the enquiry, it doesn&#39;t make tax decisions.</p>
@@ -955,12 +851,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">HMRC / MTD</span>
 <span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">IRIS / TaxCalc</span>
 <span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Email &amp; inboxes</span>
+<span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">SMS</span>
 <span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Google Sheets</span>
 <span class="bg-white border border-slate-200 shadow-sm px-4 py-2 text-sm font-[600] text-slate-700">Calendars</span></div></section><section id="how-it-works" class="scroll-mt-24 py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
       <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">How it works</div>
       <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Four simple steps for your firm</h2>
     </div><div class="grid md:grid-cols-4 gap-4"><div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">1</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Review</h3><p class="text-base text-slate-600 leading-relaxed">We look at your enquiry, follow-up and admin processes.</p></div>
-<div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">2</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Roadmap</h3><p class="text-base text-slate-600 leading-relaxed">We pick the one workflow that makes the biggest difference to your clients first.</p></div>
+<div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">2</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Roadmap</h3><p class="text-base text-slate-600 leading-relaxed">We pick the one workflow that makes the biggest difference first.</p></div>
 <div class="bg-white border border-slate-200 shadow-sm p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-slate-950 text-white flex items-center justify-center font-[800] text-lg mb-4">3</div><h3 class="font-[800] text-slate-900 uppercase tracking-[0.12em] text-sm mb-2">Build</h3><p class="text-base text-slate-600 leading-relaxed">We build and test it around your real tools, with review points for your team.</p></div>
 <div class="bg-[#c2155a] border border-[#c2155a] shadow-lg shadow-[#c2155a]/25 p-6 text-center flex flex-col items-center"><div class="w-11 h-11 rounded-full bg-white text-[#c2155a] flex items-center justify-center font-[800] text-lg mb-4">4</div><h3 class="font-[800] text-white uppercase tracking-[0.12em] text-sm mb-2">Launch</h3><p class="text-base text-white/90 leading-relaxed">It goes live, then we maintain and improve it over time.</p></div></div></section><section id="faq" class="scroll-mt-24 py-10 lg:py-14 border-t border-slate-200"><div class="text-center max-w-3xl mx-auto mb-10">
       <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">FAQ</div>
@@ -979,7 +876,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div>
               <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-[700] px-4 py-1 uppercase tracking-[0.2em] mb-4">Step 1 of 1</div>
               <h2 class="text-2xl md:text-3xl font-[800] tracking-tighter text-slate-950 leading-tight">Request your free workflow review</h2>
-              <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
+              <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">We’ll find the one AI workflow that would make the biggest difference to your business.</p>
               <ul class="mt-6 space-y-3 text-base text-slate-700">
                 <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>We’ll pinpoint one practical AI workflow opportunity for your business.</span></li>
                 <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>No system access or technical setup needed to get started.</span></li>
