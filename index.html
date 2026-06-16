@@ -660,92 +660,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-        /* Mobile exit-intent bottom sheet */
-        #mobile-exit-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 95;
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(4px);
-            padding: 0 12px 12px;
-        }
 
-        #mobile-exit-overlay.active {
-            display: flex;
-        }
-
-        #mobile-exit-sheet {
-            width: min(100%, 520px);
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 -20px 50px rgba(15, 23, 42, 0.25);
-            padding: 1.25rem;
-            transform: translateY(16px);
-            opacity: 0;
-            animation: mobileExitSlideUp 0.24s ease-out forwards;
-        }
-
-        @keyframes mobileExitSlideUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .mobile-exit-pill {
-            display: inline-block;
-            background: rgba(194, 21, 90, 0.1);
-            color: #c2155a;
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            padding: 6px 10px;
-            margin-bottom: 10px;
-        }
-
-        .mobile-exit-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            background: transparent;
-            border: 0;
-            cursor: pointer;
-        }
-
-        .mobile-exit-primary {
-            display: block;
-            width: 100%;
-            margin-top: 1.5rem;
-            background: #c2155a;
-            color: #ffffff;
-            padding: 16px 18px;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            box-shadow: 0 18px 35px rgba(194, 21, 90, 0.25);
-        }
-
-        .mobile-exit-secondary {
-            width: 100%;
-            margin-top: 12px;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-        }
-
-        @media screen and (min-width: 769px) {
-            #mobile-exit-overlay { display: none !important; }
-        }
 
 
         /* Balanced default-page hero spacing.
@@ -826,72 +741,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-    <div id="modal-overlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 modal-bg">
-        <div class="bg-white w-full max-w-md p-6 md:p-8 relative shadow-2xl modal-content border border-slate-100">
-            <button onclick="closeModal(true)" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="text-center mb-5">
-                <div id="modal-tag" class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs  px-4 py-1 uppercase tracking-[0.2em] mb-2.5">Step 1 of 1</div>
-                <h3 id="modal-title" class="text-xl md:text-2xl font-[800] tracking-tighter text-slate-950 leading-tight">Request Your Free Workflow Review</h3>
-                <p id="modal-subtitle" class="text-slate-500 text-xs md:text-base font-medium mt-1 leading-relaxed">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
-            </div>
-            <form id="audit-form" onsubmit="handleFormSubmit(event)" class="space-y-4 md:space-y-5">
-                <div class="space-y-1.5">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Full Name</label>
-                    <input type="text" id="form-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1.5 relative" id="traffic-dropdown-wrapper">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Which part of your business would you most like to improve?</label>
-                    <div class="relative cursor-pointer group" id="Pro-select-trigger">
-                        <input type="text" id="form-traffic" required readonly placeholder="Select workflow area..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
-                        <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
-                    </div>
-                    <div id="Pro-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Enquiries and intake</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Follow-up and communication</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Admin and document processing</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Job, case or project handovers</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors traffic-option">Reporting and visibility</div>
-<div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors traffic-option">Not sure yet</div>
-                    </div>
-                </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Work Email</label>
-                    <input type="email" id="form-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs  uppercase tracking-widest text-slate-400">Phone Number</label>
-                    <div class="flex items-center gap-4">
-                        <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
-                        <label class="flex items-center gap-2 cursor-pointer shrink-0">
-                            <input type="checkbox" id="form-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
-                            <span class="text-xs  uppercase tracking-widest text-slate-400">SMS?</span>
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" id="submit-btn" class="w-full bg-[#c2155a] text-white py-4 md:py-5  uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
-                <p id="modal-card-note" class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
-            </form>
-        </div>
-    </div>
 
 
 
-    <div id="mobile-exit-overlay" aria-hidden="true">
-        <div id="mobile-exit-sheet" class="relative">
-            <button type="button" class="mobile-exit-close" aria-label="Close mobile exit offer" onclick="closeMobileExitPopup(true)">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-            <div class="mobile-exit-pill">Before you go</div>
-            <h3 class="text-2xl font-[800] tracking-tighter text-slate-950 leading-tight pr-10">Want one practical workflow opportunity?</h3>
-            <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">Request a free workflow review and we’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
-            <button type="button" class="mobile-exit-primary mt-5" onclick="acceptMobileExitPopup()">
-                <i class="fas fa-lightbulb mr-2"></i> Free Workflow Review
-            </button>
-            <button type="button" class="mobile-exit-secondary" onclick="closeMobileExitPopup(true)">No thanks</button>
-        </div>
-    </div>
+
+
 
     <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col p-8 -translate-y-full xl:hidden">
         <div class="flex justify-between items-center mb-12">
@@ -1475,7 +1329,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Testing, fixes and workflow improvements</p></div>
                         <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Monthly review of opportunities and next steps</p></div>
                     </div>
-                    <button onclick="openModal(false, 'AI Support Pricing', 'starter')" class="mt-8 w-full py-4 border border-slate-300 text-slate-900 text-[12px] font-black uppercase tracking-[0.2em] hover:border-slate-900 transition-colors">Start with AI Support</button>
                 </div>
 
 
@@ -1499,7 +1352,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Ongoing strategic support as AI tools evolve</p></div>
                         <div class="flex gap-3"><i class="fas fa-check text-[#f472b6] mt-1.5"></i><p>Priority implementation and rollout guidance</p></div>
                     </div>
-                    <button onclick="openModal(false, 'AI Development Team Pricing', 'growth')" class="mt-8 w-full py-4 bg-[#c2155a] text-white text-[12px] font-black uppercase tracking-[0.2em] hover:bg-[#a0124a] transition-all">Choose AI Development Team</button>
                 </div>
                 <div class="bg-white border border-slate-200 shadow-sm p-8 flex flex-col">
                     <div class="mb-6">
@@ -1518,7 +1370,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Ongoing optimisation and iteration</p></div>
                         <div class="flex gap-3"><i class="fas fa-check text-[#c2155a] mt-1.5"></i><p>Priority implementation and rollout support</p></div>
                     </div>
-                    <button onclick="openModal(false, 'Pro Pricing', 'pro')" class="mt-8 w-full py-4 border border-slate-300 text-slate-900 text-[12px] font-black uppercase tracking-[0.2em] hover:border-slate-900 transition-colors">Talk to us about Pro</button>
                 </div>
             </div>
         </section>
@@ -1983,7 +1834,6 @@ Click the free workflow review button. It takes less than 30 seconds to request.
 
         const chatFeed = document.getElementById('chat-feed');
         const videoPlaceholder = document.getElementById('video-placeholder');
-        const modalOverlay = document.getElementById('modal-overlay');
         const chatInput = document.getElementById('user-chat-input');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -2162,96 +2012,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function openModal(isExitIntent = false, source = 'Direct Click', pkg = null) {
-            hasSubmitted = false;
-            lastTriggerSource = source; 
-            currentSelectedPackage = pkg;
-            
-            const trafficSelect = document.getElementById('form-traffic');
-            const submitBtn = document.getElementById('submit-btn');
-            const cardNote = document.getElementById('modal-card-note');
-            const modalTitle = document.getElementById('modal-title');
-            const modalSubtitle = document.getElementById('modal-subtitle');
-            const modalTag = document.getElementById('modal-tag');
-
-            if (trafficSelect) {
-                trafficSelect.value = "";
-                trafficSelect.classList.add('text-slate-300');
-                trafficSelect.classList.remove('text-slate-900');
-            }
-            cardNote.classList.remove('hidden');
-
-            let title = "Request Your Free Workflow Review";
-            let subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
-            let tagText = "Step 1 of 1";
-
-            if (pkg === 'starter') {
-                title = "Start with AI Support";
-                subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
-            } else if (pkg === 'growth') {
-                title = "Choose AI Development Team";
-                subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
-            } else if (pkg === 'pro') {
-                title = "Choose Pro";
-                subtitle = "We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.";
-            }
-
-            if (isExitIntent) {
-                tagText = "WAIT! BEFORE YOU GO...";
-                title = "Don't leave without your free workflow review.";
-            }
-
-            modalTag.innerText = tagText;
-            modalTitle.innerText = title;
-            modalSubtitle.innerText = subtitle;
-            submitBtn.innerText = "Submit Review Request";
-
-            modalOverlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(isUserTriggered = false) {
-            modalOverlay.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            if (isUserTriggered && !hasSubmitted) {
-                activateAI('abandon');
-            }
-        }
-
-        // TRAFFIC DROPDOWN LOGIC
-        document.addEventListener('DOMContentLoaded', () => {
-            const trigger = document.getElementById('Pro-select-trigger');
-            const optionsPanel = document.getElementById('Pro-select-options');
-            const inputField = document.getElementById('form-traffic');
-            const options = document.querySelectorAll('.traffic-option');
-            const wrapper = document.getElementById('traffic-dropdown-wrapper');
-
-            if (trigger && optionsPanel && inputField) {
-                
-                trigger.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
-                    optionsPanel.classList.toggle('hidden');
-                    optionsPanel.classList.toggle('flex');
-                });
-
-                options.forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        inputField.value = e.target.innerText;
-                        inputField.classList.remove('text-slate-300');
-                        inputField.classList.add('text-slate-900');
-                        optionsPanel.classList.add('hidden');
-                        optionsPanel.classList.remove('flex');
-                    });
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (wrapper && !wrapper.contains(e.target)) {
-                        optionsPanel.classList.add('hidden');
-                        optionsPanel.classList.remove('flex');
-                    }
-                });
-            }
-        });
     </script>
 
     <script id="chat-engine">
@@ -2324,86 +2084,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        function handleSuccessfulAuditSubmission(formData) {
-            hasSubmitted = true;
-
-            // Always trigger the thank-you video feedback.
-            activateAI('thanks');
-
-            // Always expand and update the chat feedback.
-            expandChatWindow(false);
-
-            const userProgress = document.createElement('div');
-            userProgress.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
-            userProgress.innerText = "Workflow review request received";
-            chatFeed.appendChild(userProgress);
-            chatFeed.scrollTop = chatFeed.scrollHeight;
-
-            const firstName = String(formData.name || 'there').split(' ')[0];
-
-            addMessages([
-                `Thanks ${firstName}! I've flagged your interest.`,
-                "My team will reach out within 24 hours."
-            ]);
-
-            // Update the URL without reloading the page.
-            window.history.pushState(null, '', '?thankyou');
-        }
-
-
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submit-btn');
-            const originalBtnText = submitBtn.innerText;
-            submitBtn.disabled = true;
-            submitBtn.innerText = "SENDING...";
-
-            const formData = {
-                name: document.getElementById('form-name').value,
-                email: document.getElementById('form-email').value,
-                pageUrl: window.location.href,
-                traffic: document.getElementById('form-traffic').value,
-                phone: document.getElementById('form-phone').value,
-                smsOptin: document.getElementById('form-sms-optin').checked,
-                selectedPackage: currentSelectedPackage,
-                triggerButton: lastTriggerSource,
-                sessionId: sessionId,
-                timestamp: new Date().toISOString()
-            };
-
-            let leadSuccess = false;
-
-            if (n8nFormWebhookUrl) {
-                try {
-                    const response = await fetch(n8nFormWebhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ type: 'ai_workflow_review_lead', ...formData })
-                    });
-                    if(response.ok) leadSuccess = true;
-                } catch (error) {
-                    console.error('Webhook Error:', error);
-                }
-            }
-
-            hasSubmitted = true;
-            activateAI('thanks');
-            
-            const userProgress = document.createElement('div');
-            userProgress.className = 'bg-slate-900 text-white p-3 text-[13px] font-bold self-end w-fit mb-3 border border-slate-800 rounded-2xl rounded-tr-none shadow-sm';
-            userProgress.innerText = `Interest in ${currentSelectedPackage || 'Audit'} noted`;
-            chatFeed.appendChild(userProgress);
-
-if (leadSuccess) {
-                handleSuccessfulAuditSubmission(formData);
-            }
-
-            closeModal(false);
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalBtnText;
-            e.target.reset();
-        }
-
         async function handleChatSubmit(e) {
             e.preventDefault();
             const text = chatInput.value.trim();
@@ -2450,141 +2130,6 @@ if (leadSuccess) {
             }
         }
 
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(true); });
-
-        // Mobile exit intent: back-button intent + scroll-depth/up-scroll + inactivity.
-        // Test manually from the console with: window.testMobileExitPopup()
-        const mobileExitConfig = {
-            minSecondsOnPage: 12,
-            scrollDepth: 0.65,
-            upwardScrollPixels: 90,
-            inactivityMs: 45000,
-            sessionKey: 'jemima_mobile_exit_seen'
-        };
-
-        let mobileExitStartedAt = Date.now();
-        let mobileExitLastScrollY = window.scrollY || 0;
-        let mobileExitInactivityTimer = null;
-        let mobileExitHistoryArmed = false;
-
-        function isMobileExitViewport() {
-            return window.matchMedia('(max-width: 768px)').matches || window.matchMedia('(pointer: coarse)').matches;
-        }
-
-        function canShowMobileExitPopup() {
-            const overlay = document.getElementById('mobile-exit-overlay');
-            if (!overlay) return false;
-            if (!isMobileExitViewport()) return false;
-            if (hasSubmitted || hasExited || isMobileMenuOpen) return false;
-            if (!modalOverlay || !modalOverlay.classList.contains('hidden')) return false;
-            if (overlay.classList.contains('active')) return false;
-            if (sessionStorage.getItem(mobileExitConfig.sessionKey) === '1') return false;
-            return true;
-        }
-
-        function showMobileExitPopup(source = 'Mobile Exit Intent') {
-            if (!canShowMobileExitPopup()) return false;
-            hasExited = true;
-            lastTriggerSource = source;
-            sessionStorage.setItem(mobileExitConfig.sessionKey, '1');
-
-            const overlay = document.getElementById('mobile-exit-overlay');
-            overlay.classList.add('active');
-            overlay.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-            return true;
-        }
-
-        function closeMobileExitPopup(userDismissed = false) {
-            const overlay = document.getElementById('mobile-exit-overlay');
-            if (!overlay) return;
-            overlay.classList.remove('active');
-            overlay.setAttribute('aria-hidden', 'true');
-            if (!isMobileMenuOpen && (!modalOverlay || modalOverlay.classList.contains('hidden'))) {
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        function acceptMobileExitPopup() {
-            closeMobileExitPopup(false);
-            scrollToReviewForm('Mobile Exit Intent');
-        }
-
-        function mobileExitElapsedEnough() {
-            return Date.now() - mobileExitStartedAt >= mobileExitConfig.minSecondsOnPage * 1000;
-        }
-
-        function resetMobileExitInactivityTimer() {
-            clearTimeout(mobileExitInactivityTimer);
-            mobileExitInactivityTimer = setTimeout(() => {
-                if (mobileExitElapsedEnough()) showMobileExitPopup('Mobile Inactivity Intent');
-            }, mobileExitConfig.inactivityMs);
-        }
-
-        function armMobileExitBackButton() {
-            if (!isMobileExitViewport() || mobileExitHistoryArmed || !window.history || !window.history.pushState) return;
-            mobileExitHistoryArmed = true;
-            window.history.pushState({ jemimaMobileExitGuard: true }, '', window.location.href);
-
-            window.addEventListener('popstate', () => {
-                if (canShowMobileExitPopup()) {
-                    showMobileExitPopup('Mobile Back Button Intent');
-                    window.history.pushState({ jemimaMobileExitGuard: true }, '', window.location.href);
-                }
-            });
-        }
-
-        function initMobileExitIntent() {
-            if (!isMobileExitViewport()) return;
-            armMobileExitBackButton();
-            resetMobileExitInactivityTimer();
-
-            ['touchstart', 'touchmove', 'scroll', 'keydown'].forEach(evt => {
-                window.addEventListener(evt, resetMobileExitInactivityTimer, { passive: true });
-            });
-
-            window.addEventListener('scroll', () => {
-                if (!canShowMobileExitPopup() || !mobileExitElapsedEnough()) {
-                    mobileExitLastScrollY = window.scrollY || 0;
-                    return;
-                }
-
-                const currentY = window.scrollY || 0;
-                const pageHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-                const depth = currentY / pageHeight;
-                const upwardScroll = mobileExitLastScrollY - currentY;
-
-                if (depth >= mobileExitConfig.scrollDepth) {
-                    showMobileExitPopup('Mobile Scroll Depth Intent');
-                } else if (mobileExitLastScrollY > 350 && upwardScroll >= mobileExitConfig.upwardScrollPixels) {
-                    showMobileExitPopup('Mobile Upward Scroll Intent');
-                }
-
-                mobileExitLastScrollY = currentY;
-            }, { passive: true });
-
-            const params = new URLSearchParams(window.location.search);
-            if (params.has('mobileExitTest')) {
-                setTimeout(() => showMobileExitPopup('Mobile Exit Test'), 1200);
-            }
-        }
-
-        window.testMobileExitPopup = function () {
-            sessionStorage.removeItem(mobileExitConfig.sessionKey);
-            hasExited = false;
-            showMobileExitPopup('Mobile Exit Manual Test');
-        };
-
-        document.addEventListener('DOMContentLoaded', initMobileExitIntent);
-
-        document.addEventListener('mouseleave', (e) => {
-            if (e.clientY < 0 && !hasExited) {
-                hasExited = true;
-                if (modalOverlay.classList.contains('hidden')) {
-                    openModal(true, 'Exit Intent');
-                }
-            }
-        });
     </script>
 
 
