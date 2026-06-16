@@ -772,6 +772,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div id="video-container" class="relative aspect-video shadow-2xl border border-slate-200 overflow-hidden bg-black">
               <video id="idle-player" src="https://vz-1599ac93-05a.b-cdn.net/c05b369d-1529-4051-8773-79320393ec05/play_1080p.mp4" class="yt-player-frame active pointer-events-none" autoplay loop muted playsinline></video>
               <video id="player-main" src="https://vz-1599ac93-05a.b-cdn.net/9210bbec-7339-4849-a52b-3fd446ec12a8/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
+              <video id="player-thanks" src="https://vz-1599ac93-05a.b-cdn.net/3278d308-19cb-4d4f-a45b-268f9227b8ef/play_1080p.mp4" class="yt-player-frame pointer-events-none" playsinline preload="auto"></video>
               <div id="video-placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-end pb-8 lg:pb-12 cursor-pointer" onclick="activateAI('main')">
                 <div id="interaction-ui" class="flex flex-col items-center gap-4 transition-all duration-300">
                   <div class="bg-[#c2155a]/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 text-white/90 text-[11px] uppercase tracking-[0.2em] shadow-xl active:bg-black/40 transition-colors">
@@ -956,7 +957,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* --- Hero video engine: idle loop + tap-to-play main (ported from homepage) --- */
   let isInteracting = false;
   let activePlayerId = null;
-  const players = { 'main': document.getElementById('player-main') };
+  const players = { 'main': document.getElementById('player-main'), 'thanks': document.getElementById('player-thanks') };
   const videoPlaceholder = document.getElementById('video-placeholder');
 
   function activateAI(videoId = 'main') {
@@ -1058,6 +1059,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     wfrSetBadge('All done');
     try{ history.pushState({}, '', full ? '?thankyou' : '?skip2'); }catch(e){}
     if(full){
+      try{ activateAI('thanks'); }catch(e){}
       try{
         var feed=document.getElementById('chat-feed');
         if(feed && typeof chatBubble==='function'){
