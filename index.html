@@ -1826,73 +1826,62 @@ Click the free workflow review button. It takes less than 30 seconds to request.
             </div>
         </section>
 
-        <!-- Final CTA Banner -->
-        <section class="py-20 bg-[#c2155a]/5 border-2 border-dashed border-[#c2155a]/20 text-center space-y-8 mb-20">
-            <div class="space-y-2">
-                <h2 class="text-4xl font-700 tracking-tighter uppercase">Ready to make your business more consistent, professional and scalable?</h2>
-                <p class="text-slate-600 font-bold uppercase tracking-widest text-xs md:text-sm italic"><p class="text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto mt-4">
-    Request a free workflow review and we’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.
-</p>
-            </div>
-            <button onclick="scrollToReviewForm('Final CTA')" class="px-12 py-6 bg-[#c2155a] text-white font-black uppercase tracking-[0.3em] text-[13px] shadow-2xl shadow-[#c2155a]/40 hover:scale-105 active:scale-95 transition-all">
-                                <i class="fas fa-lightbulb mr-2"></i>
-                                <span>Free Workflow Review</span>
-            </button>
-        </section>
 
 
-        <!-- Inline Free Workflow Review form -->
-        <section id="workflow-review-form" class="py-16 lg:py-24 border-t border-slate-200" style="scroll-margin-top:90px;">
-            <div class="max-w-xl mx-auto">
-                <div class="text-center mb-8">
-                    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em]">Free Workflow Review</div>
-                    <h2 class="mt-4 text-2xl md:text-4xl font-[800] tracking-tighter text-slate-950 leading-tight">Request your free workflow review</h2>
-                    <p class="mt-3 text-slate-600 text-base font-medium leading-relaxed">We’ll identify one practical AI workflow opportunity that could make your business more consistent, professional or scalable.</p>
+
+        <!-- Free Workflow Review form (matches industry pages) -->
+        <section id="workflow-review-form" class="scroll-mt-24 bg-slate-50 border-t border-slate-200 py-12 lg:py-16" style="scroll-margin-top:90px;">
+          <div class="max-w-5xl mx-auto px-4 lg:px-6">
+            <div class="bg-white border border-slate-200 shadow-sm p-7 md:p-10">
+              <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                <div>
+                  <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-xs font-[700] px-4 py-1 uppercase tracking-[0.2em] mb-4">Step 1 of 1</div>
+                  <h2 class="text-2xl md:text-3xl font-[800] tracking-tighter text-slate-950 leading-tight">Request your free workflow review</h2>
+                  <p class="text-slate-600 text-base font-medium mt-3 leading-relaxed">We’ll find the one AI workflow that would make the biggest difference to your business.</p>
+                  <ul class="mt-6 space-y-3 text-base text-slate-700">
+                    <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>We’ll pinpoint one practical AI workflow opportunity for your business.</span></li>
+                    <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>No system access or technical setup needed to get started.</span></li>
+                    <li class="flex items-start gap-3"><i class="fas fa-check text-[#c2155a] mt-1"></i><span>No credit card required.</span></li>
+                  </ul>
                 </div>
-                <div id="rf-success" class="hidden text-center bg-[#c2155a]/5 border border-[#c2155a]/10 p-8">
-                    <i class="fas fa-circle-check text-[#c2155a] text-3xl"></i>
-                    <h3 class="mt-3 text-xl font-[800] tracking-tight text-slate-950">Thank you — request received</h3>
-                    <p id="rf-success-text" class="mt-2 text-slate-600 font-medium">My team will reach out within 24 hours.</p>
-                </div>
-                <form id="review-form" onsubmit="handleReviewFormSubmit(event)" class="bg-white border border-slate-200 shadow-sm p-6 md:p-8 space-y-5">
-                    <div class="space-y-1.5">
-                        <label class="block text-xs uppercase tracking-widest text-slate-400">Full Name</label>
-                        <input type="text" id="rf-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                <form id="wfr-form" onsubmit="handleReviewFormSubmit(event)" class="space-y-5">
+                  <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Full Name</label>
+                    <input type="text" id="wfr-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                  </div>
+                  <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Which part of your business would you most like to improve?</label>
+                    <select id="wfr-traffic" required class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-transparent">
+                      <option value="" disabled selected>Select workflow area...</option>
+                      <option>Enquiries and intake</option>
+                      <option>Follow-up and communication</option>
+                      <option>Admin and document processing</option>
+                      <option>Job, case or project handovers</option>
+                      <option>Reporting and visibility</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Work Email</label>
+                    <input type="email" id="wfr-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                  </div>
+                  <div class="space-y-1.5">
+                    <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Phone Number</label>
+                    <div class="flex items-center gap-4">
+                      <input type="tel" id="wfr-phone" required placeholder="+44 7700 000000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                      <label class="flex items-center gap-2 cursor-pointer shrink-0">
+                        <input type="checkbox" id="wfr-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
+                        <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">SMS?</span>
+                      </label>
                     </div>
-                    <div class="space-y-1.5 relative" id="rf-traffic-wrapper">
-                        <label class="block text-xs uppercase tracking-widest text-slate-400">Which part of your business would you most like to improve?</label>
-                        <div class="relative cursor-pointer group" id="rf-select-trigger">
-                            <input type="text" id="rf-traffic" required readonly placeholder="Select workflow area..." class="w-full border-b-2 border-slate-100 py-2.5 pl-1 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 text-slate-900 cursor-pointer bg-transparent">
-                            <i class="fas fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-slate-300 text-sm pointer-events-none group-hover:text-slate-600 transition-colors"></i>
-                        </div>
-                        <div id="rf-select-options" class="hidden absolute top-full left-0 mt-1 w-full bg-white border border-slate-100 shadow-2xl z-50 rounded-md overflow-hidden flex-col">
-                            <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors rf-traffic-option">Enquiries and intake</div>
-                            <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors rf-traffic-option">Follow-up and communication</div>
-                            <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors rf-traffic-option">Admin and document processing</div>
-                            <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors rf-traffic-option">Job, case or project handovers</div>
-                            <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold border-b border-slate-50 transition-colors rf-traffic-option">Reporting and visibility</div>
-                            <div class="px-4 py-3.5 hover:bg-[#c2155a]/5 hover:text-[#c2155a] cursor-pointer text-slate-700 font-bold transition-colors rf-traffic-option">Not sure yet</div>
-                        </div>
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="block text-xs uppercase tracking-widest text-slate-400">Work Email</label>
-                        <input type="email" id="rf-email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="block text-xs uppercase tracking-widest text-slate-400">Phone Number</label>
-                        <div class="flex items-center gap-4">
-                            <input type="tel" id="rf-phone" required placeholder="+44 7000 000000" class="flex-grow border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-sm font-semibold placeholder:text-slate-300">
-                            <label class="flex items-center gap-2 cursor-pointer shrink-0">
-                                <input type="checkbox" id="rf-sms-optin" class="w-4 h-4 accent-[#c2155a] rounded-sm">
-                                <span class="text-xs uppercase tracking-widest text-slate-400">SMS?</span>
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" id="rf-submit" class="w-full bg-[#c2155a] text-white py-4 md:py-5 font-black uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all">Submit Review Request</button>
-                    <p id="rf-error" class="hidden text-center text-xs text-red-500 font-bold">Something went wrong — please try again.</p>
-                    <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+                  </div>
+                  <button type="submit" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
+                  <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
+                  <p class="text-center text-[11px] text-slate-400 font-medium mt-2">By submitting, you agree to our <a href="/privacy.html" class="underline hover:text-[#c2155a]">Privacy Policy</a>.</p>
                 </form>
+              </div>
             </div>
+          </div>
         </section>
 
     </main>
@@ -2562,69 +2551,41 @@ if (leadSuccess) {
         var el = document.getElementById('workflow-review-form');
         if (el){
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            var n = document.getElementById('rf-name');
+            var n = document.getElementById('wfr-name');
             if (n) setTimeout(function(){ try { n.focus({ preventScroll: true }); } catch(e){ n.focus(); } }, 550);
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function(){
-        var trigger = document.getElementById('rf-select-trigger');
-        var panel = document.getElementById('rf-select-options');
-        var field = document.getElementById('rf-traffic');
-        var wrapper = document.getElementById('rf-traffic-wrapper');
-        if (trigger && panel && field){
-            trigger.addEventListener('click', function(e){ e.stopPropagation(); panel.classList.toggle('hidden'); panel.classList.toggle('flex'); });
-            document.querySelectorAll('.rf-traffic-option').forEach(function(opt){
-                opt.addEventListener('click', function(e){
-                    field.value = e.target.innerText.trim();
-                    field.classList.remove('text-slate-300'); field.classList.add('text-slate-900');
-                    panel.classList.add('hidden'); panel.classList.remove('flex');
-                });
-            });
-            document.addEventListener('click', function(e){
-                if (wrapper && !wrapper.contains(e.target)){ panel.classList.add('hidden'); panel.classList.remove('flex'); }
-            });
-        }
-    });
-
     async function handleReviewFormSubmit(e){
         e.preventDefault();
-        var btn = document.getElementById('rf-submit');
-        var errEl = document.getElementById('rf-error');
-        var original = btn.innerText; btn.disabled = true; btn.innerText = 'SENDING...';
-        if (errEl) errEl.classList.add('hidden');
+        var f = e.target;
+        var b = f.querySelector('button[type=submit]');
+        var val = function(id){ var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; };
+        if (b){ b.disabled = true; b.innerText = 'Sending…'; }
         var webhook = (typeof n8nFormWebhookUrl !== 'undefined' && n8nFormWebhookUrl) ? n8nFormWebhookUrl : 'https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad';
-        var sid = (typeof sessionId !== 'undefined' && sessionId) ? sessionId : ('visitor_' + Math.random().toString(36).substr(2, 9));
-        var src = (typeof lastTriggerSource !== 'undefined') ? lastTriggerSource : 'Review Form';
-        var formData = {
-            name: document.getElementById('rf-name').value,
-            email: document.getElementById('rf-email').value,
-            pageUrl: window.location.href,
-            traffic: document.getElementById('rf-traffic').value,
-            phone: document.getElementById('rf-phone').value,
-            smsOptin: document.getElementById('rf-sms-optin').checked,
-            selectedPackage: null,
+        var src = (typeof lastTriggerSource !== 'undefined' && lastTriggerSource) ? lastTriggerSource : 'Homepage Inline Form';
+        var sid = (typeof sessionId !== 'undefined' && sessionId) ? sessionId : '';
+        var payload = {
+            type: 'Workflow Review',
+            name: val('wfr-name'),
+            traffic: val('wfr-traffic'),
+            email: val('wfr-email'),
+            phone: val('wfr-phone'),
+            sms: !!(document.getElementById('wfr-sms-optin') || {}).checked,
             triggerButton: src,
             sessionId: sid,
+            pageUrl: location.href,
+            industry: (typeof INDUSTRY !== 'undefined' ? INDUSTRY : ''),
             timestamp: new Date().toISOString()
         };
-        var ok = false;
         try {
-            var resp = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'ai_workflow_review_lead', ...formData }) });
-            ok = resp.ok;
-        } catch (err) { console.error('Review form webhook error:', err); }
-        btn.disabled = false; btn.innerText = original;
-        if (ok){
-            var firstName = String(formData.name || 'there').split(' ')[0];
-            var success = document.getElementById('rf-success');
-            var successText = document.getElementById('rf-success-text');
-            var form = document.getElementById('review-form');
-            if (successText) successText.innerText = 'Thanks ' + firstName + '! My team will reach out within 24 hours.';
-            if (success) success.classList.remove('hidden');
-            if (form) form.classList.add('hidden');
+            var r = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if (!r.ok) throw new Error('status ' + r.status);
+            f.reset();
+            if (b){ b.disabled = true; b.innerText = 'Thank you — we will be in touch'; }
             try { window.history.pushState(null, '', '?thankyou'); } catch(e){}
-        } else {
-            if (errEl) errEl.classList.remove('hidden');
+        } catch (err){
+            if (b){ b.disabled = false; b.innerText = 'Something went wrong — try again'; }
         }
     }
 </script>
