@@ -2170,8 +2170,30 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             var r = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if (!r.ok) throw new Error('status ' + r.status);
+
+            // Success — run the thank-you experience
+            var firstName = (payload.name || 'there').split(' ')[0];
             f.reset();
             if (b){ b.disabled = true; b.innerText = 'Thank you — we will be in touch'; }
+            hasSubmitted = true;
+
+            if (typeof activateAI === 'function') activateAI('thanks');        // thank-you video + scroll to hero
+            if (typeof expandChatWindow === 'function') expandChatWindow(false);
+
+            if (chatFeed) {
+                var userMsg = document.createElement('div');
+                userMsg.className = 'bg-white text-slate-700 px-4 py-3 text-[16px] font-semibold self-end w-fit mb-3 border border-slate-100 rounded-2xl rounded-tr-none shadow-sm';
+                userMsg.innerText = 'Free workflow review requested';
+                chatFeed.appendChild(userMsg);
+                chatFeed.scrollTop = chatFeed.scrollHeight;
+            }
+            if (typeof addMessages === 'function') {
+                addMessages([
+                    'Thanks ' + firstName + ', that\'s come through to my team.',
+                    'We\'ll review where AI could save your business time and get back to you within one working day.'
+                ]);
+            }
+
             try { window.history.pushState(null, '', '?thankyou'); } catch(e){}
         } catch (err){
             if (b){ b.disabled = false; b.innerText = 'Something went wrong — try again'; }
