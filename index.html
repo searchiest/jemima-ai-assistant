@@ -2270,7 +2270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         wfrSetBadge('All done');
         hasSubmitted = true;
 
-        try { window.history.pushState(null, '', '?thankyou'); } catch(e){}
+        try { window.history.pushState(null, '', full ? '?thankyou' : '?skip2'); } catch(e){}
 
         // Only a completed stage 2 earns the thank-you video + chat
         if (!full) return;
