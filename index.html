@@ -908,51 +908,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </div>
 
-    <nav class="relative flex items-center justify-between px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
-        <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer shrink-0" onclick="window.location.reload()">
-            <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
-            <span>Jemima</span>
-        </div>
-
-        <!-- Centred industry navigation dropdown -->
-        <div id="industry-nav" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[55]">
-            <button id="industry-nav-trigger" type="button" onclick="toggleIndustryNav(event)" aria-haspopup="true" aria-expanded="false" class="flex items-center gap-2 text-[11px] font-bold text-slate-600 uppercase tracking-widest hover:text-[#c2155a] transition-colors whitespace-nowrap">
-                <i class="fas fa-briefcase text-sm text-[#c2155a]"></i>
-                <span class="hidden sm:inline">Browse by industry</span>
-                <span class="sm:hidden">Industries</span>
-                <i class="fas fa-chevron-down text-[9px] industry-nav-caret transition-transform"></i>
-            </button>
-            <div id="industry-nav-panel" class="hidden absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 max-w-[88vw] max-h-[70vh] overflow-y-auto bg-white border border-slate-200 shadow-2xl rounded-md py-2">
-                <p class="px-4 pt-1 pb-2 text-[10px] font-[800] uppercase tracking-[0.18em] text-slate-400">AI for your industry</p>
-                    <a href="/uk/accountants/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Accountant</a>
-                    <a href="/uk/bathroom-companies/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Bathroom Company</a>
-                    <a href="/uk/builders/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Builder</a>
-                    <a href="/uk/car-dealerships/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Car Dealership</a>
-                    <a href="/uk/care-homes/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Care Home</a>
-                    <a href="/uk/cleaning-companies/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Cleaning Company</a>
-                    <a href="/uk/dentists/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Dentist</a>
-                    <a href="/uk/driveway-companies/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Driveway Company</a>
-                    <a href="/uk/electricians/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Electrician</a>
-                    <a href="/uk/estate-agents/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Estate Agent</a>
-                    <a href="/uk/insurance-brokers/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Insurance Broker</a>
-                    <a href="/uk/kitchen-companies/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Kitchen Company</a>
-                    <a href="/uk/landscapers/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Landscaper</a>
-                    <a href="/uk/locksmiths/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Locksmith</a>
-                    <a href="/uk/mortgage-brokers/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Mortgage Broker</a>
-                    <a href="/uk/nurseries/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Nursery and Childcare Provider</a>
-                    <a href="/uk/pest-control/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Pest Control Company</a>
-                    <a href="/uk/plumbers/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Plumber</a>
-                    <a href="/uk/private-healthcare/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Private Healthcare Clinic</a>
-                    <a href="/uk/removal-companies/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Removal Company</a>
-                    <a href="/uk/roofers/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Roofer</a>
-                    <a href="/uk/solar-installers/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Solar Installer</a>
-                    <a href="/uk/solicitors/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Solicitor</a>
-                    <a href="/uk/vets/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Veterinary Practice</a>
-                    <a href="/uk/window-door-companies/" class="block px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-[#c2155a]/5 hover:text-[#c2155a] transition-colors">Window and Door Company</a>
+    <nav class="grid grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 lg:px-12 py-4 lg:py-5 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
+        <div class="flex items-center min-w-0">
+            <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer shrink-0" onclick="window.location.reload()">
+                <img src="jemima-logo.png" alt="Jemima Logo" class="w-6 h-6 lg:w-7 lg:h-7 rounded-full shadow-sm">
+                <span>Jemima</span>
             </div>
         </div>
 
-        <div class="flex items-center gap-8 shrink-0">
+        <!-- Centred industry select -->
+        <div class="flex justify-center">
+            <select id="industry-nav-select" onchange="if(this.value){window.location.href=this.value;}" aria-label="Go to your industry page"
+                style="background-position:right 0.55rem center;background-size:0.8em;"
+                class="appearance-none border border-slate-300 rounded-md bg-white text-[12px] md:text-[13px] font-semibold text-slate-700 w-[160px] md:w-[200px] pl-3.5 pr-8 py-2 outline-none cursor-pointer hover:border-[#c2155a]/60 focus:border-[#c2155a] transition-colors">
+                    <option value="">Browse by industry</option>
+                    <option value="/uk/accountants/">Accountant</option>
+                    <option value="/uk/bathroom-companies/">Bathroom Company</option>
+                    <option value="/uk/builders/">Builder</option>
+                    <option value="/uk/car-dealerships/">Car Dealership</option>
+                    <option value="/uk/care-homes/">Care Home</option>
+                    <option value="/uk/cleaning-companies/">Cleaning Company</option>
+                    <option value="/uk/dentists/">Dentist</option>
+                    <option value="/uk/driveway-companies/">Driveway Company</option>
+                    <option value="/uk/electricians/">Electrician</option>
+                    <option value="/uk/estate-agents/">Estate Agent</option>
+                    <option value="/uk/insurance-brokers/">Insurance Broker</option>
+                    <option value="/uk/kitchen-companies/">Kitchen Company</option>
+                    <option value="/uk/landscapers/">Landscaper</option>
+                    <option value="/uk/locksmiths/">Locksmith</option>
+                    <option value="/uk/mortgage-brokers/">Mortgage Broker</option>
+                    <option value="/uk/nurseries/">Nursery and Childcare Provider</option>
+                    <option value="/uk/pest-control/">Pest Control Company</option>
+                    <option value="/uk/plumbers/">Plumber</option>
+                    <option value="/uk/private-healthcare/">Private Healthcare Clinic</option>
+                    <option value="/uk/removal-companies/">Removal Company</option>
+                    <option value="/uk/roofers/">Roofer</option>
+                    <option value="/uk/solar-installers/">Solar Installer</option>
+                    <option value="/uk/solicitors/">Solicitor</option>
+                    <option value="/uk/vets/">Veterinary Practice</option>
+                    <option value="/uk/window-door-companies/">Window and Door Company</option>
+            </select>
+        </div>
+
+        <div class="flex items-center justify-end gap-8 min-w-0">
             <div class="hidden xl:flex gap-8 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                 <a href="#problem" class="hover:text-[#c2155a]">Solution</a>
                 <a href="#how-it-works" class="hover:text-[#c2155a]">Process</a>
@@ -2628,35 +2626,6 @@ if (leadSuccess) {
             if (b){ b.disabled = false; b.innerText = 'Something went wrong — try again'; }
         }
     }
-</script>
-
-
-<script id="industry-nav-engine">
-    function toggleIndustryNav(e){
-        if (e) e.stopPropagation();
-        var p = document.getElementById('industry-nav-panel');
-        var t = document.getElementById('industry-nav-trigger');
-        var c = document.querySelector('.industry-nav-caret');
-        if (!p) return;
-        var open = p.classList.toggle('hidden') === false;
-        if (t) t.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if (c) c.style.transform = open ? 'rotate(180deg)' : '';
-    }
-    document.addEventListener('click', function(e){
-        var nav = document.getElementById('industry-nav');
-        var p = document.getElementById('industry-nav-panel');
-        if (p && nav && !nav.contains(e.target) && !p.classList.contains('hidden')){
-            p.classList.add('hidden');
-            var t = document.getElementById('industry-nav-trigger'); if (t) t.setAttribute('aria-expanded','false');
-            var c = document.querySelector('.industry-nav-caret'); if (c) c.style.transform = '';
-        }
-    });
-    document.addEventListener('keydown', function(e){
-        if (e.key === 'Escape'){
-            var p = document.getElementById('industry-nav-panel');
-            if (p && !p.classList.contains('hidden')) toggleIndustryNav();
-        }
-    });
 </script>
 
 </body>
