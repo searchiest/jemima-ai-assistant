@@ -1768,13 +1768,13 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                   </form>
 
                   <!-- STAGE 2: sharpen the review (revealed in place after stage 1) -->
-                  <form id="wfr-form-2" onsubmit="handleReviewDetailsSubmit(event)" class="space-y-5 hidden">
-                    <p class="text-base font-semibold text-slate-900">Saved. A few quick details to make your review useful — takes under a minute.</p>
-                    <div class="space-y-1.5">
+                  <form id="wfr-form-2" onsubmit="handleReviewDetailsSubmit(event)" class="space-y-4 hidden">
+                    <p class="text-base font-semibold text-slate-900">A few quick details to make your review more useful — under a minute.</p>
+                    <div class="space-y-1">
                       <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">What does your business do?</label>
                       <input type="text" id="wfr-biz" required placeholder="e.g. Roofing company, accountancy practice" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
                     </div>
-                    <div class="space-y-1.5">
+                    <div class="space-y-1">
                       <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">How big is your team?</label>
                       <select id="wfr-team" required class="w-full border-b-2 border-slate-100 py-2.5 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold text-slate-900 bg-transparent">
                         <option value="" disabled selected>Select team size...</option>
@@ -1785,15 +1785,15 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                         <option>50+</option>
                       </select>
                     </div>
-                    <div class="space-y-1.5">
-                      <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Main tools you use day to day <span class="text-slate-300 normal-case tracking-normal font-medium">(optional)</span></label>
-                      <input type="text" id="wfr-tools" placeholder="e.g. Gmail, Google Sheets, a CRM" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
+                    <div class="space-y-1">
+                      <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Main tools you use <span class="text-slate-300 normal-case tracking-normal font-medium">(optional)</span></label>
+                      <input type="text" id="wfr-tools" placeholder="e.g. Gmail, Sheets, a CRM" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
                     </div>
-                    <div class="space-y-1.5">
-                      <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Where does your team lose the most time right now?</label>
-                      <textarea id="wfr-pain" required rows="3" placeholder="e.g. Chasing quotes, re-typing enquiry details, manual follow-up" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 resize-none"></textarea>
+                    <div class="space-y-1">
+                      <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Where do you lose the most time?</label>
+                      <textarea id="wfr-pain" required rows="2" placeholder="e.g. chasing quotes, manual follow-up" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300 resize-none"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Send details</button>
+                    <button type="submit" class="w-full bg-[#c2155a] text-white py-4 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-1 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Send details</button>
                     <button type="button" onclick="skipReviewDetails()" class="w-full text-center text-[11px] text-slate-400 font-bold uppercase tracking-widest hover:text-slate-600 transition-colors">Skip for now</button>
                   </form>
 
@@ -2243,19 +2243,20 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             var r = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(details) });
             if (!r.ok) throw new Error('status ' + r.status);
-            finishReview();
+            finishReview(true);
         } catch (err){
             if (b){ b.disabled = false; b.innerText = 'Something went wrong — try again'; }
         }
     }
 
-    // Stage 2 is optional — the lead is already saved
+    // Stage 2 is optional — the lead is already saved. Skip = quiet finish (no video/chat).
     function skipReviewDetails(){
-        finishReview();
+        finishReview(false);
     }
 
-    // Final confirmation + the thank-you reward (video + chat)
-    function finishReview(){
+    // full=true  -> completed details: in-place confirmation + thank-you video + chat
+    // full=false -> skipped: quiet in-place confirmation only
+    function finishReview(full){
         var firstName = ((wfrLead && wfrLead.name) || 'there').split(' ')[0];
 
         var s1 = document.getElementById('wfr-form');
@@ -2264,10 +2265,15 @@ document.addEventListener('DOMContentLoaded', () => {
         var doneTitle = document.getElementById('wfr-done-title');
         if (s1) s1.classList.add('hidden');
         if (s2) s2.classList.add('hidden');
-        if (doneTitle) doneTitle.innerText = 'You\'re all set, ' + firstName + '.';
+        if (doneTitle) doneTitle.innerText = full ? ('You\'re all set, ' + firstName + '.') : ('Thanks, ' + firstName + ' — your request is in.');
         if (done) done.classList.remove('hidden');
         wfrSetBadge('All done');
         hasSubmitted = true;
+
+        try { window.history.pushState(null, '', '?thankyou'); } catch(e){}
+
+        // Only a completed stage 2 earns the thank-you video + chat
+        if (!full) return;
 
         if (typeof activateAI === 'function') activateAI('thanks');        // thank-you video + scroll to hero
         if (typeof expandChatWindow === 'function') expandChatWindow(false);
@@ -2284,8 +2290,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 'We\'ll review where AI could save your business time and get back to you within one working day.'
             ]);
         }
-
-        try { window.history.pushState(null, '', '?thankyou'); } catch(e){}
     }
 </script>
 
