@@ -1,4 +1,4 @@
-/* jemima consent.js — build 2026-06-17f — charcoal Accept (primary), outlined Reject */
+/* jemima consent.js — build 2026-06-17g — charcoal Accept (primary), text-link Reject */
 /* Jemima cookie consent — blocks Google Tag Manager until the visitor accepts.
    No Google request is made and no analytics cookies are set before consent.
    Choice is stored in localStorage (not a cookie), so storing it needs no consent.
@@ -30,12 +30,11 @@
       '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:nowrap;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid #e2e8f0;box-shadow:0 -6px 24px rgba(15,23,42,.06);font:500 13px/1.4 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:#475569}' +
       '#jemima-cc p{margin:0;flex:1 1 auto;min-width:0}' +
       '#jemima-cc a{color:#475569;text-decoration:underline;font-weight:700}' +
-      '#jemima-cc .jemima-cc-actions{display:flex;gap:8px;flex:0 0 auto;margin-left:auto}' +
-      '#jemima-cc button{cursor:pointer;border-radius:5px;padding:8px 16px;font:800 11px/1 inherit;letter-spacing:.06em;text-transform:uppercase;border:1px solid transparent}' +
-      '#jemima-cc .jemima-cc-accept{background:#1e293b;color:#fff;border-color:#1e293b}' +
+      '#jemima-cc .jemima-cc-actions{display:flex;align-items:center;gap:14px;flex:0 0 auto;margin-left:auto}' +
+      '#jemima-cc .jemima-cc-accept{cursor:pointer;border-radius:5px;padding:9px 20px;font:800 11px/1 inherit;letter-spacing:.06em;text-transform:uppercase;border:1px solid #1e293b;background:#1e293b;color:#fff}' +
       '#jemima-cc .jemima-cc-accept:hover{background:#0f172a;border-color:#0f172a}' +
-      '#jemima-cc .jemima-cc-reject{background:#fff;color:#475569;border-color:#cbd5e1}' +
-      '#jemima-cc .jemima-cc-reject:hover{border-color:#94a3b8;color:#0f172a}';
+      '#jemima-cc .jemima-cc-reject{cursor:pointer;background:none;border:0;padding:6px 2px;font:700 11px/1 inherit;letter-spacing:.06em;text-transform:uppercase;color:#64748b;text-decoration:underline;text-underline-offset:2px}' +
+      '#jemima-cc .jemima-cc-reject:hover{color:#0f172a}';
     var st = document.createElement('style');
     st.id = 'jemima-cc-style';
     st.textContent = css;
