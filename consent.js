@@ -1,4 +1,4 @@
-/* jemima consent.js — build 2026-06-17b — copy: 'We use cookies.' */
+/* jemima consent.js — build 2026-06-17e — light-grey Accept, black label */
 /* Jemima cookie consent — blocks Google Tag Manager until the visitor accepts.
    No Google request is made and no analytics cookies are set before consent.
    Choice is stored in localStorage (not a cookie), so storing it needs no consent.
@@ -27,13 +27,13 @@
   function injectStyles() {
     if (document.getElementById('jemima-cc-style')) return;
     var css =
-      '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:11px 18px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid #e2e8f0;box-shadow:0 -6px 24px rgba(15,23,42,.06);font:500 13px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:#475569}' +
-      '#jemima-cc p{margin:0;flex:1 1 240px}' +
-      '#jemima-cc a{color:#c2155a;text-decoration:underline;font-weight:700}' +
+      '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:nowrap;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid #e2e8f0;box-shadow:0 -6px 24px rgba(15,23,42,.06);font:500 13px/1.4 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:#475569}' +
+      '#jemima-cc p{margin:0;flex:1 1 auto;min-width:0}' +
+      '#jemima-cc a{color:#475569;text-decoration:underline;font-weight:700}' +
       '#jemima-cc .jemima-cc-actions{display:flex;gap:8px;flex:0 0 auto;margin-left:auto}' +
       '#jemima-cc button{cursor:pointer;border-radius:5px;padding:8px 16px;font:800 11px/1 inherit;letter-spacing:.06em;text-transform:uppercase;border:1px solid transparent}' +
-      '#jemima-cc .jemima-cc-accept{background:#c2155a;color:#fff;border-color:#c2155a}' +
-      '#jemima-cc .jemima-cc-accept:hover{background:#a0124a;border-color:#a0124a}' +
+      '#jemima-cc .jemima-cc-accept{background:#e2e8f0;color:#0f172a;border-color:#cbd5e1}' +
+      '#jemima-cc .jemima-cc-accept:hover{background:#cbd5e1;border-color:#94a3b8}' +
       '#jemima-cc .jemima-cc-reject{background:#fff;color:#475569;border-color:#cbd5e1}' +
       '#jemima-cc .jemima-cc-reject:hover{border-color:#94a3b8;color:#0f172a}';
     var st = document.createElement('style');
