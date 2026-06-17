@@ -1,3 +1,4 @@
+/* jemima consent.js — build 2026-06-17b — copy: 'We use cookies.' */
 /* Jemima cookie consent — blocks Google Tag Manager until the visitor accepts.
    No Google request is made and no analytics cookies are set before consent.
    Choice is stored in localStorage (not a cookie), so storing it needs no consent.
