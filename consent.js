@@ -26,7 +26,7 @@
   function injectStyles() {
     if (document.getElementById('jemima-cc-style')) return;
     var css =
-      '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:11px 18px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid #e2e8f0;box-shadow:0 -6px 24px rgba(15,23,42,.06);font:500 13px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:#475569}' +
+      '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:11px 18px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid #e2e8f0;box-shadow:0 -6px 24px rgba(15,23,42,.06);font:500 13px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:#475569}' +
       '#jemima-cc p{margin:0;flex:1 1 240px}' +
       '#jemima-cc a{color:#c2155a;text-decoration:underline;font-weight:700}' +
       '#jemima-cc .jemima-cc-actions{display:flex;gap:8px;flex:0 0 auto;margin-left:auto}' +
