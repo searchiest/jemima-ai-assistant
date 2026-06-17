@@ -1011,42 +1011,84 @@
     <section id="tailored-demo-form" class="tailored-demo-section">
       <div class="tailored-demo-grid">
         <div>
-          <div class="tailored-demo-kicker">Step 1 of 1</div>
+          <div id="tailored-step-badge" class="tailored-demo-kicker">Step 1 of 2</div>
           <h2>Request a tailored demo</h2>
-          <p>Want this connected to your landscaping enquiries, garden design leads, quote requests or missed-call workflow?</p>
+          <p>Share a few details and we will review where this kind of AI workflow could fit into your enquiry, follow-up or conversion process.</p>
           <ul class="tailored-demo-points">
             <li><i class="fas fa-check"></i><span>We will look for practical automation opportunities, not generic AI ideas.</span></li>
-            <li><i class="fas fa-check"></i><span>You can ask about SMS, calls, forms, inboxes, CRM updates or follow-up workflows.</span></li>
+            <li><i class="fas fa-check"></i><span>You can ask about website forms, inboxes, calls, SMS, email or CRM follow-up.</span></li>
             <li><i class="fas fa-check"></i><span>No credit card required.</span></li>
           </ul>
         </div>
 
-        <form id="tailoredDemoForm" class="tailored-demo-form">
-          <div class="tailored-form-row">
-            <label for="tailored-name">Full Name</label>
-            <input type="text" id="tailored-name" name="name" required placeholder="John Doe">
-          </div>
-
-          <div class="tailored-form-row">
-            <label for="tailored-email">Work Email</label>
-            <input type="email" id="tailored-email" name="email" required placeholder="john@company.com">
-          </div>
-
-          <div class="tailored-form-row">
-            <label for="tailored-phone">Phone Number</label>
-            <div class="tailored-phone-row">
-              <input type="tel" id="tailored-phone" name="phone" required placeholder="+44 7700 000000">
-              <label class="tailored-sms-label">
-                <input type="checkbox" id="tailored-sms-optin" name="smsOptin">
-                <span>SMS?</span>
-              </label>
+        <div>
+          <form id="tailoredDemoForm" class="tailored-demo-form">
+            <div class="tailored-form-row">
+              <label for="tailored-name">Full Name</label>
+              <input type="text" id="tailored-name" name="name" required placeholder="John Doe">
             </div>
-          </div>
 
-          <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
-          <div id="tailored-form-message" class="tailored-form-message"></div>
-          <p class="tailored-note">No credit card required</p>
-        </form>
+            <div class="tailored-form-row">
+              <label for="tailored-email">Work Email</label>
+              <input type="email" id="tailored-email" name="email" required placeholder="john@company.com">
+            </div>
+
+            <div class="tailored-form-row">
+              <label for="tailored-phone">Phone Number</label>
+              <div class="tailored-phone-row">
+                <input type="tel" id="tailored-phone" name="phone" required placeholder="+44 7700 000000">
+                <label class="tailored-sms-label">
+                  <input type="checkbox" id="tailored-sms-optin" name="smsOptin">
+                  <span>SMS?</span>
+                </label>
+              </div>
+            </div>
+
+            <div style="display:grid;gap:8px;">
+              <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
+              <div id="tailored-form-message" class="tailored-form-message" style="min-height:0;"></div>
+              <p class="tailored-note">No credit card required</p>
+            </div>
+          </form>
+
+          <form id="tailoredDemoForm2" class="tailored-demo-form" style="display:none;">
+            <p style="margin:0;color:#64748b;font-size:14px;font-weight:600;">A few quick details to make your review more useful — under a minute.</p>
+            <div class="tailored-form-row">
+              <label for="tailored-biz">What does your business do?</label>
+              <input type="text" id="tailored-biz" placeholder="e.g. car dealership">
+            </div>
+            <div class="tailored-form-row">
+              <label for="tailored-team">Team size</label>
+              <select id="tailored-team">
+                <option value="" disabled selected>Select team size...</option>
+                <option>Just me</option>
+                <option>2-5</option>
+                <option>6-20</option>
+                <option>21-50</option>
+                <option>50+</option>
+              </select>
+            </div>
+            <div class="tailored-form-row">
+              <label for="tailored-tools">Main tools you use (optional)</label>
+              <input type="text" id="tailored-tools" placeholder="e.g. Gmail, HubSpot, Xero">
+            </div>
+            <div class="tailored-form-row">
+              <label for="tailored-pain">Biggest time sink right now?</label>
+              <textarea id="tailored-pain" rows="3" style="width:100%;min-height:96px;border:1px solid #e2e8f0;border-radius:0;padding:10px 12px;font-family:inherit;font-size:15px;font-weight:600;color:#0f172a;background:#fff;resize:vertical;" placeholder="What eats up the most time in your week?"></textarea>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <button type="submit" id="tailored-submit-2" class="tailored-submit">Send details</button>
+              <button type="button" id="tailored-skip" style="border:0;background:transparent;color:#94a3b8;font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;padding:6px 10px;">Skip for now</button>
+            </div>
+            <div id="tailored-form-message-2" class="tailored-form-message"></div>
+          </form>
+
+          <div id="tailored-done" style="display:none;">
+            <div style="width:46px;height:46px;border-radius:999px;background:rgba(194,21,90,0.12);color:#c2155a;display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><i class="fas fa-check"></i></div>
+            <h3 id="tailored-done-title" style="margin:0;color:#020617;font-size:22px;font-weight:800;letter-spacing:-0.03em;">You are all set</h3>
+            <p id="tailored-done-msg" style="margin:8px 0 0;color:#64748b;font-size:15px;line-height:1.6;font-weight:500;">Thanks, we will be in touch shortly.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -1080,56 +1122,99 @@
     const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
 
     function setupTailoredDemoForm() {
-      const form = document.getElementById("tailoredDemoForm");
-      if (!form) return;
+      var WEBHOOK = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+      var SOURCE = "voice_demo_page_footer_form";
+      var sessionId = "visitor_" + Math.random().toString(36).slice(2, 11);
+      var DEMO_SLUG = "landscapers/out-of-hours-voice-message-capture";
+      var INDUSTRY = "Landscaper";
+      var lead = null;
 
-      const submitButton = document.getElementById("tailored-submit");
-      const message = document.getElementById("tailored-form-message");
+      function byId(id) { return document.getElementById(id); }
+      function val(id) { var el = byId(id); return el ? (el.value || "").trim() : ""; }
+      function setBadge(t) { var b = byId("tailored-step-badge"); if (b) b.textContent = t; }
 
-      form.addEventListener("submit", async function(event) {
+      var bizEl = byId("tailored-biz");
+      if (bizEl && !bizEl.value) bizEl.value = INDUSTRY;
+
+      function showDone(full) {
+        var s1 = byId("tailoredDemoForm"), s2 = byId("tailoredDemoForm2"), done = byId("tailored-done");
+        var title = byId("tailored-done-title"), msg = byId("tailored-done-msg");
+        if (s1) s1.style.display = "none";
+        if (s2) s2.style.display = "none";
+        if (done) done.style.display = "block";
+        if (title) title.textContent = full ? "You are all set" : "Thanks, we have your details";
+        if (msg) msg.textContent = full
+          ? "Thanks for the extra detail. We will review your workflows and come back to you shortly with where AI would make the biggest difference."
+          : "We will be in touch shortly. If you think of anything else, just reply to our email.";
+        setBadge("All done");
+        try { history.pushState({}, "", full ? "?thankyou" : "?skip2"); } catch (e) {}
+      }
+
+      async function submitStage1(event) {
         event.preventDefault();
-
-        submitButton.disabled = true;
-        const originalText = submitButton.textContent;
-        submitButton.textContent = "Sending...";
-        message.textContent = "";
-        message.className = "tailored-form-message";
-
-        const formData = {
-          type: "tailored_demo_request",
-          name: document.getElementById("tailored-name").value,
-          traffic: "",
-          email: document.getElementById("tailored-email").value,
-          phone: document.getElementById("tailored-phone").value,
-          smsOptin: document.getElementById("tailored-sms-optin").checked,
-          source: "voice_demo_page_footer_form",
-          currentDemoSlug: window.STATIC_SCENARIO && window.STATIC_SCENARIO.slug ? window.STATIC_SCENARIO.slug : "",
-          pageUrl: window.location.href,
+        var btn = byId("tailored-submit"), msg = byId("tailored-form-message");
+        if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+        if (msg) { msg.textContent = ""; msg.className = "tailored-form-message"; }
+        lead = {
+          name: val("tailored-name"),
+          email: val("tailored-email"),
+          phone: val("tailored-phone"),
+          sms: !!(byId("tailored-sms-optin") || {}).checked
+        };
+        var payload = {
+          type: "Workflow Review",
+          name: lead.name, email: lead.email, phone: lead.phone, sms: lead.sms,
+          triggerButton: "Demo Page Form",
+          demoSlug: DEMO_SLUG, source: SOURCE,
+          sessionId: sessionId, pageUrl: window.location.href, industry: INDUSTRY,
           timestamp: new Date().toISOString()
         };
-
         try {
-          const response = await fetch(PROXY_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ webhookAlias: "tailored-demo", ...formData })
-          });
-
-          if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-          }
-
-          message.textContent = "Thanks — your tailored demo request has been submitted.";
-          form.reset();
-        } catch (error) {
-          console.error(error);
-          message.textContent = "Sorry, something went wrong. Please try again.";
-          message.className = "tailored-form-message error";
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
+          var r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          var f1 = byId("tailoredDemoForm"), f2 = byId("tailoredDemoForm2");
+          if (f1) f1.style.display = "none";
+          if (f2) f2.style.display = "grid";
+          setBadge("Step 2 of 2");
+          var sec = byId("tailored-demo-form"); if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+        } catch (err) {
+          if (btn) { btn.disabled = false; btn.textContent = "Submit Demo Request"; }
+          if (msg) { msg.textContent = "Sorry, something went wrong. Please try again."; msg.className = "tailored-form-message error"; }
         }
-      });
+      }
+
+      async function submitStage2(event) {
+        event.preventDefault();
+        var btn = byId("tailored-submit-2"), msg = byId("tailored-form-message-2");
+        if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+        if (msg) { msg.textContent = ""; msg.className = "tailored-form-message"; }
+        var payload = {
+          type: "Workflow Review Details",
+          sessionId: sessionId,
+          name: lead ? lead.name : "",
+          email: lead ? lead.email : "",
+          businessType: val("tailored-biz"),
+          teamSize: val("tailored-team"),
+          tools: val("tailored-tools"),
+          biggestTimeSink: val("tailored-pain"),
+          demoSlug: DEMO_SLUG, industry: INDUSTRY,
+          pageUrl: window.location.href, timestamp: new Date().toISOString()
+        };
+        try {
+          var r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          showDone(true);
+        } catch (err) {
+          if (btn) { btn.disabled = false; btn.textContent = "Send details"; }
+          if (msg) { msg.textContent = "Sorry, something went wrong. Please try again."; msg.className = "tailored-form-message error"; }
+        }
+      }
+
+      function skipStage2() { showDone(false); }
+
+      var f1 = byId("tailoredDemoForm"); if (f1) f1.addEventListener("submit", submitStage1);
+      var f2 = byId("tailoredDemoForm2"); if (f2) f2.addEventListener("submit", submitStage2);
+      var sk = byId("tailored-skip"); if (sk) sk.addEventListener("click", skipStage2);
     }
 
     document.addEventListener("DOMContentLoaded", setupTailoredDemoForm);
