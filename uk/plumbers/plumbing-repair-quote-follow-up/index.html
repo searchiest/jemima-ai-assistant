@@ -34,6 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config={corePlugins:{preflight:false}}</script>
 
@@ -1533,6 +1534,8 @@
         </div>
 
         <div style="display:grid;gap:8px;">
+          <input type="text" id="tailored-hp" name="hp_field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin:0.25rem auto;display:flex;justify-content:center;"></div>
           <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
           <div id="tailored-form-message" class="tailored-form-message" style="min-height:0;"></div>
           <p class="tailored-note">No credit card required</p>
@@ -1628,9 +1631,13 @@ function scrollToTailoredDemoForm(event) {
 }
 
 function setupTailoredDemoForm() {
-  var WEBHOOK = "https://jemima-ai.app.n8n.cloud/webhook/411d7c6e-d2ac-48cb-9385-54e3c32317ad";
+  var WEBHOOK = "https://jemima-api-proxy.jemima-f5e.workers.dev";
   var SOURCE = "demo_page_footer_form";
   var sessionId = "visitor_" + Math.random().toString(36).slice(2, 11);
+  window.__wfrRenderedAt = window.__wfrRenderedAt || Date.now();
+  window.__wfrTurnstileToken = "";
+  window.onTurnstileSuccess = function(t){ window.__wfrTurnstileToken = t; };
+  window.onTurnstileExpired = function(){ window.__wfrTurnstileToken = ""; if (window.turnstile) { try { window.turnstile.reset(); } catch(e){} } };
   var DEMO_SLUG = "plumbers/plumbing-repair-quote-follow-up";
   var INDUSTRY = "Plumber";
   var lead = null;
@@ -1667,13 +1674,21 @@ function setupTailoredDemoForm() {
       phone: val("tailored-phone"),
       sms: !!(byId("tailored-sms-optin") || {}).checked
     };
+    var token = window.__wfrTurnstileToken || (window.turnstile ? window.turnstile.getResponse() : "");
+    if (!token) {
+      if (btn) { btn.disabled = false; btn.textContent = "Submit Demo Request"; }
+      if (msg) { msg.textContent = "Please complete the verification."; msg.className = "tailored-form-message error"; }
+      if (window.turnstile) { try { window.turnstile.reset(); } catch (e) {} }
+      return;
+    }
     var payload = {
       type: "Workflow Review",
       name: lead.name, email: lead.email, phone: lead.phone, sms: lead.sms,
       triggerButton: "Demo Page Form",
       demoSlug: DEMO_SLUG, source: SOURCE,
       sessionId: sessionId, pageUrl: window.location.href, industry: INDUSTRY,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      webhookAlias: "form-main", hp_field: val("tailored-hp"), formRenderedAt: (window.__wfrRenderedAt || 0), turnstileToken: token
     };
     try {
       var r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
@@ -1696,6 +1711,7 @@ function setupTailoredDemoForm() {
     if (msg) { msg.textContent = ""; msg.className = "tailored-form-message"; }
     var payload = {
       type: "Workflow Review Details",
+      webhookAlias: "form-main",
       sessionId: sessionId,
       name: lead ? lead.name : "",
       email: lead ? lead.email : "",
