@@ -1,7 +1,7 @@
 /* Jemima cookie consent — blocks Google Tag Manager until the visitor accepts.
    No Google request is made and no analytics cookies are set before consent.
    Choice is stored in localStorage (not a cookie), so storing it needs no consent.
-   Minimal compliant bar: identical on all devices, Accept and Reject equally prominent. */
+   Minimal compliant bar in the site style: light/frosted, readable, equal Accept/Reject. */
 (function () {
   var GTM_ID = 'GTM-P8CCJV29';
   var STORAGE_KEY = 'jemima_cookie_consent'; // 'granted' | 'denied'
@@ -26,15 +26,15 @@
   function injectStyles() {
     if (document.getElementById('jemima-cc-style')) return;
     var css =
-      '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 16px;background:#0f172a;color:#e2e8f0;font:500 13px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;box-shadow:0 -4px 16px rgba(15,23,42,.18)}' +
+      '#jemima-cc{position:fixed;left:0;right:0;bottom:0;z-index:2147483600;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:11px 18px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid #e2e8f0;box-shadow:0 -6px 24px rgba(15,23,42,.06);font:500 13px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:#475569}' +
       '#jemima-cc p{margin:0;flex:1 1 240px}' +
-      '#jemima-cc a{color:#f9a8d4;text-decoration:underline}' +
+      '#jemima-cc a{color:#c2155a;text-decoration:underline;font-weight:700}' +
       '#jemima-cc .jemima-cc-actions{display:flex;gap:8px;flex:0 0 auto;margin-left:auto}' +
-      '#jemima-cc button{border:1px solid transparent;cursor:pointer;border-radius:5px;padding:8px 16px;font:800 11px/1 inherit;letter-spacing:.05em;text-transform:uppercase}' +
+      '#jemima-cc button{cursor:pointer;border-radius:5px;padding:8px 16px;font:800 11px/1 inherit;letter-spacing:.06em;text-transform:uppercase;border:1px solid transparent}' +
       '#jemima-cc .jemima-cc-accept{background:#c2155a;color:#fff;border-color:#c2155a}' +
       '#jemima-cc .jemima-cc-accept:hover{background:#a0124a;border-color:#a0124a}' +
-      '#jemima-cc .jemima-cc-reject{background:transparent;color:#e2e8f0;border-color:#475569}' +
-      '#jemima-cc .jemima-cc-reject:hover{border-color:#94a3b8;background:rgba(148,163,184,.12)}';
+      '#jemima-cc .jemima-cc-reject{background:#fff;color:#475569;border-color:#cbd5e1}' +
+      '#jemima-cc .jemima-cc-reject:hover{border-color:#94a3b8;color:#0f172a}';
     var st = document.createElement('style');
     st.id = 'jemima-cc-style';
     st.textContent = css;
