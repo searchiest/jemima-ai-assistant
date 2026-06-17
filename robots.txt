@@ -1,0 +1,5 @@
+# https://jemima.ai/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://jemima.ai/sitemap.xml
