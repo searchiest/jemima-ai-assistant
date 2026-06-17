@@ -34,6 +34,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={corePlugins:{preflight:false}}</script>
 
   <style>
     :root {
@@ -1270,6 +1272,7 @@
             <button id="submitButton" class="primary" type="submit">Generate demo result</button>
             <span id="formMessage" class="message"></span>
           </div>
+          <p class="text-center text-[11px] text-slate-400 font-medium mt-2">By submitting, you agree to our <a href="/privacy.html" class="underline hover:text-[#c2155a]">Privacy Policy</a>.</p>
         </form>
 
         <p class="note">
@@ -1541,6 +1544,7 @@
           <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
           <div id="tailored-form-message" class="tailored-form-message" style="min-height:0;"></div>
           <p class="tailored-note">No credit card required</p>
+          <p class="text-center text-[11px] text-slate-400 font-medium mt-2">By submitting, you agree to our <a href="/privacy.html" class="underline hover:text-[#c2155a]">Privacy Policy</a>. If you tick SMS, you consent to receive text messages from Jemima AI about your enquiry and our services; message and data rates may apply, and you can reply STOP to opt out at any time.</p>
         </div>
       </form>
 
