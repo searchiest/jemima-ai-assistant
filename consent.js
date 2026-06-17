@@ -50,7 +50,7 @@
     bar.setAttribute('role', 'dialog');
     bar.setAttribute('aria-label', 'Cookie consent');
     bar.innerHTML =
-      '<p>We use cookies to measure traffic. <a href="' + PRIVACY_URL + '">Privacy</a></p>' +
+      '<p>We use cookies. <a href="' + PRIVACY_URL + '">Privacy</a></p>' +
       '<div class="jemima-cc-actions">' +
         '<button type="button" class="jemima-cc-reject">Reject</button>' +
         '<button type="button" class="jemima-cc-accept">Accept</button>' +
