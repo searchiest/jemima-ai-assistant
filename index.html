@@ -1845,8 +1845,8 @@ Click the free workflow review button. It takes less than 30 seconds to request.
     </footer>
 
 <script id="video-engine">
-        const n8nChatWebhookUrl = "https://jemima-ai.app.n8n.cloud/webhook/bfda4753-0e08-4fdc-aeed-969bf9fd588c/chat"; 
-        const n8nFormWebhookUrl = "https://jemima-api-proxy.jemima-f5e.workers.dev"; 
+        const chatApiUrl = "https://jemima-api-proxy.jemima-f5e.workers.dev"; 
+        const formApiUrl = "https://jemima-api-proxy.jemima-f5e.workers.dev"; 
         const sessionId = "visitor_" + Math.random().toString(36).substr(2, 9);
         window.__wfrRenderedAt = Date.now();
         window.__wfrTurnstileToken = "";
@@ -2133,12 +2133,12 @@ document.addEventListener('DOMContentLoaded', () => {
             chatFeed.appendChild(indicator);
             chatFeed.scrollTop = chatFeed.scrollHeight;
 
-            if (n8nChatWebhookUrl) {
+            if (chatApiUrl) {
                 try {
-                    const response = await fetch(n8nChatWebhookUrl, {
+                    const response = await fetch(chatApiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chatInput: text, message: text, sessionId: sessionId, industry: (typeof window.getJemimaChatIndustry === 'function' ? window.getJemimaChatIndustry() : ''), pageUrl: window.location.href, timestamp: new Date().toISOString() })
+                        body: JSON.stringify({ chatInput: text, message: text, webhookAlias: 'chat', sessionId: sessionId, industry: (typeof window.getJemimaChatIndustry === 'function' ? window.getJemimaChatIndustry() : ''), pageUrl: window.location.href, timestamp: new Date().toISOString() })
                     });
                     if (!response.ok) throw new Error('Network error');
                     const data = await response.json();
@@ -2191,7 +2191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var b = f.querySelector('button[type=submit]');
         var val = function(id){ var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; };
         if (b){ b.disabled = true; b.innerText = 'Saving…'; }
-        var webhook = (typeof n8nFormWebhookUrl !== 'undefined' && n8nFormWebhookUrl) ? n8nFormWebhookUrl : 'https://jemima-api-proxy.jemima-f5e.workers.dev';
+        var webhook = (typeof formApiUrl !== 'undefined' && formApiUrl) ? formApiUrl : 'https://jemima-api-proxy.jemima-f5e.workers.dev';
         var src = (typeof lastTriggerSource !== 'undefined' && lastTriggerSource) ? lastTriggerSource : 'Homepage Inline Form';
         var sid = (typeof sessionId !== 'undefined' && sessionId) ? sessionId : '';
         var token = window.__wfrTurnstileToken || (window.turnstile ? window.turnstile.getResponse() : '');
@@ -2240,7 +2240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var b = f.querySelector('button[type=submit]');
         var val = function(id){ var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; };
         if (b){ b.disabled = true; b.innerText = 'Sending…'; }
-        var webhook = (typeof n8nFormWebhookUrl !== 'undefined' && n8nFormWebhookUrl) ? n8nFormWebhookUrl : 'https://jemima-api-proxy.jemima-f5e.workers.dev';
+        var webhook = (typeof formApiUrl !== 'undefined' && formApiUrl) ? formApiUrl : 'https://jemima-api-proxy.jemima-f5e.workers.dev';
         var details = {
             type: 'Workflow Review Details',
             webhookAlias: 'form-main',
