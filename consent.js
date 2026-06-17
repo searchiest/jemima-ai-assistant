@@ -1,4 +1,4 @@
-/* jemima consent.js — build 2026-06-17e — light-grey Accept, black label */
+/* jemima consent.js — build 2026-06-17f — charcoal Accept (primary), outlined Reject */
 /* Jemima cookie consent — blocks Google Tag Manager until the visitor accepts.
    No Google request is made and no analytics cookies are set before consent.
    Choice is stored in localStorage (not a cookie), so storing it needs no consent.
@@ -32,8 +32,8 @@
       '#jemima-cc a{color:#475569;text-decoration:underline;font-weight:700}' +
       '#jemima-cc .jemima-cc-actions{display:flex;gap:8px;flex:0 0 auto;margin-left:auto}' +
       '#jemima-cc button{cursor:pointer;border-radius:5px;padding:8px 16px;font:800 11px/1 inherit;letter-spacing:.06em;text-transform:uppercase;border:1px solid transparent}' +
-      '#jemima-cc .jemima-cc-accept{background:#e2e8f0;color:#0f172a;border-color:#cbd5e1}' +
-      '#jemima-cc .jemima-cc-accept:hover{background:#cbd5e1;border-color:#94a3b8}' +
+      '#jemima-cc .jemima-cc-accept{background:#1e293b;color:#fff;border-color:#1e293b}' +
+      '#jemima-cc .jemima-cc-accept:hover{background:#0f172a;border-color:#0f172a}' +
       '#jemima-cc .jemima-cc-reject{background:#fff;color:#475569;border-color:#cbd5e1}' +
       '#jemima-cc .jemima-cc-reject:hover{border-color:#94a3b8;color:#0f172a}';
     var st = document.createElement('style');
