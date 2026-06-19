@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Enquiry handling demo — Jemima AI (test)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={corePlugins:{preflight:false}}</script>
+<style>body{font-family:'Plus Jakarta Sans',sans-serif;} .code-badge{font-variant-numeric:tabular-nums;letter-spacing:0.35em;}</style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+<nav class="flex items-center justify-between px-4 lg:px-12 py-4 bg-white/80 backdrop-blur-md border-b border-slate-300 sticky top-0 z-50">
+  <div class="flex items-center gap-2 text-lg lg:text-xl tracking-tighter cursor-pointer" onclick="location.href='/'">
+    <img src="https://jemima.ai/img/jemima-logo.png" alt="Jemima Logo" class="w-7 h-7 rounded-full shadow-sm"><span>Jemima</span>
+  </div>
+  <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Demo preview</span>
+</nav>
+<main class="max-w-3xl mx-auto px-4 lg:px-6 py-10 lg:py-16">
+  <div class="text-center mb-8">
+    <div class="inline-block bg-[#c2155a]/10 text-[#c2155a] text-[11px] font-[700] px-4 py-1.5 uppercase tracking-[0.25em] mb-3">Text demo</div>
+    <h1 class="text-3xl md:text-5xl font-[800] tracking-tighter text-slate-950 leading-tight">Enquiry handling</h1>
+    <p class="mt-4 text-slate-600 text-base md:text-lg font-medium leading-relaxed max-w-xl mx-auto">See how a new enquiry is read, qualified and turned into a tidy summary for your team.</p>
+  </div>
+  <div class="bg-white border border-slate-200 shadow-sm p-6 md:p-9">
+    <div id="code-form-wrap">
+      <h2 class="text-xl md:text-2xl font-[800] tracking-tight text-slate-950">Get your code</h2>
+      <p class="text-slate-600 font-medium mt-1.5 mb-5">Pop in your details and we will give you a unique 4-digit code to try this demo.</p>
+      <p id="cf-returning" style="display:none" class="text-sm text-[#c2155a] font-semibold mb-4"><i class="fas fa-circle-check mr-1.5"></i>Welcome back — your details are remembered, just grab your code.</p>
+      <form id="code-form" onsubmit="return submitCode(event)" class="space-y-4">
+        <div><label class="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">Full name</label><input id="cf-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none text-base font-semibold placeholder:text-slate-300"></div>
+        <div><label class="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">Work email</label><input id="cf-email" type="email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none text-base font-semibold placeholder:text-slate-300"></div>
+        <div><label class="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">Phone</label><input id="cf-phone" type="tel" required placeholder="+44 7700 000000" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none text-base font-semibold placeholder:text-slate-300"></div>
+        <button id="cf-btn" type="submit" class="w-full bg-[#c2155a] text-white py-4 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all">Get my code</button>
+        <p class="text-center text-[11px] text-slate-400 font-medium">By continuing you agree to our <a href="/privacy.html" class="underline">Privacy Policy</a>.</p>
+      </form>
+    </div>
+    <div id="code-result" style="display:none" class="text-center py-4">
+      <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Your code for the Enquiry handling demo</p>
+      <div id="code-value" class="code-badge text-5xl md:text-6xl font-[800] text-[#c2155a] my-4">----</div>
+      <p id="code-howto" class="text-slate-700 font-medium leading-relaxed max-w-md mx-auto"></p>
+      <p class="text-xs text-slate-400 mt-4">Your code stays live until you use it. Keep it handy.</p>
+    </div>
+  </div>
+  <p class="text-center text-xs text-slate-400 mt-8">This is a preview page for testing. <a href="/" class="underline">Back to Jemima</a></p>
+</main>
+<footer class="py-10 bg-white border-t border-slate-300 text-center"><p class="text-xs uppercase tracking-[0.3em] text-slate-400">&copy; 2026 Jemima AI</p></footer>
+<script>
+var ISSUER_URL='https://jemima-ai.app.n8n.cloud/webhook/demo-code-request';
+var DEMO_NAME='Enquiry handling';
+var DEMO_REF='LEAD-001';
+var HOW_TO_USE='Use code {CODE} when prompted in the demo. Your report will be emailed to you.';
+function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+function getTok(){try{return localStorage.getItem('jemima_demo_token')||'';}catch(e){return '';}}
+function setTok(t){try{if(t)localStorage.setItem('jemima_demo_token',t);}catch(e){}}
+document.addEventListener('DOMContentLoaded',function(){if(getTok()){var h=document.getElementById('cf-returning');if(h)h.style.display='block';}});
+async function submitCode(e){
+  e.preventDefault();
+  var btn=document.getElementById('cf-btn');if(btn){btn.disabled=true;btn.innerText='Getting your code…';}
+  var payload={name:val('cf-name'),email:val('cf-email'),phone:val('cf-phone'),demo:DEMO_NAME,demo_ref:DEMO_REF,delivery:'both',visitor_token:getTok()};
+  try{
+    var r=await fetch(ISSUER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var d=await r.json();
+    if(d&&d.code){setTok(d.visitor_token);showCode(d.code);}else{throw new Error('no code');}
+  }catch(err){if(btn){btn.disabled=false;btn.innerText='Try again';}}
+  return false;
+}
+function showCode(code){
+  document.getElementById('code-form-wrap').style.display='none';
+  var res=document.getElementById('code-result');res.style.display='block';
+  document.getElementById('code-value').innerText=code;
+  document.getElementById('code-howto').innerText=HOW_TO_USE.split('{CODE}').join(code);
+  res.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
