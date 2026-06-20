@@ -69,6 +69,9 @@ var DEMO_REF='APPT-001';
 var HOW_TO_USE='Text your code {CODE} to the SMS demo line to begin.';
 var CAPTURE_ONLY=false;
 var SHOW_SMS_OPTIN=false;
+var SCENARIO_CODE='2322';
+var SCENARIO_ID='DENTAL-SMS-2322';
+var INDUSTRY='Dentist';
 function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
 function showEl(id,on){var el=document.getElementById(id);if(el)el.style.display=on?'':'none';}
 function getProfile(){try{return JSON.parse(localStorage.getItem('jemima_demo')||'null');}catch(e){return null;}}
@@ -101,6 +104,9 @@ function buildPayload(profile){
     phone: profile?profile.phone:val('cf-phone'),
     demo: DEMO_NAME,
     demo_ref: DEMO_REF,
+    scenario_code: SCENARIO_CODE,
+    scenario_id: SCENARIO_ID,
+    industry: INDUSTRY,
     delivery: 'both',
     capture_only: CAPTURE_ONLY,
     sms_optin: profile?!!profile.sms_optin:(smsEl?smsEl.checked:false),
