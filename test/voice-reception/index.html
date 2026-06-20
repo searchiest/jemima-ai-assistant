@@ -69,6 +69,9 @@ var DEMO_REF='VOICE-001';
 var HOW_TO_USE='Call the voice demo line and key in {CODE} when prompted.';
 var CAPTURE_ONLY=false;
 var SHOW_SMS_OPTIN=true;
+var SCENARIO_CODE='';
+var SCENARIO_ID='DENTAL-VOICE-2321';
+var INDUSTRY='Dental Practice';
 function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
 function showEl(id,on){var el=document.getElementById(id);if(el)el.style.display=on?'':'none';}
 function getProfile(){try{return JSON.parse(localStorage.getItem('jemima_demo')||'null');}catch(e){return null;}}
@@ -101,6 +104,9 @@ function buildPayload(profile){
     phone: profile?profile.phone:val('cf-phone'),
     demo: DEMO_NAME,
     demo_ref: DEMO_REF,
+    scenario_code: SCENARIO_CODE,
+    scenario_id: SCENARIO_ID,
+    industry: INDUSTRY,
     delivery: 'both',
     capture_only: CAPTURE_ONLY,
     sms_optin: profile?!!profile.sms_optin:(smsEl?smsEl.checked:false),
