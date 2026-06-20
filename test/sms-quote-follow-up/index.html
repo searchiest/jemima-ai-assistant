@@ -25,23 +25,38 @@
     <p class="mt-4 text-slate-600 text-base md:text-lg font-medium leading-relaxed max-w-xl mx-auto">See how unanswered quotes get a friendly, automatic text nudge that brings replies back.</p>
   </div>
   <div class="bg-white border border-slate-200 shadow-sm p-6 md:p-9">
-    <div id="code-form-wrap">
-      <h2 class="text-xl md:text-2xl font-[800] tracking-tight text-slate-950">Get your code</h2>
-      <p class="text-slate-600 font-medium mt-1.5 mb-5">Pop in your details and we will give you a unique 4-digit code to try this demo.</p>
-      <p id="cf-returning" style="display:none" class="text-sm text-[#c2155a] font-semibold mb-4"><i class="fas fa-circle-check mr-1.5"></i>Welcome back — your details are remembered, just grab your code.</p>
-      <form id="code-form" onsubmit="return submitCode(event)" class="space-y-4">
+    <div id="view-form" style="display:none">
+      <h2 id="form-heading" class="text-xl md:text-2xl font-[800] tracking-tight text-slate-950">Get your code</h2>
+      <p id="form-sub" class="text-slate-600 font-medium mt-1.5 mb-5">Pop in your details and we will give you a unique 4-digit code to try this demo.</p>
+      <form id="code-form" onsubmit="return submitNew(event)" class="space-y-4">
         <div><label class="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">Full name</label><input id="cf-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none text-base font-semibold placeholder:text-slate-300"></div>
         <div><label class="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">Work email</label><input id="cf-email" type="email" required placeholder="john@company.com" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none text-base font-semibold placeholder:text-slate-300"></div>
         <div><label class="block text-xs uppercase tracking-widest text-slate-400 font-bold mb-1">Phone</label><input id="cf-phone" type="tel" required placeholder="+44 7700 000000" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none text-base font-semibold placeholder:text-slate-300"></div>
+        <label id="cf-sms-wrap" style="display:none" class="flex items-center gap-2 cursor-pointer pt-1">
+          <input type="checkbox" id="cf-sms" class="w-4 h-4 accent-[#c2155a]">
+          <span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Also text me</span>
+        </label>
         <button id="cf-btn" type="submit" class="w-full bg-[#c2155a] text-white py-4 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all">Get my code</button>
         <p class="text-center text-[11px] text-slate-400 font-medium">By continuing you agree to our <a href="/privacy.html" class="underline">Privacy Policy</a>.</p>
       </form>
     </div>
-    <div id="code-result" style="display:none" class="text-center py-4">
+    <div id="view-returning" style="display:none" class="text-center py-2">
+      <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Welcome back</p>
+      <p id="ret-name" class="text-2xl font-[800] text-slate-950 mt-1 mb-1">Good to see you again</p>
+      <p id="ret-sub" class="text-slate-600 font-medium mb-6">We remember your details — no need to fill anything in.</p>
+      <button id="ret-btn" onclick="submitReturning()" class="w-full bg-[#c2155a] text-white py-4 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 hover:bg-[#a0124a] transition-all">Get my code</button>
+      <button onclick="showForm()" class="block mx-auto mt-3 text-xs text-slate-400 underline">Not you? Enter different details</button>
+    </div>
+    <div id="view-code" style="display:none" class="text-center py-4">
       <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Your code for the SMS quote follow-up demo</p>
       <div id="code-value" class="code-badge text-5xl md:text-6xl font-[800] text-[#c2155a] my-4">----</div>
       <p id="code-howto" class="text-slate-700 font-medium leading-relaxed max-w-md mx-auto"></p>
       <p class="text-xs text-slate-400 mt-4">Your code stays live until you use it. Keep it handy.</p>
+    </div>
+    <div id="view-thanks" style="display:none" class="text-center py-6">
+      <div class="text-[#c2155a] text-4xl mb-3"><i class="fas fa-circle-check"></i></div>
+      <p class="text-xl font-[800] text-slate-950">Thanks — we have got your details.</p>
+      <p class="text-slate-600 font-medium mt-1.5 max-w-md mx-auto">Someone from Jemima will be in touch. No code needed for this demo.</p>
     </div>
   </div>
   <p class="text-center text-xs text-slate-400 mt-8">This is a preview page for testing. <a href="/" class="underline">Back to Jemima</a></p>
@@ -52,27 +67,70 @@ var ISSUER_URL='https://jemima-ai.app.n8n.cloud/webhook/demo-code-request';
 var DEMO_NAME='SMS quote follow-up';
 var DEMO_REF='QUOTE-001';
 var HOW_TO_USE='Text your code {CODE} to the SMS demo line to begin. We will then send your report by email or text.';
+var CAPTURE_ONLY=false;
+var SHOW_SMS_OPTIN=false;
 function val(id){var el=document.getElementById(id);return el?el.value.trim():'';}
-function getTok(){try{return localStorage.getItem('jemima_demo_token')||'';}catch(e){return '';}}
-function setTok(t){try{if(t)localStorage.setItem('jemima_demo_token',t);}catch(e){}}
-document.addEventListener('DOMContentLoaded',function(){if(getTok()){var h=document.getElementById('cf-returning');if(h)h.style.display='block';}});
-async function submitCode(e){
-  e.preventDefault();
-  var btn=document.getElementById('cf-btn');if(btn){btn.disabled=true;btn.innerText='Getting your code…';}
-  var payload={name:val('cf-name'),email:val('cf-email'),phone:val('cf-phone'),demo:DEMO_NAME,demo_ref:DEMO_REF,delivery:'both',visitor_token:getTok()};
+function showEl(id,on){var el=document.getElementById(id);if(el)el.style.display=on?'':'none';}
+function getProfile(){try{return JSON.parse(localStorage.getItem('jemima_demo')||'null');}catch(e){return null;}}
+function setProfile(p){try{localStorage.setItem('jemima_demo',JSON.stringify(p));}catch(e){}}
+document.addEventListener('DOMContentLoaded',function(){
+  if(SHOW_SMS_OPTIN)showEl('cf-sms-wrap',true);
+  if(CAPTURE_ONLY){
+    var fh=document.getElementById('form-heading');if(fh)fh.innerText='Try this demo';
+    var fs=document.getElementById('form-sub');if(fs)fs.innerText='Pop in your details and we will set you up. No code needed for this demo.';
+    var btn=document.getElementById('cf-btn');if(btn)btn.innerText='Submit';
+  }
+  var p=getProfile();
+  if(p&&p.token){
+    showEl('view-returning',true);
+    var rn=document.getElementById('ret-name');if(rn&&p.name)rn.innerText='Good to see you again, '+String(p.name).split(' ')[0];
+    if(CAPTURE_ONLY){
+      var rb=document.getElementById('ret-btn');if(rb)rb.style.display='none';
+      var rs=document.getElementById('ret-sub');if(rs)rs.innerText='You are already on our list. Nothing more to do.';
+    }
+  }else{
+    showEl('view-form',true);
+  }
+});
+function showForm(){showEl('view-returning',false);showEl('view-form',true);}
+function buildPayload(profile){
+  var smsEl=document.getElementById('cf-sms');
+  return {
+    name: profile?profile.name:val('cf-name'),
+    email: profile?profile.email:val('cf-email'),
+    phone: profile?profile.phone:val('cf-phone'),
+    demo: DEMO_NAME,
+    demo_ref: DEMO_REF,
+    delivery: 'both',
+    capture_only: CAPTURE_ONLY,
+    sms_optin: profile?!!profile.sms_optin:(smsEl?smsEl.checked:false),
+    visitor_token: profile?profile.token:(getProfile()?getProfile().token:'')
+  };
+}
+async function post(payload,btnId){
+  var btn=document.getElementById(btnId);if(btn){btn.disabled=true;btn.dataset.t=btn.innerText;btn.innerText='Please wait…';}
   try{
     var r=await fetch(ISSUER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     var d=await r.json();
-    if(d&&d.code){setTok(d.visitor_token);showCode(d.code);}else{throw new Error('no code');}
-  }catch(err){if(btn){btn.disabled=false;btn.innerText='Try again';}}
-  return false;
+    var prof=getProfile()||{};
+    prof.token=d.visitor_token||prof.token;
+    prof.name=payload.name||prof.name;
+    prof.email=payload.email||prof.email;
+    prof.phone=payload.phone||prof.phone;
+    prof.sms_optin=payload.sms_optin;
+    setProfile(prof);
+    if(CAPTURE_ONLY){showEl('view-form',false);showEl('view-returning',false);showEl('view-thanks',true);document.getElementById('view-thanks').scrollIntoView({behavior:'smooth'});}
+    else if(d.code){showCode(d.code);}
+    else{throw new Error('no code');}
+  }catch(err){if(btn){btn.disabled=false;btn.innerText=btn.dataset.t||'Try again';}}
 }
+function submitNew(e){e.preventDefault();post(buildPayload(null),'cf-btn');return false;}
+function submitReturning(){post(buildPayload(getProfile()),'ret-btn');}
 function showCode(code){
-  document.getElementById('code-form-wrap').style.display='none';
-  var res=document.getElementById('code-result');res.style.display='block';
+  showEl('view-form',false);showEl('view-returning',false);showEl('view-code',true);
   document.getElementById('code-value').innerText=code;
   document.getElementById('code-howto').innerText=HOW_TO_USE.split('{CODE}').join(code);
-  res.scrollIntoView({behavior:'smooth'});
+  document.getElementById('view-code').scrollIntoView({behavior:'smooth'});
 }
 </script>
 </body>
