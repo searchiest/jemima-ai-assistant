@@ -263,6 +263,110 @@
       object-fit: cover;
     }
 
+    .voice-signup-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .voice-signup-label {
+      color: #c2155a;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .voice-signup-intro {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0 0 18px;
+      font-weight: 500;
+    }
+
+    .voice-signup-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .voice-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .voice-field label {
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .voice-field input {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid #e2e8f0;
+      background: transparent;
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 10px 2px;
+      outline: none;
+    }
+
+    .voice-field input:focus {
+      border-color: #c2155a;
+    }
+
+    .voice-sms-optin {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .voice-sms-optin input {
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      accent-color: #c2155a;
+      flex: 0 0 auto;
+    }
+
+    .voice-signup-button {
+      border: 0;
+      cursor: pointer;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .voice-signup-message {
+      min-height: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #b91c1c;
+    }
+
+    .voice-signup-fineprint {
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.55;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .voice-signup-fineprint a {
+      color: #64748b;
+      text-decoration: underline;
+    }
+
     .voice-panel {
       background: #0f172a;
       color: #ffffff;
@@ -888,27 +992,34 @@
       </aside>
 
       <section class="main-card">
-        <div class="voice-panel" id="voicePanel">
-    <div class="label">Try this voice demo</div>
-
-    <div id="voiceSignup">
-      <p style="color:#e2e8f0;font-size:15px;line-height:1.55;margin:0 0 16px;font-weight:600;">Enter your details to get your personal demo code. You'll then call the demo number and enter that code when prompted.</p>
-      <form id="voiceCodeForm" style="display:grid;gap:14px;">
-        <div style="display:grid;gap:6px;">
-          <label for="voice_name" style="color:#f9a8d4;font-size:11px;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;">Your name</label>
-          <input id="voice_name" name="voice_name" type="text" required placeholder="Jane Smith" style="width:100%;border:0;border-bottom:2px solid #334155;background:transparent;color:#fff;font-size:16px;font-weight:700;padding:10px 2px;outline:none;">
+        <div id="voicePanel">
+    <div id="voiceSignup" class="voice-signup-card">
+      <div class="voice-signup-label">Try this voice demo</div>
+      <p class="voice-signup-intro">Enter your details below to get your own personal demo code. We'll show your code on screen, then you call the demo number and enter it when prompted.</p>
+      <form id="voiceCodeForm" class="voice-signup-form">
+        <div class="voice-field">
+          <label for="voice_name">Your name</label>
+          <input id="voice_name" name="voice_name" type="text" required placeholder="Jane Smith">
         </div>
-        <div style="display:grid;gap:6px;">
-          <label for="voice_email" style="color:#f9a8d4;font-size:11px;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;">Work email</label>
-          <input id="voice_email" name="voice_email" type="email" required placeholder="jane@company.com" style="width:100%;border:0;border-bottom:2px solid #334155;background:transparent;color:#fff;font-size:16px;font-weight:700;padding:10px 2px;outline:none;">
+        <div class="voice-field">
+          <label for="voice_email">Work email</label>
+          <input id="voice_email" name="voice_email" type="email" required placeholder="jane@company.com">
         </div>
-        <button type="submit" id="voiceCodeButton" class="voice-button" style="border:0;cursor:pointer;margin-top:6px;">Get my demo code</button>
-        <div id="voiceCodeMessage" style="min-height:18px;font-size:13px;font-weight:700;color:#fca5a5;"></div>
-        <p style="color:#94a3b8;font-size:11px;line-height:1.55;margin:4px 0 0;font-weight:500;">By continuing you agree to our <a href="/privacy.html" style="color:#cbd5e1;text-decoration:underline;">Privacy Policy</a>. Standard call charges from your provider may apply.</p>
+        <div class="voice-field">
+          <label for="voice_phone">Phone number</label>
+          <input id="voice_phone" name="voice_phone" type="tel" required placeholder="+44 7700 000000">
+        </div>
+        <label class="voice-sms-optin">
+          <input type="checkbox" id="voice_sms_optin" name="voice_sms_optin">
+          <span>Text me about my demo and occasional Jemima updates. Reply STOP anytime.</span>
+        </label>
+        <button type="submit" id="voiceCodeButton" class="voice-button voice-signup-button">Get my demo code</button>
+        <div id="voiceCodeMessage" class="voice-signup-message"></div>
+        <p class="voice-signup-fineprint">By continuing you agree to our <a href="/privacy.html">Privacy Policy</a>. Standard call charges from your provider may apply.</p>
       </form>
     </div>
 
-    <div id="voiceReveal" style="display:none;">
+    <div id="voiceReveal" class="voice-panel" style="display:none;">
       <div style="color:#f9a8d4;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Your personal demo code</div>
       <div class="voice-code" id="voiceRevealCode">----</div>
 
@@ -933,16 +1044,16 @@
     <div class="step">
       <div class="step-number">1</div>
       <div>
-        <strong>Call the demo number</strong>
-        <p>+44 (0)742 966 9381</p>
+        <strong>Fill in your details above</strong>
+        <p>Enter your name, email and phone number, then tap “Get my demo code”. Your personal demo code appears on screen straight away.</p>
       </div>
     </div>
 
     <div class="step">
       <div class="step-number">2</div>
       <div>
-        <strong>Enter the demo code</strong>
-        <p>4223#</p>
+        <strong>Call the demo number and enter your code</strong>
+        <p>Tap the call button (or dial the number shown), then enter your personal code followed by # when prompted.</p>
       </div>
     </div>
 
@@ -1156,14 +1267,16 @@
         var msg = document.getElementById("voiceCodeMessage");
         var name = (document.getElementById("voice_name").value || "").trim();
         var email = (document.getElementById("voice_email").value || "").trim();
-        if (!name || !email) { if (msg) msg.textContent = "Please enter your name and email."; return; }
+        var phone = (document.getElementById("voice_phone").value || "").trim();
+        var smsOptin = !!(document.getElementById("voice_sms_optin") || {}).checked;
+        if (!name || !email || !phone) { if (msg) msg.textContent = "Please enter your name, email and phone number."; return; }
         if (btn) { btn.disabled = true; btn.textContent = "Getting your code..."; }
         if (msg) { msg.textContent = ""; }
         var payload = {
-          name: name, email: email, demo: "voice",
+          name: name, email: email, phone: phone, demo: "voice",
           scenario_id: VOICE_SCENARIO_ID, scenario_code: VOICE_SCENARIO_CODE,
           industry: VOICE_INDUSTRY, slug: VOICE_SLUG,
-          sms_optin: false, capture_only: false,
+          sms_optin: smsOptin, capture_only: false,
           pageUrl: window.location.href, timestamp: new Date().toISOString()
         };
         try {
