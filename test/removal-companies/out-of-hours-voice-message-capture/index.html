@@ -489,6 +489,18 @@
       color: #475569;
     }
 
+    .step-code-pill {
+      display: inline-block;
+      background: #fdf2f8;
+      color: #9d174d;
+      border: 1px solid #fbcfe8;
+      padding: 2px 10px;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      vertical-align: baseline;
+    }
+
     .reply-options {
       display: flex;
       flex-wrap: wrap;
@@ -1044,8 +1056,14 @@
     <div class="step">
       <div class="step-number">1</div>
       <div>
-        <strong>Fill in your details above</strong>
-        <p>Enter your name, email and phone number, then tap “Get my demo code”. Your personal demo code appears on screen straight away.</p>
+        <div id="step1NoCode">
+          <strong>Get your personal demo code</strong>
+          <p>Fill in your name, email and phone number in the form above and tap “Get my demo code”.</p>
+        </div>
+        <div id="step1HasCode" style="display:none;">
+          <strong>Your personal demo code is ready</strong>
+          <p>Use this code when you call: <span id="stepCodeValue" class="step-code-pill">----</span></p>
+        </div>
       </div>
     </div>
 
@@ -1291,6 +1309,13 @@
           document.getElementById("voiceRevealCode").textContent = code;
           document.getElementById("voiceSignup").style.display = "none";
           document.getElementById("voiceReveal").style.display = "block";
+          // Update the dynamic "How to try it" step 1 to show the real code
+          var stepCodeEl = document.getElementById("stepCodeValue");
+          if (stepCodeEl) stepCodeEl.textContent = code;
+          var step1NoCode = document.getElementById("step1NoCode");
+          var step1HasCode = document.getElementById("step1HasCode");
+          if (step1NoCode) step1NoCode.style.display = "none";
+          if (step1HasCode) step1HasCode.style.display = "block";
         } catch (e) {
           if (btn) { btn.disabled = false; btn.textContent = "Get my demo code"; }
           if (msg) msg.textContent = "Sorry, something went wrong. Please try again.";
