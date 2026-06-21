@@ -1890,6 +1890,9 @@ Click the free workflow review button. It takes less than 30 seconds to request.
         };
 
 document.addEventListener('DOMContentLoaded', () => {
+            // 0. Pre-fill the review form for returning visitors (functional cookie).
+            try { prefillReviewForm(); } catch(e){}
+
             // 1. Setup ending loops and force the browser to see videos as clickable
             Object.values(players).forEach(video => {
                 if(video) {
@@ -2185,6 +2188,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // STAGE 1 — capture the lead, then reveal stage 2 in place (no scrolling away)
+    // --- Returning-visitor functional cookie (first-party, 1 year) ---
+    var JEMIMA_LEAD_COOKIE = "jemima_lead";
+    var JEMIMA_LEAD_MAX_AGE = 60 * 60 * 24 * 365; // 1 year in seconds
+
+    function jemimaSetLead(lead){
+        try {
+            var value = encodeURIComponent(JSON.stringify({
+                name: lead.name || "",
+                email: lead.email || "",
+                phone: lead.phone || "",
+                sms: !!lead.sms
+            }));
+            document.cookie = JEMIMA_LEAD_COOKIE + "=" + value + ";path=/;max-age=" + JEMIMA_LEAD_MAX_AGE + ";SameSite=Lax";
+        } catch(e){}
+    }
+
+    function jemimaGetLead(){
+        try {
+            var match = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_LEAD_COOKIE + "=([^;]*)"));
+            if (!match) return null;
+            var lead = JSON.parse(decodeURIComponent(match[1]));
+            if (lead && lead.name && lead.email && lead.phone) return lead;
+            return null;
+        } catch(e){ return null; }
+    }
+
+    // On load, pre-fill the step-1 review fields if we recognise the visitor.
+    function prefillReviewForm(){
+        var lead = jemimaGetLead();
+        if (!lead) return;
+        var nm = document.getElementById('wfr-name');
+        var em = document.getElementById('wfr-email');
+        var ph = document.getElementById('wfr-phone');
+        var sm = document.getElementById('wfr-sms-optin');
+        if (nm && !nm.value) nm.value = lead.name;
+        if (em && !em.value) em.value = lead.email;
+        if (ph && !ph.value) ph.value = lead.phone;
+        if (sm) sm.checked = !!lead.sms;
+    }
+
     async function handleReviewFormSubmit(e){
         e.preventDefault();
         var f = e.target;
@@ -2219,6 +2262,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             var r = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(wfrLead) });
             if (!r.ok) throw new Error('status ' + r.status);
+
+            // Remember this visitor so demo/SMS/voice pages and future visits recognise them.
+            jemimaSetLead({ name: wfrLead.name, email: wfrLead.email, phone: wfrLead.phone, sms: wfrLead.sms });
 
             // Lead is saved. Reveal stage 2 right where they are looking.
             var s1 = document.getElementById('wfr-form');
