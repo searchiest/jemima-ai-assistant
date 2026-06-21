@@ -1029,6 +1029,13 @@
         <div id="voiceCodeMessage" class="voice-signup-message"></div>
         <p class="voice-signup-fineprint">By continuing you agree to our <a href="/privacy.html">Privacy Policy</a>. Standard call charges from your provider may apply.</p>
       </form>
+
+      <div id="voiceWelcome" style="display:none;">
+        <p class="voice-signup-intro" style="margin-bottom:18px;">Welcome back, <strong id="voiceWelcomeName">there</strong>. We already have your details — just generate your personal demo code below.</p>
+        <button type="button" id="voiceWelcomeButton" class="voice-button voice-signup-button">Generate my code</button>
+        <div id="voiceWelcomeMessage" class="voice-signup-message"></div>
+        <p class="voice-signup-fineprint" style="margin-top:12px;">Not you? <a href="#" id="voiceWelcomeReset">Enter different details</a>.</p>
+      </div>
     </div>
 
     <div id="voiceReveal" class="voice-panel" style="display:none;">
@@ -1276,6 +1283,106 @@
     var VOICE_INDUSTRY = "Plumber";
     var VOICE_SLUG = "plumbers/out-of-hours-voice-message-capture";
 
+    // --- Returning-visitor functional cookie (first-party, 1 year) ---
+    var JEMIMA_LEAD_COOKIE = "jemima_lead";
+    var JEMIMA_LEAD_MAX_AGE = 60 * 60 * 24 * 365; // 1 year in seconds
+
+    function jemimaSetLead(lead) {
+      try {
+        var value = encodeURIComponent(JSON.stringify({
+          name: lead.name || "",
+          email: lead.email || "",
+          phone: lead.phone || "",
+          sms: !!lead.sms
+        }));
+        document.cookie = JEMIMA_LEAD_COOKIE + "=" + value +
+          ";path=/;max-age=" + JEMIMA_LEAD_MAX_AGE + ";SameSite=Lax";
+      } catch (e) {}
+    }
+
+    function jemimaGetLead() {
+      try {
+        var match = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_LEAD_COOKIE + "=([^;]*)"));
+        if (!match) return null;
+        var lead = JSON.parse(decodeURIComponent(match[1]));
+        if (lead && lead.name && lead.email && lead.phone) return lead;
+        return null;
+      } catch (e) { return null; }
+    }
+
+    function jemimaClearLead() {
+      document.cookie = JEMIMA_LEAD_COOKIE + "=;path=/;max-age=0;SameSite=Lax";
+    }
+
+    // Shared mint routine used by both the full form and the welcome-back button.
+    async function jemimaMintVoiceCode(lead, btn, msg, defaultBtnText) {
+      if (btn) { btn.disabled = true; btn.textContent = "Getting your code..."; }
+      if (msg) { msg.textContent = ""; }
+      var payload = {
+        name: lead.name, email: lead.email, phone: lead.phone, demo: "voice",
+        scenario_id: VOICE_SCENARIO_ID, scenario_code: VOICE_SCENARIO_CODE,
+        industry: VOICE_INDUSTRY, slug: VOICE_SLUG,
+        sms_optin: !!lead.sms, capture_only: false,
+        pageUrl: window.location.href, timestamp: new Date().toISOString()
+      };
+      try {
+        var r = await fetch(VOICE_CAPTURE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var data = await r.json();
+        var code = (data && (data.code || data.demo_code)) ? String(data.code || data.demo_code) : "";
+        if (!code) throw new Error("No code returned");
+        // Remember the visitor for next time
+        jemimaSetLead(lead);
+        // Reveal the code panel
+        document.getElementById("voiceRevealCode").textContent = code;
+        document.getElementById("voiceSignup").style.display = "none";
+        document.getElementById("voiceReveal").style.display = "block";
+        // Update the dynamic "How to try it" step 1 to show the real code
+        var stepCodeEl = document.getElementById("stepCodeValue");
+        if (stepCodeEl) stepCodeEl.textContent = code;
+        var step1NoCode = document.getElementById("step1NoCode");
+        var step1HasCode = document.getElementById("step1HasCode");
+        if (step1NoCode) step1NoCode.style.display = "none";
+        if (step1HasCode) step1HasCode.style.display = "block";
+        return true;
+      } catch (e) {
+        if (btn) { btn.disabled = false; btn.textContent = defaultBtnText; }
+        if (msg) msg.textContent = "Sorry, something went wrong. Please try again.";
+        return false;
+      }
+    }
+
+    // On load: if we recognise the visitor, swap the full form for the welcome-back panel.
+    function setupVoiceWelcome() {
+      var lead = jemimaGetLead();
+      var formWrap = document.getElementById("voiceCodeForm");
+      var welcome = document.getElementById("voiceWelcome");
+      var nameEl = document.getElementById("voiceWelcomeName");
+      var genBtn = document.getElementById("voiceWelcomeButton");
+      var resetLink = document.getElementById("voiceWelcomeReset");
+      var welcomeMsg = document.getElementById("voiceWelcomeMessage");
+      if (!welcome || !genBtn) return;
+
+      if (lead) {
+        if (formWrap) formWrap.style.display = "none";
+        welcome.style.display = "block";
+        if (nameEl) nameEl.textContent = lead.name;
+        genBtn.addEventListener("click", function() {
+          jemimaMintVoiceCode(lead, genBtn, welcomeMsg, "Generate my code");
+        });
+      }
+
+      if (resetLink) {
+        resetLink.addEventListener("click", function(ev) {
+          ev.preventDefault();
+          jemimaClearLead();
+          if (welcome) welcome.style.display = "none";
+          if (formWrap) formWrap.style.display = "grid";
+        });
+      }
+    }
+    document.addEventListener("DOMContentLoaded", setupVoiceWelcome);
+
     function setupVoiceCodeForm() {
       var form = document.getElementById("voiceCodeForm");
       if (!form) return;
@@ -1288,35 +1395,7 @@
         var phone = (document.getElementById("voice_phone").value || "").trim();
         var smsOptin = !!(document.getElementById("voice_sms_optin") || {}).checked;
         if (!name || !email || !phone) { if (msg) msg.textContent = "Please enter your name, email and phone number."; return; }
-        if (btn) { btn.disabled = true; btn.textContent = "Getting your code..."; }
-        if (msg) { msg.textContent = ""; }
-        var payload = {
-          name: name, email: email, phone: phone, demo: "voice",
-          scenario_id: VOICE_SCENARIO_ID, scenario_code: VOICE_SCENARIO_CODE,
-          industry: VOICE_INDUSTRY, slug: VOICE_SLUG,
-          sms_optin: smsOptin, capture_only: false,
-          pageUrl: window.location.href, timestamp: new Date().toISOString()
-        };
-        try {
-          var r = await fetch(VOICE_CAPTURE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-          if (!r.ok) throw new Error("HTTP " + r.status);
-          var data = await r.json();
-          var code = (data && (data.code || data.demo_code)) ? String(data.code || data.demo_code) : "";
-          if (!code) throw new Error("No code returned");
-          document.getElementById("voiceRevealCode").textContent = code;
-          document.getElementById("voiceSignup").style.display = "none";
-          document.getElementById("voiceReveal").style.display = "block";
-          // Update the dynamic "How to try it" step 1 to show the real code
-          var stepCodeEl = document.getElementById("stepCodeValue");
-          if (stepCodeEl) stepCodeEl.textContent = code;
-          var step1NoCode = document.getElementById("step1NoCode");
-          var step1HasCode = document.getElementById("step1HasCode");
-          if (step1NoCode) step1NoCode.style.display = "none";
-          if (step1HasCode) step1HasCode.style.display = "block";
-        } catch (e) {
-          if (btn) { btn.disabled = false; btn.textContent = "Get my demo code"; }
-          if (msg) msg.textContent = "Sorry, something went wrong. Please try again.";
-        }
+        await jemimaMintVoiceCode({ name: name, email: email, phone: phone, sms: smsOptin }, btn, msg, "Get my demo code");
       });
     }
     document.addEventListener("DOMContentLoaded", setupVoiceCodeForm);
@@ -1365,6 +1444,8 @@
           phone: val("tailored-phone"),
           sms: !!(byId("tailored-sms-optin") || {}).checked
         };
+        // Remember this visitor so demo pages can skip re-entry next time
+        try { jemimaSetLead(lead); } catch (e) {}
         var token = window.__wfrTurnstileToken || (window.turnstile ? window.turnstile.getResponse() : "");
         if (!token) {
           if (btn) { btn.disabled = false; btn.textContent = "Submit Demo Request"; }
