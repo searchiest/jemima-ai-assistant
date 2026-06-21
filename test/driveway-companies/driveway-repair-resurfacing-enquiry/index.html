@@ -1243,9 +1243,20 @@
       <div id="inputPanel">
         <form id="demoForm">
           <div class="form-step" data-step="1">
-            <label for="demo_user_email">Enter your work email to receive the demo report</label>
+            <label for="demo_user_name">Your name</label>
+            <input id="demo_user_name" name="demo_user_name" type="text" placeholder="Jane Smith" required>
+
+            <label for="demo_user_email" style="margin-top:14px;">Enter your work email to receive the demo report</label>
             <input id="demo_user_email" name="demo_user_email" type="email" placeholder="yourname@company.com" required>
             <div class="help">Required. The result will show on screen and the report will also be emailed to this address.</div>
+
+            <label for="demo_user_phone" style="margin-top:14px;">Phone number</label>
+            <input id="demo_user_phone" name="demo_user_phone" type="tel" placeholder="07123 456789" required>
+
+            <label style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-weight:500;cursor:pointer;">
+              <input id="demo_user_sms_optin" name="demo_user_sms_optin" type="checkbox" style="width:auto;margin-top:3px;">
+              <span>Tick to allow Jemima AI to text you about your enquiry and our services. Message and data rates may apply; reply STOP to opt out.</span>
+            </label>
           </div>
 
           <div class="form-step" data-step="2">
@@ -1621,6 +1632,63 @@ const ENGINE_WEBHOOK_ALIASES = {
   "Local Growth": "local-growth"
 };
 
+// --- Demo lead capture + completion logging (TEST PHASE: direct open n8n endpoints) ---
+const CAPTURE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-code-request";
+const COMPLETE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-completion";
+let demoSignupDone = false;
+let demoSignupRef = (function(){
+  try { return "sg_" + Math.random().toString(36).slice(2, 11); } catch (e) { return "sg_0000"; }
+})();
+
+function demoContactPayload() {
+  var nm = document.getElementById("demo_user_name");
+  var em = document.getElementById("demo_user_email");
+  var ph = document.getElementById("demo_user_phone");
+  var sm = document.getElementById("demo_user_sms_optin");
+  var sc = window.STATIC_SCENARIO || {};
+  return {
+    name: nm ? nm.value.trim() : "",
+    email: em ? em.value.trim() : "",
+    phone: ph ? ph.value.trim() : "",
+    sms_optin: sm ? !!sm.checked : false,
+    demo: "text",
+    capture_only: true,
+    scenario_id: sc.scenario_id || "",
+    scenario_code: sc.scenario_id || "",
+    industry: sc.industry || INDUSTRY,
+    slug: sc.slug || DEMO_SLUG,
+    session_ref: demoSignupRef,
+    pageUrl: window.location.href,
+    timestamp: new Date().toISOString()
+  };
+}
+
+async function captureDemoSignup() {
+  if (demoSignupDone) return;
+  demoSignupDone = true;
+  try {
+    await fetch(CAPTURE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(demoContactPayload())
+    });
+  } catch (e) { /* non-blocking: never break the demo on a capture failure */ }
+}
+
+async function logDemoCompletion() {
+  try {
+    var p = demoContactPayload();
+    p.capture_only = false;
+    p.event = "demo_completion";
+    p.demo_name = (window.STATIC_SCENARIO && window.STATIC_SCENARIO.demo_name) || "";
+    await fetch(COMPLETE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(p)
+    });
+  } catch (e) { /* non-blocking */ }
+}
+
 let activeScenario = window.STATIC_SCENARIO;
 
 function scrollToTailoredDemoForm(event) {
@@ -1984,6 +2052,9 @@ function renderResult(data) {
   }
 
   const demoUserEmail = document.getElementById("demo_user_email");
+  const demoUserName = document.getElementById("demo_user_name");
+  const demoUserPhone = document.getElementById("demo_user_phone");
+  const demoUserSmsOptin = document.getElementById("demo_user_sms_optin");
   const message = document.getElementById("formMessage");
 
   if (demoUserEmail.value) {
@@ -2027,6 +2098,9 @@ function setupDemoForm() {
     button.textContent = "Generating...";
     message.textContent = "";
     message.className = "message";
+
+    // Capture the lead + log sign-up (non-blocking, via proxy alias)
+    captureDemoSignup();
 
     const payload = {
       scenario_id: activeScenario.scenario_id,
@@ -2081,6 +2155,7 @@ function setupDemoForm() {
       }
 
       renderResult(data);
+      logDemoCompletion();
     } catch (error) {
       console.error(error);
       message.textContent = "Something went wrong: " + error.message;
