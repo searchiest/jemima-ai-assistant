@@ -2247,6 +2247,85 @@ document.addEventListener('DOMContentLoaded', () => {
         if (fields) fields.classList.remove('hidden');
     }
 
+    // Get a Turnstile token if one is already available, else poll briefly for the
+    // invisibly-rendered widget to finish. Resolves with a token string, or '' on timeout.
+    function jemimaGetTurnstileToken(maxWaitMs){
+        return new Promise(function(resolve){
+            function current(){
+                var t = window.__wfrTurnstileToken || '';
+                if (!t && window.turnstile){ try { t = window.turnstile.getResponse() || ''; } catch(e){} }
+                return t;
+            }
+            var existing = current();
+            if (existing){ resolve(existing); return; }
+            var waited = 0, step = 200, cap = (typeof maxWaitMs === 'number' ? maxWaitMs : 3500);
+            var timer = setInterval(function(){
+                var t = current();
+                waited += step;
+                if (t){ clearInterval(timer); resolve(t); }
+                else if (waited >= cap){ clearInterval(timer); resolve(''); }
+            }, step);
+        });
+    }
+
+    // Returning-visitor Continue: background stage-1 POST, then reveal step 2.
+    async function jemimaKnownVisitorContinue(lead, btn){
+        if (!lead){ jemimaShowReviewFields(); return; }
+        if (btn){ btn.disabled = true; btn.innerText = 'One moment…'; }
+
+        var token = await jemimaGetTurnstileToken(3500);
+
+        // No token available — don't risk losing the lead. Reveal the pre-filled form so the
+        // visitor completes Turnstile and submits step 1 normally.
+        if (!token){
+            if (btn){ btn.disabled = false; btn.innerText = 'Continue'; }
+            jemimaShowReviewFields();
+            var nf = document.getElementById('wfr-name');
+            if (nf){ try { nf.focus({ preventScroll: true }); } catch(e){ nf.focus(); } }
+            return;
+        }
+
+        // Build the stage-1 lead exactly like handleReviewFormSubmit would, from the cookie.
+        wfrLead = {
+            type: 'Workflow Review',
+            name: lead.name,
+            email: lead.email,
+            phone: lead.phone,
+            sms: !!lead.sms,
+            triggerButton: (typeof lastTriggerSource !== 'undefined' && lastTriggerSource) ? lastTriggerSource : 'Returning Visitor',
+            sessionId: (typeof sessionId !== 'undefined') ? sessionId : '',
+            pageUrl: location.href,
+            industry: (typeof INDUSTRY !== 'undefined' ? INDUSTRY : ''),
+            timestamp: new Date().toISOString(),
+            webhookAlias: 'form-main',
+            hp_field: '',
+            formRenderedAt: (window.__wfrRenderedAt || 0),
+            turnstileToken: token
+        };
+
+        var webhook = (typeof formApiUrl !== 'undefined' && formApiUrl) ? formApiUrl : 'https://jemima-api-proxy.jemima-f5e.workers.dev';
+        try {
+            var r = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(wfrLead) });
+            if (!r.ok) throw new Error('status ' + r.status);
+
+            // Refresh the cookie (keeps it alive) and go straight to step 2.
+            jemimaSetLead({ name: wfrLead.name, email: wfrLead.email, phone: wfrLead.phone, sms: wfrLead.sms });
+            var welcome = document.getElementById('wfr-welcome');
+            var s2 = document.getElementById('wfr-form-2');
+            if (welcome) welcome.classList.add('hidden');
+            if (s2) s2.classList.remove('hidden');
+            wfrSetBadge('Step 2 of 2');
+            var biz = document.getElementById('wfr-biz');
+            if (biz) setTimeout(function(){ try { biz.focus({ preventScroll: true }); } catch(e){ biz.focus(); } }, 60);
+        } catch (err){
+            // Network/endpoint problem — fall back to the normal pre-filled step-1 form.
+            if (btn){ btn.disabled = false; btn.innerText = 'Continue'; }
+            jemimaShowReviewFields();
+            var nf2 = document.getElementById('wfr-name');
+            if (nf2){ try { nf2.focus({ preventScroll: true }); } catch(e){ nf2.focus(); } }
+        }
+    }
+
     function prefillReviewForm(){
         var welcome = document.getElementById('wfr-welcome');
         var nameEl = document.getElementById('wfr-welcome-name');
@@ -2263,12 +2342,13 @@ document.addEventListener('DOMContentLoaded', () => {
             welcome.classList.remove('hidden');
         }
 
-        // Continue: reveal the pre-filled fields so the visitor completes Turnstile and submits as normal.
+        // Continue (returning visitor): we already have name/email/phone from the cookie, so send
+        // stage 1 silently in the background (using the Turnstile token from the widget already on
+        // the page), then jump straight to step 2 — no re-typing. If we can't get a token, we fall
+        // back to revealing the pre-filled step-1 form so a lead is never lost.
         if (contBtn){
             contBtn.addEventListener('click', function(){
-                jemimaShowReviewFields();
-                var n = document.getElementById('wfr-name');
-                if (n){ try { n.focus({ preventScroll: true }); } catch(e){ n.focus(); } }
+                jemimaKnownVisitorContinue(lead, contBtn);
             });
         }
 
