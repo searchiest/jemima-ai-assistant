@@ -1741,6 +1741,14 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                 <div>
                   <!-- STAGE 1: lead capture (kept deliberately short) -->
                   <form id="wfr-form" onsubmit="handleReviewFormSubmit(event)" class="space-y-5">
+                    <div id="wfr-welcome" class="hidden">
+                      <div class="bg-[#c2155a]/5 border border-[#c2155a]/10 rounded-2xl p-5 md:p-6">
+                        <p class="text-base md:text-lg text-slate-800 leading-relaxed">Welcome back, <strong id="wfr-welcome-name" class="text-slate-950">there</strong>. We already have your details &mdash; just confirm to continue.</p>
+                        <button type="button" id="wfr-welcome-continue" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-5 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Continue</button>
+                        <p class="text-center text-[11px] text-slate-400 font-medium mt-3">Not you? <a href="#" id="wfr-welcome-reset" class="underline hover:text-[#c2155a]">Enter different details</a>.</p>
+                      </div>
+                    </div>
+                    <div id="wfr-step1-fields" class="space-y-5">
                     <div class="space-y-1.5">
                       <label class="block text-xs uppercase tracking-widest text-slate-400 font-bold">Full Name</label>
                       <input type="text" id="wfr-name" required placeholder="John Doe" class="w-full border-b-2 border-slate-100 py-2 focus:border-[#c2155a] outline-none transition-colors text-base font-semibold placeholder:text-slate-300">
@@ -1764,6 +1772,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                     <button type="submit" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
                     <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
                     <p class="text-center text-[11px] text-slate-400 font-medium mt-2">By submitting, you agree to our <a href="/privacy.html" class="underline hover:text-[#c2155a]">Privacy Policy</a>. If you tick SMS, you consent to receive text messages from Jemima AI about your enquiry and our services; message and data rates may apply, and you can reply STOP to opt out at any time.</p>
+                    </div>
                   </form>
 
                   <!-- STAGE 2: sharpen the review (revealed in place after stage 1) -->
@@ -2214,18 +2223,72 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch(e){ return null; }
     }
 
-    // On load, pre-fill the step-1 review fields if we recognise the visitor.
-    function prefillReviewForm(){
-        var lead = jemimaGetLead();
-        if (!lead) return;
+    function jemimaClearLead(){
+        document.cookie = JEMIMA_LEAD_COOKIE + "=;path=/;max-age=0;SameSite=Lax";
+    }
+
+    // On load, recognise returning visitors: pre-fill the (hidden) fields and show a
+    // "Welcome back" panel with a Continue button and a "Not you?" reset, matching the demo form.
+    function jemimaFillStep1(lead){
         var nm = document.getElementById('wfr-name');
         var em = document.getElementById('wfr-email');
         var ph = document.getElementById('wfr-phone');
         var sm = document.getElementById('wfr-sms-optin');
-        if (nm && !nm.value) nm.value = lead.name;
-        if (em && !em.value) em.value = lead.email;
-        if (ph && !ph.value) ph.value = lead.phone;
+        if (nm) nm.value = lead.name;
+        if (em) em.value = lead.email;
+        if (ph) ph.value = lead.phone;
         if (sm) sm.checked = !!lead.sms;
+    }
+
+    function jemimaShowReviewFields(){
+        var welcome = document.getElementById('wfr-welcome');
+        var fields = document.getElementById('wfr-step1-fields');
+        if (welcome) welcome.classList.add('hidden');
+        if (fields) fields.classList.remove('hidden');
+    }
+
+    function prefillReviewForm(){
+        var welcome = document.getElementById('wfr-welcome');
+        var nameEl = document.getElementById('wfr-welcome-name');
+        var contBtn = document.getElementById('wfr-welcome-continue');
+        var resetLink = document.getElementById('wfr-welcome-reset');
+        var fields = document.getElementById('wfr-step1-fields');
+        var lead = jemimaGetLead();
+
+        if (lead && welcome && fields){
+            // Pre-fill the hidden fields so the normal submit (with Turnstile) still sends real details.
+            jemimaFillStep1(lead);
+            if (nameEl) nameEl.textContent = lead.name;
+            fields.classList.add('hidden');
+            welcome.classList.remove('hidden');
+        }
+
+        // Continue: reveal the pre-filled fields so the visitor completes Turnstile and submits as normal.
+        if (contBtn){
+            contBtn.addEventListener('click', function(){
+                jemimaShowReviewFields();
+                var n = document.getElementById('wfr-name');
+                if (n){ try { n.focus({ preventScroll: true }); } catch(e){ n.focus(); } }
+            });
+        }
+
+        // Not you?: forget the visitor, clear the fields, and show the empty form.
+        if (resetLink){
+            resetLink.addEventListener('click', function(ev){
+                ev.preventDefault();
+                jemimaClearLead();
+                var nm = document.getElementById('wfr-name');
+                var em = document.getElementById('wfr-email');
+                var ph = document.getElementById('wfr-phone');
+                var sm = document.getElementById('wfr-sms-optin');
+                if (nm) nm.value = '';
+                if (em) em.value = '';
+                if (ph) ph.value = '';
+                if (sm) sm.checked = false;
+                jemimaShowReviewFields();
+                if (nm){ try { nm.focus({ preventScroll: true }); } catch(e){ nm.focus(); } }
+            });
+        }
     }
 
     async function handleReviewFormSubmit(e){
