@@ -1744,6 +1744,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                     <div id="wfr-welcome" class="hidden">
                       <div class="bg-[#c2155a]/5 border border-[#c2155a]/10 rounded-2xl p-5 md:p-6">
                         <p class="text-base md:text-lg text-slate-800 leading-relaxed">Welcome back, <strong id="wfr-welcome-name" class="text-slate-950">there</strong>. We already have your details &mdash; just confirm to continue.</p>
+                        <div id="wfr-welcome-turnstile" style="margin:1.1rem 0 0;display:flex;justify-content:center;"></div>
                         <button type="button" id="wfr-welcome-continue" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-5 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Continue</button>
                         <p class="text-center text-[11px] text-slate-400 font-medium mt-3">Not you? <a href="#" id="wfr-welcome-reset" class="underline hover:text-[#c2155a]">Enter different details</a>.</p>
                       </div>
@@ -1768,7 +1769,7 @@ Click the free workflow review button. It takes less than 30 seconds to request.
                       </div>
                     </div>
                     <input type="text" id="wfr-hp" name="hp_field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
-                    <div class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin-top:0.85rem;margin-bottom:-0.6rem;display:flex;justify-content:center;"></div>
+                    <div id="wfr-fields-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin-top:0.85rem;margin-bottom:-0.6rem;display:flex;justify-content:center;"></div>
                     <button type="submit" class="w-full bg-[#c2155a] text-white py-4 md:py-5 uppercase tracking-[0.2em] text-[11px] font-black shadow-xl shadow-[#c2155a]/30 mt-2 hover:bg-[#a0124a] transition-all transform hover:-translate-y-0.5 active:translate-y-0">Submit Review Request</button>
                     <p class="text-center text-xs text-slate-400 font-bold uppercase tracking-widest">No credit card required</p>
                     <p class="text-center text-[11px] text-slate-400 font-medium mt-2">By submitting, you agree to our <a href="/privacy.html" class="underline hover:text-[#c2155a]">Privacy Policy</a>. If you tick SMS, you consent to receive text messages from Jemima AI about your enquiry and our services; message and data rates may apply, and you can reply STOP to opt out at any time.</p>
@@ -2245,6 +2246,68 @@ document.addEventListener('DOMContentLoaded', () => {
         var fields = document.getElementById('wfr-step1-fields');
         if (welcome) welcome.classList.add('hidden');
         if (fields) fields.classList.remove('hidden');
+        jemimaEnsureFieldsTurnstile();
+    }
+
+    var WFR_SITEKEY = '0x4AAAAAADmk1_S3YhkvBvwZ';
+    window.__wfrWelcomeToken = window.__wfrWelcomeToken || '';
+
+    // Explicitly render a Turnstile widget into a container (selector or element) and report its
+    // token via onToken. A widget inside a display:none container never renders on its own, so we
+    // render it ourselves once the container is visible. Polls until window.turnstile is ready.
+    function jemimaRenderTurnstile(target, onToken){
+        function el(){ return (typeof target === 'string') ? document.querySelector(target) : target; }
+        function attempt(){
+            var node = el();
+            if (!node || !window.turnstile || typeof window.turnstile.render !== 'function') return false;
+            if (node.getAttribute('data-wfr-rendered') === '1') return true;
+            if (node.querySelector('iframe')) { node.setAttribute('data-wfr-rendered','1'); return true; }
+            try {
+                var id = window.turnstile.render(node, {
+                    sitekey: WFR_SITEKEY,
+                    callback: function(t){ if (typeof onToken === 'function') onToken(t); },
+                    'expired-callback': function(){ if (typeof onToken === 'function') onToken(''); },
+                    'error-callback': function(){ if (typeof onToken === 'function') onToken(''); }
+                });
+                node.setAttribute('data-wfr-rendered','1');
+                if (id !== undefined && id !== null) node.setAttribute('data-wfr-widget-id', id);
+                return true;
+            } catch(e){ return false; }
+        }
+        if (attempt()) return;
+        var tries = 0;
+        var timer = setInterval(function(){ tries++; if (attempt() || tries > 60){ clearInterval(timer); } }, 100);
+    }
+
+    // Read the welcome-panel widget's token (waits for the managed challenge to finish).
+    function jemimaGetWelcomeToken(maxWaitMs){
+        return new Promise(function(resolve){
+            function cur(){
+                var t = window.__wfrWelcomeToken || '';
+                if (!t && window.turnstile){
+                    var node = document.getElementById('wfr-welcome-turnstile');
+                    var wid = node ? node.getAttribute('data-wfr-widget-id') : null;
+                    if (wid){ try { t = window.turnstile.getResponse(wid) || ''; } catch(e){} }
+                }
+                return t;
+            }
+            var existing = cur(); if (existing){ resolve(existing); return; }
+            var waited = 0, step = 200, cap = (typeof maxWaitMs === 'number' ? maxWaitMs : 8000);
+            var timer = setInterval(function(){
+                var t = cur(); waited += step;
+                if (t){ clearInterval(timer); resolve(t); }
+                else if (waited >= cap){ clearInterval(timer); resolve(''); }
+            }, step);
+        });
+    }
+
+    // When the form is revealed (e.g. after "Not you?"), its Turnstile may never have rendered
+    // because it started hidden. Render it explicitly so a normal submit can get a token.
+    function jemimaEnsureFieldsTurnstile(){
+        var node = document.getElementById('wfr-fields-turnstile') || document.querySelector('#wfr-step1-fields .cf-turnstile');
+        if (!node) return;
+        if (node.querySelector('iframe')) return;
+        jemimaRenderTurnstile(node, function(t){ window.__wfrTurnstileToken = t; });
     }
 
     // Get a Turnstile token if one is already available, else poll briefly for the
@@ -2273,7 +2336,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!lead){ jemimaShowReviewFields(); return; }
         if (btn){ btn.disabled = true; btn.innerText = 'One moment…'; }
 
-        var token = await jemimaGetTurnstileToken(3500);
+        var token = await jemimaGetWelcomeToken(8000);
 
         // No token available — don't risk losing the lead. Reveal the pre-filled form so the
         // visitor completes Turnstile and submits step 1 normally.
@@ -2340,6 +2403,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (nameEl) nameEl.textContent = lead.name;
             fields.classList.add('hidden');
             welcome.classList.remove('hidden');
+            // Render a small managed Turnstile in the welcome panel so Continue can get a token
+            // without ever showing the form.
+            jemimaRenderTurnstile('#wfr-welcome-turnstile', function(t){ window.__wfrWelcomeToken = t; });
         }
 
         // Continue (returning visitor): we already have name/email/phone from the cookie, so send
