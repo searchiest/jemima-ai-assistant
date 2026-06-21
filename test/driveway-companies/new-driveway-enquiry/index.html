@@ -1241,6 +1241,10 @@
 
     <div class="card">
       <div id="inputPanel">
+        <div id="demoWelcome" style="display:none;background:#fdf2f8;border:1px solid #fbcfe8;border-radius:14px;padding:20px 22px;margin-bottom:18px;">
+          <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:#111827;">Welcome back, <strong id="demoWelcomeName">there</strong>. We already have your details &mdash; pick an input source below and generate your demo result.</p>
+          <p style="margin:0;font-size:12px;line-height:1.6;font-weight:500;color:#94a3b8;">Not you? <a href="#" id="demoWelcomeReset" style="color:#c2155a;text-decoration:underline;">Enter different details</a>.</p>
+        </div>
         <form id="demoForm">
           <div class="form-step" data-step="1">
             <label for="demo_user_name">Your name</label>
@@ -1640,6 +1644,37 @@ const ENGINE_WEBHOOK_ALIASES = {
 // --- Demo lead capture + completion logging (TEST PHASE: direct open n8n endpoints) ---
 const CAPTURE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-code-request";
 const COMPLETE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-completion";
+
+// --- Returning-visitor functional cookie (first-party, 1 year) ---
+const JEMIMA_LEAD_COOKIE = "jemima_lead";
+const JEMIMA_LEAD_MAX_AGE = 60 * 60 * 24 * 365; // 1 year in seconds
+
+function jemimaSetLead(lead) {
+  try {
+    var value = encodeURIComponent(JSON.stringify({
+      name: lead.name || "",
+      email: lead.email || "",
+      phone: lead.phone || "",
+      sms: !!lead.sms
+    }));
+    document.cookie = JEMIMA_LEAD_COOKIE + "=" + value +
+      ";path=/;max-age=" + JEMIMA_LEAD_MAX_AGE + ";SameSite=Lax";
+  } catch (e) {}
+}
+
+function jemimaGetLead() {
+  try {
+    var match = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_LEAD_COOKIE + "=([^;]*)"));
+    if (!match) return null;
+    var lead = JSON.parse(decodeURIComponent(match[1]));
+    if (lead && lead.name && lead.email && lead.phone) return lead;
+    return null;
+  } catch (e) { return null; }
+}
+
+function jemimaClearLead() {
+  document.cookie = JEMIMA_LEAD_COOKIE + "=;path=/;max-age=0;SameSite=Lax";
+}
 let demoSignupDone = false;
 let demoSignupRef = (function(){
   try { return "sg_" + Math.random().toString(36).slice(2, 11); } catch (e) { return "sg_0000"; }
@@ -1671,6 +1706,10 @@ function demoContactPayload() {
 async function captureDemoSignup() {
   if (demoSignupDone) return;
   demoSignupDone = true;
+  try {
+    var _leadForCookie = demoContactPayload();
+    jemimaSetLead({ name: _leadForCookie.name, email: _leadForCookie.email, phone: _leadForCookie.phone, sms: _leadForCookie.sms_optin });
+  } catch (e) {}
   try {
     await fetch(CAPTURE_URL, {
       method: "POST",
@@ -2184,9 +2223,48 @@ function setupIndustryDemoSelect() {
   }
 }
 
+// On load: if we recognise the visitor, pre-fill + hide step 1 and show the welcome-back panel.
+function setupDemoWelcome() {
+  var lead = jemimaGetLead();
+  var welcome = document.getElementById("demoWelcome");
+  var nameEl = document.getElementById("demoWelcomeName");
+  var resetLink = document.getElementById("demoWelcomeReset");
+  var step1 = document.querySelector('#demoForm .form-step[data-step="1"]');
+  var nm = document.getElementById("demo_user_name");
+  var em = document.getElementById("demo_user_email");
+  var ph = document.getElementById("demo_user_phone");
+  var sm = document.getElementById("demo_user_sms_optin");
+
+  if (lead && welcome && step1) {
+    // Pre-fill the (now hidden) step-1 fields so the demo + capture still send real details.
+    if (nm) nm.value = lead.name;
+    if (em) em.value = lead.email;
+    if (ph) ph.value = lead.phone;
+    if (sm) sm.checked = !!lead.sms;
+    step1.style.display = "none";
+    welcome.style.display = "block";
+    if (nameEl) nameEl.textContent = lead.name;
+  }
+
+  if (resetLink) {
+    resetLink.addEventListener("click", function(ev) {
+      ev.preventDefault();
+      jemimaClearLead();
+      if (welcome) welcome.style.display = "none";
+      if (step1) step1.style.display = "";
+      if (nm) nm.value = "";
+      if (em) em.value = "";
+      if (ph) ph.value = "";
+      if (sm) sm.checked = false;
+      if (nm) nm.focus();
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   setupTailoredDemoForm();
   setupDemoForm();
+  setupDemoWelcome();
   setupIndustryDemoSelect();
 });
 </script>
