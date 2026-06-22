@@ -1535,6 +1535,14 @@
     </div>
 
     <div>
+      <div id="tailored-welcome" style="display:none;">
+        <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:14px;padding:20px 22px;margin-bottom:18px;">
+          <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:#111827;">Welcome back, <strong id="tailored-welcome-name">there</strong>. We already have your details &mdash; just confirm to continue.</p>
+          <div id="tailored-welcome-turnstile" style="margin:0 0 14px;display:flex;justify-content:center;"></div>
+          <button type="button" id="tailored-welcome-continue" class="tailored-submit">Continue</button>
+          <p style="margin:12px 0 0;font-size:12px;line-height:1.6;font-weight:500;color:#94a3b8;text-align:center;">Not you? <a href="#" id="tailored-welcome-reset" style="color:#c2155a;text-decoration:underline;">Enter different details</a>.</p>
+        </div>
+      </div>
       <form id="tailoredDemoForm" class="tailored-demo-form">
         <div class="tailored-form-row">
           <label for="tailored-name">Full Name</label>
@@ -1559,7 +1567,7 @@
 
         <div style="display:grid;gap:8px;">
           <input type="text" id="tailored-hp" name="hp_field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin:0.25rem auto;display:flex;justify-content:center;"></div>
+          <div id="tailored-fields-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin:0.25rem auto;display:flex;justify-content:center;"></div>
           <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
           <div id="tailored-form-message" class="tailored-form-message" style="min-height:0;"></div>
           <p class="tailored-note">No credit card required</p>
@@ -1809,6 +1817,7 @@ function setupTailoredDemoForm() {
     try {
       var r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!r.ok) throw new Error("HTTP " + r.status);
+      jemimaSetLead(lead);
       var f1 = byId("tailoredDemoForm"), f2 = byId("tailoredDemoForm2");
       if (f1) f1.style.display = "none";
       if (f2) f2.style.display = "grid";
@@ -1853,6 +1862,129 @@ function setupTailoredDemoForm() {
   var f1 = byId("tailoredDemoForm"); if (f1) f1.addEventListener("submit", submitStage1);
   var f2 = byId("tailoredDemoForm2"); if (f2) f2.addEventListener("submit", submitStage2);
   var sk = byId("tailored-skip"); if (sk) sk.addEventListener("click", skipStage2);
+
+      // --- Returning-visitor welcome-back (homepage-style) for this footer lead form ---
+      var TLR_SITEKEY = "0x4AAAAAADmk1_S3YhkvBvwZ";
+      window.__tlrWelcomeToken = window.__tlrWelcomeToken || "";
+
+      function tlrRenderTurnstile(target, onToken) {
+        function el() { return (typeof target === "string") ? document.querySelector(target) : target; }
+        function attempt() {
+          var node = el();
+          if (!node || !window.turnstile || typeof window.turnstile.render !== "function") return false;
+          if (node.getAttribute("data-tlr-rendered") === "1") return true;
+          if (node.querySelector("iframe")) { node.setAttribute("data-tlr-rendered", "1"); return true; }
+          try {
+            var id = window.turnstile.render(node, {
+              sitekey: TLR_SITEKEY,
+              callback: function(t) { if (typeof onToken === "function") onToken(t); },
+              "expired-callback": function() { if (typeof onToken === "function") onToken(""); },
+              "error-callback": function() { if (typeof onToken === "function") onToken(""); }
+            });
+            node.setAttribute("data-tlr-rendered", "1");
+            if (id !== undefined && id !== null) node.setAttribute("data-tlr-widget-id", id);
+            return true;
+          } catch (e) { return false; }
+        }
+        if (attempt()) return;
+        var tries = 0;
+        var timer = setInterval(function() { tries++; if (attempt() || tries > 60) clearInterval(timer); }, 100);
+      }
+
+      function tlrGetWelcomeToken(maxWaitMs) {
+        return new Promise(function(resolve) {
+          function cur() {
+            var t = window.__tlrWelcomeToken || "";
+            if (!t && window.turnstile) {
+              var node = byId("tailored-welcome-turnstile");
+              var wid = node ? node.getAttribute("data-tlr-widget-id") : null;
+              if (wid) { try { t = window.turnstile.getResponse(wid) || ""; } catch (e) {} }
+            }
+            return t;
+          }
+          var existing = cur(); if (existing) { resolve(existing); return; }
+          var waited = 0, step = 200, cap = (typeof maxWaitMs === "number" ? maxWaitMs : 8000);
+          var timer = setInterval(function() { var t = cur(); waited += step; if (t) { clearInterval(timer); resolve(t); } else if (waited >= cap) { clearInterval(timer); resolve(""); } }, step);
+        });
+      }
+
+      function tlrEnsureFieldsTurnstile() {
+        var node = byId("tailored-fields-turnstile") || document.querySelector("#tailoredDemoForm .cf-turnstile");
+        if (!node) return;
+        if (node.querySelector("iframe")) return;
+        tlrRenderTurnstile(node, function(t) { window.__wfrTurnstileToken = t; });
+      }
+
+      function tlrShowFields() {
+        var welcome = byId("tailored-welcome"), s1 = byId("tailoredDemoForm");
+        if (welcome) welcome.style.display = "none";
+        if (s1) s1.style.display = "grid";
+        tlrEnsureFieldsTurnstile();
+      }
+
+      // Continue: send stage 1 silently in the background, then jump to step 2.
+      async function tlrContinue(knownLead, btn) {
+        if (!knownLead) { tlrShowFields(); return; }
+        if (btn) { btn.disabled = true; btn.textContent = "One moment..."; }
+        var token = await tlrGetWelcomeToken(8000);
+        if (!token) {
+          if (btn) { btn.disabled = false; btn.textContent = "Continue"; }
+          tlrShowFields();
+          var nf = byId("tailored-name"); if (nf) { try { nf.focus({ preventScroll: true }); } catch (e) { nf.focus(); } }
+          return;
+        }
+        lead = { name: knownLead.name, email: knownLead.email, phone: knownLead.phone, sms: !!knownLead.sms };
+        var payload = {
+          type: "Workflow Review",
+          name: lead.name, email: lead.email, phone: lead.phone, sms: lead.sms,
+          triggerButton: "Demo Page Form (Returning Visitor)",
+          demoSlug: DEMO_SLUG, source: SOURCE,
+          sessionId: sessionId, pageUrl: window.location.href, industry: INDUSTRY,
+          timestamp: new Date().toISOString(),
+          webhookAlias: "form-main", hp_field: "", formRenderedAt: (window.__wfrRenderedAt || 0), turnstileToken: token
+        };
+        try {
+          var r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          jemimaSetLead(lead);
+          var welcome = byId("tailored-welcome"), f2 = byId("tailoredDemoForm2");
+          if (welcome) welcome.style.display = "none";
+          if (f2) f2.style.display = "grid";
+          setBadge("Step 2 of 2");
+          var sec = byId("tailored-demo-form"); if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+          var biz = byId("tailored-biz"); if (biz) setTimeout(function() { try { biz.focus({ preventScroll: true }); } catch (e) { biz.focus(); } }, 60);
+        } catch (err) {
+          if (btn) { btn.disabled = false; btn.textContent = "Continue"; }
+          tlrShowFields();
+          var nf2 = byId("tailored-name"); if (nf2) { try { nf2.focus({ preventScroll: true }); } catch (e) { nf2.focus(); } }
+        }
+      }
+
+      // On load: recognise a returning visitor and show the welcome-back panel.
+      function setupTailoredWelcome() {
+        var known = jemimaGetLead();
+        var welcome = byId("tailored-welcome"), nameEl = byId("tailored-welcome-name");
+        var contBtn = byId("tailored-welcome-continue"), resetLink = byId("tailored-welcome-reset");
+        var s1 = byId("tailoredDemoForm");
+        if (known && welcome && s1) {
+          var nm = byId("tailored-name"), em = byId("tailored-email"), ph = byId("tailored-phone"), sm = byId("tailored-sms-optin");
+          if (nm) nm.value = known.name; if (em) em.value = known.email; if (ph) ph.value = known.phone; if (sm) sm.checked = !!known.sms;
+          if (nameEl) nameEl.textContent = known.name;
+          s1.style.display = "none";
+          welcome.style.display = "block";
+          tlrRenderTurnstile("#tailored-welcome-turnstile", function(t) { window.__tlrWelcomeToken = t; });
+        }
+        if (contBtn) contBtn.addEventListener("click", function() { tlrContinue(known, contBtn); });
+        if (resetLink) resetLink.addEventListener("click", function(ev) {
+          ev.preventDefault();
+          jemimaClearLead();
+          var nm = byId("tailored-name"), em = byId("tailored-email"), ph = byId("tailored-phone"), sm = byId("tailored-sms-optin");
+          if (nm) nm.value = ""; if (em) em.value = ""; if (ph) ph.value = ""; if (sm) sm.checked = false;
+          tlrShowFields();
+          if (nm) { try { nm.focus({ preventScroll: true }); } catch (e) { nm.focus(); } }
+        });
+      }
+      setupTailoredWelcome();
 }
 
 function cleanSourceLabel(source) {
