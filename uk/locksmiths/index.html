@@ -1218,8 +1218,10 @@
       try{
         var feed=document.getElementById('chat-feed');
         if(feed && typeof chatBubble==='function'){
+          var firstName = ((wfrLead && wfrLead.name) || 'there').split(' ')[0];
           feed.appendChild(chatBubble('Free workflow review requested', true));
-          feed.appendChild(chatBubble("Brilliant — I've passed your details to the team. We'll map out where AI fits in your workflows and come back to you shortly.", false));
+          feed.appendChild(chatBubble("Thanks " + firstName + ", that's come through to my team.", false));
+          feed.appendChild(chatBubble("We'll map out where AI fits in your workflows and come back to you shortly.", false));
           feed.scrollTop=feed.scrollHeight;
         }
       }catch(e){}
