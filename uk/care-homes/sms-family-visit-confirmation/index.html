@@ -36,8 +36,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={corePlugins:{preflight:false}}</script>
 
   <style>
     * { box-sizing: border-box; }
@@ -263,6 +261,91 @@
       object-fit: cover;
     }
 
+    .sms-signup-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .sms-signup-label {
+      color: #c2155a;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .sms-signup-intro {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0 0 18px;
+      font-weight: 500;
+    }
+
+    .sms-signup-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .sms-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .sms-field label {
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .sms-field input {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid #e2e8f0;
+      background: transparent;
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 10px 2px;
+      outline: none;
+    }
+
+    .sms-field input:focus {
+      border-color: #c2155a;
+    }
+
+    .sms-signup-button {
+      border: 0;
+      cursor: pointer;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .sms-signup-message {
+      min-height: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #b91c1c;
+    }
+
+    .sms-signup-fineprint {
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.55;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .sms-signup-fineprint a {
+      color: #64748b;
+      text-decoration: underline;
+    }
+
     .sms-panel {
       background: #0f172a;
       color: #ffffff;
@@ -383,6 +466,18 @@
     .step p {
       margin: 0;
       color: #475569;
+    }
+
+    .step-code-pill {
+      display: inline-block;
+      background: #fdf2f8;
+      color: #9d174d;
+      border: 1px solid #fbcfe8;
+      padding: 2px 10px;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      vertical-align: baseline;
     }
 
     .reply-options {
@@ -893,9 +988,38 @@
       </aside>
 
       <section class="main-card">
-        <div class="sms-panel">
-          <div class="label">Try this SMS demo</div>
-          <div class="sms-code">3121</div>
+        <div id="smsSignup" class="sms-signup-card">
+          <div class="sms-signup-label">Try this SMS demo</div>
+          <p class="sms-signup-intro">Enter your details to get your own personal demo code. We'll show your code on screen, then you text it to run this demo.</p>
+          <form id="smsCodeForm" class="sms-signup-form">
+            <div class="sms-field">
+              <label for="sms_name">Your name</label>
+              <input id="sms_name" name="sms_name" type="text" required placeholder="Jane Smith">
+            </div>
+            <div class="sms-field">
+              <label for="sms_email">Work email</label>
+              <input id="sms_email" name="sms_email" type="email" required placeholder="jane@company.com">
+            </div>
+            <div class="sms-field">
+              <label for="sms_phone">Phone number</label>
+              <input id="sms_phone" name="sms_phone" type="tel" required placeholder="+44 7700 000000">
+            </div>
+            <button type="submit" id="smsCodeButton" class="sms-button sms-signup-button">Get my demo code</button>
+            <div id="smsCodeMessage" class="sms-signup-message"></div>
+            <p class="sms-signup-fineprint">By continuing you agree to our <a href="/privacy.html">Privacy Policy</a>. When you text your code, you consent to receive demo text messages from Jemima AI; message and data rates may apply, reply STOP to opt out.</p>
+          </form>
+
+          <div id="smsWelcome" style="display:none;">
+            <p class="sms-signup-intro" style="margin-bottom:18px;">Welcome back, <strong id="smsWelcomeName">there</strong>. We already have your details — just generate your personal demo code below.</p>
+            <button type="button" id="smsWelcomeButton" class="sms-button sms-signup-button">Generate my code</button>
+            <div id="smsWelcomeMessage" class="sms-signup-message"></div>
+            <p class="sms-signup-fineprint" style="margin-top:12px;">Not you? <a href="#" id="smsWelcomeReset">Enter different details</a>.</p>
+          </div>
+        </div>
+
+        <div class="sms-panel" id="smsReveal" style="display:none;">
+          <div style="color:#f9a8d4;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-weight:900;margin-bottom:8px;">Your personal demo code</div>
+          <div class="sms-code" id="smsRevealCode">----</div>
           <div class="sms-text-instructions desktop-sms-number">
             <div class="sms-text-row">
               <img src="/img/uk-phone-call-icon.png" alt="UK texters" class="sms-text-icon">
@@ -906,9 +1030,9 @@
               <span>+44 742 966 9381</span>
             </div>
           </div>
-          <div class="mobile-sms-help">Tap the button below to open a text message with the demo code ready to send.</div>
-          <a class="sms-button" href="sms:+447429669381?body=3121">Text 3121 now</a>
-          <div class="desktop-note">Open the text message app on your phone, text the demo code to the correct number for your location, then follow the prompts.</div>
+          <div class="mobile-sms-help">Tap the button below to open a text message with your personal code ready to send.</div>
+          <a class="sms-button" id="smsRevealButton" href="#">Text my code now</a>
+          <div class="desktop-note">Open the text message app on your phone, text your personal code to the correct number for your location, then follow the prompts.</div>
         </div>
 
         <h2>How to try it</h2>
@@ -916,8 +1040,14 @@
           <div class="step">
             <div class="step-number">1</div>
             <div>
-              <strong>Text the demo code</strong>
-              <p>3121</p>
+              <div id="step1NoCode">
+                <strong>Text the demo code</strong>
+                <p>Fill in your name, email and phone number in the form above and tap “Get my demo code”.</p>
+              </div>
+              <div id="step1HasCode" style="display:none;">
+                <strong>Your personal demo code is ready</strong>
+                <p>Text this code to the demo number: <span id="stepCodeValue" class="step-code-pill">----</span></p>
+              </div>
             </div>
           </div>
 
@@ -1049,6 +1179,14 @@
         </div>
 
         <div>
+          <div id="tailored-welcome" style="display:none;">
+            <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:14px;padding:20px 22px;margin-bottom:18px;">
+              <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:#111827;">Welcome back, <strong id="tailored-welcome-name">there</strong>. We already have your details &mdash; just confirm to continue.</p>
+              <div id="tailored-welcome-turnstile" style="margin:0 0 14px;display:flex;justify-content:center;"></div>
+              <button type="button" id="tailored-welcome-continue" class="tailored-submit">Continue</button>
+              <p style="margin:12px 0 0;font-size:12px;line-height:1.6;font-weight:500;color:#94a3b8;text-align:center;">Not you? <a href="#" id="tailored-welcome-reset" style="color:#c2155a;text-decoration:underline;">Enter different details</a>.</p>
+            </div>
+          </div>
           <form id="tailoredDemoForm" class="tailored-demo-form">
             <div class="tailored-form-row">
               <label for="tailored-name">Full Name</label>
@@ -1073,7 +1211,7 @@
 
             <div style="display:grid;gap:8px;">
               <input type="text" id="tailored-hp" name="hp_field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
-              <div class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin:0.25rem auto;display:flex;justify-content:center;"></div>
+              <div id="tailored-fields-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired" style="margin:0.25rem auto;display:flex;justify-content:center;"></div>
               <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
               <div id="tailored-form-message" class="tailored-form-message" style="min-height:0;"></div>
               <p class="tailored-note">No credit card required</p>
@@ -1151,6 +1289,133 @@
 
     const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
 
+    // --- SMS personal-code sign-up (routed via the Cloudflare proxy) ---
+    var SMS_CAPTURE_URL = PROXY_URL;
+    var SMS_SCENARIO_CODE = "3121";
+    var SMS_SCENARIO_ID = "3121";
+    var SMS_INDUSTRY = "Care Home";
+    var SMS_SLUG = "care-homes/sms-family-visit-confirmation";
+    var SMS_TO_NUMBER = "+447429669381";
+
+    // --- Returning-visitor functional cookie (first-party, 1 year) ---
+    var JEMIMA_LEAD_COOKIE = "jemima_lead";
+    var JEMIMA_LEAD_MAX_AGE = 60 * 60 * 24 * 365; // 1 year in seconds
+
+    function jemimaSetLead(lead) {
+      try {
+        var value = encodeURIComponent(JSON.stringify({
+          name: lead.name || "",
+          email: lead.email || "",
+          phone: lead.phone || "",
+          sms: !!lead.sms
+        }));
+        document.cookie = JEMIMA_LEAD_COOKIE + "=" + value +
+          ";path=/;max-age=" + JEMIMA_LEAD_MAX_AGE + ";SameSite=Lax";
+      } catch (e) {}
+    }
+
+    function jemimaGetLead() {
+      try {
+        var match = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_LEAD_COOKIE + "=([^;]*)"));
+        if (!match) return null;
+        var lead = JSON.parse(decodeURIComponent(match[1]));
+        if (lead && lead.name && lead.email && lead.phone) return lead;
+        return null;
+      } catch (e) { return null; }
+    }
+
+    function jemimaClearLead() {
+      document.cookie = JEMIMA_LEAD_COOKIE + "=;path=/;max-age=0;SameSite=Lax";
+    }
+
+    // Shared mint routine used by both the full form and the welcome-back button.
+    async function jemimaMintSmsCode(lead, btn, msg, defaultBtnText) {
+      if (btn) { btn.disabled = true; btn.textContent = "Getting your code..."; }
+      if (msg) { msg.textContent = ""; }
+      var payload = {
+        name: lead.name, email: lead.email, phone: lead.phone, demo: "sms",
+        scenario_code: SMS_SCENARIO_CODE, scenario_id: SMS_SCENARIO_ID,
+        industry: SMS_INDUSTRY, slug: SMS_SLUG,
+        sms_optin: true, capture_only: false,
+        webhookAlias: "demo-code-request",
+        pageUrl: window.location.href, timestamp: new Date().toISOString()
+      };
+      try {
+        var r = await fetch(SMS_CAPTURE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var data = await r.json();
+        var code = (data && (data.code || data.demo_code)) ? String(data.code || data.demo_code) : "";
+        if (!code) throw new Error("No code returned");
+        // Remember the visitor for next time (SMS sign-up implies texting consent)
+        jemimaSetLead({ name: lead.name, email: lead.email, phone: lead.phone, sms: true });
+        // Reveal the code panel
+        document.getElementById("smsRevealCode").textContent = code;
+        var btnLink = document.getElementById("smsRevealButton");
+        if (btnLink) btnLink.setAttribute("href", "sms:" + SMS_TO_NUMBER + "?body=" + encodeURIComponent(code));
+        document.getElementById("smsSignup").style.display = "none";
+        document.getElementById("smsReveal").style.display = "block";
+        // Update the dynamic "How to try it" step 1 to show the real code
+        var stepCodeEl = document.getElementById("stepCodeValue");
+        if (stepCodeEl) stepCodeEl.textContent = code;
+        var step1NoCode = document.getElementById("step1NoCode");
+        var step1HasCode = document.getElementById("step1HasCode");
+        if (step1NoCode) step1NoCode.style.display = "none";
+        if (step1HasCode) step1HasCode.style.display = "block";
+        return true;
+      } catch (e) {
+        if (btn) { btn.disabled = false; btn.textContent = defaultBtnText; }
+        if (msg) msg.textContent = "Sorry, something went wrong. Please try again.";
+        return false;
+      }
+    }
+
+    // On load: if we recognise the visitor, swap the full form for the welcome-back panel.
+    function setupSmsWelcome() {
+      var lead = jemimaGetLead();
+      var formWrap = document.getElementById("smsCodeForm");
+      var welcome = document.getElementById("smsWelcome");
+      var nameEl = document.getElementById("smsWelcomeName");
+      var genBtn = document.getElementById("smsWelcomeButton");
+      var resetLink = document.getElementById("smsWelcomeReset");
+      var welcomeMsg = document.getElementById("smsWelcomeMessage");
+      if (!welcome || !genBtn) return;
+
+      if (lead) {
+        if (formWrap) formWrap.style.display = "none";
+        welcome.style.display = "block";
+        if (nameEl) nameEl.textContent = lead.name;
+        genBtn.addEventListener("click", function() {
+          jemimaMintSmsCode(lead, genBtn, welcomeMsg, "Generate my code");
+        });
+      }
+
+      if (resetLink) {
+        resetLink.addEventListener("click", function(ev) {
+          ev.preventDefault();
+          jemimaClearLead();
+          if (welcome) welcome.style.display = "none";
+          if (formWrap) formWrap.style.display = "grid";
+        });
+      }
+    }
+    document.addEventListener("DOMContentLoaded", setupSmsWelcome);
+
+    function setupSmsCodeForm() {
+      var form = document.getElementById("smsCodeForm");
+      if (!form) return;
+      form.addEventListener("submit", async function(ev) {
+        ev.preventDefault();
+        var btn = document.getElementById("smsCodeButton");
+        var msg = document.getElementById("smsCodeMessage");
+        var name = (document.getElementById("sms_name").value || "").trim();
+        var email = (document.getElementById("sms_email").value || "").trim();
+        var phone = (document.getElementById("sms_phone").value || "").trim();
+        if (!name || !email || !phone) { if (msg) msg.textContent = "Please enter your name, email and phone number."; return; }
+        await jemimaMintSmsCode({ name: name, email: email, phone: phone, sms: true }, btn, msg, "Get my demo code");
+      });
+    }
+    document.addEventListener("DOMContentLoaded", setupSmsCodeForm);
+
     function setupTailoredDemoForm() {
       var WEBHOOK = "https://jemima-api-proxy.jemima-f5e.workers.dev";
       var SOURCE = "sms_demo_page_footer_form";
@@ -1195,6 +1460,8 @@
           phone: val("tailored-phone"),
           sms: !!(byId("tailored-sms-optin") || {}).checked
         };
+        // Remember this visitor so demo pages can skip re-entry next time
+        try { jemimaSetLead(lead); } catch (e) {}
         var token = window.__wfrTurnstileToken || (window.turnstile ? window.turnstile.getResponse() : "");
         if (!token) {
           if (btn) { btn.disabled = false; btn.textContent = "Submit Demo Request"; }
@@ -1258,6 +1525,129 @@
       var f1 = byId("tailoredDemoForm"); if (f1) f1.addEventListener("submit", submitStage1);
       var f2 = byId("tailoredDemoForm2"); if (f2) f2.addEventListener("submit", submitStage2);
       var sk = byId("tailored-skip"); if (sk) sk.addEventListener("click", skipStage2);
+
+      // --- Returning-visitor welcome-back (homepage-style) for this footer lead form ---
+      var TLR_SITEKEY = "0x4AAAAAADmk1_S3YhkvBvwZ";
+      window.__tlrWelcomeToken = window.__tlrWelcomeToken || "";
+
+      function tlrRenderTurnstile(target, onToken) {
+        function el() { return (typeof target === "string") ? document.querySelector(target) : target; }
+        function attempt() {
+          var node = el();
+          if (!node || !window.turnstile || typeof window.turnstile.render !== "function") return false;
+          if (node.getAttribute("data-tlr-rendered") === "1") return true;
+          if (node.querySelector("iframe")) { node.setAttribute("data-tlr-rendered", "1"); return true; }
+          try {
+            var id = window.turnstile.render(node, {
+              sitekey: TLR_SITEKEY,
+              callback: function(t) { if (typeof onToken === "function") onToken(t); },
+              "expired-callback": function() { if (typeof onToken === "function") onToken(""); },
+              "error-callback": function() { if (typeof onToken === "function") onToken(""); }
+            });
+            node.setAttribute("data-tlr-rendered", "1");
+            if (id !== undefined && id !== null) node.setAttribute("data-tlr-widget-id", id);
+            return true;
+          } catch (e) { return false; }
+        }
+        if (attempt()) return;
+        var tries = 0;
+        var timer = setInterval(function() { tries++; if (attempt() || tries > 60) clearInterval(timer); }, 100);
+      }
+
+      function tlrGetWelcomeToken(maxWaitMs) {
+        return new Promise(function(resolve) {
+          function cur() {
+            var t = window.__tlrWelcomeToken || "";
+            if (!t && window.turnstile) {
+              var node = byId("tailored-welcome-turnstile");
+              var wid = node ? node.getAttribute("data-tlr-widget-id") : null;
+              if (wid) { try { t = window.turnstile.getResponse(wid) || ""; } catch (e) {} }
+            }
+            return t;
+          }
+          var existing = cur(); if (existing) { resolve(existing); return; }
+          var waited = 0, step = 200, cap = (typeof maxWaitMs === "number" ? maxWaitMs : 8000);
+          var timer = setInterval(function() { var t = cur(); waited += step; if (t) { clearInterval(timer); resolve(t); } else if (waited >= cap) { clearInterval(timer); resolve(""); } }, step);
+        });
+      }
+
+      function tlrEnsureFieldsTurnstile() {
+        var node = byId("tailored-fields-turnstile") || document.querySelector("#tailoredDemoForm .cf-turnstile");
+        if (!node) return;
+        if (node.querySelector("iframe")) return;
+        tlrRenderTurnstile(node, function(t) { window.__wfrTurnstileToken = t; });
+      }
+
+      function tlrShowFields() {
+        var welcome = byId("tailored-welcome"), s1 = byId("tailoredDemoForm");
+        if (welcome) welcome.style.display = "none";
+        if (s1) s1.style.display = "grid";
+        tlrEnsureFieldsTurnstile();
+      }
+
+      // Continue: send stage 1 silently in the background, then jump to step 2.
+      async function tlrContinue(knownLead, btn) {
+        if (!knownLead) { tlrShowFields(); return; }
+        if (btn) { btn.disabled = true; btn.textContent = "One moment..."; }
+        var token = await tlrGetWelcomeToken(8000);
+        if (!token) {
+          if (btn) { btn.disabled = false; btn.textContent = "Continue"; }
+          tlrShowFields();
+          var nf = byId("tailored-name"); if (nf) { try { nf.focus({ preventScroll: true }); } catch (e) { nf.focus(); } }
+          return;
+        }
+        lead = { name: knownLead.name, email: knownLead.email, phone: knownLead.phone, sms: !!knownLead.sms };
+        var payload = {
+          type: "Workflow Review",
+          name: lead.name, email: lead.email, phone: lead.phone, sms: lead.sms,
+          triggerButton: "Demo Page Form (Returning Visitor)",
+          demoSlug: DEMO_SLUG, source: SOURCE,
+          sessionId: sessionId, pageUrl: window.location.href, industry: INDUSTRY,
+          timestamp: new Date().toISOString(),
+          webhookAlias: "form-main", hp_field: "", formRenderedAt: (window.__wfrRenderedAt || 0), turnstileToken: token
+        };
+        try {
+          var r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          jemimaSetLead(lead);
+          var welcome = byId("tailored-welcome"), f2 = byId("tailoredDemoForm2");
+          if (welcome) welcome.style.display = "none";
+          if (f2) f2.style.display = "grid";
+          setBadge("Step 2 of 2");
+          var sec = byId("tailored-demo-form"); if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+          var biz = byId("tailored-biz"); if (biz) setTimeout(function() { try { biz.focus({ preventScroll: true }); } catch (e) { biz.focus(); } }, 60);
+        } catch (err) {
+          if (btn) { btn.disabled = false; btn.textContent = "Continue"; }
+          tlrShowFields();
+          var nf2 = byId("tailored-name"); if (nf2) { try { nf2.focus({ preventScroll: true }); } catch (e) { nf2.focus(); } }
+        }
+      }
+
+      // On load: recognise a returning visitor and show the welcome-back panel.
+      function setupTailoredWelcome() {
+        var known = jemimaGetLead();
+        var welcome = byId("tailored-welcome"), nameEl = byId("tailored-welcome-name");
+        var contBtn = byId("tailored-welcome-continue"), resetLink = byId("tailored-welcome-reset");
+        var s1 = byId("tailoredDemoForm");
+        if (known && welcome && s1) {
+          var nm = byId("tailored-name"), em = byId("tailored-email"), ph = byId("tailored-phone"), sm = byId("tailored-sms-optin");
+          if (nm) nm.value = known.name; if (em) em.value = known.email; if (ph) ph.value = known.phone; if (sm) sm.checked = !!known.sms;
+          if (nameEl) nameEl.textContent = known.name;
+          s1.style.display = "none";
+          welcome.style.display = "block";
+          tlrRenderTurnstile("#tailored-welcome-turnstile", function(t) { window.__tlrWelcomeToken = t; });
+        }
+        if (contBtn) contBtn.addEventListener("click", function() { tlrContinue(known, contBtn); });
+        if (resetLink) resetLink.addEventListener("click", function(ev) {
+          ev.preventDefault();
+          jemimaClearLead();
+          var nm = byId("tailored-name"), em = byId("tailored-email"), ph = byId("tailored-phone"), sm = byId("tailored-sms-optin");
+          if (nm) nm.value = ""; if (em) em.value = ""; if (ph) ph.value = ""; if (sm) sm.checked = false;
+          tlrShowFields();
+          if (nm) { try { nm.focus({ preventScroll: true }); } catch (e) { nm.focus(); } }
+        });
+      }
+      setupTailoredWelcome();
     }
 
     document.addEventListener('DOMContentLoaded', setupTailoredDemoForm);
