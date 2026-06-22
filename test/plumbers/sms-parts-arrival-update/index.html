@@ -36,8 +36,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={corePlugins:{preflight:false}}</script>
 
   <style>
     * { box-sizing: border-box; }
@@ -1296,8 +1294,8 @@
 
     const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
 
-    // --- SMS personal-code sign-up (TEST PHASE: direct open n8n endpoint) ---
-    var SMS_CAPTURE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-code-request";
+    // --- SMS personal-code sign-up (routed via the Cloudflare proxy) ---
+    var SMS_CAPTURE_URL = PROXY_URL;
     var SMS_SCENARIO_CODE = "4222";
     var SMS_SCENARIO_ID = "4222";
     var SMS_INDUSTRY = "Plumber";
@@ -1344,6 +1342,7 @@
         scenario_code: SMS_SCENARIO_CODE, scenario_id: SMS_SCENARIO_ID,
         industry: SMS_INDUSTRY, slug: SMS_SLUG,
         sms_optin: true, capture_only: false,
+        webhookAlias: "demo-code-request",
         pageUrl: window.location.href, timestamp: new Date().toISOString()
       };
       try {
