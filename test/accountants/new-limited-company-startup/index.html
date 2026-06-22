@@ -36,8 +36,6 @@
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={corePlugins:{preflight:false}}</script>
 
   <style>
     :root {
@@ -1637,9 +1635,9 @@ const ENGINE_WEBHOOK_ALIASES = {
   "Local Growth": "local-growth"
 };
 
-// --- Demo lead capture + completion logging (TEST PHASE: direct open n8n endpoints) ---
-const CAPTURE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-code-request";
-const COMPLETE_URL = "https://jemima-ai.app.n8n.cloud/webhook/demo-completion";
+// --- Demo lead capture + completion logging (routed via the Cloudflare proxy) ---
+const CAPTURE_URL = PROXY_URL;
+const COMPLETE_URL = PROXY_URL;
 
 // --- Returning-visitor functional cookie (first-party, 1 year) ---
 const JEMIMA_LEAD_COOKIE = "jemima_lead";
@@ -1710,7 +1708,7 @@ async function captureDemoSignup() {
     await fetch(CAPTURE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(demoContactPayload())
+      body: JSON.stringify(Object.assign(demoContactPayload(), { webhookAlias: "demo-code-request" }))
     });
   } catch (e) { /* non-blocking: never break the demo on a capture failure */ }
 }
@@ -1721,6 +1719,7 @@ async function logDemoCompletion() {
     p.capture_only = false;
     p.event = "demo_completion";
     p.demo_name = (window.STATIC_SCENARIO && window.STATIC_SCENARIO.demo_name) || "";
+    p.webhookAlias = "demo-completion";
     await fetch(COMPLETE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
