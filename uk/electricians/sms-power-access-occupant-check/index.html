@@ -1295,36 +1295,107 @@
     var SMS_SLUG = "electricians/sms-power-access-occupant-check";
     var SMS_TO_NUMBER = "+447429669381";
 
-    // --- Returning-visitor functional cookie (first-party, 1 year) ---
-    var JEMIMA_LEAD_COOKIE = "jemima_lead";
-    var JEMIMA_LEAD_MAX_AGE = 60 * 60 * 24 * 365; // 1 year in seconds
+    // --- Returning-visitor identity (token-only + consent-gated) ---
+  // --- Token-only identity (replaces the old inline jemima_lead cookie) ---
+  // The browser stores ONLY an opaque token (jemima_tok). The real details
+  // (name/email/phone/sms) live server-side and are fetched via the Code Issuer.
+  var JEMIMA_TOK_COOKIE = "jemima_tok";
+  var JEMIMA_TOK_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+  var JEMIMA_ISSUER_URL = (typeof PROXY_URL !== 'undefined' && PROXY_URL) || (typeof chatApiUrl !== 'undefined' && chatApiUrl) || (typeof formApiUrl !== 'undefined' && formApiUrl) || 'https://jemima-api-proxy.jemima-f5e.workers.dev';
+  var JEMIMA_ISSUER_ALIAS = 'demo-code-request';
 
-    function jemimaSetLead(lead) {
+  // Recognition (reading/writing the token) is consent-gated; lead capture never is.
+  // consent.js stores localStorage 'jemima_cookie_consent' = 'granted' / 'denied';
+  // absent until the visitor chooses. Recognition is permitted ONLY when granted.
+  function jemimaConsentOK(){
+    try {
+      if (window.__jemimaConsent && window.__jemimaConsent.functional === false) return false;
+      if (window.cookieConsent && window.cookieConsent.functional === false) return false;
+      return localStorage.getItem('jemima_cookie_consent') === 'granted';
+    } catch(e){ return false; }
+  }
+
+  function jemimaGetTok(){
+    try {
+      var m = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_TOK_COOKIE + "=([^;]*)"));
+      return m ? decodeURIComponent(m[1]) : "";
+    } catch(e){ return ""; }
+  }
+  // Only write the token cookie once consent is granted. If the visitor hasn't chosen
+  // yet, hold it in memory and write it the moment they accept (handled by the flusher).
+  var jemimaPendingTok = "";
+  function jemimaSetTok(tok){
+    try {
+      if (!tok) return;
+      if (!jemimaConsentOK()){ jemimaPendingTok = tok; return; }
+      document.cookie = JEMIMA_TOK_COOKIE + "=" + encodeURIComponent(tok) + ";path=/;max-age=" + JEMIMA_TOK_MAX_AGE + ";SameSite=Lax";
+    } catch(e){}
+  }
+  function jemimaFlushPendingTok(){
+    try { if (jemimaPendingTok && jemimaConsentOK()){ var t = jemimaPendingTok; jemimaPendingTok = ""; jemimaSetTok(t); } } catch(e){}
+  }
+  try { setInterval(jemimaFlushPendingTok, 1500); } catch(e){}
+
+  // Per-visit (per-tab) cache of the resolved identity — memory only, never persisted.
+  function jemimaCacheIdent(d){ try { sessionStorage.setItem('jemima_ident', JSON.stringify(d||{})); } catch(e){} }
+  function jemimaCachedIdent(){ try { if (!jemimaConsentOK()) return null; var s = sessionStorage.getItem('jemima_ident'); return s ? JSON.parse(s) : null; } catch(e){ return null; } }
+
+  // Resolve token -> details (read-only server lookup). Resolves null on any
+  // failure/timeout/empty so the caller falls back to the normal blank form.
+  function jemimaResolveLead(maxWaitMs){
+    return new Promise(function(resolve){
+      var tok = jemimaGetTok();
+      if (!tok || !jemimaConsentOK()){ resolve(null); return; }
+      var done = false;
+      var timer = setTimeout(function(){ if(!done){ done=true; resolve(null); } }, (typeof maxWaitMs==='number'?maxWaitMs:1500));
       try {
-        var value = encodeURIComponent(JSON.stringify({
-          name: lead.name || "",
-          email: lead.email || "",
-          phone: lead.phone || "",
-          sms: !!lead.sms
-        }));
-        document.cookie = JEMIMA_LEAD_COOKIE + "=" + value +
-          ";path=/;max-age=" + JEMIMA_LEAD_MAX_AGE + ";SameSite=Lax";
-      } catch (e) {}
-    }
+        fetch(JEMIMA_ISSUER_URL, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ webhookAlias: JEMIMA_ISSUER_ALIAS, mode:'resolve', visitor_token: tok })
+        }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+          if (done) return; done = true; clearTimeout(timer);
+          if (!d || !d.found){ resolve(null); return; }
+          var lead = { name: d.name||'', email: d.email||'', phone: d.phone||'', sms: (String(d.sms).toLowerCase()==='yes') };
+          if (lead.name && lead.email && lead.phone){ jemimaCacheIdent(lead); resolve(lead); }
+          else { resolve(null); }
+        }).catch(function(){ if(!done){ done=true; clearTimeout(timer); resolve(null); } });
+      } catch(e){ if(!done){ done=true; clearTimeout(timer); resolve(null); } }
+    });
+  }
 
-    function jemimaGetLead() {
-      try {
-        var match = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_LEAD_COOKIE + "=([^;]*)"));
-        if (!match) return null;
-        var lead = JSON.parse(decodeURIComponent(match[1]));
-        if (lead && lead.name && lead.email && lead.phone) return lead;
-        return null;
-      } catch (e) { return null; }
-    }
+  // Capture details into the token (mint if needed); write the token cookie + cache.
+  // Fire-and-forget: never blocks or breaks lead capture.
+  function jemimaCaptureLead(lead){
+    try {
+      if (!lead) return;
+      var tok = jemimaGetTok();
+      var body = {
+        webhookAlias: JEMIMA_ISSUER_ALIAS, mode:'capture', capture_only:true, demo:'web',
+        visitor_token: tok || '',
+        name: lead.name||'', email: lead.email||'', phone: lead.phone||'',
+        sms: lead.sms ? 'yes' : '',
+        industry: (typeof INDUSTRY !== 'undefined' ? INDUSTRY : ''),
+        pageUrl: location.href
+      };
+      jemimaCacheIdent({ name: lead.name||'', email: lead.email||'', phone: lead.phone||'', sms: !!lead.sms });
+      fetch(JEMIMA_ISSUER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) })
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(d){ if (d && d.visitor_token){ jemimaSetTok(d.visitor_token); } })
+        .catch(function(){});
+    } catch(e){}
+  }
 
-    function jemimaClearLead() {
-      document.cookie = JEMIMA_LEAD_COOKIE + "=;path=/;max-age=0;SameSite=Lax";
-    }
+  // --- Back-compat shims: existing call sites keep working on the token system ---
+  function jemimaGetLead(){
+    var d = jemimaCachedIdent();
+    if (d && d.name && d.email && d.phone) return d;
+    return null;
+  }
+  function jemimaSetLead(lead){ jemimaCaptureLead(lead); }
+  function jemimaClearLead(){
+    try { document.cookie = JEMIMA_TOK_COOKIE + "=;path=/;max-age=0;SameSite=Lax"; } catch(e){}
+    try { sessionStorage.removeItem('jemima_ident'); } catch(e){}
+  }
 
     // Shared mint routine used by both the full form and the welcome-back button.
     async function jemimaMintSmsCode(lead, btn, msg, defaultBtnText) {
@@ -1336,6 +1407,7 @@
         industry: SMS_INDUSTRY, slug: SMS_SLUG,
         sms_optin: true, capture_only: false,
         webhookAlias: "demo-code-request",
+        visitor_token: (typeof jemimaGetTok === "function" ? jemimaGetTok() : ""),
         pageUrl: window.location.href, timestamp: new Date().toISOString()
       };
       try {
@@ -1344,8 +1416,9 @@
         var data = await r.json();
         var code = (data && (data.code || data.demo_code)) ? String(data.code || data.demo_code) : "";
         if (!code) throw new Error("No code returned");
-        // Remember the visitor for next time (SMS sign-up implies texting consent)
-        jemimaSetLead({ name: lead.name, email: lead.email, phone: lead.phone, sms: true });
+        // Store any returned visitor token (consent-gated) + cache the resolved identity for this tab.
+        try { if (data && data.visitor_token && typeof jemimaSetTok === "function") jemimaSetTok(data.visitor_token); } catch (e) {}
+        jemimaCacheIdent({ name: lead.name, email: lead.email, phone: lead.phone, sms: true });
         // Reveal the code panel
         document.getElementById("smsRevealCode").textContent = code;
         var btnLink = document.getElementById("smsRevealButton");
@@ -1368,8 +1441,8 @@
     }
 
     // On load: if we recognise the visitor, swap the full form for the welcome-back panel.
-    function setupSmsWelcome() {
-      var lead = jemimaGetLead();
+    async function setupSmsWelcome() {
+      var lead = await jemimaResolveLead(1500);
       var formWrap = document.getElementById("smsCodeForm");
       var welcome = document.getElementById("smsWelcome");
       var nameEl = document.getElementById("smsWelcomeName");
@@ -1622,8 +1695,8 @@
       }
 
       // On load: recognise a returning visitor and show the welcome-back panel.
-      function setupTailoredWelcome() {
-        var known = jemimaGetLead();
+      async function setupTailoredWelcome() {
+        var known = await jemimaResolveLead(1500);
         var welcome = byId("tailored-welcome"), nameEl = byId("tailored-welcome-name");
         var contBtn = byId("tailored-welcome-continue"), resetLink = byId("tailored-welcome-reset");
         var s1 = byId("tailoredDemoForm");
