@@ -2470,7 +2470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Per-visit (per-tab) cache of the resolved identity — memory only, never persisted.
     function jemimaCacheIdent(d){ try { sessionStorage.setItem('jemima_ident', JSON.stringify(d||{})); } catch(e){} }
-    function jemimaCachedIdent(){ try { var s = sessionStorage.getItem('jemima_ident'); return s ? JSON.parse(s) : null; } catch(e){ return null; } }
+    function jemimaCachedIdent(){ try { if (!jemimaConsentOK()) return null; var s = sessionStorage.getItem('jemima_ident'); return s ? JSON.parse(s) : null; } catch(e){ return null; } }
 
     // Resolve token -> details (read-only server lookup). Resolves null on any
     // failure/timeout/empty so the caller falls back to the normal blank form.
