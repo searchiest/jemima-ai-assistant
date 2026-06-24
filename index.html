@@ -2435,13 +2435,16 @@ document.addEventListener('DOMContentLoaded', () => {
     var JEMIMA_ISSUER_URL = (typeof formApiUrl !== 'undefined' && formApiUrl) ? formApiUrl : 'https://jemima-api-proxy.jemima-f5e.workers.dev';
     var JEMIMA_ISSUER_ALIAS = 'demo-code-request';
 
-    // Recognition (reading the token to greet / pre-fill) is consent-gated; lead capture never is.
+    // Recognition (reading/writing the token) is consent-gated; lead capture never is.
+    // consent.js stores localStorage 'jemima_cookie_consent' = 'granted' (accepted) or
+    // 'denied' (declined); the key is absent until the visitor chooses. Recognition is
+    // permitted ONLY when explicitly granted.
     function jemimaConsentOK(){
         try {
             if (window.__jemimaConsent && window.__jemimaConsent.functional === false) return false;
             if (window.cookieConsent && window.cookieConsent.functional === false) return false;
-        } catch(e){}
-        return true;
+            return localStorage.getItem('jemima_cookie_consent') === 'granted';
+        } catch(e){ return false; }
     }
 
     function jemimaGetTok(){
@@ -2450,12 +2453,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return m ? decodeURIComponent(m[1]) : "";
         } catch(e){ return ""; }
     }
+    // Only write the token cookie once consent is granted. If the visitor hasn't chosen
+    // yet, hold it in memory and write it the moment they accept (handled by the flusher).
+    var jemimaPendingTok = "";
     function jemimaSetTok(tok){
         try {
             if (!tok) return;
+            if (!jemimaConsentOK()){ jemimaPendingTok = tok; return; }
             document.cookie = JEMIMA_TOK_COOKIE + "=" + encodeURIComponent(tok) + ";path=/;max-age=" + JEMIMA_TOK_MAX_AGE + ";SameSite=Lax";
         } catch(e){}
     }
+    function jemimaFlushPendingTok(){
+        try { if (jemimaPendingTok && jemimaConsentOK()){ var t = jemimaPendingTok; jemimaPendingTok = ""; jemimaSetTok(t); } } catch(e){}
+    }
+    try { setInterval(jemimaFlushPendingTok, 1500); } catch(e){}
 
     // Per-visit (per-tab) cache of the resolved identity — memory only, never persisted.
     function jemimaCacheIdent(d){ try { sessionStorage.setItem('jemima_ident', JSON.stringify(d||{})); } catch(e){} }
