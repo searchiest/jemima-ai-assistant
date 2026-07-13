@@ -414,6 +414,25 @@
 
 <script>
 window.CHAT_SCENARIO = {"scenario_id":"DENTAL-BOOK-001","industry":"Dentist","business_name":"Bramley Dental Practice","greeting":"Hi, you're through to Bramley Dental. I can book you in — what are you after?","booking_noun":"appointment","slug":"dentists/ai-chat-booking-demo"};
+/* ---- ?id= personalisation: greet as the emailed prospect's practice (added) ---- */
+(function(){
+  try {
+    var id = new URLSearchParams(location.search).get('id');
+    if (!id || !window.CHAT_SCENARIO) return;
+    fetch("https://jemima-ai.app.n8n.cloud/webhook/chat-code-resolve", {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ code: id })
+    }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+      if (!d || !d.found) return;
+      var sc = window.CHAT_SCENARIO;
+      if (d.company) {
+        sc.business_name = d.company;
+        sc.greeting = "Hi, you're through to " + d.company + ". I can book you in — what are you after?";
+      }
+      if (d.scenario_id) sc.scenario_id = d.scenario_id;
+    }).catch(function(){});
+  } catch(e){}
+})();
 const CHAT_ENDPOINT = "https://jemima-ai.app.n8n.cloud/webhook/0f36cb58-2d3e-415e-b2fe-a08cd96b2023/chat";
 const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
 
