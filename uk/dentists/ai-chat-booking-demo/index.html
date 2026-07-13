@@ -414,25 +414,6 @@
 
 <script>
 window.CHAT_SCENARIO = {"scenario_id":"DENTAL-BOOK-001","industry":"Dentist","business_name":"Bramley Dental Practice","greeting":"Hi, you're through to Bramley Dental. I can book you in — what are you after?","booking_noun":"appointment","slug":"dentists/ai-chat-booking-demo"};
-/* ---- ?id= personalisation: greet as the emailed prospect's practice (added) ---- */
-(function(){
-  try {
-    var id = new URLSearchParams(location.search).get('id');
-    if (!id || !window.CHAT_SCENARIO) return;
-    fetch("https://jemima-ai.app.n8n.cloud/webhook/chat-code-resolve", {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ code: id })
-    }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-      if (!d || !d.found) return;
-      var sc = window.CHAT_SCENARIO;
-      if (d.company) {
-        sc.business_name = d.company;
-        sc.greeting = "Hi, you're through to " + d.company + ". I can book you in — what are you after?";
-      }
-      if (d.scenario_id) sc.scenario_id = d.scenario_id;
-    }).catch(function(){});
-  } catch(e){}
-})();
 const CHAT_ENDPOINT = "https://jemima-ai.app.n8n.cloud/webhook/0f36cb58-2d3e-415e-b2fe-a08cd96b2023/chat";
 const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
 
@@ -468,6 +449,25 @@ function jemimaCacheIdent(d){ try { sessionStorage.setItem('jemima_ident', JSON.
 function jemimaClearLead(){
   try { document.cookie = JEMIMA_TOK_COOKIE + "=;path=/;max-age=0;SameSite=Lax"; } catch(e){}
   try { sessionStorage.removeItem('jemima_ident'); } catch(e){}
+}
+
+function jemimaResolveByCode(){
+  return new Promise(function(resolve){
+    var id = '';
+    try { id = new URLSearchParams(location.search).get('id') || ''; } catch(e){ id=''; }
+    if (!id){ resolve(null); return; }
+    var done=false;
+    var timer=setTimeout(function(){ if(!done){ done=true; resolve(null); } }, 2500);
+    try {
+      fetch("https://jemima-ai.app.n8n.cloud/webhook/chat-code-resolve", {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ code: id })
+      }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+        if (done) return; done=true; clearTimeout(timer);
+        resolve((d && d.found) ? d : null);
+      }).catch(function(){ if(!done){ done=true; clearTimeout(timer); resolve(null); } });
+    } catch(e){ if(!done){ done=true; clearTimeout(timer); resolve(null); } }
+  });
 }
 
 function jemimaResolveLead(maxWaitMs){
@@ -876,16 +876,29 @@ function scrollToTailoredDemoForm(event) {
     show(byId('chatGate'));
   });
 
-  /* On load: recognise a returning visitor, else show the gate. */
-  jemimaResolveLead(1500).then(function(known){
-    if (known){
-      lead = { name:known.name, email:known.email, phone:known.phone, sms:!!known.sms, visitor_token: known.visitor_token || jemimaGetTok() };
-      byId('chatWelcomeName').textContent = String(known.name).split(' ')[0];
-      show(byId('chatWelcome'));
-      byId('chatWelcomeStart').addEventListener('click', function(){ openChat(); });
-    } else {
-      show(byId('chatGate'));
+  /* On load: a coded outreach link (?id=) skips the gate and goes straight into a personalised chat;
+     otherwise recognise a returning visitor, else show the gate. */
+  jemimaResolveByCode().then(function(coded){
+    if (coded){
+      if (coded.company){
+        sc.business_name = coded.company;
+        sc.greeting = "Hi, you're through to " + coded.company + ". I can book you in — what are you after?";
+      }
+      if (coded.scenario_id) sc.scenario_id = coded.scenario_id;
+      lead = { name: coded.name || '', email: coded.email || '', phone: coded.phone || '', sms: !!coded.sms, visitor_token: jemimaGetTok() || '' };
+      openChat();
+      return;
     }
+    jemimaResolveLead(1500).then(function(known){
+      if (known){
+        lead = { name:known.name, email:known.email, phone:known.phone, sms:!!known.sms, visitor_token: known.visitor_token || jemimaGetTok() };
+        byId('chatWelcomeName').textContent = String(known.name).split(' ')[0];
+        show(byId('chatWelcome'));
+        byId('chatWelcomeStart').addEventListener('click', function(){ openChat(); });
+      } else {
+        show(byId('chatGate'));
+      }
+    });
   });
 
   var sel = byId('industryDemoSelect');
