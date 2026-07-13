@@ -880,12 +880,11 @@ function scrollToTailoredDemoForm(event) {
      otherwise recognise a returning visitor, else show the gate. */
   jemimaResolveByCode().then(function(coded){
     if (coded){
-      if (coded.company){
-        sc.business_name = coded.company;
-        sc.greeting = "Hi, you're through to " + coded.company + ". I can book you in — what are you after?";
-      }
+      if (coded.company){ sc.business_name = coded.company; }
+      if (coded.greeting){ sc.greeting = coded.greeting; }
+      else if (coded.company){ sc.greeting = "Welcome to " + coded.company + ". I can help you book — what sort of appointment are you looking for?"; }
       if (coded.scenario_id) sc.scenario_id = coded.scenario_id;
-      lead = { name: coded.name || '', email: coded.email || '', phone: coded.phone || '', sms: !!coded.sms, visitor_token: jemimaGetTok() || '' };
+      lead = { name: '', email: '', phone: '', sms: false, visitor_token: jemimaGetTok() || '' };
       openChat();
       return;
     }
