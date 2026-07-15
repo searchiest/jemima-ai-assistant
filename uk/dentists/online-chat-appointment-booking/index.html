@@ -798,7 +798,8 @@ function scrollToTailoredDemoForm(event) {
         leadName: lead.name,
         leadEmail: lead.email,
         leadPhone: lead.phone,
-        leadSms: lead.sms ? 'true' : 'false'
+        leadSms: lead.sms ? 'true' : 'false',
+        leadCompany: lead.company || ''
       })
     })
     .then(function(r){ return r.json(); })
@@ -887,7 +888,7 @@ function scrollToTailoredDemoForm(event) {
       if (coded.greeting){ sc.greeting = coded.greeting; }
       else if (coded.company){ sc.greeting = "Welcome to " + coded.company + ". I can help you book — what sort of appointment are you looking for?"; }
       if (coded.scenario_id) sc.scenario_id = coded.scenario_id;
-      lead = { name: '', email: '', phone: '', sms: false, visitor_token: jemimaGetTok() || '' };
+      lead = { name: coded.name || '', email: coded.email || '', phone: coded.phone || '', sms: false, company: coded.company || '', visitor_token: jemimaGetTok() || '' };
       openChat();
       return;
     }
