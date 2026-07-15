@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script src="https://jemima.ai/consent.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book an appointment by chat | Jemima AI</title>
+  <meta name="description" content="See how an AI receptionist takes a booking by text — offering real slots, refusing to give clinical advice, and never touching the diary without a human. Ask it anything a patient would.">
+  <link rel="canonical" href="https://jemima.ai/uk/dentists/online-chat-appointment-booking/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="jemima.ai">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jemima.ai/uk/dentists/online-chat-appointment-booking/">
+  <meta property="og:title" content="Book an appointment by chat | Jemima AI">
+  <meta property="og:description" content="See how an AI receptionist takes a booking by text — offering real slots, refusing to give clinical advice, and never touching the diary without a human. Ask it anything a patient would.">
+  <meta property="og:image" content="https://jemima.ai/img/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Book an appointment by chat | Jemima AI">
+  <meta name="twitter:description" content="See how an AI receptionist takes a booking by text — offering real slots, refusing to give clinical advice, and never touching the diary without a human. Ask it anything a patient would.">
+  <meta name="twitter:image" content="https://jemima.ai/img/og-image.jpg">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#c2155a">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Plus Jakarta Sans','Inter',Arial,sans-serif; background:#f8fafc; color:#0f172a; line-height:1.5; }
+    .site-nav { position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 48px; background:rgba(255,255,255,0.88); backdrop-filter:blur(14px); border-bottom:1px solid #cbd5e1; }
+    .site-brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#0f172a; font-size:20px; font-weight:700; letter-spacing:-0.04em; }
+    .site-brand img { width:28px; height:28px; border-radius:999px; }
+    .site-cta { display:inline-flex; align-items:center; gap:8px; border:0; background:#c2155a; color:#fff; text-decoration:none; padding:12px 18px; font-size:11px; font-weight:900; letter-spacing:0.16em; text-transform:uppercase; }
+    .site-cta:hover { background:#a0124a; }
+    .page { max-width:1200px; margin:0 auto; padding:36px 24px 72px; }
+    .hero { width:100%; margin:0 0 30px; text-align:center; }
+    h1 { color:#020617; font-weight:800; font-size:52px; line-height:0.98; letter-spacing:-0.055em; margin:0 0 20px; }
+    .intro { color:#475569; font-size:18px; margin:0 auto; max-width:760px; }
+    .industry-demo-switcher { width:100%; max-width:460px; margin:0 auto 24px; }
+    .industry-demo-switcher label { display:block; color:#64748b; font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; margin:0 0 8px; }
+    .industry-demo-switcher select { width:100%; border:1px solid #e2e8f0; border-radius:0; padding:13px 14px; background:#fff; font-size:15px; font-weight:700; }
+    .layout { display:grid; grid-template-columns:0.9fr 1.1fr; gap:22px; align-items:start; }
+    .card { background:#fff; border:1px solid #e2e8f0; border-radius:0; padding:24px; box-shadow:0 16px 35px rgba(15,23,42,0.08); }
+    .hidden { display:none !important; }
+    .video-card, .scenario-description-block { background:#fff; border:1px solid #e2e8f0; padding:14px; margin:0 0 18px; }
+    .video-card h2 { margin:0 0 5px; font-size:16px; }
+    .video-card p { margin:0 0 10px; color:#64748b; font-size:13px; }
+    .video-frame { position:relative; width:100%; overflow:hidden; background:#000; border:1px solid #e2e8f0; }
+    .video-frame::before { content:""; display:block; padding-top:56.25%; }
+    .video-frame video { position:absolute; inset:0; width:100%; height:100%; border:0; object-fit:cover; }
+    .scenario-description-block { border-left:4px solid #c2155a; }
+    .scenario-description-block p { margin:0; color:#475569; font-size:14px; }
+    .slot-hint { background:#f8fafc; border:1px solid #e2e8f0; padding:14px; }
+    .slot-hint strong { display:block; color:#0f172a; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:8px; }
+    .slot-hint ul { margin:0; padding-left:18px; color:#475569; font-size:14px; }
+    label { font-size:14px; font-weight:700; display:block; margin-bottom:7px; }
+    input, select, textarea { width:100%; border:1px solid #e2e8f0; border-radius:0; padding:12px 13px; font-size:15px; font-family:inherit; background:#fff; color:#0f172a; }
+    input:focus, textarea:focus { border-color:#c2155a; outline:2px solid rgba(194,21,90,0.12); }
+    button.primary { border:0; border-radius:0; background:#c2155a; color:#fff; letter-spacing:0.14em; text-transform:uppercase; font-size:12px; font-weight:800; padding:15px 20px; cursor:pointer; }
+    button.primary:hover { background:#a0124a; }
+    button.primary:disabled { opacity:0.6; cursor:not-allowed; }
+    .message { font-weight:700; font-size:14px; }
+    .message.error { color:#b91c1c; }
+    .help { color:#64748b; font-size:13px; }
+    .form-step { display:grid; gap:12px; }
+
+    .chat-head { display:flex; align-items:center; gap:12px; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:14px; }
+    .chat-dot { width:10px; height:10px; border-radius:999px; background:#047857; }
+    .chat-head strong { display:block; font-size:15px; color:#0f172a; }
+    .chat-head span { color:#64748b; font-size:12px; }
+    #messages { height:380px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:4px 2px; }
+    .bubble-row { display:flex; }
+    .bubble-row.user { justify-content:flex-end; }
+    .bubble { max-width:80%; padding:10px 14px; font-size:14px; line-height:1.5; }
+    .bubble.agent { background:#f3f4f6; color:#0f172a; }
+    .bubble.user { background:#c2155a; color:#fff; }
+    .typing { display:inline-flex; gap:4px; background:#f3f4f6; padding:12px 14px; }
+    .typing i { width:6px; height:6px; border-radius:50%; background:#94a3b8; display:inline-block; animation:bounce 1.2s infinite; }
+    .typing i:nth-child(2){ animation-delay:.15s; }
+    .typing i:nth-child(3){ animation-delay:.3s; }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-4px);opacity:1} }
+    @media (prefers-reduced-motion:reduce){ .typing i { animation:none; } }
+    .chat-composer { display:flex; gap:8px; align-items:flex-end; border-top:1px solid #e2e8f0; padding-top:12px; margin-top:12px; }
+    .chat-composer textarea { min-height:44px; max-height:120px; resize:none; }
+    .chat-composer button { white-space:nowrap; }
+    .chat-disclaimer { color:#94a3b8; font-size:11px; margin:10px 0 0; text-align:center; }
+
+    .industry-demo-links-section { padding:42px 24px; background:#f8fafc; border-top:1px solid #e2e8f0; }
+    .industry-demo-links-inner { max-width:1200px; margin:0 auto; text-align:center; }
+    .industry-demo-links-inner h2 { margin:0 0 18px; font-size:24px; font-weight:800; letter-spacing:-0.04em; }
+    .industry-demo-links { display:flex; justify-content:center; flex-wrap:wrap; gap:10px 18px; }
+    .industry-demo-links a { color:#0f172a; font-size:14px; font-weight:800; text-decoration:none; }
+    .site-footer { padding:48px 24px; background:#fff; border-top:1px solid #cbd5e1; text-align:center; }
+    .site-footer p { margin:0; color:#94a3b8; font-size:12px; font-weight:800; letter-spacing:0.24em; text-transform:uppercase; }
+
+    .intro-value { display:grid; grid-template-columns:1fr 1fr; gap:22px; text-align:left; width:100%; margin:0; align-items:stretch; }
+    .intro-value-block { background:#fff; border:1px solid #e2e8f0; padding:18px; box-shadow:0 10px 25px rgba(15,23,42,0.04); display:flex; flex-direction:column; }
+    .intro-value-block strong { display:block; color:#0f172a; font-size:14px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px; }
+    .intro-value-block p { margin:0; color:#475569; font-size:15px; line-height:1.65; flex:1; }
+
+    .cta { background:#0f172a; color:#fff; padding:18px; margin-top:18px; }
+    .cta h3 { margin:0 0 8px; font-size:17px; }
+    .cta p { margin:0 0 14px; color:#e5e7eb; }
+    .cta a { display:inline-block; background:#fff; color:#111827; text-decoration:none; padding:11px 16px; font-weight:700; font-size:14px; }
+
+    .static-help-wrap { max-width:1200px; margin:28px auto 0; display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .static-help-section { background:#fff; border:1px solid #e2e8f0; padding:24px; box-shadow:0 16px 35px rgba(15,23,42,0.08); }
+    .static-help-section h2 { margin:0 0 10px; color:#020617; font-size:24px; letter-spacing:-0.04em; line-height:1.1; font-weight:800; }
+    .static-help-section p { margin:0; color:#475569; font-size:15px; line-height:1.65; }
+    .static-help-lead { margin-bottom:14px !important; }
+    .static-help-list { margin:16px 0 0; padding-left:20px; color:#475569; font-size:15px; line-height:1.65; }
+    .static-help-list li { margin-bottom:8px; }
+    .workflow-walkthrough { display:grid; gap:12px; margin-top:14px; }
+    .workflow-step-line { display:grid; grid-template-columns:42px 1fr; gap:12px; align-items:start; padding:14px; background:#f8fafc; border:1px solid #e2e8f0; }
+    .workflow-step-line span { width:32px; height:32px; background:rgba(194,21,90,0.12); color:#c2155a; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; }
+    .workflow-step-line p { margin:0; color:#334155; }
+    .handover-example { margin-top:14px; background:#f0fdf4; border-left:4px solid #047857; padding:14px; }
+    .handover-example-title { display:block; color:#065f46; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; }
+    .handover-example p { color:#064e3b; white-space:pre-line; margin:0; }
+    .handover-example-heading { padding:10px 0 12px; border-bottom:1px solid rgba(4,120,87,0.18); margin-bottom:8px; }
+    .handover-example-heading span { display:block; color:#047857; font-size:11px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px; }
+    .handover-example-heading strong { display:block; color:#064e3b; font-size:17px; line-height:1.35; }
+    .handover-example-list { list-style:none; padding:0; margin:0; }
+    .handover-example-row { display:grid; gap:3px; padding:9px 0; border-bottom:1px solid rgba(4,120,87,0.12); }
+    .handover-example-row:last-child { border-bottom:0; padding-bottom:0; }
+    .handover-example-row span { color:#047857; font-size:11px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; }
+    .handover-example-row strong { color:#064e3b; font-size:14px; line-height:1.45; font-weight:700; }
+
+    .tailored-demo-section { scroll-margin-top:96px; max-width:1100px; margin:56px auto 0; padding:48px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 18px 40px rgba(15,23,42,0.08); }
+    .tailored-demo-grid { display:grid; grid-template-columns:0.85fr 1.15fr; gap:42px; align-items:start; }
+    .tailored-demo-kicker { display:inline-block; background:rgba(194,21,90,0.1); color:#c2155a; font-size:11px; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; padding:7px 12px; margin-bottom:16px; }
+    .tailored-demo-section h2 { margin:0; color:#020617; font-size:38px; line-height:1; letter-spacing:-0.05em; font-weight:800; }
+    .tailored-demo-section p { color:#64748b; font-size:16px; line-height:1.65; margin:16px 0 0; font-weight:500; }
+    .tailored-demo-points { margin:26px 0 0; padding:0; list-style:none; display:grid; gap:12px; color:#475569; font-weight:600; }
+    .tailored-demo-points li { display:flex; gap:10px; align-items:flex-start; }
+    .tailored-demo-points i { color:#c2155a; margin-top:4px; }
+    .tailored-demo-form { display:grid; gap:22px; }
+    .tailored-form-row { display:grid; gap:7px; }
+    .tailored-form-row label { color:#64748b; font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; margin:0; }
+    .tailored-demo-form input, .tailored-demo-form select { width:100%; border:0; border-bottom:2px solid #e2e8f0; padding:12px 2px; background:transparent; color:#0f172a; font-size:16px; font-weight:700; outline:none; }
+    .tailored-demo-form input:focus, .tailored-demo-form select:focus { border-color:#c2155a; }
+    .tailored-phone-row { display:grid; grid-template-columns:1fr auto; gap:18px; align-items:end; }
+    .tailored-sms-label { display:inline-flex; align-items:center; gap:8px; cursor:pointer; padding-bottom:12px; color:#64748b; font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; white-space:nowrap; }
+    .tailored-sms-label input { width:16px; height:16px; accent-color:#c2155a; }
+    .tailored-submit { width:100%; border:0; background:#c2155a; color:#fff; padding:18px 22px; font-size:12px; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; }
+    .tailored-submit:hover { background:#a0124a; }
+    .tailored-submit:disabled { opacity:0.65; cursor:not-allowed; }
+    .tailored-note { text-align:center; color:#94a3b8 !important; font-size:12px !important; font-weight:800 !important; letter-spacing:0.14em; text-transform:uppercase; margin:0 !important; }
+    .tailored-form-message { min-height:20px; font-size:14px; font-weight:800; color:#047857; }
+    .tailored-form-message.error { color:#b91c1c; }
+
+    @media (max-width:900px) {
+      .site-nav { padding:12px 14px; }
+      h1 { font-size:38px; }
+      .layout, .intro-value, .static-help-wrap, .tailored-demo-grid { grid-template-columns:1fr; }
+      .page { padding:30px 16px 56px; }
+      .tailored-demo-section { padding:28px 20px; }
+      .tailored-demo-section h2 { font-size:32px; }
+      .tailored-phone-row { grid-template-columns:1fr; gap:10px; }
+      .tailored-sms-label { padding-bottom:0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="site-brand" href="/">
+    <img src="/img/jemima-logo.png" alt="Jemima Logo">
+    <span>Jemima</span>
+  </a>
+  <a class="site-cta" href="/#workflow-review-form"><span>Free workflow review</span></a>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <div class="industry-demo-switcher">
+    <label for="industryDemoSelect">More Dentist Demos</label>
+    <select id="industryDemoSelect"><option value="https://jemima.ai/uk/dentists/high-value-treatment-enquiry/">High-value treatment enquiry</option>
+<option value="https://jemima.ai/uk/dentists/emergency-dental-enquiry/">Emergency dental enquiry</option>
+<option value="https://jemima.ai/uk/dentists/treatment-plan-follow-up/">Treatment plan follow-up</option>
+<option value="https://jemima.ai/uk/dentists/implant-treatment-plan-follow-up/">Implant treatment plan follow-up</option>
+<option value="https://jemima.ai/uk/dentists/sms-appointment-confirmation/">Appointment confirmation and change request</option>
+<option value="https://jemima.ai/uk/dentists/sms-recall-reactivation/">Overdue check-up recall and reactivation</option>
+<option value="https://jemima.ai/uk/dentists/ai-appointment-booking-demo/">Appointment booking</option>
+<option value="https://jemima.ai/uk/dentists/out-of-hours-voice-message-capture/">Out-of-hours voice message capture</option></select>
+  </div>
+    <h1>Book an appointment by chat</h1>
+    <div class="intro-value"><div class="intro-value-block"><strong>What problem this solves</strong><p>Most dental enquiries arrive when nobody can answer. Reception is with a patient, on another call, or gone home. A patient who cannot get through does not wait — they ring the next practice on the list.</p></div><div class="intro-value-block"><strong>How this helps customers</strong><p>The patient books in under a minute, at whatever hour suits them, without waiting on hold or leaving a voicemail they are not sure anyone will hear.</p></div></div>
+  </section>
+
+  <section class="layout">
+    <div class="card">
+      <section id="videoBlock" class="video-card">
+      <h2>Watch the demo walkthrough</h2>
+      <p>This short video explains what this automation does and why it matters.</p>
+      <div class="video-frame">
+        <video src="https://vz-1599ac93-05a.b-cdn.net/628509d3-ac12-460a-9557-3e81c477b4c4/play_1080p.mp4" controls preload="metadata" playsinline webkit-playsinline poster="https://jemima.ai/video-fallback.png"
+          style="width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;"
+          title="Bramley Dental Practice explainer video"></video>
+      </div>
+    </section>
+      <section class="scenario-description-block"><p>A patient messages the practice website asking for an appointment. The assistant offers the slots the practice actually has free, takes the booking, and hands a clean summary to reception. It will not discuss symptoms, treatment or price — those go to a human, every time.</p></section>
+      <div class="slot-hint">
+    <strong>Sample availability</strong>
+    <ul><li>Tuesday 10:30am</li><li>Thursday 4:15pm</li><li>Saturday 9:00am</li></ul>
+  </div>
+    </div>
+
+    <div class="card">
+      <!-- Gate: returning visitor -->
+      <div id="chatWelcome" class="hidden">
+        <div style="background:#fdf2f8;border:1px solid #fbcfe8;padding:20px 22px;margin-bottom:18px;">
+          <p style="margin:0 0 14px;font-size:15px;color:#111827;">Welcome back, <strong id="chatWelcomeName">there</strong>. Start the demo &mdash; no need to type your details again.</p>
+          <button type="button" id="chatWelcomeStart" class="primary">Start the chat</button>
+          <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">Not you? <a href="#" id="chatWelcomeReset" style="color:#c2155a;">Enter different details</a>.</p>
+        </div>
+      </div>
+
+      <!-- Gate: form -->
+      <div id="chatGate" class="hidden">
+        <form id="chatLeadForm" class="form-step">
+          <div>
+            <label for="chat_name">Your name</label>
+            <input id="chat_name" type="text" placeholder="Jane Smith" required>
+          </div>
+          <div>
+            <label for="chat_email">Work email</label>
+            <input id="chat_email" type="email" placeholder="yourname@company.com" required>
+            <div class="help">Required. We will send you a copy of what the assistant captured.</div>
+          </div>
+          <div>
+            <label for="chat_phone">Phone number</label>
+            <input id="chat_phone" type="tel" placeholder="07123 456789" required>
+          </div>
+          <label style="display:flex;align-items:flex-start;gap:8px;font-weight:500;cursor:pointer;">
+            <input id="chat_sms" type="checkbox" style="width:auto;margin-top:3px;">
+            <span>Tick to allow Jemima AI to text you about your enquiry and our services. Message and data rates may apply; reply STOP to opt out.</span>
+          </label>
+          <div id="chat-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" style="margin:4px auto;display:flex;justify-content:center;"></div>
+          <div>
+            <button type="submit" id="chatGateSubmit" class="primary">Open the chat</button>
+            <span id="chatGateMessage" class="message"></span>
+          </div>
+          <p style="text-align:center;font-size:11px;color:#94a3b8;margin:6px 0 0;">By continuing, you agree to our <a href="/privacy.html" style="color:#94a3b8;">Privacy Policy</a>. Please do not enter real customer, patient or client information &mdash; this is a demonstration.</p>
+        </form>
+      </div>
+
+      <!-- Chat -->
+      <div id="chatPanel" class="hidden">
+        <div class="chat-head">
+          <span class="chat-dot"></span>
+          <div>
+            <strong id="chatBusinessName">Reception</strong>
+            <span id="chatStatus">Online</span>
+          </div>
+        </div>
+        <div id="messages" aria-live="polite"></div>
+        <form id="chatForm" class="chat-composer">
+          <label for="chatInput" style="display:none;">Message</label>
+          <textarea id="chatInput" rows="1" placeholder="Ask for an appointment&hellip;"></textarea>
+          <button type="submit" id="chatSend" class="primary">Send</button>
+        </form>
+        <p class="chat-disclaimer">This is a demonstration. No real appointment is booked.</p>
+        <p id="chatError" class="message error hidden" style="margin-top:8px;font-size:12px;"></p>
+      </div>
+
+      <div class="cta">
+    <h3>Want this tailored to your business?</h3>
+    <p>Want this answering enquiries on your practice website?</p>
+    <a href="javascript:void(0)" onclick="scrollToTailoredDemoForm(event)">Request tailored demo</a>
+  </div>
+    </div>
+  </section>
+
+  <section class="static-help-wrap"><section class="static-help-section">
+      <h2>Why this workflow matters</h2>
+      <p class="static-help-lead">Most enquiries a dental practice receives are not clinical questions. They are people trying to book, move or cancel an appointment — work that interrupts reception all day and needed no clinical judgement in the first place.</p>
+      <ul class="static-help-list"><li>Calls go unanswered at lunch, during treatment, and after the practice closes</li><li>Reception is interrupted mid-patient to answer the phone</li><li>Patients who cannot get through book with another practice</li><li>Voicemails are chased the next morning, by which time the patient has moved on</li></ul>
+    </section><section class="static-help-section">
+      <h2>Example workflow walkthrough</h2>
+      <div class="workflow-walkthrough">
+        <div class="workflow-step-line"><span>1</span><p>A patient opens the practice website in the evening and asks for a check-up</p></div><div class="workflow-step-line"><span>2</span><p>The assistant offers the slots the diary actually has free</p></div><div class="workflow-step-line"><span>3</span><p>The patient picks one, in their own words — the Saturday one</p></div><div class="workflow-step-line"><span>4</span><p>The booking and the patient details are written to the practice system</p></div><div class="workflow-step-line"><span>5</span><p>The patient gets a confirmation text</p></div><div class="workflow-step-line"><span>6</span><p>Reception opens a clean summary in the morning, with nothing to chase</p></div>
+      </div>
+    </section><section class="static-help-section">
+      <h2>What the business receives</h2>
+      <p class="static-help-lead">Reception stops being the bottleneck. Bookings arrive already captured and structured, out-of-hours enquiries stop leaking to competitors, and the diary fills without anyone answering the phone.</p>
+      <div class="handover-example handover-example-structured">
+        <strong class="handover-example-title">Example handover summary</strong>
+        <div class="handover-example-heading"><span>Patient</span><strong>Sarah Whitfield</strong></div>
+        <ul class="handover-example-list"><li class="handover-example-row"><span>Request</span><strong>Routine check-up</strong></li><li class="handover-example-row"><span>Chosen slot</span><strong>Tuesday 10:30am</strong></li><li class="handover-example-row"><span>Clinical content</span><strong>None</strong></li><li class="handover-example-row"><span>Urgency flag</span><strong>No</strong></li><li class="handover-example-row"><span>Action for reception</span><strong>Confirm in diary and send reminder</strong></li></ul>
+      </div>
+    </section><section class="static-help-section">
+      <h2>How this could be implemented</h2>
+      <p class="static-help-lead">The assistant connects to your practice management system and sits on your existing website. Clinical questions, pain, and anything urgent are never answered — they are flagged and handed to a human. Nothing is written to the diary that a member of staff cannot see and undo.</p>
+    </section></section>
+</main>
+
+<section id="tailored-demo-form" class="tailored-demo-section">
+  <div class="tailored-demo-grid">
+    <div>
+      <div id="tailored-step-badge" class="tailored-demo-kicker">Step 1 of 2</div>
+      <h2>Request a tailored demo</h2>
+      <p>Share a few details and we will review where this kind of AI workflow could fit into your enquiry, booking or follow-up process.</p>
+      <ul class="tailored-demo-points">
+        <li><i class="fas fa-check"></i><span>We will look for practical automation opportunities, not generic AI ideas.</span></li>
+        <li><i class="fas fa-check"></i><span>You can ask about website forms, inboxes, calls, SMS, email or CRM follow-up.</span></li>
+        <li><i class="fas fa-check"></i><span>No credit card required.</span></li>
+      </ul>
+    </div>
+
+    <div>
+      <div id="tailored-welcome" style="display:none;">
+        <div style="background:#fdf2f8;border:1px solid #fbcfe8;padding:20px 22px;margin-bottom:18px;">
+          <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:#111827;">Welcome back, <strong id="tailored-welcome-name">there</strong>. We already have your details &mdash; just confirm to continue.</p>
+          <div id="tailored-welcome-turnstile" style="margin:0 0 14px;display:flex;justify-content:center;"></div>
+          <button type="button" id="tailored-welcome-continue" class="tailored-submit">Continue</button>
+          <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;text-align:center;">Not you? <a href="#" id="tailored-welcome-reset" style="color:#c2155a;">Enter different details</a>.</p>
+        </div>
+      </div>
+
+      <form id="tailoredDemoForm" class="tailored-demo-form">
+        <div class="tailored-form-row">
+          <label for="tailored-name">Full Name</label>
+          <input type="text" id="tailored-name" name="name" required placeholder="John Doe">
+        </div>
+        <div class="tailored-form-row">
+          <label for="tailored-email">Work Email</label>
+          <input type="email" id="tailored-email" name="email" required placeholder="john@company.com">
+        </div>
+        <div class="tailored-form-row">
+          <label for="tailored-phone">Phone Number</label>
+          <div class="tailored-phone-row">
+            <input type="tel" id="tailored-phone" name="phone" required placeholder="+44 7700 000000">
+            <label class="tailored-sms-label">
+              <input type="checkbox" id="tailored-sms-optin" name="smsOptin">
+              <span>SMS?</span>
+            </label>
+          </div>
+        </div>
+        <div style="display:grid;gap:8px;">
+          <input type="text" id="tailored-hp" name="hp_field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+          <div id="tailored-fields-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAADmk1_S3YhkvBvwZ" style="margin:0.25rem auto;display:flex;justify-content:center;"></div>
+          <button type="submit" id="tailored-submit" class="tailored-submit">Submit Demo Request</button>
+          <div id="tailored-form-message" class="tailored-form-message" style="min-height:0;"></div>
+          <p class="tailored-note">No credit card required</p>
+          <p style="text-align:center;font-size:11px;line-height:1.6;color:#94a3b8;margin:10px 0 0;">By submitting, you agree to our <a href="/privacy.html" style="color:#94a3b8;">Privacy Policy</a>. If you tick SMS, you consent to receive text messages from Jemima AI about your enquiry and our services; message and data rates may apply, and you can reply STOP to opt out at any time.</p>
+        </div>
+      </form>
+
+      <form id="tailoredDemoForm2" class="tailored-demo-form" style="display:none;">
+        <p style="margin:0;color:#64748b;font-size:14px;font-weight:600;">A few quick details to make your review more useful &mdash; under a minute.</p>
+        <div class="tailored-form-row">
+          <label for="tailored-biz">What does your business do?</label>
+          <input type="text" id="tailored-biz" placeholder="e.g. dental practice">
+        </div>
+        <div class="tailored-form-row">
+          <label for="tailored-team">Team size</label>
+          <select id="tailored-team">
+            <option value="" disabled selected>Select team size...</option>
+            <option>Just me</option><option>2-5</option><option>6-20</option><option>21-50</option><option>50+</option>
+          </select>
+        </div>
+        <div class="tailored-form-row">
+          <label for="tailored-tools">Main tools you use (optional)</label>
+          <input type="text" id="tailored-tools" placeholder="e.g. Gmail, Dentally, Xero">
+        </div>
+        <div class="tailored-form-row">
+          <label for="tailored-pain">Biggest time sink right now?</label>
+          <textarea id="tailored-pain" rows="3" style="min-height:96px;border:1px solid #e2e8f0;padding:10px 12px;font-family:inherit;font-size:15px;font-weight:600;color:#0f172a;background:#fff;resize:vertical;" placeholder="What eats up the most time in your week?"></textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button type="submit" id="tailored-submit-2" class="tailored-submit">Send details</button>
+          <button type="button" id="tailored-skip" style="border:0;background:transparent;color:#94a3b8;font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;padding:6px 10px;">Skip for now</button>
+        </div>
+        <div id="tailored-form-message-2" class="tailored-form-message"></div>
+      </form>
+
+      <div id="tailored-done" style="display:none;">
+        <div style="width:46px;height:46px;border-radius:999px;background:rgba(194,21,90,0.12);color:#c2155a;display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><i class="fas fa-check"></i></div>
+        <h3 id="tailored-done-title" style="margin:0;color:#020617;font-size:22px;font-weight:800;letter-spacing:-0.03em;">You are all set</h3>
+        <p id="tailored-done-msg" style="margin:8px 0 0;color:#64748b;font-size:15px;line-height:1.6;font-weight:500;">Thanks, we will be in touch shortly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="industry-demo-links-section">
+    <div class="industry-demo-links-inner">
+      <h2>More Dentist Demos</h2>
+      <div class="industry-demo-links"><a href="https://jemima.ai/uk/dentists/high-value-treatment-enquiry/">High-value treatment enquiry</a>
+<a href="https://jemima.ai/uk/dentists/emergency-dental-enquiry/">Emergency dental enquiry</a>
+<a href="https://jemima.ai/uk/dentists/treatment-plan-follow-up/">Treatment plan follow-up</a>
+<a href="https://jemima.ai/uk/dentists/implant-treatment-plan-follow-up/">Implant treatment plan follow-up</a>
+<a href="https://jemima.ai/uk/dentists/sms-appointment-confirmation/">Appointment confirmation and change request</a>
+<a href="https://jemima.ai/uk/dentists/sms-recall-reactivation/">Overdue check-up recall and reactivation</a>
+<a href="https://jemima.ai/uk/dentists/ai-appointment-booking-demo/">Appointment booking</a>
+<a href="https://jemima.ai/uk/dentists/out-of-hours-voice-message-capture/">Out-of-hours voice message capture</a></div>
+    </div>
+  </section>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Jemima AI. All rights reserved.</p>
+</footer>
+
+<script>
+window.CHAT_SCENARIO = {"scenario_id":"DENTAL-BOOK-001","industry":"Dentist","business_name":"Bramley Dental Practice","greeting":"Hi, you're through to Bramley Dental. I can book you in — what are you after?","booking_noun":"appointment","slug":"dentists/online-chat-appointment-booking"};
+const CHAT_ENDPOINT = "https://jemima-ai.app.n8n.cloud/webhook/0f36cb58-2d3e-415e-b2fe-a08cd96b2023/chat";
+const PROXY_URL = "https://jemima-api-proxy.jemima-f5e.workers.dev";
+
+/* ---- token-only identity (same scheme as every other Jemima page) ---- */
+var JEMIMA_TOK_COOKIE = "jemima_tok";
+var JEMIMA_TOK_MAX_AGE = 60 * 60 * 24 * 365;
+var JEMIMA_ISSUER_ALIAS = "demo-code-request";
+var jemimaPendingTok = "";
+
+function jemimaConsentOK(){
+  try {
+    if (window.__jemimaConsent && window.__jemimaConsent.functional === false) return false;
+    return localStorage.getItem('jemima_cookie_consent') === 'granted';
+  } catch(e){ return false; }
+}
+function jemimaGetTok(){
+  try { var m = document.cookie.match(new RegExp("(?:^|; )" + JEMIMA_TOK_COOKIE + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : ""; }
+  catch(e){ return ""; }
+}
+function jemimaSetTok(tok){
+  try {
+    if (!tok) return;
+    if (!jemimaConsentOK()){ jemimaPendingTok = tok; return; }
+    document.cookie = JEMIMA_TOK_COOKIE + "=" + encodeURIComponent(tok) + ";path=/;max-age=" + JEMIMA_TOK_MAX_AGE + ";SameSite=Lax";
+  } catch(e){}
+}
+function jemimaFlushPendingTok(){
+  try { if (jemimaPendingTok && jemimaConsentOK()){ var t = jemimaPendingTok; jemimaPendingTok = ""; jemimaSetTok(t); } } catch(e){}
+}
+try { setInterval(jemimaFlushPendingTok, 1500); } catch(e){}
+
+function jemimaCacheIdent(d){ try { sessionStorage.setItem('jemima_ident', JSON.stringify(d||{})); } catch(e){} }
+function jemimaClearLead(){
+  try { document.cookie = JEMIMA_TOK_COOKIE + "=;path=/;max-age=0;SameSite=Lax"; } catch(e){}
+  try { sessionStorage.removeItem('jemima_ident'); } catch(e){}
+}
+
+function jemimaResolveByCode(){
+  return new Promise(function(resolve){
+    var id = '';
+    try { id = new URLSearchParams(location.search).get('id') || ''; } catch(e){ id=''; }
+    if (!id){ resolve(null); return; }
+    var done=false;
+    var timer=setTimeout(function(){ if(!done){ done=true; resolve(null); } }, 2500);
+    try {
+      fetch("https://jemima-ai.app.n8n.cloud/webhook/chat-code-resolve", {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ code: id })
+      }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+        if (done) return; done=true; clearTimeout(timer);
+        resolve((d && d.found) ? d : null);
+      }).catch(function(){ if(!done){ done=true; clearTimeout(timer); resolve(null); } });
+    } catch(e){ if(!done){ done=true; clearTimeout(timer); resolve(null); } }
+  });
+}
+
+function jemimaResolveLead(maxWaitMs){
+  return new Promise(function(resolve){
+    var tok = jemimaGetTok();
+    if (!tok || !jemimaConsentOK()){ resolve(null); return; }
+    var done = false;
+    var timer = setTimeout(function(){ if(!done){ done=true; resolve(null); } }, (typeof maxWaitMs==='number'?maxWaitMs:1500));
+    try {
+      fetch(PROXY_URL, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ webhookAlias: JEMIMA_ISSUER_ALIAS, mode:'resolve', visitor_token: tok })
+      }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+        if (done) return; done = true; clearTimeout(timer);
+        if (!d || !d.found){ resolve(null); return; }
+        var lead = { name: d.name||'', email: d.email||'', phone: d.phone||'', sms: (String(d.sms).toLowerCase()==='yes'), visitor_token: d.visitor_token || tok };
+        if (lead.name && lead.email && lead.phone){ jemimaCacheIdent(lead); resolve(lead); }
+        else { resolve(null); }
+      }).catch(function(){ if(!done){ done=true; clearTimeout(timer); resolve(null); } });
+    } catch(e){ if(!done){ done=true; clearTimeout(timer); resolve(null); } }
+  });
+}
+
+/* Capture the lead before the chat opens. This is the gate. */
+function jemimaCaptureLead(lead, turnstileToken){
+  var sc = window.CHAT_SCENARIO || {};
+  var body = {
+    webhookAlias: JEMIMA_ISSUER_ALIAS,
+    mode: 'capture', capture_only: true, demo: 'chat-booking',
+    visitor_token: jemimaGetTok() || '',
+    name: lead.name || '', email: lead.email || '', phone: lead.phone || '',
+    sms: lead.sms ? 'yes' : '',
+    scenario_id: sc.scenario_id || '', industry: sc.industry || '', slug: sc.slug || '',
+    turnstileToken: turnstileToken || '',
+    pageUrl: location.href
+  };
+  jemimaCacheIdent({ name: body.name, email: body.email, phone: body.phone, sms: !!lead.sms });
+  return fetch(PROXY_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if (d && d.visitor_token) jemimaSetTok(d.visitor_token); return d || {}; });
+}
+
+/* ---- scroll + footer lead form (stage 1 creates the lead, stage 2 adds detail) ---- */
+function scrollToTailoredDemoForm(event) {
+  if (event) event.preventDefault();
+  var s = document.getElementById("tailored-demo-form");
+  if (s) s.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+(function setupTailoredDemoForm(){
+  var WEBHOOK = PROXY_URL;
+  var SOURCE = "chat_demo_page_footer_form";
+  var sessionId = "visitor_" + Math.random().toString(36).slice(2, 11);
+  var sc = window.CHAT_SCENARIO || {};
+  var DEMO_SLUG = sc.slug || "";
+  var INDUSTRY = sc.industry || "";
+  var TLR_SITEKEY = "0x4AAAAAADmk1_S3YhkvBvwZ";
+  var tlrLead = null;
+  window.__wfrRenderedAt = Date.now();
+  window.__wfrTurnstileToken = "";
+  window.__tlrWelcomeToken = "";
+
+  function byId(id){ return document.getElementById(id); }
+  function val(id){ var el = byId(id); return el ? (el.value || "").trim() : ""; }
+  function setBadge(t){ var b = byId("tailored-step-badge"); if (b) b.textContent = t; }
+
+  var bizEl = byId("tailored-biz");
+  if (bizEl && !bizEl.value) bizEl.value = INDUSTRY;
+
+  function tlrRenderTurnstile(target, onToken){
+    function el(){ return (typeof target === "string") ? document.querySelector(target) : target; }
+    function attempt(){
+      var node = el();
+      if (!node || !window.turnstile || typeof window.turnstile.render !== "function") return false;
+      if (node.getAttribute("data-tlr-rendered") === "1") return true;
+      if (node.querySelector("iframe")) { node.setAttribute("data-tlr-rendered","1"); return true; }
+      try {
+        var id = window.turnstile.render(node, {
+          sitekey: TLR_SITEKEY,
+          callback: function(t){ if (typeof onToken === "function") onToken(t); },
+          "expired-callback": function(){ if (typeof onToken === "function") onToken(""); },
+          "error-callback": function(){ if (typeof onToken === "function") onToken(""); }
+        });
+        node.setAttribute("data-tlr-rendered","1");
+        if (id !== undefined && id !== null) node.setAttribute("data-tlr-widget-id", id);
+        return true;
+      } catch(e){ return false; }
+    }
+    if (attempt()) return;
+    var tries = 0;
+    var timer = setInterval(function(){ tries++; if (attempt() || tries > 60) clearInterval(timer); }, 100);
+  }
+
+  function tlrGetWelcomeToken(maxWaitMs){
+    return new Promise(function(resolve){
+      function cur(){
+        var t = window.__tlrWelcomeToken || "";
+        if (!t && window.turnstile){
+          var node = byId("tailored-welcome-turnstile");
+          var wid = node ? node.getAttribute("data-tlr-widget-id") : null;
+          if (wid){ try { t = window.turnstile.getResponse(wid) || ""; } catch(e){} }
+        }
+        return t;
+      }
+      var existing = cur(); if (existing){ resolve(existing); return; }
+      var waited = 0, step = 200, cap = (typeof maxWaitMs === "number" ? maxWaitMs : 8000);
+      var timer = setInterval(function(){
+        var t = cur(); waited += step;
+        if (t){ clearInterval(timer); resolve(t); }
+        else if (waited >= cap){ clearInterval(timer); resolve(""); }
+      }, step);
+    });
+  }
+
+  function tlrEnsureFieldsTurnstile(){
+    var node = byId("tailored-fields-turnstile");
+    if (!node || node.querySelector("iframe")) return;
+    tlrRenderTurnstile(node, function(t){ window.__wfrTurnstileToken = t; });
+  }
+
+  function tlrShowFields(){
+    var w = byId("tailored-welcome"), s1 = byId("tailoredDemoForm");
+    if (w) w.style.display = "none";
+    if (s1) s1.style.display = "grid";
+    tlrEnsureFieldsTurnstile();
+  }
+
+  function showDone(full){
+    var s1 = byId("tailoredDemoForm"), s2 = byId("tailoredDemoForm2"), done = byId("tailored-done");
+    if (s1) s1.style.display = "none";
+    if (s2) s2.style.display = "none";
+    if (done) done.style.display = "block";
+    var title = byId("tailored-done-title"), msg = byId("tailored-done-msg");
+    if (title) title.textContent = full ? "You are all set" : "Thanks, we have your details";
+    if (msg) msg.textContent = full
+      ? "Thanks for the extra detail. We will review your workflows and come back to you shortly."
+      : "We will be in touch shortly. If you think of anything else, just reply to our email.";
+    setBadge("All done");
+  }
+
+  async function submitStage1(event){
+    event.preventDefault();
+    var btn = byId("tailored-submit"), msg = byId("tailored-form-message");
+    if (btn){ btn.disabled = true; btn.textContent = "Sending..."; }
+    if (msg){ msg.textContent = ""; msg.className = "tailored-form-message"; }
+    tlrLead = { name: val("tailored-name"), email: val("tailored-email"), phone: val("tailored-phone"), sms: !!(byId("tailored-sms-optin")||{}).checked };
+    var token = window.__wfrTurnstileToken || "";
+    if (!token){
+      if (btn){ btn.disabled = false; btn.textContent = "Submit Demo Request"; }
+      if (msg){ msg.textContent = "Please complete the verification."; msg.className = "tailored-form-message error"; }
+      return;
+    }
+    var payload = {
+      type: "Workflow Review",
+      name: tlrLead.name, email: tlrLead.email, phone: tlrLead.phone, sms: tlrLead.sms,
+      triggerButton: "Chat Demo Page Form",
+      demoSlug: DEMO_SLUG, source: SOURCE, sessionId: sessionId,
+      pageUrl: location.href, industry: INDUSTRY, timestamp: new Date().toISOString(),
+      webhookAlias: "form-main", hp_field: val("tailored-hp"),
+      formRenderedAt: (window.__wfrRenderedAt || 0), turnstileToken: token
+    };
+    try {
+      var r = await fetch(WEBHOOK, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload) });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      jemimaCaptureLead(tlrLead, token);
+      var f1 = byId("tailoredDemoForm"), f2 = byId("tailoredDemoForm2");
+      if (f1) f1.style.display = "none";
+      if (f2) f2.style.display = "grid";
+      setBadge("Step 2 of 2");
+    } catch(err){
+      if (btn){ btn.disabled = false; btn.textContent = "Submit Demo Request"; }
+      if (msg){ msg.textContent = "Sorry, something went wrong. Please try again."; msg.className = "tailored-form-message error"; }
+    }
+  }
+
+  async function submitStage2(event){
+    event.preventDefault();
+    var btn = byId("tailored-submit-2"), msg = byId("tailored-form-message-2");
+    if (btn){ btn.disabled = true; btn.textContent = "Sending..."; }
+    var payload = {
+      type: "Workflow Review Details", webhookAlias: "form-main", sessionId: sessionId,
+      name: tlrLead ? tlrLead.name : "", email: tlrLead ? tlrLead.email : "",
+      businessType: val("tailored-biz"), teamSize: val("tailored-team"),
+      tools: val("tailored-tools"), biggestTimeSink: val("tailored-pain"),
+      demoSlug: DEMO_SLUG, industry: INDUSTRY, pageUrl: location.href, timestamp: new Date().toISOString()
+    };
+    try {
+      var r = await fetch(WEBHOOK, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload) });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      showDone(true);
+    } catch(err){
+      if (btn){ btn.disabled = false; btn.textContent = "Send details"; }
+      if (msg){ msg.textContent = "Sorry, something went wrong. Please try again."; msg.className = "tailored-form-message error"; }
+    }
+  }
+
+  /* Continue: re-send stage 1 silently, then jump to step 2. Stage 1 is never skipped,
+     because it is the step that creates the lead row with the phone number. */
+  async function tlrContinue(knownLead, btn){
+    if (!knownLead){ tlrShowFields(); return; }
+    if (btn){ btn.disabled = true; btn.textContent = "One moment..."; }
+    var token = await tlrGetWelcomeToken(8000);
+    if (!token){
+      if (btn){ btn.disabled = false; btn.textContent = "Continue"; }
+      tlrShowFields();
+      return;
+    }
+    tlrLead = { name: knownLead.name, email: knownLead.email, phone: knownLead.phone, sms: !!knownLead.sms };
+    var payload = {
+      type: "Workflow Review",
+      name: tlrLead.name, email: tlrLead.email, phone: tlrLead.phone, sms: tlrLead.sms,
+      triggerButton: "Chat Demo Page Form (Returning Visitor)",
+      demoSlug: DEMO_SLUG, source: SOURCE, sessionId: sessionId,
+      pageUrl: location.href, industry: INDUSTRY, timestamp: new Date().toISOString(),
+      webhookAlias: "form-main", hp_field: "", formRenderedAt: (window.__wfrRenderedAt || 0), turnstileToken: token
+    };
+    try {
+      var r = await fetch(WEBHOOK, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload) });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      var w = byId("tailored-welcome"), f2 = byId("tailoredDemoForm2");
+      if (w) w.style.display = "none";
+      if (f2) f2.style.display = "grid";
+      setBadge("Step 2 of 2");
+    } catch(err){
+      if (btn){ btn.disabled = false; btn.textContent = "Continue"; }
+      tlrShowFields();
+    }
+  }
+
+  var f1 = byId("tailoredDemoForm"); if (f1) f1.addEventListener("submit", submitStage1);
+  var f2 = byId("tailoredDemoForm2"); if (f2) f2.addEventListener("submit", submitStage2);
+  var sk = byId("tailored-skip"); if (sk) sk.addEventListener("click", function(){ showDone(false); });
+
+  jemimaResolveLead(1500).then(function(known){
+    var welcome = byId("tailored-welcome"), s1 = byId("tailoredDemoForm");
+    var contBtn = byId("tailored-welcome-continue"), resetLink = byId("tailored-welcome-reset");
+    if (known && welcome && s1){
+      var nm = byId("tailored-name"), em = byId("tailored-email"), ph = byId("tailored-phone"), sm = byId("tailored-sms-optin");
+      if (nm) nm.value = known.name; if (em) em.value = known.email;
+      if (ph) ph.value = known.phone; if (sm) sm.checked = !!known.sms;
+      var nameEl = byId("tailored-welcome-name"); if (nameEl) nameEl.textContent = known.name;
+      s1.style.display = "none";
+      welcome.style.display = "block";
+      tlrRenderTurnstile("#tailored-welcome-turnstile", function(t){ window.__tlrWelcomeToken = t; });
+    } else {
+      tlrEnsureFieldsTurnstile();
+    }
+    if (contBtn) contBtn.addEventListener("click", function(){ tlrContinue(known, contBtn); });
+    if (resetLink) resetLink.addEventListener("click", function(ev){
+      ev.preventDefault();
+      jemimaClearLead();
+      var nm = byId("tailored-name"), em = byId("tailored-email"), ph = byId("tailored-phone"), sm = byId("tailored-sms-optin");
+      if (nm) nm.value = ""; if (em) em.value = ""; if (ph) ph.value = ""; if (sm) sm.checked = false;
+      tlrShowFields();
+    });
+  });
+})();
+
+/* ---- the chat ---- */
+(function(){
+  var sc = window.CHAT_SCENARIO || {};
+  var lead = { name:'', email:'', phone:'', sms:false, visitor_token:'' };
+  var sessionId = 'visitor_' + Math.random().toString(36).slice(2, 11);
+  var sending = false;
+
+  function byId(id){ return document.getElementById(id); }
+  function show(el){ if (el) el.classList.remove('hidden'); }
+  function hide(el){ if (el) el.classList.add('hidden'); }
+
+  function bubble(role, text){
+    var row = document.createElement('div');
+    row.className = 'bubble-row ' + role;
+    var b = document.createElement('div');
+    b.className = 'bubble ' + role;
+    b.textContent = text;
+    row.appendChild(b);
+    byId('messages').appendChild(row);
+    byId('messages').scrollTop = byId('messages').scrollHeight;
+  }
+
+  var typingEl = null;
+  function showTyping(){
+    if (typingEl) return;
+    typingEl = document.createElement('div');
+    typingEl.className = 'bubble-row agent';
+    typingEl.innerHTML = '<div class="typing"><i></i><i></i><i></i></div>';
+    byId('messages').appendChild(typingEl);
+    byId('messages').scrollTop = byId('messages').scrollHeight;
+  }
+  function hideTyping(){ if (typingEl){ typingEl.remove(); typingEl = null; } }
+
+  function setBusy(b){
+    sending = b;
+    byId('chatInput').disabled = b;
+    byId('chatSend').disabled = b;
+  }
+
+  function openChat(){
+    hide(byId('chatGate'));
+    hide(byId('chatWelcome'));
+    show(byId('chatPanel'));
+    byId('chatBusinessName').textContent = sc.business_name || 'Reception';
+    if (sc.greeting) bubble('agent', sc.greeting);
+    byId('chatInput').focus();
+  }
+
+  function sendMessage(text){
+    bubble('user', text);
+    showTyping();
+    setBusy(true);
+    hide(byId('chatError'));
+
+    fetch(CHAT_ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        action: 'sendMessage',
+        chatInput: text,
+        sessionId: sessionId,
+        scenario_id: sc.scenario_id,
+        industry: sc.industry,
+        greeting: sc.greeting,
+        pageUrl: location.href,
+        knownVisitor: 'true',
+        visitor_token: lead.visitor_token || jemimaGetTok() || '',
+        leadName: lead.name,
+        leadEmail: lead.email,
+        leadPhone: lead.phone,
+        leadSms: lead.sms ? 'true' : 'false'
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      hideTyping(); setBusy(false);
+      if (!d || !d.output) throw new Error('empty reply');
+      bubble('agent', d.output);
+      if (d.visitor_token && !lead.visitor_token) lead.visitor_token = d.visitor_token;
+      byId('chatInput').focus();
+    })
+    .catch(function(){
+      hideTyping(); setBusy(false);
+      var e = byId('chatError');
+      e.textContent = 'That message did not get through. Try sending it again.';
+      show(e);
+    });
+  }
+
+  function turnstileToken(){
+    try { return window.turnstile ? (window.turnstile.getResponse() || '') : ''; } catch(e){ return ''; }
+  }
+
+  byId('chatLeadForm').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var msg = byId('chatGateMessage');
+    msg.textContent = '';
+    var v = {
+      name: byId('chat_name').value.trim(),
+      email: byId('chat_email').value.trim(),
+      phone: byId('chat_phone').value.trim(),
+      sms: !!byId('chat_sms').checked
+    };
+    if (!v.name || !v.email || !v.phone){
+      msg.textContent = 'Name, email and phone are all needed to start the demo.';
+      return;
+    }
+    var token = turnstileToken();
+    if (!token){
+      msg.textContent = 'Please complete the verification.';
+      return;
+    }
+    var btn = byId('chatGateSubmit');
+    btn.disabled = true; btn.textContent = 'Opening...';
+    jemimaCaptureLead(v, token)
+      .then(function(d){
+        lead = { name:v.name, email:v.email, phone:v.phone, sms:v.sms, visitor_token: (d && d.visitor_token) || '' };
+        openChat();
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'Open the chat';
+        msg.textContent = 'Sorry, something went wrong. Please try again.';
+      });
+  });
+
+  byId('chatForm').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if (sending) return;
+    var input = byId('chatInput');
+    var text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    input.style.height = 'auto';
+    sendMessage(text);
+  });
+
+  byId('chatInput').addEventListener('keydown', function(ev){
+    if (ev.key === 'Enter' && !ev.shiftKey){ ev.preventDefault(); byId('chatForm').requestSubmit(); }
+  });
+  byId('chatInput').addEventListener('input', function(){
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+
+  byId('chatWelcomeReset').addEventListener('click', function(ev){
+    ev.preventDefault();
+    jemimaClearLead();
+    hide(byId('chatWelcome'));
+    show(byId('chatGate'));
+  });
+
+  /* On load: a coded outreach link (?id=) skips the gate and goes straight into a personalised chat;
+     otherwise recognise a returning visitor, else show the gate. */
+  jemimaResolveByCode().then(function(coded){
+    if (coded){
+      if (coded.company){ sc.business_name = coded.company; }
+      if (coded.greeting){ sc.greeting = coded.greeting; }
+      else if (coded.company){ sc.greeting = "Welcome to " + coded.company + ". I can help you book — what sort of appointment are you looking for?"; }
+      if (coded.scenario_id) sc.scenario_id = coded.scenario_id;
+      lead = { name: '', email: '', phone: '', sms: false, visitor_token: jemimaGetTok() || '' };
+      openChat();
+      return;
+    }
+    jemimaResolveLead(1500).then(function(known){
+      if (known){
+        lead = { name:known.name, email:known.email, phone:known.phone, sms:!!known.sms, visitor_token: known.visitor_token || jemimaGetTok() };
+        byId('chatWelcomeName').textContent = String(known.name).split(' ')[0];
+        show(byId('chatWelcome'));
+        byId('chatWelcomeStart').addEventListener('click', function(){ openChat(); });
+      } else {
+        show(byId('chatGate'));
+      }
+    });
+  });
+
+  var sel = byId('industryDemoSelect');
+  if (sel) sel.addEventListener('change', function(){ if (this.value && this.value !== location.href) location.href = this.value; });
+})();
+</script>
+</body>
+</html>
