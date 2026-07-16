@@ -1240,7 +1240,7 @@
     <div class="card">
       <div id="inputPanel">
         <div id="demoWelcome" style="display:none;background:#fdf2f8;border:1px solid #fbcfe8;border-radius:14px;padding:20px 22px;margin-bottom:18px;">
-          <p style="margin:0 0 14px;font-size:15px;line-height:1.5;color:#111827;">Welcome back, <strong id="demoWelcomeName">there</strong>. We already have your details &mdash; pick an input source below and generate your demo result.</p>
+          <p id="demoWelcomeMsg" style="margin:0 0 14px;font-size:15px;line-height:1.5;color:#111827;">Welcome back, <strong id="demoWelcomeName">there</strong>. We already have your details &mdash; pick an input source below and generate your demo result.</p>
           <p style="margin:0;font-size:12px;line-height:1.6;font-weight:500;color:#94a3b8;">Not you? <a href="#" id="demoWelcomeReset" style="color:#c2155a;text-decoration:underline;">Enter different details</a>.</p>
         </div>
         <form id="demoForm">
@@ -2450,15 +2450,29 @@ async function setupDemoWelcome() {
   var ph = document.getElementById("demo_user_phone");
   var sm = document.getElementById("demo_user_sms_optin");
 
-  if (lead && lead.email && welcome && step1) {
-    // Pre-fill the (now hidden) step-1 fields so the demo + capture still send real details.
-    if (nm) nm.value = lead.name;
-    if (em) em.value = lead.email;
-    if (ph) ph.value = lead.phone;
+  if (lead) {
+    // Pre-fill whatever we already know so nothing has to be re-typed.
+    if (nm && lead.name) nm.value = lead.name;
+    if (em && lead.email) em.value = lead.email;
+    if (ph && lead.phone) ph.value = lead.phone;
     if (sm) sm.checked = !!lead.sms;
-    step1.style.display = "none";
-    welcome.style.display = "block";
-    if (nameEl) nameEl.textContent = (lead.name || lead.company || 'there');
+
+    var hasFullIdentity = !!(lead.name && lead.email && lead.phone);
+    var who = (lead.name || lead.company || "there");
+    var whoSafe = String(who).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;"}[c]; });
+    var msgEl = document.getElementById("demoWelcomeMsg");
+
+    if (welcome && hasFullIdentity) {
+      // Complete name + email + phone on file: hide step 1 and confirm we have their details.
+      if (msgEl) msgEl.innerHTML = "Welcome back, <strong>" + whoSafe + "</strong>. We already have your details &mdash; pick an input source below and generate your demo result.";
+      if (step1) step1.style.display = "none";
+      welcome.style.display = "block";
+    } else if (welcome && (lead.name || lead.company || lead.email)) {
+      // We recognise them but don't yet hold a full name + email + phone.
+      // Greet them, but KEEP step 1 visible so the required fields can be completed.
+      if (msgEl) msgEl.innerHTML = "Welcome, <strong>" + whoSafe + "</strong>. Add your details below and generate your demo result &mdash; it only takes a few seconds.";
+      welcome.style.display = "block";
+    }
   }
 
   if (resetLink) {
