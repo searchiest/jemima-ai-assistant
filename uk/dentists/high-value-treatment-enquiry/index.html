@@ -2420,9 +2420,30 @@ function setupIndustryDemoSelect() {
   }
 }
 
+// Resolve an outreach ?id= code -> {found, company, name, email, phone, scenario_id}. Null on miss.
+function jemimaResolveByCode(){
+  return new Promise(function(resolve){
+    var id='';
+    try { id = new URLSearchParams(location.search).get('id') || ''; } catch(e){ id=''; }
+    if (!id){ resolve(null); return; }
+    var done=false;
+    var timer=setTimeout(function(){ if(!done){ done=true; resolve(null); } }, 2500);
+    try {
+      fetch("https://jemima-ai.app.n8n.cloud/webhook/chat-code-resolve", {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ code: id })
+      }).then(function(r){ return r.ok ? r.json() : null; }).then(function(dd){
+        if(done) return; done=true; clearTimeout(timer);
+        resolve((dd && dd.found) ? dd : null);
+      }).catch(function(){ if(!done){ done=true; clearTimeout(timer); resolve(null); } });
+    } catch(e){ if(!done){ done=true; clearTimeout(timer); resolve(null); } }
+  });
+}
+
 // On load: if we recognise the visitor, pre-fill + hide step 1 and show the welcome-back panel.
 async function setupDemoWelcome() {
-  var lead = await jemimaResolveLead(1500);
+  var coded = await jemimaResolveByCode();
+  var lead = coded ? { name: coded.name||'', email: coded.email||'', phone: coded.phone||'', sms:false, company: coded.company||'' } : await jemimaResolveLead(1500);
   var welcome = document.getElementById("demoWelcome");
   var nameEl = document.getElementById("demoWelcomeName");
   var resetLink = document.getElementById("demoWelcomeReset");
@@ -2432,7 +2453,7 @@ async function setupDemoWelcome() {
   var ph = document.getElementById("demo_user_phone");
   var sm = document.getElementById("demo_user_sms_optin");
 
-  if (lead && welcome && step1) {
+  if (lead && lead.email && welcome && step1) {
     // Pre-fill the (now hidden) step-1 fields so the demo + capture still send real details.
     if (nm) nm.value = lead.name;
     if (em) em.value = lead.email;
@@ -2440,7 +2461,7 @@ async function setupDemoWelcome() {
     if (sm) sm.checked = !!lead.sms;
     step1.style.display = "none";
     welcome.style.display = "block";
-    if (nameEl) nameEl.textContent = lead.name;
+    if (nameEl) nameEl.textContent = (lead.name || lead.company || 'there');
   }
 
   if (resetLink) {
