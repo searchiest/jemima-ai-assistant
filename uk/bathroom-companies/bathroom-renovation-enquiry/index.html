@@ -2467,20 +2467,20 @@ async function setupDemoWelcome() {
     if (sm) sm.checked = !!lead.sms;
 
     var hasFullIdentity = !!(lead.name && lead.email && lead.phone);
-    var who = (lead.name || lead.company || "there");
-    var whoSafe = String(who).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;"}[c]; });
-    var msgEl = document.getElementById("demoWelcomeMsg");
+    var who = (lead.name || lead.company || 'there');
+    var whoSafe = String(who).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    var msgEl = document.getElementById('demoWelcomeMsg');
 
     if (welcome && hasFullIdentity) {
       // Complete name + email + phone on file: hide step 1 and confirm we have their details.
-      if (msgEl) msgEl.innerHTML = "Welcome back, <strong>" + whoSafe + "</strong>. We already have your details &mdash; pick an input source below and generate your demo result.";
-      if (step1) step1.style.display = "none";
-      welcome.style.display = "block";
+      if (msgEl) msgEl.innerHTML = 'Welcome back, <strong>' + whoSafe + '</strong>. We already have your details &mdash; pick an input source below and generate your demo result.';
+      if (step1) step1.style.display = 'none';
+      welcome.style.display = 'block';
     } else if (welcome && (lead.name || lead.company || lead.email)) {
-      // We recognise them but don't yet hold a full name + email + phone.
+      // We recognise them but do not yet hold a full name + email + phone.
       // Greet them, but KEEP step 1 visible so the required fields can be completed.
-      if (msgEl) msgEl.innerHTML = "Welcome, <strong>" + whoSafe + "</strong>. Add your details below and generate your demo result &mdash; it only takes a few seconds.";
-      welcome.style.display = "block";
+      if (msgEl) msgEl.innerHTML = 'Welcome, <strong>' + whoSafe + '</strong>. Add your details below and generate your demo result &mdash; it only takes a few seconds.';
+      welcome.style.display = 'block';
     }
   }
 
