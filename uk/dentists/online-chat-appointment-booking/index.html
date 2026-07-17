@@ -775,6 +775,7 @@ function scrollToTailoredDemoForm(event) {
     byId('chatBusinessName').textContent = sc.business_name || 'Reception';
     if (sc.greeting) bubble('agent', sc.greeting);
     byId('chatInput').focus();
+    setTimeout(function(){ var ci = byId('chatInput'); if (ci) ci.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60);
   }
 
   function sendMessage(text){
