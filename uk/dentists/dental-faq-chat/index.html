@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <script src="https://jemima.ai/consent.js"></script>
+  <link rel="preconnect" href="https://jemima-ai.app.n8n.cloud" crossorigin>
+  <link rel="preconnect" href="https://jemima-api-proxy.jemima-f5e.workers.dev" crossorigin>
+  <link rel="dns-prefetch" href="https://challenges.cloudflare.com">
+  <script>(function(){try{var id=new URLSearchParams(location.search).get('id')||'';if(id){window.__jemimaCodePromise=fetch("https://jemima-ai.app.n8n.cloud/webhook/chat-code-resolve",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:id})}).then(function(r){return r.ok?r.json():null;}).then(function(d){return (d&&d.found)?d:null;}).catch(function(){return null;});}}catch(e){}})();</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Answer patient questions by chat | Jemima AI</title>
@@ -203,7 +207,15 @@
 
   <section class="layout">
     <div class="card">
-      <section id="videoBlock" class="video-card hidden"></section>
+      <section id="videoHowto" class="video-card">
+      <h2>Watch the demo walkthrough</h2>
+      <p>A quick guide to how this demo works and how to try it.</p>
+      <div class="video-frame">
+        <video src="https://vz-1599ac93-05a.b-cdn.net/1f795e9e-7eb9-4fa1-a1e4-e64710e707c4/play_1080p.mp4" controls preload="none" playsinline webkit-playsinline poster="https://jemima.ai/video-fallback.png"
+          style="width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;"
+          title="the practice video"></video>
+      </div>
+    </section><section id="videoOutreach" class="video-card hidden"></section>
       <section class="scenario-description-block"><p>A patient visits the practice website with a question before they commit — how much is a crown, do you take NHS, are you open Saturday, what does a treatment involve. The assistant answers from the practice&#39;s own information, offers to book them in or have the team follow up, and takes their name, email and mobile with permission to text. It never gives clinical or diagnostic advice — anything clinical is flagged for a human.</p></section>
       
     </div>
@@ -446,6 +458,7 @@ function jemimaClearLead(){
 }
 
 function jemimaResolveByCode(){
+  if (window.__jemimaCodePromise){ return Promise.race([ window.__jemimaCodePromise, new Promise(function(res){ setTimeout(function(){ res(null); }, 2500); }) ]); }
   return new Promise(function(resolve){
     var id = '';
     try { id = new URLSearchParams(location.search).get('id') || ''; } catch(e){ id=''; }
@@ -874,6 +887,10 @@ function scrollToTailoredDemoForm(event) {
 
   /* On load: a coded outreach link (?id=) skips the gate and goes straight into a personalised chat;
      otherwise recognise a returning visitor, else show the gate. */
+  try { if (new URLSearchParams(location.search).get('id')) {
+    var _h=document.getElementById('videoHowto'); if(_h) _h.classList.add('hidden');
+    var _o=document.getElementById('videoOutreach'); if(_o) _o.classList.remove('hidden');
+  } } catch(e){}
   jemimaResolveByCode().then(function(coded){
     if (coded){
       if (coded.company){ sc.business_name = coded.company; }
